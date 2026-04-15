@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 應用規劃師 模擬測驗系統</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-decor">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+    </div>
+
+    <main class="container">
+        <!-- 開始畫面 -->
+        <section id="start-screen" class="card active">
+            <h1 class="premium-title">AI 應用規劃師<br><span class="highlight">模擬測驗系統</span></h1>
+            <p class="subtitle">包含「人工智慧基礎概論」與「生成式 AI 應用與規劃」共 100 題題庫。每次測驗隨機抽取 25 題，測試您的實力！</p>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">測驗題數</span>
+                    <span class="info-value">25 題</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">題庫總數</span>
+                    <span class="info-value">100 題</span>
+                </div>
+            </div>
+            <button id="start-btn" class="btn primary-btn">開始測驗</button>
+        </section>
+
+        <!-- 測驗畫面 -->
+        <section id="quiz-screen" class="card">
+            <div class="quiz-header">
+                <span id="category-badge" class="badge">人工智慧基礎概論</span>
+                <span id="progress-text">題目 1 / 25</span>
+            </div>
+            <div class="progress-bar-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+            <h2 id="question-text" class="question">載入中...</h2>
+            <div id="options-container" class="options-grid">
+                <!-- 選項會在此動態生成 -->
+            </div>
+            <div class="quiz-footer">
+                <button id="next-btn" class="btn secondary-btn" disabled>下一題</button>
+            </div>
+        </section>
+
+        <!-- 結果畫面 -->
+        <section id="result-screen" class="card">
+            <h2 class="result-title">測驗完成！</h2>
+            <div class="score-circle">
+                <div class="score-inner">
+                    <span id="final-score">0</span>
+                    <span class="score-total">/ 100</span>
+                </div>
+            </div>
+            <p id="result-feedback" class="feedback">不錯的表現！</p>
+            <div class="result-actions">
+                <button id="restart-btn" class="btn secondary-btn">重新測驗</button>
+                <button id="review-btn" class="btn primary-btn">檢討錯誤</button>
+            </div>
+        </section>
+
+        <!-- 檢討畫面 -->
+        <section id="review-screen" class="card large-card">
+            <div class="review-header">
+                <h2>題目檢討</h2>
+                <button id="back-to-result" class="close-btn">&times;</button>
+            </div>
+            <div id="review-container" class="review-list">
+                <!-- 檢討列表 -->
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
