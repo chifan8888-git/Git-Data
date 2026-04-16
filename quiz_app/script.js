@@ -42,6 +42,11 @@ function startQuiz() {
     testQuestions = shuffle([...QUESTIONS_DATA]).slice(0, TOTAL_QUESTIONS_PER_TEST);
     currentQuestionIndex = 0;
     userAnswers = new Array(TOTAL_QUESTIONS_PER_TEST).fill(null);
+    
+    // 重置科目統計條
+    document.getElementById('stat-bar-1').style.width = '0%';
+    document.getElementById('stat-bar-2').style.width = '0%';
+    
     showScreen(quizScreen);
     updateQuestion();
 }
@@ -85,10 +90,42 @@ function nextQuestion() {
 
 function showResults() {
     let score = 0;
-    testQuestions.forEach((q, i) => { if (userAnswers[i] === q.answer) score++; });
+    
+    // 初始化科目計分器
+    const cat1 = { name: "人工智慧基礎概論", correct: 0, total: 0 };
+    const cat2 = { name: "生成式 AI 應用與規劃", correct: 0, total: 0 };
+
+    testQuestions.forEach((q, i) => {
+        const isCorrect = userAnswers[i] === q.answer;
+        if (isCorrect) score++;
+        
+        // 累加科目統計
+        if (q.category === cat1.name) {
+            cat1.total++;
+            if (isCorrect) cat1.correct++;
+        } else if (q.category === cat2.name) {
+            cat2.total++;
+            if (isCorrect) cat2.correct++;
+        }
+    });
+
     const finalPercent = Math.round((score / TOTAL_QUESTIONS_PER_TEST) * 100);
     finalScoreElement.innerText = finalPercent;
     feedbackElement.innerText = finalPercent >= 80 ? "太棒了！" : (finalPercent >= 60 ? "不錯哦！" : "再加油！");
+    
+    // 更新科目統計顯示
+    const updateStat = (id, cat) => {
+        const percent = cat.total > 0 ? Math.round((cat.correct / cat.total) * 100) : 0;
+        document.getElementById(`stat-value-${id}`).innerText = `${percent}%`;
+        // 使用 setTimeout 確保動畫能在畫面切換後觸發
+        setTimeout(() => {
+            document.getElementById(`stat-bar-${id}`).style.width = `${percent}%`;
+        }, 100);
+    };
+
+    updateStat(1, cat1);
+    updateStat(2, cat2);
+
     showScreen(resultScreen);
 }
 
