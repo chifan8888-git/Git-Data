@@ -1,0 +1,8508 @@
+const QUESTIONS_DATABASE = {
+  "subject1": [
+    {
+      "id": "subject1_1",
+      "num": 1,
+      "difficulty": 3,
+      "question": "某電商企業希望利用自然語言處理（NLP）技術，分析顧客在社群平\n台與商品評論中的文字內容，以即時掌握顧客對產品的滿意度變化。\n若採用情感分析（Sentiment Analysis）模型，其主要目的為何？",
+      "options": {
+        "A": "預測顧客使用的語言風格與語氣；",
+        "B": "判斷文本中所表達的情感傾向；",
+        "C": "將顧客留言自動翻譯成企業內部指定語言；",
+        "D": "產生顧客評論的自動化摘要內容"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_2",
+      "num": 2,
+      "difficulty": 3,
+      "question": "某跨國金融科技公司導入Transformer 架構開發多語客服系統，以提\n升長篇金融文件的自動翻譯品質。下列何者為該模型能顯著改善翻譯\n準確度的主要原因？\n境依賴關係；\n略；",
+      "options": {
+        "A": "透過自注意力機制（Self-Attention Mechanism）捕捉長距離語",
+        "B": "透過卷積運算（Convolution Operation）加速訓練過程；",
+        "C": "透過強化學習（Reinforcement Learning）自動調整語句生成策",
+        "D": "透過資料增強（Data Augmentation）平衡多語語料比例"
+      },
+      "answer": "A",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_3",
+      "num": 3,
+      "difficulty": 3,
+      "question": "某企業計畫應用BERT（Bidirectional Encoder Representations\nfrom Transformers）模型分析大量顧客意見，以強化客服自動回覆\n系統。在BERT 的預訓練過程中，「遮罩語言模型（Masked Language\nModel, MLM）」的主要訓練策略為何？\nContext）預測被遮罩的詞；\n本以提升泛化性；",
+      "options": {
+        "A": "依序遮罩句尾詞語，讓模型從左到右逐步生成完整句子；",
+        "B": "隨機遮罩部分詞語，並讓模型根據雙向上下文（Bidirectional",
+        "C": "透過對抗訓練（Adversarial Training）生成語意相似的擾動樣",
+        "D": "以未遮罩的詞為條件，使用解碼器（Decoder）結構重建整句內容"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_4",
+      "num": 4,
+      "difficulty": 3,
+      "question": "在詞向量（Word Embedding）訓練方法中，GloVe（Global Vectors\nfor Word Representation）與Word2Vec 的主要差異為何？\n行學習；\n下文預測；\n第一科：人工智慧技術應用與規劃\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 2 頁，共 14 頁\n答案\n題目\n新",
+      "options": {
+        "A": "Word2Vec 以詞頻權重訓練詞向量，而GloVe 以隨機初始化向量進",
+        "B": "Word2Vec 以全局統計矩陣為基礎，而GloVe 採用神經網路進行上",
+        "C": "Word2Vec 為基於預測的模型，而GloVe 為基於共現統計的模型；",
+        "D": "Word2Vec 僅能用於靜態文本語料，而GloVe 可應用於即時語料更"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_5",
+      "num": 5,
+      "difficulty": 3,
+      "question": "某企業以詞頻–逆文件頻率（Term Frequency–Inverse Document\nFrequency, TF-IDF）方法分析顧客意見內容，但發現模型在處理篇\n幅較長的回饋文本時，無法準確反映關鍵詞的重要性。下列何者為造\n成此現象的主要原因？\n有詞權重趨於相近",
+      "options": {
+        "A": "長文本中的詞頻偏高，導致常見詞權重被過度放大；",
+        "B": "長文本中缺乏明確句子邊界，造成 TF-IDF 無法計算詞頻；",
+        "C": "TF-IDF 無法同時處理多份文件；",
+        "D": "長文本會改變IDF（Inverse Document Frequency）的計算，使所"
+      },
+      "answer": "A",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_6",
+      "num": 6,
+      "difficulty": 3,
+      "question": "某企業嘗試以N-gram 語言模型（N-gram Language Model）建立客服\n自動回覆系統，但發現模型生成的句子雖在片段上合理，卻缺乏整體\n語意連貫性。此問題最可能源自N-gram 模型的哪一項限制？\n距離依賴關係（Long-range Dependencies）；\n表徵詞語間的語意相似度；\n關聯",
+      "options": {
+        "A": "N-gram 模型在訓練過程中需要龐大計算量，導致長句無法收斂；",
+        "B": "N-gram 模型僅根據固定長度的前序詞建立機率估計，難以捕捉長",
+        "C": "N-gram 模型缺乏語意嵌入（Semantic Embedding）層，因此無法",
+        "D": "N-gram 模型假設詞與詞之間相互獨立，導致無法建構上下文語意"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_7",
+      "num": 7,
+      "difficulty": 3,
+      "question": "在企業導入的智慧監控系統中，模型以物件偵測（Object\nDetection）方式自動辨識影像中的人物與車輛。若評估指標採用平\n均精確率（Mean Average Precision, mAP），其中 IoU\n（Intersection over Union）閾值設定較高時，代表下列哪一項意\n義？\n準；",
+      "options": {
+        "A": "預測邊界框與真實邊界框的重疊程度越高，模型偵測結果越精",
+        "B": "預測邊界框與真實邊界框的誤差越大，導致mAP 數值上升；",
+        "C": "模型整體精確率（Precision）降低，但召回率（Recall）上升；",
+        "D": "預測邊界框的評估結果不受真實框大小影響"
+      },
+      "answer": "A",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_8",
+      "num": 8,
+      "difficulty": 3,
+      "question": "關於Softmax 與Max-Pooling，下列敘述何者正確？\n第一科：人工智慧技術應用與規劃\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 3 頁，共 14 頁\n答案\n題目\n留區域最大值；",
+      "options": {
+        "A": "Softmax 與Max-Pooling 都會將特徵張量壓縮為單一最大值；",
+        "B": "Max-Pooling 會對輸入進行機率分佈的轉換；",
+        "C": "Softmax 會保留所有輸入資訊，但以比例表示；Max-Pooling 只保",
+        "D": "Softmax 主要用於特徵降維，而Max-Pooling 用於分類輸出"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_9",
+      "num": 9,
+      "difficulty": 3,
+      "question": "某企業在訓練生成式AI 模型時，導入資料增強（Data\nAugmentation）技術以擴充訓練資料，但觀察到模型效能反而下降。\n下列哪一項最可能的原因與對應改善策略最為正確？\n計訓練啟動流程；\n力，應檢查並調整增強策略以維持語意一致性；\n高增強比例並調整學習率；\n學習方式重新校正資料",
+      "options": {
+        "A": "增強樣本未經隨機初始化，導致模型梯度更新不穩定，應重新設",
+        "B": "增強後資料的特徵分佈與原始資料不一致，影響模型的泛化能",
+        "C": "增強樣本的比例過高，造成模型對特定資料產生偏好，應適度提",
+        "D": "增強後資料的標註可信度下降，導致訓練訊號偏差，應以半監督"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_10",
+      "num": 10,
+      "difficulty": 3,
+      "question": "如果希望同時兼顧「精確率（Precision）」和「召回率（Recall）」，\n下列哪一個指標可以作為綜合評估的標準？",
+      "options": {
+        "A": "準確率（Accuracy）；",
+        "B": "均方根誤差（RMSE）；",
+        "C": "均方誤差（MSE）；",
+        "D": "F1 分數（F1 Score）"
+      },
+      "answer": "D",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_11",
+      "num": 11,
+      "difficulty": 3,
+      "question": "企業資料分析團隊使用DBSCAN（Density-Based Spatial Clustering\nof Applications with Noise）演算法進行顧客行為分群，並希望模\n型能自動區分主要群集與雜訊資料。\n在此演算法中，決定聚類結果的兩個主要超參數為下列何者？",
+      "options": {
+        "A": "特徵數與學習率；",
+        "B": "K 值與距離閾值；",
+        "C": "鄰域半徑（Epsilon ε）與最小點數（MinPts）；",
+        "D": "交叉熵（Cross Entropy）與權重初始化"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_12",
+      "num": 12,
+      "difficulty": 3,
+      "question": "某金融科技公司建立房價預測模型，使用多項特徵（如建坪、房齡、\n樓層、總價等）進行線性迴歸分析（Linear Regression\nAnalysis）。資料分析師發現多個特徵之間存在高度相關性，導致模\n型係數不穩定、預測誤差上升。為解決此問題，下列哪一種方法最適\n合？\n第一科：人工智慧技術應用與規劃\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 4 頁，共 14 頁\n答案\n題目",
+      "options": {
+        "A": "繼續保留所有特徵，不進行任何處理；",
+        "B": "使用主成分分析（PCA）將相關特徵轉換為彼此獨立的主成分；",
+        "C": "新增更多原始變數以提升模型表現；",
+        "D": "改用分類模型進行預測"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_13",
+      "num": 13,
+      "difficulty": 3,
+      "question": "下列何者為Kubernetes 在AI 模型部署與運行中的核心功能？",
+      "options": {
+        "A": "自動化管理模型的訓練流程與參數調校；",
+        "B": "管理與協調模型服務的部署、擴展與運行環境；",
+        "C": "提供AI 模型的資料儲存與版本控管功能；",
+        "D": "負責深度學習推論的 GPU 加速運算"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_14",
+      "num": 14,
+      "difficulty": 3,
+      "question": "在調整模型超參數（Hyperparameters）時，若希望避免因過度調整\n參數而導致過擬合，下列哪一種做法最有效提升模型的泛化能力？\n估，選擇在驗證資料上表現最穩定的設定；\n停止訓練，以防模型學習過度；\n學習資料特徵",
+      "options": {
+        "A": "採用交叉驗證（Cross-Validation）於多組參數組合間反覆評",
+        "B": "使用早期停止機制（Early Stopping）監控訓練誤差並在收斂前",
+        "C": "對輸入特徵進行標準化以減少特徵值差異帶來的過擬合風險；",
+        "D": "提高模型複雜度並使用更多超參數搜尋範圍，以確保模型能充分"
+      },
+      "answer": "A",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_15",
+      "num": 15,
+      "difficulty": 3,
+      "question": "在企業導入的MLOps（Machine Learning Operations）流程中，\nModel Registry 最常用於哪一個階段？",
+      "options": {
+        "A": "用於設定運算資源與執行環境以確保訓練穩定；",
+        "B": "用於建立可重複使用的資料與特徵版本；",
+        "C": "用於集中管理模型版本、訓練紀錄與部署狀態；",
+        "D": "用於追蹤模型上線後的表現與漂移情況"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_16",
+      "num": 16,
+      "difficulty": 3,
+      "question": "下列哪一種情境中最適合使用「序列到序列（Seq2Seq）」模型？\n成",
+      "options": {
+        "A": "預測銷售趨勢曲線，輸出未來數值序列；",
+        "B": "辨識文本中出現的人名、地名與組織名稱等實體資訊；",
+        "C": "對輸入文本中的關鍵字進行頻率統計與可視化；",
+        "D": "將輸入文字轉換成語意等價的另一段文字，如自動翻譯或摘要生"
+      },
+      "answer": "D",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_17",
+      "num": 17,
+      "difficulty": 3,
+      "question": "在自然語言處理中，檢索增強生成（Retrieval-Augmented\nGeneration, RAG）是一種結合語言模型與向量搜尋的技術，可有效\n減少模型知識過時與產生幻覺的問題。若要建立一套高效能的RAG 系\n統，下列何者為在「檢索階段」最關鍵的挑戰？\nWindow）中進行生成；\n第一科：人工智慧技術應用與規劃\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 5 頁，共 14 頁\n答案\n題目\n憶體占用；",
+      "options": {
+        "A": "確保檢索到的文件能被完整納入語言模型的上下文視窗（Context",
+        "B": "選擇使用Faiss 或ScaNN 等近似最近鄰搜尋函式庫；",
+        "C": "降低嵌入模型（Embedding Model）在高維空間中的計算成本與記",
+        "D": "避免向量檢索結果僅具語意相似但與查詢意圖無實質關聯的情況"
+      },
+      "answer": "D",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_18",
+      "num": 18,
+      "difficulty": 3,
+      "question": "當Transformer 模型發生「注意力分布過於平均（Attention\nCollapse）」的情形時，導致模型無法有效聚焦於關鍵資訊，下列哪\n一項策略可有效改善此問題？",
+      "options": {
+        "A": "提高Query-Key 點積（Dot Product）的縮放常數；",
+        "B": "在Softmax 前加入高斯雜訊（Gaussian Noise）；",
+        "C": "使用 ReLU 函數取代 Softmax；",
+        "D": "對注意力權重施加稀疏化約束（Sparsity Constraint）"
+      },
+      "answer": "D",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_19",
+      "num": 19,
+      "difficulty": 3,
+      "question": "某研究團隊正在訓練一個針對低資源語言（如少數民族語言）的語言\n模型，但該語言僅有約1 萬筆語料可用。在訓練過程中出現明顯的過\n擬合現象，若希望在不新增真實語料的前提下提升模型的泛化能力，\n採用下列哪一種方法最為適合？\n的偽平行語料（Pseudo‑Parallel Corpus）；\n參數；\n訓練知識",
+      "options": {
+        "A": "將Transformer 的隱藏層維度擴增至1024，以提升表徵能力；",
+        "B": "採用反向翻譯（Back-Translation）技術，以生成額外目標語句",
+        "C": "對詞嵌入矩陣（Embedding Matrix），施加L1 正則化以壓縮模型",
+        "D": "將多語言BERT（mBERT）中所有Transformer 層全部凍結以保留預"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_20",
+      "num": 20,
+      "difficulty": 3,
+      "question": "在使用生成對抗網路（GAN）進行人臉影像生成時，若出現「模式崩\n潰」（Mode Collapse）現象，下列哪一種方法最常被用來有效解決此\n問題？\n程；\n數；",
+      "options": {
+        "A": "在鑑別器中加入梯度懲罰（Gradient Penalty）以穩定訓練過",
+        "B": "採用 Wasserstein 距離（WGAN 損失）替代原始的 GAN 損失函",
+        "C": "對生成器輸入的潛在向量加入隨機擾動；",
+        "D": "使用多尺度鑑別器架構以提高對多樣性的判別能力"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_21",
+      "num": 21,
+      "difficulty": 3,
+      "question": "在多模態 AI 模型訓練或推論過程中，遇到某一模態資料缺失（例如\n僅有影像資料但缺少文本說明），下列哪一種策略最有效維持模型效\n能？\n第一科：人工智慧技術應用與規劃\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 6 頁，共 14 頁\n答案\n題目\n料；",
+      "options": {
+        "A": "以零向量或固定向量填充缺失模態輸入；",
+        "B": "訓練具備模態缺失感知能力的模型，使其適應缺失狀況；",
+        "C": "利用生成模型（如 GAN 或自迴歸模型）預測並補全缺失模態資",
+        "D": "直接捨棄缺少模態的樣本，避免干擾訓練或推論"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_22",
+      "num": 22,
+      "difficulty": 3,
+      "question": "某電商平台開發的顧客流失預測模型在上線數月後，預測準確率明顯\n下降。專案團隊懷疑顧客行為模式改變，導致模型輸入特徵的分佈與\n原始訓練資料不同，出現典型的資料漂移（Data Drift）問題。為了\n偵測並確認資料分佈是否發生變化，下列哪一種作法最合適？",
+      "options": {
+        "A": "定期重新訓練模型以應對外部變化；",
+        "B": "提升模型複雜度以捕捉更多資料變異性；",
+        "C": "增加測試資料量以提高評估準確度；",
+        "D": "計算輸入特徵分佈間的KL 散度（KL Divergence）"
+      },
+      "answer": "D",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_23",
+      "num": 23,
+      "difficulty": 3,
+      "question": "某大型醫院即將部署一套輔助診斷的AI 系統，為降低對臨床流程的\n衝擊，同時確保風險可控與回饋可收斂，應採取何種『漸進式部署』\n（Phased Rollout）策略最為合適？\n院；",
+      "options": {
+        "A": "從單一專科（如放射科）或特定病房開始啟用，逐步擴展至全",
+        "B": "先部署於病例量較高的急診單位，加速收集高頻使用回饋；",
+        "C": "僅在夜班或離峰時段啟用，避免影響主要臨床工作負載；",
+        "D": "在使用者界面啟用提示模式，讓全院同步體驗但不影響診斷流程"
+      },
+      "answer": "A",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_24",
+      "num": 24,
+      "difficulty": 3,
+      "question": "某金融機構的AI 風控系統遭受對抗性攻擊，駭客透過對輸入特徵進\n行微小但惡意的擾動，成功欺騙了模型。為了從根本上解決模型自身\n對這類攻擊的脆弱性，下列何者並非針對此種攻擊型態的技術手段？\n的辨識與防禦能力；\n的業務硬性規定；\n路連線",
+      "options": {
+        "A": "強化資料前處理，用以過濾掉格式不符或數值極端異常的輸入；",
+        "B": "在模型訓練階段導入對抗樣本訓練，以提升模型對惡意特徵擾動",
+        "C": "於推論後階段使用規則引擎，以確保模型的預測結果不違反既有",
+        "D": "在模型部署環境中強化網路防火牆，以阻擋來自未授權來源的網"
+      },
+      "answer": "D",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_25",
+      "num": 25,
+      "difficulty": 3,
+      "question": "某企業部署生成式AI 系統協助行銷與內容產出，但近期遭質疑部分\n生成內容可能涉及著作權侵權。為降低企業在法律層面的潛在責任與\n風險，下列哪一項策略最能有效預防侵權問題產生？\n第一科：人工智慧技術應用與規劃\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 7 頁，共 14 頁\n答案\n題目\n輸出結果，以降低侵權風險；\n源；\n作權保護的樣本；\nFingerprint）技術，以確保生成內容可追溯",
+      "options": {
+        "A": "對生成內容進行語意相似度比對，自動標註可能涉及既有著作的",
+        "B": "建立訓練資料篩選與授權驗證機制，排除未授權或高風險資料來",
+        "C": "在訓練與微調過程中採用差分隱私技術，避免模型記憶特定受著",
+        "D": "在模型輸出端嵌入浮水印（Watermarking）或數位指紋（Digital"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_26",
+      "num": 26,
+      "difficulty": 3,
+      "question": "在房價預測任務中，若發現特徵如「房間數」與「坪數」存在高度多\n重共線性（Multicollinearity），為降低共線性對模型參數估計的負\n面影響，應優先選擇下列哪種模型？",
+      "options": {
+        "A": "不受多重共線性影響的決策樹模型；",
+        "B": "傳統線性迴歸模型，不含正則化項；",
+        "C": "支持向量機搭配線性核函數；",
+        "D": "含L1 正則化的LASSO 迴歸模型"
+      },
+      "answer": "D",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_27",
+      "num": 27,
+      "difficulty": 3,
+      "question": "某企業需分析半結構化的系統日誌（JSON 格式），以提取關鍵的時序\n特徵供故障預測模型使用。考量日誌結構複雜且包含巢狀欄位\n（Nested Fields），下列哪一種策略最有效且實務可行？\n次數）作為特徵；\n抽取；\n行聚合與特徵萃取；",
+      "options": {
+        "A": "先將JSON 資料扁平化轉成CSV，再對欄位計算統計量（如均值、",
+        "B": "使用遞歸神經網路（RNN）直接輸入原始JSON 字串進行時序特徵",
+        "C": "設計遞迴函式展開巢狀欄位，並基於時間窗口（Time Window）進",
+        "D": "只保留時間戳記欄位，忽略其他巢狀內容以簡化特徵工程"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_28",
+      "num": 28,
+      "difficulty": 3,
+      "question": "在一個同時包含連續型特徵與類別型特徵的資料集中，若希望透過適\n當的特徵工程流程來提升模型整體表現，下列哪一種作法最為合適？\n特徵直接合併進行模型訓練；\n為類別型特徵，統一以類別方式處理；\n碼（Target Encoding），並生成交互特徵提升模型表現；\n第一科：人工智慧技術應用與規劃\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 8 頁，共 14 頁\n答案\n題目",
+      "options": {
+        "A": "將類別型特徵使用標籤編碼（Label Encoding）轉換後，與連續",
+        "B": "將連續特徵進行離散化（Discretization）或分桶（Binning）轉",
+        "C": "對連續特徵做標準化（Standardization），類別特徵採用目標編",
+        "D": "只保留連續特徵，忽略類別型變量以簡化模型"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_29",
+      "num": 29,
+      "difficulty": 3,
+      "question": "某AI 開發團隊為提升模型開發效率及品質控制，計畫實施持續整合\n（Continuous Integration, CI）流程。下列哪一項做法最符合CI\n的核心實踐，且能有效減少整合風險？\n流程；\n式碼分析；",
+      "options": {
+        "A": "在主分支（Main Branch）每日固定時間手動合併並執行完整測試",
+        "B": "每次程式碼提交（Commit）後自動觸發建置、單元測試及靜態程",
+        "C": "於模型訓練完成後，定期安排開發團隊回顧並合併程式碼；",
+        "D": "透過自動化部署腳本，將模型在特定時間點批次釋出到測試環境"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_30",
+      "num": 30,
+      "difficulty": 3,
+      "question": "某銀行計劃將AI 詐欺偵測模組整合至核心交易系統，主管機關要求\n全流程必須符合金融監管對「不可否認性（Non-repudiation）」的資\n訊安全規範，以確保日後能進行法務追蹤與稽核。下列哪一項措施最\n能確保此要求的落實？\n（Hash），並簽署數位簽章以確保不可竄改性；\n驗；",
+      "options": {
+        "A": "為每筆AI 模型推論記錄其輸入與輸出結果的加密雜湊值",
+        "B": "優化模型效能以降低平均推論延遲至100ms 以下，提升使用者體",
+        "C": "增加主機備援數量，以確保系統在故障時持續可用；",
+        "D": "將模型推論請求導入負載平衡器，避免單點壅塞導致服務延遲"
+      },
+      "answer": "A",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_31",
+      "num": 31,
+      "difficulty": 3,
+      "question": "某AI 服務系統每次推論請求需約1 秒完成，且必須支撐高達10,000\n次請求每秒（RPS）的流量。為確保系統具備高可用性且能穩定應付\n流量峰值，下列哪一種架構方案最為合適？\n（Auto Scaling）；",
+      "options": {
+        "A": "依賴單台超高效能伺服器進行垂直擴展，提升硬體規格；",
+        "B": "採用容器化部署並水平擴展服務實例，結合自動彈性伸縮機制",
+        "C": "限制最大併發連線數，以避免系統過載；",
+        "D": "增加批次處理大小，一次同時處理上千筆請求"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_32",
+      "num": 32,
+      "difficulty": 3,
+      "question": "某企業已將AI 模型部署於生產環境，為確保系統持續穩定運作，並\n能提前偵測模型效能可能衰退，技術團隊希望透過監控指標進行預\n警。\n下列哪一項監控指標最具預測效力，能提早發現模型效能下滑風險？\n第一科：人工智慧技術應用與規劃\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 9 頁，共 14 頁\n答案\n題目\nIndex）指數",
+      "options": {
+        "A": "系統CPU 與記憶體使用率波動幅度；",
+        "B": "模型推論結果的置信度（Confidence）分佈變化趨勢；",
+        "C": "API 平均回應時間與延遲百分位數變化；",
+        "D": "輸入特徵與訓練資料分布差異的PSI（Population Stability"
+      },
+      "answer": "D",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_33",
+      "num": 33,
+      "difficulty": 3,
+      "question": "企業團隊在使用Word2Vec 模型訓練客服文本語料時，若訓練資料量\n龐大且希望模型能更有效捕捉罕見詞的語意關聯，下列哪一種訓練策\n略最為適合？\n斂；\nIDF 權重以強化低頻詞表示；\n低頻詞關係；\n預測中心詞，能提升罕見詞的語意穩定度",
+      "options": {
+        "A": "採用Skip-gram 模型，但以隨機初始化權重加快高頻詞的訓練收",
+        "B": "採用CBOW 模型（Continuous Bag of Words Model）並結合TF-",
+        "C": "採用Skip-gram 模型，利用中心詞預測周圍詞語，能更有效學習",
+        "D": "採用CBOW 模型（Continuous Bag of Words Model），利用周圍詞"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_34",
+      "num": 34,
+      "difficulty": 3,
+      "question": "在自駕車影像辨識系統中，開發團隊希望模型能同時辨識每個像素所\n屬的物件類別（例如道路、建築、行人），又能區分出同類物件的不\n同個體（例如多位行人）。此時最適合採用下列哪一項電腦視覺技\n術？",
+      "options": {
+        "A": "語義分割（Semantic Segmentation）；",
+        "B": "物件偵測（Object Detection）；",
+        "C": "實例分割（Instance Segmentation）；",
+        "D": "全景分割（Panoptic Segmentation）"
+      },
+      "answer": "D",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_35",
+      "num": 35,
+      "difficulty": 3,
+      "question": "某媒體公司計畫導入CLIP（Contrastive Language–Image Pre-\ntraining）模型，以協助大量影像自動標註與搜尋，並希望在無需新\n增標訓資料的情況下，僅透過文字提示（Text Prompt）即可識別影\n像內容。請問此應用情境中，CLIP 能夠達成的關鍵技術特性為何？\n射至共同嵌入空間（Shared Embedding Space），可直接以語意相似\n度進行零樣本分類；\n進行影像特徵分類；\n描述影像內容",
+      "options": {
+        "A": "透過圖文對比式學習（Contrastive Learning）將影像與文字映",
+        "B": "透過影像增強與特徵擴散降低標訓資料需求；",
+        "C": "以監督式學習結合多層感知器（Multilayer Perceptron, MLP）",
+        "D": "以自迴歸生成模型（Autoregressive Model）逐步生成文字標籤"
+      },
+      "answer": "A",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_36",
+      "num": 36,
+      "difficulty": 3,
+      "question": "某資料科學團隊在開發預測模型時，針對多種模型設定（如學習率、\n第一科：人工智慧技術應用與規劃\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 10 頁，共 14 頁\n答案\n題目\n樹深度、正則化係數等）進行系統化測試，希望找出在驗證資料上表\n現最穩定的組合。此過程最可能採用下列哪一種方法？\n風險；\n尋與評估；\n效率；\n整搜尋方向",
+      "options": {
+        "A": "使用交叉驗證（Cross Validation）反覆評估模型以降低過擬合",
+        "B": "透過網格搜尋（Grid Search）在多組超參數設定中進行系統化搜",
+        "C": "以隨機搜尋（Random Search）快速探索部分參數空間以提升搜尋",
+        "D": "採用貝葉斯優化（Bayesian Optimization）根據歷次結果動態調"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_37",
+      "num": 37,
+      "difficulty": 3,
+      "question": "某公司正在訓練一個大型語音合成模型，開發團隊使用多台GPU 進行\n訓練，但經常出現 GPU 記憶體不足問題。由於模型架構已固定且無\n法更換硬體，團隊希望在維持模型效能與收斂品質的前提下，下列哪\n一種方法最有效降低單張 GPU 的記憶體壓力？\nSharding）分散訓練負載；",
+      "options": {
+        "A": "減少訓練資料量以降低記憶體使用；",
+        "B": "採用較小的批次大小（Batch Size）並搭配資料分片（Data",
+        "C": "增加學習率（Learning Rate）以加快收斂速度；",
+        "D": "改用測試資料集（Test Set）進行部分訓練以節省空間"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_38",
+      "num": 38,
+      "difficulty": 3,
+      "question": "某影像設計團隊在使用Stable Diffusion 生成4K 級產品圖時，發現\n影像邊緣與細節存在顆粒化與模糊現象。\n若僅能在生成階段進行調整，希望提升畫面清晰度與紋理層次，同時\n避免過度平滑，下列哪一項作法最適合？\n與多樣性；",
+      "options": {
+        "A": "降低取樣步數，以縮短生成時間；",
+        "B": "增加取樣步數並選擇高品質取樣器，以強化細節還原度；",
+        "C": "提高CFG（Classifier-Free Guidance）值，使生成結果更具創意",
+        "D": "改用低解析度輸入以降低計算成本"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_39",
+      "num": 39,
+      "difficulty": 3,
+      "question": "某企業的資料科學團隊利用ARIMA 模型（AutoRegressive\nIntegrated Moving Average Model）預測每週產品銷售量。模型建\n立完成後，分析人員發現預測誤差隨時間呈現週期性波動，且自相關\n函數（ACF）顯示殘差在多個時滯（Lag）上仍顯著不為零。根據上述\n現象，最合理的模型診斷結論為何？\n第一科：人工智慧技術應用與規劃\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 11 頁，共 14 頁\n答案\n題目\n參數以捕捉時間依賴性；",
+      "options": {
+        "A": "模型殘差符合白噪音（White Noise）假設，預測表現穩定；",
+        "B": "模型殘差雖有輕微異常，但可視為隨機誤差忽略不計；",
+        "C": "模型存在配適不足（Underfitting）問題，需重新調整 p 或 q",
+        "D": "殘差特性不影響預測結果，無須進一步修正"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_40",
+      "num": 40,
+      "difficulty": 3,
+      "question": "下列哪一項最正確地描述了VAE（Variational Autoencoder）、GAN\n（Generative Adversarial Network）與擴散模型（Diffusion\nModel）在多模態潛在空間對齊（Latent Alignment）與生成策略上\n的根本差異？\n構但生成解析度有限；GAN 透過對抗損失（Adversarial Loss）在不\n同模態間學習分佈映射，生成品質高但穩定性差；擴散模型則以條件\n化噪聲反推（Conditional Denoising）方式實現高保真跨模態生\n成，兼具穩定性與多樣性；\n練實現跨模態對齊；GAN 則以顯式後驗估計方式提升樣本一致性；\nDiffusion Model 則透過 KL 散度最小化學習語意對應。；\nSpace），僅在解碼器結構不同而已",
+      "options": {
+        "A": "VAE 透過顯式潛在變數建模實現跨模態對齊，適合捕捉整體語意結",
+        "B": "VAE 與Diffusion Ｍodel 均屬隱式生成架構，主要依賴對抗式訓",
+        "C": "VAE 與GAN 均使用馬爾可夫鏈（Markov Chain）進行跨模態轉換；",
+        "D": "三者在多模態應用中皆依賴同一潛在表徵空間（Shared Latent"
+      },
+      "answer": "A",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_41",
+      "num": 41,
+      "difficulty": 3,
+      "question": "在進行超參數調校（Hyperparameter Tuning）時，若直接在K-Fold\n交叉驗證（Cross-Validation）的資料上同時調整模型參數並評估效\n能，最可能導致下列哪一種問題？\nBias），因測試摺資料間接參與參數選擇，造成資料洩漏（Data\nLeakage）；\n正則化；\n估計；",
+      "options": {
+        "A": "模型的交叉驗證結果出現過度樂觀偏差（Over-optimistic",
+        "B": "模型會在每一摺（Fold）內反覆調整參數，導致訓練不穩與過度",
+        "C": "因交叉驗證資料被重複使用，造成效能方差增大，無法獲得穩定",
+        "D": "K-Fold 交叉驗證的假設與超參數搜尋相衝突，導致驗證過程失效"
+      },
+      "answer": "A",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_42",
+      "num": 42,
+      "difficulty": 3,
+      "question": "若部署一個深度學習模型至金融風控系統，該模型採用鑑別式架構\n（如Transformer Classifier）。然而上線後，模型對新樣本的分類\n錯誤率顯著上升，經檢查發現，輸入資料分佈已與原訓練集明顯不\n同。針對此情形，下列哪一種應對策略最為適合？\n第一科：人工智慧技術應用與規劃\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 12 頁，共 14 頁\n答案\n題目",
+      "options": {
+        "A": "改用生成對抗網路（GAN）生成新樣本並混入訓練集；",
+        "B": "改用邏輯迴歸模型（Logistic Regression）以提升穩定性；",
+        "C": "增加模型容量（Model Capacity），以學習更多樣本差異；",
+        "D": "使用變分自編碼器（VAE）監控潛在空間分佈，偵測輸入資料偏移"
+      },
+      "answer": "D",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_43",
+      "num": 43,
+      "difficulty": 3,
+      "question": "某金融科技公司欲導入AI 模型協助客服郵件自動分類（投訴、詢\n問、表揚）。團隊同時考慮兩種模型設計：\n方案 A（生成式路徑）：採用VAE 建構潛在語意空間，再結合下游分\n類器進行標籤預測；\n方案 B（鑑別式路徑）：採用BERT Classifier 直接根據輸入文本進\n行監督式分類。\n現有標註資料約 2,000 筆，資料分佈均勻但擴充成本高。若團隊希\n望公平比較兩種模型的資料利用效率與泛化能力，下列哪一種實驗設\n計最能突顯兩者的本質差異？\n（Accuracy）與推論時間；\n（100%、50%、10%），比較其F1-score；\n的精確率（Precision）差異；\n過擬合的敏感度",
+      "options": {
+        "A": "在完整資料集上分別訓練兩者，並比較其分類準確率",
+        "B": "在低資源情境（Low-resource Setting）下，逐步減少標註比例",
+        "C": "使用GAN 自動生成文本樣本補足資料，觀察兩模型在資料增強後",
+        "D": "在相同訓練資料上固定輸入維度，僅調整模型參數量，比較其對"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_44",
+      "num": 44,
+      "difficulty": 3,
+      "question": "某電信公司希望建立一個模型來預測顧客是否即將流失，並進一步模\n擬不同促銷或服務策略下顧客的行為變化，以生成多樣化的虛擬樣本\n資料進行A/B 測試與行銷策略評估。若要同時兼顧預測與資料生成的\n需求，最適合採用下列哪一種方法？\n抗網路（Generative Adversarial Network, GAN）；",
+      "options": {
+        "A": "使用傳統隨機森林（Random Forest）；",
+        "B": "使用邏輯迴歸（Logistic Regression）模型；",
+        "C": "使用變分自編碼器（Variational Autoencoder, VAE）或生成對",
+        "D": "使用強化學習代理（Reinforcement Learning Agent）"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_45",
+      "num": 45,
+      "difficulty": 3,
+      "question": "進行影像分類任務時，研究團隊嘗試利用主成分分析（Principal\nComponent Analysis, PCA）將輸入特徵從1024 維降至100 維，並將\n降維後的資料輸入支持向量機（Support Vector Machine, SVM）模\n型進行訓練。關於此作法，下列哪一項描述最為合理？\n第一科：人工智慧技術應用與規劃\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 13 頁，共 14 頁\n答案\n題目",
+      "options": {
+        "A": "PCA 保留的主成分必然能提升SVM 的分類準確率；",
+        "B": "使用原始高維資料通常更能保留資訊，因此PCA 沒有實際意義；",
+        "C": "PCA 可讓SVM 自動適用於非線性（Nonlinear）資料集；",
+        "D": "降維後可降低訓練時間並減少過擬合（Overfitting）風險"
+      },
+      "answer": "D",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_46",
+      "num": 46,
+      "difficulty": 3,
+      "question": "某企業的AI 模型已部署於線上服務環境中，用於即時預測顧客流失\n機率。近期團隊注意到模型預測準確率逐漸下降，但系統運作正常且\n未出現錯誤訊息。經分析發現，近期輸入資料的分布與模型訓練資料\n相比出現顯著偏移。若要在MLOps 流程中主動偵測並預警此類問題，\n最應採用下列哪項措施？\nDrift）監測機制；",
+      "options": {
+        "A": "建立即時的資料漂移（Data Drift）與概念漂移（Concept",
+        "B": "將模型轉換為量化版本以降低延遲；",
+        "C": "增加模型超參數調整次數以強化適應性；",
+        "D": "使用固定隨機種子（Random Seed）確保訓練穩定"
+      },
+      "answer": "A",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_47",
+      "num": 47,
+      "difficulty": 3,
+      "question": "某金融科技公司導入多任務學習架構，讓單一 Transformer 模型同\n時執行OCR（Optical Character Recognition）後的文檔分類以及命\n名實體辨識（Named Entity Recognition, NER）任務，\n以協助自動歸檔與抽取關鍵金融資訊。在部署初期，團隊發現當模型\n的NER 準確率（Accuracy）提升時，文檔分類準確率反而下降。若模\n型架構正確且資料品質良好，下列哪一項最可能是造成此現象的原\n因？\nLabeling）；\nRepresentation）；\nOutputs）",
+      "options": {
+        "A": "模型架構無法同時支援文字分類與序列標註任務（Sequence",
+        "B": "文檔分類任務不需要語意化表徵（Contextualized",
+        "C": "損失函數（Loss Function）未進行權重平衡，導致任務間競爭；",
+        "D": "所使用的BERT 模型無法支援多任務輸出頭（Multi-Head"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_48",
+      "num": 48,
+      "difficulty": 3,
+      "question": "某數據工程師使用DBSCAN 演算法對一份數百萬筆的高維顧客資料進\n行聚類分析，但發現程式執行速度極慢，甚至出現記憶體不足的情\n況。若要在不改變演算法核心邏輯的前提下，最有效提升其運算效率\n的作法為何？\n（Hierarchical Clustering）；\n第一科：人工智慧技術應用與規劃\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 14 頁，共 14 頁\n答案\n題目\nKD-Tree 或 Ball Tree；",
+      "options": {
+        "A": "改用以平均連結（Average Linkage）為基礎的階層式群集法",
+        "B": "採用高效率的距離索引結構（Distance Index Structure），例如",
+        "C": "將 ε（Epsilon）參數調得極小，以減少鄰近點的數量；",
+        "D": "在資料前處理時增加標準化後的特徵維度數"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_49",
+      "num": 49,
+      "difficulty": 3,
+      "question": "某電商平台導入AI 情感分析模型，用以自動偵測顧客評論中的負面\n情緒並觸發客服機制。然而，上線後發現模型在面對不同語言或族群\n書寫風格的評論時表現不一致，例如部分語氣強烈的正面評論被誤判\n為負面，而禮貌但含批評意圖的評論卻被判為中性。若從技術與資料\n治理的角度分析，下列哪一項描述不正確？\n語意距離不穩定，導致預測誤差；\n（Implicit Bias）；\n情緒判斷不準確；\n模型仍可能學習到偏誤判斷",
+      "options": {
+        "A": "模型未啟用詞嵌入正規化（Embedding Normalization）可能造成",
+        "B": "訓練語料若偏向特定文化或語氣特徵，可能使模型產生內隱偏誤",
+        "C": "模型若訓練資料來源不平衡，容易導致對不同語言或族群風格的",
+        "D": "Transformer 架構能捕捉上下文語意，但若訓練資料偏差仍存在，"
+      },
+      "answer": "A",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject1_50",
+      "num": 50,
+      "difficulty": 3,
+      "question": "某設計師使用公司內部建置的生成式AI 工具製作行銷素材，並輸入\n提示語（Prompt）：「請生成一張模特兒手持品牌飲料、背景為海邊夕\n陽的照片」。系統能正確生成主要主題與場景，但輸出的圖像中，品\n牌標誌顏色常有誤差，或人物手部姿勢顯得不自然。若從多模態生成\n模型的技術機制分析，此現象最可能是下列哪一項原因所造成？\n錯誤；\n生成混亂；\n齊，導致跨模態理解偏差；\n建立多模態語意關聯\n《以下空白》",
+      "options": {
+        "A": "擴散式生成模型的去雜訊過程出現隨機梯度漂移，導致影像像素",
+        "B": "提示語過長造成Transformer 的位置編碼超出上下文限制，導致",
+        "C": "CLIP 模型中的文字編碼器與影像編碼器在語意嵌入空間未充分對",
+        "D": "模型未採用對比學習（Contrastive Learning）損失函數，無法"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    }
+  ],
+  "subject2": [
+    {
+      "id": "subject2_1",
+      "num": 1,
+      "difficulty": 3,
+      "question": "若某數據點的Z 分數（Z-Score）= 2，請問代表下列哪一種意涵？",
+      "options": {
+        "A": "代表該數據點之原始數值為2；",
+        "B": "該數據點比平均值低2 個標準差；",
+        "C": "代表數據為異常值；",
+        "D": "該數據點比平均值高2 個標準差"
+      },
+      "answer": "D",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject2_2",
+      "num": 2,
+      "difficulty": 3,
+      "question": "使用Python 的pandas 套件處理各商品銷售數據（變數為 df）時，若需\n計算「總銷售額」欄位的敘述性統計量（如平均值、標準差等），應使用\n下列哪一種語法？",
+      "options": {
+        "A": "df['總銷售額'].sum()；",
+        "B": "df['總銷售額'].describe()；",
+        "C": "df['總銷售額'].sort_values()；",
+        "D": "df['總銷售額'].stats()"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject2_3",
+      "num": 3,
+      "difficulty": 3,
+      "question": "附圖為某資料之分佈圖，此圖資料之偏態（Skewness）值較有可能為下列\n哪個選項？",
+      "options": {
+        "A": "Skewness < 0；",
+        "B": "Skewness > 0；",
+        "C": "Skewness = 0；",
+        "D": "無法計算 Skewness"
+      },
+      "answer": "A",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject2_4",
+      "num": 4,
+      "difficulty": 3,
+      "question": "累積分佈函數（Cumulative Distribution Function, CDF）可用於描述\n隨機變數的機率分佈特性，其數學定義為下列何者？\n第二科：大數據處理分析與應用\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 2 頁，共 17 頁\n答\n案\n題目",
+      "options": {
+        "A": "機率密度函數（Probability Density Function, PDF）的平均值；",
+        "B": "機率密度函數（Probability Density Function, PDF）的積分；",
+        "C": "機率密度函數（Probability Density Function, PDF）的離散總和；",
+        "D": "機率密度函數（Probability Density Function, PDF）的標準差"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject2_5",
+      "num": 5,
+      "difficulty": 3,
+      "question": "在進行資料前處理時，若使用Label Encoding 將類別變數轉換為數字型\n態，下列何者為最常見的潛在風險？",
+      "options": {
+        "A": "無法處理缺值；",
+        "B": "會引入類別之間的虛假順序關係；",
+        "C": "無法擴展至新資料；",
+        "D": "記憶體佔用過高"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject2_6",
+      "num": 6,
+      "difficulty": 3,
+      "question": "在進行資料分析時，會遇到類別型（Categorical）與數值型\n（Numerical） 資料格式。關於這兩種資料格式的處理，下列敘述何者不\n正確？\n量，適用於無序（Nominal）類別資料，但在高基數（High\nCardinality）特徵下可能造成維度爆炸問題；\n（Nominal）資料，可能導致模型誤將編碼值解讀為具數值大小關係的特\n徵；\n0、標準差為 1，可在多數距離型演算法中改善收斂速度，並同時將數值\n範圍壓縮至 0 至 1 之間；\n未依據資料分佈特性設計，可能導致資訊損失或邊界偏誤",
+      "options": {
+        "A": "One-Hot 編碼（One-Hot Encoding）會將類別變數轉換為多維二元向",
+        "B": "標籤編碼（Label Encoding）會以整數表示不同類別，若應用於無序",
+        "C": "標準化（Standardization）透過將資料平移與縮放，使其平均值為",
+        "D": "對連續變數進行分箱（Binning）可提升模型可解釋性，但若分段方式"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject2_7",
+      "num": 7,
+      "difficulty": 3,
+      "question": "在資料庫的ACID 特性中，下列何者為「原子性（Atomicity）」的正確定\n義？",
+      "options": {
+        "A": "所有資料欄位必須為相同型別；",
+        "B": "每次交易需以批次方式執行；",
+        "C": "交易不可分割，需完全成功或完全失敗；",
+        "D": "系統會自動同步交易資料至所有節點"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject2_8",
+      "num": 8,
+      "difficulty": 3,
+      "question": "資料科學家為分析顧客行為，利用現有欄位「銷售金額」與「瀏覽次\n數」，計算出新變數「銷售金額/瀏覽次數」。此動作屬於下列哪一類特徵\n工程方法？\n第二科：大數據處理分析與應用\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 3 頁，共 17 頁\n答\n案\n題目",
+      "options": {
+        "A": "特徵選擇（Feature Selection）；",
+        "B": "特徵衍生（Feature Derivation）；",
+        "C": "特徵轉換（Feature Transformation）；",
+        "D": "分箱處理（Binning）"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject2_9",
+      "num": 9,
+      "difficulty": 3,
+      "question": "在進行數值特徵的標準化（Normalization）時，若資料中存在極端值\n（Outliers），下列哪一種方法最適合使用？",
+      "options": {
+        "A": "Min-Max 正規化（Min-Max Scaling）；",
+        "B": "Z-score 標準化（Z-score Normalization）；",
+        "C": "穩健縮放（Robust Scaling）；",
+        "D": "標準分箱（Standard Binning）"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject2_40",
+      "num": 40,
+      "difficulty": 3,
+      "question": "請參考附圖，下列虛擬程式碼（pseudocode）最可能是在描述何種驗證\n法？\n第二科：大數據處理分析與應用\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 12 頁，共 17 頁\n答\n案\n題目",
+      "options": {
+        "A": "Hold-out 驗證（Hold-out Validation）；",
+        "B": "留一交叉驗證LOOCV（ Leave-One-Out Cross Validation）；",
+        "C": "K-fold 交叉驗證（K-fold Cross Validation）；",
+        "D": "拔靴法（Bootstrap）驗證"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject2_41",
+      "num": 41,
+      "difficulty": 3,
+      "question": "請參考附圖，下列虛擬程式碼（pseudocode）最可能是在描述何種演算\n法？\nwith Noise Clustering）",
+      "options": {
+        "A": "K-means 分群（K-means Clustering）；",
+        "B": "高斯混合模型分群（Gaussian Mixture Model Clustering）；",
+        "C": "階層式分群（Hierarchical Clustering）；",
+        "D": "DBSCAN 分群（Density-based Spatial Clustering of Applications"
+      },
+      "answer": "A",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject2_42",
+      "num": 42,
+      "difficulty": 3,
+      "question": "考慮某生產線每小時出現瑕疵品的個數符合卜瓦松分佈（Poisson\nDistribution），已知平均每小時產生5 個瑕疵品，附圖程式碼展示資料\n處理，請問下列敘述何者正確？\n第二科：大數據處理分析與應用\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 13 頁，共 17 頁\n答\n案\n題目\n一間遊戲市場研究公司正在分析全球電子遊戲銷售情況，並準備建立一份\n「熱銷遊戲銷售報告」。分析師取得了一份名為 vgsales.csv 的資料集，\n內容包含了全球銷量超過 10 萬份的電子遊戲清單。研究團隊希望透過這\n份資料，了解不同年份、平台與地區的銷售趨勢。資料集的欄位說明如\n下，請根據下述資料情境回答以43~47 題。\nName：遊戲名稱\nPlatform：遊戲平台（如 PS4、X360、Wii 等）\nYear：發售年份\nGenre：遊戲類型（如 Action、Sports、Role-Playing 等）\nPublisher：發行商名稱\nNA_Sales / EU_Sales / JP_Sales / Other_Sales：各地區銷售量（單\n位：百萬份）\nGlobal_Sales：全球總銷售量（單位：百萬份）\n資料的欄位概觀如下：\n第二科：大數據處理分析與應用\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 14 頁，共 17 頁\n答\n案\n題目",
+      "options": {
+        "A": "lambda_poisson = 5 表示每小時最多5 個瑕疵品；",
+        "B": "poisson.pmf(5, lambda_poisson) 表示小於5 個瑕疵品的機率；",
+        "C": "卜瓦松分佈的適用條件為事件彼此獨立，且平均發生率固定；",
+        "D": "poisson.cdf(10, 5) 表示大於或等於10 個瑕疵品的機率"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject2_43",
+      "num": 43,
+      "difficulty": 3,
+      "question": "分析師在載入資料後，檢視 Year 欄位的資料型態，發現它是float64，\n而非一般年份常用的整數。他想了解這樣的情形為什麼會發生。請問下列\n哪些原因可能導致這種狀況？\n原因A：CSV 檔中Year 欄位有缺失值(NaN)，導致Pandas 自動將整欄轉為\n浮點數。\n原因B：CSV 檔中的年份資料原本是字串(如 \"2006\")，Pandas 轉換時出\n錯而變成浮點數。\n原因C：Pandas 預設會將所有數值型態讀取為float64，不論資料是否為\n整數。\n原因D：CSV 檔中的年份資料可能包含小數點(例如2006.0)，因此被視為\n浮點數。",
+      "options": {
+        "A": "原因B、原因C；",
+        "B": "原因A、原因D；",
+        "C": "原因A、原因B、原因D；",
+        "D": "原因C、原因D"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject2_44",
+      "num": 44,
+      "difficulty": 3,
+      "question": "研究團隊接下來想要將 Year 欄位轉換為整數型態，以便後續進行年份趨\n勢分析。考慮到資料中可能包含缺失值（NaN），請選出最合適的轉換方\n式。",
+      "options": {
+        "A": "data['Year'] = data['Year'].astype(int)；",
+        "B": "data['Year'] = data['Year'].fillna(0).astype(int)；",
+        "C": "data['Year'] = data['Year'].fillna(1).astype(int)；",
+        "D": "data['Year'] = data['Year'].astype('Int64')；"
+      },
+      "answer": "D",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject2_45",
+      "num": 45,
+      "difficulty": 3,
+      "question": "為了觀察各遊戲平台的市場表現，分析師想要統計每個平台的全球銷售總\n額，並以長條圖呈現。請選出最能正確實現此分析的程式碼。\n第二科：大數據處理分析與應用\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 15 頁，共 17 頁\n答\n案\n題目",
+      "options": {
+        "A": "data.groupby(\"Platform\")[\"Global_Sales\"].sum().plot(kind=\"bar\")；",
+        "B": "data.groupby(\"Platform\")[\"Global_Sales\"].count().plot(kind=\"bar\")；",
+        "C": "data[\"Platform\"].value_counts().plot(kind=\"bar\")；",
+        "D": "data.groupby(\"Platform\")[\"Global_Sales\"].mean().plot(kind=\"bar\")"
+      },
+      "answer": "A",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject2_46",
+      "num": 46,
+      "difficulty": 3,
+      "question": "團隊希望比較北美、歐洲、日本及其他地區的整體銷售比例，並使用\nseaborn 套件以長條圖的形式進行可視化分析。請選出能正確顯示這些地\n區銷售總額比例的程式碼。\ndata=data)；\ny=[\"NA_Sales\",\"EU_Sales\",\"JP_Sales\",\"Other_Sales\"],\ndata=data)；\ndata=pd.melt(data,\nvalue_vars=[\"NA_Sales\",\"EU_Sales\",\"JP_Sales\",\"Other_Sales\"]),\nestimator=sum)；",
+      "options": {
+        "A": "sns.countplot(x=[\"NA_Sales\",\"EU_Sales\",\"JP_Sales\",\"Other_Sales\"],",
+        "B": "sns.lineplot(x=\"Platform\",",
+        "C": "sns.barplot(x=\"variable\", y=\"value\",",
+        "D": "sns.histplot(data[[\"NA_Sales\",\"EU_Sales\",\"JP_Sales\",\"Other_Sales\"]])"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject2_47",
+      "num": 47,
+      "difficulty": 3,
+      "question": "研究團隊想要知道在北美地區（NA）銷售成績最好的遊戲前五名，並希望\n以seaborn 的條狀圖呈現結果。請選出能正確完成這項分析的程式碼。\n\"NA_Sales\"))；\n\"NA_Sales\"))；\n使用銷售資料集(marketing.csv)進行迴歸分析，附圖程式碼展示資料載\n入與處理，請回答後續48~50 題。\n下圖顯示資料集的前5 筆資料與相關資訊。\n第二科：大數據處理分析與應用\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 16 頁，共 17 頁\n答\n案\n題目",
+      "options": {
+        "A": "sns.barplot(x=\"NA_Sales\", y=\"Name\", data=data.head(5))；",
+        "B": "sns.barplot(x=\"Name\", y=\"NA_Sales\", data=data.nlargest(5,",
+        "C": "sns.lineplot(x=\"Name\", y=\"NA_Sales\", data=data.nlargest(5,",
+        "D": "sns.countplot(x=\"Name\", y=\"NA_Sales\", data=data)"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject2_48",
+      "num": 48,
+      "difficulty": 3,
+      "question": "根據上述結果，下列何者正確？",
+      "options": {
+        "A": "資料集個數為199 筆，變數個數為4 個；",
+        "B": "sales 變數的中位數是16.827；",
+        "C": "facebook 變數的第三四分位數(Q3)是11.94；",
+        "D": "youtube 變數的第一四分位數(Q1)是89.25"
+      },
+      "answer": "D",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject2_49",
+      "num": 49,
+      "difficulty": 3,
+      "question": "參考下圖計算各變數的遺漏值(NaN)個數結果，下列何者正確？\n選項A: df.isnull().sum()\n選項B: df.isNaN().sum()\n選項C: df.isna().sum()\n選項D: df.isnan().sum()\n第二科：大數據處理分析與應用\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 17 頁，共 17 頁\n答\n案\n題目",
+      "options": {
+        "A": "選項D；",
+        "B": "選項B、選項C、選項D；",
+        "C": "選項A、選項C；",
+        "D": "選項A、選項B、選項C"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject2_50",
+      "num": 50,
+      "difficulty": 3,
+      "question": "考慮資料集已經填補遺漏值，參考下圖執行結果，下列何者正確？\nA：空格1 完整語法 reg = LinearRegression().fit(y, X)\nB：空格1 完整語法 reg = LinearRegression().fit(X, y)\nC：print(reg.coef_) 結果為包括截距項等4 個係數值\nD：空格2 完整語法 sm.OLS(X2, y).fit()\nE：model_sm 迴歸模型的所有迴歸係數在α=0.05 之下具有顯著的解釋力\nF：截距項係數值為3.5561\n《以下空白》",
+      "options": {
+        "A": "B、C、F",
+        "B": "B、F",
+        "C": "A、C、D、F",
+        "D": "B、E"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    }
+  ],
+  "subject3": [
+    {
+      "id": "subject3_1",
+      "num": 1,
+      "difficulty": 3,
+      "question": "某零售企業建立一個銷售預測模型，希望評估該模型在不同月份的新資料\n上，是否仍能維持穩定的預測表現。資料科學團隊計畫利用統計方法檢驗\n模型對未觀察資料的適應能力與泛化效果。下列哪一種方法最適合用於此\n目的？",
+      "options": {
+        "A": "F 檢定（F-test）；",
+        "B": "交叉驗證（Cross-Validation）；",
+        "C": "配對樣本t 檢定（Paired-sample t-test）；",
+        "D": "卡方檢定（Chi-square Test）"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_2",
+      "num": 2,
+      "difficulty": 3,
+      "question": "在建立迴歸或分類模型時，若希望避免模型過度擬合（Overfitting），可\n透過加入正則化項以限制模型的複雜度。其中，L1 正則化（Lasso）的主\n要效果為何？",
+      "options": {
+        "A": "增加模型參數的數量，以提升表現靈活度；",
+        "B": "強化梯度穩定性，避免參數更新過度震盪；",
+        "C": "產生稀疏模型（Sparse Model），使部分參數權重收斂為零；",
+        "D": "提高學習率（Learning Rate），加速模型收斂速度"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_3",
+      "num": 3,
+      "difficulty": 3,
+      "question": "在訓練非線性模型時，若目標函數為非凸函數（Non-convex Function），\n演算法在參數更新過程中可能出現多個極值點，導致最佳化結果不穩定。\n請問此時最可能發生下列哪一種情況？",
+      "options": {
+        "A": "梯度消失；",
+        "B": "資料過少；",
+        "C": "局部最優解；",
+        "D": "過擬合"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_4",
+      "num": 4,
+      "difficulty": 3,
+      "question": "在執行 DBSCAN（Density-Based Spatial Clustering of Applications\nwith Noise）群集分析時，若某資料點鄰域內的樣本數不足以形成核心點\n（Core Point），且該點未被任何核心點的鄰域所包含，也未與其他群集形\n成密度可達關係（Density Reachability），此資料點最終將被歸類為哪一\n種類型？",
+      "options": {
+        "A": "鄰近點（Neighbor Point）；",
+        "B": "雜訊點（Noise Point）；",
+        "C": "邊界點（Border Point）；",
+        "D": "潛在點（Potential Point）"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_5",
+      "num": 5,
+      "difficulty": 3,
+      "question": "某智慧製造公司開發一套影像辨識系統，用於自動檢測生產線上的瑕疵產\n品。系統採用卷積神經網路（Convolutional Neural Network, CNN）作為\n主要模型架構，其中第一層卷積層（Convolutional Layer）主要負責的功\n第三科：機器學習技術與應用\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 2 頁，共 19 頁\n答案\n題目\n能為下列何者？",
+      "options": {
+        "A": "自動提取輸入影像中的局部特徵；",
+        "B": "降低影像維度以加速運算效率；",
+        "C": "增加神經元與參數數量以提升模型容量；",
+        "D": "整合所有特徵並輸出最終分類結果"
+      },
+      "answer": "A",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_6",
+      "num": 6,
+      "difficulty": 3,
+      "question": "某智慧城市團隊開發一套交通監控系統，用於即時辨識路口監視器影像中\n的車輛與行人。團隊比較後發現，卷積神經網路（Convolutional Neural\nNetwork, CNN）在訓練與推論效率上，明顯優於傳統的全連接神經網路\n（Fully Connected Neural Network, FCNN）。請問下列何者為主要原因？\nSharing）機制，降低模型參數量與運算複雜度；",
+      "options": {
+        "A": "CNN 能自動學習影像的旋轉與比例不變性；",
+        "B": "CNN 可直接跳過人工特徵提取步驟進行分類；",
+        "C": "CNN 透過區域感知（Local Receptive Field）與參數共享（Parameter",
+        "D": "CNN 捨棄激勵函數（Activation Function），以加快運算速度"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_7",
+      "num": 7,
+      "difficulty": 3,
+      "question": "下列哪一種應用最適合採用長短期記憶網路（Long Short-Term Memory,\nLSTM）模型？",
+      "options": {
+        "A": "預測未來七天的電力需求變化趨勢；",
+        "B": "辨識監視影像中不同類別的物件；",
+        "C": "將大量顧客資料依相似特徵自動分群；",
+        "D": "將高維度的感測器資料壓縮成低維表示"
+      },
+      "answer": "A",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_8",
+      "num": 8,
+      "difficulty": 3,
+      "question": "資訊增益（Information Gain）常用於衡量特徵對分類結果的不確定性貢\n獻程度，並據以進行特徵選擇。此方法主要應用於下列哪一類模型架構\n中？\n路；",
+      "options": {
+        "A": "使用 L1 正則化進行特徵篩選的線性模型；",
+        "B": "利用激活函數（Activation Function）進行特徵擷取的深度神經網",
+        "C": "透過核函數（Kernel Function）將特徵映射至高維空間的分類模型；",
+        "D": "透過遞迴分裂方式建立分類規則的決策樹模型"
+      },
+      "answer": "D",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_9",
+      "num": 9,
+      "difficulty": 3,
+      "question": "在建構以距離為基礎的機器學習模型（如KNN、SVM）時，下列哪一項資料\n前處理方式最為關鍵？\n圍；\n第三科：機器學習技術與應用\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 3 頁，共 19 頁\n答案\n題目",
+      "options": {
+        "A": "進行特徵縮放（Feature Scaling），使各特徵變數具有相似的數值範",
+        "B": "將連續型特徵變數轉換為類別型變數；",
+        "C": "以平均值或中位數進行缺失值補齊；",
+        "D": "進行隨機抽樣以平衡資料筆數"
+      },
+      "answer": "A",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_10",
+      "num": 10,
+      "difficulty": 3,
+      "question": "下列哪一種應用情境最適合導入AutoML，以提升模型開發效率？\n程；\n與時間進行手動建模；\n工程與演算法細節",
+      "options": {
+        "A": "公司已有完整的MLOps 平台與資深資料科學團隊，模型更新採固定流",
+        "B": "製造部門的生產良率模型已長期穩定運作，只需定期調整參數；",
+        "C": "行銷部門希望在短時間內比較多種顧客流失預測模型，缺乏專職工程師",
+        "D": "財務部門正在開發高度客製化的信用風險評估模型，需要精細控制特徵"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_11",
+      "num": 11,
+      "difficulty": 3,
+      "question": "相較於Grid Search，Random Search 在超參數調整上具備哪一項主要優\n勢？",
+      "options": {
+        "A": "可自動產生模型架構；",
+        "B": "可使用更大的訓練集；",
+        "C": "避免模型過擬合；",
+        "D": "能更有效率搜尋高維參數空間"
+      },
+      "answer": "D",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_12",
+      "num": 12,
+      "difficulty": 3,
+      "question": "某智慧製造公司開發一套設備故障預測系統，利用感測器資料訓練深度神\n經網路（Deep Neural Network, DNN）模型，以提前偵測異常運作跡象。\n在訓練過程中，團隊發現模型收斂速度不穩定：有時過快導致過擬合，有\n時又遲遲無法達到最佳準確率。開發團隊可以藉由調整下列哪一項超參數\n（Hyperparameter）以改善此問題？",
+      "options": {
+        "A": "每個神經元的輸出結果；",
+        "B": "損失函數（Loss Function）在訓練過程中的梯度變化值（Gradient）；",
+        "C": "學習率（Learning Rate），控制模型權重更新的速度；",
+        "D": "模型在訓練後產生的權重值"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_13",
+      "num": 13,
+      "difficulty": 3,
+      "question": "標籤偏差(Label Bias)通常是因為什麼原因造成？",
+      "options": {
+        "A": "訓練資料量過大；",
+        "B": "標記資料本身帶有主觀偏見；",
+        "C": "模型結構設計不當；",
+        "D": "特徵數量設定過多"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_14",
+      "num": 14,
+      "difficulty": 3,
+      "question": "下列哪一種AI 應用情境中，模型的可解釋性（Explainability）最為關\n鍵？\n銷策略；\n第三科：機器學習技術與應用\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 4 頁，共 19 頁\n答案\n題目\n率；\n診斷依據；",
+      "options": {
+        "A": "電商平台利用深度學習模型預測用戶的下一次購買時間，以優化推播行",
+        "B": "新創公司使用機器學習演算法自動調整廣告出價策略，以提升點擊轉換",
+        "C": "醫院導入AI 模型分析病患影像並給出腫瘤惡性可能性，作為臨床醫師",
+        "D": "銀行導入AI 模型預測客戶流失率，並自動推薦留客優惠方案"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_15",
+      "num": 15,
+      "difficulty": 3,
+      "question": "在線性迴歸模型中，若R²值為0.85，其意義為何？",
+      "options": {
+        "A": "模型準確率為85%；",
+        "B": "85%的變異可被模型解釋；",
+        "C": "預測誤差為15%；",
+        "D": "模型有85%的信心水準"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_16",
+      "num": 16,
+      "difficulty": 3,
+      "question": "在二元分類問題中，若精確率（Precision）為0.8，召回率（Recall）為\n0.6，則F1 分數（F1 Score）為何？",
+      "options": {
+        "A": "0.686；",
+        "B": "0.700；",
+        "C": "0.720；",
+        "D": "0.750"
+      },
+      "answer": "A",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_17",
+      "num": 17,
+      "difficulty": 3,
+      "question": "下列哪一種優化演算法內建動量（Momentum）的設計機制？",
+      "options": {
+        "A": "SGD+Momentum；",
+        "B": "Adam；",
+        "C": "RMSProp；",
+        "D": "Adagrad"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_18",
+      "num": 18,
+      "difficulty": 3,
+      "question": "下列何者最能同時反映XGBoost（eXtreme Gradient Boosting）相較於傳\n統梯度提升決策樹（Gradient Boosting Decision Tree, GBDT）的主要技\n術改進？\n理與並行化訓練；",
+      "options": {
+        "A": "引入正則化項（Regularization）以抑制過擬合，並支援缺失值自動處",
+        "B": "改以隨機森林（Random Forest）架構取代樹模型以提升準確率；",
+        "C": "以類神經網路（Neural Network）取代弱分類器（Weak Learners）；",
+        "D": "採用批次正規化（Batch Normalization）技術提升模型穩定性"
+      },
+      "answer": "A",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_19",
+      "num": 19,
+      "difficulty": 3,
+      "question": "某醫療機構開發疾病早期偵測模型，正樣本（確診病例）僅佔 3%。在模型\n訓練與評估過程中，下列哪一種作法最不適合用於提升對少數類病例的預\n測能力？\n第三科：機器學習技術與應用\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 5 頁，共 19 頁\n答案\n題目",
+      "options": {
+        "A": "使用SMOTE 過採樣；",
+        "B": "調整類別權重；",
+        "C": "使用準確率（Accuracy）作為評估指標；",
+        "D": "欠採樣多數類(Undersampling the majority class)"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_20",
+      "num": 20,
+      "difficulty": 3,
+      "question": "某電子商務公司為開發商品評論情感分析模型，希望模型能捕捉評論中不\n同特徵之間的關聯影響，例如「商品價格」與「顧客滿意度」的互動效\n果。下列哪一種特徵工程設計方式最適合用於建立互動特徵（Interaction\nFeatures）？",
+      "options": {
+        "A": "將單一特徵取平方；",
+        "B": "對所有特徵進行對數轉換；",
+        "C": "將兩個或多個特徵進行乘積或交互組合；",
+        "D": "對特徵進行標準化"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_21",
+      "num": 21,
+      "difficulty": 3,
+      "question": "某語音辨識系統開發團隊採用 Transformer 架構，為了讓模型能同時理解\n語音片段中的發音特徵、語速變化與語意脈絡等多層次資訊，團隊在設計\n中導入了多頭注意力（Multi-head Attention）機制。請問下列何者為此\n機制的主要優點？\n資訊；",
+      "options": {
+        "A": "減少模型參數量以降低訓練成本；",
+        "B": "加速整體注意力計算過程；",
+        "C": "從不同表示子空間（Representation Subspaces）同時捕捉多樣化關聯",
+        "D": "避免梯度消失（Gradient Vanishing）問題"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_22",
+      "num": 22,
+      "difficulty": 3,
+      "question": "某電商平台希望預測顧客是否會購買特定商品。系統蒐集顧客的瀏覽紀\n錄、停留時間、商品類別偏好與過去購買行為，並以此推估「在觀察到這\n些行為特徵的情況下，該顧客會購買的機率」。若模型採用貝氏定理\n（Bayes’Theorem）進行推論，下列敘述何者最符合其核心運作機制？\n金額；\nLearning）動態調整推薦策略",
+      "options": {
+        "A": "根據歷史樣本自動分群，找出行為相似的顧客群；",
+        "B": "以條件機率方式計算顧客屬於「會購買」或「不會購買」的分類機率；",
+        "C": "以最小平方誤差（Mean Squared Error）為損失函數，預測顧客的購買",
+        "D": "依據回饋信號（Feedback Signal）透過強化學習（Reinforcement"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_23",
+      "num": 23,
+      "difficulty": 3,
+      "question": "一家再生能源公司希望預測未來三個月太陽能發電量的波動範圍。由於氣\n候條件具有高度隨機性，且輸入變數（如日照時數、雲量、溫度）之間存\n在不確定關係，工程團隊決定以隨機抽樣方式模擬多種可能情境，以估算\n整體發電量的機率分佈與風險區間。請問此時所採用的技術最符合下列哪\n一種方法？\n第三科：機器學習技術與應用\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 6 頁，共 19 頁\n答案\n題目",
+      "options": {
+        "A": "蒙地卡羅方法（Monte Carlo Method）；",
+        "B": "K-means 聚類（K-means Clustering）；",
+        "C": "支持向量迴歸（Support Vector Regression, SVR）；",
+        "D": "特徵選取（Feature Selection）"
+      },
+      "answer": "A",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_24",
+      "num": 24,
+      "difficulty": 3,
+      "question": "某房地產公司利用多元迴歸模型（Multiple Regression Model）預測房\n價，並繪製殘差圖（Residual Plot）檢查模型品質。結果顯示部分資料點\n的殘差極大，且在高價區樣本中出現系統性彎曲分佈現象。根據此觀察，\n下列何者為最可能的正確解釋？\n不足；",
+      "options": {
+        "A": "模型過度擬合（Overfitting），導致在訓練資料上表現過好、泛化能力",
+        "B": "模型特徵數量不足，導致欠擬合（Underfitting）；",
+        "C": "模型存在異常值（Outlier）或非線性關係，違反迴歸假設；",
+        "D": "殘差圖呈現隨機分佈，表示模型已完全符合所有假設"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_25",
+      "num": 25,
+      "difficulty": 3,
+      "question": "某金融機構正在建立傳統信用評分卡模型，採用邏輯迴歸（Logistic\nRegression）作為建模方法，並依循監理機關建議的標準化流程進行模型\n開發。下列哪一項不是傳統信用評分卡模型開發流程中的常見步驟？\n穩定性",
+      "options": {
+        "A": "使用生成式模型進行特徵學習；",
+        "B": "進行特徵選擇與多重共線性（Multicollinearity）分析；",
+        "C": "進行分箱（Binning）與資訊值（Information Value, IV）檢定；",
+        "D": "使用樣本穩定性指標（Population Stability Index, PSI）檢驗模型"
+      },
+      "answer": "A",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_26",
+      "num": 26,
+      "difficulty": 3,
+      "question": "在防止監督式學習模型過擬合（Overfitting）時，下列哪一種策略不屬於\n降低模型複雜度或限制學習能力的作法？",
+      "options": {
+        "A": "採用L1 或L2 正則化；",
+        "B": "在訓練過程中使用Dropout 技術；",
+        "C": "採取早期停止（Early Stopping）機制；",
+        "D": "擴增輸入特徵變數以提升模型表達能力"
+      },
+      "answer": "D",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_27",
+      "num": 27,
+      "difficulty": 3,
+      "question": "某智慧製造團隊在開發瑕疵影像檢測模型時，發現使用線性激活函數\n（Activation Function）後，模型的訓練準確率長期停滯，懷疑模型無法\n學習到足夠複雜的特徵表達。若要改善此問題，下列哪一項調整方案最為\n合適？\n取；\n第三科：機器學習技術與應用\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 7 頁，共 19 頁\n答案\n題目\n模型表達能力",
+      "options": {
+        "A": "增加卷積層（Convolutional Layer）數量，使網路更深以強化特徵提",
+        "B": "將輸入影像先進行灰階化處理，降低運算量；",
+        "C": "使用Sigmoid 激活函數，以將輸出壓縮至[0,1]範圍；",
+        "D": "改用ReLU（Rectified Linear Unit）激活函數，以引入非線性並提升"
+      },
+      "answer": "D",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_28",
+      "num": 28,
+      "difficulty": 3,
+      "question": "一家零售電商公司希望建立顧客流失預測模型，用以判斷哪些會員可能在\n三個月內不再消費。團隊以去年會員資料進行訓練，並僅採用「曾經購買\n三次以上」的活躍顧客紀錄作為樣本。模型上線後，對整體會員進行預測\n時，發現模型對於新註冊會員與低消費會員的預測準確率明顯偏低。下列\n何者為造成此現象最可能的原因？\n（Feature Bias）；",
+      "options": {
+        "A": "特徵設計未排除與會員忠誠度高度相關的變數，導致特徵偏差",
+        "B": "標記（Label）由人工標註，導致標籤偏差（Label Bias）；",
+        "C": "訓練樣本僅涵蓋高活躍顧客，造成取樣偏差（Sampling Bias）；",
+        "D": "模型未進行超參數調整，導致過擬合（Overfitting）"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_29",
+      "num": 29,
+      "difficulty": 3,
+      "question": "在工業設備故障預測專案中，模型訓練與超參數調整均依賴於一段歷史數\n據作為驗證集。然而，隨著設備運行環境與工況條件的變化，原有驗證集\n已無法充分反映現況，導致模型在實際部署後的預測準確率逐漸下降。下\n列哪一種策略最能有效提升模型在長期運行環境中的穩健性與泛化能力？\n化；\nStopping）控制訓練；\n驗證（Rolling Window Validation）方法，動態更新驗證資料以適應時間\n演進",
+      "options": {
+        "A": "固定驗證集內容，並透過模型正則化技巧（如 L2 正則化）強化模型泛",
+        "B": "將全部歷史資料納入訓練，不使用驗證集，依靠早期停止（Early",
+        "C": "簡化模型架構，減少模型參數數量以降低過擬合風險；",
+        "D": "採用時間序列交叉驗證（Time Series Cross Validation）或滑動視窗"
+      },
+      "answer": "D",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_30",
+      "num": 30,
+      "difficulty": 3,
+      "question": "某情感分析模型在英文資料集上取得macro F1-score = 0.91。當該模型\n部署於西班牙文資料集時，F1-score 驟降至0.58。下列哪一項解釋最合\n理，且與F1-score 變化相關？\n評估；\n彙；",
+      "options": {
+        "A": "macro F1-score 本身波動性高，建議改用 micro-average F1-score",
+        "B": "模型在西班牙文語料上過度擬合，導致評估結果偏高；",
+        "C": "語言轉移造成召回率（Recall）下降，模型無法正確辨識關鍵情緒詞",
+        "D": "以均方誤差（MSE）取代 F1-score 評估可獲得更準確的結果"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_31",
+      "num": 31,
+      "difficulty": 3,
+      "question": "某能源公司利用歷史氣象與用電資料，開發長期電力需求預測模型，採用\n第三科：機器學習技術與應用\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 8 頁，共 19 頁\n答案\n題目\n深度神經網路架構進行訓練。在訓練過程中，模型在訓練集上的損失值持\n續下降，但在驗證集上，損失在第80 輪後開始波動，呈現週期性上升與下\n降。團隊懷疑模型受到季節性資料波動與隨機噪音影響，導致驗證損失難\n以穩定收斂。若要在此情境下合理運用早期停止法（Early Stopping）以\n確保模型具最佳泛化能力，下列哪一項策略最為適當？\n後再停止訓練；",
+      "options": {
+        "A": "直接根據訓練集損失最低點停止訓練，以確保模型充分擬合所有樣本；",
+        "B": "監控驗證集損失並設定適度的耐心值（Patience），在連續多輪未改善",
+        "C": "改以測試集損失作為早停依據，以提升模型最終評估一致性；",
+        "D": "將所有資料重新合併後訓練至收斂，避免因資料分割導致評估波動"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_32",
+      "num": 32,
+      "difficulty": 3,
+      "question": "某電信公司開發客戶流失預測模型，使用大量顧客行為特徵，例如通話時\n長、上網頻率、帳單金額、客服聯絡次數等。在訓練過程中，團隊發現部\n分特徵彼此高度相關，但同時也懷疑有些特徵對流失預測的貢獻度有限。\n若希望模型在避免過擬合（Overfitting）的同時，能自動篩選出較具代表\n性的特徵，採用下列哪一種方法最為合適？\n（Overfitting）；\n收斂；",
+      "options": {
+        "A": "使用早期停止法（Early Stopping）控制訓練回合數，避免過擬合",
+        "B": "同時移除多重共線性特徵並採用L2 正則化（Ridge），以確保模型穩定",
+        "C": "僅使用L2 正則化（Ridge），抑制所有權重幅度但保留全部特徵；",
+        "D": "採用L1 正則化（Lasso），透過懲罰項使部分特徵係數縮為0"
+      },
+      "answer": "D",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_33",
+      "num": 33,
+      "difficulty": 3,
+      "question": "某資料科學團隊正在開發一個客戶相似度比對系統，用於計算所有客戶之\n間的相似度分數。若系統需逐一比對每一位客戶與其他所有客戶的資料組\n合，此時演算法的時間複雜度最可能為哪一種？其代表意義為何？",
+      "options": {
+        "A": "O(n) — 執行時間與資料量成線性關係；",
+        "B": "O(n²) — 執行時間與資料量平方成正比；",
+        "C": "O(1) — 執行時間固定不變；",
+        "D": "O(log n) — 執行時間與資料量呈對數成長關係"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_34",
+      "num": 34,
+      "difficulty": 3,
+      "question": "某醫療人工智慧團隊正在開發心臟病風險預測模型，資料量僅有150 筆，\n其中陽性個案不到8%。由於樣本數稀少且類別分布極不平衡，團隊希望在\n有限資料下，仍能準確評估模型在不同資料上的表現穩定性，同時避免訓\n練資料被過度切分而影響模型效能。若團隊希望在有限樣本下，同時兼顧\n資料的利用率與各類別在驗證折中的比例一致性，最適合採用下列哪一種\n交叉驗證方法？\n第三科：機器學習技術與應用\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 9 頁，共 19 頁\n答案\n題目\nValidation）",
+      "options": {
+        "A": "5-Fold 交叉驗證（5-Fold Cross Validation）；",
+        "B": "留一法交叉驗證（Leave-One-Out Cross Validation）；",
+        "C": "隨機交叉驗證（Random Cross Validation）；",
+        "D": "分層留一法交叉驗證（Stratified Leave-One-Out Cross"
+      },
+      "answer": "D",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_35",
+      "num": 35,
+      "difficulty": 3,
+      "question": "某公司針對製程感測器資料進行主成分分析（PCA），經標準化與協方差矩\n陣分解後，得到三個主成分的特徵值如下：λ1=6.0, λ2=3.0, λ3=1.0。\n若團隊決定僅保留能解釋至少 80% 總變異量的主成分，以進行後續模型建\n構，下列哪一項敘述最合理且數據解讀正確？\n保留大部分資訊；\n留一維即可避免過擬合；\n30%，不宜捨棄第三主成分；",
+      "options": {
+        "A": "前兩個主成分合計解釋90%的總變異量，因此可安全降維至二維，且仍",
+        "B": "第一主成分解釋60%的變異量，表示資料結構呈現明顯線性關係，僅保",
+        "C": "雖然前兩個主成分可解釋超過 80% 變異量，但第二主成分貢獻仍高達",
+        "D": "三個特徵值相差不大，顯示各主成分變異均衡，降維可能導致資訊損失"
+      },
+      "answer": "A",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_36",
+      "num": 36,
+      "difficulty": 3,
+      "question": "某銀行計畫與多家合作機構共同訓練一個AI 信用風險預測模型，為避免客\n戶交易資料在傳輸與運算過程中外洩，技術團隊評估使用同態加密\n（Homomorphic Encryption）技術。下列何者最能正確描述同態加密在此\n應用中的關鍵特性？",
+      "options": {
+        "A": "系統以隨機雜訊（Noise）干擾輸出，確保統計結果不洩漏個資；",
+        "B": "各參與銀行透過安全通道交換私鑰，確保模型參數一致；",
+        "C": "將原始資料壓縮並同時加密，以減少加密後資料量與運算時間；",
+        "D": "資料在加密狀態下仍可進行數值運算，模型訓練可於未解密資料上完成"
+      },
+      "answer": "D",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_37",
+      "num": 37,
+      "difficulty": 3,
+      "question": "某跨銀行風控平台希望整合多家銀行的用戶行為資料，用於訓練信用風險\n預測模型。由於競爭與法規限制，各銀行僅願意提供加密後資料，且資料\n在任何時間不得被平台解密。同時，平台需建立安全通訊協議以確保資料\n在傳輸過程未被竄改或重放。\n下列哪一組技術最能完整對應上述需求？\n非對稱加密（Asymmetric Encryption）＋ 差分隱私（Differential\nPrivacy）；\nEncryption）＋ 單向雜湊（ One-way Hash Function）＋ 對稱加密\n第三科：機器學習技術與應用\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 10 頁，共 19 頁\n答案\n題目\n（Symmetric Encryption）；\nEncryption）＋ 同態加密（Homomorphic Encryption）＋ 數位簽章\n（Digital Signature）；\nMulti-party Computation, MPC）＋ 雜湊函數（Hash Function）＋ 對稱\n加密（Symmetric Encryption）",
+      "options": {
+        "A": "對稱加密（Symmetric Encryption）＋ 單向雜湊（Hash Function）＋",
+        "B": "同態加密（Homomorphic Encryption）＋ 非對稱加密（Asymmetric",
+        "C": "差分隱私（Differential Privacy）＋ 對稱加密（Symmetric",
+        "D": "同態加密（Homomorphic Encryption）＋ 安全多方計算（Secure"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_38",
+      "num": 38,
+      "difficulty": 3,
+      "question": "附圖程式碼所計算的是哪一類型的評估指標？",
+      "options": {
+        "A": "MAE；(B)MSE；(C)RMSE；(D)R²",
+        "B": "",
+        "C": "",
+        "D": ""
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_39",
+      "num": 39,
+      "difficulty": 3,
+      "question": "附圖程式碼實現的是哪一種正則化技術？",
+      "options": {
+        "A": "L1 正則化；(B)L2 正則化；(C)Dropout；(D)Batch Normalization",
+        "B": "",
+        "C": "",
+        "D": ""
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_40",
+      "num": 40,
+      "difficulty": 3,
+      "question": "依據附圖程式碼進行資料處理，下列何者正確？",
+      "options": {
+        "A": "np.linalg.inv(A) 計算矩陣 A 的行列式；",
+        "B": "v1 * v2 結果為 array([5, 7, 9])；",
+        "C": "np.dot(v1, v2) 結果為 np.int64(32)；",
+        "D": "np.linalg.eig(A) 計算矩陣 A 的反矩陣"
+      },
+      "answer": "C",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_41",
+      "num": 41,
+      "difficulty": 3,
+      "question": "考慮擲出骰子並採用Monte Carlo 方法估算條件機率，參考附圖程式碼。\n第三科：機器學習技術與應用\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 11 頁，共 19 頁\n答案\n題目\n事件 A：擲出偶數\n事件 B：擲出大於3\n請問下列何者為條件機率P(A∣B)的正確值？\nVGG16 是由牛津大學 Visual Geometry Group(VGG)在2014 年提出的經典\n卷積神經網路（Convolutional Neural Network, CNN）架構。該模型以簡\n潔且規則的層堆疊設計聞名，廣泛應用於影像分類、特徵提取及遷移學習\n等任務。附圖程式碼載入了預訓練的VGG16 模型，並輸出其完整層級結構\n及參數統計摘要（如附表）。請根據此資訊回答42~45 題。\n----------------------------------------------------------------\nLayer (type)               Output Shape         Param #\n================================================================\nConv2d-1         [-1, 64, 150, 150]           1,792\nReLU-2         [-1, 64, 150, 150]               0\nConv2d-3         [-1, 64, 150, 150]          36,928\nReLU-4         [-1, 64, 150, 150]               0\nMaxPool2d-5           [-1, 64, 75, 75]               0\nConv2d-6          [-1, 128, 75, 75]          73,856\nReLU-7          [-1, 128, 75, 75]               0\nConv2d-8          [-1, 128, 75, 75]         147,584\n第三科：機器學習技術與應用\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 12 頁，共 19 頁\n答案\n題目\nReLU-9          [-1, 128, 75, 75]               0\nMaxPool2d-10          [-1, 128, 37, 37]               0\nConv2d-11          [-1, 256, 37, 37]         295,168\nReLU-12          [-1, 256, 37, 37]               0\nConv2d-13          [-1, 256, 37, 37]         590,080\nReLU-14          [-1, 256, 37, 37]               0\nConv2d-15          [-1, 256, 37, 37]         590,080\nReLU-16          [-1, 256, 37, 37]               0\nMaxPool2d-17          [-1, 256, 18, 18]               0\nConv2d-18          [-1, 512, 18, 18]       1,180,160\nReLU-19          [-1, 512, 18, 18]               0\nConv2d-20          [-1, 512, 18, 18]       2,359,808\nReLU-21          [-1, 512, 18, 18]               0\nConv2d-22          [-1, 512, 18, 18]       2,359,808\nReLU-23          [-1, 512, 18, 18]               0\nMaxPool2d-24            [-1, 512, 9, 9]               0\nConv2d-25            [-1, 512, 9, 9]       2,359,808\nReLU-26            [-1, 512, 9, 9]               0\nConv2d-27            [-1, 512, 9, 9]       2,359,808\nReLU-28            [-1, 512, 9, 9]               0\nConv2d-29            [-1, 512, 9, 9]       2,359,808\nReLU-30            [-1, 512, 9, 9]               0\nMaxPool2d-31            [-1, 512, 4, 4]               0\nAdaptiveAvgPool2d-32            [-1, 512, 7, 7]               0\nLinear-33                 [-1, 4096]     102,764,544\nReLU-34                 [-1, 4096]               0\nDropout-35                 [-1, 4096]               0\nLinear-36                 [-1, 4096]      16,781,312\nReLU-37                 [-1, 4096]               0\nDropout-38                 [-1, 4096]               0\nLinear-39                 [-1, 1000]       4,097,000\n================================================================\nTotal params: 138,357,544\nTrainable params: 138,357,544\nNon-trainable params: 0\n----------------------------------------------------------------\nInput size (MB): 0.26\n第三科：機器學習技術與應用\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 13 頁，共 19 頁\n答案\n題目\nForward/backward pass size (MB): 96.93\nParams size (MB): 527.79\nEstimated Total Size (MB): 624.98\n----------------------------------------------------------------",
+      "options": {
+        "A": "A_and_B.sum() / (A.sum() * B.sum())；",
+        "B": "A_and_B.sum() / (A.sum() + B.sum())；",
+        "C": "A_and_B.sum() / A.sum()；",
+        "D": "A_and_B.sum() / B.sum()"
+      },
+      "answer": "D",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_42",
+      "num": 42,
+      "difficulty": 3,
+      "question": "在深度神經網路中，不同層的參數量（parameter count）差異極大。有些\n層雖然數量少但計算量大，有些則相反。了解參數分佈情形，有助於模型\n壓縮與遷移學習設計。請問在VGG16 中，下列何者的參數量最多？",
+      "options": {
+        "A": "卷積層(Conv2d)；",
+        "B": "全連接層(Linear)；",
+        "C": "ReLU 激活函數；",
+        "D": "池化層(MaxPool2d, AdaptiveAvgPool2d)"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_43",
+      "num": 43,
+      "difficulty": 3,
+      "question": "在神經網路中，了解各層的運算量分佈，有助於模型壓縮與硬體加速的策\n略設計。請問在VGG16 中，下列何者運算量(FLOPs)最多？",
+      "options": {
+        "A": "卷積層(Conv2d)；",
+        "B": "全連接層(Linear)；",
+        "C": "ReLU 激活函數；",
+        "D": "池化層(MaxPool2d, AdaptiveAvgPool2d)"
+      },
+      "answer": "A",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_44",
+      "num": 44,
+      "difficulty": 3,
+      "question": "VGG16 層數深且結構規則，由多層卷積、池化及全連接層組成。了解各層\n的輸入/輸出維度、參數量及記憶體需求，有助於掌握CNN 模型的組成邏輯\n與實作技巧。根據VGG16 的模型架構，下列敘述何者正確？\n層池化輸出空間為 4×4，所以第一個線性層的輸入維度是 512×4×4 =\n8192；\n偏差（bias）沒有算在內；\n型只需大約625MB 的GPU 記憶體（包含所有optimizer state 與梯度），所\n以一張 1 GB 的GPU 就足夠訓練；\n約為 138,357,544（約138.36M）",
+      "options": {
+        "A": "AdaptiveAvgPool2d 的輸出會被攤平後傳入第一個全連接層；由於前一",
+        "B": "Linear-33（第一個全連接層）報出的102,764,544 參數只包含權重，",
+        "C": "根據列出的「Estimated Total Size (MB) = 624.98」，表示訓練此模",
+        "D": "VGG16 包含13 層卷積層（conv）與3 層全連接層（FC），總參數數目"
+      },
+      "answer": "D",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_45",
+      "num": 45,
+      "difficulty": 3,
+      "question": "在實務應用中，我們常使用遷移學習(transfer learning)技巧，即載入預\n訓練模型（如VGG16），凍結部分層的參數，只針對特定任務重新訓練最後\n幾層，這種做法可節省訓練時間並提升模型效能。假設你要對VGG16 進行\n遷移學習(transfer learning)，希望凍結卷積層的參數，只訓練最後全連\n第三科：機器學習技術與應用\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 14 頁，共 19 頁\n答案\n題目\n接層(classifier)。下列哪段程式碼寫法正確？\n;\n;\n;\n在郵遞區號自動辨識的研究中，研究人員收集了一份手寫數字影像資料\n集，每一張影像為8×8 的灰階圖片，共包含多個手寫數字樣本。這份資料\n集來自UCI Machine Learning Repository，常被用於數字辨識與機器學\n習方法的教學與實驗。\n在過程中，研究人員發現資料中可能存在雜訊，例如筆跡模糊或影像中附\n加的干擾點，這會影響後續分類模型的效能。因此，他們希望透過資料降\n噪的方法，提升後續分類的準確度。同時，他們也想透過 KNN (K-Nearest\nNeighbors) 搭配交叉驗證來評估模型表現，確保模型在不同資料切割下都\n能有穩定的預測能力。\n部分樣本經繪製後的外觀如下圖所示：\n第三科：機器學習技術與應用\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 15 頁，共 19 頁\n答案\n題目\n根據這份資料來回答46~47 題。",
+      "options": {
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": ""
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_46",
+      "num": 46,
+      "difficulty": 3,
+      "question": "假設研究人員已將含有雜訊的手寫數字影像存放在變數noisy 中。部分資\n料經視覺化後的外觀如下：\n他們嘗試使用PCA 進行降噪，並希望能保留影像的主要特徵，同時去除影\n像中的雜訊。然而，當程式執行後，觀察到影像仍然含有明顯的雜訊。研\n究人員懷疑是程式中某個步驟的設定不正確，導致PCA 沒有發揮降噪的作\n用，需要修改程式碼才能讓降噪有效。請問哪一段程式碼需要修改，才能\n讓PCA 對noisy 影像有效去噪？",
+      "options": {
+        "A": "程式碼A；",
+        "B": "程式碼B；",
+        "C": "程式碼C；",
+        "D": "程式碼D"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    },
+    {
+      "id": "subject3_47",
+      "num": 47,
+      "difficulty": 3,
+      "question": "研究人員在對digits 資料集進行分類時，決定使用KNN 並搭配交叉驗證來\n評估模型準確率。他們撰寫了四組不同的程式碼來進行KNN 訓練與交叉驗\n證，但不確定哪幾組程式碼能正確執行並輸出準確率。每組程式碼在資料\n切割、模型訓練、交叉驗證函數的使用上略有差異，研究人員希望找出可\n以正確完成任務的程式碼組合，以確保模型評估的可靠性。\n第三科：機器學習技術與應用\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 16 頁，共 19 頁\n答案\n題目\n請問哪幾組程式碼能正確使用KNN 搭配交叉驗證，對digits 資料集進行訓\n練並輸出準確率？\n使用鐵達尼號(Titanic)資料集進行多層感知機(Multilayer Perceptron,\nMLP)分類預測分析，其中survived 為反應變數(1 表示存活，0 表示死\n亡)。附圖程式碼展示資料載入與處理，請根據此資料回答第48~50 題。\n下圖顯示資料集的前5 筆資料。\n第三科：機器學習技術與應用\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 17 頁，共 19 頁\n答案\n題目\nＣ\n48. 參考下圖程式碼，下列何者正確？\nA：X_train -= X_train.mean(axis=0) 將每個訓練集特徵的平均值調整為\n0\nB：X_train /= X_train.std(axis=0) 將每個訓練集特徵的標準差調整為\n0\nC：X_train 處理結果會將資料壓縮到 0 和 1 之間\nD：標準化結果防止梯度爆炸或消失\nE：標準化是屬於特徵選擇(Feature Selection)方法\nF：X_train 程式碼應修正為 X_train = X_train.std(axis=0), X_test\n程式碼應修正為 X_test = X_test.std(axis=0)\n第三科：機器學習技術與應用\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 18 頁，共 19 頁\n答案\n題目\nＣ\n49. 參考下圖執行結果，下列何者正確？\n；\nＣ\n50. 參考下圖執行結果，下列何者正確？\n第三科：機器學習技術與應用\n考試日期：114 年11 月08 日 試題公告日期：114 年11 月20 日\n第 19 頁，共 19 頁\n答案\n題目\nA：空格1 須填入 \"b-\"\nB：空格2 須填入 \"b--\"\nC：空格1 須填入 \"r-\"\nD：空格2 須填入 \"r--\"\nE：驗證損失明顯較訓練損失減少更明顯\n《以下空白》",
+      "options": {
+        "A": "B、C；",
+        "B": "A、C、D；",
+        "C": "A、D；",
+        "D": "C、D、E"
+      },
+      "answer": "B",
+      "explanation": "本題為 114 年第二次中級能力鑑定歷屆試題公告考題。"
+    }
+  ],
+  "mock_questions": [
+    {
+      "id": "mock_1",
+      "num": 1,
+      "difficulty": 3,
+      "question": "Transformer 架構中，多頭注意力（Multi-Head Attention）主要功能是？",
+      "options": {
+        "A": "增加模型深度",
+        "B": "並行捕捉不同子空間的關聯",
+        "C": "減少參數數量",
+        "D": "合成圖像特徵"
+      },
+      "answer": "B",
+      "explanation": "Multi-Head Attention 可讓模型從不同表示子空間學習注意力，有助於捕捉語義多\n樣性。"
+    },
+    {
+      "id": "mock_2",
+      "num": 2,
+      "difficulty": 1,
+      "question": "在 NLP 中，最常見的句子斷詞前處理步驟為何？",
+      "options": {
+        "A": "模型訓練",
+        "B": "分詞（Tokenization）",
+        "C": "梯度下降",
+        "D": "卷積操作"
+      },
+      "answer": "B",
+      "explanation": "Tokenization 是 NLP 最基本的前處理步驟之一，將句子拆解為詞或子詞單位。"
+    },
+    {
+      "id": "mock_3",
+      "num": 3,
+      "difficulty": 2,
+      "question": "BERT 在預訓練中使用的兩個任務包括 MLM 及哪一項？",
+      "options": {
+        "A": "詞性標註",
+        "B": "序列標註",
+        "C": "下一句預測（NSP）",
+        "D": "注意力選擇"
+      },
+      "answer": "C",
+      "explanation": "BERT 使用 MLM（Masked Language Model）與 NSP（Next Sentence\nPrediction）進行語言建模。"
+    },
+    {
+      "id": "mock_4",
+      "num": 4,
+      "difficulty": 4,
+      "question": "以下哪一項為 ViT（Vision Transformer）架構中的特點？",
+      "options": {
+        "A": "使用 LSTM 處理圖像",
+        "B": "將圖像分割成 patch 作為 token",
+        "C": "採用卷積層提取特徵",
+        "D": "預先使用 GAN 擴增資料"
+      },
+      "answer": "B",
+      "explanation": "ViT 將圖像切分為 patch，視為 token 餵入 Transformer 架構進行圖像辨識。"
+    },
+    {
+      "id": "mock_5",
+      "num": 5,
+      "difficulty": 1,
+      "question": "下列哪一個是 YOLO 模型的主要應用？",
+      "options": {
+        "A": "物件偵測",
+        "B": "聲音合成",
+        "C": "句法分析",
+        "D": "語音辨識"
+      },
+      "answer": "A",
+      "explanation": "YOLO（You Only Look Once）為即時物件偵測模型，可同時進行分類與定位。"
+    },
+    {
+      "id": "mock_6",
+      "num": 6,
+      "difficulty": 3,
+      "question": "卷積神經網路（CNN）中，主要用來進行特徵降維的層為何？",
+      "options": {
+        "A": "捲積層",
+        "B": "掩蔽層",
+        "C": "池化層",
+        "D": "解碼層"
+      },
+      "answer": "C",
+      "explanation": "池化層（Pooling Layer）用來降低特徵圖維度，減少運算量並擷取主要特徵。"
+    },
+    {
+      "id": "mock_7",
+      "num": 7,
+      "difficulty": 2,
+      "question": "Word2Vec 模型中，CBOW 架構的目標是？",
+      "options": {
+        "A": "根據上下文預測中心詞",
+        "B": "根據中心詞預測上下文",
+        "C": "將詞嵌入成二值向量",
+        "D": "分析詞頻"
+      },
+      "answer": "A",
+      "explanation": "CBOW（Continuous Bag of Words）利用上下文資訊來預測中心詞，是\nWord2Vec 架構之一。"
+    },
+    {
+      "id": "mock_8",
+      "num": 8,
+      "difficulty": 5,
+      "question": "在多模態模型中，若需同時處理圖像與文本資訊，以下哪一模型最合適？",
+      "options": {
+        "A": "GPT",
+        "B": "ResNet",
+        "C": "BLIP",
+        "D": "BPE"
+      },
+      "answer": "C",
+      "explanation": "BLIP（Bootstrapped Language Image Pretraining）是一種融合圖像與文本的多\n模態預訓練架構。"
+    },
+    {
+      "id": "mock_9",
+      "num": 9,
+      "difficulty": 1,
+      "question": "下列何者為 CNN 常見應用？",
+      "options": {
+        "A": "機器翻譯",
+        "B": "文本生成",
+        "C": "圖像分類",
+        "D": "情感分析"
+      },
+      "answer": "C",
+      "explanation": "CNN 專長於擷取空間特徵，常應用於圖像分類、辨識等視覺任務。"
+    },
+    {
+      "id": "mock_10",
+      "num": 10,
+      "difficulty": 2,
+      "question": "自注意力（Self-Attention）機制的輸出與輸入長度關係為何？",
+      "options": {
+        "A": "輸出長度固定為 1",
+        "B": "只與最大權重有關",
+        "C": "輸出長度與輸入相同",
+        "D": "不固定"
+      },
+      "answer": "C",
+      "explanation": "自注意力保留每個位置的輸入資訊，因此輸出與輸入長度相同。"
+    },
+    {
+      "id": "mock_11",
+      "num": 11,
+      "difficulty": 1,
+      "question": "自然語言處理中，「詞嵌入（Word Embedding）」的主要目的為何？",
+      "options": {
+        "A": "建立語法樹結構",
+        "B": "將文字轉換為稠密向量",
+        "C": "刪除停用詞",
+        "D": "執行主成分分析"
+      },
+      "answer": "B",
+      "explanation": "詞嵌入技術（如 Word2Vec）將文字轉為向量形式，使模型能進行語意運算。"
+    },
+    {
+      "id": "mock_12",
+      "num": 12,
+      "difficulty": 2,
+      "question": "YOLO 模型的一大特點為何？",
+      "options": {
+        "A": "後處理階段才偵測框",
+        "B": "採用兩階段偵測流程",
+        "C": "直接回歸分類與邊界框",
+        "D": "僅能處理靜態圖像"
+      },
+      "answer": "C",
+      "explanation": "YOLO 是一階段（single-shot）偵測模型，將邊界框與分類同時預測，速度快。"
+    },
+    {
+      "id": "mock_13",
+      "num": 13,
+      "difficulty": 4,
+      "question": "ViT 模型在處理圖像資訊時，缺乏卷積結構會造成什麼挑戰？",
+      "options": {
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_14",
+      "num": 14,
+      "difficulty": 3,
+      "question": "在 NLP 領域，「句向量（Sentence Embedding）」與「詞向量（Word Embedding）」的主\n要差異在於？",
+      "options": {
+        "A": "長度不同",
+        "B": "是否可用於圖像任務",
+        "C": "表示單詞 vs. 表示語句整體語意",
+        "D": "是否包含卷積運算"
+      },
+      "answer": "C",
+      "explanation": "詞向量表示個別詞彙語意，句向量（如 BERT embedding）則表示整句語意上下文\n整合。"
+    },
+    {
+      "id": "mock_15",
+      "num": 15,
+      "difficulty": 1,
+      "question": "自然語言處理中，「停用詞（Stop Words）」通常是指？",
+      "options": {
+        "A": "需特別標註的重要名詞",
+        "B": "無法分詞的英文縮寫",
+        "C": "對語意貢獻較少的常用詞",
+        "D": "被模型排除的稀有詞"
+      },
+      "answer": "C",
+      "explanation": "停用詞為如「的」「是」「了」等常見但無語意貢獻的詞，常在前處理時去除。"
+    },
+    {
+      "id": "mock_16",
+      "num": 16,
+      "difficulty": 3,
+      "question": "下列何者為圖像分類任務中常見的預訓練模型？",
+      "options": {
+        "A": "GPT",
+        "B": "ResNet",
+        "C": "T5",
+        "D": "BERT"
+      },
+      "answer": "B",
+      "explanation": "ResNet（殘差網路）是深度卷積網路，用於圖像分類與特徵擷取，有效解決梯度消\n失。"
+    },
+    {
+      "id": "mock_17",
+      "num": 17,
+      "difficulty": 5,
+      "question": "下列哪一項屬於「跨模態檢索」任務？",
+      "options": {
+        "A": "用英文描述生成英文摘要",
+        "B": "用圖像查找圖像",
+        "C": "用圖像查找描述圖文匹配的句子",
+        "D": "用語音辨識翻譯語音內容"
+      },
+      "answer": "C",
+      "explanation": "跨模態檢索指用一種模態（如圖像）查找另一模態（如文字）的對應內容，應用於\n圖文對齊。"
+    },
+    {
+      "id": "mock_18",
+      "num": 18,
+      "difficulty": 1,
+      "question": "RNN 模型的主要限制為何？",
+      "options": {
+        "A": "無法處理分類任務",
+        "B": "計算複雜度高",
+        "C": "容易發生梯度消失或爆炸",
+        "D": "無法處理長句"
+      },
+      "answer": "C",
+      "explanation": "RNN 雖能處理序列，但長序列下容易出現梯度消失或爆炸，LSTM 為其改良型。"
+    },
+    {
+      "id": "mock_19",
+      "num": 19,
+      "difficulty": 2,
+      "question": "下列關於 BERT 的描述何者正確？",
+      "options": {
+        "A": "採用單向上下文語意建模",
+        "B": "用於物件辨識",
+        "C": "使用 Encoder-Only 結構",
+        "D": "適合用於圖像特徵擷取"
+      },
+      "answer": "C",
+      "explanation": "BERT 採用 Transformer Encoder 架構，進行雙向語意理解，用於多種 NLP 任\n務。"
+    },
+    {
+      "id": "mock_20",
+      "num": 20,
+      "difficulty": 3,
+      "question": "在 CV 中，FPN（Feature Pyramid Network）的主要目的是？",
+      "options": {
+        "A": "增強圖像分辨率",
+        "B": "建立金字塔型多層特徵融合",
+        "C": "降低特徵冗餘",
+        "D": "做目標追蹤"
+      },
+      "answer": "B",
+      "explanation": "FPN 是多尺度特徵融合技術，可提升模型對小物件與不同尺寸物件的偵測能力。"
+    },
+    {
+      "id": "mock_21",
+      "num": 21,
+      "difficulty": 1,
+      "question": "在 NLP 領域中，哪一種模型最常用於實現「自動摘要」功能？",
+      "options": {
+        "A": "YOLOv5",
+        "B": "Seq2Seq",
+        "C": "K-means",
+        "D": "ResNet-50"
+      },
+      "answer": "B",
+      "explanation": "自動摘要屬於序列到序列的任務，Seq2Seq 架構（含注意力機制）是處理此類任務\n的常見方法。"
+    },
+    {
+      "id": "mock_22",
+      "num": 22,
+      "difficulty": 2,
+      "question": "在 Vision Transformer 架構中，圖像 patch 的處理方式為何？",
+      "options": {
+        "A": "每個 patch 對應一個卷積核輸出",
+        "B": "每個 patch 編碼為 token 後加入位置編碼",
+        "C": "patch 預先經過 pooling 再分類",
+        "D": "patch 僅提取邊緣特徵"
+      },
+      "answer": "B",
+      "explanation": "ViT 將圖像分割為固定大小 patch，經線性投影後加入位置編碼，再送入\nTransformer。"
+    },
+    {
+      "id": "mock_23",
+      "num": 23,
+      "difficulty": 3,
+      "question": "以下哪個 NLP 任務最適合使用 T5（Text-to-Text Transfer Transformer）模型？",
+      "options": {
+        "A": "物件偵測",
+        "B": "語者辨識",
+        "C": "文本分類與生成整合任務",
+        "D": "深度圖像生成"
+      },
+      "answer": "C",
+      "explanation": "T5 將所有 NLP 任務統一為文字轉文字格式（Text-to-Text），適用於翻譯、摘要、\n問答、分類等。"
+    },
+    {
+      "id": "mock_24",
+      "num": 24,
+      "difficulty": 4,
+      "question": "下列哪一項屬於「Zero-Shot Learning」在 NLP 中的應用場景？",
+      "options": {
+        "A": "使用已知類別資料進行分類",
+        "B": "在未知任務上使用已訓練模型進行推論",
+        "C": "對影像進行語意分割",
+        "D": "使用語音資料訓練語言模型"
+      },
+      "answer": "B",
+      "explanation": "Zero-Shot Learning 指模型未經任務特訓即可推論，如使用GPT 直接進行情感判"
+    },
+    {
+      "id": "mock_25",
+      "num": 25,
+      "difficulty": 1,
+      "question": "下列哪一項是深度學習模型訓練中常見的優化演算法？",
+      "options": {
+        "A": "梯度下降法（SGD）",
+        "B": "邏輯斯回歸",
+        "C": "支持向量機",
+        "D": "隨機森林"
+      },
+      "answer": "A",
+      "explanation": "SGD 是訓練神經網路常用的優化演算法，更新權重以最小化損失函數。"
+    },
+    {
+      "id": "mock_26",
+      "num": 26,
+      "difficulty": 3,
+      "question": "什麼是 Attention Score 在 NLP 中的功能？",
+      "options": {
+        "A": "產生句子的主題標籤",
+        "B": "決定詞與詞之間的相關程度",
+        "C": "判斷圖片中物體位置",
+        "D": "壓縮高維度特徵向量"
+      },
+      "answer": "B",
+      "explanation": "Attention Score 是衡量詞與詞間依賴關係的分數，幫助模型聚焦於重要語境。"
+    },
+    {
+      "id": "mock_27",
+      "num": 27,
+      "difficulty": 4,
+      "question": "GAN（生成對抗網路）在電腦視覺應用中的一大挑戰為何？",
+      "options": {
+        "A": "僅可用於監督式學習",
+        "B": "缺乏訓練資料",
+        "C": "訓練過程中生成器與判別器不易收斂平衡",
+        "D": "無法用於合成影像"
+      },
+      "answer": "C",
+      "explanation": "GAN 由兩個網路博弈訓練，若一方過強會導致學習失衡，收斂困難是實務應用難\n題。"
+    },
+    {
+      "id": "mock_28",
+      "num": 28,
+      "difficulty": 2,
+      "question": "哪一項屬於深度學習模型中的正則化技術，可避免過度擬合？",
+      "options": {
+        "A": "ReLU 激勵函數",
+        "B": "Dropout",
+        "C": "Batch Normalization",
+        "D": "MaxPooling"
+      },
+      "answer": "B",
+      "explanation": "Dropout 隨機忽略部分神經元，有效防止模型對特定特徵過度依賴，改善過擬合。"
+    },
+    {
+      "id": "mock_29",
+      "num": 29,
+      "difficulty": 5,
+      "question": "在多語言 NLP 模型中，XLM-R 的主要優勢為何？",
+      "options": {
+        "A": "僅支援英文語料",
+        "B": "僅進行圖像翻譯",
+        "C": "可處理百種語言並保持語言無關表徵",
+        "D": "專為單語預訓練設計"
+      },
+      "answer": "C",
+      "explanation": "XLM-R 是基於 RoBERTa 訓練的多語言模型，具備跨語言泛化能力，支援超過\n100 種語言。"
+    },
+    {
+      "id": "mock_30",
+      "num": 30,
+      "difficulty": 1,
+      "question": "哪一項是卷積神經網路中「捲積層」的核心目的？",
+      "options": {
+        "A": "對數據進行分類",
+        "B": "壓縮模型參數",
+        "C": "擷取局部特徵如邊緣與角落",
+        "D": "執行標準化處理"
+      },
+      "answer": "C",
+      "explanation": "捲積層透過濾波器滑動，擷取局部空間特徵，為 CNN 核心功能之一。"
+    },
+    {
+      "id": "mock_31",
+      "num": 31,
+      "difficulty": 2,
+      "question": "以下哪種詞嵌入技術可將子詞（subword）資訊納入語意表示？",
+      "options": {
+        "A": "One-Hot",
+        "B": "GloVe",
+        "C": "FastText",
+        "D": "Bag of Words"
+      },
+      "answer": "C",
+      "explanation": "FastText 除了詞彙向量外，也考慮子詞資訊，有助於處理未登入詞與語形變化。"
+    },
+    {
+      "id": "mock_32",
+      "num": 32,
+      "difficulty": 3,
+      "question": "下列哪一項是計算注意力權重（attention weights）所需的基本元素？",
+      "options": {
+        "A": "訓練集標籤",
+        "B": "梯度方向",
+        "C": "Query、Key、Value 向量",
+        "D": "損失函數"
+      },
+      "answer": "C",
+      "explanation": "Transformer 中的注意力機制使用 Query、Key、Value 三組向量計算注意力分數\n與加權輸出。"
+    },
+    {
+      "id": "mock_33",
+      "num": 33,
+      "difficulty": 1,
+      "question": "哪一個詞彙與「命名實體辨識（NER）」任務最密切相關？",
+      "options": {
+        "A": "邊界框",
+        "B": "文字摘要",
+        "C": "實體類別標註",
+        "D": "語音轉文字"
+      },
+      "answer": "C",
+      "explanation": "NER 目的是找出文字中具代表性的實體（如人名、地名）並標註其類別，是 NLP\n的關鍵任務之一。"
+    },
+    {
+      "id": "mock_34",
+      "num": 34,
+      "difficulty": 4,
+      "question": "下列關於 Text-to-Image 生成模型（如 DALL·E）的描述何者正確？",
+      "options": {
+        "A": "輸入為影像，輸出為文字摘要",
+        "B": "是一種純卷積網路",
+        "C": "輸入描述性文字，輸出對應圖像",
+        "D": "僅能用於圖像分類任務"
+      },
+      "answer": "C",
+      "explanation": "Text-to-Image 模型以自然語言描述為輸入，產生語意一致的圖像，是生成式多模\n態任務之一。"
+    },
+    {
+      "id": "mock_35",
+      "num": 35,
+      "difficulty": 3,
+      "question": "哪一個深度學習架構最適合用於序列到序列（Seq2Seq）語言翻譯任務？",
+      "options": {
+        "A": "CNN + Pooling",
+        "B": "RNN + Attention",
+        "C": "GAN + ResNet",
+        "D": "VGG + Fully Connected Layer"
+      },
+      "answer": "B",
+      "explanation": "Seq2Seq 任務如翻譯通常由 Encoder-Decoder 架構實現，RNN 搭配 Attention\n可有效處理長序列依賴。"
+    },
+    {
+      "id": "mock_36",
+      "num": 36,
+      "difficulty": 1,
+      "question": "下列哪一個模型不是基於 Transformer 架構？",
+      "options": {
+        "A": "BERT",
+        "B": "GPT",
+        "C": "YOLO",
+        "D": "T5"
+      },
+      "answer": "C",
+      "explanation": "YOLO 屬於電腦視覺領域，為物件偵測架構，並非基於 Transformer 設計。"
+    },
+    {
+      "id": "mock_37",
+      "num": 37,
+      "difficulty": 5,
+      "question": "CLIP 模型主要應用於何種任務？",
+      "options": {
+        "A": "對比式學習結合圖像與文字進行對齊",
+        "B": "翻譯句子成多國語言",
+        "C": "預測時間序列金融資料",
+        "D": "檢測圖片中的異常像素"
+      },
+      "answer": "A",
+      "explanation": "CLIP 將圖像與文字對映到同一語意空間中，透過對比學習實現圖文檢索與分類等任\n務。"
+    },
+    {
+      "id": "mock_38",
+      "num": 38,
+      "difficulty": 2,
+      "question": "下列哪一技術有助於提升小樣本圖像分類任務的效能？",
+      "options": {
+        "A": "強化學習",
+        "B": "Transfer Learning（遷移學習）",
+        "C": "自注意力機制",
+        "D": "多重回歸分析"
+      },
+      "answer": "B",
+      "explanation": "遷移學習可利用大型資料集預訓練的知識，轉移到小樣本任務中，減少資料需求。"
+    },
+    {
+      "id": "mock_39",
+      "num": 39,
+      "difficulty": 3,
+      "question": "RAG（Retrieval-Augmented Generation）架構整合哪兩項核心技術？",
+      "options": {
+        "A": "卷積與編碼器",
+        "B": "生成模型與資訊擷取",
+        "C": "篩選器與判別器",
+        "D": "區塊鏈與圖神經網路"
+      },
+      "answer": "B",
+      "explanation": "RAG 模型結合檢索與生成架構，先檢索相關知識文本，再進行回答生成，提升回應\n準確性。"
+    },
+    {
+      "id": "mock_40",
+      "num": 40,
+      "difficulty": 4,
+      "question": "什麼是 Vision-Language Pretraining（VLP）的主要目標？",
+      "options": {
+        "A": "讓語音能夠驅動圖像生成",
+        "B": "以多模態資料共同訓練模型理解圖文關聯",
+        "C": "分離圖像與文字的學習管道",
+        "D": "減少訓練時間的蒸餾技術"
+      },
+      "answer": "B",
+      "explanation": "VLP 是多模態預訓練方法，使模型具備同時理解圖像與語言的能力，支援 VQA、\n圖文檢索等應用。"
+    },
+    {
+      "id": "mock_41",
+      "num": 41,
+      "difficulty": 1,
+      "question": "哪一種常見的 NLP 前處理技術用於消除相似詞的字形差異？",
+      "options": {
+        "A": "Tokenization",
+        "B": "Lemmatization",
+        "C": "Padding",
+        "D": "Sampling"
+      },
+      "answer": "B",
+      "explanation": "Lemmatization 將不同型態的詞還原為詞根，有助於降低詞彙維度並保留語意。"
+    },
+    {
+      "id": "mock_42",
+      "num": 42,
+      "difficulty": 3,
+      "question": "哪一種電腦視覺任務的輸出是每個像素的分類標籤？",
+      "options": {
+        "A": "影像分類",
+        "B": "物件偵測",
+        "C": "語意分割（Semantic Segmentation）",
+        "D": "關鍵點偵測"
+      },
+      "answer": "C",
+      "explanation": "語意分割將圖像中每個像素分配至對應的語意類別，如人、車、道路等。"
+    },
+    {
+      "id": "mock_43",
+      "num": 43,
+      "difficulty": 4,
+      "question": "Text-to-Image 模型訓練時常用哪種方法提升語意一致性？",
+      "options": {
+        "A": "Autoencoder 壓縮圖像",
+        "B": "將語音標註轉為文字",
+        "C": "對比學習（Contrastive Learning）對齊圖文",
+        "D": "K-means 分群文字"
+      },
+      "answer": "C",
+      "explanation": "對比學習能將配對圖文拉近向量距離、非配對拉遠，有助模型學習語意對齊關係。"
+    },
+    {
+      "id": "mock_44",
+      "num": 44,
+      "difficulty": 2,
+      "question": "哪一個機制在 Transformer 中實現不同詞與上下文的交互關係？",
+      "options": {
+        "A": "Convolution",
+        "B": "Recurrent Loop",
+        "C": "Self-Attention",
+        "D": "Max Pooling"
+      },
+      "answer": "C",
+      "explanation": "Self-Attention 是 Transformer 核心，可計算每個詞對序列中其他詞的重要性，\n捕捉語意。"
+    },
+    {
+      "id": "mock_45",
+      "num": 45,
+      "difficulty": 5,
+      "question": "以下哪個多模態 AI 架構使用「視覺問答（VQA）」任務作為訓練目標？",
+      "options": {
+        "A": "StyleGAN",
+        "B": "Whisper",
+        "C": "Flamingo",
+        "D": "VGG"
+      },
+      "answer": "C",
+      "explanation": "DeepMind 的 Flamingo 是能進行視覺問答的多模態模型，整合圖像與文字處理\n能力。"
+    },
+    {
+      "id": "mock_46",
+      "num": 46,
+      "difficulty": 3,
+      "question": "在自回歸語言模型（如 GPT）中，下列哪一項為生成新字詞的依據？",
+      "options": {
+        "A": "預訓練分類器",
+        "B": "條件概率與 softmax 機率分布",
+        "C": "卷積核視窗大小",
+        "D": "時序強化學習"
+      },
+      "answer": "B",
+      "explanation": "GPT 類模型透過 softmax 將條件概率分佈轉為詞彙選擇依據，逐步生成文字。"
+    },
+    {
+      "id": "mock_47",
+      "num": 47,
+      "difficulty": 1,
+      "question": "在計算 NLP 任務時常見的指標「BLEU」是用於評估什麼？",
+      "options": {
+        "A": "模型參數量",
+        "B": "向量內積",
+        "C": "自然語言生成品質",
+        "D": "語音辨識錯誤率"
+      },
+      "answer": "C",
+      "explanation": "BLEU（Bilingual Evaluation Understudy）是自動化指標，用來評估機器翻譯或摘\n要的品質。"
+    },
+    {
+      "id": "mock_48",
+      "num": 48,
+      "difficulty": 2,
+      "question": "下列哪一種常見手法能提升影像資料集多樣性？",
+      "options": {
+        "A": "Text Clustering",
+        "B": "Data Augmentation",
+        "C": "Weight Decay",
+        "D": "Normalization"
+      },
+      "answer": "B",
+      "explanation": "資料擴增（Data Augmentation）利用旋轉、裁切、翻轉等方法生成更多樣的訓練\n樣本。"
+    },
+    {
+      "id": "mock_49",
+      "num": 49,
+      "difficulty": 4,
+      "question": "Prompt Engineering 在 NLP 模型中的角色為何？",
+      "options": {
+        "A": "調整模型參數",
+        "B": "增強模型對特定任務的語言輸入效果",
+        "C": "訓練圖像分類器",
+        "D": "優化 GPU 計算效率"
+      },
+      "answer": "B",
+      "explanation": "Prompt 工程設計好的輸入形式，引導大型語言模型生成預期回應，是無須微調的\n重要方式。"
+    },
+    {
+      "id": "mock_50",
+      "num": 50,
+      "difficulty": 5,
+      "question": "Diffusion Model 與 GAN 相較，其訓練優勢為何？",
+      "options": {
+        "A": "可用於 RNN 預訓練",
+        "B": "速度較快",
+        "C": "訓練穩定，較不易出現模式崩壞（mode collapse）",
+        "D": "僅支援單一模態"
+      },
+      "answer": "C",
+      "explanation": "Diffusion Model 採用逐步去噪過程，訓練較穩定，不易出現如 GAN 中常見的\nmode collapse 問題。"
+    },
+    {
+      "id": "mock_51",
+      "num": 51,
+      "difficulty": 1,
+      "question": "生成式 AI 與傳統 AI 的主要差異為何？",
+      "options": {
+        "A": "是否使用 GPU 訓練模型",
+        "B": "是否能從數據中生成新內容",
+        "C": "是否為監督式學習",
+        "D": "是否能處理表格資料"
+      },
+      "answer": "B",
+      "explanation": "傳統 AI 多為分類、預測任務；生成式 AI（如 GPT、DALL·E）能根據輸入創造全\n新內容，是其關鍵特性。"
+    },
+    {
+      "id": "mock_52",
+      "num": 52,
+      "difficulty": 2,
+      "question": "下列何者屬於大型語言模型（LLM）發展的重要趨勢？",
+      "options": {
+        "A": "僅針對單一語言設計",
+        "B": "模型參數量趨小以加快訓練",
+        "C": "通用性與任務泛化能力提升",
+        "D": "完全不需人類標註資料"
+      },
+      "answer": "C",
+      "explanation": "LLM 的核心目標是通用性與語言理解能力，能跨任務處理多樣語言應用，具高度可"
+    },
+    {
+      "id": "mock_53",
+      "num": 53,
+      "difficulty": 3,
+      "question": "Transformer 架構在生成式模型中佔有關鍵地位，其主要貢獻為何？",
+      "options": {
+        "A": "可在圖像中標註物件邊界",
+        "B": "引入注意力機制以建構語意關聯",
+        "C": "增加模型的卷積層數",
+        "D": "減少參數數量以加快訓練"
+      },
+      "answer": "B",
+      "explanation": "Transformer 引入 Self-Attention 機制，使模型能捕捉長距離語意依賴，是 LLM\n成功的關鍵基礎。"
+    },
+    {
+      "id": "mock_54",
+      "num": 54,
+      "difficulty": 4,
+      "question": "以下何者為 ChatGPT 在推論階段使用的架構特徵？",
+      "options": {
+        "A": "雙向注意力 + 編碼器",
+        "B": "自回歸 + 單向 Transformer Decoder",
+        "C": "卷積金字塔 + 時序池化",
+        "D": "LSTM 編碼器 + Seq2Seq"
+      },
+      "answer": "B",
+      "explanation": "ChatGPT 採用單向 Decoder-only Transformer 架構，以自回歸方式逐字生成回\n應。"
+    },
+    {
+      "id": "mock_55",
+      "num": 55,
+      "difficulty": 3,
+      "question": "Prompt Engineering 在生成式 AI 的應用中扮演什麼角色？",
+      "options": {
+        "A": "設計優化演算法以微調參數",
+        "B": "編寫模型訓練流程與資料標註程式",
+        "C": "設計輸入提示詞以引導模型輸出精準結果",
+        "D": "負責模型部署與雲端資源配置"
+      },
+      "answer": "C",
+      "explanation": "Prompt 工程的目的是設計清楚、具引導性的提示語，無需微調就可讓 LLM 產生\n正確結果。"
+    },
+    {
+      "id": "mock_56",
+      "num": 56,
+      "difficulty": 2,
+      "question": "哪一個工具最常被用於在不調整模型權重的情況下快速微調生成式 AI？",
+      "options": {
+        "A": "SHAP",
+        "B": "Fine-tuning API",
+        "C": "Parameter-Efficient Tuning（如 LoRA）",
+        "D": "Tokenization"
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_57",
+      "num": 57,
+      "difficulty": 5,
+      "question": "下列哪個架構整合「檢索」與「生成」的雙重能力？",
+      "options": {
+        "A": "GPT-NeoX",
+        "B": "BART",
+        "C": "RAG（Retrieval-Augmented Generation）",
+        "D": "ResNet-GPT"
+      },
+      "answer": "C",
+      "explanation": "RAG 將資訊檢索（retrieval）與文本生成（generation）結合，在回應過程中先抓\n取知識後再生成語句。"
+    },
+    {
+      "id": "mock_58",
+      "num": 58,
+      "difficulty": 1,
+      "question": "下列哪一項應用最典型地屬於生成式 AI？",
+      "options": {
+        "A": "文字分類",
+        "B": "詞性標註",
+        "C": "機器翻譯",
+        "D": "自動圖像生成"
+      },
+      "answer": "D",
+      "explanation": "圖像生成（如 DALL·E）是典型的生成任務，模型根據輸入描述創造全新影像。"
+    },
+    {
+      "id": "mock_59",
+      "num": 59,
+      "difficulty": 2,
+      "question": "GPT 模型在訓練階段最常使用的目標函數為何？",
+      "options": {
+        "A": "交叉熵損失",
+        "B": "均方誤差",
+        "C": "自編碼重建誤差",
+        "D": "蒸餾損失"
+      },
+      "answer": "A",
+      "explanation": "GPT 屬自回歸語言模型，透過交叉熵計算預測詞與實際詞之間的誤差進行更新。"
+    },
+    {
+      "id": "mock_60",
+      "num": 60,
+      "difficulty": 4,
+      "question": "下列哪一種訓練技術可讓模型在少量標註資料下依舊學會高階語意能力？",
+      "options": {
+        "A": "多頭注意力並行計算",
+        "B": "語言模型增強微調",
+        "C": "少樣本學習（Few-Shot Learning）",
+        "D": "語意分群分析"
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_61",
+      "num": 61,
+      "difficulty": 1,
+      "question": "在 ChatGPT 模型中，輸入提示語（prompt）越明確，對生成結果的影響為何？",
+      "options": {
+        "A": "無顯著影響",
+        "B": "會降低語意連貫性",
+        "C": "可提升輸出內容的相關性與精確度",
+        "D": "僅會增加運算時間"
+      },
+      "answer": "C",
+      "explanation": "Prompt 工程的重點是清楚指引任務目標，良好的提示語能顯著提高輸出品質與準\n確性。"
+    },
+    {
+      "id": "mock_62",
+      "num": 62,
+      "difficulty": 2,
+      "question": "多模態生成模型與單模態模型相比，有何主要優勢？",
+      "options": {
+        "A": "使用資料量更少",
+        "B": "可跨資料型態整合理解與生成能力",
+        "C": "僅適用圖像分類任務",
+        "D": "必須仰賴 GPU 硬體才能運行"
+      },
+      "answer": "B",
+      "explanation": "多模態模型能處理圖像、文字、聲音等不同模態間的語意關聯，是跨媒體應用的關\n鍵技術。"
+    },
+    {
+      "id": "mock_63",
+      "num": 63,
+      "difficulty": 3,
+      "question": "T5 模型的設計理念為何被稱為「Text-to-Text」架構？",
+      "options": {
+        "A": "只訓練在文字分類任務上",
+        "B": "所有輸入與輸出皆以文字形式處理",
+        "C": "僅支援英文與中文",
+        "D": "輸出為圖像特徵向量"
+      },
+      "answer": "B",
+      "explanation": "T5 模型將各種任務（分類、翻譯、問答）統一轉換為「輸入文本 ➝ 輸出文本」的\n格式，便於通用訓練與應用。"
+    },
+    {
+      "id": "mock_64",
+      "num": 64,
+      "difficulty": 4,
+      "question": "大型語言模型在處理多任務時出現「遷移學習困境（catastrophic forgetting）」的可能原因\n為？",
+      "options": {
+        "A": "沒有調整學習率",
+        "B": "",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_65",
+      "num": 65,
+      "difficulty": 1,
+      "question": "以下何者最常被使用來衡量生成式 AI 模型生成文字的「多樣性」？",
+      "options": {
+        "A": "BLEU 分數",
+        "B": "Perplexity",
+        "C": "Diversity 指標（如 Distinct-1, Distinct-2）",
+        "D": "ROC-AUC"
+      },
+      "answer": "C",
+      "explanation": "Distinct-1 和 Distinct-2 衡量輸出中獨特單字和詞組的比例，是評估生成多樣性的\n重要指標。"
+    },
+    {
+      "id": "mock_66",
+      "num": 66,
+      "difficulty": 5,
+      "question": "哪一種訓練方法可以讓模型從「未標記資料」中學習語意？",
+      "options": {
+        "A": "強化學習",
+        "B": "蒸餾學習",
+        "C": "自監督學習（Self-Supervised Learning）",
+        "D": "K-Means 聚類"
+      },
+      "answer": "C",
+      "explanation": "自監督學習透過資料本身設計任務（如遮蔽詞預測）訓練模型，無需人工標註，即\n可有效學習語意表示。"
+    },
+    {
+      "id": "mock_67",
+      "num": 67,
+      "difficulty": 2,
+      "question": "以下哪一種技術可用於改善 LLM 在特定任務下的表現，但不需重新訓練整個模型？",
+      "options": {
+        "A": "參數初始化",
+        "B": "Fine-tuning with large corpus",
+        "C": "Few-shot prompting with exemplars",
+        "D": "捲積金字塔合成"
+      },
+      "answer": "C",
+      "explanation": "Few-shot prompting 透過提供幾個示例，讓模型學習任務格式與邏輯，是不需重\n新訓練的低成本調適方式。"
+    },
+    {
+      "id": "mock_68",
+      "num": 68,
+      "difficulty": 3,
+      "question": "Diffusion Model 與 GAN 最大的訓練策略差異在於？",
+      "options": {
+        "A": "是否支援多語言輸出",
+        "B": "是否可用於分類任務",
+        "C": "使用逐步去噪而非對抗訓練生成數據",
+        "D": "無需訓練判別器"
+      },
+      "answer": "C",
+      "explanation": "Diffusion Model 藉由反覆去噪學習生成分布，不依賴對抗博弈，因此訓練更穩\n定。"
+    },
+    {
+      "id": "mock_69",
+      "num": 69,
+      "difficulty": 4,
+      "question": "Reinforcement Learning from Human Feedback（RLHF）在 ChatGPT 中的主要用途為？",
+      "options": {
+        "A": "用來微調生成語音輸出",
+        "B": "建立語音轉文字模組",
+        "C": "根據人類偏好微調回應行為",
+        "D": "減少參數運算成本"
+      },
+      "answer": "C",
+      "explanation": "RLHF 融合人類回饋與強化學習，用於優化 ChatGPT 的生成內容與語調，更符合\n人類期待。"
+    },
+    {
+      "id": "mock_70",
+      "num": 70,
+      "difficulty": 1,
+      "question": "下列哪一項應用最有可能受惠於「多模態生成模型」？",
+      "options": {
+        "A": "Excel 數據整理",
+        "B": "書籍分類",
+        "C": "圖文並茂之虛擬導覽解說產生",
+        "D": "圖形界面語法檢查"
+      },
+      "answer": "C",
+      "explanation": "虛擬導覽內容包含圖像與語音或文字敘述，需融合多模態訊息，正是多模態生成模\n型的典型應用場景。"
+    },
+    {
+      "id": "mock_71",
+      "num": 71,
+      "difficulty": 1,
+      "question": "以下何者是「生成式 AI」的主要應用領域之一？",
+      "options": {
+        "A": "統計描述分析",
+        "B": "自動生成產品廣告文案",
+        "C": "使用者分群與標籤預測",
+        "D": "監督式分類器的訓練"
+      },
+      "answer": "B",
+      "explanation": "生成式 AI 特別適用於自然語言生成，如撰寫廣告文案、新聞摘要、創作內容等。"
+    },
+    {
+      "id": "mock_72",
+      "num": 72,
+      "difficulty": 2,
+      "question": "DALL·E 系列模型的核心任務為何？",
+      "options": {
+        "A": "將語音轉換為文字",
+        "B": "將圖像轉為程式碼",
+        "C": "將文字描述轉換為圖像",
+        "D": "將文字翻譯成多國語言"
+      },
+      "answer": "C",
+      "explanation": "DALL·E 是 OpenAI 開發的文字轉圖像模型，能根據輸入的語句生成視覺上合理的\n圖像。"
+    },
+    {
+      "id": "mock_73",
+      "num": 73,
+      "difficulty": 3,
+      "question": "Meta 所提出的 LLaMA 模型屬於下列哪一類？",
+      "options": {
+        "A": "對比學習模型",
+        "B": "圖像生成網路",
+        "C": "開源大型語言模型",
+        "D": "圖神經網路"
+      },
+      "answer": "C",
+      "explanation": "LLaMA（Large Language Model Meta AI）是 Meta 所釋出的開源大型語言模型\n系列，支援多語言生成與推論任務。"
+    },
+    {
+      "id": "mock_74",
+      "num": 74,
+      "difficulty": 4,
+      "question": "「模態對齊（Modality Alignment）」在多模態模型訓練中的目的是？",
+      "options": {
+        "A": "將圖像壓縮成向量",
+        "B": "將不同模態嵌入對齊至共同語意空間",
+        "C": "只保留語言模態並捨棄其他輸入",
+        "D": "將文字轉換為純數值特徵"
+      },
+      "answer": "B",
+      "explanation": "模態對齊是指將圖像、文字等不同模態資訊映射到共享語意空間，使其能共同參與\n推理或生成。"
+    },
+    {
+      "id": "mock_75",
+      "num": 75,
+      "difficulty": 3,
+      "question": "下列哪一項生成式 AI 技術，能夠根據輸入文字自動生成原始程式碼？",
+      "options": {
+        "A": "Word2Vec",
+        "B": "CodeBERT",
+        "C": "Codex",
+        "D": "AutoML"
+      },
+      "answer": "C",
+      "explanation": "Codex 是 OpenAI 訓練的程式碼生成模型，可將自然語言指令轉為對應的"
+    },
+    {
+      "id": "mock_76",
+      "num": 76,
+      "difficulty": 5,
+      "question": "在多模態生成場景中，下列哪一技術有助於「圖文對應生成品質」的提升？",
+      "options": {
+        "A": "隱馬可夫模型",
+        "B": "編碼器-解碼器中的交叉注意力（Cross-Attention）",
+        "C": "池化層的降維處理",
+        "D": "分層聚類演算法"
+      },
+      "answer": "B",
+      "explanation": "Cross-Attention 能在圖文生成任務中將圖像與語言模態互相關聯，是生成正確對\n應描述的關鍵機制。"
+    },
+    {
+      "id": "mock_77",
+      "num": 77,
+      "difficulty": 1,
+      "question": "ChatGPT 在未連接網路的情況下，對於 2023 年後的事件回答錯誤可能原因為？",
+      "options": {
+        "A": "模型程式錯誤",
+        "B": "訓練資料來源太多",
+        "C": "預訓練資料未涵蓋該時間點",
+        "D": "模型無法使用 Attention 機制"
+      },
+      "answer": "C",
+      "explanation": "LLM 是透過固定時間點前的資料進行預訓練，未連接外部更新資訊時，無法得知最\n新事件。"
+    },
+    {
+      "id": "mock_78",
+      "num": 78,
+      "difficulty": 2,
+      "question": "下列哪一種技術最常與 LLM 結合以構建具知識擴展能力的應用？",
+      "options": {
+        "A": "軟體容器化技術",
+        "B": "記憶體編碼演算法",
+        "C": "文件搜尋與知識檢索（Retrieval）",
+        "D": "位置編碼壓縮"
+      },
+      "answer": "C",
+      "explanation": "將檢索模組（如向量資料庫）與生成模型結合，可擴展模型的即時知識查詢能力，\n屬於 Retrieval-Augmented Generation 架構。"
+    },
+    {
+      "id": "mock_79",
+      "num": 79,
+      "difficulty": 4,
+      "question": "生成式 AI 應用若未建立適當「人機介面與審核流程」，可能導致什麼問題？",
+      "options": {
+        "A": "GPU 資源過載",
+        "B": "使用者混淆模型與人類回應的界線",
+        "C": "模型參數微調失效",
+        "D": "無法進行圖像擴散"
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_80",
+      "num": 80,
+      "difficulty": 5,
+      "question": "下列關於大型語言模型偏見與風險的敘述，何者正確？",
+      "options": {
+        "A": "僅需訓練更多資料即可完全消除偏見",
+        "B": "LLM 不具備任何風險，因其非監督式學習",
+        "C": "模型可能強化訓練語料中隱含的性別、種族偏見",
+        "D": "模型輸出偏見時皆可即時自我修正"
+      },
+      "answer": "C",
+      "explanation": "LLM 會從大量資料中學習語言模式，但也可能無意中學習並強化偏見，必須透過審\n查、過濾與對抗訓練技術進行調整。"
+    },
+    {
+      "id": "mock_81",
+      "num": 81,
+      "difficulty": 1,
+      "question": "以下哪一個架構最適合建置企業內部的 LLM 聊天助理？",
+      "options": {
+        "A": "YOLOv8 + Kafka",
+        "B": "RNN + LSTM Stack",
+        "C": "RAG 架構（檢索增強生成）",
+        "D": "GAN + Discriminator Pair"
+      },
+      "answer": "C",
+      "explanation": "RAG 架構整合知識庫檢索與 LLM 文本生成能力，能回答企業內部知識性問題，是\n企業部署熱門選擇。"
+    },
+    {
+      "id": "mock_82",
+      "num": 82,
+      "difficulty": 3,
+      "question": "在語言模型部署策略中，使用「API 模型即服務（Model as a Service, MaaS）」的最大優勢為\n何？",
+      "options": {
+        "A": "模型參數可被用戶直接修改",
+        "B": "用戶可免維護硬體與資源配置",
+        "C": "可提升 BLEU 分數表現",
+        "D": "使用者能即時更新模型權重"
+      },
+      "answer": "B",
+      "explanation": "透過 MaaS 平台提供推論 API，開發者可使用 LLM 而無需部署與訓練基礎設\n施，是低成本快速整合方式。"
+    },
+    {
+      "id": "mock_83",
+      "num": 83,
+      "difficulty": 2,
+      "question": "下列哪一項是多模態生成模型 BLIP 的特點？",
+      "options": {
+        "A": "僅支援純文字輸入",
+        "B": "",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_84",
+      "num": 84,
+      "difficulty": 4,
+      "question": "以下哪一種架構最適合處理「影片+語音+文字」輸入的生成式 AI 任務？",
+      "options": {
+        "A": "單一模態自注意力網路",
+        "B": "Transformer Encoder-Only 模型",
+        "C": "三模態融合架構（Multi-modal Fusion）",
+        "D": "純卷積堆疊網路"
+      },
+      "answer": "C",
+      "explanation": "處理多種模態需設計模態融合模組（如 cross-attention 或 gated fusion），以整\n合語音、視覺與語言的語意資訊。"
+    },
+    {
+      "id": "mock_85",
+      "num": 85,
+      "difficulty": 3,
+      "question": "在大型語言模型的推論階段，以下哪一個參數能控制輸出內容的隨機性？",
+      "options": {
+        "A": "Learning Rate",
+        "B": "Perplexity",
+        "C": "Temperature",
+        "D": "BLEU Score"
+      },
+      "answer": "C",
+      "explanation": "Temperature 控制 softmax 分布的尖銳程度，值越高輸出越隨機、越低則越保守\n與確定。"
+    },
+    {
+      "id": "mock_86",
+      "num": 86,
+      "difficulty": 5,
+      "question": "哪一種方法最常用於縮減 LLM 的推論成本，但保留原始知識能力？",
+      "options": {
+        "A": "蒸餾模型（Knowledge Distillation）",
+        "B": "Zero-Padding",
+        "C": "Token 隨機重排",
+        "D": "Full-parameter fine-tuning"
+      },
+      "answer": "A",
+      "explanation": "模型蒸餾將大型模型知識遷移至較小模型，有助於提升部署效率與資源效益。"
+    },
+    {
+      "id": "mock_87",
+      "num": 87,
+      "difficulty": 2,
+      "question": "在多輪對話應用中，下列何者為維持語境一致性的常見技術？",
+      "options": {
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_88",
+      "num": 88,
+      "difficulty": 4,
+      "question": "為了降低生成式 AI 模型因訓練語料偏差導致的輸出歧視，下列何者屬於常見的緩解策略？",
+      "options": {
+        "A": "簡化語料語彙量",
+        "B": "使用過濾語料與公平性對抗訓練",
+        "C": "增加最大長度上限",
+        "D": "僅使用英文資料集"
+      },
+      "answer": "B",
+      "explanation": "透過語料審查、平衡數據來源與訓練公平性識別器，是降低偏見風險的重要方法。"
+    },
+    {
+      "id": "mock_89",
+      "num": 89,
+      "difficulty": 1,
+      "question": "在 LLM 的語言理解過程中，以下哪一層負責整合不同位置之間的語意？",
+      "options": {
+        "A": "全連接層",
+        "B": "池化層",
+        "C": "多頭自注意力層（Multi-Head Self-Attention）",
+        "D": "Softmax 層"
+      },
+      "answer": "C",
+      "explanation": "多頭注意力可同時從不同子空間擷取語意資訊，是理解上下文關聯的核心機制。"
+    },
+    {
+      "id": "mock_90",
+      "num": 90,
+      "difficulty": 4,
+      "question": "哪一項生成式 AI 技術可用於讓模型以自身輸出作為下個時間步的輸入？",
+      "options": {
+        "A": "自注意力掩碼（Causal Masking）",
+        "B": "隨機詞替換",
+        "C": "自監督嵌入學習",
+        "D": "損失正則化"
+      },
+      "answer": "A",
+      "explanation": "自回歸模型（如 GPT）使用 Causal Mask 限制只能看到先前位置輸入，避免洩漏\n未來詞資訊。"
+    },
+    {
+      "id": "mock_91",
+      "num": 91,
+      "difficulty": 1,
+      "question": "以下哪一種應用最可能使用到語音生成（Text-to-Speech, TTS）技術？",
+      "options": {
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_92",
+      "num": 92,
+      "difficulty": 2,
+      "question": "下列哪一種方法能提升圖像生成模型對於複雜語意描述的理解？",
+      "options": {
+        "A": "使用 K-means 分群對圖像編碼",
+        "B": "調整標籤權重",
+        "C": "將語意嵌入向量與圖像特徵結合輸入模型",
+        "D": "將每個像素編碼為單詞"
+      },
+      "answer": "C",
+      "explanation": "將語意嵌入（text embedding）與圖像特徵結合，能讓模型更準確對齊文字與圖像\n生成的關聯。"
+    },
+    {
+      "id": "mock_93",
+      "num": 93,
+      "difficulty": 3,
+      "question": "以下哪一個概念說明了大型語言模型即使無微調，也能執行新任務的能力？",
+      "options": {
+        "A": "啟發式規則",
+        "B": "自監督學習",
+        "C": "零樣本學習（Zero-Shot Learning）",
+        "D": "蒸餾轉移學習"
+      },
+      "answer": "C",
+      "explanation": "Zero-Shot Learning 是 LLM 的強項，能直接透過提示語執行任務，無需額外標訓\n資料。"
+    },
+    {
+      "id": "mock_94",
+      "num": 94,
+      "difficulty": 4,
+      "question": "以下哪一技術被應用於穩定圖像生成模型的訓練過程，避免模式崩壞（Mode Collapse）？",
+      "options": {
+        "A": "交叉注意力蒸餾",
+        "B": "對抗訓練配對樣本",
+        "C": "多階段噪聲擾動與去噪（Diffusion Process）",
+        "D": "共享詞嵌入與影像特徵空間"
+      },
+      "answer": "C",
+      "explanation": "Diffusion Model 透過多階段去噪方式穩定訓練過程，相較 GAN 更不易出現\nMode Collapse 問題。"
+    },
+    {
+      "id": "mock_95",
+      "num": 95,
+      "difficulty": 3,
+      "question": "在問答系統中，若希望生成回覆包含來自特定資料庫的最新資訊，最適合哪種策略？",
+      "options": {
+        "A": "使用預訓練 Word2Vec",
+        "B": "加入資料庫檢索模組結合 RAG 架構",
+        "C": "加強訓練 Decoder 隱藏層",
+        "D": "使用非監督式主成分分析"
+      },
+      "answer": "B",
+      "explanation": "使用 RAG 可結合即時檢索結果與生成模型，解決 LLM 知識過時或缺乏特定資料\n的問題。"
+    },
+    {
+      "id": "mock_96",
+      "num": 96,
+      "difficulty": 5,
+      "question": "哪一個架構允許模型在語言輸入提示語中內嵌「動作控制」或「指令執行」能力？",
+      "options": {
+        "A": "LSTM 編碼器",
+        "B": "ViT 圖像識別模組",
+        "C": "Toolformer",
+        "D": "Autoencoder"
+      },
+      "answer": "C",
+      "explanation": "Toolformer 可在語言模型中自動學會何時觸發外部工具（如計算機、搜尋 API），\n具任務執行與控制力。"
+    },
+    {
+      "id": "mock_97",
+      "num": 97,
+      "difficulty": 2,
+      "question": "生成式 AI 在教育應用上可能出現的風險包括下列何者？",
+      "options": {
+        "A": "增加教師監督效果",
+        "B": "生成不正確或偏頗的內容",
+        "C": "強化學習策略的透明度",
+        "D": "自動建立合乎規範的教材"
+      },
+      "answer": "B",
+      "explanation": "生成式模型可能生成錯誤、虛構、或具偏見的內容，若用於教育場域須謹慎設計審\n核機制。"
+    },
+    {
+      "id": "mock_98",
+      "num": 98,
+      "difficulty": 1,
+      "question": "大型語言模型的「token」是指什麼？",
+      "options": {
+        "A": "一段固定長度的文章",
+        "B": "一個語義標籤",
+        "C": "分割後的最小語言單位，如單詞、子詞或符號",
+        "D": "使用者的身分識別碼"
+      },
+      "answer": "C",
+      "explanation": "Token 是語言模型處理的基本單位，可能是單詞、子詞甚至標點，視分詞方式而"
+    },
+    {
+      "id": "mock_99",
+      "num": 99,
+      "difficulty": 3,
+      "question": "使用 ChatGPT 撰寫合約草稿時，應如何降低風險？",
+      "options": {
+        "A": "信任輸出內容即可直接使用",
+        "B": "僅使用 ChatGPT 3.0",
+        "C": "結合法律專業審查並標註非正式來源",
+        "D": "關閉 API 日誌紀錄"
+      },
+      "answer": "C",
+      "explanation": "合約草稿屬高風險應用，應由專業人員審查內容正確性並註明其為 AI 草案，避免\n法律風險。"
+    },
+    {
+      "id": "mock_100",
+      "num": 100,
+      "difficulty": 4,
+      "question": "在多語言多模態 LLM 訓練中，常面臨以下哪一挑戰？",
+      "options": {
+        "A": "每種模態需專屬 GPU",
+        "B": "多模態資料需對齊對應語言語意",
+        "C": "模型無法進行反向傳播",
+        "D": "無需對模態進行正規化"
+      },
+      "answer": "B",
+      "explanation": "多模態多語言模型需對齊不同語言的語意與影像或音訊的特徵空間，是資料與建模\n的難點之一。"
+    },
+    {
+      "id": "mock_101",
+      "num": 101,
+      "difficulty": 1,
+      "question": "多模態 AI 最基本的定義是指？",
+      "options": {
+        "A": "可同時處理多種資料模態（如文字、圖像、語音）",
+        "B": "專門用於處理語音資料的 AI 模型",
+        "C": "僅能處理結構化表格與時間序列",
+        "D": "所有模型都需基於卷積網路訓練"
+      },
+      "answer": "A",
+      "explanation": "多模態 AI 指模型能同時理解與整合不同來源的資訊，例如語音＋影像＋文字。"
+    },
+    {
+      "id": "mock_102",
+      "num": 102,
+      "difficulty": 2,
+      "question": "BLIP 模型屬於下列哪一類多模態系統？",
+      "options": {
+        "A": "語音到語音轉換",
+        "B": "圖像與文字雙模態處理",
+        "C": "結構化數據與表格分析",
+        "D": "時間序列與圖形學結合"
+      },
+      "answer": "B",
+      "explanation": ""
+    },
+    {
+      "id": "mock_103",
+      "num": 103,
+      "difficulty": 3,
+      "question": "以下哪個模組常用於融合多模態資訊（如語音與文字）？",
+      "options": {
+        "A": "Positional Encoding",
+        "B": "Gated Fusion Network",
+        "C": "Self-Attention Masking",
+        "D": "Local Feature Alignment"
+      },
+      "answer": "B",
+      "explanation": "Gated Fusion 可動態調整不同模態的資訊權重，是多模態整合中常見策略之一。"
+    },
+    {
+      "id": "mock_104",
+      "num": 104,
+      "difficulty": 4,
+      "question": "CLIP 模型的主要訓練策略為？",
+      "options": {
+        "A": "無監督圖像生成",
+        "B": "預測圖像中物體位置",
+        "C": "對比學習（Contrastive Learning）對齊圖文表示",
+        "D": "分類模擬知識轉移"
+      },
+      "answer": "C",
+      "explanation": "CLIP 同時訓練圖像與文字編碼器，透過對比學習讓配對資料的向量靠近，非配對遠\n離。"
+    },
+    {
+      "id": "mock_105",
+      "num": 105,
+      "difficulty": 5,
+      "question": "在多模態 AI 應用中，哪一種技術可讓模型推論時只使用一種模態仍維持效果？",
+      "options": {
+        "A": "模態遮罩訓練（Modality Dropout）",
+        "B": "蒸餾式增強（Distillation Boosting）",
+        "C": "多頭分類融合（Multi-head Voting）",
+        "D": "強化式補償策略"
+      },
+      "answer": "A",
+      "explanation": "Modality Dropout 可在訓練過程中隨機遮罩模態，強化模型在單模態缺失下的魯\n棒性。"
+    },
+    {
+      "id": "mock_106",
+      "num": 106,
+      "difficulty": 1,
+      "question": "以下何者為多模態應用的實際案例？",
+      "options": {
+        "A": "圖像分類",
+        "B": "聲音辨識",
+        "C": "圖像＋文字生成電子病歷摘要",
+        "D": "純結構化數據分析"
+      },
+      "answer": "C",
+      "explanation": ""
+    },
+    {
+      "id": "mock_107",
+      "num": 107,
+      "difficulty": 2,
+      "question": "Vision-Language Transformer 與純文字 Transformer 最大差異為？",
+      "options": {
+        "A": "前者引入多模態位置編碼與 cross-attention",
+        "B": "後者可處理圖像資訊",
+        "C": "前者基於 LSTM 架構",
+        "D": "後者使用雙向 GRU"
+      },
+      "answer": "A",
+      "explanation": "多模態 Transformer 如 ViLT 使用 Cross-Attention 處理語言與圖像之間的交互\n語意，是其主要特徵。"
+    },
+    {
+      "id": "mock_108",
+      "num": 108,
+      "difficulty": 3,
+      "question": "下列哪一項可作為多模態學習中「對齊」失敗的風險指標？",
+      "options": {
+        "A": "同一樣本下模態向量間餘弦相似度過低",
+        "B": "模型參數數量變少",
+        "C": "過度擬合訓練集",
+        "D": "輸入長度太短"
+      },
+      "answer": "A",
+      "explanation": "若語言與圖像模態對應向量距離過大，代表語意未能對齊，可能造成推論不穩。"
+    },
+    {
+      "id": "mock_109",
+      "num": 109,
+      "difficulty": 4,
+      "question": "多模態模型中使用「共享嵌入空間」的目的為何？",
+      "options": {
+        "A": "減少訓練資料的需要",
+        "B": "將不同模態資料映射至可比較的語意表示",
+        "C": "分離模態避免干擾",
+        "D": "增加隱藏層深度"
+      },
+      "answer": "B",
+      "explanation": "將不同模態投影至共享嵌入空間可進行比較與融合，是跨模態推理的關鍵技術。"
+    },
+    {
+      "id": "mock_110",
+      "num": 110,
+      "difficulty": 1,
+      "question": "以下哪一任務屬於多模態生成應用？",
+      "options": {
+        "A": "BERT 預訓練",
+        "B": "視覺問答（VQA）",
+        "C": "表格數據回歸",
+        "D": "圖像分類"
+      },
+      "answer": "B",
+      "explanation": "VQA 需整合視覺與語言資訊，讓模型回答與圖像內容相關的自然語言問題。"
+    },
+    {
+      "id": "mock_111",
+      "num": 111,
+      "difficulty": 2,
+      "question": "多模態模型中使用「Late Fusion」的特點是什麼？",
+      "options": {
+        "A": "在輸入端融合模態資訊",
+        "B": "分別處理各模態，於輸出層融合結果",
+        "C": "僅用於純圖像模型",
+        "D": "將模態資訊轉為一維向量再拼接"
+      },
+      "answer": "B",
+      "explanation": "Late Fusion 指各模態獨立處理後，在最後一層進行結果整合，適用於模態關聯性\n較弱或結構差異大場景。"
+    },
+    {
+      "id": "mock_112",
+      "num": 112,
+      "difficulty": 3,
+      "question": "哪一種方法能幫助多模態 AI 模型處理來自不同時間步的資料？",
+      "options": {
+        "A": "卷積金字塔結構",
+        "B": "時序對齊（Temporal Alignment）",
+        "C": "分層編碼器",
+        "D": "固定權重共享"
+      },
+      "answer": "B",
+      "explanation": "多模態資料若時間對齊失誤，會導致語意錯誤。Temporal Alignment 是解決跨模\n態時序對應的關鍵策略。"
+    },
+    {
+      "id": "mock_113",
+      "num": 113,
+      "difficulty": 4,
+      "question": "多模態語言模型在應用於智慧醫療時應特別注意下列哪一項？",
+      "options": {
+        "A": "GPU 記憶體大小",
+        "B": "圖片解析度",
+        "C": "資料隱私與倫理遵循",
+        "D": "使用的 API 數量"
+      },
+      "answer": "C",
+      "explanation": "智慧醫療處理敏感個資，需遵循隱私法規（如 HIPAA、GDPR）與公平性要求，多\n模態資料使用時更需注意倫理設計。"
+    },
+    {
+      "id": "mock_114",
+      "num": 114,
+      "difficulty": 1,
+      "question": "以下哪個任務最適合採用語音與臉部表情共同輸入的多模態模型？",
+      "options": {
+        "A": "問卷分類",
+        "B": "語意分群",
+        "C": "情緒識別",
+        "D": "指紋分析"
+      },
+      "answer": "C",
+      "explanation": "情緒具語音、語調、表情等多面向特徵，整合語音與影像模態有助於準確識別情緒"
+    },
+    {
+      "id": "mock_115",
+      "num": 115,
+      "difficulty": 4,
+      "question": "若希望多模態 AI 可將文字生成為對應的 3D 模型，需處理以下哪項挑戰？",
+      "options": {
+        "A": "時間序列漂移",
+        "B": "輸入嵌入過短",
+        "C": "高維度跨模態表示對齊與渲染處理",
+        "D": "缺乏 BERT 預訓練模型"
+      },
+      "answer": "C",
+      "explanation": "將文字描述轉為 3D 模型需跨越語意對齊、幾何結構建模、視覺渲染等多層技術挑\n戰，是高複雜度任務。"
+    },
+    {
+      "id": "mock_116",
+      "num": 116,
+      "difficulty": 3,
+      "question": "在 VQA 模型中使用「Cross-Attention」的主要目的為何？",
+      "options": {
+        "A": "減少圖像向量維度",
+        "B": "增強同一模態內部語意",
+        "C": "建立語言與圖像間語意對應關係",
+        "D": "減少推論時間"
+      },
+      "answer": "C",
+      "explanation": "Cross-Attention 機制使語言模態可聚焦於與之對應的圖像區域，是視覺問答中的\n核心組件。"
+    },
+    {
+      "id": "mock_117",
+      "num": 117,
+      "difficulty": 5,
+      "question": "「Unified Transformer」模型的目標是什麼？",
+      "options": {
+        "A": "僅用於影像與音訊分類",
+        "B": "建構具模態無關性的統一架構",
+        "C": "將表格與圖像互換格式",
+        "D": "訓練時不使用任何語言輸入"
+      },
+      "answer": "B",
+      "explanation": "Unified Transformer 透過模態共享參數與通用注意力機制，實現文字、圖像、音\n訊在同一架構中學習與推理。"
+    },
+    {
+      "id": "mock_118",
+      "num": 118,
+      "difficulty": 1,
+      "question": "在多模態系統架構中，圖像模態常使用哪種神經網路進行特徵提取？",
+      "options": {
+        "A": "LSTM",
+        "B": "ResNet",
+        "C": "T5",
+        "D": "XGBoost"
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_119",
+      "num": 119,
+      "difficulty": 2,
+      "question": "哪一個任務屬於典型的「跨模態檢索」問題？",
+      "options": {
+        "A": "圖像搜尋圖像",
+        "B": "語音辨識",
+        "C": "用文字查找匹配圖像內容",
+        "D": "圖像中找出邊緣特徵"
+      },
+      "answer": "C",
+      "explanation": "跨模態檢索是指輸入一種模態（如文字），檢索另一模態（如圖像）中對應內容，需\n共享語意嵌入空間。"
+    },
+    {
+      "id": "mock_120",
+      "num": 120,
+      "difficulty": 3,
+      "question": "下列哪一項為「模態不對稱訓練」的特徵？",
+      "options": {
+        "A": "各模態皆需同等訓練樣本數",
+        "B": "模型推論時支援的模態與訓練時不同",
+        "C": "僅支援英文語料",
+        "D": "限制輸出模態只能為圖像"
+      },
+      "answer": "B",
+      "explanation": "模態不對稱訓練可在訓練時用多模態資料，推論時僅用部分模態輸入，提升模型彈\n性與適應力。"
+    },
+    {
+      "id": "mock_121",
+      "num": 121,
+      "difficulty": 1,
+      "question": "在多模態 AI 模型中，「模態」通常代表什麼？",
+      "options": {
+        "A": "網路傳輸協議",
+        "B": "資料的表現形式或來源類型",
+        "C": "訓練策略的變數",
+        "D": "訓練輪次的數量"
+      },
+      "answer": "B",
+      "explanation": "模態（Modality）代表資料的形式，例如影像、語音、文字、感測器數據等，是多\n模態系統的核心概念。"
+    },
+    {
+      "id": "mock_122",
+      "num": 122,
+      "difficulty": 2,
+      "question": "哪一種模型最適合整合語音轉文字（ASR）與語意理解功能？",
+      "options": {
+        "A": "YOLOv5",
+        "B": "LSTM-CRF",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_123",
+      "num": 123,
+      "difficulty": 3,
+      "question": "下列何者為「模態特定編碼器」的訓練策略？",
+      "options": {
+        "A": "將所有模態資訊合併成單一輸入",
+        "B": "為每個模態建構獨立的特徵學習網路",
+        "C": "僅使用圖像資訊訓練語言模型",
+        "D": "將文字與圖像硬編碼為標籤"
+      },
+      "answer": "B",
+      "explanation": "模態特定編碼器保留各模態特性，分別建構向量表示，後續再融合，是常見的\nearly fusion 前步驟。"
+    },
+    {
+      "id": "mock_124",
+      "num": 124,
+      "difficulty": 4,
+      "question": "使用多模態 AI 於智慧零售領域，下列哪一應用最具代表性？",
+      "options": {
+        "A": "圖像辨識於保險業務審核",
+        "B": "利用圖像＋文字情境生成產品推薦說明",
+        "C": "股票資料預測未來走勢",
+        "D": "單一語言模型的情緒分析"
+      },
+      "answer": "B",
+      "explanation": "智慧零售中常見多模態應用包含分析商品圖片與評論文本，產生客製化推薦語句或\n摘要。"
+    },
+    {
+      "id": "mock_125",
+      "num": 125,
+      "difficulty": 5,
+      "question": "哪一個指標可用來評估多模態模型對「圖文匹配關聯性」的學習成效？",
+      "options": {
+        "A": "FID 分數",
+        "B": "BLEU Score",
+        "C": "CLIP Score（或類似 cosine similarity）",
+        "D": "RMSE"
+      },
+      "answer": "C",
+      "explanation": "CLIP Score 衡量語意對齊程度，常使用餘弦相似度評估圖文向量距離，數值越高代\n表匹配越好。"
+    },
+    {
+      "id": "mock_126",
+      "num": 126,
+      "difficulty": 2,
+      "question": "在多模態 AI 訓練中，「負樣本對比」主要用於什麼任務？",
+      "options": {
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_127",
+      "num": 127,
+      "difficulty": 3,
+      "question": "多模態 AI 中若出現「模態間不一致（Modality Inconsistency）」，可能的影響為何？",
+      "options": {
+        "A": "模型準確率上升",
+        "B": "記憶體用量降低",
+        "C": "推論輸出不穩或語意錯置",
+        "D": "無法進行 GPU 加速"
+      },
+      "answer": "C",
+      "explanation": "若圖像與文字不一致（如描述錯誤），會導致語意錯配，生成錯誤或語意漂移，是訓\n練與應用的風險。"
+    },
+    {
+      "id": "mock_128",
+      "num": 128,
+      "difficulty": 1,
+      "question": "在多模態應用中，下列哪一項為文字模態最常用的語言處理模型？",
+      "options": {
+        "A": "CNN",
+        "B": "ResNet",
+        "C": "BERT",
+        "D": "YOLO"
+      },
+      "answer": "C",
+      "explanation": "BERT 是目前最廣泛應用的語言表示模型，可有效捕捉上下文語意，是多模態語言\n模組的常見選擇。"
+    },
+    {
+      "id": "mock_129",
+      "num": 129,
+      "difficulty": 4,
+      "question": "部署多模態 AI 系統時，何者為典型的資源挑戰？",
+      "options": {
+        "A": "過多的離線訓練資料",
+        "B": "僅支援 CPU 推論",
+        "C": "高模態資料處理成本與模型參數負擔",
+        "D": "過少的監督標籤"
+      },
+      "answer": "C",
+      "explanation": "多模態模型需處理不同資料形式，包含大向量記憶體與複數模型分支，對算力與儲\n存要求極高。"
+    },
+    {
+      "id": "mock_130",
+      "num": 130,
+      "difficulty": 3,
+      "question": "下列哪一項屬於「跨模態生成」任務？",
+      "options": {
+        "A": "將文字摘要轉為影片片段",
+        "B": "將文章分類為主題類別",
+        "C": "將照片解析度調高",
+        "D": "使用手寫字辨識判斷身份"
+      },
+      "answer": "A",
+      "explanation": "跨模態生成是指輸入與輸出模態不同，文字 ➝ 圖像、語音、影片皆屬此類型，是\n多模態生成技術前沿。"
+    },
+    {
+      "id": "mock_131",
+      "num": 131,
+      "difficulty": 1,
+      "question": "在多模態應用中，若圖像為輸入而輸出為語句，該任務最可能屬於下列哪一類？",
+      "options": {
+        "A": "視覺分類任務",
+        "B": "圖像摘要生成",
+        "C": "表格資料預測",
+        "D": "語音辨識"
+      },
+      "answer": "B",
+      "explanation": "圖像摘要生成（Image Captioning）是一種典型的多模態應用，將視覺資訊轉換為\n語句輸出。"
+    },
+    {
+      "id": "mock_132",
+      "num": 132,
+      "difficulty": 2,
+      "question": "下列何者是處理圖像與時間序列資料的常見多模態組合架構？",
+      "options": {
+        "A": "CNN + LSTM",
+        "B": "T5 + ResNet",
+        "C": "GRU + GAN",
+        "D": "RNN + ViT"
+      },
+      "answer": "A",
+      "explanation": "CNN 常用於圖像特徵提取，LSTM 擅長處理時間序列，兩者結合能同時處理空間\n與時間維度資訊。"
+    },
+    {
+      "id": "mock_133",
+      "num": 133,
+      "difficulty": 3,
+      "question": "多模態推論時若一模態缺失，以下哪種策略最能保持推論穩定性？",
+      "options": {
+        "A": "使用均值補值",
+        "B": "模態切換降階處理",
+        "C": "採用模態魯棒編碼（Modality-Robust Encoding）",
+        "D": "使用卷積過濾降雜訊"
+      },
+      "answer": "C",
+      "explanation": "模態魯棒設計可使模型在模態缺失（如圖像無法取得）時，仍能根據其他模態維持"
+    },
+    {
+      "id": "mock_134",
+      "num": 134,
+      "difficulty": 4,
+      "question": "多模態模型的「共同訓練損失（Joint Loss）」設計目的為？",
+      "options": {
+        "A": "增加 token 數量",
+        "B": "優化每個模態單獨性能",
+        "C": "同時考量不同模態與最終任務的誤差平衡",
+        "D": "減少語音資料長度"
+      },
+      "answer": "C",
+      "explanation": "Joint Loss 將語音、文字、圖像等模態誤差共同納入訓練，以提升整體語意整合與\n下游任務表現。"
+    },
+    {
+      "id": "mock_135",
+      "num": 135,
+      "difficulty": 2,
+      "question": "在應用多模態 AI 處理新聞影片內容時，最可能會結合哪兩種模態？",
+      "options": {
+        "A": "表格與語音",
+        "B": "圖像與音訊",
+        "C": "語音與程式碼",
+        "D": "結構化數據與地圖資訊"
+      },
+      "answer": "B",
+      "explanation": "新聞影片包含影像與聲音，兩者是最基本的多模態組合，適用於語音辨識、字幕產\n生與情緒分析。"
+    },
+    {
+      "id": "mock_136",
+      "num": 136,
+      "difficulty": 5,
+      "question": "哪一項設計有助於多模態模型具備「跨語言圖像生成」能力？",
+      "options": {
+        "A": "單語模態強化記憶模組",
+        "B": "跨語言共享嵌入空間（Cross-lingual Shared Embedding）",
+        "C": "壓縮特徵向量記憶體映射",
+        "D": "多層注意力機制限制掩碼"
+      },
+      "answer": "B",
+      "explanation": "跨語言共享嵌入空間可讓模型理解多語言與圖像語意對應，是多語言到圖像生成的\n基礎技術。"
+    },
+    {
+      "id": "mock_137",
+      "num": 137,
+      "difficulty": 1,
+      "question": "使用 ChatGPT 加上外部圖片辨識 API 建立系統，屬於哪種應用架構？",
+      "options": {
+        "A": "單模態序列學習",
+        "B": "模態對抗架構",
+        "C": "多模態系統整合",
+        "D": "純分類式預測"
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_138",
+      "num": 138,
+      "difficulty": 3,
+      "question": "多模態模型中的「中間融合（Intermediate Fusion）」機制特點為？",
+      "options": {
+        "A": "在訓練後端執行模態合併",
+        "B": "完全避免模態之間交互",
+        "C": "在特徵層級融合各模態資訊",
+        "D": "僅用於語音轉錄任務"
+      },
+      "answer": "C",
+      "explanation": "Intermediate Fusion 在中間層進行語音、文字或影像等模態的特徵融合，平衡\nearly 與 late fusion 優缺點。"
+    },
+    {
+      "id": "mock_139",
+      "num": 139,
+      "difficulty": 4,
+      "question": "以下哪一問題不屬於多模態系統中的「對齊挑戰」？",
+      "options": {
+        "A": "不同模態資料長度不一致",
+        "B": "模態之間時間標記誤差",
+        "C": "模型訓練中權重初始化不當",
+        "D": "語意相似但符號分布差異"
+      },
+      "answer": "C",
+      "explanation": "對齊挑戰屬於資料與語意的對應關聯問題，權重初始化不屬於模態對齊範疇。"
+    },
+    {
+      "id": "mock_140",
+      "num": 140,
+      "difficulty": 2,
+      "question": "以下哪一項技術適合用於文字描述轉為圖像生成任務？",
+      "options": {
+        "A": "TF-IDF",
+        "B": "Autoencoder",
+        "C": "Diffusion Model（穩定擴散模型）",
+        "D": "Decision Tree"
+      },
+      "answer": "C",
+      "explanation": "Diffusion Model 是目前高品質圖像生成主流技術，能根據文字提示詞（prompt）\n逐步生成符合語意的圖像。"
+    },
+    {
+      "id": "mock_141",
+      "num": 141,
+      "difficulty": 1,
+      "question": "在圖文問答系統（Visual Question Answering）中，哪兩種模態需同時處理？",
+      "options": {
+        "A": "語音與結構化表格",
+        "B": "圖像與語言（文字）",
+        "C": "圖像與分類標籤",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_142",
+      "num": 142,
+      "difficulty": 2,
+      "question": "使用圖像與語音進行情境預測任務時，模型需具備哪一能力？",
+      "options": {
+        "A": "文本相似度辨別",
+        "B": "聲紋壓縮",
+        "C": "跨模態推理",
+        "D": "分類模型集成"
+      },
+      "answer": "C",
+      "explanation": "跨模態推理是多模態 AI 的核心功能，使模型可基於不同資料型態進行邏輯整合與\n預測。"
+    },
+    {
+      "id": "mock_143",
+      "num": 143,
+      "difficulty": 3,
+      "question": "以下何者為多模態 AI 架構中的常見模態掩蔽（Modality Masking）應用？",
+      "options": {
+        "A": "測試期間加入額外模態",
+        "B": "模擬模態缺失情境強化模型學習能力",
+        "C": "將模態映射為高維詞向量",
+        "D": "拆分模態資料進行並行訓練"
+      },
+      "answer": "B",
+      "explanation": "模態遮罩讓模型在訓練中學習如何面對模態缺失，有助於強化實際部署時的魯棒性\n與容錯能力。"
+    },
+    {
+      "id": "mock_144",
+      "num": 144,
+      "difficulty": 4,
+      "question": "哪一種策略可用於改善多模態模型在零樣本（zero-shot）條件下的表現？",
+      "options": {
+        "A": "模態專屬詞表",
+        "B": "對比式預訓練結合共享語意嵌入",
+        "C": "只使用單一模態訓練",
+        "D": "模型輸出正規化"
+      },
+      "answer": "B",
+      "explanation": "使用對比學習對齊多模態的嵌入表示空間，能強化模型在未見樣本上的推理能力。"
+    },
+    {
+      "id": "mock_145",
+      "num": 145,
+      "difficulty": 2,
+      "question": "多模態模型若欲提升語意一致性，可採用下列哪一種機制？",
+      "options": {
+        "A": "語音增強前處理",
+        "B": "Beam Search 編碼器",
+        "C": "Cross-modal Attention",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_146",
+      "num": 146,
+      "difficulty": 3,
+      "question": "下列哪一項指標可衡量多模態生成模型產出描述與輸入圖像之間的語意吻合度？",
+      "options": {
+        "A": "PSNR",
+        "B": "ROUGE-L",
+        "C": "SPICE Score",
+        "D": "AUROC"
+      },
+      "answer": "C",
+      "explanation": "SPICE 評估圖像描述語意品質，能捕捉對象、屬性與關係，是評估多模態描述生成\n常用指標之一。"
+    },
+    {
+      "id": "mock_147",
+      "num": 147,
+      "difficulty": 5,
+      "question": "多模態 AI 應用於司法或醫療決策時，應特別強化哪一項層面？",
+      "options": {
+        "A": "高速回應能力",
+        "B": "API 連線能力",
+        "C": "可解釋性與審核流程",
+        "D": "單模態性能最佳化"
+      },
+      "answer": "C",
+      "explanation": "在高風險領域使用 AI 模型時，需具備足夠解釋能力與外部審查機制，避免不當自\n動化造成決策偏誤。"
+    },
+    {
+      "id": "mock_148",
+      "num": 148,
+      "difficulty": 2,
+      "question": "「多模態檢索系統」的訓練階段，需具備哪些標註資料？",
+      "options": {
+        "A": "單模態句子分類標籤",
+        "B": "多模態配對與不配對樣本對（Positive/Negative Pairs）",
+        "C": "模型隱藏層參數分布",
+        "D": "模態缺失樣本範例"
+      },
+      "answer": "B",
+      "explanation": "檢索模型多使用對比學習，須標註正負樣本配對關係以建立嵌入空間的語意距離邏\n輯。"
+    },
+    {
+      "id": "mock_149",
+      "num": 149,
+      "difficulty": 3,
+      "question": "部署多模態模型至終端設備（如手機）時，最大技術挑戰為？",
+      "options": {
+        "A": "缺乏數據來源",
+        "B": "",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_150",
+      "num": 150,
+      "difficulty": 4,
+      "question": "哪一項架構支持將自然語言輸入用於控制機器人視覺與行動？",
+      "options": {
+        "A": "YOLO + FastText",
+        "B": "GPT-2 + XGBoost",
+        "C": "VIMA（Vision-Language Planning）",
+        "D": "T5 + CNN-LSTM"
+      },
+      "answer": "C",
+      "explanation": "VIMA 是多模態控制框架，允許自然語言輸入驅動機器人感知與規劃動作，是視覺\n語言互動應用的前沿設計。"
+    },
+    {
+      "id": "mock_151",
+      "num": 151,
+      "difficulty": 1,
+      "question": "在 AI 導入流程中，第一步通常應該是？",
+      "options": {
+        "A": "選擇開發框架",
+        "B": "部署模型至雲端",
+        "C": "釐清問題與業務需求",
+        "D": "建立監控儀表板"
+      },
+      "answer": "C",
+      "explanation": "AI 導入須以業務需求為出發點，先定義問題與目標，才能規劃後續技術與資料。"
+    },
+    {
+      "id": "mock_152",
+      "num": 152,
+      "difficulty": 2,
+      "question": "AI 解決方案若需快速驗證概念與流程，通常應先建構何種系統？",
+      "options": {
+        "A": "雲端資料倉儲",
+        "B": "原型系統（Prototype / PoC）",
+        "C": "運維監控平台",
+        "D": "智慧合約平台"
+      },
+      "answer": "B",
+      "explanation": "AI 導入初期多以原型系統（PoC）檢視效能與需求落差，再決定是否推向正式產\n品。"
+    },
+    {
+      "id": "mock_153",
+      "num": 153,
+      "difficulty": 3,
+      "question": "在評估 AI 專案可行性時，以下哪一項最能判斷業務價值的實質影響？",
+      "options": {
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_154",
+      "num": 154,
+      "difficulty": 4,
+      "question": "若資料為不定期、不完整，需即時應變，建議使用下列哪種技術方案？",
+      "options": {
+        "A": "批次學習模型",
+        "B": "強化式學習架構",
+        "C": "即時資料流架構 + 在線學習（Online Learning）",
+        "D": "離線 K-means 模型"
+      },
+      "answer": "C",
+      "explanation": "即時應變場景須搭配 Streaming 資料處理與支持動態更新的在線學習演算法。"
+    },
+    {
+      "id": "mock_155",
+      "num": 155,
+      "difficulty": 1,
+      "question": "下列何者為 No Code 平台的主要特色？",
+      "options": {
+        "A": "須以 Python 完成訓練流程",
+        "B": "提供拖拉式介面、降低技術門檻",
+        "C": "僅可用於模型壓縮任務",
+        "D": "需自建 GPU 環境方能執行"
+      },
+      "answer": "B",
+      "explanation": "No Code 平台以視覺化介面降低開發門檻，讓非程式背景者也能參與 AI 導入流\n程。"
+    },
+    {
+      "id": "mock_156",
+      "num": 156,
+      "difficulty": 2,
+      "question": "使用 AutoML 工具於 AI 導入流程中，主要能帶來何種效益？",
+      "options": {
+        "A": "人工資料清理效率提升",
+        "B": "自動優化特徵工程與模型選型",
+        "C": "增加伺服器耗能",
+        "D": "強化資安認證效力"
+      },
+      "answer": "B",
+      "explanation": "AutoML 可自動完成資料前處理、模型挑選、超參數調整，對導入初期尤其具效\n益。"
+    },
+    {
+      "id": "mock_157",
+      "num": 157,
+      "difficulty": 3,
+      "question": "下列哪一項為評估資料是否適合用於 AI 模型建構的關鍵依據？",
+      "options": {
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_158",
+      "num": 158,
+      "difficulty": 4,
+      "question": "導入 AI 解決方案後需進行的「回饋與調整」階段，主要目的為？",
+      "options": {
+        "A": "擴充模型架構",
+        "B": "改變開發語言",
+        "C": "蒐集使用成效並優化系統",
+        "D": "更換硬體架構"
+      },
+      "answer": "C",
+      "explanation": "導入 AI 為持續循環流程，須透過回饋監控模型表現、進行微調與再訓練。"
+    },
+    {
+      "id": "mock_159",
+      "num": 159,
+      "difficulty": 5,
+      "question": "AI 專案評估中使用「AI Canvas」框架時，需針對哪一層面進行綜合盤點？",
+      "options": {
+        "A": "資安風險管理",
+        "B": "模型壓縮與部署成本",
+        "C": "使用者、決策者、資料流程與倫理風險",
+        "D": "GPU 計算效能"
+      },
+      "answer": "C",
+      "explanation": "AI Canvas 涵蓋業務對象、資料來源、演算法、決策流程與倫理風險，是全方位評\n估工具。"
+    },
+    {
+      "id": "mock_160",
+      "num": 160,
+      "difficulty": 2,
+      "question": "下列哪一項屬於 AI 專案早期可能忽略但風險極高的項目？",
+      "options": {
+        "A": "程式語言選擇",
+        "B": "雲端服務費率",
+        "C": "模型偏誤與不公平性",
+        "D": "視覺化報表配色"
+      },
+      "answer": "C",
+      "explanation": "若未評估資料偏誤與模型偏見，可能造成不公平決策甚至觸法，是 AI 評估與治理\n重點。"
+    },
+    {
+      "id": "mock_161",
+      "num": 161,
+      "difficulty": 1,
+      "question": "在 AI 導入評估階段，最常用來分析專案執行條件與限制的方法為？",
+      "options": {
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_162",
+      "num": 162,
+      "difficulty": 2,
+      "question": "企業若想進行 AI 化轉型，以下哪一項是需優先建立的條件？",
+      "options": {
+        "A": "雲端 GPU 叢集",
+        "B": "資料整合與管理能力",
+        "C": "自建演算法開發平台",
+        "D": "卷積神經網路基礎架構"
+      },
+      "answer": "B",
+      "explanation": "資料是 AI 導入的基礎，若無統一管理與整合流程，將無法穩定供應模型訓練與運\n作需求。"
+    },
+    {
+      "id": "mock_163",
+      "num": 163,
+      "difficulty": 3,
+      "question": "AI 系統若導入後成效不佳，最常見的原因之一是？",
+      "options": {
+        "A": "模型參數設定過多",
+        "B": "缺乏商業流程整合與使用者導入",
+        "C": "使用開源框架所致",
+        "D": "沒有購買高階硬體"
+      },
+      "answer": "B",
+      "explanation": "AI 成敗常不在技術，而在是否與實際業務流程緊密整合並獲得用戶採納與使用。"
+    },
+    {
+      "id": "mock_164",
+      "num": 164,
+      "difficulty": 4,
+      "question": "在評估 AI 導入之投資報酬率（ROI）時，應納入哪些指標？",
+      "options": {
+        "A": "模型精度與記憶體使用率",
+        "B": "模型訓練時間與參數量",
+        "C": "導入前後作業時間成本與效能改善幅度",
+        "D": "模型開源協議類型"
+      },
+      "answer": "C",
+      "explanation": "評估 ROI 應以效能提升與人力／成本節省為核心指標，並反映財務效益與業務價\n值。"
+    },
+    {
+      "id": "mock_165",
+      "num": 165,
+      "difficulty": 2,
+      "question": "",
+      "options": {
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_166",
+      "num": 166,
+      "difficulty": 4,
+      "question": "若一組訓練資料存在明顯的類別偏斜（class imbalance），可能造成什麼影響？",
+      "options": {
+        "A": "模型效能全面提升",
+        "B": "過度依賴 GPU 計算資源",
+        "C": "預測結果傾向多數類別，導致不公平",
+        "D": "資料量太大造成無法訓練"
+      },
+      "answer": "C",
+      "explanation": "類別不均資料會導致模型忽略少數類別的樣本，造成偏見或嚴重誤判，需透過重取\n樣或加權策略處理。"
+    },
+    {
+      "id": "mock_167",
+      "num": 167,
+      "difficulty": 1,
+      "question": "No Code AI 平台對於中小企業的導入優勢在於？",
+      "options": {
+        "A": "需聘請資深機器學習工程師",
+        "B": "可快速建立模型並降低開發成本",
+        "C": "必須自建私有雲平台",
+        "D": "僅支援監督式學習模型"
+      },
+      "answer": "B",
+      "explanation": "No Code 平台讓使用者透過視覺化工具快速部署模型，降低人力與技術門檻，對\n中小企業尤具吸引力。"
+    },
+    {
+      "id": "mock_168",
+      "num": 168,
+      "difficulty": 3,
+      "question": "資料評估中若出現「資料漂移（Data Drift）」現象，表示什麼問題？",
+      "options": {
+        "A": "模型無法使用 GPU 訓練",
+        "B": "資料處理流程出錯",
+        "C": "模型測試集與部署環境資料分佈不一致",
+        "D": "API 傳輸速度過慢"
+      },
+      "answer": "C",
+      "explanation": "資料漂移指的是訓練與部署期間資料分佈變化，可能使模型準確率下降，需持續監\n控並更新模型。"
+    },
+    {
+      "id": "mock_169",
+      "num": 169,
+      "difficulty": 5,
+      "question": "下列哪一項是評估 AI 解決方案是否應導入的「必要但非充分條件」？",
+      "options": {
+        "A": "技術人員已準備好",
+        "B": "有預算可使用",
+        "C": "資料問題有明確且具可行性之解決方案",
+        "D": "已購買 AI 平台服務"
+      },
+      "answer": "C",
+      "explanation": "若資料品質不佳且無法補救，無論預算與人力多完整，AI 專案仍將失敗；資料可處\n理性是啟動條件之一。"
+    },
+    {
+      "id": "mock_170",
+      "num": 170,
+      "difficulty": 2,
+      "question": "下列哪一項最能有效辨識 AI 導入後對使用者產生的實質影響？",
+      "options": {
+        "A": "計算模型浮點運算量",
+        "B": "使用者操作流程時間變化與滿意度回饋",
+        "C": "GPU 運行溫度",
+        "D": "模型調參次數"
+      },
+      "answer": "B",
+      "explanation": "AI 項目成功需從實務流程改善、使用者回饋與體驗角度評估，才能體現真正價值。"
+    },
+    {
+      "id": "mock_171",
+      "num": 171,
+      "difficulty": 1,
+      "question": "導入 AI 解決方案的主要技術選型依據為？",
+      "options": {
+        "A": "最新發布版本",
+        "B": "程式語言是否為 Python",
+        "C": "是否符合業務需求與資料條件",
+        "D": "使用者是否偏好某開發平台"
+      },
+      "answer": "C",
+      "explanation": "選擇適當技術需根據問題類型、資料性質與業務目標，避免僅因熱門技術而錯誤選\n型。"
+    },
+    {
+      "id": "mock_172",
+      "num": 172,
+      "difficulty": 2,
+      "question": "AI 導入流程中，若公司尚未具備標註資料，適合採用哪種策略？",
+      "options": {
+        "A": "部署大型監督式模型",
+        "B": "引進時間序列回歸",
+        "C": "考慮使用半監督學習或遷移學習技術",
+        "D": "將資料轉為 JSON 格式"
+      },
+      "answer": "C",
+      "explanation": "當標註資料不足時，可採半監督或遷移學習等低資料依賴策略以彌補資料缺口。"
+    },
+    {
+      "id": "mock_173",
+      "num": 173,
+      "difficulty": 3,
+      "question": "在模型部署後持續追蹤其效能表現的過程稱為？",
+      "options": {
+        "A": "前處理分析",
+        "B": "AutoML 設計",
+        "C": "MLOps 中的監控階段（Monitoring）",
+        "D": "高速搜尋最佳化"
+      },
+      "answer": "C",
+      "explanation": "MLOps 架構中包含模型版本控管、部署、自動化與監控，用於保障模型在真實環\n境中穩定與準確。"
+    },
+    {
+      "id": "mock_174",
+      "num": 174,
+      "difficulty": 4,
+      "question": "No Code / Low Code 平台在 AI 導入中之潛在限制為？",
+      "options": {
+        "A": "僅能用於線性回歸模型",
+        "B": "無法自定義訓練流程與演算法",
+        "C": "必須具備深度學習理論知識",
+        "D": "無法支援圖形化介面"
+      },
+      "answer": "B",
+      "explanation": "儘管 No Code / Low Code 工具可快速應用，但在高度客製或進階演算法需求上\n常受限。"
+    },
+    {
+      "id": "mock_175",
+      "num": 175,
+      "difficulty": 5,
+      "question": "企業導入 AI 成果良好但無法擴散至其他部門的常見原因是？",
+      "options": {
+        "A": "模型效能不佳",
+        "B": "資料庫格式不相容",
+        "C": "缺乏流程標準化與橫向推廣策略",
+        "D": "使用開源框架不穩定"
+      },
+      "answer": "C",
+      "explanation": "AI 實作若僅限於單部門而無標準化流程、內部知識移轉與複製能力，難以擴散至全\n組織。"
+    },
+    {
+      "id": "mock_176",
+      "num": 176,
+      "difficulty": 2,
+      "question": "在進行 AI 導入成本估算時，以下哪項經常被低估？",
+      "options": {
+        "A": "建置初期人員成本",
+        "B": "模型下載時間",
+        "C": "資料格式轉換成本",
+        "D": "維運成本與重訓資源消耗"
+      },
+      "answer": "D",
+      "explanation": "部署後的模型需持續維運與調整，包括監控、重訓、修補等，這些往往在預算編列"
+    },
+    {
+      "id": "mock_177",
+      "num": 177,
+      "difficulty": 3,
+      "question": "以下哪一項不屬於 AI 成熟度評估模型的構面？",
+      "options": {
+        "A": "組織策略與治理結構",
+        "B": "資料流動與整合能力",
+        "C": "計算資源電價評估",
+        "D": "AI 專案操作流程標準化"
+      },
+      "answer": "C",
+      "explanation": "成熟度模型關注組織制度、資料與技術能力、人員準備度等面向，不涵蓋設備電費\n等硬體營運細節。"
+    },
+    {
+      "id": "mock_178",
+      "num": 178,
+      "difficulty": 1,
+      "question": "AI 導入的「敏捷原型流程」主要強調？",
+      "options": {
+        "A": "大量模型實驗",
+        "B": "分階段快速構建與迭代修正",
+        "C": "對單一架構持續精煉",
+        "D": "持久的離線資料蒐集"
+      },
+      "answer": "B",
+      "explanation": "敏捷導入流程強調 MVP 快速實作、測試、迭代更新，能降低失敗風險與縮短投產\n時間。"
+    },
+    {
+      "id": "mock_179",
+      "num": 179,
+      "difficulty": 4,
+      "question": "企業導入 AI 後，若使用者未實際採用新系統，應優先針對何處改善？",
+      "options": {
+        "A": "GPU 資源升級",
+        "B": "模型參數再優化",
+        "C": "使用者體驗設計與介面可用性",
+        "D": "更換 API 串接方式"
+      },
+      "answer": "C",
+      "explanation": "AI 模型再強，若 UX/UI 介面不友善、操作複雜或無明顯成效，將難以獲得實際使\n用與支持。"
+    },
+    {
+      "id": "mock_180",
+      "num": 180,
+      "difficulty": 2,
+      "question": "AI 成熟度較低的組織在推動 AI 專案時，最適合採用哪種策略？",
+      "options": {
+        "A": "直接部署大型預訓練模型",
+        "B": "雲端 AutoML 與模組化工具建構小規模原型",
+        "C": "自建模型訓練環境並雇用資料科學家",
+        "D": "開發企業專屬語言模型"
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_181",
+      "num": 181,
+      "difficulty": 1,
+      "question": "在 AI 導入專案中，哪個職能最常負責協助業務單位轉化需求為模型設計邏輯？",
+      "options": {
+        "A": "系統維運人員",
+        "B": "使用者介面設計師",
+        "C": "資料科學家或 AI 應用規劃師",
+        "D": "財務分析師"
+      },
+      "answer": "C",
+      "explanation": "資料科學家或 AI 應用規劃師是業務與技術之間的橋樑，能協助將業務問題轉化為\n模型可解決的形式。"
+    },
+    {
+      "id": "mock_182",
+      "num": 182,
+      "difficulty": 2,
+      "question": "下列哪一種資料型態在 AI 項目中最常被歸類為「非結構化資料」？",
+      "options": {
+        "A": "CSV 格式報表",
+        "B": "使用者語音紀錄",
+        "C": "資產負債表",
+        "D": "API 記錄檔"
+      },
+      "answer": "B",
+      "explanation": "非結構化資料如語音、影像、自由文字等不具明確欄位結構，需進行額外前處理後\n方能建模。"
+    },
+    {
+      "id": "mock_183",
+      "num": 183,
+      "difficulty": 3,
+      "question": "若一組 AI 模型每月需重新訓練以因應資料變動，建議採用哪一種 MLOps 策略？",
+      "options": {
+        "A": "離線開發再部署",
+        "B": "GPU 全訓練儲存",
+        "C": "自動化訓練與部署（CI/CD）工作流程",
+        "D": "單次訓練多次部署"
+      },
+      "answer": "C",
+      "explanation": "若模型須定期更新，應透過 CI/CD 自動流程提升效率，避免人工作業錯誤與延\n遲。"
+    },
+    {
+      "id": "mock_184",
+      "num": 184,
+      "difficulty": 4,
+      "question": "下列哪一項技術能有效整合 AI 模型與既有 ERP、CRM 系統？",
+      "options": {
+        "A": "GPU 資源分片",
+        "B": "API 接口與服務化部署（Model Serving）",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_185",
+      "num": 185,
+      "difficulty": 2,
+      "question": "下列哪一種評估方式最適合用於衡量導入 AI 後的作業效率改善？",
+      "options": {
+        "A": "GPU 使用率變化",
+        "B": "訓練輪次減少百分比",
+        "C": "處理時間與人力需求的下降幅度",
+        "D": "模型學習率超參數變動"
+      },
+      "answer": "C",
+      "explanation": "AI 是否提升業務效益，常透過處理時間縮短、人力節省等實質成效評估。"
+    },
+    {
+      "id": "mock_186",
+      "num": 186,
+      "difficulty": 4,
+      "question": "在 AI 導入中常見的「自動化 ≠ 智慧化」誤解，可能導致什麼後果？",
+      "options": {
+        "A": "預算編列過多",
+        "B": "模型過度強調準確率",
+        "C": "忽略資料與決策邏輯整合，造成結果錯誤",
+        "D": "過度倚賴 CPU 計算資源"
+      },
+      "answer": "C",
+      "explanation": "僅仰賴自動化流程無法保證智慧決策效果，需將資料分析與邏輯推理結合方能智慧\n化。"
+    },
+    {
+      "id": "mock_187",
+      "num": 187,
+      "difficulty": 3,
+      "question": "AI 成熟度評估報告顯示某組織尚無清晰 AI 治理制度，建議首要補足哪一項？",
+      "options": {
+        "A": "架設內網環境",
+        "B": "建立模型偏誤與使用責任管理辦法",
+        "C": "改用最新開源模型架構",
+        "D": "增加運算資源備援"
+      },
+      "answer": "B",
+      "explanation": "AI 治理制度需包含公平性、透明性與風險責任等規範，是企業導入 AI 必備基礎制\n度。"
+    },
+    {
+      "id": "mock_188",
+      "num": 188,
+      "difficulty": 5,
+      "question": "AI 專案常面臨「局部優化」陷阱，其可能原因為何？",
+      "options": {
+        "A": "計算架構過於分散",
+        "B": "",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_189",
+      "num": 189,
+      "difficulty": 2,
+      "question": "導入 AI 服務後，為降低長期維護風險，建議採用何種維運策略？",
+      "options": {
+        "A": "採買最昂貴的模型",
+        "B": "交由外部單位獨立維運",
+        "C": "建立內部知識轉移與文件化機制",
+        "D": "模型改為純雲端執行"
+      },
+      "answer": "C",
+      "explanation": "AI 成功導入後應同步建立文件、流程、教育訓練與內部知識轉移，減少人員更替造\n成的風險。"
+    },
+    {
+      "id": "mock_190",
+      "num": 190,
+      "difficulty": 1,
+      "question": "AI 項目開發流程中，下列哪一階段最容易受到組織內部「政治性」因素干擾？",
+      "options": {
+        "A": "資料標註",
+        "B": "模型選型",
+        "C": "業務目標設定與成果評估設計",
+        "D": "自動化測試"
+      },
+      "answer": "C",
+      "explanation": "成效評估關乎績效與資源分配，需各部門溝通協調，常受組織結構與政治影響。"
+    },
+    {
+      "id": "mock_191",
+      "num": 191,
+      "difficulty": 1,
+      "question": "在導入 AI 項目之前，最重要的前提是什麼？",
+      "options": {
+        "A": "領導高層已完成 AI 專業認證",
+        "B": "擁有完整資料標註平台",
+        "C": "問題定義明確且具備可量化目標",
+        "D": "採用 GPU 加速伺服器"
+      },
+      "answer": "C",
+      "explanation": "AI 是解決問題的工具，若問題不清晰，後續模型設計、資料收集與評估將無從展\n開。"
+    },
+    {
+      "id": "mock_192",
+      "num": 192,
+      "difficulty": 2,
+      "question": "哪一項屬於常見的 AI 成熟度評估框架？",
+      "options": {
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_193",
+      "num": 193,
+      "difficulty": 3,
+      "question": "為了讓 AI 導入具備可持續擴展性，技術架構設計上應強調什麼？",
+      "options": {
+        "A": "單體式模型部署",
+        "B": "所有模組均部署在終端裝置",
+        "C": "模組化設計與可擴展資料流架構",
+        "D": "避免使用任何自動化工具"
+      },
+      "answer": "C",
+      "explanation": "模組化與資料流分層能讓不同元件獨立更新與擴充，是大型 AI 系統可維運的關\n鍵。"
+    },
+    {
+      "id": "mock_194",
+      "num": 194,
+      "difficulty": 4,
+      "question": "下列哪一種風險需在 AI 導入初期即納入治理設計？",
+      "options": {
+        "A": "程式碼品質評分",
+        "B": "模型隨時間衰退與效能下滑（Model Decay）",
+        "C": "使用者操作 SOP 不統一",
+        "D": "開發語言版本更新"
+      },
+      "answer": "B",
+      "explanation": "模型會因環境與資料變遷導致預測失效，因此應設計監控與再訓練策略以避免長期\n表現下降。"
+    },
+    {
+      "id": "mock_195",
+      "num": 195,
+      "difficulty": 2,
+      "question": "AI 解決方案的推動若要獲得跨部門支持，下列何者為重要關鍵？",
+      "options": {
+        "A": "簡化模型架構至單一輸出",
+        "B": "提早納入業務單位參與與使用者共同設計（Co-design）",
+        "C": "改用高階演算法",
+        "D": "優化 API 計算效能"
+      },
+      "answer": "B",
+      "explanation": "AI 推動需整合業務與 IT，納入使用者共同設計有助需求準確、介面友善、提升接\n受度。"
+    },
+    {
+      "id": "mock_196",
+      "num": 196,
+      "difficulty": 3,
+      "question": "若在 AI 系統部署後，使用者行為出現「過度依賴系統建議」的情形，應採取什麼設計策略？",
+      "options": {
+        "A": "降低模型精度使其更保守",
+        "B": "加強人機互動提示與透明性設計",
+        "C": "將系統建議直接隱藏",
+        "D": "改為使用知識圖譜模型"
+      },
+      "answer": "B",
+      "explanation": "適當的解釋機制與提示設計能提升使用者理解 AI 局限，避免盲從或過度信任系\n統。"
+    },
+    {
+      "id": "mock_197",
+      "num": 197,
+      "difficulty": 5,
+      "question": "AI 項目在評估預期效益時，若缺乏明確量化標準，建議採用哪種分析方式補強？",
+      "options": {
+        "A": "模型嵌入視覺化",
+        "B": "定性敘述法與專家訪談交叉分析",
+        "C": "將模型複雜度改為衡量指標",
+        "D": "計算模型推論速率"
+      },
+      "answer": "B",
+      "explanation": "AI 導入若難以立即量化，可透過結構化訪談、專家意見與使用者回饋進行多面向定\n性分析。"
+    },
+    {
+      "id": "mock_198",
+      "num": 198,
+      "difficulty": 2,
+      "question": "AI 導入若計畫使用外部數據來源（如開放資料），下列哪一項應特別確認？",
+      "options": {
+        "A": "訓練時間與資料大小關係",
+        "B": "該資料是否可合法商業應用",
+        "C": "模型輸出格式與前端一致性",
+        "D": "雲端儲存資費"
+      },
+      "answer": "B",
+      "explanation": "開放資料多有授權限制，導入 AI 時若未留意授權條款，可能導致侵權與法律風\n險。"
+    },
+    {
+      "id": "mock_199",
+      "num": 199,
+      "difficulty": 2,
+      "question": "下列何者為確保 AI 項目「落地與運作穩定」的重要技術實作？",
+      "options": {
+        "A": "模型自動蒸餾",
+        "B": "將所有模態合併為單一向量",
+        "C": "建立系統測試、監控與告警機制",
+        "D": "訓練資料嵌入開發程式碼"
+      },
+      "answer": "C",
+      "explanation": "AI 若無監控與告警機制，異常無法即時發現將導致服務中斷或錯誤決策。"
+    },
+    {
+      "id": "mock_200",
+      "num": 200,
+      "difficulty": 3,
+      "question": "在 AI 導入評估報告中加入「風險—效益對照表」的主要目的是什麼？",
+      "options": {
+        "A": "突顯開發團隊技術能力",
+        "B": "證明使用最新模型架構",
+        "C": "平衡風險與潛在價值，有助決策層掌握優先順序",
+        "D": "確保使用者不會發現模型失誤"
+      },
+      "answer": "C",
+      "explanation": "透過量化風險與效益，能幫助管理層在有限資源下決定優先推動項目，並落實風險\n治理。"
+    },
+    {
+      "id": "mock_201",
+      "num": 201,
+      "difficulty": 1,
+      "question": "當專案對預測速度有高度要求，應優先選擇下列哪一類型模型？",
+      "options": {
+        "A": "訓練時間較長但推論快的模型（如 LightGBM）",
+        "B": "多層遞迴神經網路",
+        "C": "高精度但運算複雜的深度學習模型",
+        "D": "需每日重新訓練的時序模型"
+      },
+      "answer": "A",
+      "explanation": "如 LightGBM 等模型推論效率高，適合需快速回應的場景，如即時推薦或詐欺偵\n測。"
+    },
+    {
+      "id": "mock_202",
+      "num": 202,
+      "difficulty": 2,
+      "question": "在模型選擇評估中，若強調模型在不同樣本族群的公平性，應納入哪一項考量？",
+      "options": {
+        "A": "模型是否支援 GPU 訓練",
+        "B": "模型參數總數",
+        "C": "各族群準確率差異（Disparity）",
+        "D": "訓練資料壓縮率"
+      },
+      "answer": "C",
+      "explanation": "公平性評估需觀察模型對不同子群體是否有偏差，例如某性別或族群預測錯誤率偏\n高。"
+    },
+    {
+      "id": "mock_203",
+      "num": 203,
+      "difficulty": 3,
+      "question": "下列哪一項為模型壓縮（Model Compression）常見的技術方法？",
+      "options": {
+        "A": "逐層過擬合",
+        "B": "特徵過採樣",
+        "C": "量化與知識蒸餾",
+        "D": "全模型 L2 正則化"
+      },
+      "answer": "C",
+      "explanation": "量化可降低精度提升效能，蒸餾則用小模型學習大型模型表現，是壓縮常見策略。"
+    },
+    {
+      "id": "mock_204",
+      "num": 204,
+      "difficulty": 4,
+      "question": "在模型部署架構中，若需支援多版本切換與 A/B Test，建議採用哪種機制？",
+      "options": {
+        "A": "單一模型綁定端點",
+        "B": "離線模型打包部署",
+        "C": "模型版本控制與路由分流（Model Routing）",
+        "D": "使用硬編碼模型路徑"
+      },
+      "answer": "C",
+      "explanation": "透過模型服務平台（如 KFServing、SageMaker），可設定流量分流與版本控制支\n援 A/B 測試。"
+    },
+    {
+      "id": "mock_205",
+      "num": 205,
+      "difficulty": 1,
+      "question": "若某模型使用者需透過應用系統存取其功能，最常用的部署方式為？",
+      "options": {
+        "A": "將模型嵌入手機程式碼",
+        "B": "以 REST API 方式部署模型服務",
+        "C": "使用指令列手動執行模型",
+        "D": "使用 Jupyter Notebook 作為伺服器端"
+      },
+      "answer": "B",
+      "explanation": "REST API 是最常見模型部署方式，可供其他系統透過標準 HTTP 方法呼叫模型結\n果。"
+    },
+    {
+      "id": "mock_206",
+      "num": 206,
+      "difficulty": 2,
+      "question": "下列哪一項屬於 MLOps 的核心目標之一？",
+      "options": {
+        "A": "增加資料儲存空間",
+        "B": "降低演算法複雜度",
+        "C": "建立模型從開發到部署的自動化與可追溯流程",
+        "D": "精簡前端顯示設計"
+      },
+      "answer": "C",
+      "explanation": "MLOps 將 DevOps 精神導入 AI 流程，強調版本控管、自動部署與監控等全流程\n整合。"
+    },
+    {
+      "id": "mock_207",
+      "num": 207,
+      "difficulty": 3,
+      "question": "在系統部署環境評估中，選擇「邊緣部署」的最大考量為？",
+      "options": {
+        "A": "模型需支援多語言輸出",
+        "B": "模型需即時反應且網路不穩定",
+        "C": "模型資料來自資料湖",
+        "D": "模型必須支援 GPU 加速"
+      },
+      "answer": "B",
+      "explanation": "邊緣部署（Edge Deployment）適用於需即時處理、低延遲、或無法依賴雲端網路"
+    },
+    {
+      "id": "mock_208",
+      "num": 208,
+      "difficulty": 5,
+      "question": "若某組合模型包含三種子模型，其整合預測方式為「加權平均」，此方法屬於哪一類集成策略？",
+      "options": {
+        "A": "Boosting",
+        "B": "Stacking",
+        "C": "Bagging",
+        "D": "加權融合（Weighted Voting）"
+      },
+      "answer": "D",
+      "explanation": "加權融合可依模型表現給不同預測加權，是集成學習中簡單但實用的預測結合方\n式。"
+    },
+    {
+      "id": "mock_209",
+      "num": 209,
+      "difficulty": 2,
+      "question": "當部署一個 NLP 模型進入微服務架構中，建議的封裝單位為？",
+      "options": {
+        "A": "模型直接寫入資料庫中",
+        "B": "以 Python 模組內建於 Web Framework",
+        "C": "以容器化方式（如 Docker）部署成獨立服務",
+        "D": "嵌入 HTML 端頁面處理"
+      },
+      "answer": "C",
+      "explanation": "容器化可確保部署環境一致，利於快速擴展、版本更新與可攜性，適合部署於微服\n務架構。"
+    },
+    {
+      "id": "mock_210",
+      "num": 210,
+      "difficulty": 3,
+      "question": "在模型推論服務設計中，若需支援大量使用者同時查詢，最應優化哪一部分？",
+      "options": {
+        "A": "訓練資料格式",
+        "B": "模型超參數",
+        "C": "推論服務的水平擴展與快取機制",
+        "D": "開發者編程風格"
+      },
+      "answer": "C",
+      "explanation": "服務需考量高併發，應強化負載平衡、快取策略（如 Redis）與部署擴展能力。"
+    },
+    {
+      "id": "mock_211",
+      "num": 211,
+      "difficulty": 1,
+      "question": "在模型部署前，確認輸入資料格式與類型正確的步驟屬於？",
+      "options": {
+        "A": "模型優化",
+        "B": "推論封裝",
+        "C": "輸入驗證（Input Validation）",
+        "D": "訓練集打亂"
+      },
+      "answer": "C",
+      "explanation": ""
+    },
+    {
+      "id": "mock_212",
+      "num": 212,
+      "difficulty": 2,
+      "question": "使用 ONNX 格式轉換模型的主要目的是？",
+      "options": {
+        "A": "優化模型輸出樣式",
+        "B": "增加訓練樣本",
+        "C": "提升模型跨平台兼容性與推論效率",
+        "D": "加速資料清理"
+      },
+      "answer": "C",
+      "explanation": "ONNX（Open Neural Network Exchange）是一種中立格式，可讓模型在多種框\n架或硬體平台上運行。"
+    },
+    {
+      "id": "mock_213",
+      "num": 213,
+      "difficulty": 3,
+      "question": "部署 AI 模型至 Kubernetes 集群的主要優點是什麼？",
+      "options": {
+        "A": "減少模型精度下降",
+        "B": "自動水平擴展與容錯能力",
+        "C": "增強模型收斂能力",
+        "D": "改善資料前處理速度"
+      },
+      "answer": "B",
+      "explanation": "Kubernetes 支援自動擴展、資源監控與高可用性，是 MLOps 部署的常見平台。"
+    },
+    {
+      "id": "mock_214",
+      "num": 214,
+      "difficulty": 4,
+      "question": "若一組模型需每日根據新資料進行再訓練並自動上線，最佳解決方案是？",
+      "options": {
+        "A": "只使用雲端儲存",
+        "B": "觸發 Notebook 手動執行",
+        "C": "建立自動化流水線（Pipeline）並加入部署節點",
+        "D": "測試多個模型後人工選擇"
+      },
+      "answer": "C",
+      "explanation": "使用自動化 ML pipeline（如 Kubeflow、Vertex AI）可實現資料→訓練→部署的\n全流程更新。"
+    },
+    {
+      "id": "mock_215",
+      "num": 215,
+      "difficulty": 2,
+      "question": "下列哪一項是判斷模型部署「穩定性」的常用指標？",
+      "options": {
+        "A": "測試資料集平均長度",
+        "B": "模型參數命名方式",
+        "C": "預測延遲（Latency）與錯誤率（Error Rate）",
+        "D": "特徵數量"
+      },
+      "answer": "C",
+      "explanation": ""
+    },
+    {
+      "id": "mock_216",
+      "num": 216,
+      "difficulty": 3,
+      "question": "若要在部署中實現模型的即時推論與非同步請求處理，建議採用哪種技術架構？",
+      "options": {
+        "A": "批次處理排程器",
+        "B": "RPC 模式封裝",
+        "C": "非同步任務隊列（如 Celery + FastAPI）",
+        "D": "Excel 自動巨集"
+      },
+      "answer": "C",
+      "explanation": "非同步任務架構可接收請求後排入隊列處理，適合大量請求並避免阻塞。"
+    },
+    {
+      "id": "mock_217",
+      "num": 217,
+      "difficulty": 5,
+      "question": "在實務部署中，若需同時管理模型效能、資源使用率與行為記錄，最佳工具為？",
+      "options": {
+        "A": "模型壓縮器",
+        "B": "語意分群模組",
+        "C": "模型監控平台（如 Prometheus + Grafana）",
+        "D": "決策樹視覺化模塊"
+      },
+      "answer": "C",
+      "explanation": "如 Prometheus 可蒐集效能指標，Grafana 用於視覺化與警示，是部署監控主流\n組合。"
+    },
+    {
+      "id": "mock_218",
+      "num": 218,
+      "difficulty": 2,
+      "question": "在模型選擇階段，若業務單位要求「可追溯推論邏輯」，應避免使用下列哪種模型？",
+      "options": {
+        "A": "決策樹",
+        "B": "邏輯回歸",
+        "C": "隨機森林",
+        "D": "深度神經網路"
+      },
+      "answer": "D",
+      "explanation": "深度模型雖表現好但不具備可解釋性，不利於需要推論透明度的場景，如金融或法\n務。"
+    },
+    {
+      "id": "mock_219",
+      "num": 219,
+      "difficulty": 3,
+      "question": "在多模型部署架構中，若希望根據資料屬性自動選擇最適合模型執行，應設計？",
+      "options": {
+        "A": "自訂 API 參數",
+        "B": "模型選路器（Model Router）邏輯",
+        "C": "同步執行所有模型後手動選擇",
+        "D": "利用資料表建立觸發器"
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_220",
+      "num": 220,
+      "difficulty": 1,
+      "question": "在本地部署一個已訓練好的 NLP 模型進行推論，最基本需要哪些項目？",
+      "options": {
+        "A": "模型檔案與 tokenizer",
+        "B": "GPU 伺服器與硬碟備份",
+        "C": "雲端資料湖與演算法交換站",
+        "D": "測試報告與 API 文件"
+      },
+      "answer": "A",
+      "explanation": "NLP 模型須搭配 tokenizer 才能將輸入文字轉為模型所需的編碼格式，是部署必\n要組件。"
+    },
+    {
+      "id": "mock_221",
+      "num": 221,
+      "difficulty": 2,
+      "question": "為了追蹤 AI 模型不同版本在部署環境中的表現，建議使用哪項機制？",
+      "options": {
+        "A": "TensorBoard 視覺化訓練曲線",
+        "B": "模型版本控制與效能日誌紀錄",
+        "C": "前端頁面快取刷新",
+        "D": "將模型編譯為 JSON 格式"
+      },
+      "answer": "B",
+      "explanation": "版本控管結合效能監控可追蹤模型迭代歷史，有助於問題回溯與策略調整。"
+    },
+    {
+      "id": "mock_222",
+      "num": 222,
+      "difficulty": 3,
+      "question": "若模型需部署於資源受限環境（如 IoT 裝置），下列哪一種架構最合適？",
+      "options": {
+        "A": "大型 Transformer 模型",
+        "B": "多模型集成系統",
+        "C": "輕量化模型（如 MobileNet、TinyML）",
+        "D": "雲端即時串流模型"
+      },
+      "answer": "C",
+      "explanation": "MobileNet、TinyML 等設計用於嵌入式與邊緣設備，在效能與資源消耗間取得平\n衡。"
+    },
+    {
+      "id": "mock_223",
+      "num": 223,
+      "difficulty": 1,
+      "question": "使用者透過手機 App 發送圖片請求模型辨識，模型回傳結果，此過程稱為？",
+      "options": {
+        "A": "資料預處理",
+        "B": "模型優化",
+        "C": "推論（Inference）",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_224",
+      "num": 224,
+      "difficulty": 4,
+      "question": "以下哪一項是 AI 模型部署到 API 服務的最佳實務？",
+      "options": {
+        "A": "每次使用者請求皆重訓模型",
+        "B": "將模型與應用伺服器程式混寫",
+        "C": "將模型封裝為獨立服務並設定限流與監控",
+        "D": "僅支援離線上傳結果"
+      },
+      "answer": "C",
+      "explanation": "模型服務應與業務邏輯分離，設定 QPS 限流、故障轉移與記錄可提升穩定性與可\n維護性。"
+    },
+    {
+      "id": "mock_225",
+      "num": 225,
+      "difficulty": 3,
+      "question": "下列哪一項可以有效減少模型在生產環境的「冷啟動」時間？",
+      "options": {
+        "A": "增加特徵維度",
+        "B": "模型提前載入與快取",
+        "C": "使用更大的批次資料訓練",
+        "D": "減少 API 輸入參數"
+      },
+      "answer": "B",
+      "explanation": "冷啟動（Cold Start）會因載入模型耗時影響使用體驗，預先快取可顯著降低回應時\n間。"
+    },
+    {
+      "id": "mock_226",
+      "num": 226,
+      "difficulty": 2,
+      "question": "在多模型管理架構中，下列何者最適合支援「可重現實驗」與「模型回溯」？",
+      "options": {
+        "A": "自動調參系統",
+        "B": "資料清理器",
+        "C": "模型註冊平台（如 MLflow、Model Registry）",
+        "D": "模型融合器"
+      },
+      "answer": "C",
+      "explanation": "模型註冊系統可記錄版本、參數、輸出結果等，有助於模型治理與重現驗證。"
+    },
+    {
+      "id": "mock_227",
+      "num": 227,
+      "difficulty": 4,
+      "question": "將模型從開發環境部署到生產環境時常出現什麼問題？",
+      "options": {
+        "A": "訓練資料集遺失",
+        "B": "測試集過擬合",
+        "C": "部署環境與開發環境不一致造成效能下降",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_228",
+      "num": 228,
+      "difficulty": 1,
+      "question": "以下哪一種狀況通常表示模型已成功部署？",
+      "options": {
+        "A": "訓練集準確率達到 99%",
+        "B": "開發者完成 Python 腳本撰寫",
+        "C": "使用者可透過應用端發送請求並獲得回應",
+        "D": "模型可在 Jupyter Notebook 執行"
+      },
+      "answer": "C",
+      "explanation": "部署成功的指標為模型已成為一個可被存取並處理請求的服務，而非單純完成訓\n練。"
+    },
+    {
+      "id": "mock_229",
+      "num": 229,
+      "difficulty": 3,
+      "question": "若系統中部署多個模型並實現依任務動態路由，應如何設計？",
+      "options": {
+        "A": "將模型寫死在同一段程式中",
+        "B": "根據模型準確率手動挑選執行",
+        "C": "使用推論路由器（Inference Router）根據輸入條件選擇模型",
+        "D": "每個模型固定綁定一組使用者"
+      },
+      "answer": "C",
+      "explanation": "推論路由器能根據語言、任務或裝置條件，動態導向最適模型，是多模型系統常見\n設計。"
+    },
+    {
+      "id": "mock_230",
+      "num": 230,
+      "difficulty": 5,
+      "question": "在部署高階深度模型（如 GPT）時，若資源有限且需即時服務，最有效策略為？",
+      "options": {
+        "A": "保留原始架構並使用預設配置",
+        "B": "使用 Knowledge Distillation 轉為輕量模型部署",
+        "C": "移除所有注意力層",
+        "D": "轉為純雲端儲存服務"
+      },
+      "answer": "B",
+      "explanation": "知識蒸餾讓小模型學習大模型行為，可大幅降低部署成本與推論時間，同時保留核\n心能力。"
+    },
+    {
+      "id": "mock_231",
+      "num": 231,
+      "difficulty": 1,
+      "question": "若希望模型可支援不同任務但基礎架構不需大改動，建議採用哪種設計？",
+      "options": {
+        "A": "單任務預測器",
+        "B": "",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_232",
+      "num": 232,
+      "difficulty": 2,
+      "question": "在 AI 模型部署階段，若需持續監控「預測誤差是否逐月上升」，應使用？",
+      "options": {
+        "A": "離線統計視覺化",
+        "B": "模型重訓器",
+        "C": "線上誤差監控與警示系統",
+        "D": "推論端緩存清理機制"
+      },
+      "answer": "C",
+      "explanation": "建立自動監控模型表現（如 MSE、F1-score 變動）可及早發現模型漂移與精度下\n降。"
+    },
+    {
+      "id": "mock_233",
+      "num": 233,
+      "difficulty": 3,
+      "question": "下列哪一個平台最適合用於 MLOps 流程整合與模型生命週期管理？",
+      "options": {
+        "A": "Google Drive",
+        "B": "MLflow",
+        "C": "Sublime Text",
+        "D": "Redis"
+      },
+      "answer": "B",
+      "explanation": "MLflow 是開源的 MLOps 工具，支援實驗追蹤、模型註冊、部署與監控，是企業\n常用平台。"
+    },
+    {
+      "id": "mock_234",
+      "num": 234,
+      "difficulty": 4,
+      "question": "AI 模型於雲端部署時，以下哪一策略可避免「服務費用爆炸性成長」？",
+      "options": {
+        "A": "無伺服器架構（Serverless）與自動資源擴縮（Auto-scaling）",
+        "B": "增加資料讀寫頻率",
+        "C": "永久常駐模型服務",
+        "D": "同步推論模型結果儲存至區塊鏈"
+      },
+      "answer": "A",
+      "explanation": "Serverless 架構按需計費，搭配 Auto-scaling 可根據使用量自動調整資源，避免\n資源閒置浪費。"
+    },
+    {
+      "id": "mock_235",
+      "num": 235,
+      "difficulty": 2,
+      "question": "為了讓 API 使用者清楚了解模型輸入與輸出結構，建議提供什麼？",
+      "options": {
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_236",
+      "num": 236,
+      "difficulty": 5,
+      "question": "在多租戶模型部署架構中（multi-tenant serving），哪一挑戰最需要克服？",
+      "options": {
+        "A": "模型壓縮比例不足",
+        "B": "用戶間資源隔離與資料安全",
+        "C": "硬體規格一致性",
+        "D": "模型語言不一致"
+      },
+      "answer": "B",
+      "explanation": "多租戶部署需確保各用戶模型、資源與資料相互隔離，避免干擾與隱私外洩風險。"
+    },
+    {
+      "id": "mock_237",
+      "num": 237,
+      "difficulty": 2,
+      "question": "下列哪一指標最適合評估分類模型在部署後真實場景的錯誤傾向？",
+      "options": {
+        "A": "訓練耗時",
+        "B": "混淆矩陣",
+        "C": "遺失值比例",
+        "D": "條件機率分布圖"
+      },
+      "answer": "B",
+      "explanation": "混淆矩陣可直觀觀察 TP、FP、FN、TN 等資訊，有助辨識模型預測錯誤類型與偏\n誤。"
+    },
+    {
+      "id": "mock_238",
+      "num": 238,
+      "difficulty": 3,
+      "question": "AI 模型部署後若發現輸出與業務預期落差較大，建議首先檢查哪一項？",
+      "options": {
+        "A": "開發語言版本",
+        "B": "訓練集與實際輸入資料分布是否一致",
+        "C": "模型開源授權狀態",
+        "D": "檔案儲存格式"
+      },
+      "answer": "B",
+      "explanation": "部署輸入與訓練資料分布不一致會導致模型行為異常（資料漂移），是落地誤差主要\n來源。"
+    },
+    {
+      "id": "mock_239",
+      "num": 239,
+      "difficulty": 4,
+      "question": "若需要讓 AI 模型具備「任務導向動態生成能力」，應選擇何種架構？",
+      "options": {
+        "A": "雙層感知回饋迴路",
+        "B": "強化學習 + LLM 多任務解譯器",
+        "C": "統計迴歸模型",
+        "D": "隨機森林集成架構"
+      },
+      "answer": "B",
+      "explanation": "結合強化學習與大型語言模型可使系統根據任務情境動態生成行動方案，具備自適\n應與多任務能力。"
+    },
+    {
+      "id": "mock_240",
+      "num": 240,
+      "difficulty": 1,
+      "question": "在模型部署後若需調整參數或模型結構，應進行？",
+      "options": {
+        "A": "推論縮放",
+        "B": "微調（Fine-tuning）或再訓練（Retraining）",
+        "C": "特徵清洗",
+        "D": "模型打包"
+      },
+      "answer": "B",
+      "explanation": "微調或再訓練是模型部署後根據新資料或任務需求進行更新的重要策略。"
+    },
+    {
+      "id": "mock_241",
+      "num": 241,
+      "difficulty": 1,
+      "question": "下列哪一技術可讓已訓練好的模型快速適應新任務？",
+      "options": {
+        "A": "隨機初始化",
+        "B": "遷移學習（Transfer Learning）",
+        "C": "模型截斷訓練",
+        "D": "卷積視窗縮放"
+      },
+      "answer": "B",
+      "explanation": "遷移學習能將已有模型的知識應用於新任務，節省訓練資源並提升學習效率。"
+    },
+    {
+      "id": "mock_242",
+      "num": 242,
+      "difficulty": 2,
+      "question": "若使用者希望直接透過手機端啟動模型進行語音辨識，建議採用哪種部署形式？",
+      "options": {
+        "A": "雲端批次模型服務",
+        "B": "本地邊緣部署（on-device deployment）",
+        "C": "GPU 訓練伺服器",
+        "D": "FTP 文件回傳處理"
+      },
+      "answer": "B",
+      "explanation": "手機端語音辨識應考慮延遲與網路限制，建議部署於本地裝置實現即時回應。"
+    },
+    {
+      "id": "mock_243",
+      "num": 243,
+      "difficulty": 3,
+      "question": "為保障 AI 模型部署後的安全性，下列哪一措施最為關鍵？",
+      "options": {
+        "A": "增加資料標註人力",
+        "B": "實施 API 權限與輸入驗證",
+        "C": "以 CSV 記錄推論結果",
+        "D": "只允許模型於白天運行"
+      },
+      "answer": "B",
+      "explanation": "模型若提供外部存取介面，需設定存取權限、驗證輸入資料，避免惡意請求與資安\n風險。"
+    },
+    {
+      "id": "mock_244",
+      "num": 244,
+      "difficulty": 4,
+      "question": "在多語言應用系統中，若需讓模型自動切換回應語系，應整合何種模組？",
+      "options": {
+        "A": "圖形處理加速器",
+        "B": "語言辨識模組（Language Identification, LID）",
+        "C": "GPU 快取轉換器",
+        "D": "視訊流強化模組"
+      },
+      "answer": "B",
+      "explanation": "LID 模組可識別輸入語系，使系統動態選擇相應模型或語言輸出，是多語應用關鍵\n技術。"
+    },
+    {
+      "id": "mock_245",
+      "num": 245,
+      "difficulty": 2,
+      "question": "模型部署後若欲監測其「實際產出品質」，以下哪項指標最適合？",
+      "options": {
+        "A": "訓練集損失函數下降率",
+        "B": "推論延遲",
+        "C": "使用者滿意度回饋與錯誤報告分析",
+        "D": "GPU 佔用率"
+      },
+      "answer": "C",
+      "explanation": "部署後的效果應與實際使用者互動相關，蒐集反饋與錯誤可作為品質優化依據。"
+    },
+    {
+      "id": "mock_246",
+      "num": 246,
+      "difficulty": 5,
+      "question": "若同一模型需支援「圖像、語音、文字」多模態輸入，部署時最大挑戰為？",
+      "options": {
+        "A": "儲存空間不足",
+        "B": "多模態輸入格式解析與特徵同步處理",
+        "C": "訓練時間過短",
+        "D": "模型參數命名重複"
+      },
+      "answer": "B",
+      "explanation": "多模態模型需解析多種資料格式並對齊語意表示，對系統整合與效能要求極高。"
+    },
+    {
+      "id": "mock_247",
+      "num": 247,
+      "difficulty": 1,
+      "question": "若使用者希望查詢部署中的模型版本與狀態，應提供什麼服務？",
+      "options": {
+        "A": "CLI 編輯權限",
+        "B": "模型註冊 API 或查詢端點",
+        "C": "模型開發筆記",
+        "D": "訓練環境虛擬機"
+      },
+      "answer": "B",
+      "explanation": "透過模型註冊平台或 API 提供版本資訊，可即時查詢模型是否更新與部署狀態。"
+    },
+    {
+      "id": "mock_248",
+      "num": 248,
+      "difficulty": 3,
+      "question": "下列何者最適合用於減少部署模型時因「輸入資料雜訊」所造成的不穩定？",
+      "options": {
+        "A": "遷移學習",
+        "B": "輸入資料前處理與標準化機制",
+        "C": "模型結構加深",
+        "D": "資料集分群"
+      },
+      "answer": "B",
+      "explanation": "前處理能過濾雜訊與標準化輸入，有助於提升模型穩定與預測一致性。"
+    },
+    {
+      "id": "mock_249",
+      "num": 249,
+      "difficulty": 4,
+      "question": "若要部署一個語言模型並兼顧「效能」與「延遲控制」，以下何者為可行策略？",
+      "options": {
+        "A": "全部運行於瀏覽器端",
+        "B": "利用模型剪枝 + 動態批次控制",
+        "C": "增加輸入字數限制",
+        "D": "改為雲端 GPU 硬編碼"
+      },
+      "answer": "B",
+      "explanation": "剪枝可降低計算量，動態調整批次大小則可依即時負載調整延遲，兩者搭配利於效\n能優化。"
+    },
+    {
+      "id": "mock_250",
+      "num": 250,
+      "difficulty": 2,
+      "question": "當模型更新後需「無中斷」替換舊版服務，建議使用哪種策略？",
+      "options": {
+        "A": "雙活部署（Blue-Green Deployment）",
+        "B": "YAML 配置切換",
+        "C": "CLI 快速覆蓋",
+        "D": "硬體層快速重啟"
+      },
+      "answer": "A",
+      "explanation": "Blue-Green 部署在不中斷服務的情況下切換新版本，並保留快速回滾能力，是穩\n定升級常見做法。"
+    },
+    {
+      "id": "mock_251",
+      "num": 251,
+      "difficulty": 1,
+      "question": "資料前處理流程中，最常見的第一步驟通常是？",
+      "options": {
+        "A": "特徵交互項建立",
+        "B": "模型訓練",
+        "C": "讀取資料並檢查缺失值與欄位型別",
+        "D": "資料視覺化"
+      },
+      "answer": "C",
+      "explanation": "良好的資料前處理從資料檢查開始，包括欄位型態辨識與缺失值統計，以確保後續\n處理正確。"
+    },
+    {
+      "id": "mock_252",
+      "num": 252,
+      "difficulty": 2,
+      "question": "處理缺失值最保守且不易引入偏差的方法是？",
+      "options": {
+        "A": "全部填入 0",
+        "B": "以眾數補值",
+        "C": "刪除包含缺失的資料列",
+        "D": "使用多重插補（Multiple Imputation）"
+      },
+      "answer": "D",
+      "explanation": "多重插補透過迴歸、機率模型模擬缺失資料多種可能情境，是學術與實務界常用的\n進階補值方法。"
+    },
+    {
+      "id": "mock_253",
+      "num": 253,
+      "difficulty": 3,
+      "question": "當欄位為偏態分布時，下列哪種標準化方法最合適？",
+      "options": {
+        "A": "Z-score 標準化",
+        "B": "最小最大正規化",
+        "C": "分位數轉換（Quantile Transformation）",
+        "D": "主成分分析"
+      },
+      "answer": "C",
+      "explanation": "分位數轉換可將任何分布映射至接近常態分布，有助於提高模型穩定性與表現。"
+    },
+    {
+      "id": "mock_254",
+      "num": 254,
+      "difficulty": 1,
+      "question": "下列哪一種方法最常用來偵測數值型欄位的異常值？",
+      "options": {
+        "A": "Tokenization",
+        "B": "One-Hot Encoding",
+        "C": "IQR（四分位距）方法",
+        "D": "SMOTE 取樣"
+      },
+      "answer": "C",
+      "explanation": "IQR 方法透過 Q1、Q3 定義合理區間，將超出區間範圍視為潛在異常點，適合快\n速檢查異常。"
+    },
+    {
+      "id": "mock_255",
+      "num": 255,
+      "difficulty": 4,
+      "question": "處理類別型特徵時，若資料稀疏且類別數量過多，最佳的處理方式是？",
+      "options": {
+        "A": "One-Hot Encoding",
+        "B": "Label Encoding",
+        "C": "降維編碼或類別聚類（如 Target Encoding）",
+        "D": "將類別轉為連續數值"
+      },
+      "answer": "C",
+      "explanation": "大量稀疏類別會造成 One-Hot 爆炸性膨脹，應採用編碼策略（如 target\nencoding、mean encoding）進行壓縮。"
+    },
+    {
+      "id": "mock_256",
+      "num": 256,
+      "difficulty": 2,
+      "question": "下列哪一個步驟能提升模型對不平衡類別的辨識能力？",
+      "options": {
+        "A": "資料歸一化",
+        "B": "欄位命名優化",
+        "C": "權重調整或過取樣技術（如 SMOTE）",
+        "D": "降低學習率"
+      },
+      "answer": "C",
+      "explanation": "類別不平衡會導致模型偏向多數類別，可透過過取樣、欠取樣或加權 loss function\n來平衡預測結果。"
+    },
+    {
+      "id": "mock_257",
+      "num": 257,
+      "difficulty": 3,
+      "question": "在標準化與正規化的選擇上，若模型為基於距離的演算法（如 KNN），建議使用？",
+      "options": {
+        "A": "原始資料直接建模",
+        "B": "均值補值後再分類",
+        "C": "Min-Max Normalization",
+        "D": "決策樹特徵重要性"
+      },
+      "answer": "C",
+      "explanation": "KNN 等距離相關模型對尺度敏感，建議使用最小-最大正規化（Min-Max）將數值\n縮放至相同區間。"
+    },
+    {
+      "id": "mock_258",
+      "num": 258,
+      "difficulty": 4,
+      "question": "若在特徵工程中建立了多個欄位彼此高度相關，可能產生什麼問題？",
+      "options": {
+        "A": "模型變得更準確",
+        "B": "計算速度變快",
+        "C": "共線性問題導致模型不穩定或冗餘",
+        "D": "有助於正規化模型"
+      },
+      "answer": "C",
+      "explanation": "高度共線性（Multicollinearity）會影響模型係數穩定性與解釋力，應透過變異數膨"
+    },
+    {
+      "id": "mock_259",
+      "num": 259,
+      "difficulty": 2,
+      "question": "資料標準化（Standardization）後的資料，其平均值與標準差為？",
+      "options": {
+        "A": "平均值為 1，標準差為 0",
+        "B": "平均值為 0，標準差為 1",
+        "C": "平均值為 0.5，標準差為 0.5",
+        "D": "不確定，需依資料分布決定"
+      },
+      "answer": "B",
+      "explanation": "Z-score 標準化會將資料調整為平均值 0、標準差 1，有助於消除不同欄位量級影\n響。"
+    },
+    {
+      "id": "mock_260",
+      "num": 260,
+      "difficulty": 5,
+      "question": "若欄位中包含大量重複與無意義的單一值（如全為“None”），應如何處理？",
+      "options": {
+        "A": "進行主成分分析",
+        "B": "自動補值為平均數",
+        "C": "刪除該欄或以資料缺乏性進行標記",
+        "D": "做正規化處理"
+      },
+      "answer": "C",
+      "explanation": "幾乎無變異的欄位對模型無貢獻，建議剔除或標記為無資訊特徵，避免影響模型訓\n練效率與準確性。"
+    },
+    {
+      "id": "mock_261",
+      "num": 261,
+      "difficulty": 1,
+      "question": "進行資料分割時，常用的「訓練集 / 測試集」比例為何？",
+      "options": {
+        "A": "10% / 90%",
+        "B": "80% / 20%",
+        "C": "50% / 50%",
+        "D": "20% / 80%"
+      },
+      "answer": "B",
+      "explanation": "常見比例為 80% 訓練資料、20% 測試資料，提供模型足夠學習機會並保留驗證空\n間。"
+    },
+    {
+      "id": "mock_262",
+      "num": 262,
+      "difficulty": 2,
+      "question": "下列何者是處理類別型欄位的常見「編碼」技術？",
+      "options": {
+        "A": "Z-score",
+        "B": "Fourier Encoding",
+        "C": "Label Encoding",
+        "D": "Box-Cox 轉換"
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_263",
+      "num": 263,
+      "difficulty": 3,
+      "question": "處理類別不平衡問題時，SMOTE 技術的核心邏輯為？",
+      "options": {
+        "A": "將所有樣本複製一次",
+        "B": "只保留多數類別",
+        "C": "以 KNN 為基礎生成合成少數類別樣本",
+        "D": "降低模型學習率"
+      },
+      "answer": "C",
+      "explanation": "SMOTE 利用鄰近樣本內插新數據點，平衡資料分佈，改善預測偏差。"
+    },
+    {
+      "id": "mock_264",
+      "num": 264,
+      "difficulty": 4,
+      "question": "將時間欄位轉為模型可處理特徵時，以下哪一種轉換方式最常見？",
+      "options": {
+        "A": "將日期轉為圖像",
+        "B": "轉換為日、週、月或是否假日等衍生欄位",
+        "C": "將時間欄位刪除",
+        "D": "Label Encoding 日期字串"
+      },
+      "answer": "B",
+      "explanation": "時間特徵常轉為年/月/日/時/是否假日等形式，捕捉時間性模式與季節性波動。"
+    },
+    {
+      "id": "mock_265",
+      "num": 265,
+      "difficulty": 2,
+      "question": "為避免「資料洩漏（Data Leakage）」，以下哪個操作應特別注意？",
+      "options": {
+        "A": "將所有資料正規化後再分割",
+        "B": "測試集標籤提前給模型學習",
+        "C": "模型訓練前檢查欄位類型",
+        "D": "使用 AutoML 建模流程"
+      },
+      "answer": "B",
+      "explanation": "資料洩漏常因訓練過程中使用了不該見到的資訊（如測試標籤），導致評估失真。"
+    },
+    {
+      "id": "mock_266",
+      "num": 266,
+      "difficulty": 5,
+      "question": "在自然語言處理中，將文字轉為向量的常見方法為？",
+      "options": {
+        "A": "PCA",
+        "B": "Token Truncation",
+        "C": "Word Embedding（如 Word2Vec、GloVe）",
+        "D": "SMOTE 編碼"
+      },
+      "answer": "C",
+      "explanation": "文字需轉為向量供模型理解，Word2Vec、GloVe 等 embedding 技術可保留語意"
+    },
+    {
+      "id": "mock_267",
+      "num": 267,
+      "difficulty": 2,
+      "question": "對資料集進行標準化處理的主要原因為何？",
+      "options": {
+        "A": "加快 CSV 匯出速度",
+        "B": "強化資料隱私保護",
+        "C": "消除欄位尺度差異，避免影響模型學習",
+        "D": "減少特徵重要性"
+      },
+      "answer": "C",
+      "explanation": "模型學習若受欄位尺度差異影響會導致偏誤，標準化可提升穩定性與準確性。"
+    },
+    {
+      "id": "mock_268",
+      "num": 268,
+      "difficulty": 3,
+      "question": "若特徵間具有非線性關係，哪一方法有助於改善模型表現？",
+      "options": {
+        "A": "使用原始欄位直接建模",
+        "B": "刪除所有數值型欄位",
+        "C": "建立高次特徵（如平方、立方）",
+        "D": "使用 ID 作為模型輸入"
+      },
+      "answer": "C",
+      "explanation": "非線性關係可透過建立高次特徵（polynomial features）輔助模型捕捉複雜模式。"
+    },
+    {
+      "id": "mock_269",
+      "num": 269,
+      "difficulty": 1,
+      "question": "下列哪一項屬於資料清理流程的一部分？",
+      "options": {
+        "A": "設計神經網路架構",
+        "B": "將資料重新命名為英文",
+        "C": "移除重複資料列（duplicate rows）",
+        "D": "使用 Word2Vec 編碼"
+      },
+      "answer": "C",
+      "explanation": "移除重複列可減少資訊重複與資料偏斜，是資料清理的基本動作之一。"
+    },
+    {
+      "id": "mock_270",
+      "num": 270,
+      "difficulty": 4,
+      "question": "下列何者最適合評估特徵與標籤之間的關聯性？",
+      "options": {
+        "A": "條件隨機場模型",
+        "B": "變異數分析（ANOVA）或皮爾森相關係數（Pearson Correlation）",
+        "C": "標準化後再編碼",
+        "D": "隨機森林深度計算"
+      },
+      "answer": "B",
+      "explanation": "ANOVA 用於類別對連續型標籤影響分析，皮爾森相關衡量連續變數之間線性關\n係，是特徵篩選常用方法。"
+    },
+    {
+      "id": "mock_271",
+      "num": 271,
+      "difficulty": 1,
+      "question": "以下哪一種資料分割方式最適合處理不均衡分類問題？",
+      "options": {
+        "A": "隨機切割資料集",
+        "B": "按照資料順序分配",
+        "C": "Stratified Split（分層抽樣）",
+        "D": "單一批次訓練"
+      },
+      "answer": "C",
+      "explanation": "Stratified Split 可維持訓練與測試集中各類別的比例一致，避免類別不均造成偏\n誤。"
+    },
+    {
+      "id": "mock_272",
+      "num": 272,
+      "difficulty": 2,
+      "question": "處理多欄位中存在強烈相依性的情形時，常使用哪項方法降低維度？",
+      "options": {
+        "A": "多重插補",
+        "B": "One-Hot Encoding",
+        "C": "主成分分析（PCA）",
+        "D": "標準差過濾"
+      },
+      "answer": "C",
+      "explanation": "PCA 可從多個相關特徵中萃取較少維度的主成分，有助減少資料冗餘並提升模型效\n率。"
+    },
+    {
+      "id": "mock_273",
+      "num": 273,
+      "difficulty": 3,
+      "question": "處理時間序列資料時，哪一種欄位轉換最能捕捉週期性波動？",
+      "options": {
+        "A": "將時間欄位轉為字串",
+        "B": "轉換為日週月後再進行 sin/cos 週期編碼",
+        "C": "將時間欄位刪除",
+        "D": "轉換為 Timestamp 再轉乘 365"
+      },
+      "answer": "B",
+      "explanation": "sin/cos 編碼能將週期性時間資訊映射到圓周空間，有助於模型理解週期變化。"
+    },
+    {
+      "id": "mock_274",
+      "num": 274,
+      "difficulty": 2,
+      "question": "若使用深度學習模型處理大量類別型特徵，常見的嵌入策略為？",
+      "options": {
+        "A": "One-Hot Encoding",
+        "B": "隨機森林轉換",
+        "C": "Embedding Layer（嵌入層）",
+        "D": "標準差排序"
+      },
+      "answer": "C",
+      "explanation": "Embedding Layer 可將高維稀疏類別轉為低維密集向量，是神經網路處理類別資\n料的主流方法。"
+    },
+    {
+      "id": "mock_275",
+      "num": 275,
+      "difficulty": 5,
+      "question": "下列哪一項技術適合處理超高維特徵（如數萬欄位）的降維任務？",
+      "options": {
+        "A": "雙變數分析",
+        "B": "One-Hot Encoding",
+        "C": "隨機投影（Random Projection）",
+        "D": "時間差分轉換"
+      },
+      "answer": "C",
+      "explanation": "隨機投影能高效將高維資料壓縮為低維空間，且保留距離特性，適合處理維度爆炸\n問題。"
+    },
+    {
+      "id": "mock_276",
+      "num": 276,
+      "difficulty": 1,
+      "question": "下列哪個作法可以提升類別型欄位的可預測性？",
+      "options": {
+        "A": "將所有類別刪除",
+        "B": "對類別進行目標導向編碼（如 Mean Encoding）",
+        "C": "降低模型學習率",
+        "D": "改為標準化處理"
+      },
+      "answer": "B",
+      "explanation": "Mean Encoding 將類別轉換為其對應目標變數的平均，有助捕捉語意關聯性，但\n需防止過擬合。"
+    },
+    {
+      "id": "mock_277",
+      "num": 277,
+      "difficulty": 3,
+      "question": "將特徵欄位轉為多項式組合最常用於哪一類模型中？",
+      "options": {
+        "A": "RNN 時序模型",
+        "B": "隨機森林分類器",
+        "C": "線性模型與邏輯斯回歸",
+        "D": "強化學習代理人"
+      },
+      "answer": "C",
+      "explanation": "線性模型本身無法捕捉變數交互作用，加入高次項與交叉特徵能增加表現力。"
+    },
+    {
+      "id": "mock_278",
+      "num": 278,
+      "difficulty": 2,
+      "question": "為避免資料集過度偏重某些欄位資訊，以下哪一策略能幫助平衡特徵重要性？",
+      "options": {
+        "A": "特徵隨機遮罩",
+        "B": "特徵標準化或正規化",
+        "C": "將高重要性欄位複製多份",
+        "D": "訓練過程中刪除部分樣本"
+      },
+      "answer": "B",
+      "explanation": "不同尺度的特徵會導致模型偏向大尺度欄位，透過標準化可使模型公平處理各欄\n位。"
+    },
+    {
+      "id": "mock_279",
+      "num": 279,
+      "difficulty": 4,
+      "question": "下列哪一項處理方式可降低時間序列資料中的「自相關性偏誤」？",
+      "options": {
+        "A": "對樣本進行隨機打散",
+        "B": "轉換為類別型資料",
+        "C": "應用移動平均或差分轉換（Differencing）",
+        "D": "建立主成分特徵"
+      },
+      "answer": "C",
+      "explanation": "差分轉換可將序列中固定間距的趨勢去除，使資料更穩定且符合時間序列建模假\n設。"
+    },
+    {
+      "id": "mock_280",
+      "num": 280,
+      "difficulty": 5,
+      "question": "針對缺失率高但具業務重要性的欄位，下列何者為最佳處理策略？",
+      "options": {
+        "A": "全部刪除該欄位",
+        "B": "隨機填補空值",
+        "C": "根據相似樣本進行補值或開闢遺失類別",
+        "D": "直接以 0 取代"
+      },
+      "answer": "C",
+      "explanation": "重要欄位不宜輕易刪除，應根據相似資料補值或將缺失視為一種資訊標記，避免資\n料流失或引入偏誤。"
+    },
+    {
+      "id": "mock_281",
+      "num": 281,
+      "difficulty": 1,
+      "question": "對數轉換（log transformation）最常用於哪種資料特性？",
+      "options": {
+        "A": "常態分布資料",
+        "B": "離散類別欄位",
+        "C": "右偏斜（右尾長）的連續變數",
+        "D": "資料集中為零"
+      },
+      "answer": "C",
+      "explanation": "對數轉換可拉近右偏資料的分布，使其更接近常態，常用於處理金額、銷售量等變\n數。"
+    },
+    {
+      "id": "mock_282",
+      "num": 282,
+      "difficulty": 2,
+      "question": "進行資料合併（merge）操作時，下列哪一項最應避免？",
+      "options": {
+        "A": "鍵值欄位出現重複",
+        "B": "欄位名稱相同但意義不同",
+        "C": "選錯 join 類型（如 inner vs outer）",
+        "D": "以上皆是"
+      },
+      "answer": "D",
+      "explanation": "資料合併易出現錯誤鍵值、錯誤 join 邏輯或欄位名稱混淆，需特別小心資料一致"
+    },
+    {
+      "id": "mock_283",
+      "num": 283,
+      "difficulty": 3,
+      "question": "下列何者是評估特徵「預測力」的重要方法？",
+      "options": {
+        "A": "特徵與模型損失值的平均差",
+        "B": "特徵與標籤間的互資訊（Mutual Information）",
+        "C": "標準差與最大值比率",
+        "D": "特徵名稱是否有意義"
+      },
+      "answer": "B",
+      "explanation": "互資訊可測量特徵對標籤的不確定性貢獻，是衡量非線性關係時的有效指標。"
+    },
+    {
+      "id": "mock_284",
+      "num": 284,
+      "difficulty": 4,
+      "question": "若要將類別型資料輸入至 XGBoost 模型，下列何者處理方式最合適？",
+      "options": {
+        "A": "標準化為 Z 分數",
+        "B": "Embedding Layer",
+        "C": "Label Encoding 或 Target Encoding",
+        "D": "使用獨熱編碼並強制標準化"
+      },
+      "answer": "C",
+      "explanation": "XGBoost 接受數值輸入，因此可將類別型欄位轉為整數編碼或基於目標變數的統計\n編碼。"
+    },
+    {
+      "id": "mock_285",
+      "num": 285,
+      "difficulty": 2,
+      "question": "以下哪一種欄位最可能成為「資訊洩漏特徵」？",
+      "options": {
+        "A": "銷售日期",
+        "B": "客戶年齡",
+        "C": "交易總金額（訓練階段包含未來資訊）",
+        "D": "商品分類"
+      },
+      "answer": "C",
+      "explanation": "若欄位在預測前不可取得（如未來營收），即為洩漏欄位，會導致模型評估虛高而無\n法實用。"
+    },
+    {
+      "id": "mock_286",
+      "num": 286,
+      "difficulty": 5,
+      "question": "高基數類別欄位（High Cardinality）在訓練模型時可能導致？",
+      "options": {
+        "A": "記憶體與計算負擔過大",
+        "B": "類別頻率變小使模型收斂速度增加",
+        "C": "過擬合風險降低",
+        "D": "模型不需要正規化"
+      },
+      "answer": "A",
+      "explanation": ""
+    },
+    {
+      "id": "mock_287",
+      "num": 287,
+      "difficulty": 3,
+      "question": "欄位資料若為「次序型類別」（如滿意度評等），應如何處理？",
+      "options": {
+        "A": "改為連續變數",
+        "B": "使用 One-Hot 編碼",
+        "C": "使用 Label Encoding 並保留順序關係",
+        "D": "資料全數刪除"
+      },
+      "answer": "C",
+      "explanation": "次序型資料應保留順序資訊（如 1~5 類），Label Encoding 可表達相對關係，但\n須小心模型是否能正確解釋數值。"
+    },
+    {
+      "id": "mock_288",
+      "num": 288,
+      "difficulty": 2,
+      "question": "若要觀察特徵對模型輸出的影響關係，可使用下列哪一種圖表？",
+      "options": {
+        "A": "直方圖",
+        "B": "SHAP 值視覺化圖（如 SHAP summary plot）",
+        "C": "ROC 曲線",
+        "D": "盒鬚圖"
+      },
+      "answer": "B",
+      "explanation": "SHAP 值可量化每個特徵對單一預測結果的影響，是解釋模型的重要工具。"
+    },
+    {
+      "id": "mock_289",
+      "num": 289,
+      "difficulty": 1,
+      "question": "在資料前處理中，欄位若被判定為常數值（例如全為「N/A」），建議？",
+      "options": {
+        "A": "強制進行標準化",
+        "B": "使用獨熱編碼",
+        "C": "刪除該欄位以減少無效特徵",
+        "D": "將其轉換為時間欄位"
+      },
+      "answer": "C",
+      "explanation": "若欄位中幾乎無變異（如全為一值），對預測無幫助且可能增加模型負擔，應予以刪\n除。"
+    },
+    {
+      "id": "mock_290",
+      "num": 290,
+      "difficulty": 4,
+      "question": "使用標準化後模型效能反而下降，可能的原因為？",
+      "options": {
+        "A": "模型參數太少",
+        "B": "使用了距離不敏感的模型（如決策樹）",
+        "C": "標準化後未將欄位重新命名",
+        "D": "使用 MinMax 而非 Z-score"
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_291",
+      "num": 291,
+      "difficulty": 1,
+      "question": "在建構監督式學習模型時，標籤欄位應具有什麼特性？",
+      "options": {
+        "A": "高共線性",
+        "B": "多為文字型別",
+        "C": "清晰可辨且與特徵有關聯性",
+        "D": "可以事後加入"
+      },
+      "answer": "C",
+      "explanation": "標籤應與特徵相關，若無清晰標籤或標籤資料混亂，將難以進行有效監督學習。"
+    },
+    {
+      "id": "mock_292",
+      "num": 292,
+      "difficulty": 2,
+      "question": "將分類任務標籤中的「其他類別」重新編為單一類別的作法稱為？",
+      "options": {
+        "A": "欄位轉換",
+        "B": "One-Hot Encoding",
+        "C": "類別合併（Category Consolidation）",
+        "D": "特徵標準化"
+      },
+      "answer": "C",
+      "explanation": "類別合併將低頻或不重要的類別歸為一群，有助減少維度與資料稀疏性。"
+    },
+    {
+      "id": "mock_293",
+      "num": 293,
+      "difficulty": 3,
+      "question": "在時間序列預測任務中，下列哪一種資料切分方法最適合？",
+      "options": {
+        "A": "隨機切分",
+        "B": "K-fold 交叉驗證",
+        "C": "滾動視窗切分（Rolling Window）",
+        "D": "類別分層切分"
+      },
+      "answer": "C",
+      "explanation": "時間序列具有時間依賴性，應採用滾動視窗或保留順序的方式避免未來資料洩漏。"
+    },
+    {
+      "id": "mock_294",
+      "num": 294,
+      "difficulty": 4,
+      "question": "資料集含有大量類別型欄位，若希望自動處理轉換、篩選與嵌入，建議使用？",
+      "options": {
+        "A": "手動標準化處理",
+        "B": "自動特徵工程工具（如 Featuretools、AutoFeat）",
+        "C": "字串轉向量模組",
+        "D": "群聚分析"
+      },
+      "answer": "B",
+      "explanation": ""
+    },
+    {
+      "id": "mock_295",
+      "num": 295,
+      "difficulty": 2,
+      "question": "使用 L1 正則化的回歸模型（如 Lasso）可同時完成下列哪一項工作？",
+      "options": {
+        "A": "類別資料編碼",
+        "B": "欄位尺度調整",
+        "C": "特徵選擇",
+        "D": "標籤平滑處理"
+      },
+      "answer": "C",
+      "explanation": "L1 正則化可使部分係數趨近零，進而達到變數選擇與簡化模型的效果。"
+    },
+    {
+      "id": "mock_296",
+      "num": 296,
+      "difficulty": 3,
+      "question": "為了驗證資料清理流程是否正確，下列哪一指標最具參考價值？",
+      "options": {
+        "A": "欄位名稱是否相同",
+        "B": "資料列總數",
+        "C": "資料清理前後模型表現變化",
+        "D": "欄位型別是否統一"
+      },
+      "answer": "C",
+      "explanation": "若清理後模型準確度大幅下降或異常提升，應重新檢查是否造成資料損失或資訊洩\n漏。"
+    },
+    {
+      "id": "mock_297",
+      "num": 297,
+      "difficulty": 4,
+      "question": "針對類別型資料進行 Target Encoding 時，需特別注意？",
+      "options": {
+        "A": "編碼後是否為正整數",
+        "B": "資料集中是否有重複列",
+        "C": "是否使用整體平均造成資料洩漏（Data Leakage）",
+        "D": "模型是否支援文字欄位"
+      },
+      "answer": "C",
+      "explanation": "Target Encoding 直接使用標籤資訊進行編碼，若在全資料上計算會導致預測時使\n用未來資訊。"
+    },
+    {
+      "id": "mock_298",
+      "num": 298,
+      "difficulty": 5,
+      "question": "若某特徵在訓練集與測試集的分佈差異極大，可能導致什麼現象？",
+      "options": {
+        "A": "模型表現更穩定",
+        "B": "測試集準確率過高",
+        "C": "模型泛化能力下降",
+        "D": "模型權重初始化錯誤"
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_299",
+      "num": 299,
+      "difficulty": 1,
+      "question": "將欄位名稱如 \"Revenue_2023_Q1\" 改為 \"revenue_q1\" 屬於哪一類操作？",
+      "options": {
+        "A": "特徵選擇",
+        "B": "資料正規化",
+        "C": "欄位標準命名與清理",
+        "D": "時間差值轉換"
+      },
+      "answer": "C",
+      "explanation": "欄位命名一致性有助於資料流維護與模型追蹤，是前處理流程中的一環。"
+    },
+    {
+      "id": "mock_300",
+      "num": 300,
+      "difficulty": 2,
+      "question": "在訓練模型前加入 PCA 處理的主要目的是？",
+      "options": {
+        "A": "強化資料隨機性",
+        "B": "增加資料筆數",
+        "C": "降低維度並移除多餘訊息",
+        "D": "模擬訓練誤差"
+      },
+      "answer": "C",
+      "explanation": "PCA 可降低維度、去除冗餘特徵、提升模型效率，並可能減少共線性問題。"
+    },
+    {
+      "id": "mock_301",
+      "num": 301,
+      "difficulty": 1,
+      "question": "哪一項評估指標適用於二元分類且衡量整體準確程度？",
+      "options": {
+        "A": "F1-score",
+        "B": "ROC AUC",
+        "C": "Accuracy",
+        "D": "MAE"
+      },
+      "answer": "C",
+      "explanation": "Accuracy 是所有預測中正確的比例，適用於類別平衡時的整體模型準確性評估。"
+    },
+    {
+      "id": "mock_302",
+      "num": 302,
+      "difficulty": 2,
+      "question": "下列哪一項指標可同時考慮 Precision 與 Recall 的平衡？",
+      "options": {
+        "A": "F1-score",
+        "B": "Specificity",
+        "C": "MSE",
+        "D": "Adjusted R-squared"
+      },
+      "answer": "A",
+      "explanation": ""
+    },
+    {
+      "id": "mock_303",
+      "num": 303,
+      "difficulty": 3,
+      "question": "若模型在訓練集表現優異但測試集表現不佳，最可能發生了什麼現象？",
+      "options": {
+        "A": "欠擬合（Underfitting）",
+        "B": "特徵選擇錯誤",
+        "C": "過擬合（Overfitting）",
+        "D": "標準化過度"
+      },
+      "answer": "C",
+      "explanation": "過擬合指模型記住訓練資料細節，無法泛化至新資料，通常表現在測試集效果下\n降。"
+    },
+    {
+      "id": "mock_304",
+      "num": 304,
+      "difficulty": 4,
+      "question": "使用 K-Fold Cross Validation 的主要優點為何？",
+      "options": {
+        "A": "減少特徵數量",
+        "B": "提升模型複雜度",
+        "C": "更穩健地評估模型泛化能力",
+        "D": "避免模型使用 GPU"
+      },
+      "answer": "C",
+      "explanation": "K-Fold 將資料多次切分訓練與驗證，平均得分更能反映模型在不同資料上的表現穩\n定性。"
+    },
+    {
+      "id": "mock_305",
+      "num": 305,
+      "difficulty": 2,
+      "question": "對於迴歸問題，以下哪一項為常見評估指標？",
+      "options": {
+        "A": "Accuracy",
+        "B": "RMSE（均方根誤差）",
+        "C": "ROC AUC",
+        "D": "Precision"
+      },
+      "answer": "B",
+      "explanation": "RMSE 衡量預測值與實際值的偏差程度，是評估連續型輸出回歸模型的重要指標。"
+    },
+    {
+      "id": "mock_306",
+      "num": 306,
+      "difficulty": 4,
+      "question": "在調整超參數時使用 Grid Search 的缺點為何？",
+      "options": {
+        "A": "不支援數值型特徵",
+        "B": "容易忽略最佳參數",
+        "C": "計算成本高，尤其在高維空間",
+        "D": "無法與交叉驗證結合"
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_307",
+      "num": 307,
+      "difficulty": 5,
+      "question": "哪一種特徵重要性技術可量化個別預測中每個特徵的貢獻？",
+      "options": {
+        "A": "Gini Impurity",
+        "B": "SHAP 值（SHapley Additive exPlanations）",
+        "C": "L1 正則化係數",
+        "D": "Gain from XGBoost"
+      },
+      "answer": "B",
+      "explanation": "SHAP 提供一致且可加總的特徵貢獻分數，可針對每筆樣本說明模型預測依據。"
+    },
+    {
+      "id": "mock_308",
+      "num": 308,
+      "difficulty": 2,
+      "question": "使用 Random Search 進行超參數調整的好處為？",
+      "options": {
+        "A": "不需訓練模型",
+        "B": "能遍歷所有參數組合",
+        "C": "能以較低成本探索大空間",
+        "D": "可自動清理資料"
+      },
+      "answer": "C",
+      "explanation": "Random Search 透過隨機抽樣探索參數空間，成本較低且更可能發現佳解。"
+    },
+    {
+      "id": "mock_309",
+      "num": 309,
+      "difficulty": 3,
+      "question": "在評估分類模型的混淆矩陣中，真正例（True Positive）代表什麼？",
+      "options": {
+        "A": "預測為正類且實際為負類",
+        "B": "預測與實際皆為正類",
+        "C": "實際為正類但預測錯誤",
+        "D": "模型未進行預測"
+      },
+      "answer": "B",
+      "explanation": "True Positive 指模型正確預測出正類樣本，是模型偵測能力的重要衡量之一。"
+    },
+    {
+      "id": "mock_310",
+      "num": 310,
+      "difficulty": 4,
+      "question": "下列哪一特徵選擇方法屬於 Wrapper 方法？",
+      "options": {
+        "A": "Variance Threshold",
+        "B": "Recursive Feature Elimination（RFE）",
+        "C": "Mutual Information",
+        "D": "SHAP"
+      },
+      "answer": "B",
+      "explanation": "Wrapper 方法如 RFE 是透過模型反覆訓練並移除特徵來選擇最佳子集，較具計算"
+    },
+    {
+      "id": "mock_311",
+      "num": 311,
+      "difficulty": 1,
+      "question": "模型過度擬合的常見特徵是？",
+      "options": {
+        "A": "訓練與測試誤差都很高",
+        "B": "測試準確率高於訓練集",
+        "C": "訓練表現良好，但測試集表現差",
+        "D": "模型不收斂"
+      },
+      "answer": "C",
+      "explanation": "過擬合是指模型記住訓練集細節，泛化能力弱，造成在測試集上準確率顯著下降。"
+    },
+    {
+      "id": "mock_312",
+      "num": 312,
+      "difficulty": 2,
+      "question": "哪一項特徵篩選方法屬於 Filter 類型？",
+      "options": {
+        "A": "Backward Elimination",
+        "B": "Lasso Regression",
+        "C": "Information Gain（資訊增益）",
+        "D": "Recursive Feature Elimination"
+      },
+      "answer": "C",
+      "explanation": "Filter 方法根據特徵與標籤間統計關係進行選擇，如資訊增益、皮爾森相關、卡方\n檢定等。"
+    },
+    {
+      "id": "mock_313",
+      "num": 313,
+      "difficulty": 3,
+      "question": "下列哪一技術可用於視覺化多個特徵對模型預測結果的整體貢獻？",
+      "options": {
+        "A": "ROC 曲線",
+        "B": "混淆矩陣",
+        "C": "SHAP Summary Plot",
+        "D": "Cross Validation 折線圖"
+      },
+      "answer": "C",
+      "explanation": "SHAP Summary Plot 同時顯示各特徵的 SHAP 值分布與重要性排序，是全球可解\n釋性工具代表之一。"
+    },
+    {
+      "id": "mock_314",
+      "num": 314,
+      "difficulty": 4,
+      "question": "若模型在驗證集中表現不穩定（波動劇烈），最可能的原因為？",
+      "options": {
+        "A": "資料量過多",
+        "B": "驗證資料切分方式有偏或樣本不足",
+        "C": "模型太簡單",
+        "D": "沒有使用正則化"
+      },
+      "answer": "B",
+      "explanation": ""
+    },
+    {
+      "id": "mock_315",
+      "num": 315,
+      "difficulty": 3,
+      "question": "Permutation Importance 的核心邏輯為？",
+      "options": {
+        "A": "逐步增加特徵數",
+        "B": "打亂某特徵值，觀察模型表現變化",
+        "C": "使用 SHAP 值累加總和",
+        "D": "測試資料做投影轉換"
+      },
+      "answer": "B",
+      "explanation": "Permutation Importance 評估打亂某特徵後模型性能下降的幅度，進而推估該特\n徵的重要性。"
+    },
+    {
+      "id": "mock_316",
+      "num": 316,
+      "difficulty": 5,
+      "question": "當處理高維稀疏資料時，最佳的特徵選擇策略為？",
+      "options": {
+        "A": "使用 SHAP 值篩選前 50% 特徵",
+        "B": "直接丟入深度學習模型",
+        "C": "L1 正則化（Lasso）進行稀疏特徵壓縮",
+        "D": "模型合併特徵並增高維度"
+      },
+      "answer": "C",
+      "explanation": "Lasso 可將不重要特徵權重逼近零，天然具特徵選擇效果，對稀疏資料表現佳。"
+    },
+    {
+      "id": "mock_317",
+      "num": 317,
+      "difficulty": 1,
+      "question": "在分類模型中，哪個指標可衡量負類被正確識別的能力？",
+      "options": {
+        "A": "Precision",
+        "B": "Specificity（特異度）",
+        "C": "Recall",
+        "D": "AUC"
+      },
+      "answer": "B",
+      "explanation": "Specificity 測量模型對於負類的識別能力，即 TN / (TN + FP)，在醫療等風險控制\n任務中非常重要。"
+    },
+    {
+      "id": "mock_318",
+      "num": 318,
+      "difficulty": 2,
+      "question": "ROC AUC 越接近 1 的意義為何？",
+      "options": {
+        "A": "模型擬合過度",
+        "B": "模型越無效",
+        "C": "模型分類效果越好",
+        "D": "模型越適合回歸"
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_319",
+      "num": 319,
+      "difficulty": 4,
+      "question": "在回歸問題中，若模型 R-squared 為 0.95，但測試集 RMSE 非常大，可能的情況是？",
+      "options": {
+        "A": "模型學習率過低",
+        "B": "測試資料標籤為分類值",
+        "C": "訓練資料中存在異常值或過擬合",
+        "D": "模型參數未更新"
+      },
+      "answer": "C",
+      "explanation": "高 R² 但高 RMSE 通常為模型在訓練集擬合過度，對新資料泛化不佳，或資料中\n有極端值影響指標。"
+    },
+    {
+      "id": "mock_320",
+      "num": 320,
+      "difficulty": 3,
+      "question": "哪一種策略可同時優化模型預測能力與解釋性？",
+      "options": {
+        "A": "使用黑箱模型 + 誤差調整",
+        "B": "改為無監督學習",
+        "C": "使用集成模型並搭配 SHAP 解釋特徵貢獻",
+        "D": "放棄特徵選擇流程"
+      },
+      "answer": "C",
+      "explanation": "集成模型可提升預測能力，而 SHAP 提供個別預測的透明解釋，是兼顧效能與可解\n釋性的組合。"
+    },
+    {
+      "id": "mock_321",
+      "num": 321,
+      "difficulty": 1,
+      "question": "在二元分類中，Precision 指的是？",
+      "options": {
+        "A": "所有預測為正的樣本中，實際正的比例",
+        "B": "所有正樣本中被正確預測的比例",
+        "C": "所有錯誤預測比例",
+        "D": "預測時間與樣本量比值"
+      },
+      "answer": "A",
+      "explanation": "Precision = TP / (TP + FP)，代表模型在預測為正樣本時，有多少是正確的。"
+    },
+    {
+      "id": "mock_322",
+      "num": 322,
+      "difficulty": 2,
+      "question": "下列哪個指標對於評估多分類模型的整體區分能力最有幫助？",
+      "options": {
+        "A": "Recall",
+        "B": "ROC AUC",
+        "C": "Macro F1-score",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_323",
+      "num": 323,
+      "difficulty": 3,
+      "question": "當模型產生「高偏差（High Bias）」時，代表什麼問題？",
+      "options": {
+        "A": "模型太複雜，學得過多",
+        "B": "模型無法學習到資料模式",
+        "C": "模型訓練資料太少",
+        "D": "模型對新資料適應力太強"
+      },
+      "answer": "B",
+      "explanation": "高偏差代表模型學習能力不足（如模型太簡單），導致無法擬合訓練資料，需提升模\n型複雜度。"
+    },
+    {
+      "id": "mock_324",
+      "num": 324,
+      "difficulty": 4,
+      "question": "若模型在交叉驗證中標準差高，可能表示什麼？",
+      "options": {
+        "A": "模型表現穩定",
+        "B": "各折間數據過度重複",
+        "C": "模型對資料切分極度敏感",
+        "D": "樣本數過多"
+      },
+      "answer": "C",
+      "explanation": "標準差大表示模型對不同資料切分結果差異大，可能導致泛化能力不穩。"
+    },
+    {
+      "id": "mock_325",
+      "num": 325,
+      "difficulty": 5,
+      "question": "下列哪一種方法最適合用於「多分類模型」的 SHAP 值解釋？",
+      "options": {
+        "A": "SHAP 值僅適用二元分類",
+        "B": "使用一對一方式建構 SHAP 結果",
+        "C": "直接計算每類別的 class-wise SHAP 值",
+        "D": "使用 PCA 將類別數縮減後再進行解釋"
+      },
+      "answer": "C",
+      "explanation": "多分類模型中，SHAP 可針對每個類別獨立計算特徵貢獻，並以 softmax 前\nlogits 為基礎提供解釋。"
+    },
+    {
+      "id": "mock_326",
+      "num": 326,
+      "difficulty": 2,
+      "question": "模型預測錯誤類型中，False Negative 對醫療應用代表？",
+      "options": {
+        "A": "不重要的錯誤",
+        "B": "將健康者誤判為有病",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_327",
+      "num": 327,
+      "difficulty": 3,
+      "question": "使用哪一種方法可避免模型調參時造成過度依賴特定資料切分？",
+      "options": {
+        "A": "固定隨機種子",
+        "B": "使用 K-fold Cross Validation",
+        "C": "擴大訓練資料",
+        "D": "選擇較小模型"
+      },
+      "answer": "B",
+      "explanation": "K-fold 可減少評估受特定資料切分影響，使調參結果更穩定可靠。"
+    },
+    {
+      "id": "mock_328",
+      "num": 328,
+      "difficulty": 4,
+      "question": "哪一項特徵選擇策略可視為「Embedded」方法？",
+      "options": {
+        "A": "SHAP",
+        "B": "Lasso（L1 正則化）",
+        "C": "F-score 排序",
+        "D": "Recursive Feature Elimination"
+      },
+      "answer": "B",
+      "explanation": "Embedded 方法於模型訓練同時進行特徵選擇，L1 正則化具備此效果，可自動將\n不重要特徵係數歸零。"
+    },
+    {
+      "id": "mock_329",
+      "num": 329,
+      "difficulty": 1,
+      "question": "下列哪一項用於評估回歸模型的誤差指標？",
+      "options": {
+        "A": "MAE（平均絕對誤差）",
+        "B": "Precision",
+        "C": "ROC AUC",
+        "D": "F1-score"
+      },
+      "answer": "A",
+      "explanation": "MAE 衡量預測值與實際值的平均誤差，是迴歸模型常用的評估方式之一。"
+    },
+    {
+      "id": "mock_330",
+      "num": 330,
+      "difficulty": 3,
+      "question": "在多模型比較中，何種方法可進行模型統計顯著性差異檢定？",
+      "options": {
+        "A": "Chi-square Test",
+        "B": "Paired t-test 或 Wilcoxon Signed-Rank Test",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_331",
+      "num": 331,
+      "difficulty": 1,
+      "question": "下列哪個指標常用於評估線性回歸模型的解釋能力？",
+      "options": {
+        "A": "ROC AUC",
+        "B": "R-squared（決定係數）",
+        "C": "F1-score",
+        "D": "Confusion Matrix"
+      },
+      "answer": "B",
+      "explanation": "R-squared 反映模型解釋變異的能力，數值越接近 1 表示越能擬合資料。"
+    },
+    {
+      "id": "mock_332",
+      "num": 332,
+      "difficulty": 2,
+      "question": "何種方法可用於偵測模型是否過擬合？",
+      "options": {
+        "A": "增加特徵數",
+        "B": "使用相同資料測試模型",
+        "C": "比較訓練與測試集的準確率差異",
+        "D": "固定 batch size"
+      },
+      "answer": "C",
+      "explanation": "若訓練準確率高而測試表現明顯較差，表示模型可能過擬合訓練資料。"
+    },
+    {
+      "id": "mock_333",
+      "num": 333,
+      "difficulty": 3,
+      "question": "哪一個圖形最常用來視覺化二元分類模型的效能？",
+      "options": {
+        "A": "樞紐分析圖",
+        "B": "ROC 曲線",
+        "C": "直方圖",
+        "D": "熱力圖"
+      },
+      "answer": "B",
+      "explanation": "ROC 曲線可視覺化模型的 TP 與 FP 之間的權衡，常用於比較不同分類模型效\n能。"
+    },
+    {
+      "id": "mock_334",
+      "num": 334,
+      "difficulty": 4,
+      "question": "模型精度變動幅度大，可能與下列哪一項因素最相關？",
+      "options": {
+        "A": "預測值類別數太少",
+        "B": "標籤編碼方式一致",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_335",
+      "num": 335,
+      "difficulty": 3,
+      "question": "SHAP 值圖表中的「base value」表示什麼？",
+      "options": {
+        "A": "所有特徵的最大重要性",
+        "B": "預測為正類的門檻值",
+        "C": "沒有特徵時模型的平均預測值",
+        "D": "模型的最終分數"
+      },
+      "answer": "C",
+      "explanation": "SHAP base value 是模型在無任何特徵資訊時的預測值，個別特徵貢獻為此值的偏\n移。"
+    },
+    {
+      "id": "mock_336",
+      "num": 336,
+      "difficulty": 5,
+      "question": "當模型使用大量特徵時，最容易遇到什麼問題？",
+      "options": {
+        "A": "過少訓練樣本",
+        "B": "模型反而變得簡單",
+        "C": "計算資源過剩",
+        "D": "特徵共線性與過擬合風險提高"
+      },
+      "answer": "D",
+      "explanation": "特徵數過多會增加模型複雜度與冗餘性，易造成過擬合與模型不穩定，需進行特徵\n選擇或正則化。"
+    },
+    {
+      "id": "mock_337",
+      "num": 337,
+      "difficulty": 1,
+      "question": "交叉驗證主要的目的為何？",
+      "options": {
+        "A": "增加模型參數",
+        "B": "創造新特徵",
+        "C": "更穩定地估計模型泛化能力",
+        "D": "節省儲存空間"
+      },
+      "answer": "C",
+      "explanation": "交叉驗證可利用不同切分組合，提升模型評估的代表性與穩定性，尤其在樣本數較\n少時效果顯著。"
+    },
+    {
+      "id": "mock_338",
+      "num": 338,
+      "difficulty": 2,
+      "question": "以下哪一策略可提升模型泛化能力？",
+      "options": {
+        "A": "增加訓練次數直到過擬合",
+        "B": "",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_339",
+      "num": 339,
+      "difficulty": 4,
+      "question": "模型選擇與調參過程中，若目的是提升模型在新資料上的表現，應優先依據？",
+      "options": {
+        "A": "訓練集得分",
+        "B": "測試集得分",
+        "C": "驗證集得分或交叉驗證平均分數",
+        "D": "模型檔案大小"
+      },
+      "answer": "C",
+      "explanation": "驗證集或交叉驗證得分最能代表模型在未見資料上的泛化能力，是選擇與調整模型\n依據。"
+    },
+    {
+      "id": "mock_340",
+      "num": 340,
+      "difficulty": 5,
+      "question": "在特徵重要性排序中，若某一特徵在訓練與測試資料間重要性落差很大，可能代表？",
+      "options": {
+        "A": "特徵無需再標準化",
+        "B": "特徵與目標值完美相關",
+        "C": "資料漂移或模型過擬合特定樣本",
+        "D": "測試資料錯誤標註"
+      },
+      "answer": "C",
+      "explanation": "特徵重要性差異大可能表示模型只對訓練樣本學得太好，未能泛化至測試資料，或\n資料分布有變化。"
+    },
+    {
+      "id": "mock_341",
+      "num": 341,
+      "difficulty": 1,
+      "question": "當模型對正類辨識力強，但誤判負類為正類過多，會出現哪一問題？",
+      "options": {
+        "A": "Precision 高，Recall 低",
+        "B": "Recall 高，Precision 低",
+        "C": "AUC 等於 1",
+        "D": "Accuracy = Recall"
+      },
+      "answer": "B",
+      "explanation": "Recall 高表示大部分正類都被抓到，但若 Precision 低代表很多預測為正的其實是\n錯誤的。"
+    },
+    {
+      "id": "mock_342",
+      "num": 342,
+      "difficulty": 2,
+      "question": "下列哪一策略有助於改善回歸模型對異常值的敏感度？",
+      "options": {
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_343",
+      "num": 343,
+      "difficulty": 3,
+      "question": "模型選擇過程中，若希望以效能與模型簡潔度同時為目標，應該考慮哪種技術？",
+      "options": {
+        "A": "模型集成",
+        "B": "SHAP 解釋器",
+        "C": "正則化與特徵選擇策略",
+        "D": "Deep Neural Network"
+      },
+      "answer": "C",
+      "explanation": "正則化可防止過擬合，特徵選擇則有助於提升模型可解釋性與運算效率。"
+    },
+    {
+      "id": "mock_344",
+      "num": 344,
+      "difficulty": 4,
+      "question": "在使用模型進行預測後，若要了解某特徵對所有預測結果的「總體貢獻」，建議採用：",
+      "options": {
+        "A": "LIME 解釋每個個體預測",
+        "B": "特徵重要性視覺化（如 SHAP Summary）",
+        "C": "調整模型學習率",
+        "D": "加大特徵向量"
+      },
+      "answer": "B",
+      "explanation": "SHAP Summary 可整體呈現各特徵對模型預測的影響力與正負趨勢，是可解釋性\n分析的重要工具。"
+    },
+    {
+      "id": "mock_345",
+      "num": 345,
+      "difficulty": 2,
+      "question": "在 F1-score 計算中，Precision 與 Recall 權重分配為？",
+      "options": {
+        "A": "7:3",
+        "B": "1:1（調和平均）",
+        "C": "僅看 Precision",
+        "D": "僅看 Recall"
+      },
+      "answer": "B",
+      "explanation": "F1-score 是 Precision 與 Recall 的調和平均，強調兩者平衡，避免偏重一方。"
+    },
+    {
+      "id": "mock_346",
+      "num": 346,
+      "difficulty": 5,
+      "question": "若模型在不同時間段表現逐漸惡化，最可能出現了什麼現象？",
+      "options": {
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_347",
+      "num": 347,
+      "difficulty": 3,
+      "question": "Permutation Importance 有哪一限制？",
+      "options": {
+        "A": "無法針對分類任務使用",
+        "B": "只能用於無監督模型",
+        "C": "特徵之間若高度相關，重要性會被低估",
+        "D": "無法針對深度學習使用"
+      },
+      "answer": "C",
+      "explanation": "若特徵高度共線，打亂其中一個特徵時其他仍可補償，造成重要性低估。"
+    },
+    {
+      "id": "mock_348",
+      "num": 348,
+      "difficulty": 2,
+      "question": "哪一種方法可用於快速測試特徵與類別變數之間是否有關聯？",
+      "options": {
+        "A": "隨機森林",
+        "B": "卡方檢定（Chi-Square Test）",
+        "C": "PCA",
+        "D": "MAE"
+      },
+      "answer": "B",
+      "explanation": "卡方檢定可用於類別變數間關聯性檢驗，是特徵篩選中的常見統計方法。"
+    },
+    {
+      "id": "mock_349",
+      "num": 349,
+      "difficulty": 4,
+      "question": "在特徵重要性分析中，Gain（信息增益）主要衡量什麼？",
+      "options": {
+        "A": "模型的準確率",
+        "B": "特徵在模型中被引用次數",
+        "C": "特徵在分裂時貢獻的資訊量減少",
+        "D": "模型深度"
+      },
+      "answer": "C",
+      "explanation": "Gain 衡量每個特徵在提升純度或降低損失中的貢獻量，常見於 XGBoost 等樹模\n型中。"
+    },
+    {
+      "id": "mock_350",
+      "num": 350,
+      "difficulty": 1,
+      "question": "若模型預測與真實標籤一致率為 0.85，代表？",
+      "options": {
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_351",
+      "num": 351,
+      "difficulty": 1,
+      "question": "以下哪一個概念是資料隱私保護的核心原則？",
+      "options": {
+        "A": "資料可擴展性",
+        "B": "資料最小化（Data Minimization）",
+        "C": "資料去重處理",
+        "D": "資料可壓縮性"
+      },
+      "answer": "B",
+      "explanation": "資料最小化指收集、使用資料僅限於達成明確目的所需的最少範圍，是隱私保護的\n重要原則。"
+    },
+    {
+      "id": "mock_352",
+      "num": 352,
+      "difficulty": 2,
+      "question": "GDPR 的資料主體權利中，以下哪一項屬於「被遺忘權」？",
+      "options": {
+        "A": "要求修正錯誤資料",
+        "B": "要求資料轉移至其他服務",
+        "C": "要求刪除個人資料",
+        "D": "要求暫停處理資料"
+      },
+      "answer": "C",
+      "explanation": "「被遺忘權」（Right to be Forgotten）讓個人有權要求刪除其個人資料，特別在資\n料處理目的消失後。"
+    },
+    {
+      "id": "mock_353",
+      "num": 353,
+      "difficulty": 3,
+      "question": "差分隱私（Differential Privacy）的主要目標為？",
+      "options": {
+        "A": "提高資料查詢速度",
+        "B": "在保證隱私的前提下提供統計結果",
+        "C": "改善資料一致性",
+        "D": "增加模型泛化能力"
+      },
+      "answer": "B",
+      "explanation": "差分隱私透過增加隨機噪音，讓外部無法確認特定個體是否在資料集中，同時保留\n統計可用性。"
+    },
+    {
+      "id": "mock_354",
+      "num": 354,
+      "difficulty": 4,
+      "question": "在公平性評估中，Demographic Parity 指的是？",
+      "options": {
+        "A": "所有群體預測準確率相等",
+        "B": "預測結果在不同群體中分布相同",
+        "C": "模型特徵權重相等",
+        "D": "模型複雜度相等"
+      },
+      "answer": "B",
+      "explanation": "Demographic Parity 意味著預測正類機率不因群體特徵（如性別、族群）而有顯\n著差異。"
+    },
+    {
+      "id": "mock_355",
+      "num": 355,
+      "difficulty": 2,
+      "question": "下列哪一項屬於 NIST AI RMF（AI 風險管理框架）的核心構面？",
+      "options": {
+        "A": "資料壓縮策略",
+        "B": "模型可運算複雜度",
+        "C": "可解釋性與透明性",
+        "D": "演算法並行效率"
+      },
+      "answer": "C",
+      "explanation": "NIST AI RMF 強調可信任 AI，包括公平性、透明性、可解釋性、隱私與安全。"
+    },
+    {
+      "id": "mock_356",
+      "num": 356,
+      "difficulty": 4,
+      "question": "「Equal Opportunity」公平性定義的核心是？",
+      "options": {
+        "A": "所有預測結果相同",
+        "B": "不同群體的 True Positive Rate 相同",
+        "C": "不同群體的 False Positive Rate 相同",
+        "D": "模型精度必須一致"
+      },
+      "answer": "B",
+      "explanation": "Equal Opportunity 專注於正類被正確預測的機率（TPR）在不同群體之間無顯著\n差異。"
+    },
+    {
+      "id": "mock_357",
+      "num": 357,
+      "difficulty": 3,
+      "question": "哪一種技術能以局部方式說明單一樣本預測？",
+      "options": {
+        "A": "SHAP Summary Plot",
+        "B": "LIME（Local Interpretable Model-agnostic Explanations）",
+        "C": "Permutation Importance",
+        "D": "Mutual Information"
+      },
+      "answer": "B",
+      "explanation": "LIME 隨機擾動輸入並學習局部近似模型，專門用於單一預測結果的可解釋性。"
+    },
+    {
+      "id": "mock_358",
+      "num": 358,
+      "difficulty": 1,
+      "question": "模型卡（Model Card）的目的是？",
+      "options": {
+        "A": "測試 API 效能",
+        "B": "記錄模型參數調整歷史",
+        "C": "提供模型用途、限制與公平性資訊",
+        "D": "驗證模型運行速度"
+      },
+      "answer": "C",
+      "explanation": "Model Card 是用於說明模型應用範圍、倫理風險、偏見與性能的透明性文件。"
+    },
+    {
+      "id": "mock_359",
+      "num": 359,
+      "difficulty": 4,
+      "question": "若模型訓練資料主要來自特定族群，最可能的風險是？",
+      "options": {
+        "A": "模型效能過高",
+        "B": "模型壓縮失敗",
+        "C": "表示偏差（Representation Bias）",
+        "D": "資料漂移"
+      },
+      "answer": "C",
+      "explanation": "資料樣本偏重特定群體會導致模型學習到偏頗的分布，造成對其他群體表現不佳。"
+    },
+    {
+      "id": "mock_360",
+      "num": 360,
+      "difficulty": 2,
+      "question": "以下哪一技術可支援公平性評估與減偏？",
+      "options": {
+        "A": "Fairlearn",
+        "B": "TensorBoard",
+        "C": "Scikit-Learn Pipeline",
+        "D": "XGBoost DMatrix"
+      },
+      "answer": "A",
+      "explanation": "Fairlearn 是專門用於模型公平性分析、調整與評估的 Python 工具包。"
+    },
+    {
+      "id": "mock_361",
+      "num": 361,
+      "difficulty": 1,
+      "question": "OECD 人工智慧原則中，哪一項為資料治理的核心精神？",
+      "options": {
+        "A": "模型部署流程自動化",
+        "B": "提供最大資料共享自由度",
+        "C": "保護個人資料與隱私",
+        "D": "加速 GPU 運算能力"
+      },
+      "answer": "C",
+      "explanation": "OECD 強調應確保 AI 系統尊重法治、人權、民主與資料隱私，其中個人資料保護\n是基本原則。"
+    },
+    {
+      "id": "mock_362",
+      "num": 362,
+      "difficulty": 2,
+      "question": "AI ACT 對於高風險 AI 系統要求必須？",
+      "options": {
+        "A": "支援即時翻譯",
+        "B": "降低模型複雜度",
+        "C": "進行風險評估與透明性義務",
+        "D": "僅限在私有雲上部署"
+      },
+      "answer": "C",
+      "explanation": "歐盟 AI ACT 對於高風險系統規定須符合如資料品質、可解釋性、人機監督與帳責\n等義務。"
+    },
+    {
+      "id": "mock_363",
+      "num": 363,
+      "difficulty": 3,
+      "question": "「k-Anonymity」技術主要應用於？",
+      "options": {
+        "A": "確保回歸預測準確性",
+        "B": "加強語音辨識精度",
+        "C": "使個人資料無法被識別",
+        "D": "增強特徵重要性排名"
+      },
+      "answer": "C",
+      "explanation": "k-Anonymity 將資料處理為至少 k 個樣本無法互相區分的方式，用於隱私強化與\n去識別化。"
+    },
+    {
+      "id": "mock_364",
+      "num": 364,
+      "difficulty": 4,
+      "question": "資料治理中的「資料譜系（Data Lineage）」主要目的是？",
+      "options": {
+        "A": "測試模型更新速度",
+        "B": "追蹤資料從來源到模型的流動與轉換歷程",
+        "C": "加密所有特徵欄位",
+        "D": "追蹤伺服器端資料訪問"
+      },
+      "answer": "B",
+      "explanation": "Data Lineage 描述資料從產生、轉換、流動到應用的全流程，是實施透明化與審計\n控制的關鍵基礎。"
+    },
+    {
+      "id": "mock_365",
+      "num": 365,
+      "difficulty": 2,
+      "question": "AI 模型可能產生偏見的主要來源不包括？",
+      "options": {
+        "A": "訓練資料不平衡",
+        "B": "模型架構含注意力機制",
+        "C": "標註過程中帶入主觀意見",
+        "D": "代表性樣本不足"
+      },
+      "answer": "B",
+      "explanation": "模型產生偏見通常源自資料與標註偏誤、樣本分布不均；注意力機制本身並不導致"
+    },
+    {
+      "id": "mock_366",
+      "num": 366,
+      "difficulty": 4,
+      "question": "為提升模型公平性而加入「公平性限制」屬於哪一階段策略？",
+      "options": {
+        "A": "資料前處理",
+        "B": "模型內處理（In-processing）",
+        "C": "後處理視覺化",
+        "D": "模型壓縮階段"
+      },
+      "answer": "B",
+      "explanation": "In-processing 方法直接在訓練過程中調整目標函數或參數，以內嵌公平性限制達\n到減偏目的。"
+    },
+    {
+      "id": "mock_367",
+      "num": 367,
+      "difficulty": 3,
+      "question": "以下哪一策略可減緩資料中少數族群樣本不足的問題？",
+      "options": {
+        "A": "模型壓縮",
+        "B": "多重交叉驗證",
+        "C": "SMOTE（合成少數樣本）",
+        "D": "模型量化"
+      },
+      "answer": "C",
+      "explanation": "SMOTE 是常用的過取樣方法，能合成少數類別資料，提升訓練資料的均衡性。"
+    },
+    {
+      "id": "mock_368",
+      "num": 368,
+      "difficulty": 1,
+      "question": "模型公平性評估中，若各群體的 Precision 相近，表示？",
+      "options": {
+        "A": "模型中立無偏見",
+        "B": "所有群體預測皆為正類",
+        "C": "模型對不同群體預測精確度相近",
+        "D": "模型無法進行預測"
+      },
+      "answer": "C",
+      "explanation": "Precision 相近表示各群體中被預測為正類的正確性一致，是衡量公平性的一項依\n據。"
+    },
+    {
+      "id": "mock_369",
+      "num": 369,
+      "difficulty": 5,
+      "question": "若模型輸出結果易被特定輸入微幅變化操控，可能出現？",
+      "options": {
+        "A": "偽陰性",
+        "B": "資料漂移",
+        "C": "對抗樣本風險（Adversarial Vulnerability）",
+        "D": "多重共線性"
+      },
+      "answer": "C",
+      "explanation": ""
+    },
+    {
+      "id": "mock_370",
+      "num": 370,
+      "difficulty": 2,
+      "question": "若希望公部門 AI 系統能強化問責與公信力，以下哪一措施最有助益？",
+      "options": {
+        "A": "使用最新語言模型",
+        "B": "增加預算與模型效能",
+        "C": "建立透明的模型紀錄與外部審查機制",
+        "D": "將模型嵌入網站前端"
+      },
+      "answer": "C",
+      "explanation": "透明紀錄、可稽核性與利害關係人參與是強化政府 AI 合規性與信任的關鍵作法。"
+    },
+    {
+      "id": "mock_371",
+      "num": 371,
+      "difficulty": 1,
+      "question": "可信任 AI 系統應具備哪一項特性？",
+      "options": {
+        "A": "支援無限迴圈訓練",
+        "B": "可解釋、可靠且尊重隱私",
+        "C": "完全由 AI 自主決策",
+        "D": "對少數群體強化優先預測"
+      },
+      "answer": "B",
+      "explanation": "可信任 AI 強調透明性、隱私保護、避免偏見、強化監督與問責，是設計與治理核\n心原則。"
+    },
+    {
+      "id": "mock_372",
+      "num": 372,
+      "difficulty": 2,
+      "question": "下列哪一個作法有助於確保模型合規性並可被溯源審計？",
+      "options": {
+        "A": "開放所有模型源碼",
+        "B": "建立模型卡並記錄資料來源、用途與限制",
+        "C": "每次訓練均使用隨機權重初始化",
+        "D": "使用 k-最近鄰演算法"
+      },
+      "answer": "B",
+      "explanation": "模型卡（Model Card）制度化記錄模型用途、資料、風險與限制，支援問責與合規\n性審查。"
+    },
+    {
+      "id": "mock_373",
+      "num": 373,
+      "difficulty": 3,
+      "question": "哪一項資料處理技術可實現資料匿名但仍保留聚合分析價值？",
+      "options": {
+        "A": "Base64 編碼",
+        "B": "AES 加密",
+        "C": "差分隱私（Differential Privacy）",
+        "D": "Hash 值比對"
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_374",
+      "num": 374,
+      "difficulty": 4,
+      "question": "若希望使用者可針對 AI 判斷提出異議並要求人類審查，這屬於哪一項 AI 合規要求？",
+      "options": {
+        "A": "黑箱模型優先使用原則",
+        "B": "使用者主動學習義務",
+        "C": "可追溯性與人機監督（Human-in-the-loop）",
+        "D": "精準建模策略"
+      },
+      "answer": "C",
+      "explanation": "AI 系統須設計人類監督與干預機制，避免全自動決策失誤造成個人損害，是 AI\nACT 等法規核心條款。"
+    },
+    {
+      "id": "mock_375",
+      "num": 375,
+      "difficulty": 2,
+      "question": "以下哪種視覺化方法可協助呈現模型輸出在不同群體間的公平性差異？",
+      "options": {
+        "A": "Loss Curve",
+        "B": "ROC 曲線",
+        "C": "Disparity Plot（群體差異圖）",
+        "D": "PCA 投影圖"
+      },
+      "answer": "C",
+      "explanation": "Disparity Plot 可直觀展示模型指標（如 Precision、Recall）在不同子群體間是否\n有系統性差距。"
+    },
+    {
+      "id": "mock_376",
+      "num": 376,
+      "difficulty": 5,
+      "question": "在部署 AI 系統時加入安全監控與異常行為偵測屬於哪一種控制類型？",
+      "options": {
+        "A": "資料治理",
+        "B": "預訓練壓縮策略",
+        "C": "後處理控制（Post-processing safeguards）",
+        "D": "特徵工程優化"
+      },
+      "answer": "C",
+      "explanation": "後處理控制包含部署後階段針對風險進行監控與應變，如模型行為審查、輸出監測\n與錯誤攔截。"
+    },
+    {
+      "id": "mock_377",
+      "num": 377,
+      "difficulty": 3,
+      "question": "AI 在金融領域的應用若涉及自動核貸，應特別強化下列哪一項？",
+      "options": {
+        "A": "GPU 計算效能",
+        "B": "銀行密碼加密機制",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_378",
+      "num": 378,
+      "difficulty": 2,
+      "question": "AI ACT 對於「不可接受風險」的 AI 系統規範為？",
+      "options": {
+        "A": "允許自由訓練但禁止商用",
+        "B": "需要額外申請 API 驗證",
+        "C": "禁止設計、開發與使用",
+        "D": "需送交開源社群審查"
+      },
+      "answer": "C",
+      "explanation": "如社會評分、操縱行為等 AI 被列為不可接受風險，於歐盟法規下禁止開發與部\n署。"
+    },
+    {
+      "id": "mock_379",
+      "num": 379,
+      "difficulty": 4,
+      "question": "若企業導入 AI 系統但缺乏資料處理與風險流程文檔，將違反哪一項原則？",
+      "options": {
+        "A": "高效能原則",
+        "B": "模型壓縮透明性",
+        "C": "可問責性與可稽核性原則",
+        "D": "GPU 負載均衡原則"
+      },
+      "answer": "C",
+      "explanation": "合規 AI 須具備可被外部審查的文檔與紀錄，若缺乏則違反問責與審核標準。"
+    },
+    {
+      "id": "mock_380",
+      "num": 380,
+      "difficulty": 1,
+      "question": "下列哪一方法可於資料前處理階段降低未來的公平性風險？",
+      "options": {
+        "A": "隨機重編類別標籤",
+        "B": "過濾具有偏見傾向的欄位（如性別）",
+        "C": "訓練資料標準化後加入白噪音",
+        "D": "將所有資料改為同一類別"
+      },
+      "answer": "B",
+      "explanation": "若某些欄位如性別、種族等可能導致不公平結果，應評估其必要性，必要時移除或\n去偏處理。"
+    },
+    {
+      "id": "mock_381",
+      "num": 381,
+      "difficulty": 1,
+      "question": "AI ACT 將 AI 系統依風險劃分為哪幾類？",
+      "options": {
+        "A": "高、中、低、不可接受風險",
+        "B": "",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_382",
+      "num": 382,
+      "difficulty": 2,
+      "question": "以下哪一措施最能強化 AI 模型的問責性（Accountability）？",
+      "options": {
+        "A": "使用 GPU 加速",
+        "B": "模型加密",
+        "C": "保留模型訓練紀錄與調參紀錄",
+        "D": "刪除測試資料以避免洩漏"
+      },
+      "answer": "C",
+      "explanation": "問責性要求 AI 系統開發與使用過程可追蹤與可說明，需建立完整記錄以支援審查\n與責任界定。"
+    },
+    {
+      "id": "mock_383",
+      "num": 383,
+      "difficulty": 3,
+      "question": "使用 SHAP 值分析模型公平性時，下列敘述何者正確？",
+      "options": {
+        "A": "SHAP 值不能用於類別資料",
+        "B": "SHAP 僅能解釋整體平均效果",
+        "C": "SHAP 可用來觀察特定群體是否因特定特徵受到不公平影響",
+        "D": "SHAP 僅適用於非監督學習"
+      },
+      "answer": "C",
+      "explanation": "SHAP 可量化特徵對每個預測的貢獻，有助於辨識特定群體是否因特定變數受偏見\n影響。"
+    },
+    {
+      "id": "mock_384",
+      "num": 384,
+      "difficulty": 4,
+      "question": "資料前處理時若發現某特徵在不同群體中分布差異極大，應優先進行什麼處理？",
+      "options": {
+        "A": "將其標準化",
+        "B": "採用主成分分析降維",
+        "C": "審查其是否為潛在偏見來源",
+        "D": "將其視為高重要性特徵保留"
+      },
+      "answer": "C",
+      "explanation": "特徵若在群體間表現差異大，可能導致結果偏誤，需進一步審查其是否造成不公平\n預測。"
+    },
+    {
+      "id": "mock_385",
+      "num": 385,
+      "difficulty": 2,
+      "question": "差分隱私實作中的「ε（epsilon）」參數代表什麼？",
+      "options": {
+        "A": "模型壓縮率",
+        "B": "噪音強度，值越小代表隱私保護越強",
+        "C": "模型訓練次數",
+        "D": "欄位總數"
+      },
+      "answer": "B",
+      "explanation": "ε 值控制可容許的資訊洩漏範圍，值越小代表保護越強，但資料可用性也會降低。"
+    },
+    {
+      "id": "mock_386",
+      "num": 386,
+      "difficulty": 5,
+      "question": "AI 系統若違反公平性原則造成歧視，依 AI ACT 要求，負責方應具備哪項能力？",
+      "options": {
+        "A": "證明使用深度模型不可避免",
+        "B": "說明模型所有內部參數",
+        "C": "提供模型行為說明與歧視風險緩解措施",
+        "D": "使用外部 API 接口授權函"
+      },
+      "answer": "C",
+      "explanation": "AI ACT 要求高風險 AI 必須能提供模型行為邏輯、偏見來源分析與減偏措施，強化\n責任歸屬。"
+    },
+    {
+      "id": "mock_387",
+      "num": 387,
+      "difficulty": 3,
+      "question": "下列哪一類資料最常導致「歷史偏見（Historical Bias）」？",
+      "options": {
+        "A": "來自即時感測器資料",
+        "B": "人為標註的歷史決策結果",
+        "C": "從隨機產生器產出的訓練資料",
+        "D": "機器模擬生成資料"
+      },
+      "answer": "B",
+      "explanation": "歷史偏見通常來自過往決策中的系統性不公（如過去招聘歧視），模型從中學習導致\n再現不公平。"
+    },
+    {
+      "id": "mock_388",
+      "num": 388,
+      "difficulty": 2,
+      "question": "在資料治理流程中，誰應負責確認資料使用是否符合法規與目的限制？",
+      "options": {
+        "A": "系統開發者",
+        "B": "資料分析師",
+        "C": "資料治理負責人（Data Steward / Data Governance Officer）",
+        "D": "網頁設計師"
+      },
+      "answer": "C",
+      "explanation": "Data Steward 是資料治理制度中的核心角色，負責管理資料資產、用途與合規\n性。"
+    },
+    {
+      "id": "mock_389",
+      "num": 389,
+      "difficulty": 4,
+      "question": "若某 AI 模型被指控存在偏見，下列哪一項是首要的技術檢視項目？",
+      "options": {
+        "A": "是否有做資料壓縮",
+        "B": "預測延遲是否合規",
+        "C": "訓練資料來源與特徵分布是否不均",
+        "D": "模型檔案大小是否超過閾值"
+      },
+      "answer": "C",
+      "explanation": "偏見常源於資料階段，需首先檢視是否樣本分布、特徵設計本身已導致不公平結\n果。"
+    },
+    {
+      "id": "mock_390",
+      "num": 390,
+      "difficulty": 1,
+      "question": "以下哪一指標常用於檢測不同群體間的預測正類比率差異？",
+      "options": {
+        "A": "Accuracy",
+        "B": "Equal Opportunity Gap",
+        "C": "Demographic Parity",
+        "D": "Mean Absolute Error"
+      },
+      "answer": "C",
+      "explanation": "Demographic Parity 測量不同群體預測為正類的機率是否一致，是公平性分析的\n基本指標之一。"
+    },
+    {
+      "id": "mock_391",
+      "num": 391,
+      "difficulty": 1,
+      "question": "以下哪一措施可提升模型的可解釋性？",
+      "options": {
+        "A": "使用無監督學習",
+        "B": "採用決策樹或邏輯回歸模型",
+        "C": "改為全黑箱模型訓練",
+        "D": "增加訓練次數"
+      },
+      "answer": "B",
+      "explanation": "決策樹與邏輯回歸屬於具高度可解釋性的模型，其決策邏輯清晰、可追蹤。"
+    },
+    {
+      "id": "mock_392",
+      "num": 392,
+      "difficulty": 2,
+      "question": "下列哪一項符合 GDPR 的「資料可攜性」原則？",
+      "options": {
+        "A": "個人可下載自己的資料並轉移到其他平台",
+        "B": "資料僅可透過法院請求查看",
+        "C": "使用者需支付 API 存取費用",
+        "D": "僅可匯出圖片格式資料"
+      },
+      "answer": "A",
+      "explanation": "資料可攜性（Data Portability）讓個人可存取並將自己的資料轉移給其他資料控制\n者。"
+    },
+    {
+      "id": "mock_393",
+      "num": 393,
+      "difficulty": 3,
+      "question": "哪一項技術可降低模型在接收到具偏見特徵值時產生不公平預測的風險？",
+      "options": {
+        "A": "降維處理",
+        "B": "加入公平性調整損失函數（Fairness-Aware Loss）",
+        "C": "強化 GPU 資源",
+        "D": "增加測試資料比重"
+      },
+      "answer": "B",
+      "explanation": "調整損失函數以納入公平性約束是一種內嵌式減偏方法，有助於改善模型訓練階段\n的公平性。"
+    },
+    {
+      "id": "mock_394",
+      "num": 394,
+      "difficulty": 4,
+      "question": "以下何者最能支持 AI 合規性原則中的「可監督性」？",
+      "options": {
+        "A": "僅使用開源模型",
+        "B": "訓練時不設驗證集",
+        "C": "建立模型審核與監控制度",
+        "D": "將模型部署至海外伺服器"
+      },
+      "answer": "C",
+      "explanation": "AI 可監督性要求建立持續監控與審查機制，確保模型在部署與使用階段持續遵守法\n規與倫理。"
+    },
+    {
+      "id": "mock_395",
+      "num": 395,
+      "difficulty": 2,
+      "question": "特徵選擇時若移除與敏感群體高度相關的變數，其主要目的為何？",
+      "options": {
+        "A": "降低資料清理成本",
+        "B": "提高 recall",
+        "C": "降低模型預測結果中的偏見風險",
+        "D": "增強正規化效果"
+      },
+      "answer": "C",
+      "explanation": "某些變數（如性別、種族）與敏感群體直接相關，可能引入偏見，移除可降低不公\n平預測風險。"
+    },
+    {
+      "id": "mock_396",
+      "num": 396,
+      "difficulty": 3,
+      "question": "「反事實解釋（Counterfactual Explanation）」的核心概念是？",
+      "options": {
+        "A": "預測未發生事件的可能性",
+        "B": "建構完全隨機的樣本",
+        "C": "說明若輸入資料略為改變，預測結果將如何變化",
+        "D": "模型準確率不變時，如何壓縮模型"
+      },
+      "answer": "C",
+      "explanation": "反事實解釋指出若輸入變數做出特定變動，預測將如何改變，有助於使用者理解模"
+    },
+    {
+      "id": "mock_397",
+      "num": 397,
+      "difficulty": 5,
+      "question": "下列哪一種偏見可能在特徵工程階段就已被引入？",
+      "options": {
+        "A": "取樣偏見",
+        "B": "參數優化偏見",
+        "C": "表示偏見（Representation Bias）",
+        "D": "預測門檻設定偏見"
+      },
+      "answer": "C",
+      "explanation": "若特徵表示不完整或忽略特定群體資訊，會在建模前就導致模型對某群體理解不\n足。"
+    },
+    {
+      "id": "mock_398",
+      "num": 398,
+      "difficulty": 2,
+      "question": "以下哪一項制度設計有助於 AI 產品的倫理治理與政策透明？",
+      "options": {
+        "A": "部署權限由模型自動管理",
+        "B": "建立 AI 技術倫理委員會",
+        "C": "所有模型不得經第三方驗證",
+        "D": "僅保留技術研發文檔"
+      },
+      "answer": "B",
+      "explanation": "設置跨部門的 AI 倫理委員會有助於從多元觀點檢視風險與道德議題，是良善治理\n實踐。"
+    },
+    {
+      "id": "mock_399",
+      "num": 399,
+      "difficulty": 3,
+      "question": "資料使用時若超出原始收集目的但無通知使用者，違反了哪一原則？",
+      "options": {
+        "A": "可擴展性原則",
+        "B": "目的限制原則（Purpose Limitation）",
+        "C": "資料最大化原則",
+        "D": "隨機分派原則"
+      },
+      "answer": "B",
+      "explanation": "資料應僅限於原始收集目的使用，若變更用途應再次徵求同意，否則違反資料保護\n原則。"
+    },
+    {
+      "id": "mock_400",
+      "num": 400,
+      "difficulty": 1,
+      "question": "哪一工具可協助機構追蹤 AI 模型與資料資產的生命週期？",
+      "options": {
+        "A": "SHAP Summary Plot",
+        "B": "Data Lineage 平台",
+        "C": "文字編碼工具",
+        "D": "時序強化學習演算法"
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_401",
+      "num": 401,
+      "difficulty": 1,
+      "question": "AI 專案中「PoC（Proof of Concept）」階段的主要目的為？",
+      "options": {
+        "A": "大規模部署",
+        "B": "建立完整資料平台",
+        "C": "驗證技術與問題定義之間的可行性",
+        "D": "實施長期模型監控"
+      },
+      "answer": "C",
+      "explanation": "PoC 是早期測試階段，用於驗證所選模型或技術是否能解決業務問題，具體但小範\n圍實驗。"
+    },
+    {
+      "id": "mock_402",
+      "num": 402,
+      "difficulty": 2,
+      "question": "在 AI 專案開發初期，最應優先完成哪一項？",
+      "options": {
+        "A": "模型超參數優化",
+        "B": "部署 Docker 容器",
+        "C": "明確定義業務問題與目標",
+        "D": "訓練深度神經網路"
+      },
+      "answer": "C",
+      "explanation": "若未清楚定義業務問題，後續資料建模與評估標準都可能偏離，導致專案無法交付\n實際價值。"
+    },
+    {
+      "id": "mock_403",
+      "num": 403,
+      "difficulty": 3,
+      "question": "以下哪一項為成功導入 AI 專案的關鍵風險因素？",
+      "options": {
+        "A": "使用開源框架",
+        "B": "使用者需求未明確或缺乏跨部門協作",
+        "C": "模型參數未調整",
+        "D": "前端頁面尚未設計完成"
+      },
+      "answer": "B",
+      "explanation": "AI 專案失敗常見原因包括需求未對齊、溝通不足與業務與技術之間落差大。"
+    },
+    {
+      "id": "mock_404",
+      "num": 404,
+      "difficulty": 4,
+      "question": "下列哪一項指標最適合用來衡量 AI 專案的商業成效？",
+      "options": {
+        "A": "訓練集準確率",
+        "B": "AUC 分數",
+        "C": "運營流程節省的時間或成本",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_405",
+      "num": 405,
+      "difficulty": 2,
+      "question": "以下哪一策略有助於 AI 模型部署後的長期維運？",
+      "options": {
+        "A": "每週重新部署模型",
+        "B": "模型權重加密",
+        "C": "設計自動化監控與再訓練流程（MLOps）",
+        "D": "僅保存模型 ID"
+      },
+      "answer": "C",
+      "explanation": "MLOps 提供模型版本控管、自動部署、效能監控與再訓練流程，是長期維運關鍵\n技術。"
+    },
+    {
+      "id": "mock_406",
+      "num": 406,
+      "difficulty": 5,
+      "question": "在 AI 專案中，哪一角色最適合負責「技術與業務語言對接」？",
+      "options": {
+        "A": "資料工程師",
+        "B": "AI 應用規劃師或產品經理",
+        "C": "系統維運人員",
+        "D": "使用者研究員"
+      },
+      "answer": "B",
+      "explanation": "AI 應用規劃師或 PM 可橋接業務與技術團隊，確保需求被正確轉譯為技術規格。"
+    },
+    {
+      "id": "mock_407",
+      "num": 407,
+      "difficulty": 3,
+      "question": "AI 模型開發時，進行小規模內部驗證的階段稱為？",
+      "options": {
+        "A": "PoC",
+        "B": "MVP（Minimum Viable Product）",
+        "C": "A/B Test",
+        "D": "QA 測試"
+      },
+      "answer": "B",
+      "explanation": "MVP 是最小可行產品，代表具備核心功能的初版系統，目的為快速驗證並迭代。"
+    },
+    {
+      "id": "mock_408",
+      "num": 408,
+      "difficulty": 2,
+      "question": "當 AI 專案面臨資料不足問題時，最合理的因應方式是？",
+      "options": {
+        "A": "拒絕專案啟動",
+        "B": "使用資料擴增或遷移學習",
+        "C": "改用全無監督模型",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_409",
+      "num": 409,
+      "difficulty": 4,
+      "question": "AI 專案在導入階段若未考量使用者情境，可能造成何種問題？",
+      "options": {
+        "A": "精度下降",
+        "B": "無法與 API 串接",
+        "C": "模型效果好但實際無法被採用",
+        "D": "模型訓練速度變慢"
+      },
+      "answer": "C",
+      "explanation": "技術模型若無符合真實使用場景，即使表現再好也無法產生價值，導致無法落地。"
+    },
+    {
+      "id": "mock_410",
+      "num": 410,
+      "difficulty": 2,
+      "question": "AI 專案若為企業級應用，以下哪一項屬於部署成功後必須考量的要素？",
+      "options": {
+        "A": "使用最新語言模型",
+        "B": "模型與資料的版本控管機制",
+        "C": "模型硬編碼於前端系統",
+        "D": "關閉訓練記錄檔"
+      },
+      "answer": "B",
+      "explanation": "企業部署需考量系統維運與法遵，模型與資料版本控管是確保一致性與可回溯的基\n本要件。"
+    },
+    {
+      "id": "mock_411",
+      "num": 411,
+      "difficulty": 1,
+      "question": "在 AI 專案中，資料收集與準備應屬於哪一階段？",
+      "options": {
+        "A": "模型壓縮階段",
+        "B": "問題定義後的初始階段",
+        "C": "部署上線前最後階段",
+        "D": "專案完成後才開始"
+      },
+      "answer": "B",
+      "explanation": "資料蒐集是 AI 專案的關鍵初期工作，需在模型開發與訓練前完成，以確保資料品\n質。"
+    },
+    {
+      "id": "mock_412",
+      "num": 412,
+      "difficulty": 2,
+      "question": "下列哪一部署方式最能滿足企業對 AI 模型的即時回應與擴充性需求？",
+      "options": {
+        "A": "批次處理架構",
+        "B": "硬體離線燒錄模型",
+        "C": "雲端微服務部署（Container + API）",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_413",
+      "num": 413,
+      "difficulty": 3,
+      "question": "AI 專案開發期間若出現需求頻繁變動，建議採用哪一種專案管理方式？",
+      "options": {
+        "A": "Waterfall",
+        "B": "瀑布式與簽核為主",
+        "C": "敏捷式（Agile）迭代開發",
+        "D": "完全交由外包廠商管理"
+      },
+      "answer": "C",
+      "explanation": "敏捷開發可因應需求變動與快速回饋，適合 AI 專案這類探索性與實驗性高的工\n作。"
+    },
+    {
+      "id": "mock_414",
+      "num": 414,
+      "difficulty": 4,
+      "question": "在 AI 項目中，建立 KPI（關鍵績效指標）時應避免以下哪種狀況？",
+      "options": {
+        "A": "將 KPI 與業務目標對齊",
+        "B": "使用可量化的模型效能指標",
+        "C": "設定模型精度達 100% 為 KPI",
+        "D": "考慮資料可用性設限"
+      },
+      "answer": "C",
+      "explanation": "設立過高且不切實際的 KPI（如 100% 精度）不僅無法執行，亦可能導致不正當操\n作或模型過擬合。"
+    },
+    {
+      "id": "mock_415",
+      "num": 415,
+      "difficulty": 2,
+      "question": "AI 專案中常見的技術風險為？",
+      "options": {
+        "A": "法規合約條款更動",
+        "B": "模型可重訓性不佳與部署環境不一致",
+        "C": "使用者拒絕開會",
+        "D": "市場預測誤判"
+      },
+      "answer": "B",
+      "explanation": "若模型在開發環境訓練正常，但部署後無法重現或結果不一致，將嚴重影響專案交\n付品質。"
+    },
+    {
+      "id": "mock_416",
+      "num": 416,
+      "difficulty": 3,
+      "question": "AI 專案推動時，應如何有效管理利害關係人（Stakeholders）？",
+      "options": {
+        "A": "採匿名決策機制",
+        "B": "僅技術團隊內部討論",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_417",
+      "num": 417,
+      "difficulty": 5,
+      "question": "AI 專案中若導入模型後無法產生預期商業價值，最可能的主因為？",
+      "options": {
+        "A": "模型壓縮不足",
+        "B": "預測 API 延遲過低",
+        "C": "模型解釋性過高",
+        "D": "問題定義與業務場景脫節"
+      },
+      "answer": "D",
+      "explanation": "若問題定義與實際場景無關聯，即使模型準確也難以落地，導致無法創造價值。"
+    },
+    {
+      "id": "mock_418",
+      "num": 418,
+      "difficulty": 2,
+      "question": "為確保 AI 系統長期穩定運作，需加入下列哪一管理流程？",
+      "options": {
+        "A": "訓練時隨機種子固定",
+        "B": "模型指令內嵌 HTML",
+        "C": "模型版本控管與監控（MLOps）",
+        "D": "使用者登入重新訓練"
+      },
+      "answer": "C",
+      "explanation": "MLOps 可整合版本管理、效能追蹤與異常警示，是 AI 專案持續營運的關鍵基礎\n架構。"
+    },
+    {
+      "id": "mock_419",
+      "num": 419,
+      "difficulty": 3,
+      "question": "哪一項屬於 AI 專案驗收階段應具備的成果？",
+      "options": {
+        "A": "GPU 使用記錄",
+        "B": "測試環境登入記錄",
+        "C": "成效報告與模型驗證報告",
+        "D": "數據倉儲暫存檔案"
+      },
+      "answer": "C",
+      "explanation": "驗收須呈現明確的效益數據與模型效能報告，證明系統達成預期商業目標與技術標\n準。"
+    },
+    {
+      "id": "mock_420",
+      "num": 420,
+      "difficulty": 4,
+      "question": "AI 專案導入若涉及個資處理，應優先進行哪一項工作？",
+      "options": {
+        "A": "使用公用資料取代",
+        "B": "",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_421",
+      "num": 421,
+      "difficulty": 1,
+      "question": "在 AI 專案中，以下哪一項屬於非技術風險？",
+      "options": {
+        "A": "訓練資料過少",
+        "B": "模型架構不適合任務",
+        "C": "預測時間過長",
+        "D": "使用者無意願採用系統"
+      },
+      "answer": "D",
+      "explanation": "使用者不採用即便模型再好也無實際價值，此為變革管理與溝通未落實導致的非技\n術風險。"
+    },
+    {
+      "id": "mock_422",
+      "num": 422,
+      "difficulty": 2,
+      "question": "若 AI 專案需對接既有 ERP 系統，下列哪一項最為關鍵？",
+      "options": {
+        "A": "深度模型改為單層結構",
+        "B": "導入 SHAP 解釋模組",
+        "C": "建立 API 與資料傳輸協議整合機制",
+        "D": "將模型部署至手機端"
+      },
+      "answer": "C",
+      "explanation": "企業內部系統整合需 API 與資料流程介接，否則 AI 模型將無法納入營運環節。"
+    },
+    {
+      "id": "mock_423",
+      "num": 423,
+      "difficulty": 3,
+      "question": "AI 專案設計指標若僅看模型效能，而未考慮商業目標，可能導致？",
+      "options": {
+        "A": "模型維運太便宜",
+        "B": "GPU 用量不足",
+        "C": "模型過擬合",
+        "D": "結果無法產生實際價值"
+      },
+      "answer": "D",
+      "explanation": "若只看準確率而忽略使用場景與業務關聯，即使效能良好也難落地產生價值。"
+    },
+    {
+      "id": "mock_424",
+      "num": 424,
+      "difficulty": 4,
+      "question": "模型上線後若缺乏效能監控機制，可能產生哪一風險？",
+      "options": {
+        "A": "模型變得過於穩定",
+        "B": "",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_425",
+      "num": 425,
+      "difficulty": 2,
+      "question": "以下哪一方法最適合初期驗證 AI 專案的商業可行性？",
+      "options": {
+        "A": "雲端 GPU 池建置",
+        "B": "模型融合測試",
+        "C": "小規模試點實施與效益回報（Pilot）",
+        "D": "直接全公司推廣使用"
+      },
+      "answer": "C",
+      "explanation": "試點實驗可用最小成本驗證可行性與回報，為 AI 專案早期決策提供依據。"
+    },
+    {
+      "id": "mock_426",
+      "num": 426,
+      "difficulty": 5,
+      "question": "當模型效能下降但資料與架構皆未變，應優先檢查什麼？",
+      "options": {
+        "A": "演算法語言版本",
+        "B": "訓練輪次設定",
+        "C": "輸入資料分佈是否改變（資料漂移）",
+        "D": "預測結果是否為浮點數"
+      },
+      "answer": "C",
+      "explanation": "資料漂移會造成模型表現劣化，即使訓練流程與架構不變也會影響預測效果。"
+    },
+    {
+      "id": "mock_427",
+      "num": 427,
+      "difficulty": 3,
+      "question": "AI 專案常見的「冷啟動問題」指的是？",
+      "options": {
+        "A": "模型太新無法訓練",
+        "B": "系統部署於高溫環境導致延遲",
+        "C": "資料尚未累積足夠，無法立即建立有效模型",
+        "D": "模型啟動速度過快"
+      },
+      "answer": "C",
+      "explanation": "冷啟動常見於推薦系統或初期導入階段，樣本量不足導致模型效果不佳。"
+    },
+    {
+      "id": "mock_428",
+      "num": 428,
+      "difficulty": 2,
+      "question": "MLOps 中「CI/CD」主要解決什麼問題？",
+      "options": {
+        "A": "訓練資料預測錯誤",
+        "B": "特徵選擇不穩定",
+        "C": "模型與資料更新流程的自動化與版本化部署",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_429",
+      "num": 429,
+      "difficulty": 4,
+      "question": "在 AI 項目中，將「業務目標轉譯為模型訓練任務」稱為什麼？",
+      "options": {
+        "A": "模型融合",
+        "B": "問題轉換（Problem Framing）",
+        "C": "特徵重編碼",
+        "D": "模型卡建置"
+      },
+      "answer": "B",
+      "explanation": "問題轉換是 AI 專案中關鍵步驟，決定如何將商業需求對應為可學習任務。"
+    },
+    {
+      "id": "mock_430",
+      "num": 430,
+      "difficulty": 3,
+      "question": "AI 專案團隊中哪一角色最適合負責資料流設計與清理流程？",
+      "options": {
+        "A": "使用者體驗設計師",
+        "B": "資料工程師",
+        "C": "財務分析人員",
+        "D": "軟體前端工程師"
+      },
+      "answer": "B",
+      "explanation": "資料工程師專責資料管線設計與清理流程，確保資料正確流向模型。"
+    },
+    {
+      "id": "mock_431",
+      "num": 431,
+      "difficulty": 1,
+      "question": "AI 專案驗收時，以下哪一項是最核心的確認依據？",
+      "options": {
+        "A": "使用最新 AI 架構",
+        "B": "模型是否具備可視化介面",
+        "C": "是否達成預先定義的效能與商業指標（KPI）",
+        "D": "是否支援中文介面"
+      },
+      "answer": "C",
+      "explanation": "AI 專案成敗關鍵在於是否實現預設的業務與技術目標，這些應事前以 KPI 明確定\n義。"
+    },
+    {
+      "id": "mock_432",
+      "num": 432,
+      "difficulty": 2,
+      "question": "以下哪一項最適合用來呈現 AI 專案導入前後的效益變化？",
+      "options": {
+        "A": "ROC 曲線圖",
+        "B": "精度混淆矩陣",
+        "C": "KPI 成效比較表與成本節省分析圖",
+        "D": "模型結構流程圖"
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_433",
+      "num": 433,
+      "difficulty": 3,
+      "question": "當 AI 專案需在不同國家地區部署，應特別注意下列哪一面向？",
+      "options": {
+        "A": "模型可壓縮性",
+        "B": "不同地區資料隱私法規遵循（如 GDPR、PDPA）",
+        "C": "前端框架版本一致性",
+        "D": "模型精度不得低於 99%"
+      },
+      "answer": "B",
+      "explanation": "AI 系統跨境部署時需符合在地資料法規要求，否則可能面臨法規風險與禁用風險。"
+    },
+    {
+      "id": "mock_434",
+      "num": 434,
+      "difficulty": 4,
+      "question": "AI 專案中若無妥善設計資料流（Data Pipeline），可能產生哪些風險？",
+      "options": {
+        "A": "模型參數無法讀取",
+        "B": "資料重複使用導致偏誤、資料延遲或訓練無法重現",
+        "C": "GPU 運算效能過高",
+        "D": "使用者體驗過度友善"
+      },
+      "answer": "B",
+      "explanation": "資料流設計若未標準化與記錄，將導致資料版本錯亂、模型重訓困難與偏誤引入。"
+    },
+    {
+      "id": "mock_435",
+      "num": 435,
+      "difficulty": 2,
+      "question": "AI 模型部署至產品線後，若業務端需依據結果採取行動，應特別重視哪一項設計？",
+      "options": {
+        "A": "模型壓縮率",
+        "B": "預測結果可解釋性與信任度呈現",
+        "C": "預測回傳時間小於 0.1 秒",
+        "D": "UI 字型設計"
+      },
+      "answer": "B",
+      "explanation": "業務人員需理解預測意義與風險，設計解釋模組與信賴度指標有助於提升採用與正\n確解讀。"
+    },
+    {
+      "id": "mock_436",
+      "num": 436,
+      "difficulty": 5,
+      "question": "AI 專案若經歷多次模型版本調整，最應建立什麼機制以確保結果可溯源？",
+      "options": {
+        "A": "模型轉換 API",
+        "B": "固定資料集長度",
+        "C": "完整模型與資料版本控管系統（如 MLflow）",
+        "D": "手動 Excel 記錄模型結果"
+      },
+      "answer": "C",
+      "explanation": ""
+    },
+    {
+      "id": "mock_437",
+      "num": 437,
+      "difficulty": 3,
+      "question": "AI 專案若導入於決策輔助系統，應避免哪一種風險？",
+      "options": {
+        "A": "GPU 演算過度飽和",
+        "B": "過度依賴模型輸出，導致決策自動化失控",
+        "C": "使用者登入錯誤",
+        "D": "模型訓練資料太乾淨"
+      },
+      "answer": "B",
+      "explanation": "AI 應輔助而非取代人類關鍵決策，過度依賴模型可能在誤判時造成重大業務後果。"
+    },
+    {
+      "id": "mock_438",
+      "num": 438,
+      "difficulty": 2,
+      "question": "若 AI 模型在訓練時使用了測試資料，最可能導致？",
+      "options": {
+        "A": "訓練速度提升",
+        "B": "模型準確率提高",
+        "C": "模型評估結果失真（資料洩漏）",
+        "D": "記憶體用量下降"
+      },
+      "answer": "C",
+      "explanation": "訓練集與測試集不分會造成資料洩漏，模型提前見到未來資料，導致評估指標虛高\n失真。"
+    },
+    {
+      "id": "mock_439",
+      "num": 439,
+      "difficulty": 3,
+      "question": "以下哪一方式可協助企業識別 AI 專案的落地價值？",
+      "options": {
+        "A": "模型壓縮測試報告",
+        "B": "成效分析報告（ROI、KPI、流程改善指標）",
+        "C": "將模型名稱註冊為商標",
+        "D": "GPU 耗電量對照表"
+      },
+      "answer": "B",
+      "explanation": "AI 專案成功應能帶來流程改善與財務指標提升，ROI 與 KPI 是衡量落地價值的重\n要依據。"
+    },
+    {
+      "id": "mock_440",
+      "num": 440,
+      "difficulty": 4,
+      "question": "若企業導入 AI 解決方案後遇到現場資料格式不一致問題，最合理的解法是？",
+      "options": {
+        "A": "要求現場人員手動轉檔",
+        "B": "退回模型重新訓練",
+        "C": "建立資料格式轉換與標準化模組",
+        "D": "改為用 PowerPoint 手動呈現預測結果"
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_441",
+      "num": 441,
+      "difficulty": 1,
+      "question": "AI 專案中若資料欄位遺漏、命名錯誤，最可能影響哪一階段？",
+      "options": {
+        "A": "API 串接",
+        "B": "模型訓練與預測正確性",
+        "C": "網頁 UI 設計",
+        "D": "預測結果下載速度"
+      },
+      "answer": "B",
+      "explanation": "資料品質直接影響模型能否正確讀取與解釋輸入，欄位錯誤可能導致預測失敗或無\n法學習。"
+    },
+    {
+      "id": "mock_442",
+      "num": 442,
+      "difficulty": 2,
+      "question": "AI 專案導入時「驗證集（Validation Set）」的主要用途為何？",
+      "options": {
+        "A": "測試前端回應速度",
+        "B": "模擬最終模型輸出",
+        "C": "協助模型參數選擇與效能監測",
+        "D": "建立資料儲存結構"
+      },
+      "answer": "C",
+      "explanation": "驗證集不參與模型訓練，常用於早停（early stopping）與超參數調整。"
+    },
+    {
+      "id": "mock_443",
+      "num": 443,
+      "difficulty": 3,
+      "question": "若 AI 模型輸出結果具重大業務影響（如醫療診斷），部署前應加入哪一驗證流程？",
+      "options": {
+        "A": "精度可視化設計",
+        "B": "多模型版本平均法",
+        "C": "使用者可解釋性評估與臨床專家驗證",
+        "D": "自動回傳錯誤訊息"
+      },
+      "answer": "C",
+      "explanation": "高風險應用應結合領域專家進行預測合理性與風險控制檢視，確保模型具安全性與\n合規性。"
+    },
+    {
+      "id": "mock_444",
+      "num": 444,
+      "difficulty": 4,
+      "question": "在 AI 專案驗收中，應避免下列哪一種情況？",
+      "options": {
+        "A": "未明確定義成功指標",
+        "B": "使用標準模型驗證流程",
+        "C": "提供效能對照資料",
+        "D": "模型評估透明"
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_445",
+      "num": 445,
+      "difficulty": 2,
+      "question": "MLOps 系統中的「模型監控模組」主要負責？",
+      "options": {
+        "A": "規劃訓練排程",
+        "B": "審核合約文字",
+        "C": "監測模型效能與預測偏移行為",
+        "D": "建立圖形化介面"
+      },
+      "answer": "C",
+      "explanation": "模型部署後效能可能隨資料變動而下降，監控模組負責偵測指標漂移、錯誤率上升\n等問題。"
+    },
+    {
+      "id": "mock_446",
+      "num": 446,
+      "difficulty": 3,
+      "question": "AI 專案中若使用「預測解釋工具（如 SHAP）」，其最主要用途為？",
+      "options": {
+        "A": "減少訓練時間",
+        "B": "增強結果透明度，提升使用者信任",
+        "C": "調整超參數",
+        "D": "模型融合"
+      },
+      "answer": "B",
+      "explanation": "可解釋性工具有助說明預測依據，使模型更透明、可理解，是高風險應用的信任基\n礎。"
+    },
+    {
+      "id": "mock_447",
+      "num": 447,
+      "difficulty": 4,
+      "question": "當資料來源來自多個子系統，導致資料異質性高，部署前應採用何策略？",
+      "options": {
+        "A": "模型硬編碼至主機",
+        "B": "將所有特徵轉為文字",
+        "C": "統一資料標準與欄位格式（資料治理）",
+        "D": "採用全無監督模型"
+      },
+      "answer": "C",
+      "explanation": "多來源資料需事先標準化欄位定義、格式與處理邏輯，否則難以訓練與穩定運作。"
+    },
+    {
+      "id": "mock_448",
+      "num": 448,
+      "difficulty": 3,
+      "question": "以下哪一項最適合評估 AI 專案的長期可擴展性？",
+      "options": {
+        "A": "訓練時的 GPU 使用量",
+        "B": "模型是否可嵌入手持裝置",
+        "C": "資料管線與部署架構是否模組化與可重複",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_449",
+      "num": 449,
+      "difficulty": 5,
+      "question": "若 AI 專案無法與組織現有流程整合，最可能出現什麼後果？",
+      "options": {
+        "A": "預測結果會變成負值",
+        "B": "專案難以落地與被採納",
+        "C": "模型訓練速度加快",
+        "D": "記憶體使用率下降"
+      },
+      "answer": "B",
+      "explanation": "AI 專案需與既有作業系統或業務流程整合，否則再精準也可能因無法實際應用而失\n敗。"
+    },
+    {
+      "id": "mock_450",
+      "num": 450,
+      "difficulty": 1,
+      "question": "哪一項是 AI 專案成功導入後常見的「非技術性成果」？",
+      "options": {
+        "A": "GPU 運算強化",
+        "B": "部門效率提升與使用者體驗改善",
+        "C": "雲端計費降低",
+        "D": "模型下載速率加快"
+      },
+      "answer": "B",
+      "explanation": "AI 的價值不只在預測能力，也在實際產出效能，如自動化、人力節省與流程優化。"
+    },
+    {
+      "id": "mock_451",
+      "num": 451,
+      "difficulty": 1,
+      "question": "AI 專案導入成本中，以下哪一項屬於隱性成本？",
+      "options": {
+        "A": "資料標註費用",
+        "B": "GPU 租用費用",
+        "C": "團隊訓練與跨部門溝通成本",
+        "D": "API 串接開發費用"
+      },
+      "answer": "C",
+      "explanation": "隱性成本包含訓練、協作、溝通與轉型文化等非直接金流支出，常被忽略但對導入\n成效影響重大。"
+    },
+    {
+      "id": "mock_452",
+      "num": 452,
+      "difficulty": 2,
+      "question": "以下哪一項指標最能衡量 AI 專案的整體經濟效益？",
+      "options": {
+        "A": "Accuracy 提升比例",
+        "B": "訓練集大小",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_453",
+      "num": 453,
+      "difficulty": 5,
+      "question": "AI 成熟度模型中，組織若具備自動化模型部署與監控能力，通常屬於哪一階段？",
+      "options": {
+        "A": "初始階段（Ad hoc）",
+        "B": "可重複階段（Repeatable）",
+        "C": "已量化階段（Quantitative Managed）",
+        "D": "完善階段（Optimized）"
+      },
+      "answer": "D",
+      "explanation": "AI 成熟度的最高階段強調流程自動化、跨部門整合與持續優化能力，是「AI 工程\n化」的標誌。"
+    },
+    {
+      "id": "mock_454",
+      "num": 454,
+      "difficulty": 3,
+      "question": "以下哪一情境最適合導入 RPA（Robotic Process Automation）？",
+      "options": {
+        "A": "需要高層次邏輯推理的決策流程",
+        "B": "結構化、重複性高的行政作業流程",
+        "C": "即時圖像辨識與異常預測任務",
+        "D": "社群文本語意分類"
+      },
+      "answer": "B",
+      "explanation": "RPA 擅長處理固定規則、格式明確且需大量重複執行的流程，如表單填寫或系統登\n入等。"
+    },
+    {
+      "id": "mock_455",
+      "num": 455,
+      "difficulty": 3,
+      "question": "AI 成本評估常使用的「TCO（Total Cost of Ownership）」涵蓋哪些成本？",
+      "options": {
+        "A": "只包含開發階段的預算",
+        "B": "僅計算雲端運算費用",
+        "C": "包含採購、開發、部署與維運的全生命周期成本",
+        "D": "模型測試費用與 API 成本"
+      },
+      "answer": "C",
+      "explanation": "TCO 強調全面成本視角，評估一項技術從取得到淘汰的所有直接與間接支出。"
+    },
+    {
+      "id": "mock_456",
+      "num": 456,
+      "difficulty": 2,
+      "question": "智慧流程自動化（Intelligent Process Automation, IPA）比傳統 RPA 多了哪一層能力？",
+      "options": {
+        "A": "只能處理結構化表格",
+        "B": "具備深度學習與自然語言理解能力",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_457",
+      "num": 457,
+      "difficulty": 4,
+      "question": "若企業 AI 部署過程中資料品質不佳，將導致下列哪一項後果？",
+      "options": {
+        "A": "成本降低",
+        "B": "模型越訓練越穩定",
+        "C": "模型無法學習有效規律，降低準確率與可信度",
+        "D": "模型推論速度大幅提升"
+      },
+      "answer": "C",
+      "explanation": "資料品質不佳如缺值、錯誤標註、異常值將嚴重干擾模型學習，影響準確率與可解\n釋性。"
+    },
+    {
+      "id": "mock_458",
+      "num": 458,
+      "difficulty": 3,
+      "question": "企業評估 AI 導入成熟度時，以下哪一項不屬於常見構面？",
+      "options": {
+        "A": "技術能力",
+        "B": "組織治理與流程",
+        "C": "商業模式變革潛力",
+        "D": "員工服裝風格"
+      },
+      "answer": "D",
+      "explanation": "AI 成熟度評估通常包含組織策略、資料基礎建設、模型能力、流程與文化等，與服\n裝無關。"
+    },
+    {
+      "id": "mock_459",
+      "num": 459,
+      "difficulty": 4,
+      "question": "AI 導入後若無自動化監控系統，長期成本可能上升的原因為？",
+      "options": {
+        "A": "模型權重過大",
+        "B": "訓練資料越來越短",
+        "C": "每次模型表現下降都需人力重新修正",
+        "D": "使用者行為一致"
+      },
+      "answer": "C",
+      "explanation": "缺乏自動監控機制會使效能下降難以及時察覺，每次調整都需動員工程師，增加維\n運成本。"
+    },
+    {
+      "id": "mock_460",
+      "num": 460,
+      "difficulty": 2,
+      "question": "流程自動化導入後常見的效益不包括下列哪一項？",
+      "options": {
+        "A": "錯誤率降低",
+        "B": "",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_461",
+      "num": 461,
+      "difficulty": 1,
+      "question": "企業評估 AI 導入效益時，以下哪一指標可用於衡量作業效率提升？",
+      "options": {
+        "A": "訓練輪次",
+        "B": "使用者滿意度",
+        "C": "處理時間縮短率",
+        "D": "API 記憶體佔用量"
+      },
+      "answer": "C",
+      "explanation": "若 AI 導入能顯著減少處理時間，代表效率提升，是自動化成效的常見衡量指標。"
+    },
+    {
+      "id": "mock_462",
+      "num": 462,
+      "difficulty": 2,
+      "question": "在 AI 投資成本中，「維運成本」最常包含下列哪一項？",
+      "options": {
+        "A": "雲端運算與模型監控費用",
+        "B": "程式授權費用",
+        "C": "初期人力訓練費用",
+        "D": "資料集標註專案啟動費"
+      },
+      "answer": "A",
+      "explanation": "維運階段常見開銷包括雲端部署、效能監控、版本控管與異常處理機制。"
+    },
+    {
+      "id": "mock_463",
+      "num": 463,
+      "difficulty": 3,
+      "question": "流程自動化應用中，「人機協同」的主要價值為何？",
+      "options": {
+        "A": "完全替代人力",
+        "B": "降低模型運算資源",
+        "C": "結合人工判斷與機器效率，達成最佳決策流程",
+        "D": "增加資料分析成本"
+      },
+      "answer": "C",
+      "explanation": "人機協同是指 AI 輔助人員處理部分工作，保留人工靈活與判斷，達成效率與彈性\n的平衡。"
+    },
+    {
+      "id": "mock_464",
+      "num": 464,
+      "difficulty": 4,
+      "question": "以下哪一種場景最適合導入 IPA（智慧流程自動化）而非傳統 RPA？",
+      "options": {
+        "A": "郵件自動回覆信箱分類",
+        "B": "OCR 表單識別後自動分類並分析客訴原因",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_465",
+      "num": 465,
+      "difficulty": 2,
+      "question": "企業在初步評估 AI 導入價值時，最應回答哪一個問題？",
+      "options": {
+        "A": "可否將所有流程 AI 化",
+        "B": "是否可產出 100% 精確模型",
+        "C": "哪些業務流程中存在重複、可預測、高頻的作業",
+        "D": "能否將現有模型導入手機"
+      },
+      "answer": "C",
+      "explanation": "重複、高頻、可預測性高的流程最適合優先導入 AI 或自動化，是導入評估的首要\n對象。"
+    },
+    {
+      "id": "mock_466",
+      "num": 466,
+      "difficulty": 4,
+      "question": "AI 成本模型中，隨規模放大反而成本下降的現象稱為？",
+      "options": {
+        "A": "冗餘效應",
+        "B": "資料爆炸",
+        "C": "規模經濟（Economies of Scale）",
+        "D": "長尾效應"
+      },
+      "answer": "C",
+      "explanation": "投入成本隨產量擴大而攤提，每筆預測成本下降，是 AI 平台化運作的商業模式核\n心。"
+    },
+    {
+      "id": "mock_467",
+      "num": 467,
+      "difficulty": 3,
+      "question": "流程自動化的「瓶頸識別」通常透過哪種分析？",
+      "options": {
+        "A": "SHAP 模型可解釋性分析",
+        "B": "處理時間與頻率分析（Process Mining）",
+        "C": "ROC 曲線比較",
+        "D": "LSTM 模型效能差異"
+      },
+      "answer": "B",
+      "explanation": "Process Mining 能分析流程中執行時間、等待時間與頻率，是找出瓶頸的有效方\n法。"
+    },
+    {
+      "id": "mock_468",
+      "num": 468,
+      "difficulty": 5,
+      "question": "下列哪一種情況代表組織導入 AI 已達高成熟度等級？",
+      "options": {
+        "A": "部分部門試行 AI 模型",
+        "B": "",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_469",
+      "num": 469,
+      "difficulty": 2,
+      "question": "自動化導入常見的誤區是？",
+      "options": {
+        "A": "忽略人員訓練與使用者習慣轉變",
+        "B": "模型訓練資料過多",
+        "C": "系統運算太快",
+        "D": "資料格式太整齊"
+      },
+      "answer": "A",
+      "explanation": "流程再設計需搭配使用者適應與教育，否則自動化可能無法被採納或產生排斥。"
+    },
+    {
+      "id": "mock_470",
+      "num": 470,
+      "difficulty": 3,
+      "question": "AI 成本評估中若忽略「組織變革成本」，將導致什麼結果？",
+      "options": {
+        "A": "實際投入成本被低估",
+        "B": "模型精度偏低",
+        "C": "計算資源過度集中",
+        "D": "模型自動過擬合"
+      },
+      "answer": "A",
+      "explanation": "轉型過程中包含人員調整、溝通、流程重建等隱性成本，忽略將導致成本預估失\n真。"
+    },
+    {
+      "id": "mock_471",
+      "num": 471,
+      "difficulty": 1,
+      "question": "AI 導入若僅聚焦技術開發，忽略業務整合，最可能導致？",
+      "options": {
+        "A": "訓練時間縮短",
+        "B": "成本下降",
+        "C": "模型無法實際產出價值",
+        "D": "GPU 利用率提升"
+      },
+      "answer": "C",
+      "explanation": "AI 導入成功需技術與業務並重，否則即使模型準確也無法在實務上產生效益。"
+    },
+    {
+      "id": "mock_472",
+      "num": 472,
+      "difficulty": 2,
+      "question": "下列哪一指標可用來評估自動化導入後的「人力效益」？",
+      "options": {
+        "A": "模型壓縮率",
+        "B": "",
+        "C": "",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_473",
+      "num": 473,
+      "difficulty": 3,
+      "question": "AI 成熟度模型中，最初階段通常有哪些特徵？",
+      "options": {
+        "A": "模型部署完全自動化",
+        "B": "無明確策略，開發屬於試驗性質",
+        "C": "訂有跨部門 AI 管理辦法",
+        "D": "全部模型皆具解釋性報告"
+      },
+      "answer": "B",
+      "explanation": "初始階段組織缺乏制度化支持，AI 導入多為單點嘗試，無明確策略或評估標準。"
+    },
+    {
+      "id": "mock_474",
+      "num": 474,
+      "difficulty": 4,
+      "question": "企業導入流程自動化前應先進行哪項分析？",
+      "options": {
+        "A": "模型卡設計",
+        "B": "模型集成效能評估",
+        "C": "流程現況調查與價值流（Value Stream）分析",
+        "D": "建立模型 API"
+      },
+      "answer": "C",
+      "explanation": "了解流程現況與瓶頸有助辨識最適合自動化的區段，是成功導入前的基礎分析。"
+    },
+    {
+      "id": "mock_475",
+      "num": 475,
+      "difficulty": 2,
+      "question": "AI 成本中「技術債（Technical Debt）」指的是？",
+      "options": {
+        "A": "未償還的財務借款",
+        "B": "模型過度預測",
+        "C": "系統快速交付造成的結構或品質問題，需後續投入修復",
+        "D": "訓練樣本數過多"
+      },
+      "answer": "C",
+      "explanation": "技術債來自快速實作導致系統設計不佳，日後需花費更多資源維護與調整。"
+    },
+    {
+      "id": "mock_476",
+      "num": 476,
+      "difficulty": 5,
+      "question": "若流程中出現「自動化後作業錯誤率反升」的情況，最可能的根因是？",
+      "options": {
+        "A": "模型資料儲存格式太標準",
+        "B": "自動化邏輯未能處理例外與邊界條件",
+        "C": "模型精度過高",
+        "D": ""
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_477",
+      "num": 477,
+      "difficulty": 3,
+      "question": "導入流程自動化後，若未進行職責再設計，可能造成什麼問題？",
+      "options": {
+        "A": "資料表過大",
+        "B": "作業流程停滯或人員混亂",
+        "C": "模型過度更新",
+        "D": "成本過低"
+      },
+      "answer": "B",
+      "explanation": "流程變動後需同步調整人員職責與資源配置，否則易造成斷點與職責模糊。"
+    },
+    {
+      "id": "mock_478",
+      "num": 478,
+      "difficulty": 2,
+      "question": "導入 IPA 系統時常與下列哪一技術整合以處理非結構化資料？",
+      "options": {
+        "A": "SSH 加密",
+        "B": "區塊鏈驗證",
+        "C": "NLP（自然語言處理）模組",
+        "D": "預設視覺主題"
+      },
+      "answer": "C",
+      "explanation": "IPA 結合 NLP 可處理如客服紀錄、文本分類等非結構資料，是與 RPA 最大差異\n之一。"
+    },
+    {
+      "id": "mock_479",
+      "num": 479,
+      "difficulty": 4,
+      "question": "企業在規劃 AI 成本預算時，以下哪一項經常被低估？",
+      "options": {
+        "A": "資料收集與清理成本",
+        "B": "模型壓縮技術選型成本",
+        "C": "雲端儲存硬體建置成本",
+        "D": "網頁前端開發時間"
+      },
+      "answer": "A",
+      "explanation": "資料前處理通常需花費大量人力與時間，但常在專案規劃時低估其比重。"
+    },
+    {
+      "id": "mock_480",
+      "num": 480,
+      "difficulty": 1,
+      "question": "企業若導入流程自動化，最核心的初步效益為？",
+      "options": {
+        "A": "模型解釋性提升",
+        "B": "UI 美觀程度改善",
+        "C": "操作效率與流程一致性提高",
+        "D": "顧客滿意度回饋減少"
+      },
+      "answer": "",
+      "explanation": ""
+    },
+    {
+      "id": "mock_491",
+      "num": 491,
+      "difficulty": 1,
+      "question": "AI 導入初期若尚未建立資料標準與格式一致性，最常見的後果是？",
+      "options": {
+        "A": "成本大幅下降",
+        "B": "模型運作加快",
+        "C": "模型訓練與部署失敗或不穩定",
+        "D": "模型立即達到最佳精度"
+      },
+      "answer": "C",
+      "explanation": "資料格式不一致會導致模型無法成功訓練或預測，常見於多部門資料源未整合前。"
+    },
+    {
+      "id": "mock_492",
+      "num": 492,
+      "difficulty": 2,
+      "question": "下列哪一項屬於導入流程自動化後的「直接效益」？",
+      "options": {
+        "A": "顧客終身價值提升",
+        "B": "員工轉職率上升",
+        "C": "作業時間縮短與人力節省",
+        "D": "營運長聘任"
+      },
+      "answer": "C",
+      "explanation": "流程自動化主要提升效率、降低人工作業時間與錯誤，是最直接的生產力提升來\n源。"
+    },
+    {
+      "id": "mock_493",
+      "num": 493,
+      "difficulty": 3,
+      "question": "若 AI 導入後無定期效益回顧與調整機制，將可能造成什麼風險？",
+      "options": {
+        "A": "雲端資源過剩",
+        "B": "模型壓縮失敗",
+        "C": "模型無法持續對齊業務目標，產生價值斷層",
+        "D": "僅能離線部署"
+      },
+      "answer": "C",
+      "explanation": "AI 模型若未定期調整，可能逐漸偏離業務策略或資料變化，造成績效下降與使用率\n降低。"
+    },
+    {
+      "id": "mock_494",
+      "num": 494,
+      "difficulty": 4,
+      "question": "AI 成本模型若未納入組織流程與文化轉型的支出，屬於低估哪一類成本？",
+      "options": {
+        "A": "資料標註成本",
+        "B": "模型監控費用",
+        "C": "組織變革隱性成本（Change Management Cost）",
+        "D": "API 運算支出"
+      },
+      "answer": "C",
+      "explanation": "文化導入、內部培訓與流程變動會產生隱性成本，常被忽視但實際投入高。"
+    },
+    {
+      "id": "mock_495",
+      "num": 495,
+      "difficulty": 1,
+      "question": "導入 AI 技術後可使用哪一財務指標評估「多久可回收初期投入」？",
+      "options": {
+        "A": "Precision",
+        "B": "Payback Period（回收期）",
+        "C": "Recall",
+        "D": "F1-score"
+      },
+      "answer": "B",
+      "explanation": "回收期為投資回本時間，是最直觀的投入與效益平衡點。"
+    },
+    {
+      "id": "mock_496",
+      "num": 496,
+      "difficulty": 3,
+      "question": "企業導入 AI 系統時，需根據什麼要素來規劃「持續性預算」？",
+      "options": {
+        "A": "UI 整合效率",
+        "B": "使用者回饋風格",
+        "C": "模型維運成本、效能監控與資料更新頻率",
+        "D": "電腦鍵盤品牌"
+      },
+      "answer": "C",
+      "explanation": "模型維運包含監控、人力、再訓練與雲端資源，是預算規劃的關鍵要素。"
+    },
+    {
+      "id": "mock_497",
+      "num": 497,
+      "difficulty": 5,
+      "question": "AI 導入流程中，若沒有對使用者進行流程教育與介面設計優化，最可能導致哪種後果？",
+      "options": {
+        "A": "模型浮點誤差累積",
+        "B": "成本過低無法驗證",
+        "C": "系統使用率低落與價值未能實現",
+        "D": "預測結果不穩定"
+      },
+      "answer": "C",
+      "explanation": "即使模型精準，若使用者不理解、不接受或無法操作，也無法轉化為實際成效。"
+    },
+    {
+      "id": "mock_498",
+      "num": 498,
+      "difficulty": 2,
+      "question": "下列哪一指標可用來評估流程自動化對於錯誤率的影響？",
+      "options": {
+        "A": "Automation Error Rate",
+        "B": "Total Data Volume",
+        "C": "TCO",
+        "D": "Training Epoch"
+      },
+      "answer": "A",
+      "explanation": "Automation Error Rate 衡量自動化程序中發生錯誤的頻率，是品質管理的重要指\n標。"
+    },
+    {
+      "id": "mock_499",
+      "num": 499,
+      "difficulty": 4,
+      "question": "企業規劃導入流程自動化時，哪一因素最應先評估？",
+      "options": {
+        "A": "RPA 軟體介面顏色",
+        "B": "每月可用雲端儲存量",
+        "C": "流程標準化程度與重複性高低",
+        "D": "預測變數數量"
+      },
+      "answer": "C",
+      "explanation": "流程可自動化的前提是步驟清晰、標準化與可預測，是可行性評估的第一關鍵。"
+    },
+    {
+      "id": "mock_500",
+      "num": 500,
+      "difficulty": 3,
+      "question": "導入 AI 解決方案時，若將效益集中於短期 ROI 而忽略長期組織改造與彈性建設，將導致什\n麼風險？",
+      "options": {
+        "A": "預測誤差標準差下降",
+        "B": "模型訓練時間加速",
+        "C": "組織錯失可擴展性與競爭優勢",
+        "D": "作業流程高度自動化"
+      },
+      "answer": "C",
+      "explanation": "AI 應平衡短期報酬與長期價值，否則只強調立即成效將使組織在變革與創新上失去\n競爭力。"
+    }
+  ]
+};
