@@ -1,0 +1,227 @@
+[
+  {
+    "id": "mock_113",
+    "num": 105,
+    "difficulty": 4,
+    "question": "多模態語言模型在應用於智慧醫療時應特別注意下列哪一項？",
+    "options": {
+      "A": "GPU 記憶體大小",
+      "B": "圖片解析度",
+      "C": "資料隱私與倫理遵循",
+      "D": "使用的 API 數量"
+    },
+    "answer": "C",
+    "explanation": "智慧醫療處理敏感個資，需遵循隱私法規（如 HIPAA、GDPR）與公平性要求，多\n模態資料使用時更需注意倫理設計。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_114",
+    "num": 106,
+    "difficulty": 1,
+    "question": "以下哪個任務最適合採用語音與臉部表情共同輸入的多模態模型？",
+    "options": {
+      "A": "問卷分類",
+      "B": "語意分群",
+      "C": "情緒識別",
+      "D": "指紋分析"
+    },
+    "answer": "C",
+    "explanation": "情緒具語音、語調、表情等多面向特徵，整合語音與影像模態有助於準確識別情緒\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_115",
+    "num": 107,
+    "difficulty": 4,
+    "question": "若希望多模態 AI 可將文字生成為對應的 3D 模型，需處理以下哪項挑戰？",
+    "options": {
+      "A": "時間序列漂移",
+      "B": "輸入嵌入過短",
+      "C": "高維度跨模態表示對齊與渲染處理",
+      "D": "缺乏 BERT 預訓練模型"
+    },
+    "answer": "C",
+    "explanation": "將文字描述轉為 3D 模型需跨越語意對齊、幾何結構建模、視覺渲染等多層技術挑\n戰，是高複雜度任務。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_116",
+    "num": 108,
+    "difficulty": 3,
+    "question": "在 VQA 模型中使用「Cross-Attention」的主要目的為何？",
+    "options": {
+      "A": "減少圖像向量維度",
+      "B": "增強同一模態內部語意",
+      "C": "建立語言與圖像間語意對應關係",
+      "D": "減少推論時間"
+    },
+    "answer": "C",
+    "explanation": "Cross-Attention 機制使語言模態可聚焦於與之對應的圖像區域，是視覺問答中的\n核心組件。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_117",
+    "num": 109,
+    "difficulty": 5,
+    "question": "「Unified Transformer」模型的目標是什麼？",
+    "options": {
+      "A": "僅用於影像與音訊分類",
+      "B": "建構具模態無關性的統一架構",
+      "C": "將表格與圖像互換格式",
+      "D": "訓練時不使用任何語言輸入"
+    },
+    "answer": "B",
+    "explanation": "Unified Transformer 透過模態共享參數與通用注意力機制，實現文字、圖像、音\n訊在同一架構中學習與推理。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_119",
+    "num": 110,
+    "difficulty": 2,
+    "question": "哪一個任務屬於典型的「跨模態檢索」問題？",
+    "options": {
+      "A": "圖像搜尋圖像",
+      "B": "語音辨識",
+      "C": "用文字查找匹配圖像內容",
+      "D": "圖像中找出邊緣特徵"
+    },
+    "answer": "C",
+    "explanation": "跨模態檢索是指輸入一種模態（如文字），檢索另一模態（如圖像）中對應內容，需\n共享語意嵌入空間。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_120",
+    "num": 111,
+    "difficulty": 3,
+    "question": "下列哪一項為「模態不對稱訓練」的特徵？",
+    "options": {
+      "A": "各模態皆需同等訓練樣本數",
+      "B": "模型推論時支援的模態與訓練時不同",
+      "C": "僅支援英文語料",
+      "D": "限制輸出模態只能為圖像"
+    },
+    "answer": "B",
+    "explanation": "模態不對稱訓練可在訓練時用多模態資料，推論時僅用部分模態輸入，提升模型彈\n性與適應力。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_121",
+    "num": 112,
+    "difficulty": 1,
+    "question": "在多模態 AI 模型中，「模態」通常代表什麼？",
+    "options": {
+      "A": "網路傳輸協議",
+      "B": "資料的表現形式或來源類型",
+      "C": "訓練策略的變數",
+      "D": "訓練輪次的數量"
+    },
+    "answer": "B",
+    "explanation": "模態（Modality）代表資料的形式，例如影像、語音、文字、感測器數據等，是多\n模態系統的核心概念。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_123",
+    "num": 113,
+    "difficulty": 3,
+    "question": "下列何者為「模態特定編碼器」的訓練策略？",
+    "options": {
+      "A": "將所有模態資訊合併成單一輸入",
+      "B": "為每個模態建構獨立的特徵學習網路",
+      "C": "僅使用圖像資訊訓練語言模型",
+      "D": "將文字與圖像硬編碼為標籤"
+    },
+    "answer": "B",
+    "explanation": "模態特定編碼器保留各模態特性，分別建構向量表示，後續再融合，是常見的\nearly fusion 前步驟。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_124",
+    "num": 114,
+    "difficulty": 4,
+    "question": "使用多模態 AI 於智慧零售領域，下列哪一應用最具代表性？",
+    "options": {
+      "A": "圖像辨識於保險業務審核",
+      "B": "利用圖像＋文字情境生成產品推薦說明",
+      "C": "股票資料預測未來走勢",
+      "D": "單一語言模型的情緒分析"
+    },
+    "answer": "B",
+    "explanation": "智慧零售中常見多模態應用包含分析商品圖片與評論文本，產生客製化推薦語句或\n摘要。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_125",
+    "num": 115,
+    "difficulty": 5,
+    "question": "哪一個指標可用來評估多模態模型對「圖文匹配關聯性」的學習成效？",
+    "options": {
+      "A": "FID 分數",
+      "B": "BLEU Score",
+      "C": "CLIP Score（或類似 cosine similarity）",
+      "D": "RMSE"
+    },
+    "answer": "C",
+    "explanation": "CLIP Score 衡量語意對齊程度，常使用餘弦相似度評估圖文向量距離，數值越高代\n表匹配越好。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_127",
+    "num": 116,
+    "difficulty": 3,
+    "question": "多模態 AI 中若出現「模態間不一致（Modality Inconsistency）」，可能的影響為何？",
+    "options": {
+      "A": "模型準確率上升",
+      "B": "記憶體用量降低",
+      "C": "推論輸出不穩或語意錯置",
+      "D": "無法進行 GPU 加速"
+    },
+    "answer": "C",
+    "explanation": "若圖像與文字不一致（如描述錯誤），會導致語意錯配，生成錯誤或語意漂移，是訓\n練與應用的風險。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_128",
+    "num": 117,
+    "difficulty": 1,
+    "question": "在多模態應用中，下列哪一項為文字模態最常用的語言處理模型？",
+    "options": {
+      "A": "CNN",
+      "B": "ResNet",
+      "C": "BERT",
+      "D": "YOLO"
+    },
+    "answer": "C",
+    "explanation": "BERT 是目前最廣泛應用的語言表示模型，可有效捕捉上下文語意，是多模態語言\n模組的常見選擇。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_129",
+    "num": 118,
+    "difficulty": 4,
+    "question": "部署多模態 AI 系統時，何者為典型的資源挑戰？",
+    "options": {
+      "A": "過多的離線訓練資料",
+      "B": "僅支援 CPU 推論",
+      "C": "高模態資料處理成本與模型參數負擔",
+      "D": "過少的監督標籤"
+    },
+    "answer": "C",
+    "explanation": "多模態模型需處理不同資料形式，包含大向量記憶體與複數模型分支，對算力與儲\n存要求極高。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_130",
+    "num": 119,
+    "difficulty": 3,
+    "question": "下列哪一項屬於「跨模態生成」任務？",
+    "options": {
+      "A": "將文字摘要轉為影片片段",
+      "B": "將文章分類為主題類別",
+      "C": "將照片解析度調高",
+      "D": "使用手寫字辨識判斷身份"
+    },
+    "answer": "A",
+    "explanation": "跨模態生成是指輸入與輸出模態不同，文字 ➝ 圖像、語音、影片皆屬此類型，是\n多模態生成技術前沿。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  }
+]

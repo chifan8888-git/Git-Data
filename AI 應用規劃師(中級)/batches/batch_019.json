@@ -1,0 +1,227 @@
+[
+  {
+    "id": "subject3_31",
+    "num": 31,
+    "difficulty": 3,
+    "question": "某能源公司利用歷史氣象與用電資料，開發長期電力需求預測模型，採用 深度神經網路架構進行訓練。在訓練過程中，模型在訓練集上的損失值持續下降，但在驗證集上，損失在第80 輪後開始波動，呈現週期性上升與下降。團隊懷疑模型受到季節性資料波動與隨機噪音影響，導致驗證損失難以穩定收斂。若要在此情境下合理運用早期停止法（Early Stopping）以確保模型具最佳泛化能力，下列哪一項策略最為適當？\n後再停止訓練；",
+    "options": {
+      "A": "直接根據訓練集損失最低點停止訓練，以確保模型充分擬合所有樣本；",
+      "B": "監控驗證集損失並設定適度的耐心值（Patience），在連續多輪未改善",
+      "C": "改以測試集損失作為早停依據，以提升模型最終評估一致性；",
+      "D": "將所有資料重新合併後訓練至收斂，避免因資料分割導致評估波動"
+    },
+    "answer": "B",
+    "explanation": "當模型在訓練集表現極佳，但在測試集表現下滑時，稱為**過擬合 (Overfitting)**。常用防範手段包括：增加訓練資料量、使用 L1/L2 正則化（Lasso/Ridge）、Dropout、提前結束訓練（Early Stopping），或在影像任務中使用隨機裁剪等資料擴增技術。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  },
+  {
+    "id": "subject3_32",
+    "num": 32,
+    "difficulty": 3,
+    "question": "某電信公司開發客戶流失預測模型，使用大量顧客行為特徵，例如通話時長、上網頻率、帳單金額、客服聯絡次數等。在訓練過程中，團隊發現部分特徵彼此高度相關，但同時也懷疑有些特徵對流失預測的貢獻度有限。\n若希望模型在避免過擬合（Overfitting）的同時，能自動篩選出較具代表性的特徵，採用下列哪一種方法最為合適？\n（Overfitting）；\n收斂；",
+    "options": {
+      "A": "使用早期停止法（Early Stopping）控制訓練回合數，避免過擬合",
+      "B": "同時移除多重共線性特徵並採用L2 正則化（Ridge），以確保模型穩定",
+      "C": "僅使用L2 正則化（Ridge），抑制所有權重幅度但保留全部特徵；",
+      "D": "採用L1 正則化（Lasso），透過懲罰項使部分特徵係數縮為0"
+    },
+    "answer": "D",
+    "explanation": "當模型在訓練集表現極佳，但在測試集表現下滑時，稱為**過擬合 (Overfitting)**。常用防範手段包括：增加訓練資料量、使用 L1/L2 正則化（Lasso/Ridge）、Dropout、提前結束訓練（Early Stopping），或在影像任務中使用隨機裁剪等資料擴增技術。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  },
+  {
+    "id": "subject3_33",
+    "num": 33,
+    "difficulty": 3,
+    "question": "某資料科學團隊正在開發一個客戶相似度比對系統，用於計算所有客戶之間的相似度分數。若系統需逐一比對每一位客戶與其他所有客戶的資料組合，此時演算法的時間複雜度最可能為哪一種？其代表意義為何？",
+    "options": {
+      "A": "O(n) — 執行時間與資料量成線性關係；",
+      "B": "O(n²) — 執行時間與資料量平方成正比；",
+      "C": "O(1) — 執行時間固定不變；",
+      "D": "O(log n) — 執行時間與資料量呈對數成長關係"
+    },
+    "answer": "B",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  },
+  {
+    "id": "subject3_34",
+    "num": 34,
+    "difficulty": 3,
+    "question": "某醫療人工智慧團隊正在開發心臟病風險預測模型，資料量僅有150 筆，\n其中陽性個案不到8%。由於樣本數稀少且類別分布極不平衡，團隊希望在有限資料下，仍能準確評估模型在不同資料上的表現穩定性，同時避免訓練資料被過度切分而影響模型效能。若團隊希望在有限樣本下，同時兼顧資料的利用率與各類別在驗證折中的比例一致性，最適合採用下列哪一種交叉驗證方法？\nValidation）",
+    "options": {
+      "A": "5-Fold 交叉驗證（5-Fold Cross Validation）；",
+      "B": "留一法交叉驗證（Leave-One-Out Cross Validation）；",
+      "C": "隨機交叉驗證（Random Cross Validation）；",
+      "D": "分層留一法交叉驗證（Stratified Leave-One-Out Cross"
+    },
+    "answer": "D",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  },
+  {
+    "id": "subject3_35",
+    "num": 35,
+    "difficulty": 3,
+    "question": "某公司針對製程感測器資料進行主成分分析（PCA），經標準化與協方差矩陣分解後，得到三個主成分的特徵值如下：λ1=6.0, λ2=3.0, λ3=1.0。\n若團隊決定僅保留能解釋至少 80% 總變異量的主成分，以進行後續模型建構，下列哪一項敘述最合理且數據解讀正確？\n保留大部分資訊；\n留一維即可避免過擬合；\n30%，不宜捨棄第三主成分；",
+    "options": {
+      "A": "前兩個主成分合計解釋90%的總變異量，因此可安全降維至二維，且仍",
+      "B": "第一主成分解釋60%的變異量，表示資料結構呈現明顯線性關係，僅保",
+      "C": "雖然前兩個主成分可解釋超過 80% 變異量，但第二主成分貢獻仍高達",
+      "D": "三個特徵值相差不大，顯示各主成分變異均衡，降維可能導致資訊損失"
+    },
+    "answer": "A",
+    "explanation": "主成分分析 (PCA) 是一種無監督的線性降維技術。其核心是將高維特徵投影至最大變異數方向（主成分），在保留最大資料特異性的同時消除特徵間的共線性，降低計算複雜度。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  },
+  {
+    "id": "subject3_36",
+    "num": 36,
+    "difficulty": 3,
+    "question": "某銀行計畫與多家合作機構共同訓練一個AI 信用風險預測模型，為避免客戶交易資料在傳輸與運算過程中外洩，技術團隊評估使用同態加密（Homomorphic Encryption）技術。下列何者最能正確描述同態加密在此應用中的關鍵特性？",
+    "options": {
+      "A": "系統以隨機雜訊（Noise）干擾輸出，確保統計結果不洩漏個資；",
+      "B": "各參與銀行透過安全通道交換私鑰，確保模型參數一致；",
+      "C": "將原始資料壓縮並同時加密，以減少加密後資料量與運算時間；",
+      "D": "資料在加密狀態下仍可進行數值運算，模型訓練可於未解密資料上完成"
+    },
+    "answer": "D",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  },
+  {
+    "id": "subject3_37",
+    "num": 37,
+    "difficulty": 3,
+    "question": "某跨銀行風控平台希望整合多家銀行的用戶行為資料，用於訓練信用風險預測模型。由於競爭與法規限制，各銀行僅願意提供加密後資料，且資料在任何時間不得被平台解密。同時，平台需建立安全通訊協議以確保資料在傳輸過程未被竄改或重放。\n下列哪一組技術最能完整對應上述需求？\n非對稱加密（Asymmetric Encryption）＋ 差分隱私（Differential Privacy）；\nEncryption）＋ 單向雜湊（ One-way Hash Function）＋ 對稱加密（Symmetric Encryption）；\nEncryption）＋ 同態加密（Homomorphic Encryption）＋ 數位簽章（Digital Signature）；\nMulti-party Computation, MPC）＋ 雜湊函數（Hash Function）＋ 對稱加密（Symmetric Encryption）",
+    "options": {
+      "A": "對稱加密（Symmetric Encryption）＋ 單向雜湊（Hash Function）＋",
+      "B": "同態加密（Homomorphic Encryption）＋ 非對稱加密（Asymmetric",
+      "C": "差分隱私（Differential Privacy）＋ 對稱加密（Symmetric",
+      "D": "同態加密（Homomorphic Encryption）＋ 安全多方計算（Secure"
+    },
+    "answer": "B",
+    "explanation": "依台灣《個人資料保護法》規定，蒐集個資前應明確告知當事人：(1)蒐集機關名稱；(2)蒐集目的；(3)個資類別；(4)利用情形（期間、地區、對象及方式）；(5)當事人法定行使權利（查詢、請求閱覽、補充或更正、刪除等）及不提供時之權益影響。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  },
+  {
+    "id": "subject3_38",
+    "num": 38,
+    "difficulty": 3,
+    "question": "附圖程式碼所計算的是哪一類型的評估指標？",
+    "options": {
+      "A": "決定係數 (R-squared)",
+      "B": "混淆矩陣指標 (如 F1-Score / Accuracy)",
+      "C": "均方誤差 (MSE)",
+      "D": "餘弦相似度 (Cosine Similarity)"
+    },
+    "answer": "B",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  },
+  {
+    "id": "subject3_39",
+    "num": 39,
+    "difficulty": 3,
+    "question": "附圖程式碼實現的是哪一種正則化技術？",
+    "options": {
+      "A": "L1 正規化 (Lasso 迴歸)",
+      "B": "L2 正規化 (Ridge 迴歸)",
+      "C": "彈性網路正規化 (Elastic Net)",
+      "D": "Dropout 隨機失活"
+    },
+    "answer": "C",
+    "explanation": "防範過擬合的正則化技術：**L1 正則化 (Lasso)** 引入權重的絕對值懲罰，容易產生稀疏解（使部分權重歸零），具備特徵選取效果；**L2 正則化 (Ridge)** 引入權重的平方懲罰，能使權重值均勻變小（權重衰減），保留特徵但使模型決策邊界更平滑。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  },
+  {
+    "id": "subject3_40",
+    "num": 40,
+    "difficulty": 3,
+    "question": "依據附圖程式碼進行資料處理，下列何者正確？",
+    "options": {
+      "A": "np.linalg.inv(A) 計算矩陣 A 的行列式；",
+      "B": "v1 * v2 結果為 array([5, 7, 9])；",
+      "C": "np.dot(v1, v2) 結果為 np.int64(32)；",
+      "D": "np.linalg.eig(A) 計算矩陣 A 的反矩陣"
+    },
+    "answer": "C",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  },
+  {
+    "id": "subject3_41",
+    "num": 41,
+    "difficulty": 3,
+    "question": "考慮擲出骰子並採用 Monte Carlo 方法估算條件機率，參考附圖程式碼。\n事件 A：擲出偶數事件 B：擲出大於 3請問下列何者為條件機率 P(A|B) 的正確算式？",
+    "options": {
+      "A": "A_and_B.sum() / (A.sum() * B.sum())",
+      "B": "A_and_B.sum() / (A.sum() + B.sum())",
+      "C": "A_and_B.sum() / A.sum()",
+      "D": "A_and_B.sum() / B.sum()"
+    },
+    "answer": "D",
+    "explanation": "本題考查 Monte Carlo 方法估算條件機率。條件機率的定義為 $P(A|B) = P(A \\cap B) / P(B)$。在 Python 模擬程式碼中，`A_and_B` 代表事件 A 與事件 B 同時發生的頻數加總，而 `B` 代表事件 B 發生的頻數加總。因此，其 Monte Carlo 估算值應表示為 `A_and_B.sum() / B.sum()`。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  },
+  {
+    "id": "subject3_42",
+    "num": 42,
+    "difficulty": 3,
+    "question": "在深度神經網路中，不同層的參數量（parameter count）差異極大。有些層雖然數量少但計算量大，有些則相反。了解參數分佈情形，有助於模型壓縮與遷移學習設計。請問在VGG16 中，下列何者的參數量最多？",
+    "options": {
+      "A": "卷積層(Conv2d)；",
+      "B": "全連接層(Linear)；",
+      "C": "ReLU 激活函數；",
+      "D": "池化層(MaxPool2d, AdaptiveAvgPool2d)"
+    },
+    "answer": "B",
+    "explanation": "本題考查卷積神經網路 (CNN) 參數量計算。公式為：**Params = (F * F * Cin + 1) * Cout**。其中 F*F 為卷積核大小，Cin 為輸入通道數，+1 為偏置項 (Bias)，Cout 為輸出通道數。帶入已知數值即可求得參數總數。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  },
+  {
+    "id": "subject3_43",
+    "num": 43,
+    "difficulty": 3,
+    "question": "在神經網路中，了解各層的運算量分佈，有助於模型壓縮與硬體加速的策略設計。請問在VGG16 中，下列何者運算量(FLOPs)最多？",
+    "options": {
+      "A": "卷積層(Conv2d)；",
+      "B": "全連接層(Linear)；",
+      "C": "ReLU 激活函數；",
+      "D": "池化層(MaxPool2d, AdaptiveAvgPool2d)"
+    },
+    "answer": "A",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  },
+  {
+    "id": "subject3_44",
+    "num": 44,
+    "difficulty": 3,
+    "question": "VGG16 層數深且結構規則，由多層卷積、池化及全連接層組成。了解各層的輸入/輸出維度、參數量及記憶體需求，有助於掌握CNN 模型的組成邏輯與實作技巧。根據VGG16 的模型架構，下列敘述何者正確？\n層池化輸出空間為 4×4，所以第一個線性層的輸入維度是 512×4×4 =\n8192；\n偏差（bias）沒有算在內；\n型只需大約625MB 的GPU 記憶體（包含所有optimizer state 與梯度），所以一張 1 GB 的GPU 就足夠訓練；\n約為 138,357,544（約138.36M）",
+    "options": {
+      "A": "AdaptiveAvgPool2d 的輸出會被攤平後傳入第一個全連接層；由於前一",
+      "B": "Linear-33（第一個全連接層）報出的102,764,544 參數只包含權重，",
+      "C": "根據列出的「Estimated Total Size (MB) = 624.98」，表示訓練此模",
+      "D": "VGG16 包含13 層卷積層（conv）與3 層全連接層（FC），總參數數目"
+    },
+    "answer": "D",
+    "explanation": "本題考查卷積神經網路 (CNN) 參數量計算。公式為：**Params = (F * F * Cin + 1) * Cout**。其中 F*F 為卷積核大小，Cin 為輸入通道數，+1 為偏置項 (Bias)，Cout 為輸出通道數。帶入已知數值即可求得參數總數。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  },
+  {
+    "id": "subject3_45",
+    "num": 45,
+    "difficulty": 3,
+    "question": "在實務應用中，我們常使用遷移學習(transfer learning)技巧，即載入預訓練模型（如VGG16），凍結部分層的參數，只針對特定任務重新訓練最後幾層。請問在 PyTorch 中，凍結特徵提取層參數的正確程式碼語法為何？",
+    "options": {
+      "A": "model.features.requires_grad = True",
+      "B": "for param in model.features.parameters(): param.requires_grad = False",
+      "C": "model.features.freeze()",
+      "D": "optimizer.freeze(model.features)"
+    },
+    "answer": "B",
+    "explanation": "在 PyTorch 中進行遷移學習，若要凍結預訓練模型（如 VGG16）的前面層參數，應將其 `requires_grad` 屬性設為 `False`（例如 `param.requires_grad = False`），這樣在反向傳播時就不會計算其梯度並保持權重不變。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  }
+]

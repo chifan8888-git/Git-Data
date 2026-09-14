@@ -76,13 +76,13 @@ const LEARNING_DATABASE = [
         
         <ul>
           <li><strong>AlexNet (2012)</strong>：引入 ReLU 激活函數解決梯度飽和，使用 Dropout 防止過擬合，開啟了深度學習的浪潮。</li>
-          <li><strong>VGG (2014)</strong>：證實了「使用多個 $3\times3$ 小型卷積核代替大卷積核」能增加網路深度、減少參數量並引入更多非線性變換。</li>
+          <li><strong>VGG (2014)</strong>：證實了「使用多個 $3\\times3$ 小型卷積核代替大卷積核」能增加網路深度、減少參數量並引入更多非線性變換。</li>
           <li><strong>ResNet (2015)</strong>：引入<strong>殘差連接 (Residual Connection / Skip Connection)</strong>，讓梯度能直接越層傳播，徹底解決了網路極深時的<strong>梯度消失 (Gradient Vanishing)</strong> 與退化問題。</li>
           <li><strong>MobileNet (輕量化首選)</strong>：
             <p>專為移動端與嵌入式設備設計，其核心是將標準卷積拆分為<strong>深度可分離卷積 (Depthwise Separable Convolution)</strong>：</p>
             <ol>
               <li><strong>Depthwise 卷積</strong>：對每個輸入通道單獨進行單通道卷積，不改變通道數。</li>
-              <li><strong>Pointwise 卷積</strong>：使用 $1\times1$ 卷積將 Depthwise 的輸出通道進行線性組合，調整至目標通道數。</li>
+              <li><strong>Pointwise 卷積</strong>：使用 $1\\times1$ 卷積將 Depthwise 的輸出通道進行線性組合，調整至目標通道數。</li>
             </ol>
             <p><strong>效益</strong>：大幅降低了計算複雜度 (FLOPs) 與參數量，一般可降低至標準卷積的 1/8 到 1/9，而準確度僅微幅下降。</p>
           </li>
@@ -136,8 +136,8 @@ const LEARNING_DATABASE = [
             </ul>
           </li>
           <li><strong>VAE (Variational Autoencoder)</strong>：
-            <p>基於概率圖模型的自編碼器。將輸入編碼為潛在空間 (Latent Space) 的概率分佈（即均值 $\mu$ 與方差 $\sigma^2$），再從中採樣進行解碼生成。</p>
-            <p><strong>重參數化技巧 (Reparameterization Trick)</strong>：為解決「隨機採樣步驟無法進行反向傳播梯度傳遞」的難題，VAE 將採樣過程改寫為 $z = \mu + \sigma \odot \epsilon$（其中 $\epsilon \sim \mathcal{N}(0, I)$），將隨機性轉移到無梯度的外部噪聲 $\epsilon$ 上，使整個網路可利用反向傳播進行端到端訓練。</p>
+            <p>基於概率圖模型的自編碼器。將輸入編碼為潛在空間 (Latent Space) 的概率分佈（即均值 $\\mu$ 與方差 $\\sigma^2$），再從中採樣進行解碼生成。</p>
+            <p><strong>重參數化技巧 (Reparameterization Trick)</strong>：為解決「隨機採樣步驟無法進行反向傳播梯度傳遞」的難題，VAE 將採樣過程改寫為 $z = \\mu + \\sigma \odot \\epsilon$（其中 $\\epsilon \sim \mathcal{N}(0, I)$），將隨機性轉移到無梯度的外部噪聲 $\\epsilon$ 上，使整個網路可利用反向傳播進行端到端訓練。</p>
           </li>
           <li><strong>Diffusion Models (擴散模型)</strong>：
             <p>目前生成影像的主流。分為<strong>前向步驟 (Forward Process)</strong>（逐步向影像加入高斯噪聲，直至變為純噪聲）與<strong>反向步驟 (Reverse Process)</strong>（訓練神經網路學習逐步去噪，從純噪聲中還原出高品質影像）。</p>
@@ -425,7 +425,7 @@ const LEARNING_DATABASE = [
         <ul>
           <li><strong>Z-score 標準化 (Standardization)</strong>：
             <p>將資料轉化為均值為 0、標準差為 1 的正態分佈。公式為：</p>
-            <div class="formula">$$z = \frac{x - \mu}{\sigma}$$</div>
+            <div class="formula">$$z = \\frac{x - \\mu}{\\sigma}$$</div>
             <p><strong>適用時機</strong>：當特徵中存在極端異常值，或演算法依賴距離計算（如 K-Means、SVM、KNN、PCA、梯度下降法）時。相較於 Min-Max 縮放，Z-score 不會因為單一極端極值而將所有正常數據壓縮在極小區間內。</p>
           </li>
           <li><strong>PCA (主成分分析) 降維</strong>：
@@ -453,7 +453,7 @@ const LEARNING_DATABASE = [
         <div class="formula-box">
           <h5>🔑 1. DBSCAN 密度分群核心參數與程式碼</h5>
           <ul>
-            <li><strong>鄰域半徑 (<code>eps</code>, $\epsilon$)</strong>：定義一個點的鄰域半徑。若 eps 設得太小，大部分正常點會被判定為離群噪噪點 (-1)；設得太大，多個獨立的群集會被融合成一個。</li>
+            <li><strong>鄰域半徑 (<code>eps</code>, $\\epsilon$)</strong>：定義一個點的鄰域半徑。若 eps 設得太小，大部分正常點會被判定為離群噪噪點 (-1)；設得太大，多個獨立的群集會被融合成一個。</li>
             <li><strong>最小點數 (<code>min_samples</code>, MinPts)</strong>：核心點鄰域內所需最少樣本點數。</li>
           </ul>
           <pre><code class="language-python">from sklearn.cluster import DBSCAN
@@ -557,7 +557,7 @@ optimizer = torch.optim.Adam(
           <li><strong>資料與概念漂移 (Drift) 監控</strong>：
             <p><strong>PSI (Population Stability Index，群體穩定性指標)</strong>：用於衡量基準數據 (Baseline) 與實際推論數據 (Target) 的分佈差異。公式為：</p>
             <div class="formula">
-              $$PSI = \sum_{i=1}^{k} \left( P_i - Q_i \right) \times \ln\left(\frac{P_i}{Q_i}\right)$$
+              $$PSI = \\sum_{i=1}^{k} \\left( P_i - Q_i \\right) \\times \\ln\\left(\\frac{P_i}{Q_i}\\right)$$
             </div>
             <p>其中 $P_i$ 為實際推論數據佔比，$Q_i$ 為基準數據佔比。<strong>決策門檻：</strong></p>
             <ul>
@@ -565,7 +565,7 @@ optimizer = torch.optim.Adam(
               <li><strong>0.1 &le; PSI &lt; 0.25</strong>：中度變化，需密切監控，規劃模型<strong>定期重新訓練 (Retraining)</strong>。</li>
               <li><strong>PSI &ge; 0.25</strong>：分佈發生顯著漂移！<strong>必須立即觸發警告並啟動模型重新訓練與重新部署</strong>。</li>
             </ul>
-            <p><strong>KL 散度 (Relative Entropy)</strong>：用於量化兩個概率分佈的不相似度，公式為 $D_{KL}(P \parallel Q) = \sum_{x} P(x) \ln(P(x)/Q(x))$，不具對稱性。</p>
+            <p><strong>KL 散度 (Relative Entropy)</strong>：用於量化兩個概率分佈的不相似度，公式為 $D_{KL}(P \\parallel Q) = \\sum_{x} P(x) \\ln(P(x)/Q(x))$，不具對稱性。</p>
           </li>
           <li><strong>隱私安全計算技術</strong>：
             <ul>

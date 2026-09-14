@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPAS 淨零碳規劃管理師 — 初級考科 1 終極速查手冊</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
+            display: flex;
+            height: 100vh;
+            color: #2d3748;
+            background-color: #f7fafc;
+        }
+        /* 左側側邊欄樣式 */
+        #sidebar {
+            width: 320px;
+            background-color: #1a202c;
+            color: #edf2f7;
+            overflow-y: auto;
+            flex-shrink: 0;
+            border-right: 1px solid #e2e8f0;
+        }
+        .sidebar-header {
+            padding: 20px 16px;
+            background-color: #0f172a;
+            border-bottom: 1px solid #334155;
+        }
+        .sidebar-header h2 {
+            font-size: 1.1rem;
+            color: #38bdf8;
+            margin-bottom: 4px;
+        }
+        .sidebar-header p {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+        .nav-list {
+            list-style: none;
+            padding: 8px 0;
+        }
+        .nav-item a {
+            display: block;
+            padding: 12px 20px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            border-left: 4px solid transparent;
+        }
+        .nav-item a:hover, .nav-item a.active {
+            background-color: #334155;
+            color: #ffffff;
+            border-left-color: #38bdf8;
+        }
+        /* 右側主要內容區樣式 */
+        #content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 40px;
+            scroll-behavior: smooth;
+        }
+        .section {
+            background: #ffffff;
+            padding: 32px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+        .section h2 {
+            color: #0f172a;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #38bdf8;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+        .tree-root {
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            background-color: #1e293b;
+            color: #f8fafc;
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            white-space: pre;
+            font-size: 0.88rem;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+            font-size: 0.9rem;
+        }
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 10px 14px;
+            text-align: left;
+        }
+        th {
+            background-color: #f1f5f9;
+            color: #334155;
+            font-weight: 600;
+        }
+        .badge {
+            background-color: #e0f2fe;
+            color: #0369a1;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 左側導覽列 -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h2>iPAS 淨零碳規劃管理師</h2>
+            <p>初級考科 1 終極知識圖譜手冊</p>
+        </div>
+        <ul class="nav-list">
+            <li class="nav-item"><a href="#sec1">1. 國際氣候公約與科學基礎</a></li>
+            <li class="nav-item"><a href="#sec2">2. 國際淨零政策與碳關稅</a></li>
+            <li class="nav-item"><a href="#sec3">3. 國際倡議與揭露標準</a></li>
+            <li class="nav-item"><a href="#sec4">4. ISO 14064 家族與 14068-1</a></li>
+            <li class="nav-item"><a href="#sec5">5. 台灣政策、法規與能源目標</a></li>
+            <li class="nav-item"><a href="#sec6">6. 新興議題與前瞻技術</a></li>
+        </ul>
+    </nav>
+
+    <!-- 右側內容說明區 -->
+    <main id="content">
+
+        <!-- 主題 1 -->
+        <section id="sec1" class="section">
+            <h2>1. 國際氣候公約、永續目標與發展脈絡</h2>
+            <div class="tree-root">iPAS 淨零碳規劃管理師 (初級考科 1)
+├── 1.1 IPCC (氣候變遷專門委員會)
+│   ├── 1.1.1 創立單位：UNEP (環境署) 與 WMO (氣象組織)
+│   ├── 1.1.2 AR6 核心結論：人類活動致暖化「無庸置疑」；2030 前後恐達 1.5°C 升溫門檻
+│   └── 1.1.3 氣候情境 (SSPs)：全球須於 2030 減碳 45%，並於 2050 年實現淨零 CO₂ 排放
+├── 1.2 SDGs (聯合國 2030 永續發展目標)
+│   ├── 1.2.1 框架架構：2015 年通過，包含 17 項目標與 169 項細目標 (經濟、社會、環境)
+│   └── 1.2.2 淨零最相關 5 大關鍵目標：
+│       ├── SDG 7 清潔能源：再生能源普及與能效翻倍 (對接 COP28)
+│       ├── SDG 12 責任消費與生產：循環經濟、產品碳足跡 (ISO 14067)
+│       ├── SDG 13 氣候行動：加強韌性調適、納入國家政策 (對接《氣候法》)
+│       ├── SDG 14 水下生態：海洋與沿岸保護 (對接藍碳 Blue Carbon)
+│       └── SDG 15 陸地生態：森林永續管理、生物多樣性 (對接綠碳 & TNFD)
+├── 1.3 1992 UNFCCC (聯合國氣候變化綱要公約 - 深度下鑽)
+│   ├── 1.3.1 歷史背景與最高地位
+│   │   ├── 通過地點：1992 年里約地球高峰會通過
+│   │   ├── 法律位階：全球氣候治理最高母法框架，每年召開締約方大會 (COP)
+│   │   └── 條約性質：授權後續制定具體議定書與條約細則
+│   ├── 1.3.2 政策目的與終極目標
+│   │   ├── Article 2 終極目標：將溫室氣體濃度穩定在「防止氣候系統受到危險的人為干擾」
+│   │   └── 時間與永續前提：給予生態自然適應時間，確保糧食安全與經濟永續發展
+│   ├── 1.3.3 核心指導原則 (Article 3)
+│   │   ├── CBDR (共同但有區別的責任)：已開發國家累積排放多，應率先採取減緩行動
+│   │   ├── 預防原則 (Precautionary Principle)：缺乏完全科學確定性不得為延遲減緩之理由
+│   │   ├── 永續發展權：氣候政策應促進經濟發展
+│   │   └── 開放經濟體系原則：避免以氣候名義構成不合理之國際貿易限制
+│   ├── 1.3.4 締約國分類體系
+│   │   ├── Annex I (附件一)：已開發國及東歐經濟轉型國 (承諾帶頭將排放降至 1990 水準)
+│   │   ├── Annex II (附件二)：OECD 富裕已開發國 (承諾提供「全新且額外」之資金與技術)
+│   │   └── Non-Annex I (非附件一)：開發中國家 (初期無強制量化目標；含最不發達國 LDCs)
+│   └── 1.3.5 運作機構：COP (最高決策機構)、SBSTA (科技諮詢)、SBI (執行諮詢)、GCF (綠色氣候基金)
+├── 1.4 1997 京都議定書 (COP3)
+│   ├── 1.4.1 減量目標：附件一國家 2008-2012 平均較 1990 年減量 5.2%
+│   ├── 1.4.2 管制氣體：CO₂, CH₄, N₂O, HFCs, PFCs, SF₆ (二期納入 NF₃)
+│   └── 1.4.3 三大靈活機制：CDM (清潔發展)、JI (共同實施)、ET (排放交易)
+├── 1.5 2015 巴黎協定 (COP21) [初級核心]
+│   ├── 1.5.1 控溫目標：遠低於 2°C，努力限制在 1.5°C 內；本世紀下半葉淨零
+│   ├── 1.5.2 NDCs (國家自主貢獻)：5 年一輪更新，具「不可退縮原則」
+│   └── 1.5.3 Article 6：6.2 雙邊 ITMOs 交易、6.4 全球中央自願碳信用機制
+├── 1.6 2021 格拉斯哥氣候公約 (COP26)：寫入 Phase-down 未加裝 CCUS 的煤電；相應調整 (CA) 避雙重計數
+└── 1.7 2023 杜拜 COP28：首次 GST 全球盤點載明「脫離化石燃料」；2030 再生能源 3 倍、能效提升 2 倍</div>
+
+            <h3>UNFCCC 國家分類核心比較</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>分類類別</th>
+                        <th>代表性國家/地區</th>
+                        <th>減量義務</th>
+                        <th>資金與技術支援義務</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Annex I (附件一)</strong></td>
+                        <td>美、日、德、英、俄羅斯、東歐國</td>
+                        <td>有（率先降至 1990 水準）</td>
+                        <td>無強制資金義務（僅東歐轉型國）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Annex II (附件二)</strong></td>
+                        <td>美、日、德、英、法（OECD成員）</td>
+                        <td>有（含附件一所有義務）</td>
+                        <td><span class="badge">強制</span> 提供全新且額外資金與技術</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Non-Annex I (非附件一)</strong></td>
+                        <td>中、印、巴西、台灣（NGO身份）</td>
+                        <td>初期無（巴黎協定後改為 NDC）</td>
+                        <td>無（屬資金與技術接收方）</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- 主題 2 -->
+        <section id="sec2" class="section">
+            <h2>2. 國際淨零政策、碳關稅與市場機制</h2>
+            <div class="tree-root">2. 國際淨零政策、碳關稅與市場機制
+├── 2.1 歐盟 CBAM (碳邊境調整機制) [2026 正式期專題]
+│   ├── 2.1.1 政策目的：防範 Carbon Leakage (碳洩漏)，保護歐盟企業公平競爭力
+│   ├── 2.1.2 正式實施時程：2026/01/01 啟動購買憑證；2034 年免費配額 100% 取消
+│   ├── 2.1.3 管制 6 大產業：水泥、電力、化肥、鋼鐵、鋁、氫氣
+│   ├── 2.1.4 扣抵機制：出口國 (如台灣) 已繳納實質碳費可全額或差額扣抵 CBAM 憑證
+│   └── 2.1.5 微量豁免條款：單一進口商全年度 CBAM 貨物總淨重 ≤ 50 公噸 (50 tonnes) 免申報繳費
+├── 2.2 美國 CCA (清潔競爭法案)：針對超越美國本土同類產品碳強度基準線之高碳排進口原物料課稅
+└── 2.3 碳定價雙軌機制比對
+    ├── 價格導向 (碳稅/碳費)：政府定價、市場決定數量 (價格確定性高) ➔ 台灣碳費採用
+    └── 數量導向 (Cap-and-Trade ETS)：政府定總量 (Cap)、市場決價 (數量確定性高) ➔ 歐盟 EU ETS 採用</div>
+        </section>
+
+        <!-- 主題 3 -->
+        <section id="sec3" class="section">
+            <h2>3. 國際倡議與揭露標準</h2>
+            <div class="tree-root">3. 國際倡議與揭露標準
+├── 3.1 RE100：2030 (60%) ➔ 2040 (90%) ➔ 2050 (100% 再生能源)；僅限範疇二外購電力
+├── 3.2 SBTi：1.5°C 控溫路徑，短期每年絕對減量 ≥ 4.2%；2050 長期淨零實質減排 ≥ 90%
+├── 3.3 TCFD：四大核心柱 (治理、策略、風險管理、指標與目標)
+├── 3.4 TNFD [2026 新考點]：自然相關財務揭露，採 LEAP 評估架構 (Locate, Evaluate, Assess, Prepare)
+├── 3.5 ISSB (IFRS S1 & S2)：整合 TCFD/SASB，將氣候揭露強制納入財務報告基線
+├── 3.6 GRI 永續報導準則演進 [新舊對照]
+│   ├── 舊版通用準則 (2016)：GRI 101 (基礎)、GRI 102 (一般揭露)、GRI 103 (管理方針)
+│   ├── 新版通用準則 (2021/2023生效)：GRI 1 (基礎)、GRI 2 (一般揭露)、GRI 3 (重大主題)
+│   └── GRI 305 溫室氣體揭露：305-1 (範疇一)、305-2 (範疇二)、305-3 (範疇三)、305-4/5 (強度與減量)
+└── 3.7 雙重重要性 (Double Materiality)：財務重要性 (Outside-in) vs 衝擊重要性 (Inside-out)</div>
+        </section>
+
+        <!-- 主題 4 -->
+        <section id="sec4" class="section">
+            <h2>4. ISO 14064 家族與 ISO 14068-1 銜接</h2>
+            <div class="tree-root">4. ISO 14064 溫室氣體管理標準家族與 ISO 14068-1 銜接
+├── 4.1 ISO 14064 三大系列標準
+│   ├── ISO 14064-1:2018：組織層級溫室氣體排放與移除之量化及報告指引 (算總量)
+│   ├── ISO 14064-2:2019：專案層級溫室氣體減量或移除增強之量化與報告 (申請碳權)
+│   └── ISO 14064-3:2019：溫室氣體聲明之確證與查證指引 (第三方查驗)
+├── 4.2 ISO 14068-1:2023 碳中和標準：取代 PAS 2060 (2025/11廢止)；強調「先內部實質減量，剩餘排放才抵換」
+└── 4.3 銜接邏輯：14064-1 算總排量 ➔ 執行內部實質減量 ➔ 剩餘排放量依 14068-1 買合規碳權抵換宣告碳中和</div>
+        </section>
+
+        <!-- 主題 5 -->
+        <section id="sec5" class="section">
+            <h2>5. 台灣政策、法規與再生能源目標</h2>
+            <div class="tree-root">5. 台灣淨零政策、法規與再生能源目標
+├── 5.1 《氣候變遷因應法》：環境部氣候變遷署主管；正式將「2050 淨零排放」目標入法
+├── 5.2 台灣 NDC 時間軸：2005 基準年 ➔ 2030 中期目標減 24% ± 1% ➔ 2050 淨零排放
+├── 5.3 台灣碳費機制 [2026 正式繳費]：門檻年排放 ≥ 2.5 萬噸 CO₂e；通過「自主減量計畫」享優惠費率
+├── 5.4 2050 淨零路徑：4 大轉型 + 2 大基礎 + 12 項關鍵策略
+├── 5.5 能源推動四大主軸：創能、儲能、節能、系統整合
+├── 5.6 再生能源與能源議題拆解
+│   ├── 太陽光電：2030 達 30 GW、2050 達 40~80 GW (屋頂型優先、特定新建物強制設置)
+│   ├── 離岸風電：2030 達 13.1 GW、2050 達 40~55 GW (區塊開發 Phase 3，走向浮動式風機)
+│   ├── 前瞻能源：地熱具「基載發電」特性；氫能發電 2050 電力配比 9% ~ 12%
+│   ├── 核能政策：傳統導向非核家園；國際關注歐盟永續分類與 SMR (小型模組化反應爐)
+│   └── 2050 電力配比目標：再生能源 60~70%、氫能 9~12%、火力+CCUS 20~27%
+└── 5.7 台灣碳權交易所 (TCX)：高雄總部/台北服務；國內自願減量專案額度禁止二次轉售 (No Resale)</div>
+        </section>
+
+        <!-- 主題 6 -->
+        <section id="sec6" class="section">
+            <h2>6. 新興議題與前瞻技術</h2>
+            <div class="tree-root">6. 新興議題、前瞻技術與關鍵名詞彙整
+├── 6.1 自然碳匯 (三色碳匯)：綠碳 (陸生/森林)、藍碳 (海洋/沿岸 [吸碳快儲存長])、黃碳 (農業土壤)
+├── 6.2 氫能發展色彩：灰氫 (化石燃料)、藍氫 (化石燃料+CCUS)、綠氫 (綠電電解水 [淨零最佳解])
+├── 6.3 CCUS 技術：CCU (碳捕集與利用 [化學品/燃料]) vs CCS (碳捕集與封存 [地下地層永久封存])
+├── 6.4 內部碳定價 (ICP)：影子價格 (Shadow Price 評估投資案氣候風險)、內部碳費 (實體收費專款專用)
+└── 6.5 範疇三 Scope 3：價值鏈上下游 15 類活動，精準實體數據與供應鏈賦能</div>
+        </section>
+
+    </main>
+
+    <!-- 頁面選單互動腳本 -->
+    <script>
+        document.querySelectorAll('.nav-item a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                document.querySelectorAll('.nav-item a').forEach(a => a.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

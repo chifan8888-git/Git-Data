@@ -1,0 +1,227 @@
+[
+  {
+    "id": "mock_371",
+    "num": 330,
+    "difficulty": 1,
+    "question": "可信任 AI 系統應具備哪一項特性？",
+    "options": {
+      "A": "支援無限迴圈訓練",
+      "B": "可解釋、可靠且尊重隱私",
+      "C": "完全由 AI 自主決策",
+      "D": "對少數群體強化優先預測"
+    },
+    "answer": "B",
+    "explanation": "可信任 AI 強調透明性、隱私保護、避免偏見、強化監督與問責，是設計與治理核\n心原則。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_372",
+    "num": 331,
+    "difficulty": 2,
+    "question": "下列哪一個作法有助於確保模型合規性並可被溯源審計？",
+    "options": {
+      "A": "開放所有模型源碼",
+      "B": "建立模型卡並記錄資料來源、用途與限制",
+      "C": "每次訓練均使用隨機權重初始化",
+      "D": "使用 k-最近鄰演算法"
+    },
+    "answer": "B",
+    "explanation": "模型卡（Model Card）制度化記錄模型用途、資料、風險與限制，支援問責與合規\n性審查。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_374",
+    "num": 332,
+    "difficulty": 4,
+    "question": "若希望使用者可針對 AI 判斷提出異議並要求人類審查，這屬於哪一項 AI 合規要求？",
+    "options": {
+      "A": "黑箱模型優先使用原則",
+      "B": "使用者主動學習義務",
+      "C": "可追溯性與人機監督（Human-in-the-loop）",
+      "D": "精準建模策略"
+    },
+    "answer": "C",
+    "explanation": "AI 系統須設計人類監督與干預機制，避免全自動決策失誤造成個人損害，是 AI\nACT 等法規核心條款。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_375",
+    "num": 333,
+    "difficulty": 2,
+    "question": "以下哪種視覺化方法可協助呈現模型輸出在不同群體間的公平性差異？",
+    "options": {
+      "A": "Loss Curve",
+      "B": "ROC 曲線",
+      "C": "Disparity Plot（群體差異圖）",
+      "D": "PCA 投影圖"
+    },
+    "answer": "C",
+    "explanation": "Disparity Plot 可直觀展示模型指標（如 Precision、Recall）在不同子群體間是否\n有系統性差距。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_376",
+    "num": 334,
+    "difficulty": 5,
+    "question": "在部署 AI 系統時加入安全監控與異常行為偵測屬於哪一種控制類型？",
+    "options": {
+      "A": "資料治理",
+      "B": "預訓練壓縮策略",
+      "C": "後處理控制（Post-processing safeguards）",
+      "D": "特徵工程優化"
+    },
+    "answer": "C",
+    "explanation": "後處理控制包含部署後階段針對風險進行監控與應變，如模型行為審查、輸出監測\n與錯誤攔截。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_378",
+    "num": 335,
+    "difficulty": 2,
+    "question": "AI ACT 對於「不可接受風險」的 AI 系統規範為？",
+    "options": {
+      "A": "允許自由訓練但禁止商用",
+      "B": "需要額外申請 API 驗證",
+      "C": "禁止設計、開發與使用",
+      "D": "需送交開源社群審查"
+    },
+    "answer": "C",
+    "explanation": "如社會評分、操縱行為等 AI 被列為不可接受風險，於歐盟法規下禁止開發與部\n署。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_379",
+    "num": 336,
+    "difficulty": 4,
+    "question": "若企業導入 AI 系統但缺乏資料處理與風險流程文檔，將違反哪一項原則？",
+    "options": {
+      "A": "高效能原則",
+      "B": "模型壓縮透明性",
+      "C": "可問責性與可稽核性原則",
+      "D": "GPU 負載均衡原則"
+    },
+    "answer": "C",
+    "explanation": "合規 AI 須具備可被外部審查的文檔與紀錄，若缺乏則違反問責與審核標準。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_380",
+    "num": 337,
+    "difficulty": 1,
+    "question": "下列哪一方法可於資料前處理階段降低未來的公平性風險？",
+    "options": {
+      "A": "隨機重編類別標籤",
+      "B": "過濾具有偏見傾向的欄位（如性別）",
+      "C": "訓練資料標準化後加入白噪音",
+      "D": "將所有資料改為同一類別"
+    },
+    "answer": "B",
+    "explanation": "若某些欄位如性別、種族等可能導致不公平結果，應評估其必要性，必要時移除或\n去偏處理。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_382",
+    "num": 338,
+    "difficulty": 2,
+    "question": "以下哪一措施最能強化 AI 模型的問責性（Accountability）？",
+    "options": {
+      "A": "使用 GPU 加速",
+      "B": "模型加密",
+      "C": "保留模型訓練紀錄與調參紀錄",
+      "D": "刪除測試資料以避免洩漏"
+    },
+    "answer": "C",
+    "explanation": "問責性要求 AI 系統開發與使用過程可追蹤與可說明，需建立完整記錄以支援審查\n與責任界定。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_383",
+    "num": 339,
+    "difficulty": 3,
+    "question": "使用 SHAP 值分析模型公平性時，下列敘述何者正確？",
+    "options": {
+      "A": "SHAP 值不能用於類別資料",
+      "B": "SHAP 僅能解釋整體平均效果",
+      "C": "SHAP 可用來觀察特定群體是否因特定特徵受到不公平影響",
+      "D": "SHAP 僅適用於非監督學習"
+    },
+    "answer": "C",
+    "explanation": "SHAP 可量化特徵對每個預測的貢獻，有助於辨識特定群體是否因特定變數受偏見\n影響。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_384",
+    "num": 340,
+    "difficulty": 4,
+    "question": "資料前處理時若發現某特徵在不同群體中分布差異極大，應優先進行什麼處理？",
+    "options": {
+      "A": "將其標準化",
+      "B": "採用主成分分析降維",
+      "C": "審查其是否為潛在偏見來源",
+      "D": "將其視為高重要性特徵保留"
+    },
+    "answer": "C",
+    "explanation": "特徵若在群體間表現差異大，可能導致結果偏誤，需進一步審查其是否造成不公平\n預測。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_385",
+    "num": 341,
+    "difficulty": 2,
+    "question": "差分隱私實作中的「ε（epsilon）」參數代表什麼？",
+    "options": {
+      "A": "模型壓縮率",
+      "B": "噪音強度，值越小代表隱私保護越強",
+      "C": "模型訓練次數",
+      "D": "欄位總數"
+    },
+    "answer": "B",
+    "explanation": "ε 值控制可容許的資訊洩漏範圍，值越小代表保護越強，但資料可用性也會降低。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_386",
+    "num": 342,
+    "difficulty": 5,
+    "question": "AI 系統若違反公平性原則造成歧視，依 AI ACT 要求，負責方應具備哪項能力？",
+    "options": {
+      "A": "證明使用深度模型不可避免",
+      "B": "說明模型所有內部參數",
+      "C": "提供模型行為說明與歧視風險緩解措施",
+      "D": "使用外部 API 接口授權函"
+    },
+    "answer": "C",
+    "explanation": "AI ACT 要求高風險 AI 必須能提供模型行為邏輯、偏見來源分析與減偏措施，強化\n責任歸屬。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_387",
+    "num": 343,
+    "difficulty": 3,
+    "question": "下列哪一類資料最常導致「歷史偏見（Historical Bias）」？",
+    "options": {
+      "A": "來自即時感測器資料",
+      "B": "人為標註的歷史決策結果",
+      "C": "從隨機產生器產出的訓練資料",
+      "D": "機器模擬生成資料"
+    },
+    "answer": "B",
+    "explanation": "歷史偏見通常來自過往決策中的系統性不公（如過去招聘歧視），模型從中學習導致\n再現不公平。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_388",
+    "num": 344,
+    "difficulty": 2,
+    "question": "在資料治理流程中，誰應負責確認資料使用是否符合法規與目的限制？",
+    "options": {
+      "A": "系統開發者",
+      "B": "資料分析師",
+      "C": "資料治理負責人（Data Steward / Data Governance Officer）",
+      "D": "網頁設計師"
+    },
+    "answer": "C",
+    "explanation": "Data Steward 是資料治理制度中的核心角色，負責管理資料資產、用途與合規\n性。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  }
+]

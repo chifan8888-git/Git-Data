@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude 工作使用狀態報告 — Patrick</title>
+<style>
+  :root{
+    --ink:#1a2230;--sub:#5b6776;--faint:#8a96a5;--line:#e2e7ee;--bg:#f4f6f9;--paper:#ffffff;
+    --a:#2563eb;--a-bg:#eaf1ff;--b:#15803d;--b-bg:#e8f6ee;--c:#7c3aed;--c-bg:#f1ebfd;
+    --d:#c2410c;--d-bg:#fdeee4;--warn:#b45309;--warn-bg:#fdf4e3;--code:#0f172a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI","Microsoft JhengHei",sans-serif;line-height:1.6;font-size:14px;padding:24px 12px}
+  .page{background:var(--paper);max-width:900px;margin:0 auto 26px;padding:40px 46px;border-radius:10px;box-shadow:0 2px 20px #0f172a14;position:relative}
+  .pgnum{position:absolute;top:18px;right:24px;font-size:11px;color:var(--faint);letter-spacing:.5px}
+
+  h1{font-size:27px;letter-spacing:.5px;line-height:1.25}
+  h2{font-size:20px;margin:6px 0 14px;padding-bottom:9px;border-bottom:2px solid var(--ink);display:flex;align-items:center;gap:10px}
+  h2 .ch{background:var(--ink);color:#fff;width:30px;height:30px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  h3{font-size:15px;margin:18px 0 7px;color:var(--ink);display:flex;align-items:center;gap:7px}
+  h3::before{content:"";width:4px;height:15px;border-radius:2px;background:var(--a)}
+  p{margin:7px 0;color:var(--sub)}
+  b,strong{color:var(--ink)}
+  code{font-family:ui-monospace,Consolas,monospace;font-size:12px;background:#eef1f5;color:var(--code);padding:1px 6px;border-radius:5px}
+
+  .cover{text-align:center;padding:34px 0 20px;border-bottom:1px dashed var(--line);margin-bottom:24px}
+  .cover .sub{color:var(--sub);font-size:14px;margin-top:10px}
+  .meta{display:inline-flex;gap:0;margin-top:22px;border:1px solid var(--line);border-radius:9px;overflow:hidden;flex-wrap:wrap}
+  .meta div{padding:10px 18px;font-size:12px;color:var(--sub);border-right:1px solid var(--line)}
+  .meta div:last-child{border-right:none}
+  .meta div b{display:block;color:var(--ink);font-size:14px;margin-top:2px}
+
+  .toc{margin:6px 0 8px}
+  .toc a{display:flex;align-items:baseline;text-decoration:none;color:var(--ink);padding:8px 12px;border:1px solid var(--line);border-radius:9px;margin-bottom:7px;transition:.15s}
+  .toc a:hover{background:var(--a-bg);border-color:var(--a)}
+  .toc .n{font-family:ui-monospace,monospace;color:var(--a);font-weight:700;width:30px;flex:0 0 auto}
+  .toc .t{font-weight:600;font-size:14px}
+  .toc .d{color:var(--faint);font-size:12px;margin-left:auto;padding-left:14px}
+  .toc-cat{font-size:12px;font-weight:700;color:var(--c);letter-spacing:1px;margin:14px 0 7px}
+
+  table{width:100%;border-collapse:collapse;font-size:12.5px;margin:8px 0}
+  th,td{text-align:left;padding:8px 10px;border:1px solid var(--line);vertical-align:top}
+  th{background:#f0f3f7;color:var(--ink);font-weight:600;font-size:11.5px}
+  td code{font-size:11.5px}
+  .badge{display:inline-block;font-size:10.5px;font-weight:600;padding:1px 9px;border-radius:20px;white-space:nowrap}
+  .ok{background:var(--b-bg);color:var(--b)}
+  .wip{background:var(--warn-bg);color:var(--warn)}
+  .fail{background:var(--d-bg);color:var(--d)}
+  .mid{background:var(--c-bg);color:var(--c)}
+
+  .card{border:1px solid var(--line);border-radius:9px;padding:13px 15px;margin:10px 0;background:#fbfcfe}
+  .card.a{border-left:4px solid var(--a)}.card.b{border-left:4px solid var(--b)}
+  .card.c{border-left:4px solid var(--c)}.card.d{border-left:4px solid var(--d)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+  @media(max-width:680px){.grid2,.grid3{grid-template-columns:1fr}}
+
+  ul.tk{list-style:none;margin:6px 0}
+  ul.tk li{position:relative;padding:3px 0 3px 20px;font-size:12.5px;color:var(--sub)}
+  ul.tk li::before{content:"▸";position:absolute;left:2px;color:var(--a)}
+  ul.tk li b{color:var(--ink)}
+
+  .note{background:var(--warn-bg);border:1px solid #f0d9a8;border-radius:8px;padding:11px 14px;margin:12px 0;font-size:12.5px}
+  .note b{color:var(--warn)}
+  .note.info{background:var(--a-bg);border-color:#bdd3f7}.note.info b{color:var(--a)}
+  .note.ok{background:var(--b-bg);border-color:#a7d9b8}.note.ok b{color:var(--b)}
+  .src{font-size:11px;color:var(--faint);margin-top:6px;font-family:ui-monospace,monospace}
+  .lead-quote{background:var(--a-bg);border-left:4px solid var(--a);padding:11px 15px;border-radius:0 8px 8px 0;margin:10px 0;font-size:13px;color:var(--ink)}
+
+  .stat-row{display:flex;gap:10px;margin:12px 0;flex-wrap:wrap}
+  .stat{flex:1;min-width:120px;border:1px solid var(--line);border-radius:9px;padding:10px 14px;text-align:center;background:#fbfcfe}
+  .stat .val{font-size:24px;font-weight:700;color:var(--a);line-height:1.2}
+  .stat .lbl{font-size:11px;color:var(--faint);margin-top:2px}
+  .stat.red .val{color:var(--d)}
+  .stat.grn .val{color:var(--b)}
+
+  @media print{
+    body{background:#fff;padding:0;font-size:12px}
+    .page{box-shadow:none;margin:0;border-radius:0;max-width:none;page-break-after:always;padding:20mm 16mm}
+    .page:last-child{page-break-after:auto}
+    .toc a:hover{background:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ PAGE 1 : 封面 + 索引 ============ -->
+<section class="page">
+  <div class="pgnum">第 1 / 6 頁</div>
+
+  <div class="cover">
+    <h1>Claude 工作使用狀態報告</h1>
+    <div class="sub">以 Claude Cowork 協助處理之研發 / 品質 / 智財工作主題彙整</div>
+    <div class="meta">
+      <div>報告日期<b>2026-06-22</b></div>
+      <div>負責人<b>patrick.liao</b></div>
+      <div>分析工具<b>Claude Cowork</b></div>
+      <div>工作項目<b>14 項</b></div>
+    </div>
+  </div>
+
+  <h2><span class="ch">目</span>索引 Table of Contents</h2>
+  <div class="toc">
+    <div class="toc-cat">A · 品質管理與可靠度工程</div>
+    <a href="#s1"><span class="n">1</span><span class="t">產品可靠度測試執行步驟 — 工具與簡報建置</span><span class="d">第 2 頁</span></a>
+    <a href="#s2"><span class="n">2</span><span class="t">APQP 第一階段表單與教學文件</span><span class="d">第 2 頁</span></a>
+    <a href="#s3"><span class="n">3</span><span class="t">設計審查檢核表 + 可靠度互動教學網頁</span><span class="d">第 2 頁</span></a>
+
+    <div class="toc-cat">B · 水量計認證與法規符合</div>
+    <a href="#s4"><span class="n">4</span><span class="t">CNPA49 第8章 電子裝置性能測試評估</span><span class="d">第 3 頁</span></a>
+    <a href="#s5"><span class="n">5</span><span class="t">CNPA49 第4版測試計劃 — 電源型式適用性矩陣</span><span class="d">第 3 頁</span></a>
+
+    <div class="toc-cat">C · 電路 / EMC / 感測器設計</div>
+    <a href="#s6"><span class="n">6</span><span class="t">電子水表 ESI 通道背景雜訊干擾分析</span><span class="d">第 3 頁</span></a>
+    <a href="#s7"><span class="n">7</span><span class="t">競品 SENSOR BOARD 電路分析與 MR 輸出設計</span><span class="d">第 4 頁</span></a>
+
+    <div class="toc-cat">D · 專利與智慧財產</div>
+    <a href="#s8"><span class="n">8</span><span class="t">專利範圍解析與規避設計簡報 (TW I853409 B)</span><span class="d">第 4 頁</span></a>
+    <a href="#s9"><span class="n">9</span><span class="t">桓達專利清單儀表板自動化流程修復</span><span class="d">第 4 頁</span></a>
+
+    <div class="toc-cat">E · 產品技術簡報</div>
+    <a href="#s10"><span class="n">10</span><span class="t">快拆式過濾短管產品技術簡報</span><span class="d">第 5 頁</span></a>
+    <a href="#s11"><span class="n">11</span><span class="t">產品改善計劃與品質提升規劃簡報</span><span class="d">第 5 頁</span></a>
+    <a href="#s12"><span class="n">12</span><span class="t">智慧水表建置成果與改善承諾簡報 (NB-IoT)</span><span class="d">第 5 頁</span></a>
+
+    <div class="toc-cat">F · 技術文件與研發管理</div>
+    <a href="#s13"><span class="n">13</span><span class="t">EPT 感測器系列技術手冊 (SDL / SDX / SDX-1)</span><span class="d">第 6 頁</span></a>
+    <a href="#s14"><span class="n">14</span><span class="t">研發戰情室 HTML Dashboard 建置</span><span class="d">第 6 頁</span></a>
+  </div>
+</section>
+
+<!-- ============ PAGE 1b : 總覽 + 工時對比 ============ -->
+<section class="page">
+  <div class="pgnum">第 1 / 6 頁 (續)</div>
+
+  <h2><span class="ch">總</span>工作總覽</h2>
+  <div class="stat-row">
+    <div class="stat"><div class="val">14</div><div class="lbl">工作項目</div></div>
+    <div class="stat"><div class="val">6</div><div class="lbl">主題領域</div></div>
+    <div class="stat grn"><div class="val">14</div><div class="lbl">已完成 / 已產出</div></div>
+    <div class="stat"><div class="val">30+</div><div class="lbl">交付檔案</div></div>
+  </div>
+
+  <table>
+    <tr><th style="width:28px">#</th><th>工作項目</th><th>領域 / 類型</th><th>本次產出</th><th style="width:64px">狀態</th></tr>
+    <tr><td>1</td><td><b>產品可靠度</b>測試執行步驟</td><td>可靠度工程 / APQP</td><td>15 頁 PPTX、HTML 互動教學、Word 程序、Excel 模型（圖表防覆蓋修正）</td><td><span class="badge ok">已完成</span></td></tr>
+    <tr><td>2</td><td><b>APQP</b> 第一階段表單與教學</td><td>品質管理 / QFD</td><td>2 份 Excel 表單、企劃書 Word 範本、10 頁教學 PPTX，四檔加 Logo</td><td><span class="badge ok">已完成</span></td></tr>
+    <tr><td>3</td><td><b>設計審查</b>檢核表 + 可靠度教學</td><td>品質管理 / 設計審查</td><td>三工作表 Excel 檢核表（約 90 項）、六分頁可靠度互動教學 HTML</td><td><span class="badge ok">已完成</span></td></tr>
+    <tr><td>4</td><td><b>CNPA49 §8</b> 電子裝置性能測試</td><td>認證 / EMC 符合性</td><td>Word 評估報告、Excel 對照檢核表（含 P1–P3 改善行動彙總）</td><td><span class="badge ok">已完成</span></td></tr>
+    <tr><td>5</td><td><b>CNPA49 第4版</b>測試計劃</td><td>認證 / 法規文件</td><td>測試計劃書（PDF 33 頁＋docx）、清單對照表擴為 12 欄（電源型式矩陣）</td><td><span class="badge ok">已完成</span></td></tr>
+    <tr><td>6</td><td><b>ESI 通道</b>背景雜訊干擾</td><td>EMC / 電路設計</td><td>EMC 改善報告 docx（七大耦合機制、A/B/C 三級對策、六階段驗證）</td><td><span class="badge ok">已完成</span></td></tr>
+    <tr><td>7</td><td>競品 <b>SENSOR BOARD</b> 電路與 MR</td><td>電路 / 磁感測分析</td><td>3 份 docx（含方塊圖）＋ md 總整理、SVG/PNG 波形與電路圖</td><td><span class="badge ok">已完成</span></td></tr>
+    <tr><td>8</td><td><b>專利範圍</b>解析與規避設計</td><td>智財 / 專利分析</td><td>PPTX 簡報（16→22 張），新增專利解析章與「一案兩請」家族頁</td><td><span class="badge ok">已完成</span></td></tr>
+    <tr><td>9</td><td><b>專利清單</b>儀表板自動化</td><td>智財 / 資料自動化</td><td>修復 PowerShell 產生器、重寫 BAT、重生 patent_data.js（539 筆）</td><td><span class="badge ok">已完成</span></td></tr>
+    <tr><td>10</td><td><b>快拆式過濾短管</b>技術簡報</td><td>產品設計 / PPTX</td><td>16 頁技術簡報，部件編號完全對應專利 TW I853409 B</td><td><span class="badge ok">已產出</span></td></tr>
+    <tr><td>11</td><td><b>產品改善計劃</b>規劃簡報</td><td>品質管理 / PPTX</td><td>12 頁簡報 + md 同步，第 10 頁時程甘特圖多輪迭代</td><td><span class="badge ok">已完成</span></td></tr>
+    <tr><td>12</td><td><b>智慧水表建置成果</b>承諾簡報</td><td>無線通訊 / PPTX</td><td>20 頁對外簡報，含慢轉與 RS-485 隔離自製 SVG 示意圖</td><td><span class="badge ok">已產出</span></td></tr>
+    <tr><td>13</td><td><b>EPT 感測器</b>系列技術手冊</td><td>感測器 / 認證文件</td><td>3 份產品手冊（各 15 頁）＋系列比較手冊，共 4 份 docx</td><td><span class="badge ok">已完成</span></td></tr>
+    <tr><td>14</td><td><b>研發戰情室</b> Dashboard</td><td>研發管理 / 視覺化</td><td>HTML 戰情室 + parse_excel.py + 一鍵更新 BAT（38 專案 / 154 延遲任務）</td><td><span class="badge ok">已完成</span></td></tr>
+  </table>
+
+  <h2 style="margin-top:24px"><span class="ch">時</span>人工 vs Claude Cowork — 工時對比</h2>
+  <p>以下為 14 項工作的實際作業時間估算，對比傳統人工作業與 Claude Cowork 輔助產出所需時間。工時為依產出規模與複雜度之合理估算值，供效益參考。</p>
+
+  <table>
+    <tr>
+      <th>工作項目</th>
+      <th style="text-align:center">人工作業</th>
+      <th style="text-align:center">Claude 輔助</th>
+      <th style="text-align:center">縮短工時</th>
+      <th style="text-align:center">效率提升</th>
+      <th>人工主要耗時作業</th>
+    </tr>
+    <tr><td><b>1 產品可靠度執行步驟</b></td><td style="text-align:center">24 hr</td><td style="text-align:center;color:var(--b)"><b>3 hr</b></td><td style="text-align:center;color:var(--a)">↓ 21 hr</td><td style="text-align:center"><span class="badge ok">88%</span></td><td>公式推導、樣品數計算、三份文件說明統一、簡報製作</td></tr>
+    <tr><td><b>2 APQP 第一階段表單與教學</b></td><td style="text-align:center">20 hr</td><td style="text-align:center;color:var(--b)"><b>2.5 hr</b></td><td style="text-align:center;color:var(--a)">↓ 17.5 hr</td><td style="text-align:center"><span class="badge ok">88%</span></td><td>QFD 表單設計、企劃書範本撰寫、SOP 簡報、Logo 去背</td></tr>
+    <tr><td><b>3 設計審查檢核表 + 可靠度教學</b></td><td style="text-align:center">24 hr</td><td style="text-align:center;color:var(--b)"><b>3 hr</b></td><td style="text-align:center;color:var(--a)">↓ 21 hr</td><td style="text-align:center"><span class="badge ok">88%</span></td><td>90 項檢核表編排、六分頁計算邏輯撰寫與驗證</td></tr>
+    <tr><td><b>4 CNPA49 §8 性能測試評估</b></td><td style="text-align:center">16 hr</td><td style="text-align:center;color:var(--b)"><b>2 hr</b></td><td style="text-align:center;color:var(--a)">↓ 14 hr</td><td style="text-align:center"><span class="badge ok">88%</span></td><td>逐項條文比對、電路缺口分析、料件建議與檢核表</td></tr>
+    <tr><td><b>5 CNPA49 第4版測試計劃</b></td><td style="text-align:center">18 hr</td><td style="text-align:center;color:var(--b)"><b>2.5 hr</b></td><td style="text-align:center;color:var(--a)">↓ 15.5 hr</td><td style="text-align:center"><span class="badge ok">86%</span></td><td>適用性矩陣建立、27 項標示、雙格式排版</td></tr>
+    <tr><td><b>6 ESI 通道雜訊干擾分析</b></td><td style="text-align:center">12 hr</td><td style="text-align:center;color:var(--b)"><b>1.5 hr</b></td><td style="text-align:center;color:var(--a)">↓ 10.5 hr</td><td style="text-align:center"><span class="badge ok">88%</span></td><td>諧振頻率推算、七大耦合機制分析、驗證計畫撰寫</td></tr>
+    <tr><td><b>7 SENSOR BOARD 電路與 MR</b></td><td style="text-align:center">20 hr</td><td style="text-align:center;color:var(--b)"><b>2.5 hr</b></td><td style="text-align:center;color:var(--a)">↓ 17.5 hr</td><td style="text-align:center"><span class="badge ok">88%</span></td><td>OP Amp 鏈推導、相位/Duty 分析、方塊圖繪製</td></tr>
+    <tr><td><b>8 專利範圍解析簡報</b></td><td style="text-align:center">14 hr</td><td style="text-align:center;color:var(--b)"><b>2 hr</b></td><td style="text-align:center;color:var(--a)">↓ 12 hr</td><td style="text-align:center"><span class="badge ok">86%</span></td><td>請求項拆解、規避設計分析、簡報新增章節</td></tr>
+    <tr><td><b>9 專利清單儀表板自動化</b></td><td style="text-align:center">10 hr</td><td style="text-align:center;color:var(--b)"><b>2 hr</b></td><td style="text-align:center;color:var(--a)">↓ 8 hr</td><td style="text-align:center"><span class="badge ok">80%</span></td><td>PowerShell 相容性除錯、JSON 序列化、BAT 重寫</td></tr>
+    <tr><td><b>10 快拆式過濾短管簡報</b></td><td style="text-align:center">12 hr</td><td style="text-align:center;color:var(--b)"><b>1.5 hr</b></td><td style="text-align:center;color:var(--a)">↓ 10.5 hr</td><td style="text-align:center"><span class="badge ok">88%</span></td><td>部件對應專利圖號、示意圖繪製、16 頁排版</td></tr>
+    <tr><td><b>11 產品改善計劃簡報</b></td><td style="text-align:center">12 hr</td><td style="text-align:center;color:var(--b)"><b>1.5 hr</b></td><td style="text-align:center;color:var(--a)">↓ 10.5 hr</td><td style="text-align:center"><span class="badge ok">88%</span></td><td>甘特圖多輪迭代、簡報與 md 同步</td></tr>
+    <tr><td><b>12 智慧水表建置成果簡報</b></td><td style="text-align:center">16 hr</td><td style="text-align:center;color:var(--b)"><b>2 hr</b></td><td style="text-align:center;color:var(--a)">↓ 14 hr</td><td style="text-align:center"><span class="badge ok">88%</span></td><td>維修數據分析、自製 SVG 示意圖、20 頁簡報</td></tr>
+    <tr><td><b>13 EPT 感測器系列技術手冊</b></td><td style="text-align:center">28 hr</td><td style="text-align:center;color:var(--b)"><b>3 hr</b></td><td style="text-align:center;color:var(--a)">↓ 25 hr</td><td style="text-align:center"><span class="badge ok">89%</span></td><td>三產品手冊撰寫、測試結果整理、比較手冊、照片嵌入</td></tr>
+    <tr><td><b>14 研發戰情室 Dashboard</b></td><td style="text-align:center">20 hr</td><td style="text-align:center;color:var(--b)"><b>2.5 hr</b></td><td style="text-align:center;color:var(--a)">↓ 17.5 hr</td><td style="text-align:center"><span class="badge ok">88%</span></td><td>Excel 解析、KPI/圖表設計、自動化 BAT 流程</td></tr>
+    <tr style="background:#f0f3f7;font-weight:600">
+      <td><b>合計</b></td>
+      <td style="text-align:center"><b>246 hr</b></td>
+      <td style="text-align:center;color:var(--b)"><b>31.5 hr</b></td>
+      <td style="text-align:center;color:var(--a)"><b>↓ 214.5 hr</b></td>
+      <td style="text-align:center"><span class="badge ok" style="font-size:12px">平均 87%</span></td>
+      <td style="color:var(--sub);font-weight:400">約節省 5 個工作週</td>
+    </tr>
+  </table>
+
+  <div class="stat-row">
+    <div class="stat red"><div class="val">246 hr</div><div class="lbl">傳統人工總工時</div></div>
+    <div class="stat grn"><div class="val">31.5 hr</div><div class="lbl">Claude 輔助總工時</div></div>
+    <div class="stat"><div class="val">214.5 hr</div><div class="lbl">累計節省工時</div></div>
+    <div class="stat grn"><div class="val">87%</div><div class="lbl">平均效率提升</div></div>
+  </div>
+
+  <h3>關於本報告</h3>
+  <p>本報告由 Claude Cowork 協助，彙整 patrick.liao 近期 14 項工作主題，橫跨可靠度工程與 APQP 品質流程、水量計型式認證（CNPA49）、電路與 EMC 干擾分析、專利解析與智財自動化、產品技術簡報，以及技術手冊與研發管理。各節均保留關鍵數據與行動建議，並附對應交付檔案來源，便於跨部門閱讀與後續追蹤。</p>
+  <div class="note info"><b>ℹ 工時說明：</b>上表「人工作業」與「Claude 輔助」工時為依各項產出規模與技術複雜度之合理估算，非逐項碼錶量測值，僅供效益評估參考。</div>
+  <div class="src">來源：Claude Cowork 本機 session 記錄 · 工作資料夾 C:\Git-Data、C:\Work date</div>
+</section>
+
+<!-- ============ PAGE 2 : 品質與可靠度 (1,2,3) ============ -->
+<section class="page">
+  <div class="pgnum">第 2 / 6 頁</div>
+
+  <h2 id="s1"><span class="ch">1</span>產品可靠度測試執行步驟 — 工具與簡報建置</h2>
+  <div class="lead-quote">建立一套可靠度測試執行工具（加速壽命試驗、樣品數計算、Weibull／指數模型），統一 Excel 模型、Word 程序與 HTML 教學三份文件之說明，最後產出教學簡報。</div>
+  <div class="grid2">
+    <div>
+      <h3>核心技術重點</h3>
+      <ul class="tk">
+        <li><b>等效壽命換算</b>：釐清 t_equiv = t_test×AF 與 t_lab = t_field/AF 之差異</li>
+        <li><b>Arrhenius 加速因子</b>：Ea=0.7eV、40→85°C 得 26.0×，並說明 Ea 高敏感度（0.5/0.7/0.9 → 10/26/66）</li>
+        <li><b>樣品數三方法</b>：Success-Run、卡方法、Weibull 縮時延伸</li>
+        <li><b>指標分類不可混用</b>：磨耗件用 Weibull（R(t)/Bx/MTTF）、可維修系統用指數（MTBF/λ/FIT）</li>
+      </ul>
+    </div>
+    <div>
+      <h3>本次產出</h3>
+      <ul class="tk">
+        <li>15 頁繁中 <b>PPTX 教學簡報</b>（為何執行→流程→步驟一至七→Excel 填寫教學→交付清單）</li>
+        <li>更新 <b>HTML 互動教學工具</b>、Word 程序文件</li>
+        <li>Excel 可靠度模型：圖表錨點移至 J 欄，避免覆蓋註解與表格</li>
+      </ul>
+    </div>
+  </div>
+  <div class="src">來源：Session「Product reliability execution steps」─ APQP 資料夾</div>
+
+  <h2 id="s2" style="margin-top:26px"><span class="ch">2</span>APQP 第一階段表單與教學文件</h2>
+  <p>依 AIAG APQP 第一階段（Plan &amp; Define）製作可填寫表單、企劃書範本與教學簡報，範例採感測器／量測儀器，並於四份文件加入公司 Logo。</p>
+  <div class="grid2">
+    <div class="card a">
+      <h3 style="margin-top:0">兩份核心 Excel 表單</h3>
+      <ul class="tk" style="margin-top:4px">
+        <li><b>表單 01 顧客聲音轉換技術特性表</b>：QFD 五步驟，含 VOC／功能需求／產品特性／CC·SC／驗證方法，內建下拉與範例</li>
+        <li><b>表單 02 Benchmark 比較與設計目標表</b>：本公司 vs 競品 vs 標竿 → 差距 → 設計目標 → 策略</li>
+      </ul>
+    </div>
+    <div class="card b">
+      <h3 style="margin-top:0">文件與視覺</h3>
+      <ul class="tk" style="margin-top:4px">
+        <li>Word 企劃書範本（封面、目錄、第 1–8 章、附件與簽核表）</li>
+        <li>10 頁教學 SOP 簡報（逐欄說明＋Do/Don't＋連結 DFMEA／控制計畫）</li>
+        <li>Logo 去背處理：深底加白色圓角底襯、淺底直放，四檔重新驗證可開啟</li>
+      </ul>
+    </div>
+  </div>
+  <div class="src">來源：Session「Product design APQP documentation」─ APQP 資料夾</div>
+
+  <h2 id="s3" style="margin-top:26px"><span class="ch">3</span>設計審查檢核表 + 可靠度互動教學網頁</h2>
+  <p>建立設計審查自主檢核表（Excel），依講義重排前兩大類項目，並製作互動式網頁教工程師信賴水準與可靠度計算。</p>
+  <div class="grid2">
+    <div>
+      <h3>Excel 檢核表</h3>
+      <ul class="tk">
+        <li>13 大類、約 90 項，含執行狀況下拉燈號</li>
+        <li>Critical／Major／Minor 優先等級與 Open→Closed 閉環追蹤</li>
+        <li>自動統計：符合率、Critical 缺失數</li>
+      </ul>
+    </div>
+    <div>
+      <h3>可靠度互動教學 HTML（六分頁）</h3>
+      <ul class="tk">
+        <li>Success-Run 樣品數、Weibull R(t)/B(x)、ALT（Arrhenius/Peck/IPL）</li>
+        <li>HALT 設計裕度、HASS/ESS Burn-in、保固期（χ² 信賴下限）</li>
+        <li>計算邏輯以 scipy 逐項驗證，與講義範例誤差 &lt;0.1%</li>
+      </ul>
+    </div>
+  </div>
+  <div class="src">來源：Session「Design review checklist」─ 檢核表 .xlsx + 可靠度教學 .html</div>
+</section>
+
+<!-- ============ PAGE 3 : 認證 + EMC (4,5,6) ============ -->
+<section class="page">
+  <div class="pgnum">第 3 / 6 頁</div>
+
+  <h2 id="s4"><span class="ch">4</span>CNPA49 第8章 — 電子裝置性能測試評估</h2>
+  <div class="lead-quote">依 CNPA49 第4版第8章（8.4–8.19）逐項評估水表電路（顯示板 EPHBE1D-0001＋主板 EPHBE1M-0002），找出需精進修正的設計缺口。</div>
+  <table>
+    <tr><th>項目</th><th>發現 / 缺口</th><th>建議對策</th></tr>
+    <tr><td><b>8.6 濕熱</b></td><td>高阻節點（R3/R5=1M、多顆 100k 上拉、ESI 高阻）漏電</td><td>三防漆＋護環（guard ring）</td></tr>
+    <tr><td><b>8.8 電池低壓</b></td><td>TPS7A2033 需 Vin≥3.44V，Ubmin 取 2.0V 會使 3.3V 軌跌至 ~1.86V</td><td>Ubmin 宣告於 ~3.5V，提前低電量警示</td></tr>
+    <tr><td><b>8.11–8.16 抗擾</b></td><td>RS485 無共模扼流圈、EXT_I/O 未隔離、無 ESD 陣列、NB-IoT 自相容</td><td>CMC／隔離／ESD，並善用「偵測偏差＋視覺警報」替代路徑</td></tr>
+    <tr><td><b>8.18 靜磁場</b></td><td>1500 高斯恐使 L1/L2 鐵芯飽和、磁簧誤動</td><td>Hall 磁竄改偵測</td></tr>
+  </table>
+  <p>已確認 E1+E2 環境等級、僅電池供電，認定 8.7/8.10/8.12/8.17 不適用、8.16 僅 E2 適用。</p>
+  <div class="src">來源：Session「Water meter certification testing assessment」─ Word 評估報告 + Excel 檢核表</div>
+
+  <h2 id="s5" style="margin-top:24px"><span class="ch">5</span>CNPA49 第4版測試計劃 — 電源型式適用性矩陣</h2>
+  <p>在測試計劃書與測試項目清單對照表中，加入各分項對三種電源型式（不可更換電池／可更換電池／AC 主電源）之適用性矩陣。</p>
+  <div class="grid2">
+    <div>
+      <h3>矩陣重點</h3>
+      <ul class="tk">
+        <li>§8 各分項（8.4–8.19）對三種電源型式以 ✓／— 標示</li>
+        <li>AC 主電源專屬項（8.7/8.10/8.11/8.12/8.17）與可更換電池專屬項（8.9）區分</li>
+        <li>§8.18 靜磁場與 §7.10 同程序，可引用 3.5 結果</li>
+      </ul>
+    </div>
+    <div>
+      <h3>本次產出</h3>
+      <ul class="tk">
+        <li>測試計劃書：<b>PDF 33 頁＋docx</b>，新增 §4.0 適用性矩陣於第 23 頁</li>
+        <li>清單對照表：欄位由 10 → <b>12 欄</b>（新增兩欄電池欄位），27 項逐一標示</li>
+        <li>補回被截斷的 §肆後半＋§伍 內容</li>
+      </ul>
+    </div>
+  </div>
+  <div class="src">來源：Session「CNPA49 第4版測試計劃」─ 雙格式（PDF + docx）輸出</div>
+
+  <h2 id="s6" style="margin-top:24px"><span class="ch">6</span>電子水表 ESI 通道背景雜訊干擾分析</h2>
+  <div class="lead-quote">接上 EXT_IO_2 / RS485_A / RS485_B 後，ESICH0 / ESICH1 / ESICOM 背景雜訊拉高，須找出電路成因並整理為正式改善文件。</div>
+  <p><b>關鍵推導：</b>ESI 感測 LC tank（L1/L2=680µH、C22/C24=200pF）諧振 ≈ <b>432 kHz</b>，與 RS485 邊緣、外部 I/O 切換、電源雜訊頻段重疊。整理出七大耦合機制（共地阻抗、TVS 寄生電容、fail-safe 偏壓注入 VDD、L1/L2 作磁場天線等），對策分 A（不動 PCB）／B（局部改版）／C（架構，如 isolated RS485）三級，並提出六階段驗證計畫。</p>
+  <div class="note"><b>⚠ 診斷策略：</b>先以隔離供電／電池供電對端設備，驗證是否為共地耦合，再決定改版深度。</div>
+  <div class="src">來源：Session「Electronic water meter noise issue」─ EPH_ESI_EMI改善報告_v1.docx</div>
+</section>
+
+<!-- ============ PAGE 4 : 電路 + 專利 (7,8,9) ============ -->
+<section class="page">
+  <div class="pgnum">第 4 / 6 頁</div>
+
+  <h2 id="s7"><span class="ch">7</span>競品 SENSOR BOARD 電路分析與 MR 輸出設計</h2>
+  <p>分析競品水表感測板雙通道 MR 電路原理，評估葉輪兩磁鐵 180° 對稱下，MR1/MR2 感測器最佳機械夾角與 Duty Cycle 表現。</p>
+  <table>
+    <tr><th>機械夾角</th><th>電氣相位</th><th>四狀態 Duty</th><th>評估</th></tr>
+    <tr><td>90°</td><td>180°（反相）</td><td>—</td><td><span class="badge fail">不可用</span></td></tr>
+    <tr><td>120°</td><td>240°</td><td>不均衡</td><td><span class="badge mid">可用</span></td></tr>
+    <tr><td><b>135°</b></td><td><b>270°（≡−90° 正交）</b></td><td><b>各 25%</b></td><td><span class="badge ok">★ 最佳</span></td></tr>
+    <tr><td>180°</td><td>360°（同相）</td><td>—</td><td><span class="badge fail">不可用</span></td></tr>
+  </table>
+  <p>完整推導 OP Amp 鏈（緩衝→同相×11→反相鏡射→動態補償）、比較器、VCC/2 虛擬地與跨通道差動耦合；提供 MCU 五種讀取策略（Timer Encoder Mode 為佳）與 Duty 60:40 偏移六大成因排查 SOP。</p>
+  <div class="src">來源：Session「Circuit analysis and MR output design」─ C:\Git-Data\Circuit Analysis（docx + md + 方塊圖）</div>
+
+  <h2 id="s8" style="margin-top:24px"><span class="ch">8</span>專利範圍解析與規避設計簡報 (TW I853409 B)</h2>
+  <div class="grid2">
+    <div>
+      <h3>專利分析重點</h3>
+      <ul class="tk">
+        <li>解析三項獨立請求項（裝置／過濾網／方法）與請求項1 之 E1–E6 構成要件</li>
+        <li>規避設計：全要件原則、均等論風險評估，建議同時規避 ≥2 個核心要件</li>
+        <li>釐清「一案兩請」（專利法第32條）：M642400 選擇發明後依法消滅，保護無縫接續</li>
+      </ul>
+    </div>
+    <div>
+      <h3>簡報修訂</h3>
+      <ul class="tk">
+        <li>新增第 09 章 5 張＋第 17 張「專利狀態與家族」，16 → <b>22 張</b></li>
+        <li>修正發明人「林耀民→林耀乾」、公告日 2024/08/01→08/21</li>
+        <li>大綱頁、頁碼、參考資料頁同步更新，含視覺 QA</li>
+      </ul>
+    </div>
+  </div>
+  <div class="src">來源：Session「Patent scope presentation details」─ 修訂後 .pptx</div>
+
+  <h2 id="s9" style="margin-top:24px"><span class="ch">9</span>桓達專利清單儀表板自動化流程修復</h2>
+  <p>使用者更換 Excel 來源檔後，雙擊 <code>Patent Update.bat</code> 無法更新儀表板資料，需修復整條自動化產生流程。</p>
+  <ul class="tk">
+    <li>連續修正 PowerShell 5.1 相容性 bug：<code>$s.name</code> 與 .NET 屬性衝突、<code>SelectNodes</code> 命名空間多載失敗、巢狀 <code>[ordered]</code> 字典報錯</li>
+    <li>根除序列化問題：<code>ConvertTo-Json</code> 對物件陣列丟例外 → 改為手動組 JSON 字串（含跳脫與數字處理）</li>
+    <li>BAT 檔重寫為純 ASCII 無 BOM，成功時 2 秒自動關閉、失敗才暫停</li>
+    <li>以 Python 複刻 JSON 邏輯，對 <b>539 筆</b>實際資料驗證解析無誤</li>
+  </ul>
+  <div class="src">來源：Session「Patent dashboard automation」─ generate_dashboard.ps1 · Patent Update.bat · patent_data.js</div>
+</section>
+
+<!-- ============ PAGE 5 : 產品技術簡報 (10,11,12) ============ -->
+<section class="page">
+  <div class="pgnum">第 5 / 6 頁</div>
+
+  <h2 id="s10"><span class="ch">10</span>快拆式過濾短管產品技術簡報</h2>
+  <p>以內部技術／研發角度製作圖文並茂的繁中產品技術簡報，逐一說明各部件用途，並與專利圖號完全對應。</p>
+  <div class="grid2">
+    <div>
+      <h3>內容重點</h3>
+      <ul class="tk">
+        <li>解決傳統 Y 型過濾器限制的創新快拆設計</li>
+        <li>雙重過濾防堵作動原理與過濾流程</li>
+        <li>部件編號完全對應專利 <b>TW I853409 B</b>（本體 1、過濾網 2a、過濾板 24a、限位件 3、止漏墊片 4、上蓋 5…）</li>
+      </ul>
+    </div>
+    <div>
+      <h3>產出</h3>
+      <ul class="tk">
+        <li><b>16 頁 .pptx</b>：概述、設計痛點、創新方案、結構總覽、部件功能（3 頁）、作動原理、規格、技術特色</li>
+        <li>圖面採「自製示意圖＋專利原圖」混用並做視覺 QA</li>
+        <li>規格頁標註「以弓銓公告型錄為準」，待正式數據替換</li>
+      </ul>
+    </div>
+  </div>
+  <div class="src">來源：Session「Quick-disconnect filter tube product」─ 16 頁 .pptx</div>
+
+  <h2 id="s11" style="margin-top:24px"><span class="ch">11</span>產品改善計劃與品質提升規劃簡報</h2>
+  <p>維護更新 12 頁產品改善簡報，重點反覆迭代第 10 頁「技術改善時程表」，並確保簡報與 Markdown 逐頁同步。</p>
+  <ul class="tk">
+    <li>三大故障改善：感測器破裂進水（已改模）、顯示斷字斷畫（裁板機導入防錫裂）、慢轉／不轉（軸心耐磨修模）</li>
+    <li>各口徑驗證時程（DN40/DN25/DN20/DN13），DN40/DN25 因小流超規採「葉片加大」對策</li>
+    <li>第 10 頁時程多次迭代：表格 → 四泳道甘特圖（6–9 月）→ 加入正常／異常排程與「樣品準備」並行條</li>
+    <li>產出 <code>產品改善計劃與品質提升規劃_簡報_最終_12頁.pptx</code> 及同步 .md，並修復 mount 暫態毀損</li>
+  </ul>
+  <div class="src">來源：Session「User water quality display」─ 12 頁 .pptx + .md</div>
+
+  <h2 id="s12" style="margin-top:24px"><span class="ch">12</span>智慧水表建置成果與改善承諾簡報 (NB-IoT)</h2>
+  <p>製作對外（與技術處長口頭討論）的改善承諾簡報，以改善計劃與品質提升為主軸，不放罰款與責任歸屬。</p>
+  <div class="grid2">
+    <div class="card a">
+      <h3 style="margin-top:0">數據與分析</h3>
+      <ul class="tk" style="margin-top:4px">
+        <li>品質儀表板：斷訊率 0.7% vs 2.6%、OTA 10,205 具、修復率 87/92%</li>
+        <li>2,751 筆維修數據驅動的故障型態分析與三大改善主軸</li>
+      </ul>
+    </div>
+    <div class="card b">
+      <h3 style="margin-top:0">自製示意圖</h3>
+      <ul class="tk" style="margin-top:4px">
+        <li>慢轉／不轉改善四著力點（線圈距離、軸心、葉片、噴嘴孔數）</li>
+        <li>RS-485 串聯：V1054 前單表故障卡死整串 → V1054+ 故障自動隔離</li>
+        <li>20 頁 .pptx（存 _v2），含整合 SVG 為第 8、14 頁</li>
+      </ul>
+    </div>
+  </div>
+  <div class="src">來源：Session「Current issues」─ 20 頁 .pptx (_v2)</div>
+</section>
+
+<!-- ============ PAGE 6 : 手冊 + 管理 (13,14) ============ -->
+<section class="page">
+  <div class="pgnum">第 6 / 6 頁</div>
+
+  <h2 id="s13"><span class="ch">13</span>EPT 感測器系列技術手冊 (SDL / SDX / SDX-1)</h2>
+  <p>依 EPT 手冊既有架構，為三項產品各產出一份繁中技術手冊，並追加系列比較手冊與電路板照片。</p>
+  <table>
+    <tr><th>產品</th><th>類型</th><th>認證 / 狀態</th></tr>
+    <tr><td><b>SDL</b></td><td>液體洩漏偵測器（紅外光電、PFA/PP 外殼）</td><td><span class="badge ok">UL Recognized Component</span></td></tr>
+    <tr><td><b>SDX</b></td><td>光電液位開關（10–28V dc）</td><td><span class="badge wip">草稿 D1004-1/A0</span></td></tr>
+    <tr><td><b>SDX-1</b></td><td>光電液位開關（A1 維護版）</td><td><span class="badge ok">已正式認證</span>，新增 SDX2013A/SDX8003A</td></tr>
+  </table>
+  <ul class="tk">
+    <li>統一章節：認證程序與依據、結構規格、重要元件清單、測試項目與結果（方法/判定/結果三列）、FMEA、工廠檢查</li>
+    <li>SDX/SDX-1 密閉不鏽鋼無裸板，改以原廠 PCB Layout 圖＋外觀照</li>
+    <li>產出 3 份產品手冊（各 15 頁）＋系列比較手冊（橫向 8 頁），四產品皆 0 Fail（IEC/UL 61010-1）</li>
+  </ul>
+  <div class="src">來源：Session「EPT technical manual」─ 4 份 .docx</div>
+
+  <h2 id="s14" style="margin-top:24px"><span class="ch">14</span>研發戰情室 HTML Dashboard 建置</h2>
+  <p>以研發協理視角解析專案管控 Excel，製作 HTML 戰情室呈現專案進度與人員負荷，並產生一鍵更新 BAT。</p>
+
+  <div class="stat-row">
+    <div class="stat"><div class="val">38</div><div class="lbl">專案（Active 28 / Closed 10）</div></div>
+    <div class="stat red"><div class="val">16</div><div class="lbl">延遲專案</div></div>
+    <div class="stat red"><div class="val">154</div><div class="lbl">延遲任務</div></div>
+    <div class="stat grn"><div class="val">5</div><div class="lbl">類圖表 + 6 KPI 卡</div></div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <h3>儀表板內容</h3>
+      <ul class="tk">
+        <li>6 項 KPI 卡 + 5 類圖表（健康度環形、部門堆疊、延遲長條、Top10 延遲人員、工時負荷）</li>
+        <li>可篩選專案明細表（部門/狀態/健康度/關鍵字）+ 154 筆延遲任務明細</li>
+      </ul>
+    </div>
+    <div>
+      <h3>自動化與洞察</h3>
+      <ul class="tk">
+        <li><code>parse_excel.py</code> + <code>更新Dashboard.bat</code>：放入新 Excel 雙擊即自動更新</li>
+        <li>38 專案（Active 28/Closed 10）、16 件延遲、異常熱點部門已標示</li>
+      </ul>
+    </div>
+  </div>
+  <div class="src">來源：Session「R&D management expertise」─ C:\Git-Data\工作報表\研發戰情室\</div>
+
+  <p style="text-align:center;color:var(--faint);font-size:11px;margin-top:24px;border-top:1px dashed var(--line);padding-top:12px">— 報告結束 · Claude_工作使用狀態_Patrick_20260622 · 由 Claude Cowork 協助產出 · patrick.liao@fine-tek.com —</p>
+</section>
+
+</body>
+</html>

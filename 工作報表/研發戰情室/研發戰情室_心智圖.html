@@ -1,0 +1,177 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>研發戰情室 · 心智圖</title>
+<style>
+:root{--s0:#151513;--s1:#1e1e1c;--s2:#282826;--s3:#3a3a37;--line:#33332f;
+ --ink:#f5f4ee;--ink2:#c9c7bd;--ink3:#8e8c83;
+ --c1:#3987e5;--c2:#d95926;--c3:#199e70;--c4:#c98500;--c5:#d55181;--c6:#008300;
+ --crit:#d64545;--serious:#d95926;--warn:#c98500;--good:#199e70;--grid:#2b2b28;}
+html[data-t="light"]{--s0:#f7f6f1;--s1:#fffefa;--s2:#eeece4;--s3:#dedbd0;--line:#dedbd0;
+ --ink:#1a1a19;--ink2:#4a4842;--ink3:#77756c;
+ --c1:#2a78d6;--c2:#eb6834;--c3:#1baf7a;--c4:#eda100;--c5:#e87ba4;--c6:#008300;
+ --crit:#c0392b;--serious:#eb6834;--warn:#c47f00;--good:#1baf7a;--grid:#e6e3da;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--s0);color:var(--ink);
+ font:14px/1.55 "Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+header{position:sticky;top:0;z-index:30;background:var(--s1);border-bottom:1px solid var(--line);
+ padding:11px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+h1{font-size:16px;margin:0;font-weight:650;letter-spacing:.2px}
+.sub{color:var(--ink3);font-size:11.5px}
+.spacer{flex:1}
+.tabs{display:flex;background:var(--s2);border-radius:10px;padding:3px;gap:3px}
+.tab{background:none;border:0;color:var(--ink2);padding:6px 15px;border-radius:8px;cursor:pointer;
+ font:inherit;font-size:12.5px;font-weight:600}
+.tab[aria-selected="true"]{background:var(--c1);color:#fff}
+.btn{background:var(--s2);border:1px solid var(--line);color:var(--ink2);border-radius:8px;
+ padding:6px 12px;font:inherit;font-size:12px;cursor:pointer}
+.btn:hover{border-color:var(--c1);color:var(--ink)}
+#wrap{position:relative;overflow:auto;height:calc(100vh - 52px)}
+#stage{position:relative;transform-origin:0 0}
+#links{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}
+.node{position:absolute;background:var(--s1);border:1px solid var(--line);border-radius:10px;
+ padding:8px 12px;cursor:pointer;transition:border-color .12s,box-shadow .12s;
+ box-shadow:0 1px 2px rgba(0,0,0,.16)}
+.node:hover{border-color:var(--c1);box-shadow:0 3px 10px rgba(0,0,0,.24)}
+.node .t{font-size:13px;font-weight:600;line-height:1.4}
+.node .n{font-size:11px;color:var(--ink3);margin-top:3px;line-height:1.45}
+.node .cnt{display:inline-flex;align-items:center;justify-content:center;min-width:17px;height:17px;
+ border-radius:9px;background:var(--s3);color:var(--ink2);font-size:10px;font-weight:700;
+ margin-left:7px;padding:0 5px;vertical-align:1px}
+.node.collapsed .cnt{background:var(--c1);color:#fff}
+.node.root{background:var(--c1);border-color:var(--c1);color:#fff}
+.node.root .t{font-size:16px;font-weight:700}
+.node.root .n{color:rgba(255,255,255,.82)}
+.node.root .cnt{background:rgba(255,255,255,.24);color:#fff}
+.node.lv1{border-left:4px solid var(--bc,var(--c1))}
+.node.lv1 .t{font-size:13.5px}
+.tone-crit{--bc:var(--crit)} .tone-warn{--bc:var(--warn)} .tone-good{--bc:var(--good)}
+.tone-c1{--bc:var(--c1)} .tone-c2{--bc:var(--c2)} .tone-c3{--bc:var(--c3)} .tone-c4{--bc:var(--c4)}
+.tone-src{--bc:var(--ink3)}
+.node.tone-crit .t{color:var(--crit)} .node.tone-warn .t{color:var(--warn)}
+.node.tone-good .t{color:var(--good)}
+.node.leafsrc{background:var(--s2);border-style:dashed}
+.node.leafsrc .t{font-size:12px;font-weight:500;color:var(--ink2)}
+.zoombar{position:fixed;right:18px;bottom:18px;z-index:40;display:flex;gap:6px;background:var(--s1);
+ border:1px solid var(--line);border-radius:10px;padding:5px}
+</style></head><body>
+<header>
+  <h1>研發戰情室 · 心智圖</h1>
+  <span class="sub">桓達科技　資料基準日 2026-08-14　·　點節點可展開／收合</span>
+  <div class="tabs" id="tabs">
+    <button class="tab" data-v="arch" aria-selected="true">平台架構</button>
+    <button class="tab" data-v="prob" aria-selected="false">研發現況問題樹</button>
+  </div>
+  <div class="spacer"></div>
+  <button class="btn" id="bexp">全部展開</button>
+  <button class="btn" id="bcol">收合至主幹</button>
+  <button class="btn" id="btheme">◐ 淺色</button>
+</header>
+<div id="wrap"><div id="stage"><svg id="links"></svg></div></div>
+<div class="zoombar">
+  <button class="btn" id="zo">−</button><button class="btn" id="zr">100%</button><button class="btn" id="zi">＋</button>
+</div>
+<script>
+const DATA={"arch": {"t": "研發戰情室<br>三層式專案戰情平台", "n": "44 件專案 · 資料基準日 2026-08-14", "c": "root", "k": [{"t": "第一層　決策", "n": "董事長／總經理／研發協理 · 6 個圖表", "c": "c1", "k": [{"t": "① 專案金額", "n": "4,336萬 → 5,276萬（121.7%）", "c": "c1", "k": [{"t": "研發一處", "n": "22 案 · 3,211萬 → 3,730萬（116%）"}, {"t": "研發二處", "n": "18 案 · 1,125萬 → 1,546萬（137%）"}, {"t": "各部門明細條", "n": "點擊下鑽至該部門第三層"}, {"t": "來源：費用檔兩張工作表", "n": "(預計)專案費用統計 R 欄／2026年-專案費用統計(範圍) V 欄", "c": "src"}], "o": 0}, {"t": "② 專案狀態", "n": "44 件圓餅圖", "c": "c1", "k": [{"t": "在製 Active", "n": "26 件（59.1%）"}, {"t": "已結案 Closed", "n": "16 件（36.4%）"}, {"t": "已取消 Cancelled", "n": "2 件（4.5%）"}, {"t": "各狀態累計費用", "n": "在製 4,101萬／已結案 1,007萬／已取消 244萬"}, {"t": "來源：PLM014 G 欄 狀態", "c": "src"}], "o": 0}, {"t": "③ 工時狀態", "n": "專案工時率 60.4%", "c": "c1", "k": [{"t": "專案直接工時", "n": "53,503 hr（60.4%）"}, {"t": "非專案工時（可展開 6 類）", "n": "35,098 hr（39.6%）", "k": [{"t": "其他（未分類）", "n": "14,778 hr"}, {"t": "生產支援／客訴", "n": "11,132 hr"}, {"t": "會議", "n": "3,443 hr"}, {"t": "跨部門協助", "n": "3,208 hr"}, {"t": "研發衍生事務", "n": "2,368 hr"}, {"t": "出差", "n": "170 hr"}], "o": 0}, {"t": "各處工時投入（預計 vs 實際）", "n": "研發一處 14,435→24,748／研發二處 10,058→9,519"}, {"t": "來源：PLM002 工時類別＋專案編號", "n": "已扣休假 4,593 hr，淨工時 88,602 hr", "c": "src"}], "o": 0}, {"t": "④ 風險矩陣 5×5", "n": "在製 26 件，15 件風險值 ≥12", "c": "c1", "k": [{"t": "縱軸　發生機率 P", "n": "逾期天數＋SPI＋即將異常標記"}, {"t": "橫軸　衝擊程度 I", "n": "專案類別 40%＋累計費用 40%＋投入人力 20%"}, {"t": "分級", "n": "極高 ≥20／高 12–19／中 6–11／低 <6"}, {"t": "依據：IEC 31010 Annex B", "n": "門檻依桓達 44 件分佈校準", "c": "src"}], "o": 0}, {"t": "⑤ 異常專案", "n": "23 件 · 僅在製且進度 <100%", "c": "c1", "k": [{"t": "逾期", "n": "13 件"}, {"t": "即將異常", "n": "6 件"}, {"t": "進度落後", "n": "4 件（SPI < 0.6）"}, {"t": "只分析進行中的案子", "n": "在製且進度 <100%；已結案與進度 100% 者移至第三層資料品質", "c": "src"}], "o": 0}, {"t": "⑥ 各處級人力負荷", "n": "在職有回報 30 人 · 平均負荷 90%", "c": "c1", "k": [{"t": "研發一處", "n": "21 人 · 平均負荷 90% · 專案工時率 63% · 四象限 8/11/1/1"}, {"t": "研發二處", "n": "9 人 · 平均負荷 90% · 專案工時率 53% · 四象限 5/2/2/0"}, {"t": "負荷分佈", "n": "過載>110% 0 人／飽和 85–110% 26 人／適中 60–85% 2 人／低度<60% 2 人"}, {"t": "下一層　人員負荷 × 綜合績效四象限", "n": "匿名；可依處別與象限雙重篩選", "k": [{"t": "高效主力 · 留才重點", "n": "13 人 · 負荷 ≥85%、績效 ≥50 分位"}, {"t": "過勞低效 · 需卸載／協助", "n": "13 人 · 先查非專案工時占比再論能力"}, {"t": "量能未滿 · 可加載", "n": "3 人 · 承接新案第一順位"}, {"t": "投入與產出俱低 · 需輔導", "n": "1 人 · 先確認工時回報是否確實"}], "o": 0}, {"t": "來源：PLM002 近半年工時＋九項績效指標", "n": "負荷率 §4.1／綜合績效 §5；等第預設隱藏", "c": "src"}], "o": 0}]}, {"t": "第二層　管理", "n": "處級主管 · 控管與資源調度", "c": "c2", "k": [{"t": "部門管理卡", "n": "在製／逾期、工期膨脹、預算執行率、工時達成率、投入人次、平均負荷"}, {"t": "本處專案時程甘特", "n": "依部門分組，斜紋＝超出預計完成日"}, {"t": "三張預實散佈圖", "n": "周期（工作日）／費用／設計工時"}, {"t": "風險矩陣＋延遲根因", "n": "本處在製案", "k": [{"t": "測試驗證未過", "n": "83 件"}, {"t": "外部依賴/認證委外", "n": "43 件"}, {"t": "缺料/採購交期", "n": "17 件"}, {"t": "模具/治具/設備", "n": "16 件"}, {"t": "工時未登錄/管理", "n": "12 件"}, {"t": "設計/需求變更", "n": "8 件"}, {"t": "人力/資源排擠", "n": "8 件"}], "o": 0}, {"t": "開工偏差／結案作業落差", "n": "負值＝先做後補開案；結案落差期間仍累計分攤費用"}, {"t": "人員負荷分佈", "n": "全體平均 90.4%，85–110% 為健康區間"}, {"t": "人員 × 專案 投入矩陣", "n": "橫向看人力分散、縱向看團隊組成"}], "o": 0}, {"t": "第三層　說明", "n": "部門主管 · 數據明細與追溯", "c": "c3", "k": [{"t": "四維指標追溯表", "n": "每個數字 → 由哪些案子與哪些人組成"}, {"t": "專案逐案明細", "n": "PLM014 原生欄位＋衍生指標"}, {"t": "人員明細與個人事項", "n": "負荷、任務準時率、逾期未結"}, {"t": "資料品質問題", "n": "部門代號與名稱不一致、工時對不上、日期矛盾"}, {"t": "完整計算方法與欄位溯源", "n": "對應說明文件 §0.1"}], "o": 0}, {"t": "資料來源", "n": "5 份原始檔", "c": "src", "k": [{"t": "PLM014.xlsx　專案主檔", "n": "第 7–50 列 · 44 件；部門代號、工作日周期、結案日期、總進度"}, {"t": "專案進度表.xlsx", "n": "逐人預計／實際設計工時矩陣、專案是否異常"}, {"t": "PLM001.xlsx　任務明細", "n": "2,449 筆；描述／延遲原因、任務負責人"}, {"t": "PLM002.xlsx　工時回報", "n": "23,441 筆；工時類別、專案編號、日期、工時"}, {"t": "研發專案預算與實際統計.xlsx", "n": "預算／實際／費用分攤部門代號樹"}], "o": 0}, {"t": "組織架構", "n": "研發處轄下兩處", "c": "c4", "k": [{"t": "研發一處", "n": "研一部・研二部・技術中心・研三部（RD1100/1200/1600/1300）", "k": [{"t": "研一部"}, {"t": "研二部"}, {"t": "技術中心"}, {"t": "研三部"}], "o": 0}, {"t": "研發二處", "n": "生技・產品開發・自動化（RD2100/2300/2200）", "k": [{"t": "生技"}, {"t": "產品開發"}, {"t": "自動化"}], "o": 0}, {"t": "海外／上海", "n": "研发一部（SRC1100）· 4 案"}], "o": 0}]}, "prob": {"t": "研發現況<br>四大問題", "n": "依 44 件專案、23,441 筆工時回報盤點", "c": "root", "k": [{"t": "① 時程失控", "n": "逾期 14/26 件（53.8%）· 平均逾期 151 天", "c": "crit", "k": [{"t": "現象", "c": "c1", "k": [{"t": "平均工期膨脹 1.42x", "n": "已結案 18 件中 10 件超出計畫"}, {"t": "累計超出 728 工作日", "n": "≈ 33 人月的產能被拖走"}, {"t": "結案準時率僅 12.5%", "n": "16 件已結案中只有 2 件如期"}, {"t": "最長逾期 472 天", "n": "D250101R1 AI冷卻系統數位通訊溫度偵測器"}]}, {"t": "原因（依 PLM001 延遲原因文字分類）", "c": "c2", "k": [{"t": "測試驗證未過　83 件", "n": "佔最大宗 —— 設計一次到位率不足"}, {"t": "外部依賴／認證委外　43 件", "n": "認證與委外排程不在自己手上"}, {"t": "缺料／採購交期　17 件"}, {"t": "模具／治具／設備　16 件"}, {"t": "設計／需求變更　8 件"}, {"t": "人力／資源排擠　8 件"}]}, {"t": "對策建議", "c": "good", "k": [{"t": "前段驗證左移", "n": "把測試驗證拉到設計評審階段，降低後段返工"}, {"t": "認證委外納入關鍵路徑", "n": "排程時視為外部里程碑而非緩衝"}, {"t": "逾期 >180 天者重新立案或停案", "n": "避免長尾案持續吃分攤費用"}]}]}, {"t": "② 預算超支", "n": "4,336萬 → 5,276萬（121.7%）· 超支 15 件", "c": "crit", "k": [{"t": "三段拆解後真相", "n": "超支不是花太多錢", "c": "c1", "k": [{"t": "研究發展費　90%", "n": "1,550萬 → 1,393萬　低於預算", "c": "good"}, {"t": "人事工時費用　64%", "n": "1,368萬 → 871萬　低於預算", "c": "good"}, {"t": "處級分攤費用　212%", "n": "1,418萬 → 3,011萬　單段超出 1,593萬", "c": "crit"}]}, {"t": "根本原因", "c": "c2", "k": [{"t": "處級分攤依專案存續月數逐月攤提", "n": "專案拖越久攤越多 —— 這是時程問題的財務投影"}, {"t": "與①時程失控同源", "n": "縮短工期比壓縮支出更能改善執行率"}]}, {"t": "對策建議", "c": "good", "k": [{"t": "把「結案速度」納入預算控管指標", "n": "而非只看支出金額"}, {"t": "進度 ≥99% 者強制結案", "n": "本期有 1 件進度 100% 仍掛在製"}]}]}, {"t": "③ 產能稀釋", "n": "專案工時率僅 60.4%", "c": "warn", "k": [{"t": "工時去了哪裡", "n": "淨工時 88,602 hr（已扣休假）", "c": "c1", "k": [{"t": "專案直接工時　53,503 hr", "n": "60.4%"}, {"t": "其他（未分類）　14,778 hr", "n": "最大的非專案項 —— 無專案編號也無類別歸屬", "c": "crit"}, {"t": "生產支援／客訴　11,132 hr", "n": "研發被拉去救現場"}, {"t": "會議＋跨部門協助　6,651 hr"}]}, {"t": "更嚴重的是追蹤範圍", "c": "c2", "k": [{"t": "專案工時中只有 56.8% 落在這 44 件內", "n": "範圍內 30,401 hr／範圍外 23,102 hr"}, {"t": "真正被戰情室管理的產能 ≈ 34%", "n": "60.4% × 56.8%", "c": "crit"}, {"t": "6 件專案有預計工時但實際為 0", "n": "工時未登錄，非真實零投入"}]}, {"t": "對策建議", "c": "good", "k": [{"t": "先解決「其他（未分類）」", "n": "要求回報時強制選類別，這一項就佔非專案 42%"}, {"t": "把範圍外的專案編號納入戰情室", "n": "否則看到的永遠只是三分之一"}, {"t": "客訴／生產支援設專責窗口", "n": "避免研發被隨機中斷"}]}]}, {"t": "④ 資料品質", "n": "影響上面所有數字的可信度", "c": "warn", "k": [{"t": "日期矛盾", "n": "5 件結案日早於最後一筆任務完成日", "c": "c1"}, {"t": "狀態與進度不一致", "n": "進度 100% 卻仍為在製；進度表「異常」欄有漏標"}, {"t": "部門代號與名稱不一致", "n": "3 件掛 RD1000 但名稱寫研三部"}, {"t": "逾期未結任務 362 項", "n": "大量 2024–2025 年度、完成度 0% 的會議／文件類任務虛增逾期"}, {"t": "工時明細與小計對不上", "n": "M240804R1 小計 1,376 hr vs 逐人 1,235 hr，差 141 hr"}, {"t": "對策建議", "c": "good", "k": [{"t": "先做一次任務盤點清理", "n": "再以本平台作為週會基準"}, {"t": "PLM 日期欄位加驗證規則", "n": "結案日不得早於任務完成日"}]}]}]}};
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+let VIEW='arch', Z=1;
+const TONE=['c1','c2','c3','c4','c5','c6'];
+
+/* 為每個節點指定唯一 id 與預設展開狀態 */
+let uid=0;
+function prep(n,depth,tok){
+  n._id='n'+(uid++); n._d=depth;
+  n._open = n.o===0 ? false : true;
+  const my = depth===0 ? 'c1'
+           : (n.c && n.c!=='src' && n.c!=='root') ? n.c
+           : tok;
+  n._branch = my;
+  (n.k||[]).forEach((c,i)=>prep(c, depth+1, depth===0 ? TONE[i%6] : my));
+}
+function reset(){uid=0;prep(DATA.arch,0,0);uid=0;prep(DATA.prob,0,0);}
+reset();
+
+const stage=$('#stage'), svg=$('#links'), wrap=$('#wrap');
+
+function layout(){
+  const root=DATA[VIEW];
+  stage.querySelectorAll('.node').forEach(n=>n.remove());
+  svg.innerHTML='';
+  const PADX=34, PADY=26, GAPX=56, VGAP=10;
+  // 1) 建立 DOM 以量測尺寸
+  const items=[];
+  (function walk(n,depth,parent){
+    const el=document.createElement('div');
+    const tone=(depth<=1?(n.c||n._branch):null);
+    el.className='node'+(depth===0?' root':'')+(depth===1?' lv1':'')
+      +(n.c==='src'?' leafsrc':'')+(tone?' tone-'+tone:(n.c?' tone-'+n.c:''))
+      +((n.k&&!n._open)?' collapsed':'');
+    if(depth>=1 && n._branch) el.style.setProperty('--bc','var(--'+(n.c==='src'?'ink3':n._branch)+')');
+    if(depth>=2) el.style.borderLeft='3px solid var(--bc,var(--line))';
+    const cnt=n.k?`<span class="cnt">${n._open?'−':n.k.length}</span>`:'';
+    el.innerHTML=`<div class="t">${n.t}${cnt}</div>${n.n?`<div class="n">${n.n}</div>`:''}`;
+    el.style.maxWidth=depth===0?'260px':depth===1?'320px':'380px';
+    stage.appendChild(el);
+    const it={n,el,depth,parent,kids:[]};
+    items.push(it); if(parent)parent.kids.push(it);
+    if(n.k&&n._open) n.k.forEach(c=>walk(c,depth+1,it));
+    if(n.k) el.addEventListener('click',e=>{e.stopPropagation();n._open=!n._open;layout();});
+    return it;
+  })(root,0,null);
+  // 2) 量測
+  items.forEach(it=>{const r=it.el.getBoundingClientRect();it.w=r.width/Z;it.h=r.height/Z;});
+  // 3) 各層 x 位置＝前一層最大寬度累加
+  const byd={}; items.forEach(it=>(byd[it.depth]=byd[it.depth]||[]).push(it));
+  const maxd=Math.max(...items.map(i=>i.depth));
+  const colx=[PADX];
+  for(let dd=1;dd<=maxd;dd++){
+    const prevMax=Math.max(...byd[dd-1].map(i=>i.w));
+    colx[dd]=colx[dd-1]+prevMax+GAPX;
+  }
+  // 4) y：後序排列，葉節點依序堆疊，父節點取子節點中線
+  let cur=PADY;
+  (function place(it){
+    if(!it.kids.length){it.y=cur;cur+=it.h+VGAP;return;}
+    it.kids.forEach(place);
+    const a=it.kids[0], b=it.kids[it.kids.length-1];
+    it.y=(a.y+(b.y+b.h))/2-it.h/2;
+    if(it.y<PADY){const dy=PADY-it.y;items.forEach(x=>{if(x.y!=null)x.y+=dy});cur+=dy;}
+  })(items[0]);
+  // 5) 套用位置 + 畫連線
+  let W=0,H=0,g='';
+  items.forEach(it=>{
+    it.x=colx[it.depth];
+    it.el.style.left=it.x+'px'; it.el.style.top=it.y+'px';
+    W=Math.max(W,it.x+it.w); H=Math.max(H,it.y+it.h);
+    if(it.parent){
+      const p=it.parent;
+      const x1=p.x+p.w, y1=p.y+p.h/2, x2=it.x, y2=it.y+it.h/2, mx=(x1+x2)/2;
+      const col='var(--'+(it.n.c==='src'?'ink3':(it.n._branch||'line'))+')';
+      g+=`<path d="M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}" fill="none"
+        stroke="${col}" stroke-width="${it.depth<=1?2:1.4}" opacity="${it.depth<=1?.85:.5}"/>`;
+    }
+  });
+  svg.setAttribute('width',W+PADX); svg.setAttribute('height',H+PADY);
+  svg.style.width=(W+PADX)+'px'; svg.style.height=(H+PADY)+'px';
+  svg.innerHTML=g;
+  stage.style.width=(W+PADX)+'px'; stage.style.height=(H+PADY)+'px';
+}
+
+function setAll(root,open,maxDepth){
+  (function w(n,d){ if(n.k){ n._open = open && d<maxDepth; n.k.forEach(c=>w(c,d+1)); } })(root,0);
+}
+$('#bexp').onclick=()=>{setAll(DATA[VIEW],true,99);layout();};
+$('#bcol').onclick=()=>{setAll(DATA[VIEW],true,1);layout();};
+$$('#tabs .tab').forEach(b=>b.onclick=()=>{
+  VIEW=b.dataset.v; $$('#tabs .tab').forEach(o=>o.setAttribute('aria-selected',o===b));
+  layout(); wrap.scrollTo(0,0);
+});
+$('#btheme').onclick=()=>{const h=document.documentElement;
+  const l=h.getAttribute('data-t')==='light';
+  h.setAttribute('data-t',l?'dark':'light');
+  $('#btheme').textContent=l?'◐ 淺色':'◐ 深色'; layout();};
+const zoom=v=>{Z=Math.min(1.6,Math.max(.4,v));stage.style.transform=`scale(${Z})`;$('#zr').textContent=Math.round(Z*100)+'%';};
+$('#zi').onclick=()=>zoom(Z+.1); $('#zo').onclick=()=>zoom(Z-.1); $('#zr').onclick=()=>zoom(1);
+setAll(DATA.prob,true,2);
+layout();
+</script>
+</body></html>

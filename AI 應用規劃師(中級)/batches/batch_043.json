@@ -1,0 +1,227 @@
+[
+  {
+    "id": "mock_284",
+    "num": 255,
+    "difficulty": 4,
+    "question": "若要將類別型資料輸入至 XGBoost 模型，下列何者處理方式最合適？",
+    "options": {
+      "A": "標準化為 Z 分數",
+      "B": "Embedding Layer",
+      "C": "Label Encoding 或 Target Encoding",
+      "D": "使用獨熱編碼並強制標準化"
+    },
+    "answer": "C",
+    "explanation": "XGBoost 接受數值輸入，因此可將類別型欄位轉為整數編碼或基於目標變數的統計\n編碼。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_285",
+    "num": 256,
+    "difficulty": 2,
+    "question": "以下哪一種欄位最可能成為「資訊洩漏特徵」？",
+    "options": {
+      "A": "銷售日期",
+      "B": "客戶年齡",
+      "C": "交易總金額（訓練階段包含未來資訊）",
+      "D": "商品分類"
+    },
+    "answer": "C",
+    "explanation": "若欄位在預測前不可取得（如未來營收），即為洩漏欄位，會導致模型評估虛高而無\n法實用。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_286",
+    "num": 257,
+    "difficulty": 5,
+    "question": "高基數類別欄位（High Cardinality）在訓練模型時可能導致？",
+    "options": {
+      "A": "記憶體與計算負擔過大",
+      "B": "類別頻率變小使模型收斂速度增加",
+      "C": "過擬合風險降低",
+      "D": "模型不需要正規化"
+    },
+    "answer": "A",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_287",
+    "num": 258,
+    "difficulty": 3,
+    "question": "欄位資料若為「次序型類別」（如滿意度評等），應如何處理？",
+    "options": {
+      "A": "改為連續變數",
+      "B": "使用 One-Hot 編碼",
+      "C": "使用 Label Encoding 並保留順序關係",
+      "D": "資料全數刪除"
+    },
+    "answer": "C",
+    "explanation": "次序型資料應保留順序資訊（如 1~5 類），Label Encoding 可表達相對關係，但\n須小心模型是否能正確解釋數值。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_288",
+    "num": 259,
+    "difficulty": 2,
+    "question": "若要觀察特徵對模型輸出的影響關係，可使用下列哪一種圖表？",
+    "options": {
+      "A": "直方圖",
+      "B": "SHAP 值視覺化圖（如 SHAP summary plot）",
+      "C": "ROC 曲線",
+      "D": "盒鬚圖"
+    },
+    "answer": "B",
+    "explanation": "SHAP 值可量化每個特徵對單一預測結果的影響，是解釋模型的重要工具。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_289",
+    "num": 260,
+    "difficulty": 1,
+    "question": "在資料前處理中，欄位若被判定為常數值（例如全為「N/A」），建議？",
+    "options": {
+      "A": "強制進行標準化",
+      "B": "使用獨熱編碼",
+      "C": "刪除該欄位以減少無效特徵",
+      "D": "將其轉換為時間欄位"
+    },
+    "answer": "C",
+    "explanation": "若欄位中幾乎無變異（如全為一值），對預測無幫助且可能增加模型負擔，應予以刪\n除。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_291",
+    "num": 261,
+    "difficulty": 1,
+    "question": "在建構監督式學習模型時，標籤欄位應具有什麼特性？",
+    "options": {
+      "A": "高共線性",
+      "B": "多為文字型別",
+      "C": "清晰可辨且與特徵有關聯性",
+      "D": "可以事後加入"
+    },
+    "answer": "C",
+    "explanation": "標籤應與特徵相關，若無清晰標籤或標籤資料混亂，將難以進行有效監督學習。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_292",
+    "num": 262,
+    "difficulty": 2,
+    "question": "將分類任務標籤中的「其他類別」重新編為單一類別的作法稱為？",
+    "options": {
+      "A": "欄位轉換",
+      "B": "One-Hot Encoding",
+      "C": "類別合併（Category Consolidation）",
+      "D": "特徵標準化"
+    },
+    "answer": "C",
+    "explanation": "類別合併將低頻或不重要的類別歸為一群，有助減少維度與資料稀疏性。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_293",
+    "num": 263,
+    "difficulty": 3,
+    "question": "在時間序列預測任務中，下列哪一種資料切分方法最適合？",
+    "options": {
+      "A": "隨機切分",
+      "B": "K-fold 交叉驗證",
+      "C": "滾動視窗切分（Rolling Window）",
+      "D": "類別分層切分"
+    },
+    "answer": "C",
+    "explanation": "時間序列具有時間依賴性，應採用滾動視窗或保留順序的方式避免未來資料洩漏。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_294",
+    "num": 264,
+    "difficulty": 4,
+    "question": "資料集含有大量類別型欄位，若希望自動處理轉換、篩選與嵌入，建議使用？",
+    "options": {
+      "A": "手動標準化處理",
+      "B": "自動特徵工程工具（如 Featuretools、AutoFeat）",
+      "C": "字串轉向量模組",
+      "D": "群聚分析"
+    },
+    "answer": "B",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_295",
+    "num": 265,
+    "difficulty": 2,
+    "question": "使用 L1 正則化的回歸模型（如 Lasso）可同時完成下列哪一項工作？",
+    "options": {
+      "A": "類別資料編碼",
+      "B": "欄位尺度調整",
+      "C": "特徵選擇",
+      "D": "標籤平滑處理"
+    },
+    "answer": "C",
+    "explanation": "L1 正則化可使部分係數趨近零，進而達到變數選擇與簡化模型的效果。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_296",
+    "num": 266,
+    "difficulty": 3,
+    "question": "為了驗證資料清理流程是否正確，下列哪一指標最具參考價值？",
+    "options": {
+      "A": "欄位名稱是否相同",
+      "B": "資料列總數",
+      "C": "資料清理前後模型表現變化",
+      "D": "欄位型別是否統一"
+    },
+    "answer": "C",
+    "explanation": "若清理後模型準確度大幅下降或異常提升，應重新檢查是否造成資料損失或資訊洩\n漏。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_297",
+    "num": 267,
+    "difficulty": 4,
+    "question": "針對類別型資料進行 Target Encoding 時，需特別注意？",
+    "options": {
+      "A": "編碼後是否為正整數",
+      "B": "資料集中是否有重複列",
+      "C": "是否使用整體平均造成資料洩漏（Data Leakage）",
+      "D": "模型是否支援文字欄位"
+    },
+    "answer": "C",
+    "explanation": "Target Encoding 直接使用標籤資訊進行編碼，若在全資料上計算會導致預測時使\n用未來資訊。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_299",
+    "num": 268,
+    "difficulty": 1,
+    "question": "將欄位名稱如 \"Revenue_2023_Q1\" 改為 \"revenue_q1\" 屬於哪一類操作？",
+    "options": {
+      "A": "特徵選擇",
+      "B": "資料正規化",
+      "C": "欄位標準命名與清理",
+      "D": "時間差值轉換"
+    },
+    "answer": "C",
+    "explanation": "欄位命名一致性有助於資料流維護與模型追蹤，是前處理流程中的一環。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_300",
+    "num": 269,
+    "difficulty": 2,
+    "question": "在訓練模型前加入 PCA 處理的主要目的是？",
+    "options": {
+      "A": "強化資料隨機性",
+      "B": "增加資料筆數",
+      "C": "降低維度並移除多餘訊息",
+      "D": "模擬訓練誤差"
+    },
+    "answer": "C",
+    "explanation": "PCA 可降低維度、去除冗餘特徵、提升模型效率，並可能減少共線性問題。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  }
+]

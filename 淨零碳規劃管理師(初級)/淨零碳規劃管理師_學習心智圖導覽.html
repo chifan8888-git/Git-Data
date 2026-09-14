@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>淨零碳規劃管理師（初級）互動式學習心智圖與備考指引</title>
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-primary: #0b0f19;
+            --bg-card: #151c2c;
+            --bg-card-hover: #1e293b;
+            --border-color: #2e3a52;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            
+            --accent-emerald: #10b981;
+            --accent-emerald-glow: rgba(16, 185, 129, 0.2);
+            --accent-cyan: #06b6d4;
+            --accent-cyan-glow: rgba(6, 182, 212, 0.2);
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+            
+            --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Header Styling */
+        header {
+            background: linear-gradient(135deg, rgba(21, 28, 44, 0.95), rgba(11, 15, 25, 0.98));
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--accent-emerald), var(--accent-cyan));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: #fff;
+            box-shadow: 0 0 15px var(--accent-emerald-glow);
+        }
+
+        .logo-title h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ffffff, #a5f3fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-title p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Search Bar */
+        .search-box {
+            position: relative;
+            min-width: 280px;
+            flex-grow: 1;
+            max-width: 450px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.6rem 1rem 0.6rem 2.5rem;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 12px var(--accent-cyan-glow);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+            max-width: 1400px;
+            margin: 1.5rem auto 0;
+            padding: 0 2rem;
+            border-bottom: 1px solid var(--border-color);
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            padding: 0.75rem 1.25rem;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-cyan);
+            border-bottom-color: var(--accent-cyan);
+        }
+
+        /* Main Container */
+        main {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            flex-grow: 1;
+            width: 100%;
+        }
+
+        /* Progress Dashboard */
+        .progress-banner {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem 1.75rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .progress-info h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .progress-info p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .progress-bar-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            min-width: 260px;
+        }
+
+        .progress-bar {
+            flex-grow: 1;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-emerald), var(--accent-cyan));
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+        }
+
+        /* Mindmap Grid View */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Section Headings */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .section-header i {
+            font-size: 1.4rem;
+            color: var(--accent-cyan);
+        }
+
+        .section-header h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        /* Cards Grid */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .mindmap-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mindmap-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--card-accent, var(--accent-cyan));
+        }
+
+        .mindmap-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--card-accent, var(--accent-cyan));
+            box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.6);
+            background-color: var(--bg-card-hover);
+        }
+
+        .card-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            width: fit-content;
+            margin-bottom: 0.75rem;
+            background-color: rgba(255, 255, 255, 0.08);
+            color: var(--card-accent, var(--accent-cyan));
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-title .check-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .card-title .check-btn.checked {
+            color: var(--accent-emerald);
+        }
+
+        .node-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin-top: 0.5rem;
+        }
+
+        .node-item {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            padding: 0.5rem 0.75rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: var(--radius-sm);
+            border-left: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .node-item:hover {
+            background: rgba(255, 255, 255, 0.07);
+            color: var(--text-primary);
+            border-left-color: var(--card-accent, var(--accent-cyan));
+            transform: translateX(4px);
+        }
+
+        .node-item strong {
+            color: #fff;
+        }
+
+        /* Timeline & Strategy Grid Styling */
+        .timeline-box {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            background: var(--bg-card);
+            padding: 1rem 1.25rem;
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--accent-cyan);
+        }
+
+        .timeline-year {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            min-width: 70px;
+        }
+
+        .timeline-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .strategy-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+        }
+
+        .strategy-card h4 {
+            color: var(--accent-emerald);
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .strategy-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Formula & Quick Sheet Styling */
+        .formula-card {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .formula-box {
+            background: #090d16;
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            margin: 1rem 0;
+            font-family: monospace;
+            font-size: 1.05rem;
+            color: #67e8f9;
+            border: 1px dashed var(--accent-cyan);
+            text-align: center;
+        }
+
+        /* Detail Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-container {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            width: 90%;
+            max-width: 650px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 2rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .modal-close:hover {
+            color: var(--accent-rose);
+        }
+
+        .modal-header h3 {
+            font-size: 1.3rem;
+            color: var(--accent-cyan);
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-body {
+            margin-top: 1rem;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .modal-tag {
+            display: inline-block;
+            background: rgba(6, 182, 212, 0.15);
+            color: var(--accent-cyan);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 1.5rem 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: auto;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+            main {
+                padding: 0 1rem;
+            }
+            .nav-tabs {
+                padding: 0 1rem;
+            }
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo-group">
+                <div class="logo-icon"><i class="fa-solid fa-leaf"></i></div>
+                <div class="logo-title">
+                    <h1>淨零碳規劃管理師（初級）</h1>
+                    <p>全考科心智圖、十二戰略與階段目標速記</p>
+                </div>
+            </div>
+
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="搜尋關鍵字（例如：十二戰略、2030、CBAM、範疇三、GWP）...">
+            </div>
+        </div>
+    </header>
+
+    <!-- Nav Tabs -->
+    <div class="nav-tabs">
+        <button class="tab-btn active" data-tab="tab-all"><i class="fa-solid fa-sitemap"></i> 全考科總覽心智圖</button>
+        <button class="tab-btn" data-tab="tab-strategy"><i class="fa-solid fa-chess"></i> 12項關鍵戰略與階段時間軸</button>
+        <button class="tab-btn" data-tab="tab-subject1"><i class="fa-solid fa-earth-americas"></i> 考科一：淨零概論</button>
+        <button class="tab-btn" data-tab="tab-subject2"><i class="fa-solid fa-calculator"></i> 考科二：盤查規範</button>
+        <button class="tab-btn" data-tab="tab-formula"><i class="fa-solid fa-key"></i> 核心公式與高頻考點</button>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Progress Dashboard -->
+        <div class="progress-banner">
+            <div class="progress-info">
+                <h2><i class="fa-solid fa-chart-line" style="color: var(--accent-emerald);"></i> 學習複習進度面板</h2>
+                <p>點擊考點卡片右上角的勾選按鈕，追蹤您的複習進度！</p>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <span class="progress-text" id="progressText">0%</span>
+            </div>
+        </div>
+
+        <!-- TAB 1: 全考科總覽 -->
+        <div id="tab-all" class="tab-content active">
+            <div class="section-header">
+                <i class="fa-solid fa-compass"></i>
+                <h2>全考科系統化心智架構</h2>
+            </div>
+            <div class="card-grid" id="grid-all">
+                <!-- Javascript will inject cards -->
+            </div>
+        </div>
+
+        <!-- TAB: 十二關鍵戰略與關鍵日期時間軸 -->
+        <div id="tab-strategy" class="tab-content">
+            <div class="section-header">
+                <i class="fa-solid fa-clock"></i>
+                <h2>臺灣 2050 淨零排放關鍵時間軸與階段目標</h2>
+            </div>
+            <div class="timeline-box">
+                <div class="timeline-item">
+                    <div class="timeline-year">2005 年</div>
+                    <div class="timeline-desc"><strong>歷史基準年 (Base Year)</strong>：臺灣國家溫室氣體排放量計算與減量目標比較基準。</div>
+                </div>
+                <div class="timeline-item" style="border-left-color: var(--accent-emerald);">
+                    <div class="timeline-year" style="color: var(--accent-emerald);">2025 年</div>
+                    <div class="timeline-desc"><strong>第一期階段管制目標</strong>：溫室氣體排放量較 2005 年減少 <strong>10%</strong>。<br><strong>碳費機制正式上路</strong>：首波開徵年排放達 2.5 萬噸 CO₂e 之製造業與電力業。</div>
+                </div>
+                <div class="timeline-item" style="border-left-color: var(--accent-amber);">
+                    <div class="timeline-year" style="color: var(--accent-amber);">2030 年</div>
+                    <div class="timeline-desc"><strong>更新版 NDC 自主減量目標</strong>：排放量較 2005 年減少 <strong>24% ± 1%</strong>。<br><strong>運具電動化目標</strong>：市區公車 100% 電動化、政府公務車 100% 電動化。<br><strong>發電結構目標</strong>：再生能源發電占比達到 <strong>30%</strong> (光電 31GW、離岸風電 13.1GW)。</div>
+                </div>
+                <div class="timeline-item" style="border-left-color: var(--accent-purple);">
+                    <div class="timeline-year" style="color: var(--accent-purple);">2040 年</div>
+                    <div class="timeline-desc"><strong>新售車輛全電動化目標</strong>：<strong>新售機車 100% 電動化</strong>、<strong>新售小客車 100% 電動化</strong>。</div>
+                </div>
+                <div class="timeline-item" style="border-left-color: var(--accent-rose);">
+                    <div class="timeline-year" style="color: var(--accent-rose);">2050 年</div>
+                    <div class="timeline-desc"><strong>淨零排放 (Net Zero)</strong>：達成溫室氣體排放與移除量平衡。<br><strong>電力結構目標</strong>：再生能源 <strong>60~70%</strong>、氫能 <strong>9~12%</strong>、火力+CCUS <strong>20~27%</strong>、抽蓄水力 1%。</div>
+                </div>
+            </div>
+
+            <div class="section-header" style="margin-top: 2.5rem;">
+                <i class="fa-solid fa-layer-group"></i>
+                <h2>臺灣 2050 淨零排放「十二項關鍵戰略」細節清單</h2>
+            </div>
+            <div class="strategy-grid">
+                <div class="strategy-card">
+                    <h4>1. 風 / 光</h4>
+                    <p>擴大離岸風電與太陽光電推動，作為主力再生能源。2030 光電目標 31GW、風電 13.1GW。</p>
+                </div>
+                <div class="strategy-card">
+                    <h4>2. 氫能</h4>
+                    <p>引進藍氫/綠氫技術，應用於工業製程與發電。2050 年發電占比預計達 9~12%。</p>
+                </div>
+                <div class="strategy-card">
+                    <h4>3. 前瞻能源</h4>
+                    <p>開發地熱、生質能、海洋能（黑潮發電）及小水力，作為再生能源基載電力補強。</p>
+                </div>
+                <div class="strategy-card">
+                    <h4>4. 電力系統與儲能</h4>
+                    <p>強化電網韌性、發展智慧電網與儲能設備。2030 年儲能目標達到 5.5GW。</p>
+                </div>
+                <div class="strategy-card">
+                    <h4>5. 節能</h4>
+                    <p>推動工業、商業、住宅三快節能策略，擴大能源效率分級標示與高能效設備替換。</p>
+                </div>
+                <div class="strategy-card">
+                    <h4>6. 碳捕捉利用及封存 (CCUS)</h4>
+                    <p>負碳關鍵技術！捕捉工業與燃氣排放 CO₂ 進行地下封存或轉化利用。2050 年預估處理 5~7%。</p>
+                </div>
+                <div class="strategy-card">
+                    <h4>7. 自然碳匯</h4>
+                    <p>包含綠碳（森林造林與蓄積）、藍碳（紅樹林/海草床）、黃碳（土壤碳匯）。增加國家碳吸收能力。</p>
+                </div>
+                <div class="strategy-card">
+                    <h4>8. 淨零綠生活</h4>
+                    <p>倡導全民食衣住行育樂零廢棄、共享經濟、綠色消費與低碳生活行為轉變。</p>
+                </div>
+                <div class="strategy-card">
+                    <h4>9. 綠色金融</h4>
+                    <p>金管會推動綠色金融 3.0，引導資金投向綠色與永續發展產業，要求落實 ESG 資訊揭露。</p>
+                </div>
+                <div class="strategy-card">
+                    <h4>10. 公正轉型</h4>
+                    <p>尊重人權並秉持「不遺落任何人」原則，協助高碳排產業勞工、社區進行轉職與轉型升級。</p>
+                </div>
+                <div class="strategy-card">
+                    <h4>11. 淨零綠色科技</h4>
+                    <p>國科會跨部會整合，加速前瞻負碳技術、新一代電池與綠能科技研發與產業化應用。</p>
+                </div>
+                <div class="strategy-card">
+                    <h4>12. 氣候法制</h4>
+                    <p>完備《氣候變遷因應法》子法建置、碳費徵收機制、自願減量核發與碳交易市場運作。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: 考科一 -->
+        <div id="tab-subject1" class="tab-content">
+            <div class="section-header">
+                <i class="fa-solid fa-globe"></i>
+                <h2>考科一：淨零碳規劃管理基礎概論</h2>
+            </div>
+            <div class="card-grid" id="grid-subject1">
+                <!-- Javascript will inject cards -->
+            </div>
+        </div>
+
+        <!-- TAB 3: 考科二 -->
+        <div id="tab-subject2" class="tab-content">
+            <div class="section-header">
+                <i class="fa-solid fa-scale-balanced"></i>
+                <h2>考科二：溫室氣體盤查規範與程序概要</h2>
+            </div>
+            <div class="card-grid" id="grid-subject2">
+                <!-- Javascript will inject cards -->
+            </div>
+        </div>
+
+        <!-- TAB 4: 公式與速記卡 -->
+        <div id="tab-formula" class="tab-content">
+            <div class="section-header">
+                <i class="fa-solid fa-bolt"></i>
+                <h2>核心計算公式與高頻考點精華</h2>
+            </div>
+
+            <div class="formula-card">
+                <h3><i class="fa-solid fa-calculator" style="color: var(--accent-cyan);"></i> 1. 溫室氣體排放量核心計算公式</h3>
+                <div class="formula-box">
+                    排放量 (t CO₂e) = 活動數據 (Activity Data) × 排放係數 (Emission Factor) × GWP
+                </div>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                    * <strong>活動數據</strong>：能源使用量（公噸、公升、度數、kWh等）。<br>
+                    * <strong>排放係數</strong>：單位活動數據產生的 CO₂e 排放量。<br>
+                    * <strong>GWP (全球暖化潛勢)</strong>：以 CO₂ 為 1 之相對基準（IPCC 報告評估值）。
+                </p>
+            </div>
+
+            <div class="formula-card">
+                <h3><i class="fa-solid fa-list-check" style="color: var(--accent-emerald);"></i> 2. 7大溫室氣體與 GWP 快速記憶卡</h3>
+                <div style="overflow-x: auto; margin-top: 1rem;">
+                    <table style="width: 100%; border-collapse: collapse; color: var(--text-primary); text-align: left;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--border-color); color: var(--accent-cyan);">
+                                <th style="padding: 0.75rem;">溫室氣體</th>
+                                <th style="padding: 0.75rem;">化學式</th>
+                                <th style="padding: 0.75rem;">主要排放源</th>
+                                <th style="padding: 0.75rem;">GWP (AR5)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 0.75rem;">二氧化碳</td>
+                                <td style="padding: 0.75rem;">CO₂</td>
+                                <td style="padding: 0.75rem;">化石燃料燃燒、水泥工業製程</td>
+                                <td style="padding: 0.75rem; font-weight: bold;">1</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 0.75rem;">甲烷</td>
+                                <td style="padding: 0.75rem;">CH₄</td>
+                                <td style="padding: 0.75rem;">畜牧業反芻、廢水處理、天然氣洩漏</td>
+                                <td style="padding: 0.75rem; font-weight: bold;">28</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 0.75rem;">氧化亞氮</td>
+                                <td style="padding: 0.75rem;">N₂O</td>
+                                <td style="padding: 0.75rem;">農業施肥、硝酸/己二酸化工製造</td>
+                                <td style="padding: 0.75rem; font-weight: bold;">265</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 0.75rem;">氫氟碳化物</td>
+                                <td style="padding: 0.75rem;">HFCs</td>
+                                <td style="padding: 0.75rem;">冷氣與冷凍空調冷媒、發泡劑</td>
+                                <td style="padding: 0.75rem;">數百 ~ 萬</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 0.75rem;">全氟碳化物</td>
+                                <td style="padding: 0.75rem;">PFCs</td>
+                                <td style="padding: 0.75rem;">半導體晶圓蝕刻製程、鋁冶煉</td>
+                                <td style="padding: 0.75rem;">數千 ~ 萬</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 0.75rem;">六氟化硫</td>
+                                <td style="padding: 0.75rem;">SF₆</td>
+                                <td style="padding: 0.75rem;">高壓電力 GIS 絕緣設備</td>
+                                <td style="padding: 0.75rem; font-weight: bold; color: var(--accent-rose);">23,500</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.75rem;">三氟化氮</td>
+                                <td style="padding: 0.75rem;">NF₃</td>
+                                <td style="padding: 0.75rem;">LCD面板製造、半導體電漿清洗</td>
+                                <td style="padding: 0.75rem; font-weight: bold; color: var(--accent-amber);">16,100</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Detail Modal -->
+    <div class="modal-overlay" id="detailModal">
+        <div class="modal-container">
+            <button class="modal-close" id="modalClose"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-header">
+                <span class="modal-tag" id="modalTag">考點精解</span>
+                <h3 id="modalTitle">主題名稱</h3>
+            </div>
+            <div class="modal-body" id="modalContent">
+                <!-- Dynamic Content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 淨零碳規劃管理師（初級）備考輔導系統 | 依據 113-115 年能力鑑定規範製作</p>
+    </footer>
+
+    <!-- Script Logic -->
+    <script>
+        // Mindmap Data Structure
+        const mindmapData = [
+            // 考科一
+            {
+                id: 'c1-1',
+                subject: 1,
+                badge: '考科一：國際公約',
+                accentColor: '#06b6d4',
+                title: '氣候變遷公約與國際協定',
+                nodes: [
+                    { name: 'UNFCCC 氣候變化綱要公約', desc: '1992年簽訂，確立「共同但有區別的責任」原則。' },
+                    { name: '京都議定書 (Kyoto Protocol)', desc: '1997年通過，具法律約束力。規範附件一國家減量目標，並確立6大溫室氣體與三大靈活機制（CDM, JI, ET）。' },
+                    { name: '巴黎協定 (Paris Agreement)', desc: '2015年通過，適用全球所有國家。將升溫控制在遠低於 2°C，並努力限制於 1.5°C 內。採「由下而上」國家自主貢獻（NDC），每5年盤點。' },
+                    { name: 'COP26 - COP28 關鍵決議', desc: 'COP26完成第6條碳市場細則；COP27成立損失與損害基金；COP28進行首次全球盤查，承諾擺脫化石燃料、2030再生能源增至3倍。' }
+                ]
+            },
+            {
+                id: 'c1-2',
+                subject: 1,
+                badge: '考科一：貿易機制',
+                accentColor: '#3b82f6',
+                title: '國際碳邊境調整與倡議',
+                nodes: [
+                    { name: '歐盟 CBAM 時間表', desc: '2023/10~2025/12為過渡期（僅申報無須買憑證）；2026/01起正式實施，須繳銷CBAM憑證。已於國內繳納碳費可申請扣抵。涵蓋鋼鐵、鋁、水泥、化肥、電力、氫氣。' },
+                    { name: '美國 CCA 清潔競爭法案', desc: '針對高碳排進口工業產品，超過美國同類產品平均碳排基準者徵收碳稅。' },
+                    { name: 'SBTi 科學減碳目標', desc: '由WWF, CDP, UNGC, WRI共同發起，要求企業依照 1.5°C 路徑設定近程與淨零目標。' },
+                    { name: 'RE100 / EV100 / EP100', desc: '氣候組織倡議。RE100要求100%使用再生能源；EV100推動車隊電動化；EP100倍增能源生產力。' }
+                ]
+            },
+            {
+                id: 'c1-3',
+                subject: 1,
+                badge: '考科一：臺灣法規',
+                accentColor: '#10b981',
+                title: '臺灣2050淨零政策與氣候法',
+                nodes: [
+                    { name: '臺灣2050淨零排放路徑', desc: '包含四大轉型（能源、產業、生活、社會轉型）與兩大治理基礎（氣候法制、科技研發），搭配十二項關鍵戰略。' },
+                    { name: '關鍵階段減量目標', desc: '基準年2005年。2025年目標減10%；2030年更新版NDC目標減 24% ± 1%（公務車/市區公車100%電動化）；2040年新售機車與小客車100%電動化；2050年達成淨零排放。' },
+                    { name: '氣候變遷因應法', desc: '2023年修法實施，將2050淨零目標正式入法。授權徵收碳費、成立溫室氣體管理基金，並推動自主減量計畫優惠費率。' },
+                    { name: '臺灣碳權交易所 (TCX)', desc: '提供國內自願減量額度交易、增量抵換交易及國外碳權交易平台。' }
+                ]
+            },
+            {
+                id: 'c1-4',
+                subject: 1,
+                badge: '考科一：永續揭露',
+                accentColor: '#8b5cf6',
+                title: 'ESG 揭露與淨零標準',
+                nodes: [
+                    { name: 'GRI 永續報告準則', desc: '利害關係人導向，涵蓋經濟、環境、社會三大面向，具通用準則與特定主題準則。' },
+                    { name: 'SASB 永續會計標準', desc: '投資人導向，聚焦於77個產業的「財務重大性」永續指標。' },
+                    { name: 'TCFD 氣候相關財務揭露', desc: '包含四大核心要素：治理、策略、風險管理、指標與目標。' },
+                    { name: 'ISO 14068-1:2023 碳中和', desc: '最新國際碳中和標準（取代PAS 2060），強調必須優先採取實質減量行動，剩餘排放始可使用高品質碳權抵換。' }
+                ]
+            },
+
+            // 考科二
+            {
+                id: 'c2-1',
+                subject: 2,
+                badge: '考科二：組織邊界',
+                accentColor: '#f59e0b',
+                title: 'ISO 14064-1 組織與營運邊界',
+                nodes: [
+                    { name: '組織邊界劃分法', desc: '分為股權比例法 (Equity Share) 與控制權法 (Control Approach)。控制權法又分為營運控制權法（最常用）與財務控制權法。' },
+                    { name: 'ISO 14064-1:2018 六大類別', desc: '類別1直接排放、類別2輸入能源間接排放、類別3運輸間接、類別4使用產品間接、類別5與使用產品相關間接、類別6其他間接。' },
+                    { name: 'GHG Protocol 範疇劃分', desc: 'Scope 1 (直接)、Scope 2 (輸入電力/熱能間接)、Scope 3 (其他價值鏈間接排放)。' }
+                ]
+            },
+            {
+                id: 'c2-2',
+                subject: 2,
+                badge: '考科二：數據量化',
+                accentColor: '#f43f5e',
+                title: '排放量計算與量化方法',
+                nodes: [
+                    { name: '三大量化方法', desc: '1. 計算公式法 (活動數據x排放係數xGWP)；2. 物料衡算法；3. 實測法 (連續排放監測 CEMS)。' },
+                    { name: '全球暖化潛勢 (GWP)', desc: '以 CO₂ 為基準 (GWP=1)。考題常見評估版本如 AR4、AR5 或 AR6，計算時必須採用統一版本之 GWP 值。' },
+                    { name: '基準年設定與重算', desc: '設定基準年作為減量追蹤基準。當組織發生併購、拆分或估算方法學出現重大改變時，須進行基準年重算。' }
+                ]
+            },
+            {
+                id: 'c2-3',
+                subject: 2,
+                badge: '考科二：查證程序',
+                accentColor: '#06b6d4',
+                title: '盤查程序與 ISO 14064-3 查證',
+                nodes: [
+                    { name: '溫室氣體盤查五大步驟', desc: '1. 界定邊界 -> 2. 辨識排放源 -> 3. 選定量化方法 -> 4. 數據收集計算 -> 5. 建立盤查清冊與報告書。' },
+                    { name: '查證等級 (Level of Assurance)', desc: '合理保證 (Reasonable Assurance，保證程度高) 與 有限保證 (Limited Assurance，保證程度較低)。' },
+                    { name: '重大性門檻 (Materiality)', desc: '判定差異或不實表達是否影響決策之門檻，常採 5% 為標準。' }
+                ]
+            },
+            {
+                id: 'c2-4',
+                subject: 2,
+                badge: '考科二：產品碳足跡',
+                accentColor: '#10b981',
+                title: 'ISO 14067 產品碳足跡 (CFP)',
+                nodes: [
+                    { name: '生命週期評估 (LCA)', desc: '涵蓋搖籃到墳墓 (Cradle-to-Grave，全生命週期) 或搖籃到大門 (Cradle-to-Gate，B2B商業出廠)。' },
+                    { name: '產品類別規則 (PCR)', desc: '針對特定產品群訂定統一的環境衝擊評估規範與系統邊界，為申請碳標籤之前提文件。' },
+                    { name: '分配與碳標籤', desc: '多產品共用製程時依物理量或經濟價值進行分配。碳標籤包含碳足跡標籤與減碳標籤。' }
+                ]
+            }
+        ];
+
+        // State & DOM elements
+        let checkedState = JSON.parse(localStorage.getItem('netzero_mindmap_checked') || '{}');
+
+        const gridAll = document.getElementById('grid-all');
+        const gridSubject1 = document.getElementById('grid-subject1');
+        const gridSubject2 = document.getElementById('grid-subject2');
+        const searchInput = document.getElementById('searchInput');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        const detailModal = document.getElementById('detailModal');
+        const modalClose = document.getElementById('modalClose');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalTag = document.getElementById('modalTag');
+        const modalContent = document.getElementById('modalContent');
+
+        // Render Function
+        function renderCards() {
+            gridAll.innerHTML = '';
+            gridSubject1.innerHTML = '';
+            gridSubject2.innerHTML = '';
+
+            const searchTerm = searchInput.value.trim().toLowerCase();
+
+            mindmapData.forEach(card => {
+                // Filter nodes based on search
+                const filteredNodes = card.nodes.filter(n => 
+                    n.name.toLowerCase().includes(searchTerm) || 
+                    n.desc.toLowerCase().includes(searchTerm) ||
+                    card.title.toLowerCase().includes(searchTerm)
+                );
+
+                if (searchTerm && filteredNodes.length === 0) return;
+
+                const isChecked = !!checkedState[card.id];
+                const cardEl = document.createElement('div');
+                cardEl.className = 'mindmap-card';
+                cardEl.style.setProperty('--card-accent', card.accentColor);
+
+                const nodesToRender = searchTerm ? filteredNodes : card.nodes;
+
+                cardEl.innerHTML = `
+                    <span class="card-badge">${card.badge}</span>
+                    <div class="card-title">
+                        <span>${card.title}</span>
+                        <button class="check-btn ${isChecked ? 'checked' : ''}" onclick="toggleCheck('${card.id}', event)">
+                            <i class="fa-${isChecked ? 'solid' : 'regular'} fa-circle-check"></i>
+                        </button>
+                    </div>
+                    <ul class="node-list">
+                        ${nodesToRender.map(node => `
+                            <li class="node-item" onclick="openNodeModal('${node.name}', '${node.desc.replace(/'/g, "\\'")}', '${card.badge}')">
+                                <strong>${node.name}</strong>
+                            </li>
+                        `).join('')}
+                    </ul>
+                `;
+
+                gridAll.appendChild(cardEl.cloneNode(true));
+                if (card.subject === 1) gridSubject1.appendChild(cardEl.cloneNode(true));
+                if (card.subject === 2) gridSubject2.appendChild(cardEl);
+            });
+
+            updateProgress();
+        }
+
+        // Toggle Card Checked
+        window.toggleCheck = function(id, e) {
+            e.stopPropagation();
+            checkedState[id] = !checkedState[id];
+            localStorage.setItem('netzero_mindmap_checked', JSON.stringify(checkedState));
+            renderCards();
+        };
+
+        // Update Progress Bar
+        function updateProgress() {
+            const total = mindmapData.length;
+            const checkedCount = Object.values(checkedState).filter(Boolean).length;
+            const pct = Math.round((checkedCount / total) * 100);
+            progressFill.style.width = pct + '%';
+            progressText.innerText = pct + '%';
+        }
+
+        // Open Modal
+        window.openNodeModal = function(name, desc, badge) {
+            modalTitle.innerText = name;
+            modalTag.innerText = badge;
+            modalContent.innerHTML = `
+                <p><strong>核心觀念與考試要點：</strong></p>
+                <p>${desc}</p>
+            `;
+            detailModal.classList.add('active');
+        };
+
+        modalClose.addEventListener('click', () => {
+            detailModal.classList.remove('active');
+        });
+
+        detailModal.addEventListener('click', (e) => {
+            if (e.target === detailModal) detailModal.classList.remove('active');
+        });
+
+        // Tab Switching
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+
+                btn.classList.add('active');
+                const targetTab = btn.getAttribute('data-tab');
+                document.getElementById(targetTab).classList.add('active');
+            });
+        });
+
+        // Search Input
+        searchInput.addEventListener('input', renderCards);
+
+        // Initial Render
+        renderCards();
+    </script>
+</body>
+</html>

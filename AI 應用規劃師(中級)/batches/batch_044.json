@@ -1,0 +1,227 @@
+[
+  {
+    "id": "mock_301",
+    "num": 270,
+    "difficulty": 1,
+    "question": "哪一項評估指標適用於二元分類且衡量整體準確程度？",
+    "options": {
+      "A": "F1-score",
+      "B": "ROC AUC",
+      "C": "Accuracy",
+      "D": "MAE"
+    },
+    "answer": "C",
+    "explanation": "Accuracy 是所有預測中正確的比例，適用於類別平衡時的整體模型準確性評估。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_302",
+    "num": 271,
+    "difficulty": 2,
+    "question": "下列哪一項指標可同時考慮 Precision 與 Recall 的平衡？",
+    "options": {
+      "A": "F1-score",
+      "B": "Specificity",
+      "C": "MSE",
+      "D": "Adjusted R-squared"
+    },
+    "answer": "A",
+    "explanation": "本題考查模型評估指標。在不平衡分類任務中，**召回率 (Recall) = TP / (TP + FN)**，衡量所有正樣本中被預測出的比例（常用於漏診代價高的醫療篩檢）；**精確率 (Precision) = TP / (TP + FP)**，衡量預測為正的樣本中真正為正的比例（常用於垃圾郵件過濾）。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_303",
+    "num": 272,
+    "difficulty": 3,
+    "question": "若模型在訓練集表現優異但測試集表現不佳，最可能發生了什麼現象？",
+    "options": {
+      "A": "欠擬合（Underfitting）",
+      "B": "特徵選擇錯誤",
+      "C": "過擬合（Overfitting）",
+      "D": "標準化過度"
+    },
+    "answer": "C",
+    "explanation": "過擬合指模型記住訓練資料細節，無法泛化至新資料，通常表現在測試集效果下\n降。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_304",
+    "num": 273,
+    "difficulty": 4,
+    "question": "使用 K-Fold Cross Validation 的主要優點為何？",
+    "options": {
+      "A": "減少特徵數量",
+      "B": "提升模型複雜度",
+      "C": "更穩健地評估模型泛化能力",
+      "D": "避免模型使用 GPU"
+    },
+    "answer": "C",
+    "explanation": "K-Fold 將資料多次切分訓練與驗證，平均得分更能反映模型在不同資料上的表現穩\n定性。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_305",
+    "num": 274,
+    "difficulty": 2,
+    "question": "對於迴歸問題，以下哪一項為常見評估指標？",
+    "options": {
+      "A": "Accuracy",
+      "B": "RMSE（均方根誤差）",
+      "C": "ROC AUC",
+      "D": "Precision"
+    },
+    "answer": "B",
+    "explanation": "RMSE 衡量預測值與實際值的偏差程度，是評估連續型輸出回歸模型的重要指標。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_307",
+    "num": 275,
+    "difficulty": 5,
+    "question": "哪一種特徵重要性技術可量化個別預測中每個特徵的貢獻？",
+    "options": {
+      "A": "Gini Impurity",
+      "B": "SHAP 值（SHapley Additive exPlanations）",
+      "C": "L1 正則化係數",
+      "D": "Gain from XGBoost"
+    },
+    "answer": "B",
+    "explanation": "SHAP 提供一致且可加總的特徵貢獻分數，可針對每筆樣本說明模型預測依據。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_308",
+    "num": 276,
+    "difficulty": 2,
+    "question": "使用 Random Search 進行超參數調整的好處為？",
+    "options": {
+      "A": "不需訓練模型",
+      "B": "能遍歷所有參數組合",
+      "C": "能以較低成本探索大空間",
+      "D": "可自動清理資料"
+    },
+    "answer": "C",
+    "explanation": "Random Search 透過隨機抽樣探索參數空間，成本較低且更可能發現佳解。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_309",
+    "num": 277,
+    "difficulty": 3,
+    "question": "在評估分類模型的混淆矩陣中，真正例（True Positive）代表什麼？",
+    "options": {
+      "A": "預測為正類且實際為負類",
+      "B": "預測與實際皆為正類",
+      "C": "實際為正類但預測錯誤",
+      "D": "模型未進行預測"
+    },
+    "answer": "B",
+    "explanation": "True Positive 指模型正確預測出正類樣本，是模型偵測能力的重要衡量之一。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_310",
+    "num": 278,
+    "difficulty": 4,
+    "question": "下列哪一特徵選擇方法屬於 Wrapper 方法？",
+    "options": {
+      "A": "Variance Threshold",
+      "B": "Recursive Feature Elimination（RFE）",
+      "C": "Mutual Information",
+      "D": "SHAP"
+    },
+    "answer": "B",
+    "explanation": "Wrapper 方法如 RFE 是透過模型反覆訓練並移除特徵來選擇最佳子集，較具計算\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_311",
+    "num": 279,
+    "difficulty": 1,
+    "question": "模型過度擬合的常見特徵是？",
+    "options": {
+      "A": "訓練與測試誤差都很高",
+      "B": "測試準確率高於訓練集",
+      "C": "訓練表現良好，但測試集表現差",
+      "D": "模型不收斂"
+    },
+    "answer": "C",
+    "explanation": "過擬合是指模型記住訓練集細節，泛化能力弱，造成在測試集上準確率顯著下降。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_312",
+    "num": 280,
+    "difficulty": 2,
+    "question": "哪一項特徵篩選方法屬於 Filter 類型？",
+    "options": {
+      "A": "Backward Elimination",
+      "B": "Lasso Regression",
+      "C": "Information Gain（資訊增益）",
+      "D": "Recursive Feature Elimination"
+    },
+    "answer": "C",
+    "explanation": "Filter 方法根據特徵與標籤間統計關係進行選擇，如資訊增益、皮爾森相關、卡方\n檢定等。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_313",
+    "num": 281,
+    "difficulty": 3,
+    "question": "下列哪一技術可用於視覺化多個特徵對模型預測結果的整體貢獻？",
+    "options": {
+      "A": "ROC 曲線",
+      "B": "混淆矩陣",
+      "C": "SHAP Summary Plot",
+      "D": "Cross Validation 折線圖"
+    },
+    "answer": "C",
+    "explanation": "SHAP Summary Plot 同時顯示各特徵的 SHAP 值分布與重要性排序，是全球可解\n釋性工具代表之一。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_314",
+    "num": 282,
+    "difficulty": 4,
+    "question": "若模型在驗證集中表現不穩定（波動劇烈），最可能的原因為？",
+    "options": {
+      "A": "資料量過多",
+      "B": "驗證資料切分方式有偏或樣本不足",
+      "C": "模型太簡單",
+      "D": "沒有使用正則化"
+    },
+    "answer": "B",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_315",
+    "num": 283,
+    "difficulty": 3,
+    "question": "Permutation Importance 的核心邏輯為？",
+    "options": {
+      "A": "逐步增加特徵數",
+      "B": "打亂某特徵值，觀察模型表現變化",
+      "C": "使用 SHAP 值累加總和",
+      "D": "測試資料做投影轉換"
+    },
+    "answer": "B",
+    "explanation": "Permutation Importance 評估打亂某特徵後模型性能下降的幅度，進而推估該特\n徵的重要性。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_316",
+    "num": 284,
+    "difficulty": 5,
+    "question": "當處理高維稀疏資料時，最佳的特徵選擇策略為？",
+    "options": {
+      "A": "使用 SHAP 值篩選前 50% 特徵",
+      "B": "直接丟入深度學習模型",
+      "C": "L1 正則化（Lasso）進行稀疏特徵壓縮",
+      "D": "模型合併特徵並增高維度"
+    },
+    "answer": "C",
+    "explanation": "Lasso 可將不重要特徵權重逼近零，天然具特徵選擇效果，對稀疏資料表現佳。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  }
+]

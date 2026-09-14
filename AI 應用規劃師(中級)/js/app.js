@@ -315,14 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const activeModeCard = document.querySelector('.mode-card.active');
     const mode = activeModeCard.getAttribute('data-mode');
 
-    // 3. 取得題數
-    let numQuestions = 50;
-    if (mode === 'quick') {
-      const activeCountBtn = document.querySelector('.q-count-btn.active');
-      numQuestions = activeCountBtn ? parseInt(activeCountBtn.getAttribute('data-count')) : 10;
-    }
-
-    // 4. 抽取題目
+    // 3. 抽取題目
     let rawQuestions = [];
     if (subjectId === 'subject1') {
       // 科目一合併歷屆試題與模擬題庫，為考生提供最大刷題庫
@@ -338,9 +331,20 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // 隨機洗牌演算法
-    const shuffled = [...rawQuestions].sort(() => 0.5 - Math.random());
-    const selectedQuestions = shuffled.slice(0, Math.min(numQuestions, shuffled.length));
+    // 4. 取得題數並依序取題（不再隨機洗牌）
+    let numQuestions = 50;
+    if (mode === 'quick') {
+      const activeCountBtn = document.querySelector('.q-count-btn.active');
+      const countVal = activeCountBtn ? activeCountBtn.getAttribute('data-count') : '10';
+      if (countVal === 'all') {
+        numQuestions = rawQuestions.length;
+      } else {
+        numQuestions = parseInt(countVal);
+      }
+    }
+    
+    // 逐題依序，不 shuffle
+    const selectedQuestions = rawQuestions.slice(0, Math.min(numQuestions, rawQuestions.length));
 
     // 5. 初始化考試狀態
     state.currentExam = {
@@ -499,6 +503,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // 題目文本（若有程式碼或公式，會進行包覆）
     const qTextEl = document.getElementById('active-question-text');
     qTextEl.innerText = q.question;
+
+    // 圖片渲染
+    const imgContainer = document.getElementById('active-question-image-container');
+    const imgEl = document.getElementById('active-question-image');
+    if (imgContainer && imgEl) {
+      if (q.image) {
+        imgEl.src = q.image;
+        imgContainer.style.display = 'block';
+      } else {
+        imgContainer.style.display = 'none';
+      }
+    }
 
     // 選項容器
     const optionsContainer = document.getElementById('active-options-container');
@@ -884,25 +900,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // 將所有錯題打亂作為新測驗
     const shuffled = [...state.wrongQuestions].sort(() => 0.5 - Math.random());
     
-    state.currentExam = {
-      subjectId: 'mistake_review',
-      subjectName: '個人錯題精準複習',
-      subjectBadge: '錯題複習',
-      questions: shuffled,
-      userAnswers: new Array(shuffled.length).fill(null),
-      flagged: new Set(),
-      currentIndex: 0,
-      mode: 'quick', // 錯題複習預設為快速模式，可即時看解析
-      timeLeft: 0,
-      timeSpent: 0,
-      isSubmitted: false,
-      timer: null
-    };
-
-    // UI 跳轉到 Exam 分頁
+    // UI 跳轉到 Exam 分頁 (會觸發 router 清空 currentExam)
     window.location.hash = 'exam';
     
     setTimeout(() => {
+      state.currentExam = {
+        subjectId: 'mistake_review',
+        subjectName: '個人錯題精準複習',
+        subjectBadge: '錯題複習',
+        questions: shuffled,
+        userAnswers: new Array(shuffled.length).fill(null),
+        flagged: new Set(),
+        currentIndex: 0,
+        mode: 'quick', // 錯題複習預設為快速模式，可即時看解析
+        timeLeft: 0,
+        timeSpent: 0,
+        isSubmitted: false,
+        timer: null
+      };
+
       examSetupDiv.style.display = 'none';
       examActiveDiv.style.display = 'block';
       examResultDiv.style.display = 'none';
@@ -953,7 +969,7 @@ model.fc = nn.Linear(in_features, num_classes)</code></pre>
       subject: "科目三 · 機器學習調參",
       front: "DBSCAN 密度聚類核心超參數及其影響",
       back: `
-        <p><strong>eps ($\epsilon$)</strong>：鄰域半徑。設太小會將大部分正常點判定為噪聲 (-1)；設太大會將本應獨立的多個群集融合成一個。</p>
+        <p><strong>eps ($\\epsilon$)</strong>：鄰域半徑。設太小會將大部分正常點判定為噪聲 (-1)；設太大會將本應獨立的多個群集融合成一個。</p>
         <p><strong>min_samples (MinPts)</strong>：核心點所需最少鄰居數。設太小容易把小雜訊當作獨立群集；設太大會使分群變得過於嚴苛，核心點減少。</p>
       `
     },
@@ -961,16 +977,16 @@ model.fc = nn.Linear(in_features, num_classes)</code></pre>
       subject: "科目三 · 計算題",
       front: "卷積層 (Convolutional Layer) 輸出尺寸計算公式",
       back: `
-        <div class="formula">$$W_{out} = \lfloor \frac{W_{in} - F + 2P}{S} \rfloor + 1$$</div>
-        <p>其中 $W_{in}$ 為輸入寬度，$F$ 為卷積核大小，$P$ 為 Padding，$S$ 為 Stride 步長，$\lfloor \cdot \rfloor$ 代表向下取整。</p>
+        <div class="formula">$$W_{out} = \\lfloor \\frac{W_{in} - F + 2P}{S} \\rfloor + 1$$</div>
+        <p>其中 $W_{in}$ 為輸入寬度，$F$ 為卷積核大小，$P$ 為 Padding，$S$ 為 Stride 步長，$\\lfloor \\cdot \\rfloor$ 代表向下取整。</p>
       `
     },
     {
       subject: "科目三 · 計算題",
       front: "卷積層參數量 (Parameters) 計算公式 (有 Bias)",
       back: `
-        <div class="formula">$$\text{Params} = (F \times F \times C_{in} + 1) \times C_{out}$$</div>
-        <p>其中 $F \times F$ 為卷積核大小，$C_{in}$ 為輸入通道數，$+1$ 代表偏置項 (Bias)，$C_{out}$ 為輸出通道數。</p>
+        <div class="formula">$$\\text{Params} = (F \\times F \\times C_{in} + 1) \\times C_{out}$$</div>
+        <p>其中 $F \\times F$ 為卷積核大小，$C_{in}$ 為輸入通道數，$+1$ 代表偏置項 (Bias)，$C_{out}$ 為輸出通道數。</p>
       `
     },
     {
@@ -1282,3 +1298,6 @@ model.fc = nn.Linear(in_features, num_classes)</code></pre>
     });
   }
 });
+
+
+  

@@ -1,0 +1,227 @@
+[
+  {
+    "id": "mock_238",
+    "num": 210,
+    "difficulty": 3,
+    "question": "AI 模型部署後若發現輸出與業務預期落差較大，建議首先檢查哪一項？",
+    "options": {
+      "A": "開發語言版本",
+      "B": "訓練集與實際輸入資料分布是否一致",
+      "C": "模型開源授權狀態",
+      "D": "檔案儲存格式"
+    },
+    "answer": "B",
+    "explanation": "部署輸入與訓練資料分布不一致會導致模型行為異常（資料漂移），是落地誤差主要\n來源。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_239",
+    "num": 211,
+    "difficulty": 4,
+    "question": "若需要讓 AI 模型具備「任務導向動態生成能力」，應選擇何種架構？",
+    "options": {
+      "A": "雙層感知回饋迴路",
+      "B": "強化學習 + LLM 多任務解譯器",
+      "C": "統計迴歸模型",
+      "D": "隨機森林集成架構"
+    },
+    "answer": "B",
+    "explanation": "結合強化學習與大型語言模型可使系統根據任務情境動態生成行動方案，具備自適\n應與多任務能力。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_240",
+    "num": 212,
+    "difficulty": 1,
+    "question": "在模型部署後若需調整參數或模型結構，應進行？",
+    "options": {
+      "A": "推論縮放",
+      "B": "微調（Fine-tuning）或再訓練（Retraining）",
+      "C": "特徵清洗",
+      "D": "模型打包"
+    },
+    "answer": "B",
+    "explanation": "微調或再訓練是模型部署後根據新資料或任務需求進行更新的重要策略。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_241",
+    "num": 213,
+    "difficulty": 1,
+    "question": "下列哪一技術可讓已訓練好的模型快速適應新任務？",
+    "options": {
+      "A": "隨機初始化",
+      "B": "遷移學習（Transfer Learning）",
+      "C": "模型截斷訓練",
+      "D": "卷積視窗縮放"
+    },
+    "answer": "B",
+    "explanation": "遷移學習能將已有模型的知識應用於新任務，節省訓練資源並提升學習效率。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_242",
+    "num": 214,
+    "difficulty": 2,
+    "question": "若使用者希望直接透過手機端啟動模型進行語音辨識，建議採用哪種部署形式？",
+    "options": {
+      "A": "雲端批次模型服務",
+      "B": "本地邊緣部署（on-device deployment）",
+      "C": "GPU 訓練伺服器",
+      "D": "FTP 文件回傳處理"
+    },
+    "answer": "B",
+    "explanation": "手機端語音辨識應考慮延遲與網路限制，建議部署於本地裝置實現即時回應。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_243",
+    "num": 215,
+    "difficulty": 3,
+    "question": "為保障 AI 模型部署後的安全性，下列哪一措施最為關鍵？",
+    "options": {
+      "A": "增加資料標註人力",
+      "B": "實施 API 權限與輸入驗證",
+      "C": "以 CSV 記錄推論結果",
+      "D": "只允許模型於白天運行"
+    },
+    "answer": "B",
+    "explanation": "模型若提供外部存取介面，需設定存取權限、驗證輸入資料，避免惡意請求與資安\n風險。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_244",
+    "num": 216,
+    "difficulty": 4,
+    "question": "在多語言應用系統中，若需讓模型自動切換回應語系，應整合何種模組？",
+    "options": {
+      "A": "圖形處理加速器",
+      "B": "語言辨識模組（Language Identification, LID）",
+      "C": "GPU 快取轉換器",
+      "D": "視訊流強化模組"
+    },
+    "answer": "B",
+    "explanation": "LID 模組可識別輸入語系，使系統動態選擇相應模型或語言輸出，是多語應用關鍵\n技術。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_245",
+    "num": 217,
+    "difficulty": 2,
+    "question": "模型部署後若欲監測其「實際產出品質」，以下哪項指標最適合？",
+    "options": {
+      "A": "訓練集損失函數下降率",
+      "B": "推論延遲",
+      "C": "使用者滿意度回饋與錯誤報告分析",
+      "D": "GPU 佔用率"
+    },
+    "answer": "C",
+    "explanation": "部署後的效果應與實際使用者互動相關，蒐集反饋與錯誤可作為品質優化依據。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_246",
+    "num": 218,
+    "difficulty": 5,
+    "question": "若同一模型需支援「圖像、語音、文字」多模態輸入，部署時最大挑戰為？",
+    "options": {
+      "A": "儲存空間不足",
+      "B": "多模態輸入格式解析與特徵同步處理",
+      "C": "訓練時間過短",
+      "D": "模型參數命名重複"
+    },
+    "answer": "B",
+    "explanation": "多模態模型需解析多種資料格式並對齊語意表示，對系統整合與效能要求極高。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_247",
+    "num": 219,
+    "difficulty": 1,
+    "question": "若使用者希望查詢部署中的模型版本與狀態，應提供什麼服務？",
+    "options": {
+      "A": "CLI 編輯權限",
+      "B": "模型註冊 API 或查詢端點",
+      "C": "模型開發筆記",
+      "D": "訓練環境虛擬機"
+    },
+    "answer": "B",
+    "explanation": "透過模型註冊平台或 API 提供版本資訊，可即時查詢模型是否更新與部署狀態。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_248",
+    "num": 220,
+    "difficulty": 3,
+    "question": "下列何者最適合用於減少部署模型時因「輸入資料雜訊」所造成的不穩定？",
+    "options": {
+      "A": "遷移學習",
+      "B": "輸入資料前處理與標準化機制",
+      "C": "模型結構加深",
+      "D": "資料集分群"
+    },
+    "answer": "B",
+    "explanation": "前處理能過濾雜訊與標準化輸入，有助於提升模型穩定與預測一致性。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_249",
+    "num": 221,
+    "difficulty": 4,
+    "question": "若要部署一個語言模型並兼顧「效能」與「延遲控制」，以下何者為可行策略？",
+    "options": {
+      "A": "全部運行於瀏覽器端",
+      "B": "利用模型剪枝 + 動態批次控制",
+      "C": "增加輸入字數限制",
+      "D": "改為雲端 GPU 硬編碼"
+    },
+    "answer": "B",
+    "explanation": "剪枝可降低計算量，動態調整批次大小則可依即時負載調整延遲，兩者搭配利於效\n能優化。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_250",
+    "num": 222,
+    "difficulty": 2,
+    "question": "當模型更新後需「無中斷」替換舊版服務，建議使用哪種策略？",
+    "options": {
+      "A": "雙活部署（Blue-Green Deployment）",
+      "B": "YAML 配置切換",
+      "C": "CLI 快速覆蓋",
+      "D": "硬體層快速重啟"
+    },
+    "answer": "A",
+    "explanation": "Blue-Green 部署在不中斷服務的情況下切換新版本，並保留快速回滾能力，是穩\n定升級常見做法。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_251",
+    "num": 223,
+    "difficulty": 1,
+    "question": "資料前處理流程中，最常見的第一步驟通常是？",
+    "options": {
+      "A": "特徵交互項建立",
+      "B": "模型訓練",
+      "C": "讀取資料並檢查缺失值與欄位型別",
+      "D": "資料視覺化"
+    },
+    "answer": "C",
+    "explanation": "良好的資料前處理從資料檢查開始，包括欄位型態辨識與缺失值統計，以確保後續\n處理正確。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_252",
+    "num": 224,
+    "difficulty": 2,
+    "question": "處理缺失值最保守且不易引入偏差的方法是？",
+    "options": {
+      "A": "全部填入 0",
+      "B": "以眾數補值",
+      "C": "刪除包含缺失的資料列",
+      "D": "使用多重插補（Multiple Imputation）"
+    },
+    "answer": "D",
+    "explanation": "多重插補透過迴歸、機率模型模擬缺失資料多種可能情境，是學術與實務界常用的\n進階補值方法。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  }
+]

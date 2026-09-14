@@ -1,0 +1,227 @@
+[
+  {
+    "id": "mock_150",
+    "num": 135,
+    "difficulty": 4,
+    "question": "哪一項架構支持將自然語言輸入用於控制機器人視覺與行動？",
+    "options": {
+      "A": "YOLO + FastText",
+      "B": "GPT-2 + XGBoost",
+      "C": "VIMA（Vision-Language Planning）",
+      "D": "T5 + CNN-LSTM"
+    },
+    "answer": "C",
+    "explanation": "VIMA 是多模態控制框架，允許自然語言輸入驅動機器人感知與規劃動作，是視覺\n語言互動應用的前沿設計。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_151",
+    "num": 136,
+    "difficulty": 1,
+    "question": "在 AI 導入流程中，第一步通常應該是？",
+    "options": {
+      "A": "選擇開發框架",
+      "B": "部署模型至雲端",
+      "C": "釐清問題與業務需求",
+      "D": "建立監控儀表板"
+    },
+    "answer": "C",
+    "explanation": "AI 導入須以業務需求為出發點，先定義問題與目標，才能規劃後續技術與資料。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_152",
+    "num": 137,
+    "difficulty": 2,
+    "question": "AI 解決方案若需快速驗證概念與流程，通常應先建構何種系統？",
+    "options": {
+      "A": "雲端資料倉儲",
+      "B": "原型系統（Prototype / PoC）",
+      "C": "運維監控平台",
+      "D": "智慧合約平台"
+    },
+    "answer": "B",
+    "explanation": "AI 導入初期多以原型系統（PoC）檢視效能與需求落差，再決定是否推向正式產\n品。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_154",
+    "num": 138,
+    "difficulty": 4,
+    "question": "若資料為不定期、不完整，需即時應變，建議使用下列哪種技術方案？",
+    "options": {
+      "A": "批次學習模型",
+      "B": "強化式學習架構",
+      "C": "即時資料流架構 + 在線學習（Online Learning）",
+      "D": "離線 K-means 模型"
+    },
+    "answer": "C",
+    "explanation": "即時應變場景須搭配 Streaming 資料處理與支持動態更新的在線學習演算法。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_155",
+    "num": 139,
+    "difficulty": 1,
+    "question": "下列何者為 No Code 平台的主要特色？",
+    "options": {
+      "A": "須以 Python 完成訓練流程",
+      "B": "提供拖拉式介面、降低技術門檻",
+      "C": "僅可用於模型壓縮任務",
+      "D": "需自建 GPU 環境方能執行"
+    },
+    "answer": "B",
+    "explanation": "No Code 平台以視覺化介面降低開發門檻，讓非程式背景者也能參與 AI 導入流\n程。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_156",
+    "num": 140,
+    "difficulty": 2,
+    "question": "使用 AutoML 工具於 AI 導入流程中，主要能帶來何種效益？",
+    "options": {
+      "A": "人工資料清理效率提升",
+      "B": "自動優化特徵工程與模型選型",
+      "C": "增加伺服器耗能",
+      "D": "強化資安認證效力"
+    },
+    "answer": "B",
+    "explanation": "AutoML 可自動完成資料前處理、模型挑選、超參數調整，對導入初期尤其具效\n益。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_158",
+    "num": 141,
+    "difficulty": 4,
+    "question": "導入 AI 解決方案後需進行的「回饋與調整」階段，主要目的為？",
+    "options": {
+      "A": "擴充模型架構",
+      "B": "改變開發語言",
+      "C": "蒐集使用成效並優化系統",
+      "D": "更換硬體架構"
+    },
+    "answer": "C",
+    "explanation": "導入 AI 為持續循環流程，須透過回饋監控模型表現、進行微調與再訓練。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_159",
+    "num": 142,
+    "difficulty": 5,
+    "question": "AI 專案評估中使用「AI Canvas」框架時，需針對哪一層面進行綜合盤點？",
+    "options": {
+      "A": "資安風險管理",
+      "B": "模型壓縮與部署成本",
+      "C": "使用者、決策者、資料流程與倫理風險",
+      "D": "GPU 計算效能"
+    },
+    "answer": "C",
+    "explanation": "AI Canvas 涵蓋業務對象、資料來源、演算法、決策流程與倫理風險，是全方位評\n估工具。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_160",
+    "num": 143,
+    "difficulty": 2,
+    "question": "下列哪一項屬於 AI 專案早期可能忽略但風險極高的項目？",
+    "options": {
+      "A": "程式語言選擇",
+      "B": "雲端服務費率",
+      "C": "模型偏誤與不公平性",
+      "D": "視覺化報表配色"
+    },
+    "answer": "C",
+    "explanation": "若未評估資料偏誤與模型偏見，可能造成不公平決策甚至觸法，是 AI 評估與治理\n重點。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_162",
+    "num": 144,
+    "difficulty": 2,
+    "question": "企業若想進行 AI 化轉型，以下哪一項是需優先建立的條件？",
+    "options": {
+      "A": "雲端 GPU 叢集",
+      "B": "資料整合與管理能力",
+      "C": "自建演算法開發平台",
+      "D": "卷積神經網路基礎架構"
+    },
+    "answer": "B",
+    "explanation": "資料是 AI 導入的基礎，若無統一管理與整合流程，將無法穩定供應模型訓練與運\n作需求。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_163",
+    "num": 145,
+    "difficulty": 3,
+    "question": "AI 系統若導入後成效不佳，最常見的原因之一是？",
+    "options": {
+      "A": "模型參數設定過多",
+      "B": "缺乏商業流程整合與使用者導入",
+      "C": "使用開源框架所致",
+      "D": "沒有購買高階硬體"
+    },
+    "answer": "B",
+    "explanation": "AI 成敗常不在技術，而在是否與實際業務流程緊密整合並獲得用戶採納與使用。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_164",
+    "num": 146,
+    "difficulty": 4,
+    "question": "在評估 AI 導入之投資報酬率（ROI）時，應納入哪些指標？",
+    "options": {
+      "A": "模型精度與記憶體使用率",
+      "B": "模型訓練時間與參數量",
+      "C": "導入前後作業時間成本與效能改善幅度",
+      "D": "模型開源協議類型"
+    },
+    "answer": "C",
+    "explanation": "評估 ROI 應以效能提升與人力／成本節省為核心指標，並反映財務效益與業務價\n值。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_166",
+    "num": 147,
+    "difficulty": 4,
+    "question": "若一組訓練資料存在明顯的類別偏斜（class imbalance），可能造成什麼影響？",
+    "options": {
+      "A": "模型效能全面提升",
+      "B": "過度依賴 GPU 計算資源",
+      "C": "預測結果傾向多數類別，導致不公平",
+      "D": "資料量太大造成無法訓練"
+    },
+    "answer": "C",
+    "explanation": "類別不均資料會導致模型忽略少數類別的樣本，造成偏見或嚴重誤判，需透過重取\n樣或加權策略處理。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_167",
+    "num": 148,
+    "difficulty": 1,
+    "question": "No Code AI 平台對於中小企業的導入優勢在於？",
+    "options": {
+      "A": "需聘請資深機器學習工程師",
+      "B": "可快速建立模型並降低開發成本",
+      "C": "必須自建私有雲平台",
+      "D": "僅支援監督式學習模型"
+    },
+    "answer": "B",
+    "explanation": "No Code 平台讓使用者透過視覺化工具快速部署模型，降低人力與技術門檻，對\n中小企業尤具吸引力。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_168",
+    "num": 149,
+    "difficulty": 3,
+    "question": "資料評估中若出現「資料漂移（Data Drift）」現象，表示什麼問題？",
+    "options": {
+      "A": "模型無法使用 GPU 訓練",
+      "B": "資料處理流程出錯",
+      "C": "模型測試集與部署環境資料分佈不一致",
+      "D": "API 傳輸速度過慢"
+    },
+    "answer": "C",
+    "explanation": "資料漂移指的是訓練與部署期間資料分佈變化，可能使模型準確率下降，需持續監\n控並更新模型。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  }
+]

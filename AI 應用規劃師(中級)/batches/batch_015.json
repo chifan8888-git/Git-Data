@@ -1,0 +1,227 @@
+[
+  {
+    "id": "guide_subject2_u2_1",
+    "num": 81,
+    "difficulty": 3,
+    "question": "在大數據收集階段，若資料來源來自感測器與機台設備，最常見的資料特性 為？",
+    "options": {
+      "A": "批次性、靜態資料",
+      "B": "高頻率、串流型資料",
+      "C": "人工產生、低變動性資料",
+      "D": "固定欄位、標準化格式資料"
+    },
+    "answer": "B",
+    "explanation": "感測器與機台設備產出的資料具有即時性與高頻率更新特性，屬於典型 的串流資料來源。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u2_2",
+    "num": 82,
+    "difficulty": 3,
+    "question": "在進行資料清理時，下列哪一項操作主要用於處理欄位中存在空值的情況？",
+    "options": {
+      "A": "資料標準化",
+      "B": "特徵選擇",
+      "C": "遺漏值補全（Imputation）",
+      "D": "主成分分析"
+    },
+    "answer": "C",
+    "explanation": "Imputation 是處理缺失值的主要方法，可透過平均數、中位數或模型預 測進行補值。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u2_3",
+    "num": 83,
+    "difficulty": 3,
+    "question": "哪一種資料儲存系統較適合處理半結構化資料，如JSON 或XML？",
+    "options": {
+      "A": "關聯式資料庫（RDBMS）",
+      "B": "鍵值資料庫",
+      "C": "文件型NoSQL 資料庫",
+      "D": "圖形資料庫"
+    },
+    "answer": "C",
+    "explanation": "文件型資料庫如MongoDB 可有效儲存結構不固定的JSON/XML，常用 於半結構化資料管理。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u2_4",
+    "num": 84,
+    "difficulty": 3,
+    "question": "下列何者為分散式資料儲存架構中的一項核心特徵？",
+    "options": {
+      "A": "集中式備份",
+      "B": "單點故障容忍度高",
+      "C": "跨節點資料切分與冗餘備援",
+      "D": "僅支援結構化資料格式"
+    },
+    "answer": "C",
+    "explanation": "分散式系統可將資料分片儲存並建立冗餘副本，提高可用性與容錯能力。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u2_5",
+    "num": 85,
+    "difficulty": 3,
+    "question": "若企業希望即時監控交易異常，應選擇下列哪一類數據處理架構？",
+    "options": {
+      "A": "批次式資料倉儲",
+      "B": "離線式資料湖",
+      "C": "串流處理系統",
+      "D": "冷資料備援架構 4-31"
+    },
+    "answer": "C",
+    "explanation": "串流處理（如Apache Kafka、Spark Streaming）可即時處理與分析進入 系統的資料，適用於異常偵測與即時應用。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u2_6",
+    "num": 86,
+    "difficulty": 3,
+    "question": "在進行特徵工程時，特徵衍生（Feature Derivation）的主要目的是什麼？",
+    "options": {
+      "A": "增加模型的自由度以擬合更多資料",
+      "B": "精簡資料以減少儲存成本",
+      "C": "建立對預測任務更具意義或可解釋性的變數",
+      "D": "移除不連續的類別型欄位"
+    },
+    "answer": "C",
+    "explanation": "特徵衍生旨在透過現有資料邏輯建立新特徵，如時間差、組合變數，提 升模型可預測性與可解釋性。（A）增加模型自由度可能導致過擬合，並非特徵 衍生的核心目的。（B）資料壓縮與儲存效率屬資料處理領域，與特徵衍生無關。 （D）移除不連續的類別型欄位屬於特徵選擇或清理行為，並非特徵衍生，其\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u2_7",
+    "num": 87,
+    "difficulty": 3,
+    "question": "在大數據清理流程中，對文字資料進行大小寫統一、移除特殊符號與空白等動 作，最適合歸類為哪一種前處理操作？",
+    "options": {
+      "A": "資料轉換",
+      "B": "資料驗證",
+      "C": "資料正規化（Normalization）",
+      "D": "資料標註"
+    },
+    "answer": "A",
+    "explanation": "此類操作目的在於將文字欄位轉換為一致格式，利於分析，屬於典型的 轉換處理，不涉及數值縮放或資料結構規劃。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u2_8",
+    "num": 88,
+    "difficulty": 3,
+    "question": "在處理由IoT 裝置產生的大規模即時資料時，系統架構應優先考量下列哪一項 需求？",
+    "options": {
+      "A": "高解析圖像處理能力",
+      "B": "即時串流處理與低延遲反應能力",
+      "C": "複雜圖形關係查詢能力",
+      "D": "靜態資料的批次整合能力"
+    },
+    "answer": "B",
+    "explanation": "IoT 裝置資料具有高頻、連續與即時性等特徵，需使用能支援實時資料\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u2_9",
+    "num": 89,
+    "difficulty": 3,
+    "question": "在大數據架構中，資料湖（Data Lake）與傳統資料倉儲最大的差異為何？",
+    "options": {
+      "A": "資料湖僅支援結構化資料",
+      "B": "資料湖支援多樣資料型態且不需預先定義結構",
+      "C": "資料倉儲無法查詢資料",
+      "D": "資料湖適用於即時交易分析"
+    },
+    "answer": "B",
+    "explanation": "資料湖可儲存原始格式的結構化、半結構化與非結構化資料，支援彈性 探索與延後建模。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u2_10",
+    "num": 90,
+    "difficulty": 3,
+    "question": "資料驗證（Data Validation）的主要目的為何？",
+    "options": {
+      "A": "將資料轉為結構化表格",
+      "B": "過濾掉資料中所有離群值",
+      "C": "檢查資料格式與邏輯是否正確",
+      "D": "壓縮資料以節省儲存空間"
+    },
+    "answer": "C",
+    "explanation": "資料驗證確保資料符合預期格式與邏輯規則，是資料品質管理的重要步 驟。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u3_1",
+    "num": 91,
+    "difficulty": 3,
+    "question": "在大數據的描述性分析中，最常用來呈現類別變數分佈的圖形是？",
+    "options": {
+      "A": "折線圖",
+      "B": "箱型圖",
+      "C": "長條圖",
+      "D": "散佈圖"
+    },
+    "answer": "C",
+    "explanation": "長條圖（BarChart）可清楚顯示類別型變數的數量分佈，是描述性分析 中的基礎視覺工具。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u3_2",
+    "num": 92,
+    "difficulty": 3,
+    "question": "若要分析網站每日訪客數量的趨勢變化，最適合使用下列哪一種視覺化工具？",
+    "options": {
+      "A": "熱力圖",
+      "B": "折線圖",
+      "C": "圓餅圖",
+      "D": "直方圖"
+    },
+    "answer": "B",
+    "explanation": "折線圖適合表現隨時間變動的連續數據，如日、週、月的趨勢觀察。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u3_3",
+    "num": 93,
+    "difficulty": 3,
+    "question": "在大數據中進行關聯分析時，最常用來量化兩變數線性關係的指標為何？",
+    "options": {
+      "A": "變異數",
+      "B": "t 值",
+      "C": "相關係數",
+      "D": "z 分數"
+    },
+    "answer": "C",
+    "explanation": "相關係數（如Pearsonr）用於衡量兩變數間的線性關聯程度，常見於探 索性分析。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u3_4",
+    "num": 94,
+    "difficulty": 3,
+    "question": "為了分析社群網路使用者之間的互動結構，應使用下列哪種分析方法？",
+    "options": {
+      "A": "文字探勘",
+      "B": "主成分分析",
+      "C": "圖論分析",
+      "D": "分群分析"
+    },
+    "answer": "C",
+    "explanation": "圖論分析可用於建構節點與邊的關係網路，適用於社群關係、推薦系統 等情境。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u3_5",
+    "num": 95,
+    "difficulty": 3,
+    "question": "在文字分析中，使用TF-IDF 技術的主要目的是？",
+    "options": {
+      "A": "去除標點符號",
+      "B": "將詞彙轉換為向量",
+      "C": "辨識常出現的關鍵詞並排除常見詞",
+      "D": "標示詞性與語法角色 5-48"
+    },
+    "answer": "C",
+    "explanation": "TF-IDF（詞頻-逆文檔頻率）可強化具有辨識性的詞彙，抑制文檔中普 遍存在但不具代表性的詞語。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  }
+]

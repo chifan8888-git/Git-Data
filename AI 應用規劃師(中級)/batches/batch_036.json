@@ -1,0 +1,227 @@
+[
+  {
+    "id": "mock_169",
+    "num": 150,
+    "difficulty": 5,
+    "question": "下列哪一項是評估 AI 解決方案是否應導入的「必要但非充分條件」？",
+    "options": {
+      "A": "技術人員已準備好",
+      "B": "有預算可使用",
+      "C": "資料問題有明確且具可行性之解決方案",
+      "D": "已購買 AI 平台服務"
+    },
+    "answer": "C",
+    "explanation": "若資料品質不佳且無法補救，無論預算與人力多完整，AI 專案仍將失敗；資料可處\n理性是啟動條件之一。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_170",
+    "num": 151,
+    "difficulty": 2,
+    "question": "下列哪一項最能有效辨識 AI 導入後對使用者產生的實質影響？",
+    "options": {
+      "A": "計算模型浮點運算量",
+      "B": "使用者操作流程時間變化與滿意度回饋",
+      "C": "GPU 運行溫度",
+      "D": "模型調參次數"
+    },
+    "answer": "B",
+    "explanation": "AI 項目成功需從實務流程改善、使用者回饋與體驗角度評估，才能體現真正價值。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_171",
+    "num": 152,
+    "difficulty": 1,
+    "question": "導入 AI 解決方案的主要技術選型依據為？",
+    "options": {
+      "A": "最新發布版本",
+      "B": "程式語言是否為 Python",
+      "C": "是否符合業務需求與資料條件",
+      "D": "使用者是否偏好某開發平台"
+    },
+    "answer": "C",
+    "explanation": "選擇適當技術需根據問題類型、資料性質與業務目標，避免僅因熱門技術而錯誤選\n型。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_172",
+    "num": 153,
+    "difficulty": 2,
+    "question": "AI 導入流程中，若公司尚未具備標註資料，適合採用哪種策略？",
+    "options": {
+      "A": "部署大型監督式模型",
+      "B": "引進時間序列回歸",
+      "C": "考慮使用半監督學習或遷移學習技術",
+      "D": "將資料轉為 JSON 格式"
+    },
+    "answer": "C",
+    "explanation": "當標註資料不足時，可採半監督或遷移學習等低資料依賴策略以彌補資料缺口。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_173",
+    "num": 154,
+    "difficulty": 3,
+    "question": "在模型部署後持續追蹤其效能表現的過程稱為？",
+    "options": {
+      "A": "前處理分析",
+      "B": "AutoML 設計",
+      "C": "MLOps 中的監控階段（Monitoring）",
+      "D": "高速搜尋最佳化"
+    },
+    "answer": "C",
+    "explanation": "MLOps 架構中包含模型版本控管、部署、自動化與監控，用於保障模型在真實環\n境中穩定與準確。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_174",
+    "num": 155,
+    "difficulty": 4,
+    "question": "No Code / Low Code 平台在 AI 導入中之潛在限制為？",
+    "options": {
+      "A": "僅能用於線性回歸模型",
+      "B": "無法自定義訓練流程與演算法",
+      "C": "必須具備深度學習理論知識",
+      "D": "無法支援圖形化介面"
+    },
+    "answer": "B",
+    "explanation": "儘管 No Code / Low Code 工具可快速應用，但在高度客製或進階演算法需求上\n常受限。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_175",
+    "num": 156,
+    "difficulty": 5,
+    "question": "企業導入 AI 成果良好但無法擴散至其他部門的常見原因是？",
+    "options": {
+      "A": "模型效能不佳",
+      "B": "資料庫格式不相容",
+      "C": "缺乏流程標準化與橫向推廣策略",
+      "D": "使用開源框架不穩定"
+    },
+    "answer": "C",
+    "explanation": "AI 實作若僅限於單部門而無標準化流程、內部知識移轉與複製能力，難以擴散至全\n組織。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_176",
+    "num": 157,
+    "difficulty": 2,
+    "question": "在進行 AI 導入成本估算時，以下哪項經常被低估？",
+    "options": {
+      "A": "建置初期人員成本",
+      "B": "模型下載時間",
+      "C": "資料格式轉換成本",
+      "D": "維運成本與重訓資源消耗"
+    },
+    "answer": "D",
+    "explanation": "部署後的模型需持續維運與調整，包括監控、重訓、修補等，這些往往在預算編列\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_177",
+    "num": 158,
+    "difficulty": 3,
+    "question": "以下哪一項不屬於 AI 成熟度評估模型的構面？",
+    "options": {
+      "A": "組織策略與治理結構",
+      "B": "資料流動與整合能力",
+      "C": "計算資源電價評估",
+      "D": "AI 專案操作流程標準化"
+    },
+    "answer": "C",
+    "explanation": "成熟度模型關注組織制度、資料與技術能力、人員準備度等面向，不涵蓋設備電費\n等硬體營運細節。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_178",
+    "num": 159,
+    "difficulty": 1,
+    "question": "AI 導入的「敏捷原型流程」主要強調？",
+    "options": {
+      "A": "大量模型實驗",
+      "B": "分階段快速構建與迭代修正",
+      "C": "對單一架構持續精煉",
+      "D": "持久的離線資料蒐集"
+    },
+    "answer": "B",
+    "explanation": "敏捷導入流程強調 MVP 快速實作、測試、迭代更新，能降低失敗風險與縮短投產\n時間。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_179",
+    "num": 160,
+    "difficulty": 4,
+    "question": "企業導入 AI 後，若使用者未實際採用新系統，應優先針對何處改善？",
+    "options": {
+      "A": "GPU 資源升級",
+      "B": "模型參數再優化",
+      "C": "使用者體驗設計與介面可用性",
+      "D": "更換 API 串接方式"
+    },
+    "answer": "C",
+    "explanation": "AI 模型再強，若 UX/UI 介面不友善、操作複雜或無明顯成效，將難以獲得實際使\n用與支持。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_181",
+    "num": 161,
+    "difficulty": 1,
+    "question": "在 AI 導入專案中，哪個職能最常負責協助業務單位轉化需求為模型設計邏輯？",
+    "options": {
+      "A": "系統維運人員",
+      "B": "使用者介面設計師",
+      "C": "資料科學家或 AI 應用規劃師",
+      "D": "財務分析師"
+    },
+    "answer": "C",
+    "explanation": "資料科學家或 AI 應用規劃師是業務與技術之間的橋樑，能協助將業務問題轉化為\n模型可解決的形式。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_182",
+    "num": 162,
+    "difficulty": 2,
+    "question": "下列哪一種資料型態在 AI 項目中最常被歸類為「非結構化資料」？",
+    "options": {
+      "A": "CSV 格式報表",
+      "B": "使用者語音紀錄",
+      "C": "資產負債表",
+      "D": "API 記錄檔"
+    },
+    "answer": "B",
+    "explanation": "非結構化資料如語音、影像、自由文字等不具明確欄位結構，需進行額外前處理後\n方能建模。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_183",
+    "num": 163,
+    "difficulty": 3,
+    "question": "若一組 AI 模型每月需重新訓練以因應資料變動，建議採用哪一種 MLOps 策略？",
+    "options": {
+      "A": "離線開發再部署",
+      "B": "GPU 全訓練儲存",
+      "C": "自動化訓練與部署（CI/CD）工作流程",
+      "D": "單次訓練多次部署"
+    },
+    "answer": "C",
+    "explanation": "若模型須定期更新，應透過 CI/CD 自動流程提升效率，避免人工作業錯誤與延\n遲。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_185",
+    "num": 164,
+    "difficulty": 2,
+    "question": "下列哪一種評估方式最適合用於衡量導入 AI 後的作業效率改善？",
+    "options": {
+      "A": "GPU 使用率變化",
+      "B": "訓練輪次減少百分比",
+      "C": "處理時間與人力需求的下降幅度",
+      "D": "模型學習率超參數變動"
+    },
+    "answer": "C",
+    "explanation": "AI 是否提升業務效益，常透過處理時間縮短、人力節省等實質成效評估。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  }
+]

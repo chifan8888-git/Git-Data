@@ -1,0 +1,227 @@
+[
+  {
+    "id": "mock_389",
+    "num": 345,
+    "difficulty": 4,
+    "question": "若某 AI 模型被指控存在偏見，下列哪一項是首要的技術檢視項目？",
+    "options": {
+      "A": "是否有做資料壓縮",
+      "B": "預測延遲是否合規",
+      "C": "訓練資料來源與特徵分布是否不均",
+      "D": "模型檔案大小是否超過閾值"
+    },
+    "answer": "C",
+    "explanation": "偏見常源於資料階段，需首先檢視是否樣本分布、特徵設計本身已導致不公平結\n果。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_390",
+    "num": 346,
+    "difficulty": 1,
+    "question": "以下哪一指標常用於檢測不同群體間的預測正類比率差異？",
+    "options": {
+      "A": "Accuracy",
+      "B": "Equal Opportunity Gap",
+      "C": "Demographic Parity",
+      "D": "Mean Absolute Error"
+    },
+    "answer": "C",
+    "explanation": "Demographic Parity 測量不同群體預測為正類的機率是否一致，是公平性分析的\n基本指標之一。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_391",
+    "num": 347,
+    "difficulty": 1,
+    "question": "以下哪一措施可提升模型的可解釋性？",
+    "options": {
+      "A": "使用無監督學習",
+      "B": "採用決策樹或邏輯回歸模型",
+      "C": "改為全黑箱模型訓練",
+      "D": "增加訓練次數"
+    },
+    "answer": "B",
+    "explanation": "決策樹與邏輯回歸屬於具高度可解釋性的模型，其決策邏輯清晰、可追蹤。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_392",
+    "num": 348,
+    "difficulty": 2,
+    "question": "下列哪一項符合 GDPR 的「資料可攜性」原則？",
+    "options": {
+      "A": "個人可下載自己的資料並轉移到其他平台",
+      "B": "資料僅可透過法院請求查看",
+      "C": "使用者需支付 API 存取費用",
+      "D": "僅可匯出圖片格式資料"
+    },
+    "answer": "A",
+    "explanation": "資料可攜性（Data Portability）讓個人可存取並將自己的資料轉移給其他資料控制\n者。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_393",
+    "num": 349,
+    "difficulty": 3,
+    "question": "哪一項技術可降低模型在接收到具偏見特徵值時產生不公平預測的風險？",
+    "options": {
+      "A": "降維處理",
+      "B": "加入公平性調整損失函數（Fairness-Aware Loss）",
+      "C": "強化 GPU 資源",
+      "D": "增加測試資料比重"
+    },
+    "answer": "B",
+    "explanation": "調整損失函數以納入公平性約束是一種內嵌式減偏方法，有助於改善模型訓練階段\n的公平性。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_394",
+    "num": 350,
+    "difficulty": 4,
+    "question": "以下何者最能支持 AI 合規性原則中的「可監督性」？",
+    "options": {
+      "A": "僅使用開源模型",
+      "B": "訓練時不設驗證集",
+      "C": "建立模型審核與監控制度",
+      "D": "將模型部署至海外伺服器"
+    },
+    "answer": "C",
+    "explanation": "AI 可監督性要求建立持續監控與審查機制，確保模型在部署與使用階段持續遵守法\n規與倫理。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_395",
+    "num": 351,
+    "difficulty": 2,
+    "question": "特徵選擇時若移除與敏感群體高度相關的變數，其主要目的為何？",
+    "options": {
+      "A": "降低資料清理成本",
+      "B": "提高 recall",
+      "C": "降低模型預測結果中的偏見風險",
+      "D": "增強正規化效果"
+    },
+    "answer": "C",
+    "explanation": "某些變數（如性別、種族）與敏感群體直接相關，可能引入偏見，移除可降低不公\n平預測風險。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_396",
+    "num": 352,
+    "difficulty": 3,
+    "question": "「反事實解釋（Counterfactual Explanation）」的核心概念是？",
+    "options": {
+      "A": "預測未發生事件的可能性",
+      "B": "建構完全隨機的樣本",
+      "C": "說明若輸入資料略為改變，預測結果將如何變化",
+      "D": "模型準確率不變時，如何壓縮模型"
+    },
+    "answer": "C",
+    "explanation": "反事實解釋指出若輸入變數做出特定變動，預測將如何改變，有助於使用者理解模\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_397",
+    "num": 353,
+    "difficulty": 5,
+    "question": "下列哪一種偏見可能在特徵工程階段就已被引入？",
+    "options": {
+      "A": "取樣偏見",
+      "B": "參數優化偏見",
+      "C": "表示偏見（Representation Bias）",
+      "D": "預測門檻設定偏見"
+    },
+    "answer": "C",
+    "explanation": "若特徵表示不完整或忽略特定群體資訊，會在建模前就導致模型對某群體理解不\n足。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_398",
+    "num": 354,
+    "difficulty": 2,
+    "question": "以下哪一項制度設計有助於 AI 產品的倫理治理與政策透明？",
+    "options": {
+      "A": "部署權限由模型自動管理",
+      "B": "建立 AI 技術倫理委員會",
+      "C": "所有模型不得經第三方驗證",
+      "D": "僅保留技術研發文檔"
+    },
+    "answer": "B",
+    "explanation": "設置跨部門的 AI 倫理委員會有助於從多元觀點檢視風險與道德議題，是良善治理\n實踐。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_399",
+    "num": 355,
+    "difficulty": 3,
+    "question": "資料使用時若超出原始收集目的但無通知使用者，違反了哪一原則？",
+    "options": {
+      "A": "可擴展性原則",
+      "B": "目的限制原則（Purpose Limitation）",
+      "C": "資料最大化原則",
+      "D": "隨機分派原則"
+    },
+    "answer": "B",
+    "explanation": "資料應僅限於原始收集目的使用，若變更用途應再次徵求同意，否則違反資料保護\n原則。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_401",
+    "num": 356,
+    "difficulty": 1,
+    "question": "AI 專案中「PoC（Proof of Concept）」階段的主要目的為？",
+    "options": {
+      "A": "大規模部署",
+      "B": "建立完整資料平台",
+      "C": "驗證技術與問題定義之間的可行性",
+      "D": "實施長期模型監控"
+    },
+    "answer": "C",
+    "explanation": "PoC 是早期測試階段，用於驗證所選模型或技術是否能解決業務問題，具體但小範\n圍實驗。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_402",
+    "num": 357,
+    "difficulty": 2,
+    "question": "在 AI 專案開發初期，最應優先完成哪一項？",
+    "options": {
+      "A": "模型超參數優化",
+      "B": "部署 Docker 容器",
+      "C": "明確定義業務問題與目標",
+      "D": "訓練深度神經網路"
+    },
+    "answer": "C",
+    "explanation": "若未清楚定義業務問題，後續資料建模與評估標準都可能偏離，導致專案無法交付\n實際價值。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_403",
+    "num": 358,
+    "difficulty": 3,
+    "question": "以下哪一項為成功導入 AI 專案的關鍵風險因素？",
+    "options": {
+      "A": "使用開源框架",
+      "B": "使用者需求未明確或缺乏跨部門協作",
+      "C": "模型參數未調整",
+      "D": "前端頁面尚未設計完成"
+    },
+    "answer": "B",
+    "explanation": "AI 專案失敗常見原因包括需求未對齊、溝通不足與業務與技術之間落差大。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_405",
+    "num": 359,
+    "difficulty": 2,
+    "question": "以下哪一策略有助於 AI 模型部署後的長期維運？",
+    "options": {
+      "A": "每週重新部署模型",
+      "B": "模型權重加密",
+      "C": "設計自動化監控與再訓練流程（MLOps）",
+      "D": "僅保存模型 ID"
+    },
+    "answer": "C",
+    "explanation": "MLOps 提供模型版本控管、自動部署、效能監控與再訓練流程，是長期維運關鍵\n技術。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  }
+]

@@ -1,0 +1,227 @@
+[
+  {
+    "id": "mock_31",
+    "num": 30,
+    "difficulty": 2,
+    "question": "以下哪種詞嵌入技術可將子詞（subword）資訊納入語意表示？",
+    "options": {
+      "A": "One-Hot",
+      "B": "GloVe",
+      "C": "FastText",
+      "D": "Bag of Words"
+    },
+    "answer": "C",
+    "explanation": "FastText 除了詞彙向量外，也考慮子詞資訊，有助於處理未登入詞與語形變化。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_32",
+    "num": 31,
+    "difficulty": 3,
+    "question": "下列哪一項是計算注意力權重（attention weights）所需的基本元素？",
+    "options": {
+      "A": "訓練集標籤",
+      "B": "梯度方向",
+      "C": "Query、Key、Value 向量",
+      "D": "損失函數"
+    },
+    "answer": "C",
+    "explanation": "Transformer 中的注意力機制使用 Query、Key、Value 三組向量計算注意力分數\n與加權輸出。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_33",
+    "num": 32,
+    "difficulty": 1,
+    "question": "哪一個詞彙與「命名實體辨識（NER）」任務最密切相關？",
+    "options": {
+      "A": "邊界框",
+      "B": "文字摘要",
+      "C": "實體類別標註",
+      "D": "語音轉文字"
+    },
+    "answer": "C",
+    "explanation": "NER 目的是找出文字中具代表性的實體（如人名、地名）並標註其類別，是 NLP\n的關鍵任務之一。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_34",
+    "num": 33,
+    "difficulty": 4,
+    "question": "下列關於 Text-to-Image 生成模型（如 DALL·E）的描述何者正確？",
+    "options": {
+      "A": "輸入為影像，輸出為文字摘要",
+      "B": "是一種純卷積網路",
+      "C": "輸入描述性文字，輸出對應圖像",
+      "D": "僅能用於圖像分類任務"
+    },
+    "answer": "C",
+    "explanation": "Text-to-Image 模型以自然語言描述為輸入，產生語意一致的圖像，是生成式多模\n態任務之一。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_35",
+    "num": 34,
+    "difficulty": 3,
+    "question": "哪一個深度學習架構最適合用於序列到序列（Seq2Seq）語言翻譯任務？",
+    "options": {
+      "A": "CNN + Pooling",
+      "B": "RNN + Attention",
+      "C": "GAN + ResNet",
+      "D": "VGG + Fully Connected Layer"
+    },
+    "answer": "B",
+    "explanation": "Seq2Seq 任務如翻譯通常由 Encoder-Decoder 架構實現，RNN 搭配 Attention\n可有效處理長序列依賴。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_36",
+    "num": 35,
+    "difficulty": 1,
+    "question": "下列哪一個模型不是基於 Transformer 架構？",
+    "options": {
+      "A": "BERT",
+      "B": "GPT",
+      "C": "YOLO",
+      "D": "T5"
+    },
+    "answer": "C",
+    "explanation": "YOLO 屬於電腦視覺領域，為物件偵測架構，並非基於 Transformer 設計。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_37",
+    "num": 36,
+    "difficulty": 5,
+    "question": "CLIP 模型主要應用於何種任務？",
+    "options": {
+      "A": "對比式學習結合圖像與文字進行對齊",
+      "B": "翻譯句子成多國語言",
+      "C": "預測時間序列金融資料",
+      "D": "檢測圖片中的異常像素"
+    },
+    "answer": "A",
+    "explanation": "CLIP 將圖像與文字對映到同一語意空間中，透過對比學習實現圖文檢索與分類等任\n務。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_38",
+    "num": 37,
+    "difficulty": 2,
+    "question": "下列哪一技術有助於提升小樣本圖像分類任務的效能？",
+    "options": {
+      "A": "強化學習",
+      "B": "Transfer Learning（遷移學習）",
+      "C": "自注意力機制",
+      "D": "多重回歸分析"
+    },
+    "answer": "B",
+    "explanation": "遷移學習可利用大型資料集預訓練的知識，轉移到小樣本任務中，減少資料需求。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_39",
+    "num": 38,
+    "difficulty": 3,
+    "question": "RAG（Retrieval-Augmented Generation）架構整合哪兩項核心技術？",
+    "options": {
+      "A": "卷積與編碼器",
+      "B": "生成模型與資訊擷取",
+      "C": "篩選器與判別器",
+      "D": "區塊鏈與圖神經網路"
+    },
+    "answer": "B",
+    "explanation": "RAG 模型結合檢索與生成架構，先檢索相關知識文本，再進行回答生成，提升回應\n準確性。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_40",
+    "num": 39,
+    "difficulty": 4,
+    "question": "什麼是 Vision-Language Pretraining（VLP）的主要目標？",
+    "options": {
+      "A": "讓語音能夠驅動圖像生成",
+      "B": "以多模態資料共同訓練模型理解圖文關聯",
+      "C": "分離圖像與文字的學習管道",
+      "D": "減少訓練時間的蒸餾技術"
+    },
+    "answer": "B",
+    "explanation": "VLP 是多模態預訓練方法，使模型具備同時理解圖像與語言的能力，支援 VQA、\n圖文檢索等應用。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_41",
+    "num": 40,
+    "difficulty": 1,
+    "question": "哪一種常見的 NLP 前處理技術用於消除相似詞的字形差異？",
+    "options": {
+      "A": "Tokenization",
+      "B": "Lemmatization",
+      "C": "Padding",
+      "D": "Sampling"
+    },
+    "answer": "B",
+    "explanation": "Lemmatization 將不同型態的詞還原為詞根，有助於降低詞彙維度並保留語意。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_42",
+    "num": 41,
+    "difficulty": 3,
+    "question": "哪一種電腦視覺任務的輸出是每個像素的分類標籤？",
+    "options": {
+      "A": "影像分類",
+      "B": "物件偵測",
+      "C": "語意分割（Semantic Segmentation）",
+      "D": "關鍵點偵測"
+    },
+    "answer": "C",
+    "explanation": "語意分割將圖像中每個像素分配至對應的語意類別，如人、車、道路等。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_43",
+    "num": 42,
+    "difficulty": 4,
+    "question": "Text-to-Image 模型訓練時常用哪種方法提升語意一致性？",
+    "options": {
+      "A": "Autoencoder 壓縮圖像",
+      "B": "將語音標註轉為文字",
+      "C": "對比學習（Contrastive Learning）對齊圖文",
+      "D": "K-means 分群文字"
+    },
+    "answer": "C",
+    "explanation": "對比學習能將配對圖文拉近向量距離、非配對拉遠，有助模型學習語意對齊關係。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_44",
+    "num": 43,
+    "difficulty": 2,
+    "question": "哪一個機制在 Transformer 中實現不同詞與上下文的交互關係？",
+    "options": {
+      "A": "Convolution",
+      "B": "Recurrent Loop",
+      "C": "Self-Attention",
+      "D": "Max Pooling"
+    },
+    "answer": "C",
+    "explanation": "Self-Attention 是 Transformer 核心，可計算每個詞對序列中其他詞的重要性，\n捕捉語意。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_45",
+    "num": 44,
+    "difficulty": 5,
+    "question": "以下哪個多模態 AI 架構使用「視覺問答（VQA）」任務作為訓練目標？",
+    "options": {
+      "A": "StyleGAN",
+      "B": "Whisper",
+      "C": "Flamingo",
+      "D": "VGG"
+    },
+    "answer": "C",
+    "explanation": "DeepMind 的 Flamingo 是能進行視覺問答的多模態模型，整合圖像與文字處理\n能力。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  }
+]

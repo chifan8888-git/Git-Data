@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude 工作使用狀態報告</title>
+<style>
+  :root{
+    --ink:#1a2230;--sub:#5b6776;--faint:#8a96a5;--line:#e2e7ee;--bg:#f4f6f9;--paper:#ffffff;
+    --a:#2563eb;--a-bg:#eaf1ff;--b:#15803d;--b-bg:#e8f6ee;--c:#7c3aed;--c-bg:#f1ebfd;
+    --d:#c2410c;--d-bg:#fdeee4;--warn:#b45309;--warn-bg:#fdf4e3;--code:#0f172a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI","Microsoft JhengHei",sans-serif;line-height:1.6;font-size:14px;padding:24px 12px}
+  .page{background:var(--paper);max-width:900px;margin:0 auto 26px;padding:40px 46px;border-radius:10px;box-shadow:0 2px 20px #0f172a14;position:relative}
+  .pgnum{position:absolute;top:18px;right:24px;font-size:11px;color:var(--faint);letter-spacing:.5px}
+
+  h1{font-size:27px;letter-spacing:.5px;line-height:1.25}
+  h2{font-size:20px;margin:6px 0 14px;padding-bottom:9px;border-bottom:2px solid var(--ink);display:flex;align-items:center;gap:10px}
+  h2 .ch{background:var(--ink);color:#fff;width:30px;height:30px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;flex:0 0 auto}
+  h3{font-size:15px;margin:18px 0 7px;color:var(--ink);display:flex;align-items:center;gap:7px}
+  h3::before{content:"";width:4px;height:15px;border-radius:2px;background:var(--a)}
+  p{margin:7px 0;color:var(--sub)}
+  b,strong{color:var(--ink)}
+  code{font-family:ui-monospace,Consolas,monospace;font-size:12px;background:#eef1f5;color:var(--code);padding:1px 6px;border-radius:5px}
+
+  /* cover */
+  .cover{text-align:center;padding:34px 0 20px;border-bottom:1px dashed var(--line);margin-bottom:24px}
+  .cover .sub{color:var(--sub);font-size:14px;margin-top:10px}
+  .meta{display:inline-flex;gap:0;margin-top:22px;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+  .meta div{padding:10px 18px;font-size:12px;color:var(--sub);border-right:1px solid var(--line)}
+  .meta div:last-child{border-right:none}
+  .meta div b{display:block;color:var(--ink);font-size:14px;margin-top:2px}
+
+  /* TOC */
+  .toc{margin:6px 0 8px}
+  .toc a{display:flex;align-items:baseline;text-decoration:none;color:var(--ink);padding:9px 12px;border:1px solid var(--line);border-radius:9px;margin-bottom:8px;transition:.15s}
+  .toc a:hover{background:var(--a-bg);border-color:var(--a)}
+  .toc .n{font-family:ui-monospace,monospace;color:var(--a);font-weight:700;width:34px;flex:0 0 auto}
+  .toc .t{font-weight:600;font-size:14.5px}
+  .toc .d{color:var(--faint);font-size:12px;margin-left:auto;padding-left:14px}
+
+  table{width:100%;border-collapse:collapse;font-size:12.5px;margin:8px 0}
+  th,td{text-align:left;padding:8px 10px;border:1px solid var(--line);vertical-align:top}
+  th{background:#f0f3f7;color:var(--ink);font-weight:600;font-size:11.5px}
+  td code{font-size:11.5px}
+  .badge{display:inline-block;font-size:10.5px;font-weight:600;padding:1px 9px;border-radius:20px}
+  .ok{background:var(--b-bg);color:var(--b)}
+  .wip{background:var(--warn-bg);color:var(--warn)}
+
+  .card{border:1px solid var(--line);border-radius:9px;padding:13px 15px;margin:10px 0;background:#fbfcfe}
+  .card.a{border-left:4px solid var(--a)}.card.b{border-left:4px solid var(--b)}
+  .card.c{border-left:4px solid var(--c)}.card.d{border-left:4px solid var(--d)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+
+  pre{background:var(--code);color:#e6edf3;border-radius:8px;padding:11px 13px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:11.5px;line-height:1.55;margin:7px 0}
+  pre .cm{color:#7d8aa0}pre .kw{color:#ff9a8b}pre .nu{color:#9ecbff}pre .ad{color:#86e29a}
+  ul.tk{list-style:none;margin:6px 0}
+  ul.tk li{position:relative;padding:3px 0 3px 20px;font-size:12.5px;color:var(--sub)}
+  ul.tk li::before{content:"▸";position:absolute;left:2px;color:var(--a)}
+  ul.tk li b{color:var(--ink)}
+
+  .note{background:var(--warn-bg);border:1px solid #f0d9a8;border-radius:8px;padding:11px 14px;margin:12px 0;font-size:12.5px}
+  .note b{color:var(--warn)}
+  .src{font-size:11px;color:var(--faint);margin-top:6px;font-family:ui-monospace,monospace}
+  .lead-quote{background:var(--a-bg);border-left:4px solid var(--a);padding:11px 15px;border-radius:0 8px 8px 0;margin:10px 0;font-size:13.5px;color:var(--ink)}
+
+  @media print{
+    body{background:#fff;padding:0;font-size:12px}
+    .page{box-shadow:none;margin:0;border-radius:0;max-width:none;page-break-after:always;padding:24mm 18mm}
+    .page:last-child{page-break-after:auto}
+    .toc a:hover{background:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ PAGE 1 : 封面 + 索引 + 總覽 ============ -->
+<section class="page">
+  <div class="pgnum">第 1 / 3 頁</div>
+
+  <div class="cover">
+    <h1>Claude 工作使用狀態報告</h1>
+    <div class="sub">四項產品技術 / 工程分析主題之彙整</div>
+    <div class="meta">
+      <div>報告日期<b>2026-06-22</b></div>
+      <div>負責人<b>mark.huang</b></div>
+      <div>工作項目<b>4 項</b></div>
+      <div>工具<b>Claude (Cowork / Sonnet 4.6)</b></div>
+    </div>
+  </div>
+
+  <h2><span class="ch">目</span>索引 Table of Contents</h2>
+  <div class="toc">
+    <a href="#s1"><span class="n">1</span><span class="t">光電開關稜鏡探頭 — 遮光干擾分析與圖示製作</span><span class="d">第 2 頁</span></a>
+    <a href="#s2"><span class="n">2</span><span class="t">Apple AirTag — Find My 技術原理解析</span><span class="d">第 2 頁</span></a>
+    <a href="#s3"><span class="n">3</span><span class="t">APQP 產品開發流程 — Excel 流程圖表建立</span><span class="d">第 3 頁</span></a>
+    <a href="#s4"><span class="n">4</span><span class="t">粉粒體流量標準測場 — 建置規劃 PPTX 簡報</span><span class="d">第 3 頁</span></a>
+  </div>
+
+  <h2><span class="ch">總</span>工作總覽</h2>
+  <table>
+    <tr><th style="width:32px">#</th><th>工作項目</th><th>領域 / 類型</th><th>本次產出</th><th style="width:72px">狀態</th></tr>
+    <tr>
+      <td>1</td><td><b>光電開關</b>稜鏡探頭遮光干擾</td>
+      <td>光學 / 感測器設計</td>
+      <td>6 種內建遮光方案比較、IR 能量調整利弊分析、光路折射情境 SVG 圖示</td>
+      <td><span class="badge ok">已完成</span></td>
+    </tr>
+    <tr>
+      <td>2</td><td><b>Apple AirTag</b> 技術原理</td>
+      <td>無線通訊 / IoT</td>
+      <td>Find My 網路機制、BLE 廣播 vs Mesh 差異、生態系壁壘說明</td>
+      <td><span class="badge ok">已說明</span></td>
+    </tr>
+    <tr>
+      <td>3</td><td><b>APQP</b> 產品開發流程</td>
+      <td>品質管理 / Excel</td>
+      <td>P0–P4 五階段流程圖表 .xlsx，修正合併儲存格衝突問題</td>
+      <td><span class="badge ok">已產出</span></td>
+    </tr>
+    <tr>
+      <td>4</td><td><b>粉粒體流量</b>標準測場建置</td>
+      <td>工業設備 / PPTX</td>
+      <td>17 張建置規劃簡報，含螺旋給料機剖面圖 (Slide 9) 修訂</td>
+      <td><span class="badge ok">已完成</span></td>
+    </tr>
+  </table>
+
+  <h3>關於本報告</h3>
+  <p>本報告彙整 mark.huang 以 Claude Cowork 協助處理的四個工作主題，涵蓋感測器光學設計、無線技術解析、品質流程文件、工業設備簡報製作。各項目均有具體產出物（SVG 圖示、Excel、PPTX）或技術說明。後續第 2、3 頁為各項目技術重點摘要。</p>
+  <div class="src">來源：Session 光電開關產品比較 · Apple AirTag technology · APQP product development process · Powder flow test facility design</div>
+</section>
+
+<!-- ============ PAGE 2 : 光電開關 + AirTag ============ -->
+<section class="page">
+  <div class="pgnum">第 2 / 3 頁</div>
+
+  <h2 id="s1"><span class="ch">1</span>光電開關稜鏡探頭 — 遮光干擾分析與圖示製作</h2>
+  <div class="lead-quote">核心問題：<b>探頭距管壁約 30mm，管壁拋光面對 IR 940nm 反射率 &gt;60%，折射光補回 PT 造成「液體存在但誤判為空」</b>，需從結構、光學、電路三層面解決。</div>
+
+  <h3>六種內建遮光方案比較</h3>
+  <table>
+    <tr><th>方案</th><th>層面</th><th>難度</th><th>效果</th></tr>
+    <tr><td><b>① 探頭本體延伸（一體成型）</b></td><td>機構設計</td><td>低</td><td>★★★★★</td></tr>
+    <tr><td>② 稜鏡側面 IR 吸收塗層</td><td>材料製程</td><td>中</td><td>★★★★</td></tr>
+    <tr><td>③ 準直透鏡縮小 PT 接收角</td><td>光學設計</td><td>中</td><td>★★★★</td></tr>
+    <tr><td><b>④ 差動雙 PT 設計</b></td><td>電路＋機構</td><td>中高</td><td>★★★★★</td></tr>
+    <tr><td>⑤ PWM 同步解調（電子遮光）</td><td>電路 / 韌體</td><td>中</td><td>★★★</td></tr>
+    <tr><td>⑥ 脈衝 ToF 微型化（概念）</td><td>高速電路</td><td>高</td><td>—（研究中）</td></tr>
+  </table>
+  <p><b>最佳組合：</b>「探頭本體延伸」＋「差動雙 PT」，結構層遮擋大角度反射光，電路層消除殘餘干擾，無需使用者加裝配件。</p>
+
+  <div class="grid2">
+    <div>
+      <h3>降低 IR 發射能量的利弊</h3>
+      <ul class="tk">
+        <li><b>優點</b>：管壁反射補回量等比降低、LED 元件壽命延長、整機功耗降低</li>
+        <li><b>缺點</b>：SNR 惡化、溫度漂移佔比放大、對折射率相近液體判別力喪失、薄膜容忍度下降、<b>功能性壽命反而縮短</b>（光衰更快撞下限）</li>
+      </ul>
+    </div>
+    <div>
+      <h3>光路折射情境圖示產出</h3>
+      <ul class="tk">
+        <li><b>四條光路</b>：折射光①②③直射管壁各自角度反射回 PT；二次散射④多次反射路徑</li>
+        <li>主圖區淨空（標籤最少化）+ 下方三面板說明，解決說明框遮擋問題</li>
+        <li>產出：SVG 互動圖示 + HTML 說明檔</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note"><b>⚠ 關鍵建議：</b>降低能量是次佳對策，更穩健做法是<b>只調整比較器判斷閾值</b>，在不犧牲 SNR 的前提下達到相同目的，裕度保持完整。</div>
+  <div class="src">來源：Session 光電開關產品比較 ─ 遮光罩設計 · IR 能量分析 · 光路折射 SVG 圖示</div>
+
+  <h2 id="s2" style="margin-top:30px"><span class="ch">2</span>Apple AirTag — Find My 技術原理解析</h2>
+  <p>針對 AirTag 工作原理、通訊協定、遠距機制三個核心問題進行完整技術解析。</p>
+
+  <div class="card a">
+    <h3 style="margin-top:0">① Find My 眾包網路：不是長距無線，是分散式定位</h3>
+    <pre><span class="cm">AirTag BLE 廣播（10–30m 範圍）</span>
+   ↓ 任一 iPhone 偵測到
+   → 加密位置資料
+   → 各自透過 4G/WiFi 上傳 Apple 伺服器   <span class="cm">（非接力跳板）</span>
+   → 你的 Find My App 顯示位置</pre>
+    <p style="margin-bottom:0">全球 10 億台 Apple 裝置構成感測網路，每台裝置是<b>獨立感測器</b>，而非 Mesh 跳板節點。</p>
+  </div>
+
+  <div class="card b">
+    <h3 style="margin-top:0">② 三種無線協定分工</h3>
+    <table style="margin:4px 0">
+      <tr><th>協定</th><th>用途</th><th>說明</th></tr>
+      <tr><td><b>BLE（非配對廣播）</b></td><td>主要定位</td><td>Advertising 模式，不需配對，任何裝置可收</td></tr>
+      <tr><td><b>UWB</b></td><td>精確尋向</td><td>iPhone 11+ 支援，可指引方向與距離（cm 級）</td></tr>
+      <tr><td><b>NFC</b></td><td>遺失模式</td><td>撿到者用手機感應查看聯絡資訊</td></tr>
+    </table>
+  </div>
+
+  <p><b>生態系壁壘：</b>BLE 廣播任何品牌都可接收，但 Android 背景 BLE 掃描受 OS 限制、Find My 封包格式私有、缺乏對應雲端後端，三重因素使非 Apple 裝置無法參與。Google 亦建立自有 Find My Device 網路，形成平行的封閉生態。</p>
+  <div class="src">來源：Session Apple AirTag technology ─ 工作原理 · BLE vs Mesh · 生態系壁壘</div>
+</section>
+
+<!-- ============ PAGE 3 : APQP + 粉粒體 ============ -->
+<section class="page">
+  <div class="pgnum">第 3 / 3 頁</div>
+
+  <h2 id="s3"><span class="ch">3</span>APQP 產品開發流程 — Excel 流程圖表建立</h2>
+  <p>建立 Automotive / 工業產品適用的 APQP（Advanced Product Quality Planning）P0–P4 五階段流程 Excel 圖表。</p>
+
+  <h3>五階段結構</h3>
+  <table>
+    <tr><th style="width:50px">階段</th><th>名稱</th><th>主要子階段 / 輸出項目</th></tr>
+    <tr><td><b>P0</b></td><td>決策與啟動</td><td>市場需求確認、專案核准、資源配置</td></tr>
+    <tr><td><b>P1</b></td><td>產品規劃與定義</td><td>客戶需求解析、設計目標、可靠度計畫</td></tr>
+    <tr><td><b>P2</b></td><td>產品設計與開發</td><td>DFMEA、DVP&amp;R、工程圖面；ECO 回饋機制（紅色標注）</td></tr>
+    <tr><td><b>P3</b></td><td>製程設計與開發</td><td>PFMEA、Control Plan、製程流程圖、MSA</td></tr>
+    <tr><td><b>P4</b></td><td>產品與製程確認</td><td>PPAP、量產試跑、Q1 驗收（主要產出＋判定條件雙欄）</td></tr>
+  </table>
+
+  <div class="grid2">
+    <div>
+      <h3>Excel 視覺設計</h3>
+      <ul class="tk">
+        <li><b>A 欄</b>：主階段標籤（P0~P4），垂直合併色塊</li>
+        <li><b>B/C/D 欄</b>：各子階段內容，深色標題帶 + 交替淺色底</li>
+        <li>Gate 審查列：深灰全寬帶，清楚分隔各主階段</li>
+        <li>凍結窗格（B4）+ 列印適合單頁寬</li>
+      </ul>
+    </div>
+    <div>
+      <h3>技術問題與修正</h3>
+      <ul class="tk">
+        <li><b>問題</b>：初版在迴圈中對已合併儲存格重複呼叫 <code>merge</code>，Excel 無法開啟</li>
+        <li><b>修正</b>：改以安全追蹤機制確保每個儲存格只被合併一次</li>
+        <li>已透過 LibreOffice 驗證可正常開啟</li>
+        <li>共 47 列、26 個合併區域，結構完整</li>
+      </ul>
+    </div>
+  </div>
+  <div class="src">來源：Session APQP product development process ─ APQP_流程圖.xlsx（重新產生版）</div>
+
+  <h2 id="s4" style="margin-top:28px"><span class="ch">4</span>粉粒體流量標準測場 — 建置規劃 PPTX 簡報</h2>
+  <p>針對工業用粉粒體流量測場建置需求，製作完整 17 張 PowerPoint 建置規劃簡報。</p>
+
+  <div class="grid2">
+    <div class="card a">
+      <h3 style="margin-top:0">Slide 9 — 螺旋給料機剖面圖</h3>
+      <ul class="tk" style="margin-top:4px">
+        <li><b>儲料桶</b>：圓柱料倉＋錐形漏斗（65° 出口角）＋側邊防橋拱震動馬達</li>
+        <li><b>螺旋管殼</b>：雙層管壁，橙色斜線表示螺旋葉片</li>
+        <li><b>進料口</b>（綠色）：料倉出口直接銜接螺旋管</li>
+        <li><b>軸封（S）</b>：充氣迷宮式密封</li>
+        <li><b>驅動端</b>：減速箱（GB）＋馬達（M）＋VFD 變頻器</li>
+        <li><b>粉體出口</b>：左端向下，接注氣混合腔</li>
+      </ul>
+    </div>
+    <div class="card b">
+      <h3 style="margin-top:0">簡報整體結構</h3>
+      <ul class="tk" style="margin-top:4px">
+        <li>共 <b>17 張</b>建置規劃投影片</li>
+        <li>涵蓋場地配置、設備選型、管路設計、量測系統、操作流程</li>
+        <li>每張設備圖皆含右側規格表</li>
+        <li>本次修訂：Slide 9 規格表末行超出邊界問題修正完成</li>
+        <li>產出：<code>粉粒體流量標準測場建置規劃.pptx</code></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="note"><b>⚠ 後續建議：</b>Slide 9 螺旋給料機剖面圖已完成，若需補充其他設備段（如注氣混合腔、質量流量計安裝段）的剖面示意圖，可依相同格式繼續製作。</div>
+  <div class="src">來源：Session Powder flow test facility design ─ 粉粒體流量標準測場建置規劃.pptx（17 張）</div>
+
+  <p style="text-align:center;color:var(--faint);font-size:11px;margin-top:24px;border-top:1px dashed var(--line);padding-top:12px">— 報告結束 · Claude_工作使用狀態_20260622 · mark.huang@fine-tek.com —</p>
+</section>
+
+</body>
+</html>

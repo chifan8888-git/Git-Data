@@ -1,0 +1,227 @@
+[
+  {
+    "id": "mock_356",
+    "num": 315,
+    "difficulty": 4,
+    "question": "「Equal Opportunity」公平性定義的核心是？",
+    "options": {
+      "A": "所有預測結果相同",
+      "B": "不同群體的 True Positive Rate 相同",
+      "C": "不同群體的 False Positive Rate 相同",
+      "D": "模型精度必須一致"
+    },
+    "answer": "B",
+    "explanation": "Equal Opportunity 專注於正類被正確預測的機率（TPR）在不同群體之間無顯著\n差異。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_357",
+    "num": 316,
+    "difficulty": 3,
+    "question": "哪一種技術能以局部方式說明單一樣本預測？",
+    "options": {
+      "A": "SHAP Summary Plot",
+      "B": "LIME（Local Interpretable Model-agnostic Explanations）",
+      "C": "Permutation Importance",
+      "D": "Mutual Information"
+    },
+    "answer": "B",
+    "explanation": "LIME 隨機擾動輸入並學習局部近似模型，專門用於單一預測結果的可解釋性。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_358",
+    "num": 317,
+    "difficulty": 1,
+    "question": "模型卡（Model Card）的目的是？",
+    "options": {
+      "A": "測試 API 效能",
+      "B": "記錄模型參數調整歷史",
+      "C": "提供模型用途、限制與公平性資訊",
+      "D": "驗證模型運行速度"
+    },
+    "answer": "C",
+    "explanation": "Model Card 是用於說明模型應用範圍、倫理風險、偏見與性能的透明性文件。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_359",
+    "num": 318,
+    "difficulty": 4,
+    "question": "若模型訓練資料主要來自特定族群，最可能的風險是？",
+    "options": {
+      "A": "模型效能過高",
+      "B": "模型壓縮失敗",
+      "C": "表示偏差（Representation Bias）",
+      "D": "資料漂移"
+    },
+    "answer": "C",
+    "explanation": "資料樣本偏重特定群體會導致模型學習到偏頗的分布，造成對其他群體表現不佳。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_360",
+    "num": 319,
+    "difficulty": 2,
+    "question": "以下哪一技術可支援公平性評估與減偏？",
+    "options": {
+      "A": "Fairlearn",
+      "B": "TensorBoard",
+      "C": "Scikit-Learn Pipeline",
+      "D": "XGBoost DMatrix"
+    },
+    "answer": "A",
+    "explanation": "Fairlearn 是專門用於模型公平性分析、調整與評估的 Python 工具包。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_361",
+    "num": 320,
+    "difficulty": 1,
+    "question": "OECD 人工智慧原則中，哪一項為資料治理的核心精神？",
+    "options": {
+      "A": "模型部署流程自動化",
+      "B": "提供最大資料共享自由度",
+      "C": "保護個人資料與隱私",
+      "D": "加速 GPU 運算能力"
+    },
+    "answer": "C",
+    "explanation": "OECD 強調應確保 AI 系統尊重法治、人權、民主與資料隱私，其中個人資料保護\n是基本原則。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_362",
+    "num": 321,
+    "difficulty": 2,
+    "question": "AI ACT 對於高風險 AI 系統要求必須？",
+    "options": {
+      "A": "支援即時翻譯",
+      "B": "降低模型複雜度",
+      "C": "進行風險評估與透明性義務",
+      "D": "僅限在私有雲上部署"
+    },
+    "answer": "C",
+    "explanation": "歐盟 AI ACT 對於高風險系統規定須符合如資料品質、可解釋性、人機監督與帳責\n等義務。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_363",
+    "num": 322,
+    "difficulty": 3,
+    "question": "「k-Anonymity」技術主要應用於？",
+    "options": {
+      "A": "確保回歸預測準確性",
+      "B": "加強語音辨識精度",
+      "C": "使個人資料無法被識別",
+      "D": "增強特徵重要性排名"
+    },
+    "answer": "C",
+    "explanation": "k-Anonymity 將資料處理為至少 k 個樣本無法互相區分的方式，用於隱私強化與\n去識別化。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_364",
+    "num": 323,
+    "difficulty": 4,
+    "question": "資料治理中的「資料譜系（Data Lineage）」主要目的是？",
+    "options": {
+      "A": "測試模型更新速度",
+      "B": "追蹤資料從來源到模型的流動與轉換歷程",
+      "C": "加密所有特徵欄位",
+      "D": "追蹤伺服器端資料訪問"
+    },
+    "answer": "B",
+    "explanation": "Data Lineage 描述資料從產生、轉換、流動到應用的全流程，是實施透明化與審計\n控制的關鍵基礎。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_365",
+    "num": 324,
+    "difficulty": 2,
+    "question": "AI 模型可能產生偏見的主要來源不包括？",
+    "options": {
+      "A": "訓練資料不平衡",
+      "B": "模型架構含注意力機制",
+      "C": "標註過程中帶入主觀意見",
+      "D": "代表性樣本不足"
+    },
+    "answer": "B",
+    "explanation": "模型產生偏見通常源自資料與標註偏誤、樣本分布不均；注意力機制本身並不導致\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_366",
+    "num": 325,
+    "difficulty": 4,
+    "question": "為提升模型公平性而加入「公平性限制」屬於哪一階段策略？",
+    "options": {
+      "A": "資料前處理",
+      "B": "模型內處理（In-processing）",
+      "C": "後處理視覺化",
+      "D": "模型壓縮階段"
+    },
+    "answer": "B",
+    "explanation": "In-processing 方法直接在訓練過程中調整目標函數或參數，以內嵌公平性限制達\n到減偏目的。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_367",
+    "num": 326,
+    "difficulty": 3,
+    "question": "以下哪一策略可減緩資料中少數族群樣本不足的問題？",
+    "options": {
+      "A": "模型壓縮",
+      "B": "多重交叉驗證",
+      "C": "SMOTE（合成少數樣本）",
+      "D": "模型量化"
+    },
+    "answer": "C",
+    "explanation": "SMOTE 是常用的過取樣方法，能合成少數類別資料，提升訓練資料的均衡性。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_368",
+    "num": 327,
+    "difficulty": 1,
+    "question": "模型公平性評估中，若各群體的 Precision 相近，表示？",
+    "options": {
+      "A": "模型中立無偏見",
+      "B": "所有群體預測皆為正類",
+      "C": "模型對不同群體預測精確度相近",
+      "D": "模型無法進行預測"
+    },
+    "answer": "C",
+    "explanation": "Precision 相近表示各群體中被預測為正類的正確性一致，是衡量公平性的一項依\n據。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_369",
+    "num": 328,
+    "difficulty": 5,
+    "question": "若模型輸出結果易被特定輸入微幅變化操控，可能出現？",
+    "options": {
+      "A": "偽陰性",
+      "B": "資料漂移",
+      "C": "對抗樣本風險（Adversarial Vulnerability）",
+      "D": "多重共線性"
+    },
+    "answer": "C",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_370",
+    "num": 329,
+    "difficulty": 2,
+    "question": "若希望公部門 AI 系統能強化問責與公信力，以下哪一措施最有助益？",
+    "options": {
+      "A": "使用最新語言模型",
+      "B": "增加預算與模型效能",
+      "C": "建立透明的模型紀錄與外部審查機制",
+      "D": "將模型嵌入網站前端"
+    },
+    "answer": "C",
+    "explanation": "透明紀錄、可稽核性與利害關係人參與是強化政府 AI 合規性與信任的關鍵作法。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  }
+]

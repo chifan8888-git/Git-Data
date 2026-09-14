@@ -1,0 +1,227 @@
+[
+  {
+    "id": "subject3_16",
+    "num": 16,
+    "difficulty": 3,
+    "question": "在二元分類問題中，若精確率（Precision）為0.8，召回率（Recall）為0.6，則F1 分數（F1 Score）為何？",
+    "options": {
+      "A": "0.686；",
+      "B": "0.700；",
+      "C": "0.720；",
+      "D": "0.750"
+    },
+    "answer": "A",
+    "explanation": "本題考查模型評估指標。在不平衡分類任務中，**召回率 (Recall) = TP / (TP + FN)**，衡量所有正樣本中被預測出的比例（常用於漏診代價高的醫療篩檢）；**精確率 (Precision) = TP / (TP + FP)**，衡量預測為正的樣本中真正為正的比例（常用於垃圾郵件過濾）。 **F1-Score** 為精確率與召回率的調和平均數，能平衡考量兩者表現。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  },
+  {
+    "id": "subject3_17",
+    "num": 17,
+    "difficulty": 3,
+    "question": "下列哪一種優化演算法內建動量（Momentum）的設計機制？",
+    "options": {
+      "A": "SGD+Momentum；",
+      "B": "Adam；",
+      "C": "RMSProp；",
+      "D": "Adagrad"
+    },
+    "answer": "B",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  },
+  {
+    "id": "subject3_18",
+    "num": 18,
+    "difficulty": 3,
+    "question": "下列何者最能同時反映XGBoost（eXtreme Gradient Boosting）相較於傳統梯度提升決策樹（Gradient Boosting Decision Tree, GBDT）的主要技術改進？\n理與並行化訓練；",
+    "options": {
+      "A": "引入正則化項（Regularization）以抑制過擬合，並支援缺失值自動處",
+      "B": "改以隨機森林（Random Forest）架構取代樹模型以提升準確率；",
+      "C": "以類神經網路（Neural Network）取代弱分類器（Weak Learners）；",
+      "D": "採用批次正規化（Batch Normalization）技術提升模型穩定性"
+    },
+    "answer": "A",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  },
+  {
+    "id": "subject3_19",
+    "num": 19,
+    "difficulty": 3,
+    "question": "某醫療機構開發疾病早期偵測模型，正樣本（確診病例）僅佔 3%。在模型訓練與評估過程中，下列哪一種作法最不適合用於提升對少數類病例的預測能力？",
+    "options": {
+      "A": "使用SMOTE 過採樣；",
+      "B": "調整類別權重；",
+      "C": "使用準確率（Accuracy）作為評估指標；",
+      "D": "欠採樣多數類(Undersampling the majority class)"
+    },
+    "answer": "C",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  },
+  {
+    "id": "subject3_20",
+    "num": 20,
+    "difficulty": 3,
+    "question": "某電子商務公司為開發商品評論情感分析模型，希望模型能捕捉評論中不同特徵之間的關聯影響，例如「商品價格」與「顧客滿意度」的互動效果。下列哪一種特徵工程設計方式最適合用於建立互動特徵（Interaction Features）？",
+    "options": {
+      "A": "將單一特徵取平方；",
+      "B": "對所有特徵進行對數轉換；",
+      "C": "將兩個或多個特徵進行乘積或交互組合；",
+      "D": "對特徵進行標準化"
+    },
+    "answer": "C",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  },
+  {
+    "id": "subject3_21",
+    "num": 21,
+    "difficulty": 3,
+    "question": "某語音辨識系統開發團隊採用 Transformer 架構，為了讓模型能同時理解語音片段中的發音特徵、語速變化與語意脈絡等多層次資訊，團隊在設計中導入了多頭注意力（Multi-head Attention）機制。請問下列何者為此機制的主要優點？\n資訊；",
+    "options": {
+      "A": "減少模型參數量以降低訓練成本；",
+      "B": "加速整體注意力計算過程；",
+      "C": "從不同表示子空間（Representation Subspaces）同時捕捉多樣化關聯",
+      "D": "避免梯度消失（Gradient Vanishing）問題"
+    },
+    "answer": "C",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  },
+  {
+    "id": "subject3_22",
+    "num": 22,
+    "difficulty": 3,
+    "question": "某電商平台希望預測顧客是否會購買特定商品。系統蒐集顧客的瀏覽紀錄、停留時間、商品類別偏好與過去購買行為，並以此推估「在觀察到這些行為特徵的情況下，該顧客會購買的機率」。若模型採用貝氏定理（Bayes’Theorem）進行推論，下列敘述何者最符合其核心運作機制？\n金額；\nLearning）動態調整推薦策略",
+    "options": {
+      "A": "根據歷史樣本自動分群，找出行為相似的顧客群；",
+      "B": "以條件機率方式計算顧客屬於「會購買」或「不會購買」的分類機率；",
+      "C": "以最小平方誤差（Mean Squared Error）為損失函數，預測顧客的購買",
+      "D": "依據回饋信號（Feedback Signal）透過強化學習（Reinforcement"
+    },
+    "answer": "B",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  },
+  {
+    "id": "subject3_23",
+    "num": 23,
+    "difficulty": 3,
+    "question": "一家再生能源公司希望預測未來三個月太陽能發電量的波動範圍。由於氣候條件具有高度隨機性，且輸入變數（如日照時數、雲量、溫度）之間存在不確定關係，工程團隊決定以隨機抽樣方式模擬多種可能情境，以估算整體發電量的機率分佈與風險區間。請問此時所採用的技術最符合下列哪一種方法？",
+    "options": {
+      "A": "蒙地卡羅方法（Monte Carlo Method）；",
+      "B": "K-means 聚類（K-means Clustering）；",
+      "C": "支持向量迴歸（Support Vector Regression, SVR）；",
+      "D": "特徵選取（Feature Selection）"
+    },
+    "answer": "A",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  },
+  {
+    "id": "subject3_24",
+    "num": 24,
+    "difficulty": 3,
+    "question": "某房地產公司利用多元迴歸模型（Multiple Regression Model）預測房價，並繪製殘差圖（Residual Plot）檢查模型品質。結果顯示部分資料點的殘差極大，且在高價區樣本中出現系統性彎曲分佈現象。根據此觀察，\n下列何者為最可能的正確解釋？\n不足；",
+    "options": {
+      "A": "模型過度擬合（Overfitting），導致在訓練資料上表現過好、泛化能力",
+      "B": "模型特徵數量不足，導致欠擬合（Underfitting）；",
+      "C": "模型存在異常值（Outlier）或非線性關係，違反迴歸假設；",
+      "D": "殘差圖呈現隨機分佈，表示模型已完全符合所有假設"
+    },
+    "answer": "C",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  },
+  {
+    "id": "subject3_25",
+    "num": 25,
+    "difficulty": 3,
+    "question": "某金融機構正在建立傳統信用評分卡模型，採用邏輯迴歸（Logistic Regression）作為建模方法，並依循監理機關建議的標準化流程進行模型開發。下列哪一項不是傳統信用評分卡模型開發流程中的常見步驟？\n穩定性",
+    "options": {
+      "A": "使用生成式模型進行特徵學習；",
+      "B": "進行特徵選擇與多重共線性（Multicollinearity）分析；",
+      "C": "進行分箱（Binning）與資訊值（Information Value, IV）檢定；",
+      "D": "使用樣本穩定性指標（Population Stability Index, PSI）檢驗模型"
+    },
+    "answer": "A",
+    "explanation": "在 Scikit-Learn 中，特徵標準化（如 StandardScaler）應先使用 `fit_transform()` 擬合訓練集並轉換；隨後的測試集則只能使用 `transform()` 進行轉換，以防止測試集資訊洩漏 (Data Leakage)。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  },
+  {
+    "id": "subject3_26",
+    "num": 26,
+    "difficulty": 3,
+    "question": "在防止監督式學習模型過擬合（Overfitting）時，下列哪一種策略不屬於降低模型複雜度或限制學習能力的作法？",
+    "options": {
+      "A": "採用L1 或L2 正則化；",
+      "B": "在訓練過程中使用Dropout 技術；",
+      "C": "採取早期停止（Early Stopping）機制；",
+      "D": "擴增輸入特徵變數以提升模型表達能力"
+    },
+    "answer": "D",
+    "explanation": "當模型在訓練集表現極佳，但在測試集表現下滑時，稱為**過擬合 (Overfitting)**。常用防範手段包括：增加訓練資料量、使用 L1/L2 正則化（Lasso/Ridge）、Dropout、提前結束訓練（Early Stopping），或在影像任務中使用隨機裁剪等資料擴增技術。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  },
+  {
+    "id": "subject3_27",
+    "num": 27,
+    "difficulty": 3,
+    "question": "某智慧製造團隊在開發瑕疵影像檢測模型時，發現使用線性激活函數（Activation Function）後，模型的訓練準確率長期停滯，懷疑模型無法學習到足夠複雜的特徵表達。若要改善此問題，下列哪一項調整方案最為合適？\n取；\n模型表達能力",
+    "options": {
+      "A": "增加卷積層（Convolutional Layer）數量，使網路更深以強化特徵提",
+      "B": "將輸入影像先進行灰階化處理，降低運算量；",
+      "C": "使用Sigmoid 激活函數，以將輸出壓縮至[0,1]範圍；",
+      "D": "改用ReLU（Rectified Linear Unit）激活函數，以引入非線性並提升"
+    },
+    "answer": "D",
+    "explanation": "激活函數（如 ReLU、Sigmoid、Tanh 等）的主要目的是為神經網絡引入非線性表達能力，使其能夠擬合複雜的非線性決策邊界。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  },
+  {
+    "id": "subject3_28",
+    "num": 28,
+    "difficulty": 3,
+    "question": "一家零售電商公司希望建立顧客流失預測模型，用以判斷哪些會員可能在三個月內不再消費。團隊以去年會員資料進行訓練，並僅採用「曾經購買三次以上」的活躍顧客紀錄作為樣本。模型上線後，對整體會員進行預測時，發現模型對於新註冊會員與低消費會員的預測準確率明顯偏低。下列何者為造成此現象最可能的原因？\n（Feature Bias）；",
+    "options": {
+      "A": "特徵設計未排除與會員忠誠度高度相關的變數，導致特徵偏差",
+      "B": "標記（Label）由人工標註，導致標籤偏差（Label Bias）；",
+      "C": "訓練樣本僅涵蓋高活躍顧客，造成取樣偏差（Sampling Bias）；",
+      "D": "模型未進行超參數調整，導致過擬合（Overfitting）"
+    },
+    "answer": "C",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  },
+  {
+    "id": "subject3_29",
+    "num": 29,
+    "difficulty": 3,
+    "question": "在工業設備故障預測專案中，模型訓練與超參數調整均依賴於一段歷史數據作為驗證集。然而，隨著設備運行環境與工況條件的變化，原有驗證集已無法充分反映現況，導致模型在實際部署後的預測準確率逐漸下降。下列哪一種策略最能有效提升模型在長期運行環境中的穩健性與泛化能力？\n化；\nStopping）控制訓練；\n驗證（Rolling Window Validation）方法，動態更新驗證資料以適應時間演進",
+    "options": {
+      "A": "固定驗證集內容，並透過模型正則化技巧（如 L2 正則化）強化模型泛",
+      "B": "將全部歷史資料納入訓練，不使用驗證集，依靠早期停止（Early",
+      "C": "簡化模型架構，減少模型參數數量以降低過擬合風險；",
+      "D": "採用時間序列交叉驗證（Time Series Cross Validation）或滑動視窗"
+    },
+    "answer": "D",
+    "explanation": "當模型在訓練集表現極佳，但在測試集表現下滑時，稱為**過擬合 (Overfitting)**。常用防範手段包括：增加訓練資料量、使用 L1/L2 正則化（Lasso/Ridge）、Dropout、提前結束訓練（Early Stopping），或在影像任務中使用隨機裁剪等資料擴增技術。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  },
+  {
+    "id": "subject3_30",
+    "num": 30,
+    "difficulty": 3,
+    "question": "某情感分析模型在英文資料集上取得macro F1-score = 0.91。當該模型部署於西班牙文資料集時，F1-score 驟降至0.58。下列哪一項解釋最合理，且與F1-score 變化相關？\n評估；\n彙；",
+    "options": {
+      "A": "macro F1-score 本身波動性高，建議改用 micro-average F1-score",
+      "B": "模型在西班牙文語料上過度擬合，導致評估結果偏高；",
+      "C": "語言轉移造成召回率（Recall）下降，模型無法正確辨識關鍵情緒詞",
+      "D": "以均方誤差（MSE）取代 F1-score 評估可獲得更準確的結果"
+    },
+    "answer": "C",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：AI 應用規劃師中級能力鑑定核心題庫】",
+    "_category": "subject3"
+  }
+]

@@ -1,0 +1,227 @@
+[
+  {
+    "id": "guide_subject3_u5_4",
+    "num": 121,
+    "difficulty": 3,
+    "question": "在進行特徵轉換時，若資料存在極端偏高的右偏分佈，常用哪種轉換以降低偏 態？",
+    "options": {
+      "A": "平方根轉換（Square Root Transform）",
+      "B": "對數轉換（Log Transform）",
+      "C": "Label Encoding",
+      "D": "缺失指標編碼"
+    },
+    "answer": "B",
+    "explanation": "對數轉換可有效降低右偏分佈的極端值影響，使資料分佈更接近常態。 常用於收入、銷售額等具極端高值的變數。平方根轉換則較適用於中度偏態資 料。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u5_5",
+    "num": 122,
+    "difficulty": 3,
+    "question": "在模型訓練過程中，若模型在訓練集表現良好，但測試集效能不佳，可能是發 生了什麼問題？",
+    "options": {
+      "A": "欠擬合 5-54",
+      "B": "特徵縮放失敗",
+      "C": "過擬合",
+      "D": "批次大小過小"
+    },
+    "answer": "C",
+    "explanation": "過擬合發生在模型學習了太多訓練集的細節與雜訊，導致在未見過的測 試資料上表現不佳。常見解決方案包括使用正則化、降低模型複雜度或早停策 略（Early Stopping）。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u5_6",
+    "num": 123,
+    "difficulty": 3,
+    "question": "交叉驗證中，哪一種方法在每次驗證中只留下一筆樣本作為驗證集，其餘皆用 於訓練？",
+    "options": {
+      "A": "K-fold",
+      "B": "Stratified K-fold",
+      "C": "LOOCV",
+      "D": "Repeated K-fold"
+    },
+    "answer": "C",
+    "explanation": "LOOCV（Leave-One-Out Cross-Validation）是K-fold 的極端形式，當K 等於樣本數n 時，每次只留一筆做驗證。此方法能最大化資料利用，但計算成 本極高，不適用於大樣本情境。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u5_7",
+    "num": 124,
+    "difficulty": 3,
+    "question": "在訓練深度學習模型時，隨機將部分神經元暫時關閉以減少過擬合的技術是什 麼？",
+    "options": {
+      "A": "Early Stopping",
+      "B": "Dropout",
+      "C": "Batch Normalization",
+      "D": "Quantization"
+    },
+    "answer": "B",
+    "explanation": "Dropout 透過隨機將神經元暫時設為零，迫使模型在每次訓練都以不同 的「子網路」進行學習，有效降低模型對特定神經元的過度依賴，減少過擬合 風險。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u5_8",
+    "num": 125,
+    "difficulty": 3,
+    "question": "在模型壓縮技術中，知識蒸餾（Knowledge Distillation）的主要目的是什麼？",
+    "options": {
+      "A": "減少資料維度",
+      "B": "降低參數數量使模型更小",
+      "C": "將大型模型的知識轉移至小型模型",
+      "D": "增強資料平衡"
+    },
+    "answer": "C",
+    "explanation": "Knowledge Distillation 是利用大型、高性能的教師模型，將其知識以軟 標籤（soft labels）的形式傳遞給小型學生模型，讓學生模型在參數較少的情況 下，仍維持接近的預測能力。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u5_9",
+    "num": 126,
+    "difficulty": 3,
+    "question": "在優化器中，哪一個方法會自動調整每個參數的學習率，特別適用於稀疏資 料？",
+    "options": {
+      "A": "Momentum",
+      "B": "Adagrad",
+      "C": "Adam",
+      "D": "SGD"
+    },
+    "answer": "B",
+    "explanation": "Adagrad 能針對每個參數調整不同的學習率，累積梯度平方和後，自動 減小常被更新參數的學習步伐。適合處理特徵稀疏的場景，如文字分析，但學 習率會不斷衰減至極小值，需留意訓練是否停滯。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u6_1",
+    "num": 127,
+    "difficulty": 3,
+    "question": "在個人資料保護法規的框架下，下列哪一組資訊單獨使用時，最明確地被歸類 為「直接識別個人身份資訊（Directly Identifiable Information, PII）」？",
+    "options": {
+      "A": "出生日期、郵遞區號、職業",
+      "B": "網站Cookie ID、設備IP 位址、地理定位資訊",
+      "C": "姓名、電子郵件地址、身分證字號",
+      "D": "網路行為模式、匿名化統計數據、加密後的密碼雜湊值"
+    },
+    "answer": "C",
+    "explanation": "「直接識別個人身份資訊（PII）」是指無需透過其他資訊輔助，單獨即可 明確辨識出特定個人的資料。 （A）出生日期、郵遞區號和職業等資訊單獨無法直接識別特定個人，通常需 要結合其他資訊才能達到識別效果，屬於準識別資訊（Quasi-Identifiers）。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u6_2",
+    "num": 128,
+    "difficulty": 3,
+    "question": "以下哪一種資料處理方式屬於「隨機擾動（Noise Injection）」？",
+    "options": {
+      "A": "把姓名改成代號",
+      "B": "將薪資加入隨機誤差",
+      "C": "將地址改成縣市級別",
+      "D": "以星號遮蔽身分證號"
+    },
+    "answer": "B",
+    "explanation": "即便進行匿名化，外部資料比對仍可能造成再識別風險，因此須強化匿 名化措施或限制資料使用情境，才能降低風險。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u6_3",
+    "num": 129,
+    "difficulty": 3,
+    "question": "在AI 偏見治理中，對不同群體調整模型預測閾值，屬於哪一種偏見修正方法？",
+    "options": {
+      "A": "資料泛化",
+      "B": "結果門檻調整",
+      "C": "模型剪枝",
+      "D": "資料增強"
+    },
+    "answer": "B",
+    "explanation": "結果門檻調整（Threshold Adjustment）屬於模型後處理方式，透過改變 不同群體的決策門檻，以平衡模型在不同群體間的預測公平性。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u6_4",
+    "num": 130,
+    "difficulty": 3,
+    "question": "若企業想確保AI 模型在不同群體間「真正該被選擇者」皆有同等機會被正確 預測，應採用哪一個公平性指標？",
+    "options": {
+      "A": "Equal Opportunity",
+      "B": "Demographic Parity",
+      "C": "K-Anonymity",
+      "D": "T-Closeness"
+    },
+    "answer": "A",
+    "explanation": "Equal Opportunity 著重在實際應獲得正向結果的個案，在不同群體間應 具有相同的被正確預測機率，尤其適用於醫療、社會福利等情境。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u6_5",
+    "num": 131,
+    "difficulty": 3,
+    "question": "若企業欲在AI 專案中降低敏感特徵（如性別）的影響，可以採取哪種模型內 部處理方式？",
+    "options": {
+      "A": "對抗式去偏模型 6-27",
+      "B": "模型蒸餾",
+      "C": "雜湊處理",
+      "D": "結果門檻調整"
+    },
+    "answer": "A",
+    "explanation": "對抗式去偏透過訓練一個對抗網路，迫使主模型無法預測敏感屬性，從 而降低模型對敏感特徵的依賴，是常見的公平性處理技術。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u6_6",
+    "num": 132,
+    "difficulty": 3,
+    "question": "若資料集中存在群體樣本數不均，造成模型偏向多數群體，適合採用哪種技 術？",
+    "options": {
+      "A": "權重初始化",
+      "B": "權重衰減",
+      "C": "類別重加權",
+      "D": "全量訓練"
+    },
+    "answer": "C",
+    "explanation": "類別重加權能在模型訓練時賦予少數類別更高權重，提升模型對少數群 體的辨識能力，是處理不平衡資料常見的方法。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u6_7",
+    "num": 133,
+    "difficulty": 3,
+    "question": "T-接近性（T-Closeness）技術主要是為了降低什麼風險？",
+    "options": {
+      "A": "機率分佈差異造成的識別風險",
+      "B": "資料重複風險",
+      "C": "訓練時間過長",
+      "D": "演算法震盪問題"
+    },
+    "answer": "A",
+    "explanation": "T-Closeness 要求群組內敏感屬性的分佈，需與全體資料集分佈相近，以 防止透過分佈偏差推測個人特徵，是進階的隱私保護技術。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u6_8",
+    "num": 134,
+    "difficulty": 3,
+    "question": "在AI 公平性治理中，企業應建立什麼跨部門組織，確保公平性納入日常決策 流程？",
+    "options": {
+      "A": "模型剪枝委員會",
+      "B": "AI 蒸餾中心",
+      "C": "公平性審查委員會",
+      "D": "隨機抽樣團隊"
+    },
+    "answer": "C",
+    "explanation": "公平性審查委員會匯集法務、技術、產品與倫理等部門，負責評估AI 系統的偏見風險，是企業治理AI 公平性的重要機制。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u6_9",
+    "num": 135,
+    "difficulty": 3,
+    "question": "若企業欲降低AI 模型因少數群體樣本過少而造成的過擬合風險，可以採用哪 種資料增強方法？",
+    "options": {
+      "A": "SMOTE",
+      "B": "Softmax",
+      "C": "Momentum",
+      "D": "Dropout 6-28"
+    },
+    "answer": "A",
+    "explanation": "SMOTE（Synthetic Minority Over-sampling Technique）透過合成新樣本， 擴增少數類別資料，有助於平衡類別分佈，降低過擬合及模型偏誤風險。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  }
+]

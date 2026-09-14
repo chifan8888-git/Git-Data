@@ -1,0 +1,362 @@
+[
+  {
+    "subject": "subject2",
+    "id": "subject2_new_61",
+    "question": "某連鎖便利商店集團欲建立門市未來14 天每日銷售額預測模型(500 間門市、3 年歷史資料)。資料具有明顯的週期性(週末較高)、年度季節性(暑假與年末高峰)及長期成長趨勢，並包含已知節日與不定期事件(如颱風)。在此情境下，關於資料切分與建模策略，何者最適當？",
+    "options": [
+      "A. 採隨機切分(80/20)，使用傳統時間序列模型建模，刪除節日資料避免極端值影響，並以均方根誤差(RMSE)評估；",
+      "B. 依時間順序切分(最後90 天為測試集)，使用具季節性建模能力的時間序列模型並加入節日資訊，不處理不定期事件，以平均絕對百分比誤差(MAPE)評估；",
+      "C. 依時間順序切分並採前進式驗證(Walk-Forward Validation)，結合時間序列分解與機器學習模型，加入時間特徵、滯後與滾動統計特徵，並納入節日與不定期事件資訊，使用均方根誤差(RMSE)與平均絕對百分比誤差(MAPE)評估；",
+      "D. 依時間順序切分，直接使用深度學習模型建模，不進行特徵工程，所有門市共用模型，以平均絕對誤差(MAE)評估 C"
+    ],
+    "answer": "C"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_62",
+    "question": "Receiver Operating Characteristic(ROC)曲線係由單一分類模型在不同決策閾值下形成，並以真陽率(True Positive Rate, TPR)為縱軸、假陽率(False Positive Rate, FPR)為橫軸。請問下圖中四條曲線，何者最不可能是ROC 曲線？",
+    "options": [
+      "A. 水平線A；",
+      "B. 曲線B；",
+      "C. 曲線C；",
+      "D. 斜直線D C"
+    ],
+    "answer": "C"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_63",
+    "question": "某金融機構導入AI 模型進行信用卡詐欺偵測，由於詐欺交易極為稀少(約佔全部交易0.3%)，因此模型在測試階段得到99.6%準確率(Accuracy)，被初步認定為「高效模型」。然而在實際上線後，風控部門發現模型幾乎無法攔截詐欺交易，且大量誤判正常交易。經進一步檢查，發現資料極度不平衡，但模型仍以Accuracy 作為主要優化與評估指標。在此情境下，下列何者最適當的改善方向？",
+    "options": [
+      "A. 持續優化Accuracy 指標以提升整體分類正確率；",
+      "B. 改用精確率(Precision)作為主要評估指標以降低誤報；",
+      "C. 引入Class Weight 或Cost-sensitive Learning 調整損失函數；",
+      "D. 移除少數類資料以提升模型穩定性與收斂速度 A"
+    ],
+    "answer": "C"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_64",
+    "question": "某電商推薦系統的資料工程師在建構模型特徵時，將使用者的訂單UNIX 時間戳記(連續數值)轉換為「早晨(6–12 時)、下午(12–18 時)、夜晚(18–6 時)」三個區間類別，以讓推薦模型更容易學習消費時段規律。在資料前處理中，這種將連續數值轉換為有序類別的操作最精確的名稱為何？",
+    "options": [
+      "A. 特徵離散化(Feature Discretization)；",
+      "B. 特徵縮放(Feature Scaling)；",
+      "C. 數據降維(Dimensionality Reduction)；",
+      "D. One-Hot 編碼(One-Hot Encoding) D"
+    ],
+    "answer": "A"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_65",
+    "question": "某AI 產品的商業分析師在準備月度報告時，需要在單一頁面上同時呈現1,000 位使用者的留存率、活躍程度與付費轉換率三項指標，以讓決策層快速掌握整體趨勢。若依據Edward Tufte 的資料視覺化原則中資料密度(Data Density)的概念，下列何者最符合此原則的設計方向？",
+    "options": [
+      "A. 將1,000 筆資料分散至多張圖表(每張顯示約100 筆)，避免單一圖表資訊過載；",
+      "B. 移除所有圖例、軸標籤與輔助線等非資料墨水(Non-data Ink)，使版面最簡潔；",
+      "C. 在圖表中加入大量裝飾性元素(如色塊、陰影、3D 效果)，使視覺效果更豐富；",
+      "D. 在有限頁面空間中呈現盡可能多的有效資料資訊，同時維持可讀性與清楚的視覺層次 C"
+    ],
+    "answer": "D"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_66",
+    "question": "年第一次AI 應用規劃師-中級能力鑑定【公告試題】  ",
+    "options": [
+      "A. 提升資料解析效率並減少認知負擔；",
+      "B. 增強小幅差異的可視化辨識能力；",
+      "C. 造成視覺誤導並放大實際差異感；",
+      "D. 提升圖表計算準確性與數據正確性 D"
+    ],
+    "answer": "UNKNOWN"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_67",
+    "question": "某AI 系統的維運工程師需要在儀表板上呈現「模型推論延遲(ms)隨時間的變化趨勢」，以便即時監控 服務水準協議(Service Level Agreement, SLA)是否達標(P99<200 ms)。在資料視覺化的圖表類型選擇上，下列哪種圖表最適合呈現連續數值隨時間變化的趨勢？",
+    "options": [
+      "A. 面積圖(Area Chart)；",
+      "B. 散佈圖(Scatter Plot)；",
+      "C. 長條圖(Bar Chart)；",
+      "D. 折線圖(Line Plot) B"
+    ],
+    "answer": "D"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_68",
+    "question": "訓練資料共5,000 萬筆，工程師比較Batch Size=32 與 Batch Size = 4096 的訓練表現，發現大批次(Large Batch)雖然訓練較快，但模型泛化能力較差。從最佳化理論角度，下列何者為此現象最合理的解釋？",
+    "options": [
+      "A. 大批次(Large Batch)計算量過大，GPU 無法有效處理；",
+      "B. 大批次(Large Batch)梯度估計更穩定，但容易收斂至局部極小值(Local Minima)，導致泛化能力較差；",
+      "C. 小批次(Small Batch)因隨機性高，更容易發生梯度爆炸(Gradient Explosion)；",
+      "D. 批次大小(Batch Size)與泛化能力無關，問題出在學習率(Learning Rate)設定 B"
+    ],
+    "answer": "B"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_69",
+    "question": "某公司中，A 團隊負責信用評分模型，B 團隊負責詐欺偵測模型，兩團隊皆需要「使用者過去30 天交易行為」資料，但各自會進行特徵工程與後續工作。以公司整體管理角度，下列何者為導入統一管理與共用特徵的主要目的？",
+    "options": [
+      "A. 模型推論延遲過高，導致線上服務回應時間不符合系統即時性需求與使用體驗要求；",
+      "B. 降低跨團隊重複開發的維護成本；",
+      "C. 訓練資料儲存空間不足，造成歷史資料保存與批次訓練流程效率下降問題；",
+      "D. 模型版本管理混亂，導致不同模型部署與回溯分析困難並增加維運複雜度 B"
+    ],
+    "answer": "B"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_70",
+    "question": "某線上書店希望建立一個多類別書籍推薦模型，根據讀者的「年齡、性別、過去購書類別偏好評分」等特徵，預測讀者下次最可能購買的書籍主題(共8 類)。資料已完整標註，且資料量達數十萬筆。在模型選型上，除了預測準確率外，也需考量模型訓練效率、可擴充性，並需支援快速訓練與線上部署。請問下列哪種方法最適合此情境？",
+    "options": [
+      "A. 多類別羅吉斯迴歸(Multinomial Logistic Regression)；",
+      "B. 支援向量機(SVM)搭配One-vs-One；",
+      "C. K-means 分群後將群集標籤作為分類結果；",
+      "D. 主成分分析(PCA)後再以最大主成分作為分類依據 C"
+    ],
+    "answer": "A"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_71",
+    "question": "某電商平台希望建立二元分類模型，根據商品的「價格區間、品牌、顏色、材質」等特徵，將商品分類為「高銷量(1)」或「低銷量(0)」。同時希望模型輸出具備可解釋的機率(如P=0.73 表示73%機率為高銷量)。請問下列哪種方法最適合？",
+    "options": [
+      "A. K-means 分群(K-means Clustering)；",
+      "B. 決策樹迴歸(Decision Tree Regression)；",
+      "C. 羅吉斯迴歸(Logistic Regression)；",
+      "D. 線性迴歸(Linear Regression) D"
+    ],
+    "answer": "C"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_72",
+    "question": "某工程師在開發一個以Transformer 為基礎的文本分類模型時，發現模型對於詞語順序的變化不夠敏感，影響語意判斷效果。請問在Transformer 架構中，位置編碼(Positional Encoding)的主要作用為何？",
+    "options": [
+      "A. 在詞嵌入(Embedding)中加入隨機擾動，以提升模型對輸入變化的泛化能力；",
+      "B. 在注意力機制中加入遮罩(Mask)，限制模型只能關注部分詞語；",
+      "C. 將輸入序列轉換為可同時運算的向量表示，以提升計算效率；",
+      "D. 在詞的向量表示中加入位置資訊，使模型能區分序列中不同位置的詞語 D"
+    ],
+    "answer": "D"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_73",
+    "question": "年第一次AI 應用規劃師-中級能力鑑定【公告試題】  ",
+    "options": [
+      "A. 協同過濾(Collaborative Filtering)：根據歷史查詢推薦相似問題的答案，無法執行新問題的即時計算；",
+      "B. 檢索增強生成(RAG)：讓LLM 檢索相關資料後生成回答，但無法可靠執行大規模數值聚合與精確統計查詢；",
+      "C. 生成對抗網路(GAN)：用於生成合成資料或模擬數據分佈，可用於資料擴增，但不適合即時查詢與資料庫聚合運算；",
+      "D. Text-to-SQL Agent：由LLM 將自然語言轉換為SQL 查詢，交由分散式資料庫執行，兼顧自然語言彈性與資料查詢精確性 A"
+    ],
+    "answer": "UNKNOWN"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_74",
+    "question": "某金融機構將訓練好的信用評分模型開放API 供合作夥伴查詢。資安團隊警告此設計可能遭受成員推斷攻擊(Membership Inference Attack)。下列何者最準確說明攻擊原理與對應防禦？",
+    "options": [
+      "A. 利用模型對訓練樣本的高信心輸出判斷其是否屬於訓練集；以差分隱私或降低輸出信心防禦；",
+      "B. 利用查詢次數與回應頻率差異判斷資料是否在訓練集中；以限制查詢次數防禦；",
+      "C. 透過模型輸出推測輸入的敏感特徵；以限制輸出資訊防禦；",
+      "D. 透過大量查詢建立替代模型模擬目標模型；以限制模型存取防禦 B"
+    ],
+    "answer": "A"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_75",
+    "question": "某AI 平台的資料治理工程師正在評估三種去識別化技術的適用場景與強度：K 匿名(K-anonymity)、差分隱私合成資料(Differential Privacy Synthetic Data)、亂數回應機制(Randomized Response)。下列敘述何者不正確？",
+    "options": [
+      "A. K 匿名主要應用於表格型資料，確保每筆記錄在準識別符(Quasi-identifier)組合上至少與K-1 筆其他記錄相同，防止個體被唯一識別；",
+      "B. 差分隱私合成資料是在發布統計查詢結果或訓練模型時直接對原始資料加入雜訊，以確保單一個體的加入或移除不會顯著改變輸出；",
+      "C. 亂數回應機制讓受訪者以機率性方式回答敏感問題(如：您是否曾逃稅？)，賦予個人對答案的可否認性(Plausible Deniability)；",
+      "D. 三種技術中，只有差分隱私提供可組合且可量化的隱私保證，而K 匿名與亂數回應在面對背景知識攻擊或多次查詢時保護能力有限"
+    ],
+    "answer": "B"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_76",
+    "question": "在建構自動化資料清洗管線時，工程師撰寫一個用於補齊缺失欄位的Python 函式，如下圖所示。當此函式連續處理兩筆獨立的資料(row1 與row2)後，請問第二筆資料row2['tags']的內容會為何？",
+    "options": [
+      "A. [\"checked\", \"tags\"]；",
+      "B. []；",
+      "C. [\"checked\", \"checked\"] ；",
+      "D. 拋出KeyError 錯誤，因為字典中沒有tags 鍵值 Ａ"
+    ],
+    "answer": "UNKNOWN"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_77",
+    "question": "下圖為一段分類演算法的pseudocode，請問最可能對應下列哪一種演算法？",
+    "options": [
+      "A. K-近鄰(K-Nearest Neighbors, KNN)；",
+      "B. K-means 分群(K-means Clustering)；",
+      "C. 支援向量機(Support Vector Machine, SVM)；",
+      "D. 隨機森林分類器(Random Forest Classifier)"
+    ],
+    "answer": "UNKNOWN"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_78",
+    "question": "以上版本)：  輸出結果如下： ● mean：223.411306 ● 50%：128.552462 ● max：4500.000000  若團隊進一步發現daily_earnings 欄位約有5%的遺失值，且目前規劃先建立線性迴歸(Linear Regression)模型來預測未來收入。為盡可能保留該欄位原有分布特性，並降低因補值造成的偏差，請問下列哪一種處理方式最為合理？",
+    "options": [
+      "A. df['daily_earnings'].fillna(df['daily_earnings'].mean(), inplace=True)；",
+      "B. df['daily_earnings'].fillna(df['daily_earnings'].median(), inplace=True)；",
+      "C. df['daily_earnings'].fillna(df['daily_earnings'].max(), inplace=True)；",
+      "D. 直接刪除所有遺失資料，因數值型欄位不適合進行補值處理"
+    ],
+    "answer": "UNKNOWN"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_79",
+    "question": "承上題，團隊在建立預測模型前，先將region(A、B、C 區)轉換為整數 1、2、3，即採用標籤編碼(Label Encoding)。模型上線測試後發現，線性迴歸模型對於C 區(編碼為3)的預測收入出現明顯高估，顯示模型可能將編碼值誤解為具有線性大小關係。若主管要求不得修改原有的特徵編碼方式，必須維持1、2、3 的整數表示，但希望從演算法層面降低此類誤解風險，則下列何者最適合作為替代模型？",
+    "options": [
+      "A. 羅吉斯迴歸(Logistic Regression)；",
+      "B. Ridge 迴歸(Ridge Regression)；",
+      "C. 支援向量機(Support Vector Machine, SVM)搭配線性核函數；",
+      "D. 隨機森林(Random Forest) C"
+    ],
+    "answer": "D"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_80",
+    "question": "平台安全部門發現，僅有極少數司機(約占總體0.05%)會利用外掛程式竄改gps_ping_rate，以騙取里程補貼。某新進資料科學家訓練了一個二元分類模型，並在報告中指出：「模型整體準確率(Accuracy)高達99.95%，因此可直接上線攔截可疑帳號。」  然而，資深工程師檢視後認為，僅憑上述結果(如圖)仍不足以支持模型直接上線。下列何者不是其提出質疑的合理理由？",
+    "options": [
+      "A. 在此類極度不平衡的資料中，即使模型永遠預測所有司機皆為正常，整體準確率仍可能高達99.95%；",
+      "B. 報告中未呈現召回率(Recall)，因此模型可能無法有效辨識真正的外掛司機；",
+      "C. 異常偵測問題不可使用分類模型處理，僅能使用分群或離群值方法；",
+      "D. 對於少數類比例極低的問題，若僅觀察Accuracy，可能忽略模型對異常樣本的實際偵測能力 A"
+    ],
+    "answer": "C"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_81",
+    "question": "針對上述外掛偵測模型，營運長下達最終的商業決策目標如下：「對於作弊行為零容忍。即使誤凍結部分正常司機帳號，後續仍可交由人工覆核；但不能放過任何一個真正的外掛司機。」根據上述目標，團隊在調整模型輸出的決策機率門檻(Threshold，預設為0.5)時，應採取下列何種策略最為合理？",
+    "options": [
+      "A. 選擇使模型對作弊者的召回率(Recall)最大化的門檻，通常代表應降低 Threshold",
+      "B. 選擇使模型精確率(Precision)最大化的門檻，通常代表應提高Threshold",
+      "C. 固定使用Threshold=0.5 作為預設值，因為調整門檻將破壞演算法原有的訓練平衡",
+      "D. 選擇使模型特異度(Specificity)達到100%的門檻，以確保正常司機不會被誤判"
+    ],
+    "answer": "A"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_82",
+    "question": "若分析師想找出「總貢獻營收最高的前3 名客戶」，下列Pandas 程式碼何者最為精確且高效？",
+    "options": [
+      "A. df.sort_values('Revenue', ascending=False).head(3)['CustomerID']；",
+      "B. df.groupby('CustomerID')['Revenue'].max().head(3)；",
+      "C. df.groupby('CustomerID')['Revenue'].sum().nlargest(3)；",
+      "D. df.value_counts('CustomerID').head(3) A"
+    ],
+    "answer": "C"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_83",
+    "question": "若分析師只想計算「Electronics(電子產品)」這個特定分類的平均營收，下列何者為最佳的語法？",
+    "options": [
+      "A. df[df['Category'] == 'Electronics']['Revenue'].mean()；",
+      "B. df['Category' == 'Electronics']['Revenue'].mean()；",
+      "C. df.loc['Electronics', 'Revenue'].mean()；",
+      "D. df.filter(items=['Electronics'])['Revenue'].mean()； C"
+    ],
+    "answer": "A"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_84",
+    "question": "分析師想將customers 表中的Region 欄位加入到df 交易紀錄中，且「只保留那些在customers 表中有對應資料的交易紀錄」。下列哪一種合併方式最正確？",
+    "options": [
+      "A. pd.concat([df, customers], axis=1)；",
+      "B. pd.merge(df, customers, on='CustomerID', how='outer')；",
+      "C. pd.merge(df, customers, on='CustomerID', how='inner')；",
+      "D. df.join(customers, on='CustomerID')"
+    ],
+    "answer": "C"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_85",
+    "question": "在進行機器學習建模前，資料分析師需對特徵變數X 進行標準化處理，以消除不同量尺所造成的影響。已知使用StandardScaler 進行資料轉換，程式碼如下：scaler = StandardScaler()。請問下列哪一種寫法可以正確完成資料標準化？",
+    "options": [
+      "A. X_norm = scaler.transform(X)；",
+      "B. X_norm = scaler.fit(X)；",
+      "C. X_norm = scaler.fit_transform(X)；",
+      "D. X_norm = fit_transform(scaler)  B"
+    ],
+    "answer": "C"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_86",
+    "question": "年第一次AI 應用規劃師-中級能力鑑定【公告試題】  ",
+    "options": [
+      "A. ",
+      "B. ",
+      "C. ",
+      "D. D"
+    ],
+    "answer": "UNKNOWN"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_87",
+    "question": "參考下圖程式碼，下列描述何者正確？",
+    "options": [
+      "A. cm 表示混淆矩陣，橫列表測試集的預測值；",
+      "B. 混淆矩陣對角線數值皆大於非對角線數值表示模型過度擬合；",
+      "C. f1_score 參數average=\"weighted\"表示計算平均f1_score；",
+      "D. f1_score 計算時採用各類別精確率(Precision)與召回率(Recall)的調和平均，並加權考量類別不平衡性"
+    ],
+    "answer": "D"
+  },
+  {
+    "subject": "subject3",
+    "id": "subject3_new_1",
+    "question": "某零售企業建立一個銷售預測模型，希望評估該模型在不同月份的新資料上，是否仍能維持穩定的預測表現。資料科學團隊計畫利用統計方法檢驗模型對未觀察資料的適應能力與泛化效果。下列哪一種方法最適合用於此目的？",
+    "options": [
+      "A. F 檢定(F-test)；",
+      "B. 交叉驗證(Cross-Validation)；",
+      "C. 配對樣本t 檢定(Paired-sample t-test)；",
+      "D. 卡方檢定(Chi-square Test) C"
+    ],
+    "answer": "B"
+  },
+  {
+    "subject": "subject3",
+    "id": "subject3_new_2",
+    "question": "在建立迴歸或分類模型時，若希望避免模型過度擬合(Overfitting)，可透過加入正則化項以限制模型的複雜度。其中，L1 正則化(Lasso)的主要效果為何？",
+    "options": [
+      "A. 增加模型參數的數量，以提升表現靈活度；",
+      "B. 強化梯度穩定性，避免參數更新過度震盪；",
+      "C. 產生稀疏模型(Sparse Model)，使部分參數權重收斂為零；",
+      "D. 提高學習率(Learning Rate)，加速模型收斂速度 C"
+    ],
+    "answer": "C"
+  },
+  {
+    "subject": "subject3",
+    "id": "subject3_new_3",
+    "question": "在訓練非線性模型時，若目標函數為非凸函數(Non-convex Function)，演算法在參數更新過程中可能出現多個極值點，導致最佳化結果不穩定。請問此時最可能發生下列哪一種情況？",
+    "options": [
+      "A. 梯度消失；",
+      "B. 資料過少；",
+      "C. 局部最優解；",
+      "D. 過擬合 B"
+    ],
+    "answer": "C"
+  }
+]

@@ -1,0 +1,227 @@
+[
+  {
+    "id": "115_1_subject3_44",
+    "num": 91,
+    "difficulty": 3,
+    "question": "研究人員撰寫的程式中（下圖），先用整體資料進行LDA（Linear Discriminant Analysis）降維，接著再用KNN（K-Nearest Neighbors）進行分類，並用交叉驗證來評估準確率。請問下列敘述何者正確？\n<div style=\"text-align:center; margin:1rem 0;\"><img src=\"images/115_1_subject3_44.png\" style=\"max-width:100%; border:1px solid var(--border-color); border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.15);\"></div>",
+    "options": {
+      "A": "此寫法完全正確，因為先以整體資料進行LDA 降維，再以交叉驗證測試KNN，\n是標準流程；",
+      "B": "此寫法存在資料洩漏（Data Leakage）問題，應將LDA 納入交叉驗證流程中一併進行；",
+      "C": "雖然流程不夠嚴謹，但結果仍然能夠代表模型真實的泛化能力；",
+      "D": "如果只想驗證KNN 的分類效果，可以直接跳過LDA 步驟，以簡化流程"
+    },
+    "answer": "B",
+    "explanation": "本題考查 Scikit-Learn 機器學習管線 (Pipeline)。在使用 LDA 降維與 KNN 分類器時，應將資料拆分為訓練集與測試集，並僅在訓練集上擬合 (fit)，再應用於測試集，以避免發生資料洩漏 (Data Leakage)。\n\n【來源：115 年第一次中級能力鑑定歷屆試題】",
+    "_category": "subject3"
+  },
+  {
+    "id": "115_1_subject3_45",
+    "num": 92,
+    "difficulty": 3,
+    "question": "研究人員在程式（下圖）中使用cross_val_score 進行交叉驗證，但目前尚未設定cv參數。\n他們希望確保在每次資料分割時，訓練集與測試集的類別比例與原始資料一致，以免影響模型的準確率估計。目前有以下幾段候選程式碼可供選擇。請問為了確保在交叉驗證時每個分割中的類別比例與原始資料一致，上面哪幾段程式碼插入在原始程式中[#填入程式碼]的部分比較合適？\n<div style=\"text-align:center; margin:1rem 0;\"><img src=\"images/115_1_subject3_45.png\" style=\"max-width:100%; border:1px solid var(--border-color); border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.15);\"></div>",
+    "options": {
+      "A": "程式碼B、程式碼C、程式碼D；",
+      "B": "程式碼A、程式碼C；",
+      "C": "程式碼A、程式碼B、程式碼D；",
+      "D": "程式碼C、程式碼D答案請依據下方資訊回答第46~48 題。\n使用CIFAR-10 資料集以建立卷積神經網路（CNN），進行彩色影像之分類與辨識分析。CIFAR-10 為一常用之影像分類基準資料集，內容包含10 個類別，共計60000張彩色影像，其中訓練集含50000 張影像，測試集則含10000 張影像。每張影像解析度為32 × 32 像素，並具有三個通道（channel），分別對應紅、綠、藍三原色。\n以下程式碼片段示範資料載入與處理流程。\n下圖顯示資料集的第1 筆部分資料。"
+    },
+    "answer": "A",
+    "explanation": "本題考查 Scikit-Learn 交叉驗證與數據分割策略。`cross_val_score` 能評估模型泛化效能，若要保持訓練與測試集的類別比例一致，應使用 StratifiedKFold（分層交叉驗證），這在類別不平衡的資料中特別重要。\n\n【來源：115 年第一次中級能力鑑定歷屆試題】",
+    "_category": "subject3"
+  },
+  {
+    "id": "115_1_subject3_46",
+    "num": 93,
+    "difficulty": 3,
+    "question": "參考下圖資料處理，下列哪一項描述組合正確？\n<div style=\"text-align:center; margin:1rem 0;\"><img src=\"images/115_1_subject3_46.png\" style=\"max-width:100%; border:1px solid var(--border-color); border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.15);\"></div>",
+    "options": {
+      "A": "描述A、描述C、描述F；",
+      "B": "描述B、描述D、描述E、描述F；",
+      "C": "描述B、描述C、描述E、描述F；",
+      "D": "描述A、描述B、描述D、描述E、描述F"
+    },
+    "answer": "B",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：115 年第一次中級能力鑑定歷屆試題】",
+    "_category": "subject3"
+  },
+  {
+    "id": "115_1_subject3_47",
+    "num": 94,
+    "difficulty": 3,
+    "question": "參考下圖建立模型結果，下列哪一項描述組合正確？\n<div style=\"text-align:center; margin:1rem 0;\"><img src=\"images/115_1_subject3_47.png\" style=\"max-width:100%; border:1px solid var(--border-color); border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.15);\"></div>",
+    "options": {
+      "A": "描述A、描述C；",
+      "B": "描述C、描述E、描述F；",
+      "C": "描述A、描述D、描述E；",
+      "D": "描述D、描述E、描述F"
+    },
+    "answer": "B",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：115 年第一次中級能力鑑定歷屆試題】",
+    "_category": "subject3"
+  },
+  {
+    "id": "115_1_subject3_48",
+    "num": 95,
+    "difficulty": 3,
+    "question": "參考下圖繪圖結果，當Epochs=6 時，訓練曲線值(0.81)明顯大於驗證曲線值(0.72)，\n下列何者為最可能的原因？\n<div style=\"text-align:center; margin:1rem 0;\"><img src=\"images/115_1_subject3_48.png\" style=\"max-width:100%; border:1px solid var(--border-color); border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.15);\"></div>",
+    "options": {
+      "A": "學習率（Learning Rate）太低；",
+      "B": "批次大小（Batch Size）設定太大；",
+      "C": "模型低度擬合（Underfitting）；",
+      "D": "模型過擬合（Overfitting）某人工智慧團隊正在開發一套自動光學檢測（Automated Optical Inspection, AOI）系統，目標是透過機械手臂上的相機，自動辨識晶圓表面是否存在「劃傷（Scratch）」\n或「污點（Spot）」等瑕疵。目前系統開發面臨以下挑戰：\n● 資料極度不平衡，正常晶圓影像約佔99%，有瑕疵影像僅佔1%。\n● 輸入影像品質不一致，包含不同解析度，且部分影像因機械手臂震動而出現模糊。\n● 在使用深層卷積神經網路（CNN）訓練時，Loss 曲線震盪劇烈，甚至偶爾出現數值溢出（NaN）情形。\n請根據上述情境，回答第49~50 題。"
+    },
+    "answer": "D",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：115 年第一次中級能力鑑定歷屆試題】",
+    "_category": "subject3"
+  },
+  {
+    "id": "115_1_subject3_49",
+    "num": 96,
+    "difficulty": 3,
+    "question": "若團隊需要建立一個超過50 層的深層神經網路，以捕捉晶圓表面細微的劃傷特徵，\n但又擔心傳統深層網路常見的梯度消失（Vanishing Gradient）問題，則下列哪一種經典架構最適合優先考慮？",
+    "options": {
+      "A": "VGG（Visual Geometry Group）：透過重複堆疊3×3 卷積層與池化層來維持梯度穩定；",
+      "B": "GoogLeNet：透過Inception 模塊並行使用不同大小的卷積核，以避免深層網路的梯度問題；",
+      "C": "ResNet （Residual Network ）：透過殘差連接（Residual Connection / Skip Connection），使梯度能跨層傳遞並降低深層訓練困難；",
+      "D": "Vision Transformer（ViT）：完全捨棄卷積，因此不會出現任何深層模型的訓練問題"
+    },
+    "answer": "C",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：115 年第一次中級能力鑑定歷屆試題】",
+    "_category": "subject3"
+  },
+  {
+    "id": "115_1_subject3_50",
+    "num": 97,
+    "difficulty": 3,
+    "question": "為了修復訓練過程中Loss 突然變成NaN 的問題，工程師考慮在PyTorch 訓練迴圈中加入梯度裁剪（Gradient Clipping）機制，例如 torch.nn.utils.clip_grad_norm_。若要正確加入梯度裁剪，最適合插入於哪個位置？其主要作用為何？",
+    "options": {
+      "A": "插入於位置3 與位置4 之間；用以限制Loss 數值大小，避免梯度消失；",
+      "B": "插入於位置4 與位置5 之間；用以限制梯度範數過大，避免更新步幅失控導致數值不穩；",
+      "C": "插入於位置5 之後；用以將更新後的權重強制壓縮回正常範圍；",
+      "D": "插入於位置1 與位置2 之間；用以對輸入影像進行批次標準化"
+    },
+    "answer": "B",
+    "explanation": "在 PyTorch 中，為了防止深層網絡訓練時的梯度爆炸（導致 Loss 變成 NaN），可以在優化器更新權重前，調用 **`torch.nn.utils.clip_grad_norm_()`** 進行梯度裁剪，將梯度範數限制在指定閾值內。\n\n【來源：115 年第一次中級能力鑑定歷屆試題】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u2_1",
+    "num": 98,
+    "difficulty": 3,
+    "question": "若欲描述隨機變數在連續範圍內取值的機率分佈，最適合使用下列哪一種函 數？",
+    "options": {
+      "A": "機率質量函數（PMF）",
+      "B": "條件機率",
+      "C": "機率密度函數（PDF）",
+      "D": "累積分佈函數（CDF）"
+    },
+    "answer": "C",
+    "explanation": "機率密度函數（PDF）用於描述連續型隨機變數於某個取值範圍內的機 率分佈。與離散型隨機變數不同，連續變數在單一點的機率為零，PDF 通常透 過積分計算區間內的機率，而PMF 則用於離散型變數。累積分佈函數（CDF） 則是累計機率的工具，而非直接描述機率密度。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u2_2",
+    "num": 99,
+    "difficulty": 3,
+    "question": "若一個隨機變數服從伯努利分佈（Bernoulli Distribution），則該變數可能取值 為下列哪一組？",
+    "options": {
+      "A": "任何實數",
+      "B": "0 或1",
+      "C": "正整數",
+      "D": "任意整數"
+    },
+    "answer": "B",
+    "explanation": "伯努利分佈是典型的二元分佈，僅有兩種可能結果，通常以0 和1 表 示，例如成功與失敗、點擊與未點擊。此分佈是多數二元分類模型（如邏輯迴 歸）的理論基礎。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u2_3",
+    "num": 100,
+    "difficulty": 3,
+    "question": "在主成分分析（PCA）中，常使用哪一種矩陣分解技術來找出資料的主軸方向？",
+    "options": {
+      "A": "矩陣求逆",
+      "B": "矩陣轉置",
+      "C": "特徵值分解",
+      "D": "條件機率分解"
+    },
+    "answer": "C",
+    "explanation": "PCA 透過對協方差矩陣進行特徵值分解，找出最大變異方向，並以此降 低維度並保留最重要的資訊。這能讓資料投影到較少的維度上，同時盡可能維 持原始資料的變異。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u2_4",
+    "num": 101,
+    "difficulty": 3,
+    "question": "若想將高維資料映射至較低維度空間，同時保留資料的主要變異，常用下列哪 一種方法？",
+    "options": {
+      "A": "邊際機率估計",
+      "B": "矩陣轉置",
+      "C": "主成分分析",
+      "D": "累積機率計算"
+    },
+    "answer": "C",
+    "explanation": "PCA 是常用的維度簡化工具，透過線性變換找出資料中變異最大的方 向，將原始高維度資料投影到較少維度上，達到資料壓縮與特徵提取的效果。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u2_5",
+    "num": 102,
+    "difficulty": 3,
+    "question": "在梯度下降（Gradient Descent）中，「梯度」代表下列哪一項？",
+    "options": {
+      "A": "資料點個數",
+      "B": "模型精確度 3-29",
+      "C": "損失函數對參數的偏微分",
+      "D": "模型計算速度"
+    },
+    "answer": "C",
+    "explanation": "梯度是損失函數相對於模型參數的導數，能指引參數應往哪個方向調整 以減少損失。梯度越大，表示調整幅度應越大，以快速降低誤差。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u2_6",
+    "num": 103,
+    "difficulty": 3,
+    "question": "在進行假設檢定時，顯著水準（α）表示什麼？",
+    "options": {
+      "A": "平均值的大小",
+      "B": "模型運算速度",
+      "C": "拒絕虛無假設時所容許的型一錯誤機率",
+      "D": "資料筆數多少"
+    },
+    "answer": "C",
+    "explanation": "顯著水準（α）是研究者事先設定的風險上限，代表當虛無假設為真時， 錯誤拒絕該假設的容忍機率。常見設定為0.05，意即容許5%的型一錯誤。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u2_7",
+    "num": 104,
+    "difficulty": 3,
+    "question": "若資料集中存在極端值，以下哪一種集中趨勢指標較不受影響？",
+    "options": {
+      "A": "平均數",
+      "B": "變異數",
+      "C": "標準差",
+      "D": "中位數"
+    },
+    "answer": "D",
+    "explanation": "平均數會受極端值拉動而偏離中心位置。中位數則是將資料排序後取中 間值，不會受到少數極端值的嚴重影響，因此在偏態分佈或極端值存在時，常 用中位數描述資料集中趨勢。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u2_8",
+    "num": 105,
+    "difficulty": 3,
+    "question": "以下哪一種優化方法會累積每個參數的歷史梯度大小，以調整學習率？",
+    "options": {
+      "A": "Momentum",
+      "B": "Adagrad",
+      "C": "SGD",
+      "D": "Batch Normalization"
+    },
+    "answer": "B",
+    "explanation": "Adagrad 根據各參數歷史梯度平方和，調整每個參數的學習率。對變動 較少的參數保留較高學習率，而對變動大的參數降低學習率，特別適合處理稀 疏特徵資料。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  }
+]

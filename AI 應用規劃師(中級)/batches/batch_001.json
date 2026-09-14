@@ -1,0 +1,227 @@
+[
+  {
+    "id": "subject1_1",
+    "num": 1,
+    "difficulty": 3,
+    "question": "某電商企業希望利用自然語言處理（NLP）技術，分析顧客在社群平台與商品評論中的文字內容，以即時掌握顧客對產品的滿意度變化。\n若採用情感分析（Sentiment Analysis）模型，其主要目的為何？",
+    "options": {
+      "A": "預測顧客使用的語言風格與語氣；",
+      "B": "判斷文本中所表達的情感傾向；",
+      "C": "將顧客留言自動翻譯成企業內部指定語言；",
+      "D": "產生顧客評論的自動化摘要內容"
+    },
+    "answer": "B",
+    "explanation": "【正確答案是 B 解析：B 選項可直接判斷文本中蘊含的情感傾向，符合情感分析模型的主要目的。 其他選項：A 為風格預測，非情感分析核心；C 為機器翻譯功能；D 為文本摘要功能。】",
+    "_category": "subject1"
+  },
+  {
+    "id": "subject1_2",
+    "num": 2,
+    "difficulty": 3,
+    "question": "某跨國金融科技公司導入Transformer 架構開發多語客服系統，以提升長篇金融文件的自動翻譯品質。下列何者為該模型能顯著改善翻譯準確度的主要原因？\n境依賴關係；\n略；",
+    "options": {
+      "A": "透過自注意力機制（Self-Attention Mechanism）捕捉長距離語",
+      "B": "透過卷積運算（Convolution Operation）加速訓練過程；",
+      "C": "透過強化學習（Reinforcement Learning）自動調整語句生成策",
+      "D": "透過資料增強（Data Augmentation）平衡多語語料比例"
+    },
+    "answer": "A",
+    "explanation": "【正確答案是 A 解析：A 選項的自注意力機制能有效捕捉長距離依賴關係，提升長篇翻譯準確度。 其他選項：B 卷積運算非 Transformer 核心架構；C 強化學習非此架構預設生成策略；D 資料增強無法直接改善模型本身的長距離捕捉能力。】",
+    "_category": "subject1"
+  },
+  {
+    "id": "subject1_3",
+    "num": 3,
+    "difficulty": 3,
+    "question": "某企業計畫應用BERT（Bidirectional Encoder Representations\nfrom Transformers）模型分析大量顧客意見，以強化客服自動回覆系統。在BERT 的預訓練過程中，「遮罩語言模型（Masked Language\nModel, MLM）」的主要訓練策略為何？\nContext）預測被遮罩的詞；\n本以提升泛化性；",
+    "options": {
+      "A": "依序遮罩句尾詞語，讓模型從左到右逐步生成完整句子；",
+      "B": "隨機遮罩部分詞語，並讓模型根據雙向上下文（Bidirectional",
+      "C": "透過對抗訓練（Adversarial Training）生成語意相似的擾動樣",
+      "D": "以未遮罩的詞為條件，使用解碼器（Decoder）結構重建整句內容"
+    },
+    "answer": "B",
+    "explanation": "【正確答案是 B 解析：B 選項正確描述了 BERT 遮罩語言模型（MLM）利用雙向上下文預測遮罩詞彙的預訓練機制。 其他選項：A 為傳統單向語言模型策略；C 為對抗訓練策略，非 MLM；D 為 Seq2Seq 解碼器結構，非 MLM 機制。】",
+    "_category": "subject1"
+  },
+  {
+    "id": "subject1_4",
+    "num": 4,
+    "difficulty": 3,
+    "question": "在詞向量（Word Embedding）訓練方法中，GloVe（Global Vectors\nfor Word Representation）與Word2Vec 的主要差異為何？\n行學習；\n下文預測；\n新",
+    "options": {
+      "A": "Word2Vec 以詞頻權重訓練詞向量，而GloVe 以隨機初始化向量進",
+      "B": "Word2Vec 以全局統計矩陣為基礎，而GloVe 採用神經網路進行上",
+      "C": "Word2Vec 為基於預測的模型，而GloVe 為基於共現統計的模型；",
+      "D": "Word2Vec 僅能用於靜態文本語料，而GloVe 可應用於即時語料更"
+    },
+    "answer": "C",
+    "explanation": "【正確答案是 C 解析：C 選項正確點出 Word2Vec 基於預測模型，而 GloVe 基於全域共現矩陣統計。 其他選項：A 皆非隨機初始化進行學習；B 兩者皆可使用神經網路；D 兩者皆主要用於靜態語料訓練。】",
+    "_category": "subject1"
+  },
+  {
+    "id": "subject1_5",
+    "num": 5,
+    "difficulty": 3,
+    "question": "某企業以詞頻–逆文件頻率（Term Frequency–Inverse Document Frequency, TF-IDF）方法分析顧客意見內容，但發現模型在處理篇幅較長的回饋文本時，無法準確反映關鍵詞的重要性。下列何者為造成此現象的主要原因？\n有詞權重趨於相近",
+    "options": {
+      "A": "長文本中的詞頻偏高，導致常見詞權重被過度放大；",
+      "B": "長文本中缺乏明確句子邊界，造成 TF-IDF 無法計算詞頻；",
+      "C": "TF-IDF 無法同時處理多份文件；",
+      "D": "長文本會改變IDF（Inverse Document Frequency）的計算，使所"
+    },
+    "answer": "A",
+    "explanation": "【正確答案是 A 解析：A 選項指出長文本易導致某些常見詞的詞頻異常偏高，進而掩蓋真正關鍵詞的權重。 其他選項：B TF-IDF 不依賴句子邊界；C TF-IDF 本身即用於處理多份文件；D IDF 不會因單一文本變長而改變。】",
+    "_category": "subject1"
+  },
+  {
+    "id": "subject1_6",
+    "num": 6,
+    "difficulty": 3,
+    "question": "某企業嘗試以N-gram 語言模型（N-gram Language Model）建立客服自動回覆系統，但發現模型生成的句子雖在片段上合理，卻缺乏整體語意連貫性。此問題最可能源自N-gram 模型的哪一項限制？\n距離依賴關係（Long-range Dependencies）；\n表徵詞語間的語意相似度；\n關聯",
+    "options": {
+      "A": "N-gram 模型在訓練過程中需要龐大計算量，導致長句無法收斂；",
+      "B": "N-gram 模型僅根據固定長度的前序詞建立機率估計，難以捕捉長",
+      "C": "N-gram 模型缺乏語意嵌入（Semantic Embedding）層，因此無法",
+      "D": "N-gram 模型假設詞與詞之間相互獨立，導致無法建構上下文語意"
+    },
+    "answer": "B",
+    "explanation": "【正確答案是 B 解析：B 選項正確說明 N-gram 模型受限於 N 的大小，無法捕捉跨越長距離的上下文語意與依賴關係。 其他選項：A 長句不收斂非 N-gram 核心限制；C 語意嵌入非 N-gram 的標準架構；D N-gram 有假設相鄰詞關聯，並非完全獨立。】",
+    "_category": "subject1"
+  },
+  {
+    "id": "subject1_7",
+    "num": 7,
+    "difficulty": 3,
+    "question": "在企業導入的智慧監控系統中，模型以物件偵測（Object Detection）方式自動辨識影像中的人物與車輛。若評估指標採用平均精確率（Mean Average Precision, mAP），其中 IoU\n（Intersection over Union）閾值設定較高時，代表下列哪一項意義？\n準；",
+    "options": {
+      "A": "預測邊界框與真實邊界框的重疊程度越高，模型偵測結果越精",
+      "B": "預測邊界框與真實邊界框的誤差越大，導致mAP 數值上升；",
+      "C": "模型整體精確率（Precision）降低，但召回率（Recall）上升；",
+      "D": "預測邊界框的評估結果不受真實框大小影響"
+    },
+    "answer": "A",
+    "explanation": "【正確答案是 A 解析：A 選項指出較高的 IoU 閾值要求預測框與真實框有更高的重疊比例，代表模型必須更精準。 其他選項：B 誤差大會使 mAP 下降；C 高 IoU 閾值通常使精確率與召回率下降；D 評估結果仍受真實框影響。】",
+    "_category": "subject1"
+  },
+  {
+    "id": "subject1_8",
+    "num": 8,
+    "difficulty": 3,
+    "question": "關於Softmax 與Max-Pooling，下列敘述何者正確？\n留區域最大值；",
+    "options": {
+      "A": "Softmax 與Max-Pooling 都會將特徵張量壓縮為單一最大值；",
+      "B": "Max-Pooling 會對輸入進行機率分佈的轉換；",
+      "C": "Softmax 會保留所有輸入資訊，但以比例表示；Max-Pooling 只保",
+      "D": "Softmax 主要用於特徵降維，而Max-Pooling 用於分類輸出"
+    },
+    "answer": "C",
+    "explanation": "【正確答案是 C 解析：C 選項正確點出 Softmax 將特徵轉為機率分佈並保留所有資訊比例，而 Max-Pooling 僅保留局部最大值特徵。 其他選項：A Softmax 不壓縮為單一最大值；B Max-Pooling 不進行機率分佈轉換；D Softmax 用於分類輸出，Max-Pooling 用於特徵降維。】",
+    "_category": "subject1"
+  },
+  {
+    "id": "subject1_9",
+    "num": 9,
+    "difficulty": 3,
+    "question": "某企業在訓練生成式AI 模型時，導入資料增強（Data Augmentation）技術以擴充訓練資料，但觀察到模型效能反而下降。\n下列哪一項最可能的原因與對應改善策略最為正確？\n計訓練啟動流程；\n力，應檢查並調整增強策略以維持語意一致性；\n高增強比例並調整學習率；\n學習方式重新校正資料",
+    "options": {
+      "A": "增強樣本未經隨機初始化，導致模型梯度更新不穩定，應重新設",
+      "B": "增強後資料的特徵分佈與原始資料不一致，影響模型的泛化能",
+      "C": "增強樣本的比例過高，造成模型對特定資料產生偏好，應適度提",
+      "D": "增強後資料的標註可信度下降，導致訓練訊號偏差，應以半監督"
+    },
+    "answer": "B",
+    "explanation": "【正確答案是 B 解析：B 選項指出不當的增強可能改變資料原始分佈，導致模型學習到錯誤模式而泛化能力下降。 其他選項：A 隨機初始化與增強無直接關係；C 關鍵在於分佈而非比例；D 可信度下降應修正增強策略而非改用半監督。】",
+    "_category": "subject1"
+  },
+  {
+    "id": "subject1_10",
+    "num": 10,
+    "difficulty": 3,
+    "question": "如果希望同時兼顧「精確率（Precision）」和「召回率（Recall）」，\n下列哪一個指標可以作為綜合評估的標準？",
+    "options": {
+      "A": "準確率（Accuracy）；",
+      "B": "均方根誤差（RMSE）；",
+      "C": "均方誤差（MSE）；",
+      "D": "F1 分數（F1 Score）"
+    },
+    "answer": "D",
+    "explanation": "【正確答案是 D 解析：D 選項的 F1 分數是精確率與召回率的調和平均數，能有效綜合評估兩者的表現。 其他選項：A 準確率未兼顧兩者平衡；B RMSE 用於迴歸評估；C MSE 亦為迴歸評估指標。】",
+    "_category": "subject1"
+  },
+  {
+    "id": "subject1_11",
+    "num": 11,
+    "difficulty": 3,
+    "question": "企業資料分析團隊使用DBSCAN（Density-Based Spatial Clustering of Applications with Noise）演算法進行顧客行為分群，並希望模型能自動區分主要群集與雜訊資料。\n在此演算法中，決定聚類結果的兩個主要超參數為下列何者？",
+    "options": {
+      "A": "特徵數與學習率；",
+      "B": "K 值與距離閾值；",
+      "C": "鄰域半徑（Epsilon ε）與最小點數（MinPts）；",
+      "D": "交叉熵（Cross Entropy）與權重初始化"
+    },
+    "answer": "C",
+    "explanation": "【正確答案是 C 解析：C 選項的鄰域半徑與最小點數是 DBSCAN 決定密度群集的核心超參數。 其他選項：A 學習率用於神經網路；B K 值用於 K-Means；D 交叉熵與權重初始化用於深度學習。】",
+    "_category": "subject1"
+  },
+  {
+    "id": "subject1_12",
+    "num": 12,
+    "difficulty": 3,
+    "question": "某金融科技公司建立房價預測模型，使用多項特徵（如建坪、房齡、\n樓層、總價等）進行線性迴歸分析（Linear Regression Analysis）。資料分析師發現多個特徵之間存在高度相關性，導致模型係數不穩定、預測誤差上升。為解決此問題，下列哪一種方法最適合？",
+    "options": {
+      "A": "繼續保留所有特徵，不進行任何處理；",
+      "B": "使用主成分分析（PCA）將相關特徵轉換為彼此獨立的主成分；",
+      "C": "新增更多原始變數以提升模型表現；",
+      "D": "改用分類模型進行預測"
+    },
+    "answer": "B",
+    "explanation": "【正確答案是 B 解析：B 選項的 PCA 可將高度相關的原始特徵轉換為獨立的主成分，有效消除多重共線性問題。 其他選項：A 保留會導致模型不穩定；C 新增變數無法解決既有共線性；D 房價預測為迴歸任務，改用分類不合理。】",
+    "_category": "subject1"
+  },
+  {
+    "id": "subject1_13",
+    "num": 13,
+    "difficulty": 3,
+    "question": "下列何者為Kubernetes 在AI 模型部署與運行中的核心功能？",
+    "options": {
+      "A": "自動化管理模型的訓練流程與參數調校；",
+      "B": "管理與協調模型服務的部署、擴展與運行環境；",
+      "C": "提供AI 模型的資料儲存與版本控管功能；",
+      "D": "負責深度學習推論的 GPU 加速運算"
+    },
+    "answer": "B",
+    "explanation": "【正確答案是 B 解析：B 選項正確描述 Kubernetes 作為容器編排平台，負責 AI 模型服務的部署、擴充與運行環境管理。 其他選項：A 為 MLOps 訓練排程功能；C 為 Model Registry 功能；D GPU 加速由底層驅動負責，非 K8s 核心功能。】",
+    "_category": "subject1"
+  },
+  {
+    "id": "subject1_14",
+    "num": 14,
+    "difficulty": 3,
+    "question": "在調整模型超參數（Hyperparameters）時，若希望避免因過度調整參數而導致過擬合，下列哪一種做法最有效提升模型的泛化能力？\n估，選擇在驗證資料上表現最穩定的設定；\n停止訓練，以防模型學習過度；\n學習資料特徵",
+    "options": {
+      "A": "採用交叉驗證（Cross-Validation）於多組參數組合間反覆評",
+      "B": "使用早期停止機制（Early Stopping）監控訓練誤差並在收斂前",
+      "C": "對輸入特徵進行標準化以減少特徵值差異帶來的過擬合風險；",
+      "D": "提高模型複雜度並使用更多超參數搜尋範圍，以確保模型能充分"
+    },
+    "answer": "A",
+    "explanation": "【正確答案是 A 解析：A 選項的交叉驗證能透過多組驗證資料的反覆評估，選出泛化能力最佳的超參數組合，避免過擬合。 其他選項：B 早期停止用於模型訓練過程，非超參數調整；C 標準化屬資料前處理；D 提高複雜度易增加過擬合風險。】",
+    "_category": "subject1"
+  },
+  {
+    "id": "subject1_15",
+    "num": 15,
+    "difficulty": 3,
+    "question": "在企業導入的MLOps（Machine Learning Operations）流程中，\nModel Registry 最常用於哪一個階段？",
+    "options": {
+      "A": "用於設定運算資源與執行環境以確保訓練穩定；",
+      "B": "用於建立可重複使用的資料與特徵版本；",
+      "C": "用於集中管理模型版本、訓練紀錄與部署狀態；",
+      "D": "用於追蹤模型上線後的表現與漂移情況"
+    },
+    "answer": "C",
+    "explanation": "【正確答案是 C 解析：C 選項正確指出 Model Registry 的核心功能為集中式管理模型的版本、訓練紀錄與部署狀態。 其他選項：A 為運算資源管理；B 為 Feature Store 功能；D 為模型監控功能。】",
+    "_category": "subject1"
+  }
+]

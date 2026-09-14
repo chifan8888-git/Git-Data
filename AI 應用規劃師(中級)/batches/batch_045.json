@@ -1,0 +1,227 @@
+[
+  {
+    "id": "mock_317",
+    "num": 285,
+    "difficulty": 1,
+    "question": "在分類模型中，哪個指標可衡量負類被正確識別的能力？",
+    "options": {
+      "A": "Precision",
+      "B": "Specificity（特異度）",
+      "C": "Recall",
+      "D": "AUC"
+    },
+    "answer": "B",
+    "explanation": "Specificity 測量模型對於負類的識別能力，即 TN / (TN + FP)，在醫療等風險控制\n任務中非常重要。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_319",
+    "num": 286,
+    "difficulty": 4,
+    "question": "在回歸問題中，若模型 R-squared 為 0.95，但測試集 RMSE 非常大，可能的情況是？",
+    "options": {
+      "A": "模型學習率過低",
+      "B": "測試資料標籤為分類值",
+      "C": "訓練資料中存在異常值或過擬合",
+      "D": "模型參數未更新"
+    },
+    "answer": "C",
+    "explanation": "高 R² 但高 RMSE 通常為模型在訓練集擬合過度，對新資料泛化不佳，或資料中\n有極端值影響指標。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_320",
+    "num": 287,
+    "difficulty": 3,
+    "question": "哪一種策略可同時優化模型預測能力與解釋性？",
+    "options": {
+      "A": "使用黑箱模型 + 誤差調整",
+      "B": "改為無監督學習",
+      "C": "使用集成模型並搭配 SHAP 解釋特徵貢獻",
+      "D": "放棄特徵選擇流程"
+    },
+    "answer": "C",
+    "explanation": "集成模型可提升預測能力，而 SHAP 提供個別預測的透明解釋，是兼顧效能與可解\n釋性的組合。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_321",
+    "num": 288,
+    "difficulty": 1,
+    "question": "在二元分類中，Precision 指的是？",
+    "options": {
+      "A": "所有預測為正的樣本中，實際正的比例",
+      "B": "所有正樣本中被正確預測的比例",
+      "C": "所有錯誤預測比例",
+      "D": "預測時間與樣本量比值"
+    },
+    "answer": "A",
+    "explanation": "Precision = TP / (TP + FP)，代表模型在預測為正樣本時，有多少是正確的。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_323",
+    "num": 289,
+    "difficulty": 3,
+    "question": "當模型產生「高偏差（High Bias）」時，代表什麼問題？",
+    "options": {
+      "A": "模型太複雜，學得過多",
+      "B": "模型無法學習到資料模式",
+      "C": "模型訓練資料太少",
+      "D": "模型對新資料適應力太強"
+    },
+    "answer": "B",
+    "explanation": "高偏差代表模型學習能力不足（如模型太簡單），導致無法擬合訓練資料，需提升模\n型複雜度。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_324",
+    "num": 290,
+    "difficulty": 4,
+    "question": "若模型在交叉驗證中標準差高，可能表示什麼？",
+    "options": {
+      "A": "模型表現穩定",
+      "B": "各折間數據過度重複",
+      "C": "模型對資料切分極度敏感",
+      "D": "樣本數過多"
+    },
+    "answer": "C",
+    "explanation": "標準差大表示模型對不同資料切分結果差異大，可能導致泛化能力不穩。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_325",
+    "num": 291,
+    "difficulty": 5,
+    "question": "下列哪一種方法最適合用於「多分類模型」的 SHAP 值解釋？",
+    "options": {
+      "A": "SHAP 值僅適用二元分類",
+      "B": "使用一對一方式建構 SHAP 結果",
+      "C": "直接計算每類別的 class-wise SHAP 值",
+      "D": "使用 PCA 將類別數縮減後再進行解釋"
+    },
+    "answer": "C",
+    "explanation": "多分類模型中，SHAP 可針對每個類別獨立計算特徵貢獻，並以 softmax 前\nlogits 為基礎提供解釋。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_327",
+    "num": 292,
+    "difficulty": 3,
+    "question": "使用哪一種方法可避免模型調參時造成過度依賴特定資料切分？",
+    "options": {
+      "A": "固定隨機種子",
+      "B": "使用 K-fold Cross Validation",
+      "C": "擴大訓練資料",
+      "D": "選擇較小模型"
+    },
+    "answer": "B",
+    "explanation": "K-fold 可減少評估受特定資料切分影響，使調參結果更穩定可靠。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_328",
+    "num": 293,
+    "difficulty": 4,
+    "question": "哪一項特徵選擇策略可視為「Embedded」方法？",
+    "options": {
+      "A": "SHAP",
+      "B": "Lasso（L1 正則化）",
+      "C": "F-score 排序",
+      "D": "Recursive Feature Elimination"
+    },
+    "answer": "B",
+    "explanation": "Embedded 方法於模型訓練同時進行特徵選擇，L1 正則化具備此效果，可自動將\n不重要特徵係數歸零。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_329",
+    "num": 294,
+    "difficulty": 1,
+    "question": "下列哪一項用於評估回歸模型的誤差指標？",
+    "options": {
+      "A": "MAE（平均絕對誤差）",
+      "B": "Precision",
+      "C": "ROC AUC",
+      "D": "F1-score"
+    },
+    "answer": "A",
+    "explanation": "MAE 衡量預測值與實際值的平均誤差，是迴歸模型常用的評估方式之一。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_331",
+    "num": 295,
+    "difficulty": 1,
+    "question": "下列哪個指標常用於評估線性回歸模型的解釋能力？",
+    "options": {
+      "A": "ROC AUC",
+      "B": "R-squared（決定係數）",
+      "C": "F1-score",
+      "D": "Confusion Matrix"
+    },
+    "answer": "B",
+    "explanation": "R-squared 反映模型解釋變異的能力，數值越接近 1 表示越能擬合資料。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_332",
+    "num": 296,
+    "difficulty": 2,
+    "question": "何種方法可用於偵測模型是否過擬合？",
+    "options": {
+      "A": "增加特徵數",
+      "B": "使用相同資料測試模型",
+      "C": "比較訓練與測試集的準確率差異",
+      "D": "固定 batch size"
+    },
+    "answer": "C",
+    "explanation": "若訓練準確率高而測試表現明顯較差，表示模型可能過擬合訓練資料。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_333",
+    "num": 297,
+    "difficulty": 3,
+    "question": "哪一個圖形最常用來視覺化二元分類模型的效能？",
+    "options": {
+      "A": "樞紐分析圖",
+      "B": "ROC 曲線",
+      "C": "直方圖",
+      "D": "熱力圖"
+    },
+    "answer": "B",
+    "explanation": "ROC 曲線可視覺化模型的 TP 與 FP 之間的權衡，常用於比較不同分類模型效\n能。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_335",
+    "num": 298,
+    "difficulty": 3,
+    "question": "SHAP 值圖表中的「base value」表示什麼？",
+    "options": {
+      "A": "所有特徵的最大重要性",
+      "B": "預測為正類的門檻值",
+      "C": "沒有特徵時模型的平均預測值",
+      "D": "模型的最終分數"
+    },
+    "answer": "C",
+    "explanation": "SHAP base value 是模型在無任何特徵資訊時的預測值，個別特徵貢獻為此值的偏\n移。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_336",
+    "num": 299,
+    "difficulty": 5,
+    "question": "當模型使用大量特徵時，最容易遇到什麼問題？",
+    "options": {
+      "A": "過少訓練樣本",
+      "B": "模型反而變得簡單",
+      "C": "計算資源過剩",
+      "D": "特徵共線性與過擬合風險提高"
+    },
+    "answer": "D",
+    "explanation": "特徵數過多會增加模型複雜度與冗餘性，易造成過擬合與模型不穩定，需進行特徵\n選擇或正則化。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  }
+]

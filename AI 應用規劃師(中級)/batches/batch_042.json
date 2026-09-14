@@ -1,0 +1,227 @@
+[
+  {
+    "id": "mock_269",
+    "num": 240,
+    "difficulty": 1,
+    "question": "下列哪一項屬於資料清理流程的一部分？",
+    "options": {
+      "A": "設計神經網路架構",
+      "B": "將資料重新命名為英文",
+      "C": "移除重複資料列（duplicate rows）",
+      "D": "使用 Word2Vec 編碼"
+    },
+    "answer": "C",
+    "explanation": "移除重複列可減少資訊重複與資料偏斜，是資料清理的基本動作之一。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_270",
+    "num": 241,
+    "difficulty": 4,
+    "question": "下列何者最適合評估特徵與標籤之間的關聯性？",
+    "options": {
+      "A": "條件隨機場模型",
+      "B": "變異數分析（ANOVA）或皮爾森相關係數（Pearson Correlation）",
+      "C": "標準化後再編碼",
+      "D": "隨機森林深度計算"
+    },
+    "answer": "B",
+    "explanation": "ANOVA 用於類別對連續型標籤影響分析，皮爾森相關衡量連續變數之間線性關\n係，是特徵篩選常用方法。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_271",
+    "num": 242,
+    "difficulty": 1,
+    "question": "以下哪一種資料分割方式最適合處理不均衡分類問題？",
+    "options": {
+      "A": "隨機切割資料集",
+      "B": "按照資料順序分配",
+      "C": "Stratified Split（分層抽樣）",
+      "D": "單一批次訓練"
+    },
+    "answer": "C",
+    "explanation": "Stratified Split 可維持訓練與測試集中各類別的比例一致，避免類別不均造成偏\n誤。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_272",
+    "num": 243,
+    "difficulty": 2,
+    "question": "處理多欄位中存在強烈相依性的情形時，常使用哪項方法降低維度？",
+    "options": {
+      "A": "多重插補",
+      "B": "One-Hot Encoding",
+      "C": "主成分分析（PCA）",
+      "D": "標準差過濾"
+    },
+    "answer": "C",
+    "explanation": "PCA 可從多個相關特徵中萃取較少維度的主成分，有助減少資料冗餘並提升模型效\n率。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_273",
+    "num": 244,
+    "difficulty": 3,
+    "question": "處理時間序列資料時，哪一種欄位轉換最能捕捉週期性波動？",
+    "options": {
+      "A": "將時間欄位轉為字串",
+      "B": "轉換為日週月後再進行 sin/cos 週期編碼",
+      "C": "將時間欄位刪除",
+      "D": "轉換為 Timestamp 再轉乘 365"
+    },
+    "answer": "B",
+    "explanation": "sin/cos 編碼能將週期性時間資訊映射到圓周空間，有助於模型理解週期變化。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_274",
+    "num": 245,
+    "difficulty": 2,
+    "question": "若使用深度學習模型處理大量類別型特徵，常見的嵌入策略為？",
+    "options": {
+      "A": "One-Hot Encoding",
+      "B": "隨機森林轉換",
+      "C": "Embedding Layer（嵌入層）",
+      "D": "標準差排序"
+    },
+    "answer": "C",
+    "explanation": "Embedding Layer 可將高維稀疏類別轉為低維密集向量，是神經網路處理類別資\n料的主流方法。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_275",
+    "num": 246,
+    "difficulty": 5,
+    "question": "下列哪一項技術適合處理超高維特徵（如數萬欄位）的降維任務？",
+    "options": {
+      "A": "雙變數分析",
+      "B": "One-Hot Encoding",
+      "C": "隨機投影（Random Projection）",
+      "D": "時間差分轉換"
+    },
+    "answer": "C",
+    "explanation": "隨機投影能高效將高維資料壓縮為低維空間，且保留距離特性，適合處理維度爆炸\n問題。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_276",
+    "num": 247,
+    "difficulty": 1,
+    "question": "下列哪個作法可以提升類別型欄位的可預測性？",
+    "options": {
+      "A": "將所有類別刪除",
+      "B": "對類別進行目標導向編碼（如 Mean Encoding）",
+      "C": "降低模型學習率",
+      "D": "改為標準化處理"
+    },
+    "answer": "B",
+    "explanation": "Mean Encoding 將類別轉換為其對應目標變數的平均，有助捕捉語意關聯性，但\n需防止過擬合。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_277",
+    "num": 248,
+    "difficulty": 3,
+    "question": "將特徵欄位轉為多項式組合最常用於哪一類模型中？",
+    "options": {
+      "A": "RNN 時序模型",
+      "B": "隨機森林分類器",
+      "C": "線性模型與邏輯斯回歸",
+      "D": "強化學習代理人"
+    },
+    "answer": "C",
+    "explanation": "線性模型本身無法捕捉變數交互作用，加入高次項與交叉特徵能增加表現力。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_278",
+    "num": 249,
+    "difficulty": 2,
+    "question": "為避免資料集過度偏重某些欄位資訊，以下哪一策略能幫助平衡特徵重要性？",
+    "options": {
+      "A": "特徵隨機遮罩",
+      "B": "特徵標準化或正規化",
+      "C": "將高重要性欄位複製多份",
+      "D": "訓練過程中刪除部分樣本"
+    },
+    "answer": "B",
+    "explanation": "不同尺度的特徵會導致模型偏向大尺度欄位，透過標準化可使模型公平處理各欄\n位。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_279",
+    "num": 250,
+    "difficulty": 4,
+    "question": "下列哪一項處理方式可降低時間序列資料中的「自相關性偏誤」？",
+    "options": {
+      "A": "對樣本進行隨機打散",
+      "B": "轉換為類別型資料",
+      "C": "應用移動平均或差分轉換（Differencing）",
+      "D": "建立主成分特徵"
+    },
+    "answer": "C",
+    "explanation": "差分轉換可將序列中固定間距的趨勢去除，使資料更穩定且符合時間序列建模假\n設。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_280",
+    "num": 251,
+    "difficulty": 5,
+    "question": "針對缺失率高但具業務重要性的欄位，下列何者為最佳處理策略？",
+    "options": {
+      "A": "全部刪除該欄位",
+      "B": "隨機填補空值",
+      "C": "根據相似樣本進行補值或開闢遺失類別",
+      "D": "直接以 0 取代"
+    },
+    "answer": "C",
+    "explanation": "重要欄位不宜輕易刪除，應根據相似資料補值或將缺失視為一種資訊標記，避免資\n料流失或引入偏誤。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_281",
+    "num": 252,
+    "difficulty": 1,
+    "question": "對數轉換（log transformation）最常用於哪種資料特性？",
+    "options": {
+      "A": "常態分布資料",
+      "B": "離散類別欄位",
+      "C": "右偏斜（右尾長）的連續變數",
+      "D": "資料集中為零"
+    },
+    "answer": "C",
+    "explanation": "對數轉換可拉近右偏資料的分布，使其更接近常態，常用於處理金額、銷售量等變\n數。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_282",
+    "num": 253,
+    "difficulty": 2,
+    "question": "進行資料合併（merge）操作時，下列哪一項最應避免？",
+    "options": {
+      "A": "鍵值欄位出現重複",
+      "B": "欄位名稱相同但意義不同",
+      "C": "選錯 join 類型（如 inner vs outer）",
+      "D": "以上皆是"
+    },
+    "answer": "D",
+    "explanation": "資料合併易出現錯誤鍵值、錯誤 join 邏輯或欄位名稱混淆，需特別小心資料一致\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_283",
+    "num": 254,
+    "difficulty": 3,
+    "question": "下列何者是評估特徵「預測力」的重要方法？",
+    "options": {
+      "A": "特徵與模型損失值的平均差",
+      "B": "特徵與標籤間的互資訊（Mutual Information）",
+      "C": "標準差與最大值比率",
+      "D": "特徵名稱是否有意義"
+    },
+    "answer": "B",
+    "explanation": "互資訊可測量特徵對標籤的不確定性貢獻，是衡量非線性關係時的有效指標。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  }
+]

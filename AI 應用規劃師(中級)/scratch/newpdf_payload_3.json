@@ -1,0 +1,362 @@
+[
+  {
+    "subject": "subject2",
+    "id": "subject2_new_1",
+    "question": "若某數據點的Z 分數(Z-Score)= 2，請問代表下列哪一種意涵？",
+    "options": [
+      "A. 代表該數據點之原始數值為2；",
+      "B. 該數據點比平均值低2 個標準差；",
+      "C. 代表數據為異常值；",
+      "D. 該數據點比平均值高2 個標準差 B"
+    ],
+    "answer": "D"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_2",
+    "question": "使用Python 的pandas 套件處理各商品銷售數據(變數為 df)時，若需計算「總銷售額」欄位的敘述性統計量(如平均值、標準差等)，應使用下列哪一種語法？",
+    "options": [
+      "A. df['總銷售額'].sum()；",
+      "B. df['總銷售額'].describe()；",
+      "C. df['總銷售額'].sort_values()；",
+      "D. df['總銷售額'].stats() A"
+    ],
+    "answer": "B"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_3",
+    "question": "附圖為某資料之分佈圖，此圖資料之偏態(Skewness)值較有可能為下列哪個選項？",
+    "options": [
+      "A. Skewness < 0；",
+      "B. Skewness > 0；",
+      "C. Skewness = 0；",
+      "D. 無法計算 Skewness B"
+    ],
+    "answer": "A"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_4",
+    "question": "在進行資料前處理時，若使用Label Encoding 將類別變數轉換為數字型態，下列何者為最常見的潛在風險？",
+    "options": [
+      "A. 無法處理缺值；",
+      "B. 會引入類別之間的虛假順序關係；",
+      "C. 無法擴展至新資料；",
+      "D. 記憶體佔用過高 C"
+    ],
+    "answer": "B"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_5",
+    "question": "在進行資料分析時，會遇到類別型(Categorical)與數值型 (Numerical) 資料格式。關於這兩種資料格式的處理，下列敘述何者不正確？",
+    "options": [
+      "A. One-Hot 編碼(One-Hot Encoding)會將類別變數轉換為多維二元向量，適用於無序(Nominal)類別資料，但在高基數(High Cardinality)特徵下可能造成維度爆炸問題；",
+      "B. 標籤編碼(Label Encoding)會以整數表示不同類別，若應用於無序(Nominal)資料，可能導致模型誤將編碼值解讀為具數值大小關係的特徵；",
+      "C. 標準化(Standardization)透過將資料平移與縮放，使其平均值為 0、標準差為 1，可在多數距離型演算法中改善收斂速度，並同時將數值範圍壓縮至 0 至 1 之間；",
+      "D. 對連續變數進行分箱(Binning)可提升模型可解釋性，但若分段方式未依據資料分佈特性設計，可能導致資訊損失或邊界偏誤 C"
+    ],
+    "answer": "C"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_6",
+    "question": "在資料庫的ACID 特性中，下列何者為「原子性(Atomicity)」的正確定義？",
+    "options": [
+      "A. 所有資料欄位必須為相同型別；",
+      "B. 每次交易需以批次方式執行；",
+      "C. 交易不可分割，需完全成功或完全失敗；",
+      "D. 系統會自動同步交易資料至所有節點 B"
+    ],
+    "answer": "C"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_7",
+    "question": "在進行數值特徵的標準化(Normalization)時，若資料中存在極端值(Outliers)，下列哪一種方法最適合使用？",
+    "options": [
+      "A. Min-Max 正規化(Min-Max Scaling)；",
+      "B. Z-score 標準化(Z-score Normalization)；",
+      "C. 穩健縮放(Robust Scaling)；",
+      "D. 標準分箱(Standard Binning) C"
+    ],
+    "answer": "C"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_8",
+    "question": "下列哪一種情境最適合應用異常偵測(Anomaly Detection)技術？",
+    "options": [
+      "A. 根據歷史銷售資料預測特定商品在旺季期間是否會出現供貨短缺，以提前調整庫存策略；",
+      "B. 透過信用風險模型預測顧客是否可能發生違約，以輔助核貸決策；",
+      "C. 即時分析金融交易資料流，偵測與平常交易行為明顯不同的可疑交易紀錄；",
+      "D. 監控線上服務平台的使用者登入次數，預測次日的登入量變化趨勢 C"
+    ],
+    "answer": "C"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_9",
+    "question": "若一家公司需即時監控大量物聯網裝置的異常行為，下列哪一種組合最適合此應用？",
+    "options": [
+      "A. 傳統關聯式資料庫+圖形視覺化；",
+      "B. 批次資料處理+雲端備份；",
+      "C. 大數據平台+即時資料分析技術；",
+      "D. Word 文件+手動標註 A"
+    ],
+    "answer": "C"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_10",
+    "question": "在處理分類問題時，若某一類樣本數明顯少於其他類別，研究人員可能採用隨機過採樣(Random Oversampling)以平衡資料比例，此方法最常造成下列哪一種問題？",
+    "options": [
+      "A. 增加過擬合風險；",
+      "B. 降低模型的收斂速度；",
+      "C. 減少資料總筆數數量；",
+      "D. 導致訓練資料欄位缺失 D"
+    ],
+    "answer": "A"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_11",
+    "question": "下列何者為同態加密(Homomorphic Encryption)技術的核心特性？",
+    "options": [
+      "A. 將資料轉換為匿名識別碼以隱藏身分；",
+      "B. 對資料進行標準化處理以提升模型精度；",
+      "C. 自動偵測與排除異常值；",
+      "D. 可直接在加密狀態下進行數據運算"
+    ],
+    "answer": "D"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_12",
+    "question": "某組資料共10 項標籤如下： A, A, A, A, A, B, B, B, B, B 若該標籤僅有A、B 兩種，請問這組資料的「正規化吉尼不純度(Normalized Gini impurity)」為何？",
+    "options": [
+      "A. 0；",
+      "B. 0.42；",
+      "C. 0.84；",
+      "D. 1 C"
+    ],
+    "answer": "D"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_13",
+    "question": "某家客服中心統計資料發現，平均每小時會接到約20 通顧客來電，但每分鐘的來電數量不固定，可能為 0、1、2 通不等。這些來電事件彼此獨立，且在短時間內，發生的機率與時間長短成正比。若要以機率模型描述「每分鐘接到幾通來電」的機率分佈，下列哪一種最適合使用？",
+    "options": [
+      "A. 均勻分佈(Uniform distribution)；",
+      "B. 指數分佈(Exponential distribution)；",
+      "C. 卜瓦松分佈(Poisson distribution)；",
+      "D. 常態分佈(Normal distribution) A"
+    ],
+    "answer": "C"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_14",
+    "question": "某金融科技公司以Z 分數(Z-Score)監控交易金額異常狀況。若交易金額平均為新台幣2,000 元，標準差為400 元，某筆交易金額為 3,200元，且公司以|Z| ≥ 3 判定為異常值(Outlier)，下列判斷何者最為正確？",
+    "options": [
+      "A. 該筆交易的Z 分數為 3，應標記為異常值；",
+      "B. 該筆交易的Z 分數為 2.5，屬於合理變異範圍；",
+      "C. 該筆交易的Z 分數為 2，顯示模型標準差估計過高；",
+      "D. 該筆交易的Z 分數為 1.5，無須納入異常檢測 B"
+    ],
+    "answer": "A"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_15",
+    "question": "某人工智慧團隊使用分散式資料庫(Distributed Database)儲存模型訓練資料，並在更新訓練樣本時啟用多節點交易。若其中一個節點在交易過程中發生錯誤，但系統仍確保整體資料不會出現部分更新、最終狀態維持一致，下列何者最能說明此現象？",
+    "options": [
+      "A. 系統透過原子性(Atomicity)確保交易必須全部成功或全部回復(Rollback)；",
+      "B. 系統透過一致性(Consistency)確保交易完成後資料符合完整性規則；",
+      "C. 系統透過隔離性(Isolation)避免多筆交易同時存取或修改相同資料；",
+      "D. 系統透過持久性(Durability)確保交易一旦提交，其結果將永久保留於資料庫中 C"
+    ],
+    "answer": "A"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_16",
+    "question": "某製造企業導入上萬台物聯網(IoT)感測器以進行設備健康監測。系統需在毫秒級回應異常事件，並同時將完整資料保留於雲端供後續 AI 模型訓練與分析。若企業希望兼顧即時性、資料完整性與可擴展性，下列哪一種資料流程設計最符合此目標？",
+    "options": [
+      "A. 感測器 → 雲端 API Gateway → 分散式資料庫→ 批次特徵工程(→ 模型推論；",
+      "B. 感測器 → MQTT Broker → 雲端資料倉儲→ 即時儀表板→ 模型再訓練；",
+      "C. 感測器 → 邊緣運算節點→ 流式資料處理框架(Stream Processing Framework)→ 雲端資料湖→ 模型推論；",
+      "D. 感測器 → 本地快取層→ RESTful API → 雲端報表系統)→ 模型批次更新 D"
+    ],
+    "answer": "C"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_17",
+    "question": "某資料分析師設計在業務績效報告時，希望單一頁面中同時呈現多區域、不同產品線的銷售趨勢變化，並確保主管能在短時間內掌握整體資料走向。若依據 Edward Rolf Tufte 的數據密度(Data Density) 原則，下列哪一種設計方式最能符合該概念？",
+    "options": [
+      "A. 將每個區域的銷售資料分成多張獨立折線圖，以避免資訊重疊；",
+      "B. 使用顏色區分產品線，於同一圖表中整合多區域趨勢線，保持比例一致且標註清晰；",
+      "C. 移除所有輔助線與標籤，僅保留主要折線以凸顯趨勢；",
+      "D. 將資料轉換為表格形式，確保數值精確呈現並取代圖表視覺化 D"
+    ],
+    "answer": "B"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_18",
+    "question": "某投資研究員希望分析四檔科技類股(A、B、C、D)每日報酬率的變化趨勢，以判斷這些股票之間是否存在高度相關性與共變動性，並評估投資組合分散風險的程度。若研究員希望以單一圖表快速呈現各股票間的關聯強度與方向，下列哪一種視覺化呈現方式最適合？",
+    "options": [
+      "A. 為每檔股票各自繪製直方圖(Histogram)以比較報酬率分佈；",
+      "B. 針對任兩檔股票繪製散佈圖並加上趨勢線(Regression Line)；",
+      "C. 使用雙軸折線圖(Dual-axis Line Chart)同時顯示四檔股價變化；",
+      "D. 熱力圖(Heatmap)配合相關係數矩陣(Correlation Matrix) C"
+    ],
+    "answer": "D"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_19",
+    "question": "某研究團隊以單樣本t 檢定(one-sample t-test)檢驗「新行銷策略後的平均月銷售額是否與原本的 100 萬元不同」，顯著水準設定為 α=0.05。檢定結果顯示：p 值=0.08，且95%信賴區間為 [95 萬元, 108 萬元]。根據上述結果，下列敘述何者正確？",
+    "options": [
+      "A. 因p 值< 0.05，可拒絕虛無假設；",
+      "B. 若顯著水準改為0.10，仍不顯著；",
+      "C. 因100 萬元落在信賴區間內，無法拒絕虛無假設；",
+      "D. 信賴區間寬度僅與顯著水準有關 A"
+    ],
+    "answer": "C"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_20",
+    "question": "年第二次AI 應用規劃師-中級能力鑑定【公告試題】 ",
+    "options": [
+      "A. 建立資料湖(Data Lake)結構，並以Apache Spark 或Ray 進行分散式資料預處理與特徵抽取，再串接至模型訓練管線(Pipeline)；",
+      "B. 採用單節點高效能伺服器搭配批次處理模式，集中執行資料清理與格式轉換；",
+      "C. 將所有文字資料轉換為向量，並以資料庫索引方式直接餵入語言模型訓練；",
+      "D. 使用生成式模型先行自動清理資料內容，再將結果輸入至下游訓練流程 A"
+    ],
+    "answer": "UNKNOWN"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_21",
+    "question": "某電商資料團隊繪製顧客單筆消費金額的箱型圖後發現：四分位距(IQR)範圍極小，但上鬚線拉得很長，且在高金額區域有多筆離群值。若希望協助行銷部門依據消費層級設計分群策略，下列哪一種視覺化方式最有助於凸顯不同消費層級間的差異？",
+    "options": [
+      "A. 以對數刻度繪製箱型圖或長條圖，放大高金額消費族群的變化差異；",
+      "B. 移除所有離群值，確保資料呈現集中分布；",
+      "C. 採用等距分箱(Equal-Width Binning)方式分群；",
+      "D. 改以折線圖(Line Chart)觀察時間變化趨勢 C"
+    ],
+    "answer": "A"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_22",
+    "question": "某串流影音平台運用關聯規則學習(Association Rule Learning)分析用戶的觀影行為，發現若使用者觀看了科幻影集，則有較高機率接著觀看超級英雄電影。分析顯示，同時觀看這兩種類型的使用者約佔全部觀影紀錄的12%，而觀看科幻影集的使用者中，有50%也觀看了超級英雄電影，該規則的提升度(Lift)為1.8。根據上述資訊，下列哪一項推論最為正確？",
+    "options": [
+      "A. 支持度(Support)過低，代表此規則不具任何商業價值；",
+      "B. 提升度(Lift)大於 1 表示兩種類型內容無關，僅屬於隨機重疊；",
+      "C. 信賴度(Confidence)為 50%，代表觀看科幻影集者有明顯傾向觀看超級英雄電影；",
+      "D. 同時觀看比例僅12%，代表兩種類型互相排斥 D"
+    ],
+    "answer": "C"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_23",
+    "question": "年第二次AI 應用規劃師-中級能力鑑定【公告試題】 ",
+    "options": [
+      "A. 確保每個分位值的結果完全精確，即使計算時間較長；",
+      "B. 利用機器學習模型預測分位數位置，以減少統計計算量；",
+      "C. 僅能對結構化資料進行批次處理，無法應用於即時資料流；",
+      "D. 在可容忍誤差範圍內，快速估算分位值以支援即時分析 A"
+    ],
+    "answer": "UNKNOWN"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_24",
+    "question": "若在高維度(>500 維)的資料上應用DBSCAN(Density-Based Spatial Clustering of Applications with Noise)演算法，卻發現所有資料點皆被判定為雜訊(Noise)，下列何者為最有可能的原因？",
+    "options": [
+      "A. 高維下距離變化趨同，導致 ε(Epsilon)閾值選擇失效；",
+      "B. 使用錯誤的距離函數(Distance Function)；",
+      "C. MinPts 參數設得太小；",
+      "D. 資料過度標準化導致特徵消失 D"
+    ],
+    "answer": "A"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_25",
+    "question": "某團隊在開發風險評估模型時，使用主成分分析(Principal Component Analysis, PCA)進行降維。輸入資料包含三個數值欄位：「交易金額(單位：新台幣)」、「交易次數(次／月)」與「年齡(歲)」，其數值量級分別約為10⁵、10¹與10²。分析人員直接將原始數據帶入 PCA，結果第一主成分(PC1)幾乎完全由「交易金額」主導。下列哪一項作法或判斷最合理？",
+    "options": [
+      "A. 這是正常現象，金額本身變異較大，應主導主要成分；",
+      "B. 若改用特徵選擇法，可自動解決變數量級問題；",
+      "C. 可刪除「交易金額」欄位以平衡各主成分的影響；",
+      "D. 在進行PCA 前應先進行標準化(Standardization)，以避免因數值尺度差異造成特徵偏誤 C"
+    ],
+    "answer": "D"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_26",
+    "question": "某行銷團隊想了解「廣告預算」與「銷售金額」之間的關聯程度。經繪製散佈圖後發現兩者呈現明顯線性趨勢，且資料中無明顯離群值(Outliers)。若希望衡量兩者之間線性關係的強度與方向，下列哪一種方法最適合？",
+    "options": [
+      "A. 均方根誤差(Root Mean Squared Error, RMSE)；",
+      "B. 共變異數(Covariance)；",
+      "C. 皮爾森相關係數(Pearson Correlation Coefficient)；",
+      "D. 平均絕對誤差(Mean Absolute Error, MAE) B"
+    ],
+    "answer": "C"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_27",
+    "question": "年第二次AI 應用規劃師-中級能力鑑定【公告試題】 ",
+    "options": [
+      "A. 因樣本數極大，可直接以常態分佈近似二項分佈(Binomial Distribution)；",
+      "B. 只有當 np 與 n(1-p) 皆大於 5 時，才能以常態分佈作近似；",
+      "C. 常態近似只適用於p=0.5 的情況；",
+      "D. 無論樣本數多大，二項分佈都不能以常態分佈近似 A"
+    ],
+    "answer": "UNKNOWN"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_28",
+    "question": "某電信公司導入生成式AI 客服系統，利用過去對話紀錄與用戶行為資料訓練語言模型，在資料治理與合規審查過程中，團隊發現模型可能會在回答中生成包含真實姓名、電話或交易資訊的內容。為確保系統符合個資法及生成式AI 的安全與隱私要求，下列哪一項作法最符合實務可行及法規原則？",
+    "options": [
+      "A. 在訓練資料前進行資料匿名化(Anonymization)或偽匿名化(Pseudonymization)處理，並建立輸出內容稽核機制；",
+      "B. 改以強化學習(Reinforcement Learning)微調模型，使模型學習避免產出真實資訊；",
+      "C. 採用同態加密(Homomorphic Encryption)以加密所有文字輸入，確保模型無法辨識任何個資；",
+      "D. 僅設定模型回覆時不顯示用戶姓名，即可視為隱私防護完成 D"
+    ],
+    "answer": "A"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_29",
+    "question": "某金融機構的量化分析師在建立資產風險評估模型時，發現報酬率資料分佈明顯非對稱，且出現多次極端損失事件，使得傳統假設常態分佈的模型無法準確反映真實風險。若希望在不依賴常態分佈假設的前提下，採取更能捕捉資料極端情況的建模策略，下列哪一種方法最為合適？",
+    "options": [
+      "A. 採用線性迴歸模型(Linear Regression Model)，以常態分佈殘差(Residuals)為基礎進行推估；",
+      "B. 使用平均數(Mean)與標準差(Standard Deviation)估計波動範圍；",
+      "C. 將資料裁剪至 ±3σ 範圍內以排除異常值影響；",
+      "D. 採用分位數回歸模型(Quantile Regression Model)，聚焦於尾部分位(Tail Quantiles)以評估極端風險 B"
+    ],
+    "answer": "D"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_30",
+    "question": "年第二次AI 應用規劃師-中級能力鑑定【公告試題】 ",
+    "options": [
+      "A. 將「按讚」視為節點(Node)，與使用者建立邊(Edge)；",
+      "B. 將「按讚」資訊作為邊的屬性(Property)儲存，連結使用者與被按讚的貼文節點；",
+      "C. 把「按讚」資訊直接寫入使用者節點中作為屬性；",
+      "D. 建立「按讚紀錄表」並將資料存入關聯式資料庫 B"
+    ],
+    "answer": "UNKNOWN"
+  }
+]

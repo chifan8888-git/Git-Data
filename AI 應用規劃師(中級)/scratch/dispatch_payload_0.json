@@ -1,0 +1,482 @@
+[
+  {
+    "id": "mock_296",
+    "question": "為了驗證資料清理流程是否正確，下列哪一指標最具參考價值？",
+    "options": {
+      "A": "欄位名稱是否相同",
+      "B": "資料列總數",
+      "C": "資料清理前後模型表現變化",
+      "D": "欄位型別是否統一"
+    },
+    "answer": "C",
+    "orig_expl": "若清理後模型準確度大幅下降或異常提升，應重新檢查是否造成資料損失或資訊洩\n漏。"
+  },
+  {
+    "id": "mock_297",
+    "question": "針對類別型資料進行 Target Encoding 時，需特別注意？",
+    "options": {
+      "A": "編碼後是否為正整數",
+      "B": "資料集中是否有重複列",
+      "C": "是否使用整體平均造成資料洩漏（Data Leakage）",
+      "D": "模型是否支援文字欄位"
+    },
+    "answer": "C",
+    "orig_expl": "Target Encoding 直接使用標籤資訊進行編碼，若在全資料上計算會導致預測時使\n用未來資訊。"
+  },
+  {
+    "id": "mock_298",
+    "question": "若某特徵在訓練集與測試集的分佈差異極大，可能導致什麼現象？",
+    "options": {
+      "A": "模型表現更穩定",
+      "B": "測試集準確率過高",
+      "C": "模型泛化能力下降",
+      "D": "模型權重初始化錯誤"
+    },
+    "answer": "",
+    "orig_expl": ""
+  },
+  {
+    "id": "mock_299",
+    "question": "將欄位名稱如 \"Revenue_2023_Q1\" 改為 \"revenue_q1\" 屬於哪一類操作？",
+    "options": {
+      "A": "特徵選擇",
+      "B": "資料正規化",
+      "C": "欄位標準命名與清理",
+      "D": "時間差值轉換"
+    },
+    "answer": "C",
+    "orig_expl": "欄位命名一致性有助於資料流維護與模型追蹤，是前處理流程中的一環。"
+  },
+  {
+    "id": "mock_300",
+    "question": "在訓練模型前加入 PCA 處理的主要目的是？",
+    "options": {
+      "A": "強化資料隨機性",
+      "B": "增加資料筆數",
+      "C": "降低維度並移除多餘訊息",
+      "D": "模擬訓練誤差"
+    },
+    "answer": "C",
+    "orig_expl": "PCA 可降低維度、去除冗餘特徵、提升模型效率，並可能減少共線性問題。"
+  },
+  {
+    "id": "mock_301",
+    "question": "哪一項評估指標適用於二元分類且衡量整體準確程度？",
+    "options": {
+      "A": "F1-score",
+      "B": "ROC AUC",
+      "C": "Accuracy",
+      "D": "MAE"
+    },
+    "answer": "C",
+    "orig_expl": "Accuracy 是所有預測中正確的比例，適用於類別平衡時的整體模型準確性評估。"
+  },
+  {
+    "id": "mock_302",
+    "question": "下列哪一項指標可同時考慮 Precision 與 Recall 的平衡？",
+    "options": {
+      "A": "F1-score",
+      "B": "Specificity",
+      "C": "MSE",
+      "D": "Adjusted R-squared"
+    },
+    "answer": "A",
+    "orig_expl": ""
+  },
+  {
+    "id": "mock_303",
+    "question": "若模型在訓練集表現優異但測試集表現不佳，最可能發生了什麼現象？",
+    "options": {
+      "A": "欠擬合（Underfitting）",
+      "B": "特徵選擇錯誤",
+      "C": "過擬合（Overfitting）",
+      "D": "標準化過度"
+    },
+    "answer": "C",
+    "orig_expl": "過擬合指模型記住訓練資料細節，無法泛化至新資料，通常表現在測試集效果下\n降。"
+  },
+  {
+    "id": "mock_304",
+    "question": "使用 K-Fold Cross Validation 的主要優點為何？",
+    "options": {
+      "A": "減少特徵數量",
+      "B": "提升模型複雜度",
+      "C": "更穩健地評估模型泛化能力",
+      "D": "避免模型使用 GPU"
+    },
+    "answer": "C",
+    "orig_expl": "K-Fold 將資料多次切分訓練與驗證，平均得分更能反映模型在不同資料上的表現穩\n定性。"
+  },
+  {
+    "id": "mock_305",
+    "question": "對於迴歸問題，以下哪一項為常見評估指標？",
+    "options": {
+      "A": "Accuracy",
+      "B": "RMSE（均方根誤差）",
+      "C": "ROC AUC",
+      "D": "Precision"
+    },
+    "answer": "B",
+    "orig_expl": "RMSE 衡量預測值與實際值的偏差程度，是評估連續型輸出回歸模型的重要指標。"
+  },
+  {
+    "id": "mock_306",
+    "question": "在調整超參數時使用 Grid Search 的缺點為何？",
+    "options": {
+      "A": "不支援數值型特徵",
+      "B": "容易忽略最佳參數",
+      "C": "計算成本高，尤其在高維空間",
+      "D": "無法與交叉驗證結合"
+    },
+    "answer": "",
+    "orig_expl": ""
+  },
+  {
+    "id": "mock_307",
+    "question": "哪一種特徵重要性技術可量化個別預測中每個特徵的貢獻？",
+    "options": {
+      "A": "Gini Impurity",
+      "B": "SHAP 值（SHapley Additive exPlanations）",
+      "C": "L1 正則化係數",
+      "D": "Gain from XGBoost"
+    },
+    "answer": "B",
+    "orig_expl": "SHAP 提供一致且可加總的特徵貢獻分數，可針對每筆樣本說明模型預測依據。"
+  },
+  {
+    "id": "mock_308",
+    "question": "使用 Random Search 進行超參數調整的好處為？",
+    "options": {
+      "A": "不需訓練模型",
+      "B": "能遍歷所有參數組合",
+      "C": "能以較低成本探索大空間",
+      "D": "可自動清理資料"
+    },
+    "answer": "C",
+    "orig_expl": "Random Search 透過隨機抽樣探索參數空間，成本較低且更可能發現佳解。"
+  },
+  {
+    "id": "mock_309",
+    "question": "在評估分類模型的混淆矩陣中，真正例（True Positive）代表什麼？",
+    "options": {
+      "A": "預測為正類且實際為負類",
+      "B": "預測與實際皆為正類",
+      "C": "實際為正類但預測錯誤",
+      "D": "模型未進行預測"
+    },
+    "answer": "B",
+    "orig_expl": "True Positive 指模型正確預測出正類樣本，是模型偵測能力的重要衡量之一。"
+  },
+  {
+    "id": "mock_310",
+    "question": "下列哪一特徵選擇方法屬於 Wrapper 方法？",
+    "options": {
+      "A": "Variance Threshold",
+      "B": "Recursive Feature Elimination（RFE）",
+      "C": "Mutual Information",
+      "D": "SHAP"
+    },
+    "answer": "B",
+    "orig_expl": "Wrapper 方法如 RFE 是透過模型反覆訓練並移除特徵來選擇最佳子集，較具計算"
+  },
+  {
+    "id": "mock_311",
+    "question": "模型過度擬合的常見特徵是？",
+    "options": {
+      "A": "訓練與測試誤差都很高",
+      "B": "測試準確率高於訓練集",
+      "C": "訓練表現良好，但測試集表現差",
+      "D": "模型不收斂"
+    },
+    "answer": "C",
+    "orig_expl": "過擬合是指模型記住訓練集細節，泛化能力弱，造成在測試集上準確率顯著下降。"
+  },
+  {
+    "id": "mock_312",
+    "question": "哪一項特徵篩選方法屬於 Filter 類型？",
+    "options": {
+      "A": "Backward Elimination",
+      "B": "Lasso Regression",
+      "C": "Information Gain（資訊增益）",
+      "D": "Recursive Feature Elimination"
+    },
+    "answer": "C",
+    "orig_expl": "Filter 方法根據特徵與標籤間統計關係進行選擇，如資訊增益、皮爾森相關、卡方\n檢定等。"
+  },
+  {
+    "id": "mock_313",
+    "question": "下列哪一技術可用於視覺化多個特徵對模型預測結果的整體貢獻？",
+    "options": {
+      "A": "ROC 曲線",
+      "B": "混淆矩陣",
+      "C": "SHAP Summary Plot",
+      "D": "Cross Validation 折線圖"
+    },
+    "answer": "C",
+    "orig_expl": "SHAP Summary Plot 同時顯示各特徵的 SHAP 值分布與重要性排序，是全球可解\n釋性工具代表之一。"
+  },
+  {
+    "id": "mock_314",
+    "question": "若模型在驗證集中表現不穩定（波動劇烈），最可能的原因為？",
+    "options": {
+      "A": "資料量過多",
+      "B": "驗證資料切分方式有偏或樣本不足",
+      "C": "模型太簡單",
+      "D": "沒有使用正則化"
+    },
+    "answer": "B",
+    "orig_expl": ""
+  },
+  {
+    "id": "mock_315",
+    "question": "Permutation Importance 的核心邏輯為？",
+    "options": {
+      "A": "逐步增加特徵數",
+      "B": "打亂某特徵值，觀察模型表現變化",
+      "C": "使用 SHAP 值累加總和",
+      "D": "測試資料做投影轉換"
+    },
+    "answer": "B",
+    "orig_expl": "Permutation Importance 評估打亂某特徵後模型性能下降的幅度，進而推估該特\n徵的重要性。"
+  },
+  {
+    "id": "mock_316",
+    "question": "當處理高維稀疏資料時，最佳的特徵選擇策略為？",
+    "options": {
+      "A": "使用 SHAP 值篩選前 50% 特徵",
+      "B": "直接丟入深度學習模型",
+      "C": "L1 正則化（Lasso）進行稀疏特徵壓縮",
+      "D": "模型合併特徵並增高維度"
+    },
+    "answer": "C",
+    "orig_expl": "Lasso 可將不重要特徵權重逼近零，天然具特徵選擇效果，對稀疏資料表現佳。"
+  },
+  {
+    "id": "mock_317",
+    "question": "在分類模型中，哪個指標可衡量負類被正確識別的能力？",
+    "options": {
+      "A": "Precision",
+      "B": "Specificity（特異度）",
+      "C": "Recall",
+      "D": "AUC"
+    },
+    "answer": "B",
+    "orig_expl": "Specificity 測量模型對於負類的識別能力，即 TN / (TN + FP)，在醫療等風險控制\n任務中非常重要。"
+  },
+  {
+    "id": "mock_318",
+    "question": "ROC AUC 越接近 1 的意義為何？",
+    "options": {
+      "A": "模型擬合過度",
+      "B": "模型越無效",
+      "C": "模型分類效果越好",
+      "D": "模型越適合回歸"
+    },
+    "answer": "",
+    "orig_expl": ""
+  },
+  {
+    "id": "mock_319",
+    "question": "在回歸問題中，若模型 R-squared 為 0.95，但測試集 RMSE 非常大，可能的情況是？",
+    "options": {
+      "A": "模型學習率過低",
+      "B": "測試資料標籤為分類值",
+      "C": "訓練資料中存在異常值或過擬合",
+      "D": "模型參數未更新"
+    },
+    "answer": "C",
+    "orig_expl": "高 R² 但高 RMSE 通常為模型在訓練集擬合過度，對新資料泛化不佳，或資料中\n有極端值影響指標。"
+  },
+  {
+    "id": "mock_320",
+    "question": "哪一種策略可同時優化模型預測能力與解釋性？",
+    "options": {
+      "A": "使用黑箱模型 + 誤差調整",
+      "B": "改為無監督學習",
+      "C": "使用集成模型並搭配 SHAP 解釋特徵貢獻",
+      "D": "放棄特徵選擇流程"
+    },
+    "answer": "C",
+    "orig_expl": "集成模型可提升預測能力，而 SHAP 提供個別預測的透明解釋，是兼顧效能與可解\n釋性的組合。"
+  },
+  {
+    "id": "mock_321",
+    "question": "在二元分類中，Precision 指的是？",
+    "options": {
+      "A": "所有預測為正的樣本中，實際正的比例",
+      "B": "所有正樣本中被正確預測的比例",
+      "C": "所有錯誤預測比例",
+      "D": "預測時間與樣本量比值"
+    },
+    "answer": "A",
+    "orig_expl": "Precision = TP / (TP + FP)，代表模型在預測為正樣本時，有多少是正確的。"
+  },
+  {
+    "id": "mock_322",
+    "question": "下列哪個指標對於評估多分類模型的整體區分能力最有幫助？",
+    "options": {
+      "A": "Recall",
+      "B": "ROC AUC",
+      "C": "Macro F1-score",
+      "D": ""
+    },
+    "answer": "",
+    "orig_expl": ""
+  },
+  {
+    "id": "mock_323",
+    "question": "當模型產生「高偏差（High Bias）」時，代表什麼問題？",
+    "options": {
+      "A": "模型太複雜，學得過多",
+      "B": "模型無法學習到資料模式",
+      "C": "模型訓練資料太少",
+      "D": "模型對新資料適應力太強"
+    },
+    "answer": "B",
+    "orig_expl": "高偏差代表模型學習能力不足（如模型太簡單），導致無法擬合訓練資料，需提升模\n型複雜度。"
+  },
+  {
+    "id": "mock_324",
+    "question": "若模型在交叉驗證中標準差高，可能表示什麼？",
+    "options": {
+      "A": "模型表現穩定",
+      "B": "各折間數據過度重複",
+      "C": "模型對資料切分極度敏感",
+      "D": "樣本數過多"
+    },
+    "answer": "C",
+    "orig_expl": "標準差大表示模型對不同資料切分結果差異大，可能導致泛化能力不穩。"
+  },
+  {
+    "id": "mock_325",
+    "question": "下列哪一種方法最適合用於「多分類模型」的 SHAP 值解釋？",
+    "options": {
+      "A": "SHAP 值僅適用二元分類",
+      "B": "使用一對一方式建構 SHAP 結果",
+      "C": "直接計算每類別的 class-wise SHAP 值",
+      "D": "使用 PCA 將類別數縮減後再進行解釋"
+    },
+    "answer": "C",
+    "orig_expl": "多分類模型中，SHAP 可針對每個類別獨立計算特徵貢獻，並以 softmax 前\nlogits 為基礎提供解釋。"
+  },
+  {
+    "id": "mock_326",
+    "question": "模型預測錯誤類型中，False Negative 對醫療應用代表？",
+    "options": {
+      "A": "不重要的錯誤",
+      "B": "將健康者誤判為有病",
+      "C": "",
+      "D": ""
+    },
+    "answer": "",
+    "orig_expl": ""
+  },
+  {
+    "id": "mock_327",
+    "question": "使用哪一種方法可避免模型調參時造成過度依賴特定資料切分？",
+    "options": {
+      "A": "固定隨機種子",
+      "B": "使用 K-fold Cross Validation",
+      "C": "擴大訓練資料",
+      "D": "選擇較小模型"
+    },
+    "answer": "B",
+    "orig_expl": "K-fold 可減少評估受特定資料切分影響，使調參結果更穩定可靠。"
+  },
+  {
+    "id": "mock_328",
+    "question": "哪一項特徵選擇策略可視為「Embedded」方法？",
+    "options": {
+      "A": "SHAP",
+      "B": "Lasso（L1 正則化）",
+      "C": "F-score 排序",
+      "D": "Recursive Feature Elimination"
+    },
+    "answer": "B",
+    "orig_expl": "Embedded 方法於模型訓練同時進行特徵選擇，L1 正則化具備此效果，可自動將\n不重要特徵係數歸零。"
+  },
+  {
+    "id": "mock_329",
+    "question": "下列哪一項用於評估回歸模型的誤差指標？",
+    "options": {
+      "A": "MAE（平均絕對誤差）",
+      "B": "Precision",
+      "C": "ROC AUC",
+      "D": "F1-score"
+    },
+    "answer": "A",
+    "orig_expl": "MAE 衡量預測值與實際值的平均誤差，是迴歸模型常用的評估方式之一。"
+  },
+  {
+    "id": "mock_330",
+    "question": "在多模型比較中，何種方法可進行模型統計顯著性差異檢定？",
+    "options": {
+      "A": "Chi-square Test",
+      "B": "Paired t-test 或 Wilcoxon Signed-Rank Test",
+      "C": "",
+      "D": ""
+    },
+    "answer": "",
+    "orig_expl": ""
+  },
+  {
+    "id": "mock_331",
+    "question": "下列哪個指標常用於評估線性回歸模型的解釋能力？",
+    "options": {
+      "A": "ROC AUC",
+      "B": "R-squared（決定係數）",
+      "C": "F1-score",
+      "D": "Confusion Matrix"
+    },
+    "answer": "B",
+    "orig_expl": "R-squared 反映模型解釋變異的能力，數值越接近 1 表示越能擬合資料。"
+  },
+  {
+    "id": "mock_332",
+    "question": "何種方法可用於偵測模型是否過擬合？",
+    "options": {
+      "A": "增加特徵數",
+      "B": "使用相同資料測試模型",
+      "C": "比較訓練與測試集的準確率差異",
+      "D": "固定 batch size"
+    },
+    "answer": "C",
+    "orig_expl": "若訓練準確率高而測試表現明顯較差，表示模型可能過擬合訓練資料。"
+  },
+  {
+    "id": "mock_333",
+    "question": "哪一個圖形最常用來視覺化二元分類模型的效能？",
+    "options": {
+      "A": "樞紐分析圖",
+      "B": "ROC 曲線",
+      "C": "直方圖",
+      "D": "熱力圖"
+    },
+    "answer": "B",
+    "orig_expl": "ROC 曲線可視覺化模型的 TP 與 FP 之間的權衡，常用於比較不同分類模型效\n能。"
+  },
+  {
+    "id": "mock_334",
+    "question": "模型精度變動幅度大，可能與下列哪一項因素最相關？",
+    "options": {
+      "A": "預測值類別數太少",
+      "B": "標籤編碼方式一致",
+      "C": "",
+      "D": ""
+    },
+    "answer": "",
+    "orig_expl": ""
+  },
+  {
+    "id": "mock_335",
+    "question": "SHAP 值圖表中的「base value」表示什麼？",
+    "options": {
+      "A": "所有特徵的最大重要性",
+      "B": "預測為正類的門檻值",
+      "C": "沒有特徵時模型的平均預測值",
+      "D": "模型的最終分數"
+    },
+    "answer": "C",
+    "orig_expl": "SHAP base value 是模型在無任何特徵資訊時的預測值，個別特徵貢獻為此值的偏\n移。"
+  }
+]

@@ -1,0 +1,227 @@
+[
+  {
+    "id": "mock_253",
+    "num": 225,
+    "difficulty": 3,
+    "question": "當欄位為偏態分布時，下列哪種標準化方法最合適？",
+    "options": {
+      "A": "Z-score 標準化",
+      "B": "最小最大正規化",
+      "C": "分位數轉換（Quantile Transformation）",
+      "D": "主成分分析"
+    },
+    "answer": "C",
+    "explanation": "分位數轉換可將任何分布映射至接近常態分布，有助於提高模型穩定性與表現。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_254",
+    "num": 226,
+    "difficulty": 1,
+    "question": "下列哪一種方法最常用來偵測數值型欄位的異常值？",
+    "options": {
+      "A": "Tokenization",
+      "B": "One-Hot Encoding",
+      "C": "IQR（四分位距）方法",
+      "D": "SMOTE 取樣"
+    },
+    "answer": "C",
+    "explanation": "IQR 方法透過 Q1、Q3 定義合理區間，將超出區間範圍視為潛在異常點，適合快\n速檢查異常。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_255",
+    "num": 227,
+    "difficulty": 4,
+    "question": "處理類別型特徵時，若資料稀疏且類別數量過多，最佳的處理方式是？",
+    "options": {
+      "A": "One-Hot Encoding",
+      "B": "Label Encoding",
+      "C": "降維編碼或類別聚類（如 Target Encoding）",
+      "D": "將類別轉為連續數值"
+    },
+    "answer": "C",
+    "explanation": "大量稀疏類別會造成 One-Hot 爆炸性膨脹，應採用編碼策略（如 target\nencoding、mean encoding）進行壓縮。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_256",
+    "num": 228,
+    "difficulty": 2,
+    "question": "下列哪一個步驟能提升模型對不平衡類別的辨識能力？",
+    "options": {
+      "A": "資料歸一化",
+      "B": "欄位命名優化",
+      "C": "權重調整或過取樣技術（如 SMOTE）",
+      "D": "降低學習率"
+    },
+    "answer": "C",
+    "explanation": "類別不平衡會導致模型偏向多數類別，可透過過取樣、欠取樣或加權 loss function\n來平衡預測結果。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_257",
+    "num": 229,
+    "difficulty": 3,
+    "question": "在標準化與正規化的選擇上，若模型為基於距離的演算法（如 KNN），建議使用？",
+    "options": {
+      "A": "原始資料直接建模",
+      "B": "均值補值後再分類",
+      "C": "Min-Max Normalization",
+      "D": "決策樹特徵重要性"
+    },
+    "answer": "C",
+    "explanation": "KNN 等距離相關模型對尺度敏感，建議使用最小-最大正規化（Min-Max）將數值\n縮放至相同區間。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_258",
+    "num": 230,
+    "difficulty": 4,
+    "question": "若在特徵工程中建立了多個欄位彼此高度相關，可能產生什麼問題？",
+    "options": {
+      "A": "模型變得更準確",
+      "B": "計算速度變快",
+      "C": "共線性問題導致模型不穩定或冗餘",
+      "D": "有助於正規化模型"
+    },
+    "answer": "C",
+    "explanation": "高度共線性（Multicollinearity）會影響模型係數穩定性與解釋力，應透過變異數膨\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_259",
+    "num": 231,
+    "difficulty": 2,
+    "question": "資料標準化（Standardization）後的資料，其平均值與標準差為？",
+    "options": {
+      "A": "平均值為 1，標準差為 0",
+      "B": "平均值為 0，標準差為 1",
+      "C": "平均值為 0.5，標準差為 0.5",
+      "D": "不確定，需依資料分布決定"
+    },
+    "answer": "B",
+    "explanation": "Z-score 標準化會將資料調整為平均值 0、標準差 1，有助於消除不同欄位量級影\n響。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_260",
+    "num": 232,
+    "difficulty": 5,
+    "question": "若欄位中包含大量重複與無意義的單一值（如全為“None”），應如何處理？",
+    "options": {
+      "A": "進行主成分分析",
+      "B": "自動補值為平均數",
+      "C": "刪除該欄或以資料缺乏性進行標記",
+      "D": "做正規化處理"
+    },
+    "answer": "C",
+    "explanation": "幾乎無變異的欄位對模型無貢獻，建議剔除或標記為無資訊特徵，避免影響模型訓\n練效率與準確性。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_261",
+    "num": 233,
+    "difficulty": 1,
+    "question": "進行資料分割時，常用的「訓練集 / 測試集」比例為何？",
+    "options": {
+      "A": "10% / 90%",
+      "B": "80% / 20%",
+      "C": "50% / 50%",
+      "D": "20% / 80%"
+    },
+    "answer": "B",
+    "explanation": "常見比例為 80% 訓練資料、20% 測試資料，提供模型足夠學習機會並保留驗證空\n間。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_263",
+    "num": 234,
+    "difficulty": 3,
+    "question": "處理類別不平衡問題時，SMOTE 技術的核心邏輯為？",
+    "options": {
+      "A": "將所有樣本複製一次",
+      "B": "只保留多數類別",
+      "C": "以 KNN 為基礎生成合成少數類別樣本",
+      "D": "降低模型學習率"
+    },
+    "answer": "C",
+    "explanation": "SMOTE 利用鄰近樣本內插新數據點，平衡資料分佈，改善預測偏差。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_264",
+    "num": 235,
+    "difficulty": 4,
+    "question": "將時間欄位轉為模型可處理特徵時，以下哪一種轉換方式最常見？",
+    "options": {
+      "A": "將日期轉為圖像",
+      "B": "轉換為日、週、月或是否假日等衍生欄位",
+      "C": "將時間欄位刪除",
+      "D": "Label Encoding 日期字串"
+    },
+    "answer": "B",
+    "explanation": "時間特徵常轉為年/月/日/時/是否假日等形式，捕捉時間性模式與季節性波動。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_265",
+    "num": 236,
+    "difficulty": 2,
+    "question": "為避免「資料洩漏（Data Leakage）」，以下哪個操作應特別注意？",
+    "options": {
+      "A": "將所有資料正規化後再分割",
+      "B": "測試集標籤提前給模型學習",
+      "C": "模型訓練前檢查欄位類型",
+      "D": "使用 AutoML 建模流程"
+    },
+    "answer": "B",
+    "explanation": "資料洩漏常因訓練過程中使用了不該見到的資訊（如測試標籤），導致評估失真。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_266",
+    "num": 237,
+    "difficulty": 5,
+    "question": "在自然語言處理中，將文字轉為向量的常見方法為？",
+    "options": {
+      "A": "PCA",
+      "B": "Token Truncation",
+      "C": "Word Embedding（如 Word2Vec、GloVe）",
+      "D": "SMOTE 編碼"
+    },
+    "answer": "C",
+    "explanation": "文字需轉為向量供模型理解，Word2Vec、GloVe 等 embedding 技術可保留語意\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_267",
+    "num": 238,
+    "difficulty": 2,
+    "question": "對資料集進行標準化處理的主要原因為何？",
+    "options": {
+      "A": "加快 CSV 匯出速度",
+      "B": "強化資料隱私保護",
+      "C": "消除欄位尺度差異，避免影響模型學習",
+      "D": "減少特徵重要性"
+    },
+    "answer": "C",
+    "explanation": "模型學習若受欄位尺度差異影響會導致偏誤，標準化可提升穩定性與準確性。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_268",
+    "num": 239,
+    "difficulty": 3,
+    "question": "若特徵間具有非線性關係，哪一方法有助於改善模型表現？",
+    "options": {
+      "A": "使用原始欄位直接建模",
+      "B": "刪除所有數值型欄位",
+      "C": "建立高次特徵（如平方、立方）",
+      "D": "使用 ID 作為模型輸入"
+    },
+    "answer": "C",
+    "explanation": "非線性關係可透過建立高次特徵（polynomial features）輔助模型捕捉複雜模式。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  }
+]

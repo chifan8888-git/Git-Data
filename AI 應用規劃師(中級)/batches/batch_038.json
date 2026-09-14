@@ -1,0 +1,227 @@
+[
+  {
+    "id": "mock_203",
+    "num": 180,
+    "difficulty": 3,
+    "question": "下列哪一項為模型壓縮（Model Compression）常見的技術方法？",
+    "options": {
+      "A": "逐層過擬合",
+      "B": "特徵過採樣",
+      "C": "量化與知識蒸餾",
+      "D": "全模型 L2 正則化"
+    },
+    "answer": "C",
+    "explanation": "量化可降低精度提升效能，蒸餾則用小模型學習大型模型表現，是壓縮常見策略。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_204",
+    "num": 181,
+    "difficulty": 4,
+    "question": "在模型部署架構中，若需支援多版本切換與 A/B Test，建議採用哪種機制？",
+    "options": {
+      "A": "單一模型綁定端點",
+      "B": "離線模型打包部署",
+      "C": "模型版本控制與路由分流（Model Routing）",
+      "D": "使用硬編碼模型路徑"
+    },
+    "answer": "C",
+    "explanation": "透過模型服務平台（如 KFServing、SageMaker），可設定流量分流與版本控制支\n援 A/B 測試。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_205",
+    "num": 182,
+    "difficulty": 1,
+    "question": "若某模型使用者需透過應用系統存取其功能，最常用的部署方式為？",
+    "options": {
+      "A": "將模型嵌入手機程式碼",
+      "B": "以 REST API 方式部署模型服務",
+      "C": "使用指令列手動執行模型",
+      "D": "使用 Jupyter Notebook 作為伺服器端"
+    },
+    "answer": "B",
+    "explanation": "REST API 是最常見模型部署方式，可供其他系統透過標準 HTTP 方法呼叫模型結\n果。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_206",
+    "num": 183,
+    "difficulty": 2,
+    "question": "下列哪一項屬於 MLOps 的核心目標之一？",
+    "options": {
+      "A": "增加資料儲存空間",
+      "B": "降低演算法複雜度",
+      "C": "建立模型從開發到部署的自動化與可追溯流程",
+      "D": "精簡前端顯示設計"
+    },
+    "answer": "C",
+    "explanation": "MLOps 將 DevOps 精神導入 AI 流程，強調版本控管、自動部署與監控等全流程\n整合。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_207",
+    "num": 184,
+    "difficulty": 3,
+    "question": "在系統部署環境評估中，選擇「邊緣部署」的最大考量為？",
+    "options": {
+      "A": "模型需支援多語言輸出",
+      "B": "模型需即時反應且網路不穩定",
+      "C": "模型資料來自資料湖",
+      "D": "模型必須支援 GPU 加速"
+    },
+    "answer": "B",
+    "explanation": "邊緣部署（Edge Deployment）適用於需即時處理、低延遲、或無法依賴雲端網路\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_208",
+    "num": 185,
+    "difficulty": 5,
+    "question": "若某組合模型包含三種子模型，其整合預測方式為「加權平均」，此方法屬於哪一類集成策略？",
+    "options": {
+      "A": "Boosting",
+      "B": "Stacking",
+      "C": "Bagging",
+      "D": "加權融合（Weighted Voting）"
+    },
+    "answer": "D",
+    "explanation": "加權融合可依模型表現給不同預測加權，是集成學習中簡單但實用的預測結合方\n式。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_209",
+    "num": 186,
+    "difficulty": 2,
+    "question": "當部署一個 NLP 模型進入微服務架構中，建議的封裝單位為？",
+    "options": {
+      "A": "模型直接寫入資料庫中",
+      "B": "以 Python 模組內建於 Web Framework",
+      "C": "以容器化方式（如 Docker）部署成獨立服務",
+      "D": "嵌入 HTML 端頁面處理"
+    },
+    "answer": "C",
+    "explanation": "容器化可確保部署環境一致，利於快速擴展、版本更新與可攜性，適合部署於微服\n務架構。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_210",
+    "num": 187,
+    "difficulty": 3,
+    "question": "在模型推論服務設計中，若需支援大量使用者同時查詢，最應優化哪一部分？",
+    "options": {
+      "A": "訓練資料格式",
+      "B": "模型超參數",
+      "C": "推論服務的水平擴展與快取機制",
+      "D": "開發者編程風格"
+    },
+    "answer": "C",
+    "explanation": "服務需考量高併發，應強化負載平衡、快取策略（如 Redis）與部署擴展能力。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_211",
+    "num": 188,
+    "difficulty": 1,
+    "question": "在模型部署前，確認輸入資料格式與類型正確的步驟屬於？",
+    "options": {
+      "A": "模型優化",
+      "B": "推論封裝",
+      "C": "輸入驗證（Input Validation）",
+      "D": "訓練集打亂"
+    },
+    "answer": "C",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_212",
+    "num": 189,
+    "difficulty": 2,
+    "question": "使用 ONNX 格式轉換模型的主要目的是？",
+    "options": {
+      "A": "優化模型輸出樣式",
+      "B": "增加訓練樣本",
+      "C": "提升模型跨平台兼容性與推論效率",
+      "D": "加速資料清理"
+    },
+    "answer": "C",
+    "explanation": "ONNX（Open Neural Network Exchange）是一種中立格式，可讓模型在多種框\n架或硬體平台上運行。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_213",
+    "num": 190,
+    "difficulty": 3,
+    "question": "部署 AI 模型至 Kubernetes 集群的主要優點是什麼？",
+    "options": {
+      "A": "減少模型精度下降",
+      "B": "自動水平擴展與容錯能力",
+      "C": "增強模型收斂能力",
+      "D": "改善資料前處理速度"
+    },
+    "answer": "B",
+    "explanation": "Kubernetes 支援自動擴展、資源監控與高可用性，是 MLOps 部署的常見平台。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_214",
+    "num": 191,
+    "difficulty": 4,
+    "question": "若一組模型需每日根據新資料進行再訓練並自動上線，最佳解決方案是？",
+    "options": {
+      "A": "只使用雲端儲存",
+      "B": "觸發 Notebook 手動執行",
+      "C": "建立自動化流水線（Pipeline）並加入部署節點",
+      "D": "測試多個模型後人工選擇"
+    },
+    "answer": "C",
+    "explanation": "使用自動化 ML pipeline（如 Kubeflow、Vertex AI）可實現資料→訓練→部署的\n全流程更新。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_215",
+    "num": 192,
+    "difficulty": 2,
+    "question": "下列哪一項是判斷模型部署「穩定性」的常用指標？",
+    "options": {
+      "A": "測試資料集平均長度",
+      "B": "模型參數命名方式",
+      "C": "預測延遲（Latency）與錯誤率（Error Rate）",
+      "D": "特徵數量"
+    },
+    "answer": "C",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_216",
+    "num": 193,
+    "difficulty": 3,
+    "question": "若要在部署中實現模型的即時推論與非同步請求處理，建議採用哪種技術架構？",
+    "options": {
+      "A": "批次處理排程器",
+      "B": "RPC 模式封裝",
+      "C": "非同步任務隊列（如 Celery + FastAPI）",
+      "D": "Excel 自動巨集"
+    },
+    "answer": "C",
+    "explanation": "非同步任務架構可接收請求後排入隊列處理，適合大量請求並避免阻塞。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_217",
+    "num": 194,
+    "difficulty": 5,
+    "question": "在實務部署中，若需同時管理模型效能、資源使用率與行為記錄，最佳工具為？",
+    "options": {
+      "A": "模型壓縮器",
+      "B": "語意分群模組",
+      "C": "模型監控平台（如 Prometheus + Grafana）",
+      "D": "決策樹視覺化模塊"
+    },
+    "answer": "C",
+    "explanation": "如 Prometheus 可蒐集效能指標，Grafana 用於視覺化與警示，是部署監控主流\n組合。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  }
+]

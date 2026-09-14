@@ -1,0 +1,107 @@
+[
+  {
+    "id": "mock_494",
+    "num": 420,
+    "difficulty": 4,
+    "question": "AI 成本模型若未納入組織流程與文化轉型的支出，屬於低估哪一類成本？",
+    "options": {
+      "A": "資料標註成本",
+      "B": "模型監控費用",
+      "C": "組織變革隱性成本（Change Management Cost）",
+      "D": "API 運算支出"
+    },
+    "answer": "C",
+    "explanation": "文化導入、內部培訓與流程變動會產生隱性成本，常被忽視但實際投入高。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_495",
+    "num": 421,
+    "difficulty": 1,
+    "question": "導入 AI 技術後可使用哪一財務指標評估「多久可回收初期投入」？",
+    "options": {
+      "A": "Precision",
+      "B": "Payback Period（回收期）",
+      "C": "Recall",
+      "D": "F1-score"
+    },
+    "answer": "B",
+    "explanation": "回收期為投資回本時間，是最直觀的投入與效益平衡點。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_496",
+    "num": 422,
+    "difficulty": 3,
+    "question": "企業導入 AI 系統時，需根據什麼要素來規劃「持續性預算」？",
+    "options": {
+      "A": "UI 整合效率",
+      "B": "使用者回饋風格",
+      "C": "模型維運成本、效能監控與資料更新頻率",
+      "D": "電腦鍵盤品牌"
+    },
+    "answer": "C",
+    "explanation": "模型維運包含監控、人力、再訓練與雲端資源，是預算規劃的關鍵要素。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_497",
+    "num": 423,
+    "difficulty": 5,
+    "question": "AI 導入流程中，若沒有對使用者進行流程教育與介面設計優化，最可能導致哪種後果？",
+    "options": {
+      "A": "模型浮點誤差累積",
+      "B": "成本過低無法驗證",
+      "C": "系統使用率低落與價值未能實現",
+      "D": "預測結果不穩定"
+    },
+    "answer": "C",
+    "explanation": "即使模型精準，若使用者不理解、不接受或無法操作，也無法轉化為實際成效。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_498",
+    "num": 424,
+    "difficulty": 2,
+    "question": "下列哪一指標可用來評估流程自動化對於錯誤率的影響？",
+    "options": {
+      "A": "Automation Error Rate",
+      "B": "Total Data Volume",
+      "C": "TCO",
+      "D": "Training Epoch"
+    },
+    "answer": "A",
+    "explanation": "Automation Error Rate 衡量自動化程序中發生錯誤的頻率，是品質管理的重要指\n標。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_499",
+    "num": 425,
+    "difficulty": 4,
+    "question": "企業規劃導入流程自動化時，哪一因素最應先評估？",
+    "options": {
+      "A": "RPA 軟體介面顏色",
+      "B": "每月可用雲端儲存量",
+      "C": "流程標準化程度與重複性高低",
+      "D": "預測變數數量"
+    },
+    "answer": "C",
+    "explanation": "流程可自動化的前提是步驟清晰、標準化與可預測，是可行性評估的第一關鍵。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_500",
+    "num": 426,
+    "difficulty": 3,
+    "question": "導入 AI 解決方案時，若將效益集中於短期 ROI 而忽略長期組織改造與彈性建設，將導致什麼風險？",
+    "options": {
+      "A": "預測誤差標準差下降",
+      "B": "模型訓練時間加速",
+      "C": "組織錯失可擴展性與競爭優勢",
+      "D": "作業流程高度自動化"
+    },
+    "answer": "C",
+    "explanation": "AI 應平衡短期報酬與長期價值，否則只強調立即成效將使組織在變革與創新上失去\n競爭力。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  }
+]

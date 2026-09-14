@@ -1,0 +1,227 @@
+[
+  {
+    "id": "mock_98",
+    "num": 90,
+    "difficulty": 1,
+    "question": "大型語言模型的「token」是指什麼？",
+    "options": {
+      "A": "一段固定長度的文章",
+      "B": "一個語義標籤",
+      "C": "分割後的最小語言單位，如單詞、子詞或符號",
+      "D": "使用者的身分識別碼"
+    },
+    "answer": "C",
+    "explanation": "Token 是語言模型處理的基本單位，可能是單詞、子詞甚至標點，視分詞方式而\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_99",
+    "num": 91,
+    "difficulty": 3,
+    "question": "使用 ChatGPT 撰寫合約草稿時，應如何降低風險？",
+    "options": {
+      "A": "信任輸出內容即可直接使用",
+      "B": "僅使用 ChatGPT 3.0",
+      "C": "結合法律專業審查並標註非正式來源",
+      "D": "關閉 API 日誌紀錄"
+    },
+    "answer": "C",
+    "explanation": "合約草稿屬高風險應用，應由專業人員審查內容正確性並註明其為 AI 草案，避免\n法律風險。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_100",
+    "num": 92,
+    "difficulty": 4,
+    "question": "在多語言多模態 LLM 訓練中，常面臨以下哪一挑戰？",
+    "options": {
+      "A": "每種模態需專屬 GPU",
+      "B": "多模態資料需對齊對應語言語意",
+      "C": "模型無法進行反向傳播",
+      "D": "無需對模態進行正規化"
+    },
+    "answer": "B",
+    "explanation": "多模態多語言模型需對齊不同語言的語意與影像或音訊的特徵空間，是資料與建模\n的難點之一。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_101",
+    "num": 93,
+    "difficulty": 1,
+    "question": "多模態 AI 最基本的定義是指？",
+    "options": {
+      "A": "可同時處理多種資料模態（如文字、圖像、語音）",
+      "B": "專門用於處理語音資料的 AI 模型",
+      "C": "僅能處理結構化表格與時間序列",
+      "D": "所有模型都需基於卷積網路訓練"
+    },
+    "answer": "A",
+    "explanation": "多模態 AI 指模型能同時理解與整合不同來源的資訊，例如語音＋影像＋文字。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_102",
+    "num": 94,
+    "difficulty": 2,
+    "question": "BLIP 模型屬於下列哪一類多模態系統？",
+    "options": {
+      "A": "語音到語音轉換",
+      "B": "圖像與文字雙模態處理",
+      "C": "結構化數據與表格分析",
+      "D": "時間序列與圖形學結合"
+    },
+    "answer": "B",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_103",
+    "num": 95,
+    "difficulty": 3,
+    "question": "以下哪個模組常用於融合多模態資訊（如語音與文字）？",
+    "options": {
+      "A": "Positional Encoding",
+      "B": "Gated Fusion Network",
+      "C": "Self-Attention Masking",
+      "D": "Local Feature Alignment"
+    },
+    "answer": "B",
+    "explanation": "Gated Fusion 可動態調整不同模態的資訊權重，是多模態整合中常見策略之一。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_104",
+    "num": 96,
+    "difficulty": 4,
+    "question": "CLIP 模型的主要訓練策略為？",
+    "options": {
+      "A": "無監督圖像生成",
+      "B": "預測圖像中物體位置",
+      "C": "對比學習（Contrastive Learning）對齊圖文表示",
+      "D": "分類模擬知識轉移"
+    },
+    "answer": "C",
+    "explanation": "CLIP 同時訓練圖像與文字編碼器，透過對比學習讓配對資料的向量靠近，非配對遠\n離。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_105",
+    "num": 97,
+    "difficulty": 5,
+    "question": "在多模態 AI 應用中，哪一種技術可讓模型推論時只使用一種模態仍維持效果？",
+    "options": {
+      "A": "模態遮罩訓練（Modality Dropout）",
+      "B": "蒸餾式增強（Distillation Boosting）",
+      "C": "多頭分類融合（Multi-head Voting）",
+      "D": "強化式補償策略"
+    },
+    "answer": "A",
+    "explanation": "Modality Dropout 可在訓練過程中隨機遮罩模態，強化模型在單模態缺失下的魯\n棒性。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_106",
+    "num": 98,
+    "difficulty": 1,
+    "question": "以下何者為多模態應用的實際案例？",
+    "options": {
+      "A": "圖像分類",
+      "B": "聲音辨識",
+      "C": "圖像＋文字生成電子病歷摘要",
+      "D": "純結構化數據分析"
+    },
+    "answer": "C",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_107",
+    "num": 99,
+    "difficulty": 2,
+    "question": "Vision-Language Transformer 與純文字 Transformer 最大差異為？",
+    "options": {
+      "A": "前者引入多模態位置編碼與 cross-attention",
+      "B": "後者可處理圖像資訊",
+      "C": "前者基於 LSTM 架構",
+      "D": "後者使用雙向 GRU"
+    },
+    "answer": "A",
+    "explanation": "多模態 Transformer 如 ViLT 使用 Cross-Attention 處理語言與圖像之間的交互\n語意，是其主要特徵。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_108",
+    "num": 100,
+    "difficulty": 3,
+    "question": "下列哪一項可作為多模態學習中「對齊」失敗的風險指標？",
+    "options": {
+      "A": "同一樣本下模態向量間餘弦相似度過低",
+      "B": "模型參數數量變少",
+      "C": "過度擬合訓練集",
+      "D": "輸入長度太短"
+    },
+    "answer": "A",
+    "explanation": "若語言與圖像模態對應向量距離過大，代表語意未能對齊，可能造成推論不穩。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_109",
+    "num": 101,
+    "difficulty": 4,
+    "question": "多模態模型中使用「共享嵌入空間」的目的為何？",
+    "options": {
+      "A": "減少訓練資料的需要",
+      "B": "將不同模態資料映射至可比較的語意表示",
+      "C": "分離模態避免干擾",
+      "D": "增加隱藏層深度"
+    },
+    "answer": "B",
+    "explanation": "將不同模態投影至共享嵌入空間可進行比較與融合，是跨模態推理的關鍵技術。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_110",
+    "num": 102,
+    "difficulty": 1,
+    "question": "以下哪一任務屬於多模態生成應用？",
+    "options": {
+      "A": "BERT 預訓練",
+      "B": "視覺問答（VQA）",
+      "C": "表格數據回歸",
+      "D": "圖像分類"
+    },
+    "answer": "B",
+    "explanation": "VQA 需整合視覺與語言資訊，讓模型回答與圖像內容相關的自然語言問題。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_111",
+    "num": 103,
+    "difficulty": 2,
+    "question": "多模態模型中使用「Late Fusion」的特點是什麼？",
+    "options": {
+      "A": "在輸入端融合模態資訊",
+      "B": "分別處理各模態，於輸出層融合結果",
+      "C": "僅用於純圖像模型",
+      "D": "將模態資訊轉為一維向量再拼接"
+    },
+    "answer": "B",
+    "explanation": "Late Fusion 指各模態獨立處理後，在最後一層進行結果整合，適用於模態關聯性\n較弱或結構差異大場景。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_112",
+    "num": 104,
+    "difficulty": 3,
+    "question": "哪一種方法能幫助多模態 AI 模型處理來自不同時間步的資料？",
+    "options": {
+      "A": "卷積金字塔結構",
+      "B": "時序對齊（Temporal Alignment）",
+      "C": "分層編碼器",
+      "D": "固定權重共享"
+    },
+    "answer": "B",
+    "explanation": "多模態資料若時間對齊失誤，會導致語意錯誤。Temporal Alignment 是解決跨模\n態時序對應的關鍵策略。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  }
+]

@@ -1,0 +1,227 @@
+[
+  {
+    "id": "mock_80",
+    "num": 75,
+    "difficulty": 5,
+    "question": "下列關於大型語言模型偏見與風險的敘述，何者正確？",
+    "options": {
+      "A": "僅需訓練更多資料即可完全消除偏見",
+      "B": "LLM 不具備任何風險，因其非監督式學習",
+      "C": "模型可能強化訓練語料中隱含的性別、種族偏見",
+      "D": "模型輸出偏見時皆可即時自我修正"
+    },
+    "answer": "C",
+    "explanation": "LLM 會從大量資料中學習語言模式，但也可能無意中學習並強化偏見，必須透過審\n查、過濾與對抗訓練技術進行調整。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_81",
+    "num": 76,
+    "difficulty": 1,
+    "question": "以下哪一個架構最適合建置企業內部的 LLM 聊天助理？",
+    "options": {
+      "A": "YOLOv8 + Kafka",
+      "B": "RNN + LSTM Stack",
+      "C": "RAG 架構（檢索增強生成）",
+      "D": "GAN + Discriminator Pair"
+    },
+    "answer": "C",
+    "explanation": "RAG 架構整合知識庫檢索與 LLM 文本生成能力，能回答企業內部知識性問題，是\n企業部署熱門選擇。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_82",
+    "num": 77,
+    "difficulty": 3,
+    "question": "在語言模型部署策略中，使用「API 模型即服務（Model as a Service, MaaS）」的最大優勢為何？",
+    "options": {
+      "A": "模型參數可被用戶直接修改",
+      "B": "用戶可免維護硬體與資源配置",
+      "C": "可提升 BLEU 分數表現",
+      "D": "使用者能即時更新模型權重"
+    },
+    "answer": "B",
+    "explanation": "透過 MaaS 平台提供推論 API，開發者可使用 LLM 而無需部署與訓練基礎設\n施，是低成本快速整合方式。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_84",
+    "num": 78,
+    "difficulty": 4,
+    "question": "以下哪一種架構最適合處理「影片+語音+文字」輸入的生成式 AI 任務？",
+    "options": {
+      "A": "單一模態自注意力網路",
+      "B": "Transformer Encoder-Only 模型",
+      "C": "三模態融合架構（Multi-modal Fusion）",
+      "D": "純卷積堆疊網路"
+    },
+    "answer": "C",
+    "explanation": "處理多種模態需設計模態融合模組（如 cross-attention 或 gated fusion），以整\n合語音、視覺與語言的語意資訊。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_85",
+    "num": 79,
+    "difficulty": 3,
+    "question": "在大型語言模型的推論階段，以下哪一個參數能控制輸出內容的隨機性？",
+    "options": {
+      "A": "Learning Rate",
+      "B": "Perplexity",
+      "C": "Temperature",
+      "D": "BLEU Score"
+    },
+    "answer": "C",
+    "explanation": "Temperature 控制 softmax 分布的尖銳程度，值越高輸出越隨機、越低則越保守\n與確定。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_86",
+    "num": 80,
+    "difficulty": 5,
+    "question": "哪一種方法最常用於縮減 LLM 的推論成本，但保留原始知識能力？",
+    "options": {
+      "A": "蒸餾模型（Knowledge Distillation）",
+      "B": "Zero-Padding",
+      "C": "Token 隨機重排",
+      "D": "Full-parameter fine-tuning"
+    },
+    "answer": "A",
+    "explanation": "模型蒸餾將大型模型知識遷移至較小模型，有助於提升部署效率與資源效益。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_88",
+    "num": 81,
+    "difficulty": 4,
+    "question": "為了降低生成式 AI 模型因訓練語料偏差導致的輸出歧視，下列何者屬於常見的緩解策略？",
+    "options": {
+      "A": "簡化語料語彙量",
+      "B": "使用過濾語料與公平性對抗訓練",
+      "C": "增加最大長度上限",
+      "D": "僅使用英文資料集"
+    },
+    "answer": "B",
+    "explanation": "透過語料審查、平衡數據來源與訓練公平性識別器，是降低偏見風險的重要方法。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_89",
+    "num": 82,
+    "difficulty": 1,
+    "question": "在 LLM 的語言理解過程中，以下哪一層負責整合不同位置之間的語意？",
+    "options": {
+      "A": "全連接層",
+      "B": "池化層",
+      "C": "多頭自注意力層（Multi-Head Self-Attention）",
+      "D": "Softmax 層"
+    },
+    "answer": "C",
+    "explanation": "多頭注意力可同時從不同子空間擷取語意資訊，是理解上下文關聯的核心機制。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_90",
+    "num": 83,
+    "difficulty": 4,
+    "question": "哪一項生成式 AI 技術可用於讓模型以自身輸出作為下個時間步的輸入？",
+    "options": {
+      "A": "自注意力掩碼（Causal Masking）",
+      "B": "隨機詞替換",
+      "C": "自監督嵌入學習",
+      "D": "損失正則化"
+    },
+    "answer": "A",
+    "explanation": "自回歸模型（如 GPT）使用 Causal Mask 限制只能看到先前位置輸入，避免洩漏\n未來詞資訊。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_92",
+    "num": 84,
+    "difficulty": 2,
+    "question": "下列哪一種方法能提升圖像生成模型對於複雜語意描述的理解？",
+    "options": {
+      "A": "使用 K-means 分群對圖像編碼",
+      "B": "調整標籤權重",
+      "C": "將語意嵌入向量與圖像特徵結合輸入模型",
+      "D": "將每個像素編碼為單詞"
+    },
+    "answer": "C",
+    "explanation": "將語意嵌入（text embedding）與圖像特徵結合，能讓模型更準確對齊文字與圖像\n生成的關聯。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_93",
+    "num": 85,
+    "difficulty": 3,
+    "question": "以下哪一個概念說明了大型語言模型即使無微調，也能執行新任務的能力？",
+    "options": {
+      "A": "啟發式規則",
+      "B": "自監督學習",
+      "C": "零樣本學習（Zero-Shot Learning）",
+      "D": "蒸餾轉移學習"
+    },
+    "answer": "C",
+    "explanation": "Zero-Shot Learning 是 LLM 的強項，能直接透過提示語執行任務，無需額外標訓\n資料。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_94",
+    "num": 86,
+    "difficulty": 4,
+    "question": "以下哪一技術被應用於穩定圖像生成模型的訓練過程，避免模式崩壞（Mode Collapse）？",
+    "options": {
+      "A": "交叉注意力蒸餾",
+      "B": "對抗訓練配對樣本",
+      "C": "多階段噪聲擾動與去噪（Diffusion Process）",
+      "D": "共享詞嵌入與影像特徵空間"
+    },
+    "answer": "C",
+    "explanation": "Diffusion Model 透過多階段去噪方式穩定訓練過程，相較 GAN 更不易出現\nMode Collapse 問題。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_95",
+    "num": 87,
+    "difficulty": 3,
+    "question": "在問答系統中，若希望生成回覆包含來自特定資料庫的最新資訊，最適合哪種策略？",
+    "options": {
+      "A": "使用預訓練 Word2Vec",
+      "B": "加入資料庫檢索模組結合 RAG 架構",
+      "C": "加強訓練 Decoder 隱藏層",
+      "D": "使用非監督式主成分分析"
+    },
+    "answer": "B",
+    "explanation": "使用 RAG 可結合即時檢索結果與生成模型，解決 LLM 知識過時或缺乏特定資料\n的問題。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_96",
+    "num": 88,
+    "difficulty": 5,
+    "question": "哪一個架構允許模型在語言輸入提示語中內嵌「動作控制」或「指令執行」能力？",
+    "options": {
+      "A": "LSTM 編碼器",
+      "B": "ViT 圖像識別模組",
+      "C": "Toolformer",
+      "D": "Autoencoder"
+    },
+    "answer": "C",
+    "explanation": "Toolformer 可在語言模型中自動學會何時觸發外部工具（如計算機、搜尋 API），\n具任務執行與控制力。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_97",
+    "num": 89,
+    "difficulty": 2,
+    "question": "生成式 AI 在教育應用上可能出現的風險包括下列何者？",
+    "options": {
+      "A": "增加教師監督效果",
+      "B": "生成不正確或偏頗的內容",
+      "C": "強化學習策略的透明度",
+      "D": "自動建立合乎規範的教材"
+    },
+    "answer": "B",
+    "explanation": "生成式模型可能生成錯誤、虛構、或具偏見的內容，若用於教育場域須謹慎設計審\n核機制。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  }
+]

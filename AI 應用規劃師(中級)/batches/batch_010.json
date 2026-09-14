@@ -1,0 +1,227 @@
+[
+  {
+    "id": "subject2_6",
+    "num": 6,
+    "difficulty": 3,
+    "question": "在進行資料分析時，會遇到類別型（Categorical）與數值型（Numerical） 資料格式。關於這兩種資料格式的處理，下列敘述何者不正確？\n量，適用於無序（Nominal）類別資料，但在高基數（High Cardinality）特徵下可能造成維度爆炸問題；\n（Nominal）資料，可能導致模型誤將編碼值解讀為具數值大小關係的特徵；\n0、標準差為 1，可在多數距離型演算法中改善收斂速度，並同時將數值範圍壓縮至 0 至 1 之間；\n未依據資料分佈特性設計，可能導致資訊損失或邊界偏誤",
+    "options": {
+      "A": "One-Hot 編碼（One-Hot Encoding）會將類別變數轉換為多維二元向",
+      "B": "標籤編碼（Label Encoding）會以整數表示不同類別，若應用於無序",
+      "C": "標準化（Standardization）透過將資料平移與縮放，使其平均值為",
+      "D": "對連續變數進行分箱（Binning）可提升模型可解釋性，但若分段方式"
+    },
+    "answer": "C",
+    "explanation": "【正確答案是C 解析：C 選項敘述不正確。標準化（Standardization，Z-score）是將資料轉換為平均值為 0、標準差為 1 的分佈，但它不會將數值範圍嚴格壓縮至 0 至 1 之間；將範圍壓縮至 0 至 1 之間的是 Min-Max 正規化（Min-Max Scaling）。 其他選項：A 選項正確，One-Hot 編碼將類別變數轉為多維二元向量，會增加特徵維度，高基數時易導致維度爆炸；B 選項正確，標籤編碼以整數表示類別，若用於無序資料會使模型誤解整數間有大小關係；D 選項正確，分箱將連續變數轉為離散類別，分段不當可能造成資訊遺失。】",
+    "_category": "subject2"
+  },
+  {
+    "id": "subject2_7",
+    "num": 7,
+    "difficulty": 3,
+    "question": "在資料庫的ACID 特性中，下列何者為「原子性（Atomicity）」的正確定義？",
+    "options": {
+      "A": "所有資料欄位必須為相同型別；",
+      "B": "每次交易需以批次方式執行；",
+      "C": "交易不可分割，需完全成功或完全失敗；",
+      "D": "系統會自動同步交易資料至所有節點"
+    },
+    "answer": "C",
+    "explanation": "【正確答案是C 解析：C 選項正確描述了「原子性（Atomicity）」，即交易（Transaction）是一個不可分割的工作單元，其中的所有操作要麼全部成功執行並寫入資料庫，要麼全部失敗並回滾至初始狀態。 其他選項：A 選項與原子性無關，屬於資料庫綱要（Schema）或一致性（Consistency）的範圍；B 選項描述的批次執行與交易的原子性定義不符；D 選項描述的是分散式系統中的「自動同步」或「持久性（Durability）/一致性」，而非原子性。】",
+    "_category": "subject2"
+  },
+  {
+    "id": "subject2_8",
+    "num": 8,
+    "difficulty": 3,
+    "question": "資料科學家為分析顧客行為，利用現有欄位「銷售金額」與「瀏覽次數」，計算出新變數「銷售金額/瀏覽次數」。此動作屬於下列哪一類特徵工程方法？\n答案",
+    "options": {
+      "A": "特徵選擇（Feature Selection）；",
+      "B": "特徵衍生（Feature Derivation）；",
+      "C": "特徵轉換（Feature Transformation）；",
+      "D": "分箱處理（Binning）"
+    },
+    "answer": "B",
+    "explanation": "【正確答案是B 解析：B 選項正確。「特徵衍生（Feature Derivation）」是指利用現有特徵透過數學運算（如加減乘除）或邏輯組合來創造出新的特徵，本題將兩變數相除產生新變數即屬此類。 其他選項：A 選項特徵選擇是從現有特徵中挑選具預測力的子集；C 選項特徵轉換通常指對單一特徵進行對數、標準化等數學轉換以改變其分佈；D 選項分箱處理是將連續型數值離散化為多個區間。】",
+    "_category": "subject2"
+  },
+  {
+    "id": "subject2_9",
+    "num": 9,
+    "difficulty": 3,
+    "question": "在進行數值特徵的標準化（Normalization）時，若資料中存在極端值（Outliers），下列哪一種方法最適合使用？",
+    "options": {
+      "A": "Min-Max 正規化（Min-Max Scaling）；",
+      "B": "Z-score 標準化（Z-score Normalization）；",
+      "C": "穩健縮放（Robust Scaling）；",
+      "D": "標準分箱（Standard Binning）"
+    },
+    "answer": "C",
+    "explanation": "【正確答案是C 解析：C 選項正確。「穩健縮放（Robust Scaling）」利用中位數（Median）和四分位距（IQR）來縮放資料，這兩個統計量對極端值不敏感，因此特別適合處理含有極端值的數值特徵。 其他選項：A 選項 Min-Max 正規化易受極值影響，會將極值對應到邊界而壓縮正常資料；B 選項 Z-score 標準化依賴平均值和標準差，這兩者極易被極端值扭曲；D 選項標準分箱主要用於離散化連續特徵，非標準化的首選。】",
+    "_category": "subject2"
+  },
+  {
+    "id": "subject2_40",
+    "num": 10,
+    "difficulty": 3,
+    "question": "請參考附圖，下列虛擬程式碼（pseudocode）最可能是在描述何種驗證法？\n答案",
+    "options": {
+      "A": "Hold-out 驗證（Hold-out Validation）；",
+      "B": "留一交叉驗證LOOCV（ Leave-One-Out Cross Validation）；",
+      "C": "K-fold 交叉驗證（K-fold Cross Validation）；",
+      "D": "拔靴法（Bootstrap）驗證"
+    },
+    "answer": "B",
+    "explanation": "【正確答案是B 解析：B 選項正確。留一交叉驗證（Leave-One-Out Cross Validation, LOOCV）是 K-fold 交叉驗證的極端情況，其中 K 等於樣本總數，每次僅保留一筆資料作為驗證集，其餘全為訓練集，最符合本題描述。 其他選項：A 選項 Hold-out 僅單次切分訓練與驗證集；C 選項 K-fold 通常將資料分為 K 份（K 遠小於樣本數），每次以一份驗證；D 選項拔靴法是透過有後放回抽樣來建立多個訓練集。】",
+    "_category": "subject2"
+  },
+  {
+    "id": "subject2_41",
+    "num": 11,
+    "difficulty": 3,
+    "question": "請參考附圖，下列虛擬程式碼（pseudocode）最可能是在描述何種演算法？\nwith Noise Clustering）",
+    "options": {
+      "A": "K-means 分群（K-means Clustering）；",
+      "B": "高斯混合模型分群（Gaussian Mixture Model Clustering）；",
+      "C": "階層式分群（Hierarchical Clustering）；",
+      "D": "DBSCAN 分群（Density-based Spatial Clustering of Applications"
+    },
+    "answer": "A",
+    "explanation": "【正確答案是A 解析：A 選項正確。K-means 分群演算法的核心邏輯包含：初始化 K 個群集中心，計算各資料點到中心的距離並分配至最近的群集，接著重新計算群集中心，反覆迭代直到收斂。 其他選項：B 選項高斯混合模型是基於機率分佈的軟分群；C 選項階層式分群是透過計算相似度矩陣逐步合併或分裂；D 選項 DBSCAN 是基於資料密度的分群方法，依靠核心點、邊界點與雜訊點來建立群集。】",
+    "_category": "subject2"
+  },
+  {
+    "id": "subject2_42",
+    "num": 12,
+    "difficulty": 3,
+    "question": "考慮某生產線每小時出現瑕疵品的個數符合卜瓦松分佈（Poisson Distribution），已知平均每小時產生5 個瑕疵品，附圖程式碼展示資料處理，請問下列敘述何者正確？\n答案一間遊戲市場研究公司正在分析全球電子遊戲銷售情況，並準備建立一份\n「熱銷遊戲銷售報告」。分析師取得了一份名為 vgsales.csv 的資料集，\n內容包含了全球銷量超過 10 萬份的電子遊戲清單。研究團隊希望透過這份資料，了解不同年份、平台與地區的銷售趨勢。資料集的欄位說明如下，請根據下述資料情境回答以43~47 題。\nName：遊戲名稱Platform：遊戲平台（如 PS4、X360、Wii 等）\nYear：發售年份Genre：遊戲類型（如 Action、Sports、Role-Playing 等）\nPublisher：發行商名稱NA_Sales / EU_Sales / JP_Sales / Other_Sales：各地區銷售量（單位：百萬份）\nGlobal_Sales：全球總銷售量（單位：百萬份）資料的欄位概觀如下：\n答案",
+    "options": {
+      "A": "lambda_poisson = 5 表示每小時最多5 個瑕疵品；",
+      "B": "poisson.pmf(5, lambda_poisson) 表示小於5 個瑕疵品的機率；",
+      "C": "卜瓦松分佈的適用條件為事件彼此獨立，且平均發生率固定；",
+      "D": "poisson.cdf(10, 5) 表示大於或等於10 個瑕疵品的機率"
+    },
+    "answer": "C",
+    "explanation": "【正確答案是C 解析：C 選項正確。卜瓦松分佈（Poisson Distribution）的適用前提為：單位時間或空間內事件發生的平均次數固定，且各事件的發生必須是獨立的。 其他選項：A 選項中 lambda (λ)=5 代表平均每小時發生 5 個瑕疵品，而非最多；B 選項 pmf(5, lambda) 是計算剛好出現 5 個瑕疵品的「機率質量函數」值；D 選項 cdf(10, 5) 代表計算出現 10 個（含）以下瑕疵品的「累積機率」，而非大於或等於 10 個。】",
+    "_category": "subject2"
+  },
+  {
+    "id": "subject2_43",
+    "num": 13,
+    "difficulty": 3,
+    "question": "分析師在載入資料後，檢視 Year 欄位的資料型態，發現它是float64，\n而非一般年份常用的整數。他想了解這樣的情形為什麼會發生。請問下列哪些原因可能導致這種狀況？\n原因A：CSV 檔中Year 欄位有缺失值(NaN)，導致Pandas 自動將整欄轉為浮點數。\n原因B：CSV 檔中的年份資料原本是字串(如 \"2006\")，Pandas 轉換時出錯而變成浮點數。\n原因C：Pandas 預設會將所有數值型態讀取為float64，不論資料是否為整數。\n原因D：CSV 檔中的年份資料可能包含小數點(例如2006.0)，因此被視為浮點數。",
+    "options": {
+      "A": "原因B、原因C；",
+      "B": "原因A、原因D；",
+      "C": "原因A、原因B、原因D；",
+      "D": "原因C、原因D"
+    },
+    "answer": "B",
+    "explanation": "【正確答案是B 解析：B 選項正確，包含原因A與原因D。在 Pandas 中，若數值欄位中包含遺漏值 (NaN)，由於 NaN 屬於浮點數型別，會強制將整數欄位轉為 float64；此外，若原始資料中帶有小數點（如 2006.0），也會被讀取為浮點數。 其他選項：原因B字串轉換錯誤通常會變成 object 類型；原因C說法錯誤，Pandas 預設能正確推斷整數（int64），不會無故全轉為 float64。因此僅包含原因A、D的 B 選項為正解。】",
+    "_category": "subject2"
+  },
+  {
+    "id": "subject2_44",
+    "num": 14,
+    "difficulty": 3,
+    "question": "研究團隊接下來想要將 Year 欄位轉換為整數型態，以便後續進行年份趨勢分析。考慮到資料中可能包含缺失值（NaN），請選出最合適的轉換方式。",
+    "options": {
+      "A": "data['Year'] = data['Year'].astype(int)；",
+      "B": "data['Year'] = data['Year'].fillna(0).astype(int)；",
+      "C": "data['Year'] = data['Year'].fillna(1).astype(int)；",
+      "D": "data['Year'] = data['Year'].astype('Int64')；"
+    },
+    "answer": "D",
+    "explanation": "【正確答案是D 解析：D 選項正確。在 Pandas 中，傳統整數型態（int）不支援 NaN，若要保留 NaN 並將欄位轉換為整數，應使用可空整數型態（Nullable Integer Type）'Int64'（大寫 I）。 其他選項：A 選項若欄位含有 NaN，直接使用 astype(int) 會報錯；B 與 C 選項透過 fillna() 填補 0 或 1 雖可轉為整數，但會竄改原始缺失值的意義，干擾後續分析。】",
+    "_category": "subject2"
+  },
+  {
+    "id": "subject2_45",
+    "num": 15,
+    "difficulty": 3,
+    "question": "為了觀察各遊戲平台的市場表現，分析師想要統計每個平台的全球銷售總額，並以長條圖呈現。請選出最能正確實現此分析的程式碼。\n答案",
+    "options": {
+      "A": "data.groupby(\"Platform\")[\"Global_Sales\"].sum().plot(kind=\"bar\")；",
+      "B": "data.groupby(\"Platform\")[\"Global_Sales\"].count().plot(kind=\"bar\")；",
+      "C": "data[\"Platform\"].value_counts().plot(kind=\"bar\")；",
+      "D": "data.groupby(\"Platform\")[\"Global_Sales\"].mean().plot(kind=\"bar\")"
+    },
+    "answer": "A",
+    "explanation": "【正確答案是A 解析：A 選項正確。要計算「每個平台」的「銷售總額」，必須先依照平台 (Platform) 進行分組（groupby），然後選取全球銷售 (Global_Sales) 欄位，並使用加總函數 sum()，最後呼叫 plot(kind=\"bar\") 繪製長條圖。 其他選項：B 選項使用 count() 是計算筆數而非總額；C 選項 value_counts() 僅統計各平台出現的次數；D 選項使用 mean() 則是計算各平台的平均銷售額。】",
+    "_category": "subject2"
+  },
+  {
+    "id": "subject2_46",
+    "num": 16,
+    "difficulty": 3,
+    "question": "團隊希望比較北美、歐洲、日本及其他地區的整體銷售比例，並使用seaborn 套件以長條圖的形式進行可視化分析。請選出能正確顯示這些地區銷售總額比例的程式碼。\ndata=data)；\ny=[\"NA_Sales\",\"EU_Sales\",\"JP_Sales\",\"Other_Sales\"],\ndata=data)；\ndata=pd.melt(data,\nvalue_vars=[\"NA_Sales\",\"EU_Sales\",\"JP_Sales\",\"Other_Sales\"]),\nestimator=sum)；",
+    "options": {
+      "A": "sns.countplot(x=[\"NA_Sales\",\"EU_Sales\",\"JP_Sales\",\"Other_Sales\"],",
+      "B": "sns.lineplot(x=\"Platform\",",
+      "C": "sns.barplot(x=\"variable\", y=\"value\",",
+      "D": "sns.histplot(data[[\"NA_Sales\",\"EU_Sales\",\"JP_Sales\",\"Other_Sales\"]])"
+    },
+    "answer": "C",
+    "explanation": "【正確答案是C 解析：C 選項正確。使用 Seaborn 繪製多個變數的條狀圖時，通常需要先以 pd.melt 將資料轉換為長格式（Long-form），將各地區銷售欄位轉為 variable 和 value，再搭配 sns.barplot 並設定 estimator=sum 以顯示銷售總額。 其他選項：A 選項 countplot 僅用於計算類別出現頻率；B 選項 lineplot 是繪製折線圖，不符合題目要求的長條圖；D 選項 histplot 用於繪製數值分佈直方圖，無法呈現分類加總。】",
+    "_category": "subject2"
+  },
+  {
+    "id": "subject2_47",
+    "num": 17,
+    "difficulty": 3,
+    "question": "研究團隊想要知道在北美地區（NA）銷售成績最好的遊戲前五名，並希望以seaborn 的條狀圖呈現結果。請選出能正確完成這項分析的程式碼。\n\"NA_Sales\"))；\n\"NA_Sales\"))；\n使用銷售資料集(marketing.csv)進行迴歸分析，附圖程式碼展示資料載入與處理，請回答後續48~50 題。\n下圖顯示資料集的前5 筆資料與相關資訊。\n答案",
+    "options": {
+      "A": "sns.barplot(x=\"NA_Sales\", y=\"Name\", data=data.head(5))；",
+      "B": "sns.barplot(x=\"Name\", y=\"NA_Sales\", data=data.nlargest(5,",
+      "C": "sns.lineplot(x=\"Name\", y=\"NA_Sales\", data=data.nlargest(5,",
+      "D": "sns.countplot(x=\"Name\", y=\"NA_Sales\", data=data)"
+    },
+    "answer": "B",
+    "explanation": "【正確答案是B 解析：B 選項正確。要取得北美銷售最好的前五名，應使用 data.nlargest(5, \"NA_Sales\")，並使用 sns.barplot(x=\"Name\", y=\"NA_Sales\", ...) 繪製橫向或直向條狀圖。 其他選項：A 選項 head(5) 只是取資料前五筆，並非銷售前五名；C 選項 lineplot 畫的是折線圖；D 選項 countplot 畫的是計數圖，均不符合需求。】",
+    "_category": "subject2"
+  },
+  {
+    "id": "subject2_48",
+    "num": 18,
+    "difficulty": 3,
+    "question": "根據上述結果，下列何者正確？",
+    "options": {
+      "A": "資料集個數為199 筆，變數個數為4 個；",
+      "B": "sales 變數的中位數是16.827；",
+      "C": "facebook 變數的第三四分位數(Q3)是11.94；",
+      "D": "youtube 變數的第一四分位數(Q1)是89.25"
+    },
+    "answer": "D",
+    "explanation": "【正確答案是D 解析：D 選項正確。由題目上下文推斷，youtube 變數的第一四分位數 (Q1) 為 89.25，這通常來自敘述統計量 describe() 的輸出結果。 其他選項：A 選項資料集與變數個數描述不符圖表；B 選項 sales 的中位數不符；C 選項 facebook 變數的第三四分位數亦不符圖表數據。】",
+    "_category": "subject2"
+  },
+  {
+    "id": "subject2_49",
+    "num": 19,
+    "difficulty": 3,
+    "question": "參考下圖計算各變數的遺漏值(NaN)個數結果，下列何者正確？\n選項A: df.isnull().sum()選項B: df.isNaN().sum()選項C: df.isna().sum()選項D: df.isnan().sum()答案",
+    "options": {
+      "A": "選項D；",
+      "B": "選項B、選項C、選項D；",
+      "C": "選項A、選項C；",
+      "D": "選項A、選項B、選項C"
+    },
+    "answer": "C",
+    "explanation": "【正確答案是C 解析：C 選項正確，包含 df.isnull().sum() 與 df.isna().sum()。在 Pandas 中，isnull() 和 isna() 兩者是完全等價的方法，搭配 sum() 可以加總每一欄位中 True (即遺漏值) 的個數。 其他選項：Pandas 中不存在 isNaN() 或 isnan() 的 DataFrame 方法（isnan 是 NumPy 的函數），因此選項 B、D 為錯誤語法。】",
+    "_category": "subject2"
+  },
+  {
+    "id": "subject2_50",
+    "num": 20,
+    "difficulty": 3,
+    "question": "考慮資料集已經填補遺漏值，參考下圖執行結果，下列何者正確？\nA：空格1 完整語法 reg = LinearRegression().fit(y, X)\nB：空格1 完整語法 reg = LinearRegression().fit(X, y)\nC：print(reg.coef_) 結果為包括截距項等4 個係數值D：空格2 完整語法 sm.OLS(X2, y).fit()\nE：model_sm 迴歸模型的所有迴歸係數在α=0.05 之下具有顯著的解釋力F：截距項係數值為3.5561\n《以下空白》",
+    "options": {
+      "A": "B、C、F",
+      "B": "B、F",
+      "C": "A、C、D、F",
+      "D": "B、E"
+    },
+    "answer": "B",
+    "explanation": "【正確答案是B 解析：B 選項正確。在 Scikit-Learn 中，模型配適的標準語法是先放入特徵矩陣 X，再放入目標變數 y，即 fit(X, y)。 其他選項：A 選項 fit(y, X) 順序顛倒；C 選項 reg.coef_ 僅包含自變數的迴歸係數，不包含截距項（截距為 reg.intercept_）；D、E、F 選項的描述與一般 OLS 回歸或統計摘要的標準輸出細節不符。】",
+    "_category": "subject2"
+  }
+]

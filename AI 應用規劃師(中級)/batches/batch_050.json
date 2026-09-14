@@ -1,0 +1,227 @@
+[
+  {
+    "id": "mock_406",
+    "num": 360,
+    "difficulty": 5,
+    "question": "在 AI 專案中，哪一角色最適合負責「技術與業務語言對接」？",
+    "options": {
+      "A": "資料工程師",
+      "B": "AI 應用規劃師或產品經理",
+      "C": "系統維運人員",
+      "D": "使用者研究員"
+    },
+    "answer": "B",
+    "explanation": "AI 應用規劃師或 PM 可橋接業務與技術團隊，確保需求被正確轉譯為技術規格。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_407",
+    "num": 361,
+    "difficulty": 3,
+    "question": "AI 模型開發時，進行小規模內部驗證的階段稱為？",
+    "options": {
+      "A": "PoC",
+      "B": "MVP（Minimum Viable Product）",
+      "C": "A/B Test",
+      "D": "QA 測試"
+    },
+    "answer": "B",
+    "explanation": "MVP 是最小可行產品，代表具備核心功能的初版系統，目的為快速驗證並迭代。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_409",
+    "num": 362,
+    "difficulty": 4,
+    "question": "AI 專案在導入階段若未考量使用者情境，可能造成何種問題？",
+    "options": {
+      "A": "精度下降",
+      "B": "無法與 API 串接",
+      "C": "模型效果好但實際無法被採用",
+      "D": "模型訓練速度變慢"
+    },
+    "answer": "C",
+    "explanation": "技術模型若無符合真實使用場景，即使表現再好也無法產生價值，導致無法落地。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_410",
+    "num": 363,
+    "difficulty": 2,
+    "question": "AI 專案若為企業級應用，以下哪一項屬於部署成功後必須考量的要素？",
+    "options": {
+      "A": "使用最新語言模型",
+      "B": "模型與資料的版本控管機制",
+      "C": "模型硬編碼於前端系統",
+      "D": "關閉訓練記錄檔"
+    },
+    "answer": "B",
+    "explanation": "企業部署需考量系統維運與法遵，模型與資料版本控管是確保一致性與可回溯的基\n本要件。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_411",
+    "num": 364,
+    "difficulty": 1,
+    "question": "在 AI 專案中，資料收集與準備應屬於哪一階段？",
+    "options": {
+      "A": "模型壓縮階段",
+      "B": "問題定義後的初始階段",
+      "C": "部署上線前最後階段",
+      "D": "專案完成後才開始"
+    },
+    "answer": "B",
+    "explanation": "資料蒐集是 AI 專案的關鍵初期工作，需在模型開發與訓練前完成，以確保資料品\n質。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_413",
+    "num": 365,
+    "difficulty": 3,
+    "question": "AI 專案開發期間若出現需求頻繁變動，建議採用哪一種專案管理方式？",
+    "options": {
+      "A": "Waterfall",
+      "B": "瀑布式與簽核為主",
+      "C": "敏捷式（Agile）迭代開發",
+      "D": "完全交由外包廠商管理"
+    },
+    "answer": "C",
+    "explanation": "敏捷開發可因應需求變動與快速回饋，適合 AI 專案這類探索性與實驗性高的工\n作。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_414",
+    "num": 366,
+    "difficulty": 4,
+    "question": "在 AI 項目中，建立 KPI（關鍵績效指標）時應避免以下哪種狀況？",
+    "options": {
+      "A": "將 KPI 與業務目標對齊",
+      "B": "使用可量化的模型效能指標",
+      "C": "設定模型精度達 100% 為 KPI",
+      "D": "考慮資料可用性設限"
+    },
+    "answer": "C",
+    "explanation": "設立過高且不切實際的 KPI（如 100% 精度）不僅無法執行，亦可能導致不正當操\n作或模型過擬合。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_415",
+    "num": 367,
+    "difficulty": 2,
+    "question": "AI 專案中常見的技術風險為？",
+    "options": {
+      "A": "法規合約條款更動",
+      "B": "模型可重訓性不佳與部署環境不一致",
+      "C": "使用者拒絕開會",
+      "D": "市場預測誤判"
+    },
+    "answer": "B",
+    "explanation": "若模型在開發環境訓練正常，但部署後無法重現或結果不一致，將嚴重影響專案交\n付品質。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_417",
+    "num": 368,
+    "difficulty": 5,
+    "question": "AI 專案中若導入模型後無法產生預期商業價值，最可能的主因為？",
+    "options": {
+      "A": "模型壓縮不足",
+      "B": "預測 API 延遲過低",
+      "C": "模型解釋性過高",
+      "D": "問題定義與業務場景脫節"
+    },
+    "answer": "D",
+    "explanation": "若問題定義與實際場景無關聯，即使模型準確也難以落地，導致無法創造價值。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_418",
+    "num": 369,
+    "difficulty": 2,
+    "question": "為確保 AI 系統長期穩定運作，需加入下列哪一管理流程？",
+    "options": {
+      "A": "訓練時隨機種子固定",
+      "B": "模型指令內嵌 HTML",
+      "C": "模型版本控管與監控（MLOps）",
+      "D": "使用者登入重新訓練"
+    },
+    "answer": "C",
+    "explanation": "MLOps 可整合版本管理、效能追蹤與異常警示，是 AI 專案持續營運的關鍵基礎\n架構。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_419",
+    "num": 370,
+    "difficulty": 3,
+    "question": "哪一項屬於 AI 專案驗收階段應具備的成果？",
+    "options": {
+      "A": "GPU 使用記錄",
+      "B": "測試環境登入記錄",
+      "C": "成效報告與模型驗證報告",
+      "D": "數據倉儲暫存檔案"
+    },
+    "answer": "C",
+    "explanation": "驗收須呈現明確的效益數據與模型效能報告，證明系統達成預期商業目標與技術標\n準。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_421",
+    "num": 371,
+    "difficulty": 1,
+    "question": "在 AI 專案中，以下哪一項屬於非技術風險？",
+    "options": {
+      "A": "訓練資料過少",
+      "B": "模型架構不適合任務",
+      "C": "預測時間過長",
+      "D": "使用者無意願採用系統"
+    },
+    "answer": "D",
+    "explanation": "使用者不採用即便模型再好也無實際價值，此為變革管理與溝通未落實導致的非技\n術風險。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_422",
+    "num": 372,
+    "difficulty": 2,
+    "question": "若 AI 專案需對接既有 ERP 系統，下列哪一項最為關鍵？",
+    "options": {
+      "A": "深度模型改為單層結構",
+      "B": "導入 SHAP 解釋模組",
+      "C": "建立 API 與資料傳輸協議整合機制",
+      "D": "將模型部署至手機端"
+    },
+    "answer": "C",
+    "explanation": "企業內部系統整合需 API 與資料流程介接，否則 AI 模型將無法納入營運環節。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_423",
+    "num": 373,
+    "difficulty": 3,
+    "question": "AI 專案設計指標若僅看模型效能，而未考慮商業目標，可能導致？",
+    "options": {
+      "A": "模型維運太便宜",
+      "B": "GPU 用量不足",
+      "C": "模型過擬合",
+      "D": "結果無法產生實際價值"
+    },
+    "answer": "D",
+    "explanation": "若只看準確率而忽略使用場景與業務關聯，即使效能良好也難落地產生價值。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_425",
+    "num": 374,
+    "difficulty": 2,
+    "question": "以下哪一方法最適合初期驗證 AI 專案的商業可行性？",
+    "options": {
+      "A": "雲端 GPU 池建置",
+      "B": "模型融合測試",
+      "C": "小規模試點實施與效益回報（Pilot）",
+      "D": "直接全公司推廣使用"
+    },
+    "answer": "C",
+    "explanation": "試點實驗可用最小成本驗證可行性與回報，為 AI 專案早期決策提供依據。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  }
+]

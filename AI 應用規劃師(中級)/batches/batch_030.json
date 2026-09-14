@@ -1,0 +1,227 @@
+[
+  {
+    "id": "mock_63",
+    "num": 60,
+    "difficulty": 3,
+    "question": "T5 模型的設計理念為何被稱為「Text-to-Text」架構？",
+    "options": {
+      "A": "只訓練在文字分類任務上",
+      "B": "所有輸入與輸出皆以文字形式處理",
+      "C": "僅支援英文與中文",
+      "D": "輸出為圖像特徵向量"
+    },
+    "answer": "B",
+    "explanation": "T5 模型將各種任務（分類、翻譯、問答）統一轉換為「輸入文本 ➝ 輸出文本」的\n格式，便於通用訓練與應用。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_65",
+    "num": 61,
+    "difficulty": 1,
+    "question": "以下何者最常被使用來衡量生成式 AI 模型生成文字的「多樣性」？",
+    "options": {
+      "A": "BLEU 分數",
+      "B": "Perplexity",
+      "C": "Diversity 指標（如 Distinct-1, Distinct-2）",
+      "D": "ROC-AUC"
+    },
+    "answer": "C",
+    "explanation": "Distinct-1 和 Distinct-2 衡量輸出中獨特單字和詞組的比例，是評估生成多樣性的\n重要指標。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_66",
+    "num": 62,
+    "difficulty": 5,
+    "question": "哪一種訓練方法可以讓模型從「未標記資料」中學習語意？",
+    "options": {
+      "A": "強化學習",
+      "B": "蒸餾學習",
+      "C": "自監督學習（Self-Supervised Learning）",
+      "D": "K-Means 聚類"
+    },
+    "answer": "C",
+    "explanation": "自監督學習透過資料本身設計任務（如遮蔽詞預測）訓練模型，無需人工標註，即\n可有效學習語意表示。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_67",
+    "num": 63,
+    "difficulty": 2,
+    "question": "以下哪一種技術可用於改善 LLM 在特定任務下的表現，但不需重新訓練整個模型？",
+    "options": {
+      "A": "參數初始化",
+      "B": "Fine-tuning with large corpus",
+      "C": "Few-shot prompting with exemplars",
+      "D": "捲積金字塔合成"
+    },
+    "answer": "C",
+    "explanation": "Few-shot prompting 透過提供幾個示例，讓模型學習任務格式與邏輯，是不需重\n新訓練的低成本調適方式。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_68",
+    "num": 64,
+    "difficulty": 3,
+    "question": "Diffusion Model 與 GAN 最大的訓練策略差異在於？",
+    "options": {
+      "A": "是否支援多語言輸出",
+      "B": "是否可用於分類任務",
+      "C": "使用逐步去噪而非對抗訓練生成數據",
+      "D": "無需訓練判別器"
+    },
+    "answer": "C",
+    "explanation": "Diffusion Model 藉由反覆去噪學習生成分布，不依賴對抗博弈，因此訓練更穩\n定。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_69",
+    "num": 65,
+    "difficulty": 4,
+    "question": "Reinforcement Learning from Human Feedback（RLHF）在 ChatGPT 中的主要用途為？",
+    "options": {
+      "A": "用來微調生成語音輸出",
+      "B": "建立語音轉文字模組",
+      "C": "根據人類偏好微調回應行為",
+      "D": "減少參數運算成本"
+    },
+    "answer": "C",
+    "explanation": "RLHF 融合人類回饋與強化學習，用於優化 ChatGPT 的生成內容與語調，更符合\n人類期待。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_70",
+    "num": 66,
+    "difficulty": 1,
+    "question": "下列哪一項應用最有可能受惠於「多模態生成模型」？",
+    "options": {
+      "A": "Excel 數據整理",
+      "B": "書籍分類",
+      "C": "圖文並茂之虛擬導覽解說產生",
+      "D": "圖形界面語法檢查"
+    },
+    "answer": "C",
+    "explanation": "虛擬導覽內容包含圖像與語音或文字敘述，需融合多模態訊息，正是多模態生成模\n型的典型應用場景。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_71",
+    "num": 67,
+    "difficulty": 1,
+    "question": "以下何者是「生成式 AI」的主要應用領域之一？",
+    "options": {
+      "A": "統計描述分析",
+      "B": "自動生成產品廣告文案",
+      "C": "使用者分群與標籤預測",
+      "D": "監督式分類器的訓練"
+    },
+    "answer": "B",
+    "explanation": "生成式 AI 特別適用於自然語言生成，如撰寫廣告文案、新聞摘要、創作內容等。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_72",
+    "num": 68,
+    "difficulty": 2,
+    "question": "DALL·E 系列模型的核心任務為何？",
+    "options": {
+      "A": "將語音轉換為文字",
+      "B": "將圖像轉為程式碼",
+      "C": "將文字描述轉換為圖像",
+      "D": "將文字翻譯成多國語言"
+    },
+    "answer": "C",
+    "explanation": "DALL·E 是 OpenAI 開發的文字轉圖像模型，能根據輸入的語句生成視覺上合理的\n圖像。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_73",
+    "num": 69,
+    "difficulty": 3,
+    "question": "Meta 所提出的 LLaMA 模型屬於下列哪一類？",
+    "options": {
+      "A": "對比學習模型",
+      "B": "圖像生成網路",
+      "C": "開源大型語言模型",
+      "D": "圖神經網路"
+    },
+    "answer": "C",
+    "explanation": "LLaMA（Large Language Model Meta AI）是 Meta 所釋出的開源大型語言模型\n系列，支援多語言生成與推論任務。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_74",
+    "num": 70,
+    "difficulty": 4,
+    "question": "「模態對齊（Modality Alignment）」在多模態模型訓練中的目的是？",
+    "options": {
+      "A": "將圖像壓縮成向量",
+      "B": "將不同模態嵌入對齊至共同語意空間",
+      "C": "只保留語言模態並捨棄其他輸入",
+      "D": "將文字轉換為純數值特徵"
+    },
+    "answer": "B",
+    "explanation": "模態對齊是指將圖像、文字等不同模態資訊映射到共享語意空間，使其能共同參與\n推理或生成。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_75",
+    "num": 71,
+    "difficulty": 3,
+    "question": "下列哪一項生成式 AI 技術，能夠根據輸入文字自動生成原始程式碼？",
+    "options": {
+      "A": "Word2Vec",
+      "B": "CodeBERT",
+      "C": "Codex",
+      "D": "AutoML"
+    },
+    "answer": "C",
+    "explanation": "Codex 是 OpenAI 訓練的程式碼生成模型，可將自然語言指令轉為對應的\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_76",
+    "num": 72,
+    "difficulty": 5,
+    "question": "在多模態生成場景中，下列哪一技術有助於「圖文對應生成品質」的提升？",
+    "options": {
+      "A": "隱馬可夫模型",
+      "B": "編碼器-解碼器中的交叉注意力（Cross-Attention）",
+      "C": "池化層的降維處理",
+      "D": "分層聚類演算法"
+    },
+    "answer": "B",
+    "explanation": "Cross-Attention 能在圖文生成任務中將圖像與語言模態互相關聯，是生成正確對\n應描述的關鍵機制。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_77",
+    "num": 73,
+    "difficulty": 1,
+    "question": "ChatGPT 在未連接網路的情況下，對於 2023 年後的事件回答錯誤可能原因為？",
+    "options": {
+      "A": "模型程式錯誤",
+      "B": "訓練資料來源太多",
+      "C": "預訓練資料未涵蓋該時間點",
+      "D": "模型無法使用 Attention 機制"
+    },
+    "answer": "C",
+    "explanation": "LLM 是透過固定時間點前的資料進行預訓練，未連接外部更新資訊時，無法得知最\n新事件。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_78",
+    "num": 74,
+    "difficulty": 2,
+    "question": "下列哪一種技術最常與 LLM 結合以構建具知識擴展能力的應用？",
+    "options": {
+      "A": "軟體容器化技術",
+      "B": "記憶體編碼演算法",
+      "C": "文件搜尋與知識檢索（Retrieval）",
+      "D": "位置編碼壓縮"
+    },
+    "answer": "C",
+    "explanation": "將檢索模組（如向量資料庫）與生成模型結合，可擴展模型的即時知識查詢能力，\n屬於 Retrieval-Augmented Generation 架構。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  }
+]

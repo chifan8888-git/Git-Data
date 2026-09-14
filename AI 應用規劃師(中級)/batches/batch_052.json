@@ -1,0 +1,227 @@
+[
+  {
+    "id": "mock_445",
+    "num": 390,
+    "difficulty": 2,
+    "question": "MLOps 系統中的「模型監控模組」主要負責？",
+    "options": {
+      "A": "規劃訓練排程",
+      "B": "審核合約文字",
+      "C": "監測模型效能與預測偏移行為",
+      "D": "建立圖形化介面"
+    },
+    "answer": "C",
+    "explanation": "模型部署後效能可能隨資料變動而下降，監控模組負責偵測指標漂移、錯誤率上升\n等問題。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_446",
+    "num": 391,
+    "difficulty": 3,
+    "question": "AI 專案中若使用「預測解釋工具（如 SHAP）」，其最主要用途為？",
+    "options": {
+      "A": "減少訓練時間",
+      "B": "增強結果透明度，提升使用者信任",
+      "C": "調整超參數",
+      "D": "模型融合"
+    },
+    "answer": "B",
+    "explanation": "可解釋性工具有助說明預測依據，使模型更透明、可理解，是高風險應用的信任基\n礎。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_447",
+    "num": 392,
+    "difficulty": 4,
+    "question": "當資料來源來自多個子系統，導致資料異質性高，部署前應採用何策略？",
+    "options": {
+      "A": "模型硬編碼至主機",
+      "B": "將所有特徵轉為文字",
+      "C": "統一資料標準與欄位格式（資料治理）",
+      "D": "採用全無監督模型"
+    },
+    "answer": "C",
+    "explanation": "多來源資料需事先標準化欄位定義、格式與處理邏輯，否則難以訓練與穩定運作。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_449",
+    "num": 393,
+    "difficulty": 5,
+    "question": "若 AI 專案無法與組織現有流程整合，最可能出現什麼後果？",
+    "options": {
+      "A": "預測結果會變成負值",
+      "B": "專案難以落地與被採納",
+      "C": "模型訓練速度加快",
+      "D": "記憶體使用率下降"
+    },
+    "answer": "B",
+    "explanation": "AI 專案需與既有作業系統或業務流程整合，否則再精準也可能因無法實際應用而失\n敗。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_450",
+    "num": 394,
+    "difficulty": 1,
+    "question": "哪一項是 AI 專案成功導入後常見的「非技術性成果」？",
+    "options": {
+      "A": "GPU 運算強化",
+      "B": "部門效率提升與使用者體驗改善",
+      "C": "雲端計費降低",
+      "D": "模型下載速率加快"
+    },
+    "answer": "B",
+    "explanation": "AI 的價值不只在預測能力，也在實際產出效能，如自動化、人力節省與流程優化。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_451",
+    "num": 395,
+    "difficulty": 1,
+    "question": "AI 專案導入成本中，以下哪一項屬於隱性成本？",
+    "options": {
+      "A": "資料標註費用",
+      "B": "GPU 租用費用",
+      "C": "團隊訓練與跨部門溝通成本",
+      "D": "API 串接開發費用"
+    },
+    "answer": "C",
+    "explanation": "隱性成本包含訓練、協作、溝通與轉型文化等非直接金流支出，常被忽略但對導入\n成效影響重大。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_453",
+    "num": 396,
+    "difficulty": 5,
+    "question": "AI 成熟度模型中，組織若具備自動化模型部署與監控能力，通常屬於哪一階段？",
+    "options": {
+      "A": "初始階段（Ad hoc）",
+      "B": "可重複階段（Repeatable）",
+      "C": "已量化階段（Quantitative Managed）",
+      "D": "完善階段（Optimized）"
+    },
+    "answer": "D",
+    "explanation": "AI 成熟度的最高階段強調流程自動化、跨部門整合與持續優化能力，是「AI 工程\n化」的標誌。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_454",
+    "num": 397,
+    "difficulty": 3,
+    "question": "以下哪一情境最適合導入 RPA（Robotic Process Automation）？",
+    "options": {
+      "A": "需要高層次邏輯推理的決策流程",
+      "B": "結構化、重複性高的行政作業流程",
+      "C": "即時圖像辨識與異常預測任務",
+      "D": "社群文本語意分類"
+    },
+    "answer": "B",
+    "explanation": "RPA 擅長處理固定規則、格式明確且需大量重複執行的流程，如表單填寫或系統登\n入等。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_455",
+    "num": 398,
+    "difficulty": 3,
+    "question": "AI 成本評估常使用的「TCO（Total Cost of Ownership）」涵蓋哪些成本？",
+    "options": {
+      "A": "只包含開發階段的預算",
+      "B": "僅計算雲端運算費用",
+      "C": "包含採購、開發、部署與維運的全生命周期成本",
+      "D": "模型測試費用與 API 成本"
+    },
+    "answer": "C",
+    "explanation": "TCO 強調全面成本視角，評估一項技術從取得到淘汰的所有直接與間接支出。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_457",
+    "num": 399,
+    "difficulty": 4,
+    "question": "若企業 AI 部署過程中資料品質不佳，將導致下列哪一項後果？",
+    "options": {
+      "A": "成本降低",
+      "B": "模型越訓練越穩定",
+      "C": "模型無法學習有效規律，降低準確率與可信度",
+      "D": "模型推論速度大幅提升"
+    },
+    "answer": "C",
+    "explanation": "資料品質不佳如缺值、錯誤標註、異常值將嚴重干擾模型學習，影響準確率與可解\n釋性。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_458",
+    "num": 400,
+    "difficulty": 3,
+    "question": "企業評估 AI 導入成熟度時，以下哪一項不屬於常見構面？",
+    "options": {
+      "A": "技術能力",
+      "B": "組織治理與流程",
+      "C": "商業模式變革潛力",
+      "D": "員工服裝風格"
+    },
+    "answer": "D",
+    "explanation": "AI 成熟度評估通常包含組織策略、資料基礎建設、模型能力、流程與文化等，與服\n裝無關。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_459",
+    "num": 401,
+    "difficulty": 4,
+    "question": "AI 導入後若無自動化監控系統，長期成本可能上升的原因為？",
+    "options": {
+      "A": "模型權重過大",
+      "B": "訓練資料越來越短",
+      "C": "每次模型表現下降都需人力重新修正",
+      "D": "使用者行為一致"
+    },
+    "answer": "C",
+    "explanation": "缺乏自動監控機制會使效能下降難以及時察覺，每次調整都需動員工程師，增加維\n運成本。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_461",
+    "num": 402,
+    "difficulty": 1,
+    "question": "企業評估 AI 導入效益時，以下哪一指標可用於衡量作業效率提升？",
+    "options": {
+      "A": "訓練輪次",
+      "B": "使用者滿意度",
+      "C": "處理時間縮短率",
+      "D": "API 記憶體佔用量"
+    },
+    "answer": "C",
+    "explanation": "若 AI 導入能顯著減少處理時間，代表效率提升，是自動化成效的常見衡量指標。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_462",
+    "num": 403,
+    "difficulty": 2,
+    "question": "在 AI 投資成本中，「維運成本」最常包含下列哪一項？",
+    "options": {
+      "A": "雲端運算與模型監控費用",
+      "B": "程式授權費用",
+      "C": "初期人力訓練費用",
+      "D": "資料集標註專案啟動費"
+    },
+    "answer": "A",
+    "explanation": "維運階段常見開銷包括雲端部署、效能監控、版本控管與異常處理機制。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_463",
+    "num": 404,
+    "difficulty": 3,
+    "question": "流程自動化應用中，「人機協同」的主要價值為何？",
+    "options": {
+      "A": "完全替代人力",
+      "B": "降低模型運算資源",
+      "C": "結合人工判斷與機器效率，達成最佳決策流程",
+      "D": "增加資料分析成本"
+    },
+    "answer": "C",
+    "explanation": "人機協同是指 AI 輔助人員處理部分工作，保留人工靈活與判斷，達成效率與彈性\n的平衡。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  }
+]

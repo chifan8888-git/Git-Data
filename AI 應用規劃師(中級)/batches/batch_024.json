@@ -1,0 +1,227 @@
+[
+  {
+    "id": "guide_subject3_u2_9",
+    "num": 106,
+    "difficulty": 3,
+    "question": "當深度學習模型在訓練時出現梯度爆炸現象，應優先採用哪種技術加以處理？",
+    "options": {
+      "A": "增大學習率",
+      "B": "梯度裁剪（Gradient Clipping）",
+      "C": "減少資料量",
+      "D": "刪除輸入特徵"
+    },
+    "answer": "B",
+    "explanation": "梯度爆炸會導致權重變動過大甚至溢出，影響模型穩定性。梯度裁剪能 限制梯度的最大值，防止數值爆炸，特別適用於深度神經網路或RNN 訓練。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u2_10",
+    "num": 107,
+    "difficulty": 3,
+    "question": "邏輯迴歸（Logistic Regression）模型在處理二元分類問題時，通常假設目標變 數服從哪種分佈？",
+    "options": {
+      "A": "常態分佈",
+      "B": "均勻分佈",
+      "C": "伯努利分佈",
+      "D": "泊松分佈"
+    },
+    "answer": "C",
+    "explanation": "邏輯迴歸假設目標變數為二元型態（如0 或1），服從伯努利分佈，並透 過sigmoid 函數將預測值映射至機率區間[0, 1]，以完成二元分類。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u4_1",
+    "num": 108,
+    "difficulty": 3,
+    "question": "機器學習（Machine Learning）中，若輸入資料沒有標註，欲探索潛在的群組或 模式，應屬於哪種學習類型？",
+    "options": {
+      "A": "監督式學習（Supervised Learning）",
+      "B": "半監督式學習（Semi-supervised Learning）",
+      "C": "非監督式學習（Unsupervised Learning）",
+      "D": "強化式學習（Reinforcement Learning）"
+    },
+    "answer": "C",
+    "explanation": "非監督式學習（Unsupervised Learning）不依賴標註資料，主要目的是 從資料中發現潛在結構、模式或分佈，例如分群（Clustering ）、降維 （Dimensionality Reduction）等技術，是探索性資料分析的重要工具。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u4_2",
+    "num": 109,
+    "difficulty": 3,
+    "question": "在監督式學習中，當模型要預測一個連續數值時，這種任務稱為什麼？",
+    "options": {
+      "A": "分類（Classification）",
+      "B": "迴歸（Regression）",
+      "C": "聚類（Clustering）",
+      "D": "降維（Dimensionality Reduction）"
+    },
+    "answer": "B",
+    "explanation": "迴歸（Regression）是預測連續數值的任務，如房價預測、氣溫預測等， 與分類不同，分類是用來預測離散類別結果。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u4_3",
+    "num": 110,
+    "difficulty": 3,
+    "question": "在深度學習中，用於學習資料中局部特徵的網路架構通常是什麼？",
+    "options": {
+      "A": "循環神經網路（Recurrent Neural Network, RNN）",
+      "B": "決策樹（Decision Tree）",
+      "C": "卷積神經網路（Convolutional Neural Network, CNN）",
+      "D": "隨機森林（Random Forest）"
+    },
+    "answer": "C",
+    "explanation": "卷積神經網路（CNN）透過卷積層偵測局部特徵，尤其擅長處理影像、 語音等有空間或時間結構的資料，是深度學習中重要的基礎架構之一。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u4_4",
+    "num": 111,
+    "difficulty": 3,
+    "question": "支援向量機（Support Vector Machine, SVM）若用於迴歸問題，稱為什麼？",
+    "options": {
+      "A": "Logistic Regression",
+      "B": "Decision Tree Regression",
+      "C": "Random Forest",
+      "D": "Support Vector Regression"
+    },
+    "answer": "D",
+    "explanation": "當支援向量機（SVM）應用於連續數值的預測問題時，稱為支援向量迴 歸（Support Vector Regression, SVR）。SVR 與傳統SVM 不同，目標是尋找一 條最佳超平面，使大多數資料點落在預設的誤差範圍內。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u4_5",
+    "num": 112,
+    "difficulty": 3,
+    "question": "機器學習模型若過度學習訓練資料中的雜訊，導致泛化能力下降，此現象稱為 什麼？",
+    "options": {
+      "A": "欠擬合（Underfitting）",
+      "B": "過擬合（Overfitting）",
+      "C": "特徵縮放（Feature Scaling） 4-94",
+      "D": "梯度爆炸（Gradient Explosion）"
+    },
+    "answer": "B",
+    "explanation": "過擬合（Overfitting）是指模型在訓練資料上表現極好，卻無法在未知 新資料上維持預測效能，通常是因為模型過於複雜，學習到不具代表性的噪聲。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u4_6",
+    "num": 113,
+    "difficulty": 3,
+    "question": "在深度學習中，哪一個是為了引入非線性，使神經網路能學習複雜模式的元 件？",
+    "options": {
+      "A": "損失函數（Loss Function）",
+      "B": "激活函數（Activation Function）",
+      "C": "隱藏層（Hidden Layer）",
+      "D": "梯度下降（Gradient Descent）"
+    },
+    "answer": "B",
+    "explanation": "激活函數（Activation Function）如ReLU、Sigmoid 等，為神經網路帶 來非線性能力，若沒有激活函數，多層網路仍只是線性變換，無法表現複雜的 關係。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u4_7",
+    "num": 114,
+    "difficulty": 3,
+    "question": "若想在機器學習中降低模型過度擬合風險，可採用哪種方法？",
+    "options": {
+      "A": "提高學習率",
+      "B": "減少資料量",
+      "C": "正則化（Regularization）",
+      "D": "隨機刪除特徵"
+    },
+    "answer": "C",
+    "explanation": "正則化（Regularization）透過在損失函數中加入L1 或L2 懲罰項，限制 模型權重的大小，減少模型過度擬合訓練資料，提升泛化能力。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u4_8",
+    "num": 115,
+    "difficulty": 3,
+    "question": "在深度學習模型的訓練過程中，計算模型輸出與實際值差距的函數稱為什麼？",
+    "options": {
+      "A": "激活函數（Activation Function）",
+      "B": "池化函數（Pooling Function）",
+      "C": "損失函數（Loss Function）",
+      "D": "梯度函數（Gradient Function）"
+    },
+    "answer": "C",
+    "explanation": "損失函數（Loss Function）用來衡量模型預測值與實際值的差距，是指 引優化器調整參數方向的重要依據。常見如均方誤差（MSE）、交叉熵損失 （Cross-Entropy Loss）等。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u4_9",
+    "num": 116,
+    "difficulty": 3,
+    "question": "Transformer 模型中用來捕捉輸入序列不同位置間依賴關係的核心機制是什 麼？",
+    "options": {
+      "A": "池化機制（Pooling）",
+      "B": "注意力機制（Attention）",
+      "C": "決策樹分支",
+      "D": "激活函數（Activation Function）"
+    },
+    "answer": "B",
+    "explanation": "Transformer 模型核心在於注意力機制（Attention），透過計算序列中各 元素間的關聯權重，捕捉長距離依賴，徹底取代傳統RNN 的循環架構，大幅 提升計算效率與表現。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u4_10",
+    "num": 117,
+    "difficulty": 3,
+    "question": "在決策樹模型中，用於判斷分裂效果好壞的指標，常見的是下列哪一種？",
+    "options": {
+      "A": "機率密度函數（Probability Density Function）",
+      "B": "均方根誤差（Root Mean Squared Error）",
+      "C": "基尼不純度（Gini Impurity）",
+      "D": "卷積核大小（Kernel Size）"
+    },
+    "answer": "C",
+    "explanation": "基尼不純度（Gini Impurity）衡量節點內樣本的不純度，數值越低表示 節點內樣本越集中於單一類別，是決策樹演算法常用的分裂判斷依據，尤其在 分類任務中扮演重要角色。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u5_1",
+    "num": 118,
+    "difficulty": 3,
+    "question": "針對缺失值（Missing Value）的處理，下列哪種方法屬於利用模型進行補值的 方式？",
+    "options": {
+      "A": "刪除法（Deletion）",
+      "B": "均值填補（Mean Imputation）",
+      "C": "預測模型填補（Predictive Imputation）",
+      "D": "缺失指標編碼（Missing Indicator）"
+    },
+    "answer": "C",
+    "explanation": "預測模型填補是利用其他特徵變數訓練模型，如迴歸或分類器，預測缺 失值的位置或值，特別適用於特徵之間關聯性高的情況。相對於簡單的刪除或 均值填補，模型補值能更好地捕捉數據內在關聯性，降低資訊流失。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u5_2",
+    "num": 119,
+    "difficulty": 3,
+    "question": "在進行異常值（Outlier）偵測時，哪種方法是利用統計特徵分佈來判斷離群點？",
+    "options": {
+      "A": "KNN 補值",
+      "B": "四分位距法（IQR）",
+      "C": "Isolation Forest",
+      "D": "One-hot Encoding"
+    },
+    "answer": "B",
+    "explanation": "四分位距法是常見的統計方法，透過計算資料的第一與第三四分位數 （Q1 與Q3），並判定距離超過IQR（四分位距）1.5 倍以上的數據點為異常。 這種方法直觀且適用於大多數數值型資料的初步檢查。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "guide_subject3_u5_3",
+    "num": 120,
+    "difficulty": 3,
+    "question": "下列哪一種特徵選擇方法會直接在模型訓練過程中進行特徵挑選？",
+    "options": {
+      "A": "Filter 方法",
+      "B": "Wrapper 方法",
+      "C": "Embedded 方法",
+      "D": "One-hot Encoding"
+    },
+    "answer": "C",
+    "explanation": "Embedded 方法會在模型訓練過程中同步進行特徵挑選。例如決策樹模 型會產生特徵重要性（Feature Importance），或像Lasso、Ridge 透過正則化直 接控制特徵權重，實現同時建模與特徵選擇的目標。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  }
+]

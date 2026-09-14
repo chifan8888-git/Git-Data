@@ -1,0 +1,227 @@
+[
+  {
+    "id": "mock_218",
+    "num": 195,
+    "difficulty": 2,
+    "question": "在模型選擇階段，若業務單位要求「可追溯推論邏輯」，應避免使用下列哪種模型？",
+    "options": {
+      "A": "決策樹",
+      "B": "邏輯回歸",
+      "C": "隨機森林",
+      "D": "深度神經網路"
+    },
+    "answer": "D",
+    "explanation": "深度模型雖表現好但不具備可解釋性，不利於需要推論透明度的場景，如金融或法\n務。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_220",
+    "num": 196,
+    "difficulty": 1,
+    "question": "在本地部署一個已訓練好的 NLP 模型進行推論，最基本需要哪些項目？",
+    "options": {
+      "A": "模型檔案與 tokenizer",
+      "B": "GPU 伺服器與硬碟備份",
+      "C": "雲端資料湖與演算法交換站",
+      "D": "測試報告與 API 文件"
+    },
+    "answer": "A",
+    "explanation": "NLP 模型須搭配 tokenizer 才能將輸入文字轉為模型所需的編碼格式，是部署必\n要組件。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_221",
+    "num": 197,
+    "difficulty": 2,
+    "question": "為了追蹤 AI 模型不同版本在部署環境中的表現，建議使用哪項機制？",
+    "options": {
+      "A": "TensorBoard 視覺化訓練曲線",
+      "B": "模型版本控制與效能日誌紀錄",
+      "C": "前端頁面快取刷新",
+      "D": "將模型編譯為 JSON 格式"
+    },
+    "answer": "B",
+    "explanation": "版本控管結合效能監控可追蹤模型迭代歷史，有助於問題回溯與策略調整。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_222",
+    "num": 198,
+    "difficulty": 3,
+    "question": "若模型需部署於資源受限環境（如 IoT 裝置），下列哪一種架構最合適？",
+    "options": {
+      "A": "大型 Transformer 模型",
+      "B": "多模型集成系統",
+      "C": "輕量化模型（如 MobileNet、TinyML）",
+      "D": "雲端即時串流模型"
+    },
+    "answer": "C",
+    "explanation": "MobileNet、TinyML 等設計用於嵌入式與邊緣設備，在效能與資源消耗間取得平\n衡。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_224",
+    "num": 199,
+    "difficulty": 4,
+    "question": "以下哪一項是 AI 模型部署到 API 服務的最佳實務？",
+    "options": {
+      "A": "每次使用者請求皆重訓模型",
+      "B": "將模型與應用伺服器程式混寫",
+      "C": "將模型封裝為獨立服務並設定限流與監控",
+      "D": "僅支援離線上傳結果"
+    },
+    "answer": "C",
+    "explanation": "模型服務應與業務邏輯分離，設定 QPS 限流、故障轉移與記錄可提升穩定性與可\n維護性。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_225",
+    "num": 200,
+    "difficulty": 3,
+    "question": "下列哪一項可以有效減少模型在生產環境的「冷啟動」時間？",
+    "options": {
+      "A": "增加特徵維度",
+      "B": "模型提前載入與快取",
+      "C": "使用更大的批次資料訓練",
+      "D": "減少 API 輸入參數"
+    },
+    "answer": "B",
+    "explanation": "冷啟動（Cold Start）會因載入模型耗時影響使用體驗，預先快取可顯著降低回應時\n間。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_226",
+    "num": 201,
+    "difficulty": 2,
+    "question": "在多模型管理架構中，下列何者最適合支援「可重現實驗」與「模型回溯」？",
+    "options": {
+      "A": "自動調參系統",
+      "B": "資料清理器",
+      "C": "模型註冊平台（如 MLflow、Model Registry）",
+      "D": "模型融合器"
+    },
+    "answer": "C",
+    "explanation": "模型註冊系統可記錄版本、參數、輸出結果等，有助於模型治理與重現驗證。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_228",
+    "num": 202,
+    "difficulty": 1,
+    "question": "以下哪一種狀況通常表示模型已成功部署？",
+    "options": {
+      "A": "訓練集準確率達到 99%",
+      "B": "開發者完成 Python 腳本撰寫",
+      "C": "使用者可透過應用端發送請求並獲得回應",
+      "D": "模型可在 Jupyter Notebook 執行"
+    },
+    "answer": "C",
+    "explanation": "部署成功的指標為模型已成為一個可被存取並處理請求的服務，而非單純完成訓\n練。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_229",
+    "num": 203,
+    "difficulty": 3,
+    "question": "若系統中部署多個模型並實現依任務動態路由，應如何設計？",
+    "options": {
+      "A": "將模型寫死在同一段程式中",
+      "B": "根據模型準確率手動挑選執行",
+      "C": "使用推論路由器（Inference Router）根據輸入條件選擇模型",
+      "D": "每個模型固定綁定一組使用者"
+    },
+    "answer": "C",
+    "explanation": "推論路由器能根據語言、任務或裝置條件，動態導向最適模型，是多模型系統常見\n設計。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_230",
+    "num": 204,
+    "difficulty": 5,
+    "question": "在部署高階深度模型（如 GPT）時，若資源有限且需即時服務，最有效策略為？",
+    "options": {
+      "A": "保留原始架構並使用預設配置",
+      "B": "使用 Knowledge Distillation 轉為輕量模型部署",
+      "C": "移除所有注意力層",
+      "D": "轉為純雲端儲存服務"
+    },
+    "answer": "B",
+    "explanation": "知識蒸餾讓小模型學習大模型行為，可大幅降低部署成本與推論時間，同時保留核\n心能力。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_232",
+    "num": 205,
+    "difficulty": 2,
+    "question": "在 AI 模型部署階段，若需持續監控「預測誤差是否逐月上升」，應使用？",
+    "options": {
+      "A": "離線統計視覺化",
+      "B": "模型重訓器",
+      "C": "線上誤差監控與警示系統",
+      "D": "推論端緩存清理機制"
+    },
+    "answer": "C",
+    "explanation": "建立自動監控模型表現（如 MSE、F1-score 變動）可及早發現模型漂移與精度下\n降。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_233",
+    "num": 206,
+    "difficulty": 3,
+    "question": "下列哪一個平台最適合用於 MLOps 流程整合與模型生命週期管理？",
+    "options": {
+      "A": "Google Drive",
+      "B": "MLflow",
+      "C": "Sublime Text",
+      "D": "Redis"
+    },
+    "answer": "B",
+    "explanation": "MLflow 是開源的 MLOps 工具，支援實驗追蹤、模型註冊、部署與監控，是企業\n常用平台。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_234",
+    "num": 207,
+    "difficulty": 4,
+    "question": "AI 模型於雲端部署時，以下哪一策略可避免「服務費用爆炸性成長」？",
+    "options": {
+      "A": "無伺服器架構（Serverless）與自動資源擴縮（Auto-scaling）",
+      "B": "增加資料讀寫頻率",
+      "C": "永久常駐模型服務",
+      "D": "同步推論模型結果儲存至區塊鏈"
+    },
+    "answer": "A",
+    "explanation": "Serverless 架構按需計費，搭配 Auto-scaling 可根據使用量自動調整資源，避免\n資源閒置浪費。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_236",
+    "num": 208,
+    "difficulty": 5,
+    "question": "在多租戶模型部署架構中（multi-tenant serving），哪一挑戰最需要克服？",
+    "options": {
+      "A": "模型壓縮比例不足",
+      "B": "用戶間資源隔離與資料安全",
+      "C": "硬體規格一致性",
+      "D": "模型語言不一致"
+    },
+    "answer": "B",
+    "explanation": "多租戶部署需確保各用戶模型、資源與資料相互隔離，避免干擾與隱私外洩風險。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_237",
+    "num": 209,
+    "difficulty": 2,
+    "question": "下列哪一指標最適合評估分類模型在部署後真實場景的錯誤傾向？",
+    "options": {
+      "A": "訓練耗時",
+      "B": "混淆矩陣",
+      "C": "遺失值比例",
+      "D": "條件機率分布圖"
+    },
+    "answer": "B",
+    "explanation": "混淆矩陣可直觀觀察 TP、FP、FN、TN 等資訊，有助辨識模型預測錯誤類型與偏\n誤。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  }
+]

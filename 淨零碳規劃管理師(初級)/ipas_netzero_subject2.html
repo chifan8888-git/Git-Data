@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPAS 淨零碳規劃管理師 — 初級考科 2 終極速查手冊</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
+            display: flex;
+            height: 100vh;
+            color: #2d3748;
+            background-color: #f7fafc;
+        }
+        /* 左側側邊欄樣式 */
+        #sidebar {
+            width: 320px;
+            background-color: #1a202c;
+            color: #edf2f7;
+            overflow-y: auto;
+            flex-shrink: 0;
+            border-right: 1px solid #e2e8f0;
+        }
+        .sidebar-header {
+            padding: 20px 16px;
+            background-color: #0f172a;
+            border-bottom: 1px solid #334155;
+        }
+        .sidebar-header h2 {
+            font-size: 1.1rem;
+            color: #38bdf8;
+            margin-bottom: 4px;
+        }
+        .sidebar-header p {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+        .nav-list {
+            list-style: none;
+            padding: 8px 0;
+        }
+        .nav-item a {
+            display: block;
+            padding: 12px 20px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            border-left: 4px solid transparent;
+        }
+        .nav-item a:hover, .nav-item a.active {
+            background-color: #334155;
+            color: #ffffff;
+            border-left-color: #38bdf8;
+        }
+        /* 右側主要內容區樣式 */
+        #content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 40px;
+            scroll-behavior: smooth;
+        }
+        .section {
+            background: #ffffff;
+            padding: 32px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+        .section h2 {
+            color: #0f172a;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #38bdf8;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+        .tree-root {
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            background-color: #1e293b;
+            color: #f8fafc;
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            white-space: pre;
+            font-size: 0.88rem;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+            font-size: 0.9rem;
+        }
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 10px 14px;
+            text-align: left;
+        }
+        th {
+            background-color: #f1f5f9;
+            color: #334155;
+            font-weight: 600;
+        }
+        .badge {
+            background-color: #e0f2fe;
+            color: #0369a1;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        .formula-box {
+            background-color: #f0fdf4;
+            border: 1px solid #86efac;
+            color: #166534;
+            padding: 16px;
+            border-radius: 6px;
+            font-weight: bold;
+            margin: 16px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 左側導覽列 -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h2>iPAS 淨零碳規劃管理師</h2>
+            <p>初級考科 2 終極知識圖譜手冊</p>
+        </div>
+        <ul class="nav-list">
+            <li class="nav-item"><a href="#sec1">1. ISO 14064-1 邊界與類別界定</a></li>
+            <li class="nav-item"><a href="#sec2">2. 量化方法學與數據計算</a></li>
+            <li class="nav-item"><a href="#sec3">3. 數據品質與品質管理體系</a></li>
+            <li class="nav-item"><a href="#sec4">4. ISO 14067 產品碳足跡實務</a></li>
+            <li class="nav-item"><a href="#sec5">5. 報告書製作與第三方查驗</a></li>
+            <li class="nav-item"><a href="#sec6">6. 考科 2 終極計算與常見陷阱</a></li>
+        </ul>
+    </nav>
+
+    <!-- 右側內容說明區 -->
+    <main id="content">
+
+        <!-- 主題 1 -->
+        <section id="sec1" class="section">
+            <h2>1. ISO 14064-1 邊界界定與六大類別拆解</h2>
+            <div class="tree-root">iPAS 淨零碳規劃管理師 (初級考科 2：淨零碳盤查規範與程序概要)
+│
+├── 1.1 組織邊界設定 (Organizational Boundaries) [最常考邊界選擇題]
+│   ├── 1.1.1 股權比例法 (Equity Share Approach)：依據組織在營運實體持有的「股權比例」分配排放量
+│   └── 1.1.2 控制權法 (Control Approach) [企業實務最常用]
+│       ├── 營運控制法 (Operational Control)：對該設施具備「營運政策制定與執行權力」者（採 100% 計算）
+│       └── 財務控制法 (Financial Control)：對該設施具備「導向財務與營運政策」以取得經濟效益權力者
+│
+├── 1.2 報告邊界與邊界修訂機制
+│   ├── 1.2.1 基準年 (Base Year)：選定具代表性數據之年份（基準年重置條件：併購、組織分割、方法學改變達顯著門檻）
+│   └── 1.2.2 顯著性評估標準 (Significance Criteria)：針對其他間接排放（原範疇三）設定篩選準則
+│
+└── 1.3 溫室氣體排放類別 (GHG Emission Categories) [ISO 14064-1:2018 版分類]
+    ├── 類別 1：直接溫室氣體排放與移除 (Direct Emissions) [舊版範疇一 Scope 1]
+    │   ├── 固定燃燒 (如鍋爐、發電機燃料)
+    │   ├── 移動燃燒 (如公司車、堆高機用油)
+    │   ├── 製程排放 (如石灰石煅燒、化學反應)
+    │   └── 逸散排放 (如冷氣冷媒、冷卻水塔、化糞池、SF6 斷路器)
+    ├── 類別 2：輸入能源的間接溫室氣體排放 (Imported Energy) [舊版範疇二 Scope 2]
+    │   └── 外購電力、外購蒸氣、外購冷熱能（採地點基準 Location-based 或市場基準 Market-based）
+    ├── 類別 3：運輸產生的間接溫室氣體排放 (Transportation Indirect)
+    │   └── 上下游原料與產品運輸、員工通勤、商務差旅、客戶來訪運輸
+    ├── 類別 4：組織使用產品產生的間接溫室氣體排放 (Products Used)
+    │   └── 採購商品、資本財 (設備/廠房)、水資源使用、廢棄物處置
+    ├── 類別 5：與使用組織產品相關的間接溫室氣體排放 (Products Associated with Use)
+    │   └── 產品使用階段能耗、售出產品廢棄處理、產品租賃
+    └── 類別 6：其他來源的間接溫室氣體排放 (Other Sources)</div>
+
+            <h3>ISO 14064-1 六大類別與舊版三範疇對照表</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ISO 14064-1:2018 分類</th>
+                        <th>GHG Protocol / 舊版 GHG 範疇</th>
+                        <th>包含主要排放來源與範例</th>
+                        <th>盤查強制性要求</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>類別 1 (Category 1)</strong></td>
+                        <td>範疇一 (Scope 1 Direct)</td>
+                        <td>廠內鍋爐、公務車、製程反應、冷氣冷媒逸散</td>
+                        <td><span class="badge">強制盤查</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>類別 2 (Category 2)</strong></td>
+                        <td>範疇二 (Scope 2 Indirect)</td>
+                        <td>台電外購電力、外購蒸汽、外購冰水冷氣</td>
+                        <td><span class="badge">強制盤查</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>類別 3 (Category 3)</strong></td>
+                        <td>範疇三 (Scope 3 Up/Downstream)</td>
+                        <td>原料運輸物流、員工差旅、員工通勤</td>
+                        <td>依「顯著性評估」決定</td>
+                    </tr>
+                    <tr>
+                        <td><strong>類別 4 (Category 4)</strong></td>
+                        <td>範疇三 (Scope 3 Upstream)</td>
+                        <td>採購原物料生產、委外廢棄物處理、水資源</td>
+                        <td>依「顯著性評估」決定</td>
+                    </tr>
+                    <tr>
+                        <td><strong>類別 5 (Category 5)</strong></td>
+                        <td>範疇三 (Scope 3 Downstream)</td>
+                        <td>售出產品使用階段能耗、終端報廢處置</td>
+                        <td>依「顯著性評估」決定</td>
+                    </tr>
+                    <tr>
+                        <td><strong>類別 6 (Category 6)</strong></td>
+                        <td>範疇三 (Scope 3 Other)</td>
+                        <td>其他無法歸類之特殊間接排放源</td>
+                        <td>依「顯著性評估」決定</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- 主題 2 -->
+        <section id="sec2" class="section">
+            <h2>2. 量化方法學與數據計算實務</h2>
+            
+            <div class="formula-box">
+                核心計算公式：溫室氣體排放量 (tCO₂e) = 活動數據 (Activity Data) × 排放係數 (Emission Factor) × GWP 值 (全球暖化潛勢)
+            </div>
+
+            <div class="tree-root">2. 量化方法學與數據計算實務
+├── 2.1 七大管制溫室氣體 (GHGs) 與 GWP (全球暖化潛勢)
+│   ├── 二氧化碳 (CO₂)：GWP = 1 (基準物)
+│   ├── 甲烷 (CH₄)：主來源為廢水處理、垃圾掩埋、畜牧
+│   ├── 氧化亞氮 (N₂O)：主來源為化肥使用、高溫燃燒
+│   ├── 氫氟碳化物 (HFCs)：冷氣與冷凍設備冷媒
+│   ├── 氟碳化物 (PFCs)：半導體與面板清洗劑
+│   ├── 六氟化硫 (SF₆)：高壓電力絕緣開關 (高 GWP 值)
+│   └── 三氟化氮 (NF₃)：電子與光電產業清洗氣體
+├── 2.2 量化方法（Quantification Approaches）
+│   ├── 2.2.1 活動數據法 (Activity Data Approach) [最常見]：利用用電度數、公升數、公斤數進行計算
+│   ├── 2.2.2 質量平衡法 (Mass Balance Approach)：輸入質量 - 輸出質量 - 積存量 = 排放量 (常用於化學反應/冷媒)
+│   └── 2.2.3 連續排放監測法 (CEMS)：直接利用感測器連續測量煙道氣體濃度與流速
+└── 2.3 排放係數選用階層 (Hierarchy of Emission Factors)
+    ├── 第一優先：實測係數 / 設備供應商特定數據 (Facility-specific)
+    ├── 第二優先：區域 / 國家權威資料庫 (如台灣環境部溫室氣體排放係數管理表)
+    └── 第三優先：國際權威資料庫 (如 IPCC 氣候變遷專門委員會預設係數)</div>
+        </section>
+
+        <!-- 主題 3 -->
+        <section id="sec3" class="section">
+            <h2>3. 數據品質與品質管理體系 (QA/QC)</h2>
+            <div class="tree-root">3. 數據品質與品質管理體系
+├── 3.1 溫室氣體盤查五大原則 (GHG Accounting Principles) [必考觀念題]
+│   ├── 相關性 (Relevance)：選擇適合目標使用者決策需求之排放源與數據
+│   ├── 完整性 (Completeness)：涵蓋邊界內所有顯著之溫室氣體排放與移除，不得無故遺漏
+│   ├── 一致性 (Consistency)：跨時間使用相同之邊界、數據與方法學，使不同年份具可比性
+│   ├── 準確性 (Accuracy)：降低不確定性，確保數據不偏高亦不偏低
+│   └── 透明度 (Transparency)：揭露充分且適當之資訊，使驗證者能進行合理的評估
+├── 3.2 數據不確定性評估 (Uncertainty Assessment)
+│   ├── 數據來源不確定性：儀器校正誤差、抽樣誤差
+│   └── 係數不確定性：通用係數與現場實際狀況之偏差
+└── 3.3 不重覆計算與相應調整 (Double Counting Prevention)</div>
+        </section>
+
+        <!-- 主題 4 -->
+        <section id="sec4" class="section">
+            <h2>4. ISO 14067 產品碳足跡 (PCF) 實務</h2>
+            <div class="tree-root">4. ISO 14067 產品碳足跡 (Product Carbon Footprint)
+├── 4.1 生命週期評估 (LCA - Life Cycle Assessment) 範疇
+│   ├── 搖籃到墳墓 (Cradle-to-Grave)：B2C 產品，涵蓋原物料取得、製造、運輸、使用至最終處置
+│   ├── 搖籃到大門 (Cradle-to-Gate)：B2B 中間產品，涵蓋原物料取得至產品離開廠區大門
+│   └── 大門到大門 (Gate-to-Gate)：僅涵蓋單一工廠內部製程
+├── 4.2 功能單位 (Functional Unit) 與 宣告單位 (Declared Unit)
+│   ├── 功能單位：衡量產品績效與使用功能之標準（例：提供 1000 小時照明之燈泡）
+│   └── 宣告單位：無法確定終端功能時使用之單位（例：1 公斤鋼材、1 公升鮮乳）
+├── 4.3 產品類別規則 (PCR - Product Category Rules)
+│   └── 針對特定產品群訂定之統一計算與評估規則，確保同類產品碳足跡具備比較性
+└── 4.4 生質碳 (Biogenic Carbon) 與土地變更 (Land Use Change) 處理</div>
+        </section>
+
+        <!-- 主題 5 -->
+        <section id="sec5" class="section">
+            <h2>5. 報告書製作與第三方查核準備</h2>
+            <div class="tree-root">5. 報告書製作與第三方查核準備
+├── 5.1 溫室氣體清冊 (GHG Inventory) 與報告書結構
+│   └── 必須包含：組織邊界、報告期間、七大氣體清冊、量化方法學、排除排放源說明
+├── 5.2 第三方查核/確證與查驗 (Verification vs Validation)
+│   ├── 確證 (Validation)：針對「未來預期」之減量專案或目標進行評估 (如 ISO 14064-2)
+│   └── 查驗 (Verification)：針對「過去既成」之歷史排放數據進行稽核 (如 ISO 14064-1)
+└── 5.3 查證保證等級 (Level of Assurance)
+    ├── 合理保證 (Reasonable Assurance)：高強度查證，查核範圍廣，實質性門檻低（警語為正向確信）
+    └── 有限保證 (Limited Assurance)：中強度查證，抽樣範圍小（警語為負向確信，如「未發現有不符合...」）</div>
+        </section>
+
+        <!-- 主題 6 -->
+        <section id="sec6" class="section">
+            <h2>6. 考科 2 終極計算題與常見陷阱速查</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>常見考題陷阱點</th>
+                        <th>正確觀念 / 計算解析</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>冷媒逸散計算 (質量平衡)</strong></td>
+                        <td><strong>排放量 = 填充量 (補灌量) × 冷媒 GWP 值</strong>（填充量即代表該年度逸散量）。</td>
+                    </tr>
+                    <tr>
+                        <td><strong>電力排放計算 (範疇二)</strong></td>
+                        <td><strong>排放量 = 用電度數 (kWh) × 電力排放係數 (kg CO₂e/度) ÷ 1000</strong>（注意單位換算為公噸 tCO₂e）。</td>
+                    </tr>
+                    <tr>
+                        <td><strong>外購蒸汽與冰水</strong></td>
+                        <td>屬於 <strong>類別 2 (輸入能源間接排放)</strong>，不可誤歸類為類別 1 或類別 4。</td>
+                    </tr>
+                    <tr>
+                        <td><strong>生物質 (Biomass) 燃燒</strong></td>
+                        <td>生物質燃燒產生的 CO₂ 需 <strong>單獨揭露</strong>，不得直接加總進組織直接排放總量中。</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+
+    <!-- 頁面選單互動腳本 -->
+    <script>
+        document.querySelectorAll('.nav-item a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                document.querySelectorAll('.nav-item a').forEach(a => a.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

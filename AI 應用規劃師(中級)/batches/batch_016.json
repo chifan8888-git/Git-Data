@@ -1,0 +1,227 @@
+[
+  {
+    "id": "guide_subject2_u3_6",
+    "num": 96,
+    "difficulty": 3,
+    "question": "下列哪一項屬於異常偵測技術常見的應用情境？",
+    "options": {
+      "A": "定期報表自動生成",
+      "B": "用戶行為分群",
+      "C": "信用卡詐騙識別",
+      "D": "影片推薦排序"
+    },
+    "answer": "C",
+    "explanation": "異常偵測可用於發現違常模式，像是信用卡交易中異常消費、系統入侵 等風險情境。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u3_7",
+    "num": 97,
+    "difficulty": 3,
+    "question": "若要從大量原始變數中萃取低維的代表性特徵，最常使用哪一種降維技術？",
+    "options": {
+      "A": "K-means",
+      "B": "PCA（主成分分析）",
+      "C": "t 檢定",
+      "D": "SMOTE"
+    },
+    "answer": "B",
+    "explanation": "PCA 是常見的線性降維方法，將原始特徵投影到新的主成分空間中，以 保留資料最大變異。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u3_8",
+    "num": 98,
+    "difficulty": 3,
+    "question": "在大數據分析中，哪一種資料探勘技術可用於找出客戶購買行為中常見的組合 規則？",
+    "options": {
+      "A": "關聯規則分析",
+      "B": "分類分析",
+      "C": "時間序列分析",
+      "D": "迴歸分析"
+    },
+    "answer": "A",
+    "explanation": "關聯規則分析（如Apriori 演算法）可找出項目間常見組合，例如「買 牛奶常搭配買麵包」。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u3_9",
+    "num": 99,
+    "difficulty": 3,
+    "question": "箱型圖（Box Plot）如何呈現異常值？",
+    "options": {
+      "A": "以箱體內部大小表示",
+      "B": "以特殊符號（如點或星號）單獨標記",
+      "C": "自動刪除異常值",
+      "D": "以中位數代表異常值"
+    },
+    "answer": "B",
+    "explanation": "箱型圖透過特殊符號（如點、星號）單獨標記異常值，使使用者易於辨 識數據中的異常資料點。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u3_10",
+    "num": 100,
+    "difficulty": 3,
+    "question": "若企業需自動比對商品評論中出現的品牌名稱，建議使用哪一種處理流程？",
+    "options": {
+      "A": "結構化資料匹配",
+      "B": "命名實體識別（NER）",
+      "C": "群集分析",
+      "D": "影像分類"
+    },
+    "answer": "B",
+    "explanation": "NER 屬於自然語言處理技術，可自動從文字中辨識出品牌、人名、地點 等實體資訊。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u4_1",
+    "num": 101,
+    "difficulty": 3,
+    "question": "鑑別式AI 模型的主要特性為何？",
+    "options": {
+      "A": "可產生新內容樣本",
+      "B": "僅適用於無監督學習任務",
+      "C": "專注於資料分類與預測決策邊界",
+      "D": "無法使用結構化資料進行訓練"
+    },
+    "answer": "C",
+    "explanation": "鑑別式AI 模型（如邏輯迴歸、SVM）學習資料間的判別界線，廣泛應 用於預測任務。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u4_2",
+    "num": 102,
+    "difficulty": 3,
+    "question": "為了加速大數據環境下的AI 模型訓練，以下哪一項為常見技術？",
+    "options": {
+      "A": "早期停止（Early Stopping）",
+      "B": "批次分群（Mini-batching）",
+      "C": "混合精度訓練（Mixed Precision Training）",
+      "D": "主成分分析（PCA）"
+    },
+    "answer": "C",
+    "explanation": "混合使用16-bit 與32-bit 浮點運算可減少訓練時間與記憶體使用量，提 升效能。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u4_3",
+    "num": 103,
+    "difficulty": 3,
+    "question": "在生成式AI 中，若輸入為結構化資料並希望產出自然語言敘述，最適合使用 下列哪類模型？",
+    "options": {
+      "A": "決策樹",
+      "B": "強化學習模型",
+      "C": "語言生成模型",
+      "D": "圖論模型"
+    },
+    "answer": "C",
+    "explanation": "生成式AI 可根據結構化或非結構化輸入生成文字、圖像等內容，GPT 是典型文字生成架構。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u4_4",
+    "num": 104,
+    "difficulty": 3,
+    "question": "大數據對生成式AI 內容品質的影響關鍵在於？",
+    "options": {
+      "A": "GPU 數量多寡",
+      "B": "訓練樣本是否具多樣性與語境一致性",
+      "C": "API 回應速度",
+      "D": "是否使用Python 編寫模型"
+    },
+    "answer": "B",
+    "explanation": "生成式模型的品質極度依賴訓練資料的多樣性與語境品質，關係到語言 流暢性與真實性。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u4_5",
+    "num": 105,
+    "difficulty": 3,
+    "question": "在AI 模型訓練過程中，為避免使用含有個資的敏感欄位，常用哪一種資料處 理方法？",
+    "options": {
+      "A": "資料標註",
+      "B": "資料蒐集",
+      "C": "資料匿名化 6-41",
+      "D": "資料分群"
+    },
+    "answer": "C",
+    "explanation": "資料匿名化處理如移除姓名、轉換欄位等，可降低個資風險並符合法規 要求。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u4_6",
+    "num": 106,
+    "difficulty": 3,
+    "question": "下列哪一項技術可強化AI 模型對使用者資料的隱私保護？",
+    "options": {
+      "A": "特徵擴增（Feature Augmentation）",
+      "B": "差分隱私（Differential Privacy）",
+      "C": "貝氏分類器",
+      "D": "強化學習"
+    },
+    "answer": "B",
+    "explanation": "差分隱私透過加噪機制保護個別資料不被逆推出，即使在公開模型中也 難以重建原始資料。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u4_7",
+    "num": 107,
+    "difficulty": 3,
+    "question": "若企業欲將醫療資料用於訓練AI 模型，下列哪一項最符合合法合規原則？",
+    "options": {
+      "A": "將所有資料匿名處理後存於海外伺服器",
+      "B": "取得合法授權與病患同意，並執行隱私強化",
+      "C": "僅標註患者年齡即可訓練",
+      "D": "合併不同院所資料以擴大樣本量，不需其他處理"
+    },
+    "answer": "B",
+    "explanation": "處理含敏感資訊之醫療資料時，必須符合隱私法規與倫理原則，包括告 知、同意與匿名化處理。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u4_8",
+    "num": 108,
+    "difficulty": 3,
+    "question": "為確保AI 系統合規性與可追溯性，應建立哪一種制度？",
+    "options": {
+      "A": "模型評分制度",
+      "B": "模型自動訓練流程",
+      "C": "資料版本管理與操作紀錄制度",
+      "D": "開源資料集快速上線制度"
+    },
+    "answer": "C",
+    "explanation": "版本管理可確保資料來源、處理歷程清楚記錄，對稽核與合規性追蹤至 關重要。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u4_9",
+    "num": 109,
+    "difficulty": 3,
+    "question": "在企業內部推動AI 模型落地時，哪一種治理措施最能確保模型部署後持續符 合法規與道德標準？",
+    "options": {
+      "A": "部署後由IT 團隊定期觀察效能",
+      "B": "設定固定訓練資料更新週期",
+      "C": "導入AI 治理框架與跨部門監管流程",
+      "D": "採購更多模型訓練設備以強化能力"
+    },
+    "answer": "C",
+    "explanation": "AI 治理需結合技術、法務、業務等部門共同制定監督機制，確保風險控 制與合規落實。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u4_10",
+    "num": 110,
+    "difficulty": 3,
+    "question": "若欲在大數據環境中有效訓練深度學習模型，以下哪一項策略最常用於解決資 料與運算資源不對稱的問題？",
+    "options": {
+      "A": "將所有資料轉存為影像格式以提升讀取效率",
+      "B": "將模型拆解為多個子模型並分別部署於本機",
+      "C": "採用分散式訓練與硬體加速架構",
+      "D": "改以監督式學習取代非監督式學習以降低負載"
+    },
+    "answer": "C",
+    "explanation": "本題考查大數據處理分析與應用的實務操作，包含數據清洗、特徵工程、敘述統計、大檔案 Pandas 分批讀取優化、統計假說檢定以及分散式運算架構之基礎觀念。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  }
+]

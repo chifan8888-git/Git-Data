@@ -1,0 +1,227 @@
+[
+  {
+    "id": "115_1_subject2_46",
+    "num": 66,
+    "difficulty": 3,
+    "question": "若分析師只想計算「Electronics（電子產品）」這個特定分類的平均營收，下列何者為最佳的語法？",
+    "options": {
+      "A": "df[df['Category'] == 'Electronics']['Revenue'].mean()；",
+      "B": "df['Category' == 'Electronics']['Revenue'].mean()；",
+      "C": "df.loc['Electronics', 'Revenue'].mean()；",
+      "D": "df.filter(items=['Electronics'])['Revenue'].mean()；"
+    },
+    "answer": "A",
+    "explanation": "本題考查大數據處理分析與應用的實務操作，包含數據清洗、特徵工程、敘述統計、大檔案 Pandas 分批讀取優化、統計假說檢定以及分散式運算架構之基礎觀念。\n\n【來源：115 年第一次中級能力鑑定歷屆試題】",
+    "_category": "subject2"
+  },
+  {
+    "id": "115_1_subject2_47",
+    "num": 67,
+    "difficulty": 3,
+    "question": "分析師想將customers 表中的Region 欄位加入到df 交易紀錄中，且「只保留那些在customers 表中有對應資料的交易紀錄」。下列哪一種合併方式最正確？",
+    "options": {
+      "A": "pd.concat([df, customers], axis=1)；",
+      "B": "pd.merge(df, customers, on='CustomerID', how='outer')；",
+      "C": "pd.merge(df, customers, on='CustomerID', how='inner')；",
+      "D": "df.join(customers, on='CustomerID')請根據下方資訊回答第48~50 題。"
+    },
+    "answer": "C",
+    "explanation": "本題考查大數據處理分析與應用的實務操作，包含數據清洗、特徵工程、敘述統計、大檔案 Pandas 分批讀取優化、統計假說檢定以及分散式運算架構之基礎觀念。\n\n【來源：115 年第一次中級能力鑑定歷屆試題】",
+    "_category": "subject2"
+  },
+  {
+    "id": "115_1_subject2_48",
+    "num": 68,
+    "difficulty": 3,
+    "question": "在進行機器學習建模前，資料分析師需對特徵變數X 進行標準化處理，以消除不同量尺所造成的影響。已知使用StandardScaler 進行資料轉換，程式碼如下：scaler =\nStandardScaler()。請問下列哪一種寫法可以正確完成資料標準化？",
+    "options": {
+      "A": "X_norm = scaler.transform(X)；",
+      "B": "X_norm = scaler.fit(X)；",
+      "C": "X_norm = scaler.fit_transform(X)；",
+      "D": "X_norm = fit_transform(scaler)"
+    },
+    "answer": "C",
+    "explanation": "在 Scikit-Learn 中，特徵標準化（如 StandardScaler）應先使用 `fit_transform()` 擬合訓練集並轉換；隨後的測試集則只能使用 `transform()` 進行轉換，以防止測試集資訊洩漏 (Data Leakage)。\n\n【來源：115 年第一次中級能力鑑定歷屆試題】",
+    "_category": "subject2"
+  },
+  {
+    "id": "115_1_subject2_49",
+    "num": 69,
+    "difficulty": 3,
+    "question": "在進行機器學習建模前，資料分析師已完成資料前處理（包含遺漏值處理與特徵標準化），並準備建立分類模型。\n已知資料流程如下：\n1. 將資料區分為訓練集與測試集2. 建立羅吉斯迴歸（Logistic Regression）模型3. 使用訓練資料進行模型擬合（fit）請問下列哪一組Pandas / Scikit-learn 程式碼流程最為正確？",
+    "options": {
+      "A": "X_train, X_test, y_train, y_test = train_test_split(X, y)\\nmodel = LogisticRegression()\\nmodel.predict(X_train, y_train)",
+      "B": "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)\\nmodel = LogisticRegression()\\nmodel.fit(X_train, y_train)",
+      "C": "X_train, X_test, y_train, y_test = train_test_split(X, y)\\nmodel = LogisticRegression()\\nmodel.fit(X_test, y_test)",
+      "D": "model = LogisticRegression()\\nmodel.fit(X, y)\\nX_train, X_test, y_train, y_test = train_test_split(X_norm, y)"
+    },
+    "answer": "B",
+    "explanation": "在 Scikit-Learn 中，特徵標準化（如 StandardScaler）應先使用 `fit_transform()` 擬合訓練集並轉換；隨後的測試集則只能使用 `transform()` 進行轉換，以防止測試集資訊洩漏 (Data Leakage)。\n\n【來源：115 年第一次中級能力鑑定歷屆試題】",
+    "_category": "subject2"
+  },
+  {
+    "id": "115_1_subject2_50",
+    "num": 70,
+    "difficulty": 3,
+    "question": "參考下圖程式碼，下列描述何者正確？\n<div style=\"text-align:center; margin:1rem 0;\"><img src=\"images/115_1_subject2_50.png\" style=\"max-width:100%; border:1px solid var(--border-color); border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.15);\"></div>",
+    "options": {
+      "A": "cm 表示混淆矩陣，橫列表測試集的預測值；",
+      "B": "混淆矩陣對角線數值皆大於非對角線數值表示模型過度擬合；",
+      "C": "f1_score 參數average=\"weighted\"表示計算平均f1_score；",
+      "D": "f1_score 計算時採用各類別精確率（Precision）與召回率（Recall）的調和平均，並加權考量類別不平衡性"
+    },
+    "answer": "D",
+    "explanation": "本題考查大數據處理分析與應用的實務操作，包含數據清洗、特徵工程、敘述統計、大檔案 Pandas 分批讀取優化、統計假說檢定以及分散式運算架構之基礎觀念。\n\n【來源：115 年第一次中級能力鑑定歷屆試題】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u1_1",
+    "num": 71,
+    "difficulty": 3,
+    "question": "下列何者屬於「敘述統計」的主要目的？",
+    "options": {
+      "A": "建立模型預測未來事件",
+      "B": "評估樣本是否顯著",
+      "C": "概括並整理資料特徵",
+      "D": "檢定兩組資料的平均數是否相等"
+    },
+    "answer": "C",
+    "explanation": "敘述統計（Descriptive Statistics）主要用於整理、彙整與呈現資料特性， 不涉及推論或決策。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u1_2",
+    "num": 72,
+    "difficulty": 3,
+    "question": "下列何者為常見的離散型機率分佈？",
+    "options": {
+      "A": "常態分佈",
+      "B": "指數分佈",
+      "C": "貝他分佈",
+      "D": "二項分佈"
+    },
+    "answer": "D",
+    "explanation": "二項分佈用於計算多次伯努利試驗中成功的次數，為典型的離散型分佈。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u1_3",
+    "num": 73,
+    "difficulty": 3,
+    "question": "在資料集中若極端值眾多，應優先採用哪一項代表集中趨勢？",
+    "options": {
+      "A": "平均數",
+      "B": "中位數",
+      "C": "眾數",
+      "D": "標準差"
+    },
+    "answer": "B",
+    "explanation": "中位數不受極端值影響，適合描述偏態分佈或有離群值的資料。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u1_4",
+    "num": 74,
+    "difficulty": 3,
+    "question": "標準差的統計意義為何？",
+    "options": {
+      "A": "資料中最大與最小值的距離",
+      "B": "數據分佈的對稱程度",
+      "C": "資料平均偏離中心值的程度",
+      "D": "代表資料的平均數"
+    },
+    "answer": "C",
+    "explanation": "標準差衡量資料與平均值的偏離程度，是最常見的離散程度指標之一。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u1_5",
+    "num": 75,
+    "difficulty": 3,
+    "question": "假設檢定中，若p 值小於顯著水準0.05，代表什麼意思？",
+    "options": {
+      "A": "接受虛無假設",
+      "B": "拒絕虛無假設",
+      "C": "樣本數不足",
+      "D": "結果不顯著 3-47"
+    },
+    "answer": "B",
+    "explanation": "當p 值小於設定的顯著水準α，表示樣本資料與虛無假設有顯著差異， 故應拒絕虛無假設。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u1_6",
+    "num": 76,
+    "difficulty": 3,
+    "question": "在統計推論中，哪一個值通常用於判斷假設檢定的顯著性？",
+    "options": {
+      "A": "z-score",
+      "B": "t 值",
+      "C": "p 值",
+      "D": "標準差"
+    },
+    "answer": "C",
+    "explanation": "p 值表示在虛無假設成立的情況下，觀察到現有樣本結果的機率，是統 計顯著性的核心指標。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u1_7",
+    "num": 77,
+    "difficulty": 3,
+    "question": "下列哪一個情況較適合使用單樣本t 檢定？",
+    "options": {
+      "A": "比較兩群獨立樣本平均差異",
+      "B": "比較一組樣本與既定平均值的差異",
+      "C": "分析兩變數間的線性關係",
+      "D": "檢定類別分佈是否一致"
+    },
+    "answer": "B",
+    "explanation": "單樣本t 檢定用來評估樣本平均數是否與某個已知值有顯著差異。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u1_8",
+    "num": 78,
+    "difficulty": 3,
+    "question": "平均數、標準差、最大值等統計量的取得屬於何種統計方法？",
+    "options": {
+      "A": "敘述統計",
+      "B": "推論統計",
+      "C": "機率模型",
+      "D": "監督式學習"
+    },
+    "answer": "A",
+    "explanation": "這些統計量是對資料本身的描述，不涉及推論或預測，屬於敘述統計。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u1_9",
+    "num": 79,
+    "difficulty": 3,
+    "question": "關於常態分佈（Normal Distribution）的敘述，下列何者「錯誤」？",
+    "options": {
+      "A": "其分佈曲線呈鐘型且對稱於均值",
+      "B": "大多數數據點集中於均值附近，隨著偏離均值逐漸減少",
+      "C": "任何類型的數據在樣本數足夠大時，都會呈現常態分佈",
+      "D": "標準常態分佈的均值為0，標準差為1"
+    },
+    "answer": "C",
+    "explanation": "中央極限定理指出，當樣本數足夠大時，樣本平均數的分佈會趨近常態 分佈；然而，原始資料本身的分佈並不會因此變為常態。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  },
+  {
+    "id": "guide_subject2_u1_10",
+    "num": 80,
+    "difficulty": 3,
+    "question": "若資料呈現明顯左偏，最適合使用下列哪一項統計量作為代表集中趨勢的指 標？",
+    "options": {
+      "A": "平均數",
+      "B": "標準差",
+      "C": "中位數",
+      "D": "變異係數"
+    },
+    "answer": "C",
+    "explanation": "當資料呈現偏態分佈（如左偏或右偏）時，平均數容易受到極端值影響， 導致偏離中心位置。中位數對極端值不敏感，因此在偏態分佈中較能準確代表 資料集中趨勢。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject2"
+  }
+]

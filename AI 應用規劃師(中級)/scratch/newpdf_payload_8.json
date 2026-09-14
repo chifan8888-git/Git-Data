@@ -1,0 +1,302 @@
+[
+  {
+    "subject": "subject3",
+    "id": "subject3_new_64",
+    "question": "某團隊開發法律文件生成系統，需根據合約前半段內容自動生成後半段條款。工程師分別使用BERT 與GPT-2 進行微調，但發現BERT 的生成效果明顯較差，且即使增加訓練資料也無法改善。下列何者為最主要原因？",
+    "options": [
+      "A. BERT 缺乏法律領域知識，因此生成能力較差；",
+      "B. BERT 的分詞方式影響語意理解，導致生成效果不佳；",
+      "C. BERT 模型規模較小，因此生成能力不足；",
+      "D. BERT 無法根據前文逐步生成後續文字，較不適合此類任務 D"
+    ],
+    "answer": "D"
+  },
+  {
+    "subject": "subject3",
+    "id": "subject3_new_65",
+    "question": "某推薦系統工程師處理商品類別特徵，該特徵包含約3,000 個不同商品項目，每一種商品或其規格皆視為一個獨立類別。請問在高基數(High Cardinality)的情境下，下列哪一種編碼方式最容易造成維度爆炸問題？",
+    "options": [
+      "A. 目標編碼(Target Encoding)；",
+      "B. 標籤編碼(Label Encoding)；",
+      "C. Embedding 層(Categorical Embedding)；",
+      "D. One-Hot 編碼(One-Hot Encoding)"
+    ],
+    "answer": "D"
+  },
+  {
+    "subject": "subject3",
+    "id": "subject3_new_66",
+    "question": "某工程師建立房價預測模型，輸入特徵包含屋齡與距捷運站距離(公尺)。他發現距捷運站距離分布嚴重右偏，經對數(Log)轉換後模型表現明顯改善；但將同樣轉換套用於屋齡後，模型表現反而下降。下列何者為最可能的原因？",
+    "options": [
+      "A. 屋齡與房價若呈線性關係，Log 轉換反而破壞此結構；",
+      "B. Log 轉換會壓縮所有特徵的變異數，導致模型失去鑑別能力；",
+      "C. Log 轉換不適用於有單位的連續變數，應改用Box-Cox；",
+      "D. 兩特徵須套用相同轉換，否則尺度不一致導致梯度不穩定 D"
+    ],
+    "answer": "A"
+  },
+  {
+    "subject": "subject3",
+    "id": "subject3_new_67",
+    "question": "在時間序列資料的特徵工程中，工程師常使用滑動窗口(Sliding Window)方法，將過去多個時間點的觀測值組合為模型輸入。下列何者為此方法的主要目的？",
+    "options": [
+      "A. 資料增強；",
+      "B. 去除資料雜訊；",
+      "C. 降低特徵維度；",
+      "D. 建立滯後特徵 C"
+    ],
+    "answer": "D"
+  },
+  {
+    "subject": "subject3",
+    "id": "subject3_new_68",
+    "question": "週作為測試集(固定時間切分)。半年後重新評估，發現模型對最新資料(如第80 週)的預測明顯衰退，推測為時間演進導致行為模式改變。若重新設計驗證策略，應採用下列哪種方法，使每次訓練皆基於最新時間區間資料？",
+    "options": [
+      "A. K-fold 交叉驗證(K-fold Cross-Validation)；",
+      "B. 分層K-fold(Stratified K-fold)；",
+      "C. 滾動窗口驗證(Rolling Window Validation / Time Series Split)；",
+      "D. 留一驗證法(Leave-One-Out Cross-Validation) B"
+    ],
+    "answer": "UNKNOWN"
+  },
+  {
+    "subject": "subject3",
+    "id": "subject3_new_69",
+    "question": "某房仲平台要預測物件成交價，資料集含50 個特徵，其中部分特徵與房價呈非線性關係，且業務單位要求模型須能提供整體特徵重要性以供稽核。下列哪一種模型選擇策略最符合需求？",
+    "options": [
+      "A. 使用羅吉斯迴歸(Logistic Regression)，透過線性係數解釋特徵影響，但無法有效建模非線性關係；",
+      "B. 使用隨機森林迴歸(Random Forest Regression)，可處理非線性關係，並提供整體特徵重要性(Feature Importance)作為解釋依據；",
+      "C. 用K-means 分群(K-means Clustering)後分別建立迴歸模型，以提升預測準確度並間接提升可解釋性；",
+      "D. 使用支持向量迴歸(Support Vector Regression, SVR)，透過核函數(Kernel Function)捕捉非線性關係，並以支持向量解釋模型決策 B"
+    ],
+    "answer": "B"
+  },
+  {
+    "subject": "subject3",
+    "id": "subject3_new_70",
+    "question": "年第一次AI 應用規劃師-中級能力鑑定【公告試題】  ",
+    "options": [
+      "A. 監督式二元分類(Supervised Binary Classification)；",
+      "B. 非監督或半監督異常偵測(Unsupervised / Semi-supervised Anomaly Detection)；",
+      "C. 強化學習(Reinforcement Learning)；",
+      "D. 自監督學習(Self-supervised Learning) B"
+    ],
+    "answer": "UNKNOWN"
+  },
+  {
+    "subject": "subject3",
+    "id": "subject3_new_71",
+    "question": "某信用風險模型：訓練AUC=0.97、驗證AUC=0.72、少數違約樣本預測波動極大及不同K-fold 切分結果差異明顯。下列何者為最可能的問題？",
+    "options": [
+      "A. 高偏差；",
+      "B. 高變異；",
+      "C. 過擬合；",
+      "D. 資料漂移 A"
+    ],
+    "answer": "B"
+  },
+  {
+    "subject": "subject3",
+    "id": "subject3_new_72",
+    "question": "某倉儲自動化公司以強化學習(Reinforcement Learning, RL)訓練機器手臂進行揀貨，獎勵函數設計為「每成功抓取一個貨品得+1 分」。部署後發現機器手臂學會反覆放開再抓取同一物品，以累積分數，但實際完成任務的效率極低。請問此現象的核心問題為何？應如何修正獎勵設計？",
+    "options": [
+      "A. 獎勵塑形(Reward Shaping)：將獎勵改為「成功完成一次揀貨任務」而非單次抓取行為；",
+      "B. 策略退化(Policy Degradation)：降低學習率以穩定訓練；",
+      "C. 信用分配問題(Credit Assignment Problem)：引入優勢函數(Advantage Function)；",
+      "D. 災難性遺忘(Catastrophic Forgetting)：加入經驗回放(Replay Buffer) D"
+    ],
+    "answer": "A"
+  },
+  {
+    "subject": "subject3",
+    "id": "subject3_new_73",
+    "question": "某詐欺偵測模型需同時具備高精確率(Precision)，以避免誤凍結正常帳號，並維持高召回率(Recall)表現，以確保不放過任何詐欺行為。然而工程師發現兩者之間存在取捨關係(Precision-Recall Tradeoff)。在此情境下，F1-score 最能反映何種特性？",
+    "options": [
+      "A. F1-score = (Precision + Recall) / 2，為算術平均；",
+      "B. F1-score 為Precision 的加權平均；",
+      "C. F1-score 僅適用於類別平衡資料；",
+      "D. F1-score = 2 × (Precision×Recall)/(Precision+Recall)，為調和平均，對較小值敏感 B"
+    ],
+    "answer": "D"
+  },
+  {
+    "subject": "subject3",
+    "id": "subject3_new_74",
+    "question": "某工程師使用XGBoost 模型進行調參，需對以下超參數進行網格搜尋(Grid Search)：learning_rate(3 個候選值)、max_depth(4 個)、n_estimators(5 個)、subsample(3 個)、colsample_bytree(3 個)。每組參數組合皆需完整進行5-Fold交叉驗證。請問總共需要訓練幾個模型？",
+    "options": [
+      "A. 3 + 4 + 5 + 3 + 3 = 18 個；",
+      "B. 5 × 5 = 25 個；",
+      "C. max(3,4,5,3,3) × 5 = 25 個；",
+      "D. 3 × 4 × 5 × 3 × 3 × 5 = 2,700 個 D"
+    ],
+    "answer": "D"
+  },
+  {
+    "subject": "subject3",
+    "id": "subject3_new_75",
+    "question": "某團隊使用LoRA 微調大型語言模型進行法律摘要任務，發現模型在複雜條款的摘要上常出現內容遺漏，但GPU 顯存已接近上限。下列哪種調整方式最能在不明顯增加記憶體使用的前提下改善模型表現？",
+    "options": [
+      "A. 提高LoRA rank 以增強模型表達能力；",
+      "B. 改用完整微調(Full Fine-tuning)以學習更多細節；",
+      "C. 降低LoRA rank 以釋放記憶體並增加Batch Size；",
+      "D. 降低LoRA rank 但套用到更多層，保持trainable 總參數不變 B"
+    ],
+    "answer": "D"
+  },
+  {
+    "subject": "subject3",
+    "id": "subject3_new_76",
+    "question": "某金融機構的AI 信用評分模型需上傳至第三方雲端服務商進行推論。法務部門要求：在不解密資料的前提下，由單一雲端服務商直接對加密資料進行模型運算。下列哪種隱私保護技術最符合此需求？",
+    "options": [
+      "A. 聯邦學習(Federated Learning)；",
+      "B. 同態加密(Homomorphic Encryption)；",
+      "C. 差分隱私(Differential Privacy)；",
+      "D. 安全多方計算(Secure Multi-Party Computation, MPC) A"
+    ],
+    "answer": "B"
+  },
+  {
+    "subject": "subject3",
+    "id": "subject3_new_77",
+    "question": "某公司導入AI 履歷篩選系統，用於自動決定是否進入面試。模型對男性應徵者的面試通過率為55%，對女性應徵者為30%。在其他條件不變的情況下，工程師需評估模型是否符合統計均等(Statistical Parity)的公平性定義。下列何者最正確？",
+    "options": [
+      "A. 符合統計均等，因為模型未使用性別作為輸入特徵；",
+      "B. 符合統計均等，因為兩個族群皆有部分應徵者被錄取；",
+      "C. 不符合統計均等，因為不同群體的正向決策比例(通過率)存在明顯差異；",
+      "D. 不符合統計均等，因為女性族群的預測準確率較低 A"
+    ],
+    "answer": "C"
+  },
+  {
+    "subject": "subject3",
+    "id": "subject3_new_78",
+    "question": "某銀行信貸模型上線後稽核發現，女性申請者中「實際具有還款能力卻被模型拒絕」的比例顯著高於男性，但法務限制不允許在推論階段使用性別欄位調整輸出。下列去偏策略何者在此限制下仍可執行？",
+    "options": [
+      "A. 訓練中(In-processing)：在損失函數加入公平性懲罰項，降低不同群體的錯誤拒絕比例差異；",
+      "B. 前處理(Pre-processing)：僅於訓練資料進行重新採樣，無法直接修正既有模型在推論階段的偏誤；",
+      "C. 後處理(Post-processing)：依性別分組調整決策門檻，使不同群體的錯誤拒絕比例一致；",
+      "D. 改用人口統計均等指標(Demographic Parity)，錯誤拒絕比例差異將自動消失"
+    ],
+    "answer": "A"
+  },
+  {
+    "subject": "subject3",
+    "id": "subject3_new_79",
+    "question": "個類別的多層感知機(MLP)，且標籤已轉為One-Hot 編碼(One-Hot Encoding)。為符合10 個類別的單標籤分類需求，下圖中的程式碼中",
+    "options": [
+      "A. 與",
+      "B. 的函數應填入何者？  (A) sigmoid，mean_squared_error； (B) softmax，categorical_crossentropy；",
+      "C. relu，binary_crossentropy；",
+      "D. tanh，sparse_categorical_crossentropy B"
+    ],
+    "answer": "UNKNOWN"
+  },
+  {
+    "subject": "subject3",
+    "id": "subject3_new_80",
+    "question": "年第一次AI 應用規劃師-中級能力鑑定【公告試題】  ",
+    "options": [
+      "A. RandomRotation(15)角度過大導致特徵變形，應降至5 度以內；",
+      "B. RandomHorizontalFlip 破壞字母方向語義，使模型以50%機率學到鏡像錯誤標籤；",
+      "C. ColorJitter 改變筆畫灰階，導致邊緣偵測特徵失真；",
+      "D. ToTensor( )應放在所有幾何變換之前才能保持座標對應正確   下圖為使用ResNet 進行遷移學習(Transfer Learning)的Python 程式片段。請回答第42~43 題。  C"
+    ],
+    "answer": "UNKNOWN"
+  },
+  {
+    "subject": "subject3",
+    "id": "subject3_new_81",
+    "question": "觀察程式中行",
+    "options": [
+      "A. 將所有既有權重的梯度計算關閉，這在遷移學習中屬於哪一種標準策略？ (A)全面微調(Full Fine-Tuning)；",
+      "B. 零樣本學習(Zero-shot Learning)；",
+      "C. 特徵萃取(Feature Extraction)；",
+      "D. 知識蒸餾(Knowledge Distillation) D"
+    ],
+    "answer": "C"
+  },
+  {
+    "subject": "subject3",
+    "id": "subject3_new_82",
+    "question": "在進行遷移學習微調(Fine-Tuning)時，通常會將優化器的學習率(Learning Rate)設得非常小(如1e-4)，下列何者為主要的原因？",
+    "options": [
+      "A. 為了避免記憶體耗盡(OOM)；",
+      "B. 為了加速模型整體的收斂時間；",
+      "C. 為了讓損失函數強制歸零；",
+      "D. 為了避免更新步伐過大，破壞預訓練模型原本已學好的良好特徵表示"
+    ],
+    "answer": "D"
+  },
+  {
+    "subject": "subject3",
+    "id": "subject3_new_83",
+    "question": "年第一次AI 應用規劃師-中級能力鑑定【公告試題】  ",
+    "options": [
+      "A. 此寫法完全正確，因為先以整體資料進行LDA 降維，再以交叉驗證測試KNN，是標準流程；",
+      "B. 此寫法存在資料洩漏(Data Leakage)問題，應將LDA 納入交叉驗證流程中一併進行；",
+      "C. 雖然流程不夠嚴謹，但結果仍然能夠代表模型真實的泛化能力；",
+      "D. 如果只想驗證KNN 的分類效果，可以直接跳過LDA 步驟，以簡化流程 Ａ"
+    ],
+    "answer": "UNKNOWN"
+  },
+  {
+    "subject": "subject3",
+    "id": "subject3_new_84",
+    "question": "研究人員在程式(下圖)中使用cross_val_score 進行交叉驗證，但目前尚未設定cv參數。  他們希望確保在每次資料分割時，訓練集與測試集的類別比例與原始資料一致，以免影響模型的準確率估計。目前有以下幾段候選程式碼可供選擇。請問為了確保在交叉驗證時每個分割中的類別比例與原始資料一致，上面哪幾段程式碼插入在原始程式中[#填入程式碼]的部分比較合適？",
+    "options": [
+      "A. 程式碼B、程式碼C、程式碼D；",
+      "B. 程式碼A、程式碼C；",
+      "C. 程式碼A、程式碼B、程式碼D；",
+      "D. 程式碼C、程式碼D"
+    ],
+    "answer": "UNKNOWN"
+  },
+  {
+    "subject": "subject3",
+    "id": "subject3_new_85",
+    "question": "年第一次AI 應用規劃師-中級能力鑑定【公告試題】  ",
+    "options": [
+      "A. 描述A、描述C、描述F；",
+      "B. 描述B、描述D、描述E、描述F；",
+      "C. 描述B、描述C、描述E、描述F；",
+      "D. 描述A、描述B、描述D、描述E、描述F B"
+    ],
+    "answer": "UNKNOWN"
+  },
+  {
+    "subject": "subject3",
+    "id": "subject3_new_86",
+    "question": "參考下圖建立模型結果，下列哪一項描述組合正確？",
+    "options": [
+      "A. 描述A、描述C；",
+      "B. 描述C、描述E、描述F；",
+      "C. 描述A、描述D、描述E；",
+      "D. 描述D、描述E、描述F D"
+    ],
+    "answer": "B"
+  },
+  {
+    "subject": "subject3",
+    "id": "subject3_new_87",
+    "question": "年第一次AI 應用規劃師-中級能力鑑定【公告試題】  ",
+    "options": [
+      "A. 學習率(Learning Rate)太低；",
+      "B. 批次大小(Batch Size)設定太大；",
+      "C. 模型低度擬合(Underfitting)；",
+      "D. 模型過擬合(Overfitting)   某人工智慧團隊正在開發一套自動光學檢測(Automated Optical Inspection, AOI)系統，目標是透過機械手臂上的相機，自動辨識晶圓表面是否存在「劃傷(Scratch)」或「污點(Spot)」等瑕疵。目前系統開發面臨以下挑戰： ● 資料極度不平衡，正常晶圓影像約佔99%，有瑕疵影像僅佔1%。 ● 輸入影像品質不一致，包含不同解析度，且部分影像因機械手臂震動而出現模糊。 ● 在使用深層卷積神經網路(CNN)訓練時，Loss 曲線震盪劇烈，甚至偶爾出現數值溢出(NaN)情形。  請根據上述情境，回答第49~50 題。 C"
+    ],
+    "answer": "UNKNOWN"
+  },
+  {
+    "subject": "subject3",
+    "id": "subject3_new_88",
+    "question": "為了修復訓練過程中Loss 突然變成NaN 的問題，工程師考慮在PyTorch 訓練迴圈中加入梯度裁剪(Gradient Clipping)機制，例如 torch.nn.utils.clip_grad_norm_。若要正確加入梯度裁剪，最適合插入於哪個位置？其主要作用為何？",
+    "options": [
+      "A. 插入於位置3 與位置4 之間；用以限制Loss 數值大小，避免梯度消失；",
+      "B. 插入於位置4 與位置5 之間；用以限制梯度範數過大，避免更新步幅失控導致數值不穩；",
+      "C. 插入於位置5 之後；用以將更新後的權重強制壓縮回正常範圍；",
+      "D. 插入於位置1 與位置2 之間；用以對輸入影像進行批次標準化"
+    ],
+    "answer": "B"
+  }
+]

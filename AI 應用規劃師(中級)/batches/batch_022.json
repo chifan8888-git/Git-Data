@@ -1,0 +1,227 @@
+[
+  {
+    "id": "115_1_subject3_29",
+    "num": 76,
+    "difficulty": 3,
+    "question": "某工廠設備監測系統需偵測馬達軸承的異常振動，但過去僅記錄了大量正常運作的振動時序資料，缺乏任何已確認故障的標註樣本。請問下列何種任務範疇最符題目合此情境下的異常偵測需求？",
+    "options": {
+      "A": "監督式二元分類（Supervised Binary Classification）；",
+      "B": "非監督或半監督異常偵測（Unsupervised / Semi-supervised Anomaly Detection）；",
+      "C": "強化學習（Reinforcement Learning）；",
+      "D": "自監督學習（Self-supervised Learning）"
+    },
+    "answer": "B",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：115 年第一次中級能力鑑定歷屆試題】",
+    "_category": "subject3"
+  },
+  {
+    "id": "115_1_subject3_30",
+    "num": 77,
+    "difficulty": 3,
+    "question": "某信用風險模型：訓練AUC=0.97、驗證AUC=0.72、少數違約樣本預測波動極大及不同K-fold 切分結果差異明顯。下列何者為最可能的問題？",
+    "options": {
+      "A": "高偏差；",
+      "B": "高變異；",
+      "C": "過擬合；",
+      "D": "資料漂移"
+    },
+    "answer": "B",
+    "explanation": "ROC 曲線以偽陽性率 (FPR) 為橫軸，真陽性率 (TPR / Recall) 為縱軸。**ROC AUC 愈接近 1**，代表模型在不同門檻值下的分類區分能力愈強，且該指標不受類別不平衡的影響。\n\n【來源：115 年第一次中級能力鑑定歷屆試題】",
+    "_category": "subject3"
+  },
+  {
+    "id": "115_1_subject3_31",
+    "num": 78,
+    "difficulty": 3,
+    "question": "某倉儲自動化公司以強化學習（Reinforcement Learning, RL）訓練機器手臂進行揀貨，獎勵函數設計為「每成功抓取一個貨品得+1 分」。部署後發現機器手臂學會反覆放開再抓取同一物品，以累積分數，但實際完成任務的效率極低。請問此現象的核心問題為何？應如何修正獎勵設計？",
+    "options": {
+      "A": "獎勵塑形（Reward Shaping）：將獎勵改為「成功完成一次揀貨任務」而非單次抓取行為；",
+      "B": "策略退化（Policy Degradation）：降低學習率以穩定訓練；",
+      "C": "信用分配問題（Credit Assignment Problem）：引入優勢函數（Advantage Function）；",
+      "D": "災難性遺忘（Catastrophic Forgetting）：加入經驗回放（Replay Buffer）"
+    },
+    "answer": "A",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：115 年第一次中級能力鑑定歷屆試題】",
+    "_category": "subject3"
+  },
+  {
+    "id": "115_1_subject3_32",
+    "num": 79,
+    "difficulty": 3,
+    "question": "某詐欺偵測模型需同時具備高精確率（Precision），以避免誤凍結正常帳號，並維持高召回率（Recall）表現，以確保不放過任何詐欺行為。然而工程師發現兩者之間存在取捨關係（Precision-Recall Tradeoff）。在此情境下，F1-score 最能反映何種特性？",
+    "options": {
+      "A": "F1-score = (Precision + Recall) / 2，為算術平均；",
+      "B": "F1-score 為Precision 的加權平均；",
+      "C": "F1-score 僅適用於類別平衡資料；",
+      "D": "F1-score = 2 × (Precision×Recall)/(Precision+Recall)，為調和平均，對較小值敏感"
+    },
+    "answer": "D",
+    "explanation": "本題考查模型評估指標。在不平衡分類任務中，**召回率 (Recall) = TP / (TP + FN)**，衡量所有正樣本中被預測出的比例（常用於漏診代價高的醫療篩檢）；**精確率 (Precision) = TP / (TP + FP)**，衡量預測為正的樣本中真正為正的比例（常用於垃圾郵件過濾）。 **F1-Score** 為精確率與召回率的調和平均數，能平衡考量兩者表現。\n\n【來源：115 年第一次中級能力鑑定歷屆試題】",
+    "_category": "subject3"
+  },
+  {
+    "id": "115_1_subject3_33",
+    "num": 80,
+    "difficulty": 3,
+    "question": "某工程師的多元線性迴歸模型包含150 個特徵，其中許多特徵高度相關（如「建坪」與「總面積」）。他同時希望控制過擬合且保留所有特徵的解釋能力，不讓任何特徵係數歸零，下列哪一項正則化方案最適當？",
+    "options": {
+      "A": "Lasso 迴歸（L1 正則化）：透過絕對值懲罰使部分係數歸零，具有特徵選擇效題目果；",
+      "B": "Ridge 迴歸（L2 正則化）：透過平方懲罰縮小所有係數，在共線性下穩定估計且不歸零；",
+      "C": "Elastic Net（L1+L2）：結合稀疏性與穩定性，但部分係數仍可能被壓為0；",
+      "D": "無正則化的OLS 迴歸：不控制過擬合，在共線性下係數估計不穩定"
+    },
+    "answer": "B",
+    "explanation": "當模型在訓練集表現極佳，但在測試集表現下滑時，稱為**過擬合 (Overfitting)**。常用防範手段包括：增加訓練資料量、使用 L1/L2 正則化（Lasso/Ridge）、Dropout、提前結束訓練（Early Stopping），或在影像任務中使用隨機裁剪等資料擴增技術。\n\n【來源：115 年第一次中級能力鑑定歷屆試題】",
+    "_category": "subject3"
+  },
+  {
+    "id": "115_1_subject3_34",
+    "num": 81,
+    "difficulty": 3,
+    "question": "某工程師使用XGBoost 模型進行調參，需對以下超參數進行網格搜尋（Grid Search）：learning_rate（3 個候選值）、max_depth（4 個）、n_estimators（5 個）、\nsubsample（3 個）、colsample_bytree（3 個）。每組參數組合皆需完整進行5-Fold交叉驗證。請問總共需要訓練幾個模型？",
+    "options": {
+      "A": "3 + 4 + 5 + 3 + 3 = 18 個；",
+      "B": "5 × 5 = 25 個；",
+      "C": "max(3,4,5,3,3) × 5 = 25 個；",
+      "D": "3 × 4 × 5 × 3 × 3 × 5 = 2,700 個"
+    },
+    "answer": "D",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：115 年第一次中級能力鑑定歷屆試題】",
+    "_category": "subject3"
+  },
+  {
+    "id": "115_1_subject3_35",
+    "num": 82,
+    "difficulty": 3,
+    "question": "某團隊使用LoRA 微調大型語言模型進行法律摘要任務，發現模型在複雜條款的摘要上常出現內容遺漏，但GPU 顯存已接近上限。下列哪種調整方式最能在不明顯增加記憶體使用的前提下改善模型表現？",
+    "options": {
+      "A": "提高LoRA rank 以增強模型表達能力；",
+      "B": "改用完整微調（Full Fine-tuning）以學習更多細節；",
+      "C": "降低LoRA rank 以釋放記憶體並增加Batch Size；",
+      "D": "降低LoRA rank 但套用到更多層，保持trainable 總參數不變"
+    },
+    "answer": "D",
+    "explanation": "LoRA (Low-Rank Adaptation) 是一種參數高效的微調技術 (PEFT)。它透過在原始預訓練模型旁插入低秩矩陣（分解為 A 和 B），在微調時僅更新這些低秩矩陣參數而凍結原模型權重，大幅降低記憶體開銷與計算成本。\n\n【來源：115 年第一次中級能力鑑定歷屆試題】",
+    "_category": "subject3"
+  },
+  {
+    "id": "115_1_subject3_36",
+    "num": 83,
+    "difficulty": 3,
+    "question": "某金融機構的AI 信用評分模型需上傳至第三方雲端服務商進行推論。法務部門要求：在不解密資料的前提下，由單一雲端服務商直接對加密資料進行模型運算。\n下列哪種隱私保護技術最符合此需求？",
+    "options": {
+      "A": "聯邦學習（Federated Learning）；",
+      "B": "同態加密（Homomorphic Encryption）；",
+      "C": "差分隱私（Differential Privacy）；",
+      "D": "安全多方計算（Secure Multi-Party Computation, MPC）"
+    },
+    "answer": "B",
+    "explanation": "依台灣《個人資料保護法》規定，蒐集個資前應明確告知當事人：(1)蒐集機關名稱；(2)蒐集目的；(3)個資類別；(4)利用情形（期間、地區、對象及方式）；(5)當事人法定行使權利（查詢、請求閱覽、補充或更正、刪除等）及不提供時之權益影響。\n\n【來源：115 年第一次中級能力鑑定歷屆試題】",
+    "_category": "subject3"
+  },
+  {
+    "id": "115_1_subject3_37",
+    "num": 84,
+    "difficulty": 3,
+    "question": "某銀行導入AI 貸款審核系統，監管要求每筆被拒絕的申請須提供可理解的拒絕原因。技術主管評估以下方案，哪一種最能實現個別預測的局部可解釋性（Local Explainability）？",
+    "options": {
+      "A": "SHAP（SHapley Additive exPlanations）值：計算每個特徵對單筆預測的貢獻；",
+      "B": "全域特徵重要性（Global Feature Importance）：說明整體特徵影響，無法解釋單一個案；",
+      "C": "Grad-CAM（Gradient-weighted Class Activation Mapping）：以熱力圖解釋影像題目模型；",
+      "D": "混淆矩陣（Confusion Matrix）：呈現整體分類表現"
+    },
+    "answer": "A",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：115 年第一次中級能力鑑定歷屆試題】",
+    "_category": "subject3"
+  },
+  {
+    "id": "115_1_subject3_38",
+    "num": 85,
+    "difficulty": 3,
+    "question": "某公司導入AI 履歷篩選系統，用於自動決定是否進入面試。模型對男性應徵者的面試通過率為55%，對女性應徵者為30%。在其他條件不變的情況下，工程師需評估模型是否符合統計均等（Statistical Parity）的公平性定義。下列何者最正確？",
+    "options": {
+      "A": "符合統計均等，因為模型未使用性別作為輸入特徵；",
+      "B": "符合統計均等，因為兩個族群皆有部分應徵者被錄取；",
+      "C": "不符合統計均等，因為不同群體的正向決策比例（通過率）存在明顯差異；",
+      "D": "不符合統計均等，因為女性族群的預測準確率較低"
+    },
+    "answer": "C",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：115 年第一次中級能力鑑定歷屆試題】",
+    "_category": "subject3"
+  },
+  {
+    "id": "115_1_subject3_39",
+    "num": 86,
+    "difficulty": 3,
+    "question": "某銀行信貸模型上線後稽核發現，女性申請者中「實際具有還款能力卻被模型拒絕」的比例顯著高於男性，但法務限制不允許在推論階段使用性別欄位調整輸出。\n下列去偏策略何者在此限制下仍可執行？",
+    "options": {
+      "A": "訓練中（In-processing）：在損失函數加入公平性懲罰項，降低不同群體的錯誤拒絕比例差異；",
+      "B": "前處理（Pre-processing）：僅於訓練資料進行重新採樣，無法直接修正既有模型在推論階段的偏誤；",
+      "C": "後處理（Post-processing）：依性別分組調整決策門檻，使不同群體的錯誤拒絕比例一致；",
+      "D": "改用人口統計均等指標（Demographic Parity），錯誤拒絕比例差異將自動消失答案"
+    },
+    "answer": "A",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：115 年第一次中級能力鑑定歷屆試題】",
+    "_category": "subject3"
+  },
+  {
+    "id": "115_1_subject3_40",
+    "num": 87,
+    "difficulty": 3,
+    "question": "分析師準備建立一個能將手寫數字圖片（28x28 像素展平為784 維度）分為0~9 共10 個類別的多層感知機（MLP），且標籤已轉為One-Hot 編碼（One-Hot Encoding）。\n為符合10 個類別的單標籤分類需求，下圖中的程式碼中(A)與(B)的函數應填入何者？\n<div style=\"text-align:center; margin:1rem 0;\"><img src=\"images/115_1_subject3_40.png\" style=\"max-width:100%; border:1px solid var(--border-color); border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.15);\"></div>",
+    "options": {
+      "A": "sigmoid，mean_squared_error；",
+      "B": "softmax，categorical_crossentropy；",
+      "C": "relu，binary_crossentropy；",
+      "D": "tanh，sparse_categorical_crossentropy"
+    },
+    "answer": "B",
+    "explanation": "本題考查多分類模型的標準配置。對於 0-9 手寫數字共 10 個類別的單標籤分類任務，當標籤已轉為 One-Hot 編碼時，輸出層應選用 **softmax 激活函數**以輸出概率分佈，並搭配 **categorical_crossentropy（類別交叉熵）損失函數**。若標籤為整數編碼，則應選用 sparse_categorical_crossentropy。\n\n【來源：115 年第一次中級能力鑑定歷屆試題】",
+    "_category": "subject3"
+  },
+  {
+    "id": "115_1_subject3_41",
+    "num": 88,
+    "difficulty": 3,
+    "question": "工程師使用PyTorch 建立OCR 訓練pipeline，並對手寫字母資料集套用下圖程式進行資料增強（Transform）。模型在訓練過程中顯示驗證損失（Validation Loss）持續下降，但實際部署後，系統在辨識「b/d/p/q」類字母錯誤率異常偏高。下列何者為最可能的根本原因？\n<div style=\"text-align:center; margin:1rem 0;\"><img src=\"images/115_1_subject3_41.png\" style=\"max-width:100%; border:1px solid var(--border-color); border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.15);\"></div>",
+    "options": {
+      "A": "RandomRotation(15)角度過大導致特徵變形，應降至5 度以內；",
+      "B": "RandomHorizontalFlip 破壞字母方向語義，使模型以50%機率學到鏡像錯誤標籤；",
+      "C": "ColorJitter 改變筆畫灰階，導致邊緣偵測特徵失真；",
+      "D": "ToTensor( )應放在所有幾何變換之前才能保持座標對應正確下圖為使用ResNet 進行遷移學習（Transfer Learning）的Python 程式片段。請回答第42~43 題。"
+    },
+    "answer": "B",
+    "explanation": "本題考查 PyTorch / Torchvision 中的數據增強 (Transforms)。對手寫字母資料集套用隨機裁剪、旋轉或縮放等變換，能增加訓練資料的多樣性，降低模型過擬合風險，從而提升驗證集的泛化效能。\n\n【來源：115 年第一次中級能力鑑定歷屆試題】",
+    "_category": "subject3"
+  },
+  {
+    "id": "115_1_subject3_42",
+    "num": 89,
+    "difficulty": 3,
+    "question": "觀察程式中行(A)將所有既有權重的梯度計算關閉，這在遷移學習中屬於哪一種標準策略？",
+    "options": {
+      "A": "全面微調（Full Fine-Tuning）；",
+      "B": "零樣本學習（Zero-shot Learning）；",
+      "C": "特徵萃取（Feature Extraction）；",
+      "D": "知識蒸餾（Knowledge Distillation）"
+    },
+    "answer": "C",
+    "explanation": "本題考查機器學習與深度學習核心技術，涵蓋機器學習數學基礎（如條件機率與線性代數）、常見模型演算法特徵、超參數調優、過擬合處理、模型評估指標（如混淆矩陣）與部署治理實務。\n\n【來源：115 年第一次中級能力鑑定歷屆試題】",
+    "_category": "subject3"
+  },
+  {
+    "id": "115_1_subject3_43",
+    "num": 90,
+    "difficulty": 3,
+    "question": "在進行遷移學習微調（Fine-Tuning）時，通常會將優化器的學習率（Learning Rate）設得非常小（如1e-4），下列何者為主要的原因？",
+    "options": {
+      "A": "為了避免記憶體耗盡（OOM）；",
+      "B": "為了加速模型整體的收斂時間；",
+      "C": "為了讓損失函數強制歸零；",
+      "D": "為了避免更新步伐過大，破壞預訓練模型原本已學好的良好特徵表示答案請依據下方資訊回答第44~45 題。\nIris 是UCI Dataset 上的一組經典資料集，常被用來教學與測試分類模型。\n這份資料包含三種類型的鳶尾花（Iris setosa、Iris versicolor、Iris virginica），每個類別各有50 筆資料。\n每筆資料包含四個特徵：花萼長度、花萼寬度、花瓣長度、花瓣寬度。\n研究人員希望透過機器學習模型，根據花朵的形態特徵，自動判斷該花屬於哪一種類型。在本次任務中，研究人員希望比較不同分類模型的表現。他們首先嘗試用線性判別分析（LDA）進行降維，接著使用K 最近鄰（KNN）分類器來做分類預測，\n並使用交叉驗證（Cross Validation）評估模型的準確率。"
+    },
+    "answer": "D",
+    "explanation": "LoRA (Low-Rank Adaptation) 是一種參數高效的微調技術 (PEFT)。它透過在原始預訓練模型旁插入低秩矩陣（分解為 A 和 B），在微調時僅更新這些低秩矩陣參數而凍結原模型權重，大幅降低記憶體開銷與計算成本。\n\n【來源：115 年第一次中級能力鑑定歷屆試題】",
+    "_category": "subject3"
+  }
+]

@@ -1,0 +1,227 @@
+[
+  {
+    "id": "mock_16",
+    "num": 15,
+    "difficulty": 3,
+    "question": "下列何者為圖像分類任務中常見的預訓練模型？",
+    "options": {
+      "A": "GPT",
+      "B": "ResNet",
+      "C": "T5",
+      "D": "BERT"
+    },
+    "answer": "B",
+    "explanation": "ResNet（殘差網路）是深度卷積網路，用於圖像分類與特徵擷取，有效解決梯度消\n失。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_17",
+    "num": 16,
+    "difficulty": 5,
+    "question": "下列哪一項屬於「跨模態檢索」任務？",
+    "options": {
+      "A": "用英文描述生成英文摘要",
+      "B": "用圖像查找圖像",
+      "C": "用圖像查找描述圖文匹配的句子",
+      "D": "用語音辨識翻譯語音內容"
+    },
+    "answer": "C",
+    "explanation": "跨模態檢索指用一種模態（如圖像）查找另一模態（如文字）的對應內容，應用於\n圖文對齊。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_18",
+    "num": 17,
+    "difficulty": 1,
+    "question": "RNN 模型的主要限制為何？",
+    "options": {
+      "A": "無法處理分類任務",
+      "B": "計算複雜度高",
+      "C": "容易發生梯度消失或爆炸",
+      "D": "無法處理長句"
+    },
+    "answer": "C",
+    "explanation": "RNN 雖能處理序列，但長序列下容易出現梯度消失或爆炸，LSTM 為其改良型。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_19",
+    "num": 18,
+    "difficulty": 2,
+    "question": "下列關於 BERT 的描述何者正確？",
+    "options": {
+      "A": "採用單向上下文語意建模",
+      "B": "用於物件辨識",
+      "C": "使用 Encoder-Only 結構",
+      "D": "適合用於圖像特徵擷取"
+    },
+    "answer": "C",
+    "explanation": "BERT 採用 Transformer Encoder 架構，進行雙向語意理解，用於多種 NLP 任\n務。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_20",
+    "num": 19,
+    "difficulty": 3,
+    "question": "在 CV 中，FPN（Feature Pyramid Network）的主要目的是？",
+    "options": {
+      "A": "增強圖像分辨率",
+      "B": "建立金字塔型多層特徵融合",
+      "C": "降低特徵冗餘",
+      "D": "做目標追蹤"
+    },
+    "answer": "B",
+    "explanation": "FPN 是多尺度特徵融合技術，可提升模型對小物件與不同尺寸物件的偵測能力。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_21",
+    "num": 20,
+    "difficulty": 1,
+    "question": "在 NLP 領域中，哪一種模型最常用於實現「自動摘要」功能？",
+    "options": {
+      "A": "YOLOv5",
+      "B": "Seq2Seq",
+      "C": "K-means",
+      "D": "ResNet-50"
+    },
+    "answer": "B",
+    "explanation": "自動摘要屬於序列到序列的任務，Seq2Seq 架構（含注意力機制）是處理此類任務\n的常見方法。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_22",
+    "num": 21,
+    "difficulty": 2,
+    "question": "在 Vision Transformer 架構中，圖像 patch 的處理方式為何？",
+    "options": {
+      "A": "每個 patch 對應一個卷積核輸出",
+      "B": "每個 patch 編碼為 token 後加入位置編碼",
+      "C": "patch 預先經過 pooling 再分類",
+      "D": "patch 僅提取邊緣特徵"
+    },
+    "answer": "B",
+    "explanation": "ViT 將圖像分割為固定大小 patch，經線性投影後加入位置編碼，再送入\nTransformer。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_23",
+    "num": 22,
+    "difficulty": 3,
+    "question": "以下哪個 NLP 任務最適合使用 T5（Text-to-Text Transfer Transformer）模型？",
+    "options": {
+      "A": "物件偵測",
+      "B": "語者辨識",
+      "C": "文本分類與生成整合任務",
+      "D": "深度圖像生成"
+    },
+    "answer": "C",
+    "explanation": "T5 將所有 NLP 任務統一為文字轉文字格式（Text-to-Text），適用於翻譯、摘要、\n問答、分類等。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_24",
+    "num": 23,
+    "difficulty": 4,
+    "question": "下列哪一項屬於「Zero-Shot Learning」在 NLP 中的應用場景？",
+    "options": {
+      "A": "使用已知類別資料進行分類",
+      "B": "在未知任務上使用已訓練模型進行推論",
+      "C": "對影像進行語意分割",
+      "D": "使用語音資料訓練語言模型"
+    },
+    "answer": "B",
+    "explanation": "Zero-Shot Learning 指模型未經任務特訓即可推論，如使用GPT 直接進行情感判\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_25",
+    "num": 24,
+    "difficulty": 1,
+    "question": "下列哪一項是深度學習模型訓練中常見的優化演算法？",
+    "options": {
+      "A": "梯度下降法（SGD）",
+      "B": "邏輯斯回歸",
+      "C": "支持向量機",
+      "D": "隨機森林"
+    },
+    "answer": "A",
+    "explanation": "SGD 是訓練神經網路常用的優化演算法，更新權重以最小化損失函數。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_26",
+    "num": 25,
+    "difficulty": 3,
+    "question": "什麼是 Attention Score 在 NLP 中的功能？",
+    "options": {
+      "A": "產生句子的主題標籤",
+      "B": "決定詞與詞之間的相關程度",
+      "C": "判斷圖片中物體位置",
+      "D": "壓縮高維度特徵向量"
+    },
+    "answer": "B",
+    "explanation": "Attention Score 是衡量詞與詞間依賴關係的分數，幫助模型聚焦於重要語境。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_27",
+    "num": 26,
+    "difficulty": 4,
+    "question": "GAN（生成對抗網路）在電腦視覺應用中的一大挑戰為何？",
+    "options": {
+      "A": "僅可用於監督式學習",
+      "B": "缺乏訓練資料",
+      "C": "訓練過程中生成器與判別器不易收斂平衡",
+      "D": "無法用於合成影像"
+    },
+    "answer": "C",
+    "explanation": "GAN 由兩個網路博弈訓練，若一方過強會導致學習失衡，收斂困難是實務應用難\n題。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_28",
+    "num": 27,
+    "difficulty": 2,
+    "question": "哪一項屬於深度學習模型中的正則化技術，可避免過度擬合？",
+    "options": {
+      "A": "ReLU 激勵函數",
+      "B": "Dropout",
+      "C": "Batch Normalization",
+      "D": "MaxPooling"
+    },
+    "answer": "B",
+    "explanation": "Dropout 隨機忽略部分神經元，有效防止模型對特定特徵過度依賴，改善過擬合。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_29",
+    "num": 28,
+    "difficulty": 5,
+    "question": "在多語言 NLP 模型中，XLM-R 的主要優勢為何？",
+    "options": {
+      "A": "僅支援英文語料",
+      "B": "僅進行圖像翻譯",
+      "C": "可處理百種語言並保持語言無關表徵",
+      "D": "專為單語預訓練設計"
+    },
+    "answer": "C",
+    "explanation": "XLM-R 是基於 RoBERTa 訓練的多語言模型，具備跨語言泛化能力，支援超過\n100 種語言。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_30",
+    "num": 29,
+    "difficulty": 1,
+    "question": "哪一項是卷積神經網路中「捲積層」的核心目的？",
+    "options": {
+      "A": "對數據進行分類",
+      "B": "壓縮模型參數",
+      "C": "擷取局部特徵如邊緣與角落",
+      "D": "執行標準化處理"
+    },
+    "answer": "C",
+    "explanation": "捲積層透過濾波器滑動，擷取局部空間特徵，為 CNN 核心功能之一。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  }
+]

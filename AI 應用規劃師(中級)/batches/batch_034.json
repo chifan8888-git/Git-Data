@@ -1,0 +1,227 @@
+[
+  {
+    "id": "mock_131",
+    "num": 120,
+    "difficulty": 1,
+    "question": "在多模態應用中，若圖像為輸入而輸出為語句，該任務最可能屬於下列哪一類？",
+    "options": {
+      "A": "視覺分類任務",
+      "B": "圖像摘要生成",
+      "C": "表格資料預測",
+      "D": "語音辨識"
+    },
+    "answer": "B",
+    "explanation": "圖像摘要生成（Image Captioning）是一種典型的多模態應用，將視覺資訊轉換為\n語句輸出。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_132",
+    "num": 121,
+    "difficulty": 2,
+    "question": "下列何者是處理圖像與時間序列資料的常見多模態組合架構？",
+    "options": {
+      "A": "CNN + LSTM",
+      "B": "T5 + ResNet",
+      "C": "GRU + GAN",
+      "D": "RNN + ViT"
+    },
+    "answer": "A",
+    "explanation": "CNN 常用於圖像特徵提取，LSTM 擅長處理時間序列，兩者結合能同時處理空間\n與時間維度資訊。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_133",
+    "num": 122,
+    "difficulty": 3,
+    "question": "多模態推論時若一模態缺失，以下哪種策略最能保持推論穩定性？",
+    "options": {
+      "A": "使用均值補值",
+      "B": "模態切換降階處理",
+      "C": "採用模態魯棒編碼（Modality-Robust Encoding）",
+      "D": "使用卷積過濾降雜訊"
+    },
+    "answer": "C",
+    "explanation": "模態魯棒設計可使模型在模態缺失（如圖像無法取得）時，仍能根據其他模態維持\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_134",
+    "num": 123,
+    "difficulty": 4,
+    "question": "多模態模型的「共同訓練損失（Joint Loss）」設計目的為？",
+    "options": {
+      "A": "增加 token 數量",
+      "B": "優化每個模態單獨性能",
+      "C": "同時考量不同模態與最終任務的誤差平衡",
+      "D": "減少語音資料長度"
+    },
+    "answer": "C",
+    "explanation": "Joint Loss 將語音、文字、圖像等模態誤差共同納入訓練，以提升整體語意整合與\n下游任務表現。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_135",
+    "num": 124,
+    "difficulty": 2,
+    "question": "在應用多模態 AI 處理新聞影片內容時，最可能會結合哪兩種模態？",
+    "options": {
+      "A": "表格與語音",
+      "B": "圖像與音訊",
+      "C": "語音與程式碼",
+      "D": "結構化數據與地圖資訊"
+    },
+    "answer": "B",
+    "explanation": "新聞影片包含影像與聲音，兩者是最基本的多模態組合，適用於語音辨識、字幕產\n生與情緒分析。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_136",
+    "num": 125,
+    "difficulty": 5,
+    "question": "哪一項設計有助於多模態模型具備「跨語言圖像生成」能力？",
+    "options": {
+      "A": "單語模態強化記憶模組",
+      "B": "跨語言共享嵌入空間（Cross-lingual Shared Embedding）",
+      "C": "壓縮特徵向量記憶體映射",
+      "D": "多層注意力機制限制掩碼"
+    },
+    "answer": "B",
+    "explanation": "跨語言共享嵌入空間可讓模型理解多語言與圖像語意對應，是多語言到圖像生成的\n基礎技術。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_138",
+    "num": 126,
+    "difficulty": 3,
+    "question": "多模態模型中的「中間融合（Intermediate Fusion）」機制特點為？",
+    "options": {
+      "A": "在訓練後端執行模態合併",
+      "B": "完全避免模態之間交互",
+      "C": "在特徵層級融合各模態資訊",
+      "D": "僅用於語音轉錄任務"
+    },
+    "answer": "C",
+    "explanation": "Intermediate Fusion 在中間層進行語音、文字或影像等模態的特徵融合，平衡\nearly 與 late fusion 優缺點。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_139",
+    "num": 127,
+    "difficulty": 4,
+    "question": "以下哪一問題不屬於多模態系統中的「對齊挑戰」？",
+    "options": {
+      "A": "不同模態資料長度不一致",
+      "B": "模態之間時間標記誤差",
+      "C": "模型訓練中權重初始化不當",
+      "D": "語意相似但符號分布差異"
+    },
+    "answer": "C",
+    "explanation": "對齊挑戰屬於資料與語意的對應關聯問題，權重初始化不屬於模態對齊範疇。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_140",
+    "num": 128,
+    "difficulty": 2,
+    "question": "以下哪一項技術適合用於文字描述轉為圖像生成任務？",
+    "options": {
+      "A": "TF-IDF",
+      "B": "Autoencoder",
+      "C": "Diffusion Model（穩定擴散模型）",
+      "D": "Decision Tree"
+    },
+    "answer": "C",
+    "explanation": "Diffusion Model 是目前高品質圖像生成主流技術，能根據文字提示詞（prompt）\n逐步生成符合語意的圖像。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_142",
+    "num": 129,
+    "difficulty": 2,
+    "question": "使用圖像與語音進行情境預測任務時，模型需具備哪一能力？",
+    "options": {
+      "A": "文本相似度辨別",
+      "B": "聲紋壓縮",
+      "C": "跨模態推理",
+      "D": "分類模型集成"
+    },
+    "answer": "C",
+    "explanation": "跨模態推理是多模態 AI 的核心功能，使模型可基於不同資料型態進行邏輯整合與\n預測。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_143",
+    "num": 130,
+    "difficulty": 3,
+    "question": "以下何者為多模態 AI 架構中的常見模態掩蔽（Modality Masking）應用？",
+    "options": {
+      "A": "測試期間加入額外模態",
+      "B": "模擬模態缺失情境強化模型學習能力",
+      "C": "將模態映射為高維詞向量",
+      "D": "拆分模態資料進行並行訓練"
+    },
+    "answer": "B",
+    "explanation": "模態遮罩讓模型在訓練中學習如何面對模態缺失，有助於強化實際部署時的魯棒性\n與容錯能力。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_144",
+    "num": 131,
+    "difficulty": 4,
+    "question": "哪一種策略可用於改善多模態模型在零樣本（zero-shot）條件下的表現？",
+    "options": {
+      "A": "模態專屬詞表",
+      "B": "對比式預訓練結合共享語意嵌入",
+      "C": "只使用單一模態訓練",
+      "D": "模型輸出正規化"
+    },
+    "answer": "B",
+    "explanation": "使用對比學習對齊多模態的嵌入表示空間，能強化模型在未見樣本上的推理能力。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_146",
+    "num": 132,
+    "difficulty": 3,
+    "question": "下列哪一項指標可衡量多模態生成模型產出描述與輸入圖像之間的語意吻合度？",
+    "options": {
+      "A": "PSNR",
+      "B": "ROUGE-L",
+      "C": "SPICE Score",
+      "D": "AUROC"
+    },
+    "answer": "C",
+    "explanation": "SPICE 評估圖像描述語意品質，能捕捉對象、屬性與關係，是評估多模態描述生成\n常用指標之一。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_147",
+    "num": 133,
+    "difficulty": 5,
+    "question": "多模態 AI 應用於司法或醫療決策時，應特別強化哪一項層面？",
+    "options": {
+      "A": "高速回應能力",
+      "B": "API 連線能力",
+      "C": "可解釋性與審核流程",
+      "D": "單模態性能最佳化"
+    },
+    "answer": "C",
+    "explanation": "在高風險領域使用 AI 模型時，需具備足夠解釋能力與外部審查機制，避免不當自\n動化造成決策偏誤。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_148",
+    "num": 134,
+    "difficulty": 2,
+    "question": "「多模態檢索系統」的訓練階段，需具備哪些標註資料？",
+    "options": {
+      "A": "單模態句子分類標籤",
+      "B": "多模態配對與不配對樣本對（Positive/Negative Pairs）",
+      "C": "模型隱藏層參數分布",
+      "D": "模態缺失樣本範例"
+    },
+    "answer": "B",
+    "explanation": "檢索模型多使用對比學習，須標註正負樣本配對關係以建立嵌入空間的語意距離邏\n輯。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  }
+]

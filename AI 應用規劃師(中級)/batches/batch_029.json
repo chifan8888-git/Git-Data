@@ -1,0 +1,227 @@
+[
+  {
+    "id": "mock_46",
+    "num": 45,
+    "difficulty": 3,
+    "question": "在自回歸語言模型（如 GPT）中，下列哪一項為生成新字詞的依據？",
+    "options": {
+      "A": "預訓練分類器",
+      "B": "條件概率與 softmax 機率分布",
+      "C": "卷積核視窗大小",
+      "D": "時序強化學習"
+    },
+    "answer": "B",
+    "explanation": "GPT 類模型透過 softmax 將條件概率分佈轉為詞彙選擇依據，逐步生成文字。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_47",
+    "num": 46,
+    "difficulty": 1,
+    "question": "在計算 NLP 任務時常見的指標「BLEU」是用於評估什麼？",
+    "options": {
+      "A": "模型參數量",
+      "B": "向量內積",
+      "C": "自然語言生成品質",
+      "D": "語音辨識錯誤率"
+    },
+    "answer": "C",
+    "explanation": "BLEU（Bilingual Evaluation Understudy）是自動化指標，用來評估機器翻譯或摘\n要的品質。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_48",
+    "num": 47,
+    "difficulty": 2,
+    "question": "下列哪一種常見手法能提升影像資料集多樣性？",
+    "options": {
+      "A": "Text Clustering",
+      "B": "Data Augmentation",
+      "C": "Weight Decay",
+      "D": "Normalization"
+    },
+    "answer": "B",
+    "explanation": "資料擴增（Data Augmentation）利用旋轉、裁切、翻轉等方法生成更多樣的訓練\n樣本。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_49",
+    "num": 48,
+    "difficulty": 4,
+    "question": "Prompt Engineering 在 NLP 模型中的角色為何？",
+    "options": {
+      "A": "調整模型參數",
+      "B": "增強模型對特定任務的語言輸入效果",
+      "C": "訓練圖像分類器",
+      "D": "優化 GPU 計算效率"
+    },
+    "answer": "B",
+    "explanation": "Prompt 工程設計好的輸入形式，引導大型語言模型生成預期回應，是無須微調的\n重要方式。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_50",
+    "num": 49,
+    "difficulty": 5,
+    "question": "Diffusion Model 與 GAN 相較，其訓練優勢為何？",
+    "options": {
+      "A": "可用於 RNN 預訓練",
+      "B": "速度較快",
+      "C": "訓練穩定，較不易出現模式崩壞（mode collapse）",
+      "D": "僅支援單一模態"
+    },
+    "answer": "C",
+    "explanation": "Diffusion Model 採用逐步去噪過程，訓練較穩定，不易出現如 GAN 中常見的\nmode collapse 問題。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_51",
+    "num": 50,
+    "difficulty": 1,
+    "question": "生成式 AI 與傳統 AI 的主要差異為何？",
+    "options": {
+      "A": "是否使用 GPU 訓練模型",
+      "B": "是否能從數據中生成新內容",
+      "C": "是否為監督式學習",
+      "D": "是否能處理表格資料"
+    },
+    "answer": "B",
+    "explanation": "傳統 AI 多為分類、預測任務；生成式 AI（如 GPT、DALL·E）能根據輸入創造全\n新內容，是其關鍵特性。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_52",
+    "num": 51,
+    "difficulty": 2,
+    "question": "下列何者屬於大型語言模型（LLM）發展的重要趨勢？",
+    "options": {
+      "A": "僅針對單一語言設計",
+      "B": "模型參數量趨小以加快訓練",
+      "C": "通用性與任務泛化能力提升",
+      "D": "完全不需人類標註資料"
+    },
+    "answer": "C",
+    "explanation": "LLM 的核心目標是通用性與語言理解能力，能跨任務處理多樣語言應用，具高度可\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_53",
+    "num": 52,
+    "difficulty": 3,
+    "question": "Transformer 架構在生成式模型中佔有關鍵地位，其主要貢獻為何？",
+    "options": {
+      "A": "可在圖像中標註物件邊界",
+      "B": "引入注意力機制以建構語意關聯",
+      "C": "增加模型的卷積層數",
+      "D": "減少參數數量以加快訓練"
+    },
+    "answer": "B",
+    "explanation": "Transformer 引入 Self-Attention 機制，使模型能捕捉長距離語意依賴，是 LLM\n成功的關鍵基礎。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_54",
+    "num": 53,
+    "difficulty": 4,
+    "question": "以下何者為 ChatGPT 在推論階段使用的架構特徵？",
+    "options": {
+      "A": "雙向注意力 + 編碼器",
+      "B": "自回歸 + 單向 Transformer Decoder",
+      "C": "卷積金字塔 + 時序池化",
+      "D": "LSTM 編碼器 + Seq2Seq"
+    },
+    "answer": "B",
+    "explanation": "ChatGPT 採用單向 Decoder-only Transformer 架構，以自回歸方式逐字生成回\n應。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_55",
+    "num": 54,
+    "difficulty": 3,
+    "question": "Prompt Engineering 在生成式 AI 的應用中扮演什麼角色？",
+    "options": {
+      "A": "設計優化演算法以微調參數",
+      "B": "編寫模型訓練流程與資料標註程式",
+      "C": "設計輸入提示詞以引導模型輸出精準結果",
+      "D": "負責模型部署與雲端資源配置"
+    },
+    "answer": "C",
+    "explanation": "Prompt 工程的目的是設計清楚、具引導性的提示語，無需微調就可讓 LLM 產生\n正確結果。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_57",
+    "num": 55,
+    "difficulty": 5,
+    "question": "下列哪個架構整合「檢索」與「生成」的雙重能力？",
+    "options": {
+      "A": "GPT-NeoX",
+      "B": "BART",
+      "C": "RAG（Retrieval-Augmented Generation）",
+      "D": "ResNet-GPT"
+    },
+    "answer": "C",
+    "explanation": "RAG 將資訊檢索（retrieval）與文本生成（generation）結合，在回應過程中先抓\n取知識後再生成語句。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_58",
+    "num": 56,
+    "difficulty": 1,
+    "question": "下列哪一項應用最典型地屬於生成式 AI？",
+    "options": {
+      "A": "文字分類",
+      "B": "詞性標註",
+      "C": "機器翻譯",
+      "D": "自動圖像生成"
+    },
+    "answer": "D",
+    "explanation": "圖像生成（如 DALL·E）是典型的生成任務，模型根據輸入描述創造全新影像。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_59",
+    "num": 57,
+    "difficulty": 2,
+    "question": "GPT 模型在訓練階段最常使用的目標函數為何？",
+    "options": {
+      "A": "交叉熵損失",
+      "B": "均方誤差",
+      "C": "自編碼重建誤差",
+      "D": "蒸餾損失"
+    },
+    "answer": "A",
+    "explanation": "GPT 屬自回歸語言模型，透過交叉熵計算預測詞與實際詞之間的誤差進行更新。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_61",
+    "num": 58,
+    "difficulty": 1,
+    "question": "在 ChatGPT 模型中，輸入提示語（prompt）越明確，對生成結果的影響為何？",
+    "options": {
+      "A": "無顯著影響",
+      "B": "會降低語意連貫性",
+      "C": "可提升輸出內容的相關性與精確度",
+      "D": "僅會增加運算時間"
+    },
+    "answer": "C",
+    "explanation": "Prompt 工程的重點是清楚指引任務目標，良好的提示語能顯著提高輸出品質與準\n確性。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_62",
+    "num": 59,
+    "difficulty": 2,
+    "question": "多模態生成模型與單模態模型相比，有何主要優勢？",
+    "options": {
+      "A": "使用資料量更少",
+      "B": "可跨資料型態整合理解與生成能力",
+      "C": "僅適用圖像分類任務",
+      "D": "必須仰賴 GPU 硬體才能運行"
+    },
+    "answer": "B",
+    "explanation": "多模態模型能處理圖像、文字、聲音等不同模態間的語意關聯，是跨媒體應用的關\n鍵技術。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  }
+]

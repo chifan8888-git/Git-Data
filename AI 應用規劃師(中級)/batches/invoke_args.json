@@ -1,0 +1,308 @@
+[
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 4",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_004.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_004_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 5",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_005.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_005_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 6",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_006.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_006_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 7",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_007.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_007_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 8",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_008.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_008_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 9",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_009.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_009_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 10",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_010.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_010_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 11",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_011.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_011_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 12",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_012.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_012_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 13",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_013.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_013_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 14",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_014.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_014_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 15",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_015.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_015_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 16",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_016.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_016_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 17",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_017.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_017_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 18",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_018.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_018_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 19",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_019.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_019_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 20",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_020.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_020_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 21",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_021.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_021_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 22",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_022.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_022_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 23",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_023.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_023_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 24",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_024.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_024_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 25",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_025.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_025_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 26",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_026.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_026_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 27",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_027.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_027_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 28",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_028.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_028_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 29",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_029.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_029_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 30",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_030.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_030_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 31",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_031.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_031_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 32",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_032.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_032_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 33",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_033.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_033_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 34",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_034.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_034_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 35",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_035.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_035_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 36",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_036.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_036_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 37",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_037.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_037_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 38",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_038.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_038_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 39",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_039.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_039_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 40",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_040.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_040_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 41",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_041.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_041_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 42",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_042.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_042_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 43",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_043.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_043_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 44",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_044.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_044_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 45",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_045.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_045_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 46",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_046.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_046_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 47",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_047.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_047_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 48",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_048.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_048_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 49",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_049.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_049_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 50",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_050.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_050_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 51",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_051.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_051_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 52",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_052.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_052_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 53",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_053.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_053_done.json。",
+    "Model": "pro"
+  },
+  {
+    "TypeName": "ExplanationWriterV2",
+    "Role": "解析專家 54",
+    "Prompt": "請讀取 c:/Git-Data/AI 應用規劃師(中級)/batches/batch_054.json。擴寫解析後，必須將結果寫入絕對路徑：c:/Git-Data/AI 應用規劃師(中級)/batches/batch_054_done.json。",
+    "Model": "pro"
+  }
+]

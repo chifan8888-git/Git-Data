@@ -1,0 +1,16 @@
+[
+  {
+    "id": "mock_1",
+    "num": 1,
+    "difficulty": 3,
+    "question": "Transformer 架構中，多頭注意力（Multi-Head Attention）主要功能是？",
+    "options": {
+      "A": "增加模型深度",
+      "B": "並行捕捉不同子空間的關聯",
+      "C": "減少參數數量",
+      "D": "合成圖像特徵"
+    },
+    "answer": "B",
+    "explanation": "Multi-Head Attention 可讓模型從不同表示子空間學習注意力，有助於捕捉語義多\n樣性。"
+  }
+]

@@ -1,0 +1,362 @@
+[
+  {
+    "subject": "subject2",
+    "id": "subject2_new_31",
+    "question": "某企業欲建構知識圖譜(Knowledge Graph)，以整合內部的研究報告、專利資料與專家知識，並支援語意查詢與關聯推理。若希望模型能具備良好的語意擴展性與高效推理能力，下列哪一種圖模型設計最為合適？",
+    "options": [
+      "A. 僅以節點(Node)與邊(Edge)表示，所有資訊存放於節點屬性中；",
+      "B. 將資料結構建為 RDF(Resource Description Framework)三元組(Subject–Predicate–Object)；",
+      "C. 使用文件型資料庫儲存內容，並以標籤(Tag)連接節點；",
+      "D. 採用關聯式資料庫儲存對應關係，並搭配預建索引加速查詢 B"
+    ],
+    "answer": "B"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_32",
+    "question": "某研究人員欲使用線性迴歸模型(Linear Regression Model)分析變數Y 與X 之間的關係，但發現Y 的分佈明顯右偏，且其變異數隨X 的增大而增加。為滿足模型假設並提升配適效果，下列哪一種前處理方法最為合適？",
+    "options": [
+      "A. 對X 進行標準化(Standardization)；",
+      "B. 對Y 進行Box–Cox 轉換(Box–Cox Transformation)；",
+      "C. 對資料進行一次差分(First Differencing)；",
+      "D. 將Y 中變異較大的樣本移除 C"
+    ],
+    "answer": "B"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_33",
+    "question": "若開發一個用於罕見疾病自動診斷的分類模型，目前資料集中確診樣本僅佔不到1%，且因為標註成本高，短期內無法取得更多資料。在此情況下，若希望提升模型對少數類的偵測能力，同時避免過擬合，下列哪一種策略最為合理？",
+    "options": [
+      "A. 對少數類進行隨機過採樣(Random Oversampling)；",
+      "B. 對多數類進行欠採樣(Random Undersampling)；",
+      "C. 使用SMOTE(Synthetic Minority Over-sampling Technique)生成合成少數類樣本後再訓練分類模型；",
+      "D. 僅使用現有資料調整模型決策閾值(Decision Threshold)以提升召回率 B"
+    ],
+    "answer": "C"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_34",
+    "question": "年第二次AI 應用規劃師-中級能力鑑定【公告試題】 ",
+    "options": [
+      "A. 雙樣本平均數 t 檢定(Two-sample t-test)；",
+      "B. 雙比例 Z 檢定(Two-proportion Z-test)；",
+      "C. 卡方檢定(Chi-square test)；",
+      "D. 變異數分析(ANOVA) D"
+    ],
+    "answer": "UNKNOWN"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_35",
+    "question": "若評估一個新開發的腫瘤分類模型，其資料集中有80%的樣本來自良性病例。若直接使用5-fold 交叉驗證(Cross-Validation) 進行模型評估，可能導致模型效能評估出現偏差，為避免此問題，下列哪一種作法最合適？",
+    "options": [
+      "A. 降低K 值以減少交叉驗證次數；",
+      "B. 改為使用拔靴法(Bootstrap)；",
+      "C. 調整測試集使良性樣本比例更高，以模擬真實分佈；",
+      "D. 使用分層交叉驗證(Stratified K-Fold Cross-Validation)，以確保每折類別比例一致 Ｂ 40 請參考附圖，下列虛擬程式碼(pseudocode)最可能是在描述何種驗證法？  (A) Hold-out 驗證(Hold-out Validation)；"
+    ],
+    "answer": "D"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_36",
+    "question": "年第二次AI 應用規劃師-中級能力鑑定【公告試題】 ",
+    "options": [
+      "A. ",
+      "B. 留一交叉驗證LOOCV( Leave-One-Out Cross Validation)；",
+      "C. K-fold 交叉驗證(K-fold Cross Validation)；",
+      "D. 拔靴法(Bootstrap)驗證 Ａ 41 請參考附圖，下列虛擬程式碼(pseudocode)最可能是在描述何種演算法？  (A)K-means 分群(K-means Clustering)； (B)高斯混合模型分群(Gaussian Mixture Model Clustering)； (C)階層式分群(Hierarchical Clustering)； (D)DBSCAN 分群(Density-based Spatial Clustering of Applications with Noise Clustering) Ｃ 42 考慮某生產線每小時出現瑕疵品的個數符合卜瓦松分佈(Poisson Distribution)，已知平均每小時產生5 個瑕疵品，附圖程式碼展示資料處理，請問下列敘述何者正確？"
+    ],
+    "answer": "UNKNOWN"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_37",
+    "question": "年第二次AI 應用規劃師-中級能力鑑定【公告試題】 ",
+    "options": [
+      "A. lambda_poisson = 5 表示每小時最多5 個瑕疵品；",
+      "B. poisson.pmf(5, lambda_poisson) 表示小於5 個瑕疵品的機率；",
+      "C. 卜瓦松分佈的適用條件為事件彼此獨立，且平均發生率固定；",
+      "D. poisson.cdf(10, 5) 表示大於或等於10 個瑕疵品的機率   一間遊戲市場研究公司正在分析全球電子遊戲銷售情況，並準備建立一份「熱銷遊戲銷售報告」。分析師取得了一份名為 vgsales.csv 的資料集，內容包含了全球銷量超過 10 萬份的電子遊戲清單。研究團隊希望透過這份資料，了解不同年份、平台與地區的銷售趨勢。資料集的欄位說明如下，請根據下述資料情境回答以43~47 題。 Name：遊戲名稱 Platform：遊戲平台(如 PS4、X360、Wii 等) Year：發售年份 Genre：遊戲類型(如 Action、Sports、Role-Playing 等) Publisher：發行商名稱 NA_Sales / EU_Sales / JP_Sales / Other_Sales：各地區銷售量(單位：百萬份) Global_Sales：全球總銷售量(單位：百萬份) 資料的欄位概觀如下："
+    ],
+    "answer": "UNKNOWN"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_38",
+    "question": "年第二次AI 應用規劃師-中級能力鑑定【公告試題】 ",
+    "options": [
+      "A. 原因B、原因C；",
+      "B. 原因A、原因D；",
+      "C. 原因A、原因B、原因D；",
+      "D. 原因C、原因D Ｄ 44 研究團隊接下來想要將 Year 欄位轉換為整數型態，以便後續進行年份趨勢分析。考慮到資料中可能包含缺失值(NaN)，請選出最合適的轉換方式。 (A)data['Year'] = data['Year'].astype(int)； (B)data['Year'] = data['Year'].fillna(0).astype(int)； (C)data['Year'] = data['Year'].fillna(1).astype(int)； (D)data['Year'] = data['Year'].astype('Int64')； Ａ 45 為了觀察各遊戲平台的市場表現，分析師想要統計每個平台的全球銷售總額，並以長條圖呈現。請選出最能正確實現此分析的程式碼。 (A)data.groupby(\"Platform\")[\"Global_Sales\"].sum().plot(kind=\"bar\")； (B)data.groupby(\"Platform\")[\"Global_Sales\"].count().plot(kind=\"bar\")；"
+    ],
+    "answer": "UNKNOWN"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_39",
+    "question": "年第二次AI 應用規劃師-中級能力鑑定【公告試題】 ",
+    "options": [
+      "A. sns.countplot(x=[\"NA_Sales\",\"EU_Sales\",\"JP_Sales\",\"Other_Sales\"], data=data)；",
+      "B. ",
+      "C. data[\"Platform\"].value_counts().plot(kind=\"bar\")；",
+      "D. data.groupby(\"Platform\")[\"Global_Sales\"].mean().plot(kind=\"bar\") Ｃ 46 團隊希望比較北美、歐洲、日本及其他地區的整體銷售比例，並使用 seaborn 套件以長條圖的形式進行可視化分析。請選出能正確顯示這些地區銷售總額比例的程式碼。 (A)sns.countplot(x=[\"NA_Sales\",\"EU_Sales\",\"JP_Sales\",\"Other_Sales\"], data=data)； (B)sns.lineplot(x=\"Platform\",         y=[\"NA_Sales\",\"EU_Sales\",\"JP_Sales\",\"Other_Sales\"], data=data)； (C)sns.barplot(x=\"variable\", y=\"value\",              data=pd.melt(data,          value_vars=[\"NA_Sales\",\"EU_Sales\",\"JP_Sales\",\"Other_Sales\"]),       estimator=sum)； (D)sns.histplot(data[[\"NA_Sales\",\"EU_Sales\",\"JP_Sales\",\"Other_Sales\"]]) Ｂ 47 研究團隊想要知道在北美地區(NA)銷售成績最好的遊戲前五名，並希望以seaborn 的條狀圖呈現結果。請選出能正確完成這項分析的程式碼。 (A)sns.barplot(x=\"NA_Sales\", y=\"Name\", data=data.head(5))； (B)sns.barplot(x=\"Name\", y=\"NA_Sales\", data=data.nlargest(5, \"NA_Sales\"))； (C)sns.lineplot(x=\"Name\", y=\"NA_Sales\", data=data.nlargest(5, \"NA_Sales\"))； (D)sns.countplot(x=\"Name\", y=\"NA_Sales\", data=data)   使用銷售資料集(marketing.csv)進行迴歸分析，附圖程式碼展示資料載入與處理，請回答後續48~50 題。  下圖顯示資料集的前5 筆資料與相關資訊。"
+    ],
+    "answer": "UNKNOWN"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_40",
+    "question": "年第二次AI 應用規劃師-中級能力鑑定【公告試題】 ",
+    "options": [
+      "A. 資料集個數為199 筆，變數個數為4 個；",
+      "B. sales 變數的中位數是16.827；",
+      "C. facebook 變數的第三四分位數(Q3)是11.94；",
+      "D. youtube 變數的第一四分位數(Q1)是89.25 Ｃ 49 參考下圖計算各變數的遺漏值(NaN)個數結果，下列何者正確？  選項A: df.isnull().sum() 選項B: df.isNaN().sum() 選項C: df.isna().sum() 選項D: df.isnan().sum() (A)選項D； (B)選項B、選項C、選項D； (C)選項A、選項C；"
+    ],
+    "answer": "UNKNOWN"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_41",
+    "question": "年第二次AI 應用規劃師-中級能力鑑定【公告試題】 ",
+    "options": [
+      "A. B、C、F",
+      "B. B、F",
+      "C. ",
+      "D. 選項A、選項B、選項C Ｂ 50 考慮資料集已經填補遺漏值，參考下圖執行結果，下列何者正確？  A：空格1 完整語法 reg = LinearRegression().fit(y, X) B：空格1 完整語法 reg = LinearRegression().fit(X, y) C：print(reg.coef_) 結果為包括截距項等4 個係數值 D：空格2 完整語法 sm.OLS(X2, y).fit() E：model_sm 迴歸模型的所有迴歸係數在α=0.05 之下具有顯著的解釋力 F：截距項係數值為3.5561 (A)B、C、F (B)B、F (C)A、C、D、F (D)B、E   《以下空白》"
+    ],
+    "answer": "UNKNOWN"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_42",
+    "question": "工程師使用盒鬚圖(Box Plot)比較三個城市的房價分布，觀察到城市A 的盒子很短但鬚很長，城市B 的盒子很長且對稱，城市C 的中位數位置明顯偏向盒子下方。依統計圖形判讀原則，下列敘述何者正確？",
+    "options": [
+      "A. 城市A 中段房價集中但存在極端值；城市C 中位數偏低，資料呈右偏分布；",
+      "B. 城市A 房價集中且離群值少；城市C 資料呈左偏分布；",
+      "C. 城市B 的盒子較長代表房價變異較大；城市C 呈左偏分布；",
+      "D. 盒鬚圖無法判斷偏態，需搭配直方圖才能得出以上結論 A"
+    ],
+    "answer": "A"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_43",
+    "question": "下圖為吉尼不純度(Gini Impurity)的計算公式，在決策樹(Decision Tree)中，吉尼不純度用於評估節點分裂的品質。關於吉尼不純度，下列敘述何者不正確？",
+    "options": [
+      "A. 公式中的pᵢ代表第 i 類在該節點中的樣本數，並直接帶入公式計算；",
+      "B. 公式中的k 代表節點內資料的類別數量；",
+      "C. 吉尼不純度用於衡量節點內資料的類別混雜程度，數值越高代表越混雜；",
+      "D. 當節點內所有樣本屬於同一類別時(完全純淨)，吉尼不純度為 0 B"
+    ],
+    "answer": "A"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_44",
+    "question": "某物流平台要預測「每小時客服來電數量」，資料顯示平均每小時12 通，且來電事件彼此獨立，並在固定時間區間內發生率穩定。工程師在選擇機率模型時，應優先考慮哪個分布？若實際資料的變異數明顯大於平均數，應如何調整？",
+    "options": [
+      "A. 使用常態分布(Normal Distribution)；變異數偏大時改用t 分布；",
+      "B. 使用卜瓦松分布(Poisson Distribution)；變異數>平均數時改用負二項分布(Negative Binomial)；",
+      "C. 使用卜瓦松分布(Poisson Distribution)；變異數偏大時增加樣本數即可修正；",
+      "D. 使用二項分布(Binomial Distribution)；變異數偏大時改用卜瓦松分布(Poisson Dstribution) A"
+    ],
+    "answer": "B"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_45",
+    "question": "某AI 團隊在模型上線後，透過監控系統持續追蹤輸入特徵的分布變化，系統使用Z-score(Z)作為異常判斷依據，並設定當|Z| ≥ 2 時需觸發警示。假設該特徵近似常態分布，某次監控中發現某特徵值的Z-score 為-2，請問就實務判讀而言，此數值最可能代表什麼意義？",
+    "options": [
+      "A. 該特徵值低於該特徵歷史平均值2 個標準差；",
+      "B. 該特徵值高於該特徵歷史平均值2 個標準差；",
+      "C. 該特徵值等於該特徵的歷史平均值；",
+      "D. Z-score 為負值代表該數值位於母體分布之外，無法以常態分布解釋 D"
+    ],
+    "answer": "A"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_46",
+    "question": "在AI 模型評估的假說檢定框架中，「女士品茶」實驗是理解型一／型二錯誤的經典案例。實驗中某女士宣稱能分辨8 杯奶茶中哪4 杯先加牛奶，若以顯著水準α=0.05 進行假說檢定，下列敘述何者不正確？",
+    "options": [
+      "A. 虛無假說(H₀)為「女士無此能力(隨機猜測)」，對立假說(H₁)為「女士確實有此能力」；",
+      "B. 在α=0.05 下，若女士完全答對(8 選4 全對)，其p 值約為1/70≈0.014，小於顯著水準，可達統計顯著；",
+      "C. 若女士完全答對且p 值<α，則拒絕虛無假說，統計上支持女士有此能力；",
+      "D. 若女士未完全答對，則「接受虛無假說」，代表確認女士無此能力 B"
+    ],
+    "answer": "D"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_47",
+    "question": "某醫療AI 研究團隊開發了一套個人化用藥劑量推薦系統，並設計實驗評估其效果。研究團隊招募40 名高血壓患者，分別在導入AI 推薦系統前後各測量一次收縮壓，且資料近似常態分布。研究目標是判斷同一批患者在依據AI 推薦調整用藥劑量前後，血壓是否有顯著差異。請問此研究情境應選用哪種統計檢定方法？",
+    "options": [
+      "A. 獨立樣本t 檢定(Independent Samples t-test)；",
+      "B. 成對樣本t 檢定(Paired Samples t-test)；",
+      "C. 單因子變異數分析(One-Way ANOVA)；",
+      "D. 魏克遜符號等級檢定(Wilcoxon Signed-Rank Test) D"
+    ],
+    "answer": "B"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_48",
+    "question": "某生技公司正在進行新型AI 輔助新藥篩選的臨床試驗，並將顯著水準由α=0.05 降低至α=0.01。在新藥療效安全試驗的情境下，此調整對統計檢定的直接影響為何？",
+    "options": [
+      "A. 降低型二錯誤(Type II Error／β)的發生機率，減少未能偵測到有效藥物的風險；",
+      "B. 降低型一錯誤(Type I Error／α，偽陽性)的發生機率，減少將無效藥物誤判為有效並進入後續高成本試驗的風險；",
+      "C. 增加樣本數以提升統計功效(Statistical Power)，進而改善估計精度；",
+      "D. 降低統計計算過程中的數值誤差，提高p 值的精確度 B"
+    ],
+    "answer": "B"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_49",
+    "question": "某團隊為職業籃球隊建立球員受傷風險預測模型，原始特徵280 個。初始模型訓練集AUC 為0.94、測試集僅0.68，顯示嚴重過擬合。為改善模型，團隊進行以下處理步驟：第一步於全體資料(含測試集)上計算特徵間線性相關係數並移除高度相關特徵；第二步依模型重要性篩選特徵後重新訓練模型。最終測試集AUC 提升至0.81。關於上述調整流程，下列敘述何者最為正確？",
+    "options": [
+      "A. 使用相關係數進行特徵篩選方向正確，主要問題在於相關係數門檻設定過高；",
+      "B. 在全體資料(含測試集)上進行特徵篩選會造成資料洩漏，且線性相關無法捕捉非線性關係；",
+      "C. 特徵篩選後需重新對測試集進行標準化，否則會影響模型表現；",
+      "D. 測試集表現提升代表過擬合已解決，流程可直接部署 C"
+    ],
+    "answer": "B"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_50",
+    "question": "個不同類別，類別之間無順序關係。團隊計劃分別以Logistic Regression 與XGBoost訓練模型，並對上述特徵進行編碼。請問下列哪個編碼方案最適當？",
+    "options": [
+      "A. 兩模型皆將「客服評價」與「居住縣市」進行One-Hot Encoding，保留全部欄位並使用相同特徵矩陣訓練模型；",
+      "B. Logistic Regression 將「客服評價」做Ordinal Encoding、「居住縣市」以歷史續約率進行編碼且於資料切分前計算；XGBoost 對兩個特徵皆採Ordinal Encoding 處理；",
+      "C. Logistic Regression 將「客服評價」做Ordinal Encoding、「居住縣市」進行One-Hot Encoding 並採Drop First；XGBoost 將「客服評價」採Ordinal Encoding，「居住縣市」以類別型態輸入並啟用enable_categorical；",
+      "D. 兩個模型均將「客服評價」以平均續約率進行編碼，「居住縣市」先做One-Hot Encoding 再以PCA 降維，並統一作為兩模型輸入特徵 C"
+    ],
+    "answer": "UNKNOWN"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_51",
+    "question": "年第一次AI 應用規劃師-中級能力鑑定【公告試題】  ",
+    "options": [
+      "A. nrows=10000：限制僅讀取前N 筆資料以避免記憶體溢位；",
+      "B. usecols=0.5：隨機載入50%的資料欄位，以減半記憶體使用量；",
+      "C. chunksize=10000：分批讀取資料並逐批處理，避免一次載入整個檔案；",
+      "D. dtype：指定欄位資料型別以降低記憶體使用量 B"
+    ],
+    "answer": "UNKNOWN"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_52",
+    "question": "某電商平台正在重構商品資料架構，需同時支援三個系統：商品管理後台需處理結構化與半結構化資料(如巢狀庫存與不同類別商品欄位差異)，並支援複雜條件查詢；AI推薦系統需儲存高維向量(1,536 維)並進行高效相似度搜尋(高QPS)；即時庫存服務則要求ACID 且延遲低於10ms，以避免超賣。在此情境下，哪種資料庫架構最適合？",
+    "options": [
+      "A. 全部使用關聯式資料庫，透過JSON 欄位儲存巢狀資料，並以延伸套件支援向量搜尋，同時以資料列鎖(Row-level Lock)處理庫存扣減；",
+      "B. 商品資料使用文件型資料庫，向量搜尋使用專用向量資料庫，庫存服務使用關聯式資料庫，各系統依需求選擇最適合的資料庫；",
+      "C. 全部使用文件型資料庫，同時處理商品資料、向量搜尋與庫存服務，以統一技術棧降低維運複雜度；",
+      "D. 商品與向量資料使用搜尋引擎型資料庫，並以文件更新機制處理庫存扣減 C"
+    ],
+    "answer": "B"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_53",
+    "question": "某AI 平台的資料量已達PB 級，單一資料庫節點已無法負荷，決定採用分片(Sharding)策略。下列何者為Sharding 設計的主要目的？",
+    "options": [
+      "A. 增加資料備份數量以提升安全性；",
+      "B. 將查詢結果預先計算以降低延遲；",
+      "C. 將資料水平分割以提升擴展性與負載均衡；",
+      "D. 將資料壓縮以減少儲存成本 C"
+    ],
+    "answer": "C"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_54",
+    "question": "某資料工程師在建構大規模影像資料處理流程時，需要處理數千萬筆訓練影像，並發現模型出現嚴重的過度擬合(Overfitting)：訓練集準確率達99%，但驗證集僅有72%。在不改變模型架構的前提下，下列哪一項「資料處理層面」的調整最無法有效改善過度擬合，甚至可能使問題惡化？",
+    "options": [
+      "A. 在資料處理流程中加入資料增強(Data Augmentation)，於訓練時動態生成多樣化影像樣本；",
+      "B. 擴充資料來源，收集更多不同場景與條件的影像，以提升訓練資料分布的多樣性；",
+      "C. 為了提升資料處理吞吐量(Throughput)，預先將影像轉為固定特徵並快取(Cache)，反覆使用相同訓練資料以加速訓練流程；",
+      "D. 在資料前處理階段進行資料清理，移除標註錯誤或品質不佳的影像資料 A"
+    ],
+    "answer": "C"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_55",
+    "question": "年第一次AI 應用規劃師-中級能力鑑定【公告試題】  ",
+    "options": [
+      "A. SVD 只能分解方陣(Square Matrix)，無法應用於行列數不相等的長方形矩陣；",
+      "B. SVD 常用於降維(Dimensionality Reduction)，透過保留最大的k 個奇異值來近似原始矩陣(截斷SVD)；",
+      "C. SVD 比PCA 更一般化，因為PCA 可視為對資料的共變異數矩陣(Covariance Matrix)進行的特殊SVD 運算；",
+      "D. LSA 是SVD 在文字-文件矩陣上的應用，透過截斷SVD 捕捉詞語與文件的潛在語意關係 D"
+    ],
+    "answer": "UNKNOWN"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_56",
+    "question": "某醫院欲建立一套加護病房(ICU)敗血症預測模型，資料來自120 位病患之生命徵象(如心率、血壓、體溫等)，每5 分鐘記錄一次。資料中敗血症相關樣本僅佔3.2%，屬於高度不平衡資料。在資料檢查過程中發現數項問題，包括血氧資料會出現10 至30分鐘的連續缺失、部分血壓感測器隨使用時間產生系統性偏高(感測器漂移)、敗血症標註時間存在約±2 小時誤差，以及不同病患之正常生命徵象基準差異甚大。請問下列何種資料處理與建模方式最為適當？",
+    "options": [
+      "A. 將缺失值以整體平均填補，未額外處理感測器漂移，並將敗血症標註區間由6 小時擴大至8 小時以涵蓋時間誤差，模型評估採用ROC-AUC 作為主要指標；",
+      "B. 對缺失值進行線性插值，若連續缺失時間過長則刪除該段資料，並以Z-score 標準化處理感測器漂移，交叉驗證採隨機切分，未避免同一病患資料同時出現在訓練與測試集中；",
+      "C. 刪除所有含缺失值之資料，對資料進行Min-Max 正規化處理，未考慮病患間差異直接建模，並以Accuracy 作為評估指標，交叉驗證採分層K-Fold 方式進行；",
+      "D. 對缺失值採前向填補並加入缺失指標特徵，利用感測器72 小時滾動中位數進行漂移校正，並處理標註雜訊，同時以個別病患基準建模，交叉驗證採病患分組，評估採PR-AUC 與Recall 指標 D"
+    ],
+    "answer": "D"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_57",
+    "question": "某零售企業的AI 工程師正在用關聯規則學習(Association Rule Learning)分析購物籃資料，評估商品A 跟商品B 之間同時購買的關係。關於「支援度(Support)」、「信賴度(Confidence)」、「提升度(Lift)」三個指標，下列敘述何者正確？",
+    "options": [
+      "A. 信賴度=P(A∩B)，即A 與B 同時出現的機率，範圍[0,1]；",
+      "B. 支援度=P(B|A)，即A 出現時B 也出現的條件機率，範圍[0,1]；",
+      "C. 提升度=P(A∩B) / [P(A)×P(B)]，範圍固定在[0,1]之間；",
+      "D. 提升度=1 表示A 與B 獨立(無關聯)，<1 表示負相關，>1 表示正向關聯，因此提升度並非數值愈大即代表關聯愈強 D"
+    ],
+    "answer": "D"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_58",
+    "question": "年第一次AI 應用規劃師-中級能力鑑定【公告試題】  ",
+    "options": [
+      "A. {A}；",
+      "B. {A, D}；",
+      "C. {A, B, E}；",
+      "D. {B, E} B"
+    ],
+    "answer": "UNKNOWN"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_59",
+    "question": "某電信公司的AI 反詐欺模型在正常交易佔99.5%、詐欺交易僅佔0.5%的類別嚴重不平衡資料集上訓練。若工程師僅以整體準確率(Accuracy)作為模型選擇的唯一指標，最可能產生什麼嚴重問題？",
+    "options": [
+      "A. 模型訓練時間會因類別不平衡而大幅增加；",
+      "B. 一個永遠預測為正常交易的模型即可達到99.5%準確率，但對詐欺交易的召回率為0%，使準確率失去判別能力；",
+      "C. 類別不平衡會導致模型訓練過程出現梯度爆炸；",
+      "D. 類別不平衡會直接導致模型過擬合，使測試集表現下降 D"
+    ],
+    "answer": "B"
+  },
+  {
+    "subject": "subject2",
+    "id": "subject2_new_60",
+    "question": "某AI 平台的資料工程師需要在Apache Spark 叢集上，對包含10 億筆使用者行為紀錄的RDD/DataFrame 計算整體標準差(Standard Deviation)。請問下列哪種策略在分散式環境中最正確且有效率？",
+    "options": [
+      "A. 呼叫collect()將所有資料傳回Driver 節點的本機記憶體後，再使用Python 的 statistics.stdev()計算；",
+      "B. 先對資料進行全域排序(sortBy)，再取中間值計算變異數；",
+      "C. 將資料輸出為CSV，再以Excel 的STDEV 函數計算；",
+      "D. 使用DataFrame.agg({'col': 'stddev'})或RDD.aggregate()等分散式統計方法，由各Executor 計算局部統計量後再進行彙總"
+    ],
+    "answer": "D"
+  }
+]

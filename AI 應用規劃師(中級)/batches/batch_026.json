@@ -1,0 +1,227 @@
+[
+  {
+    "id": "guide_subject3_u6_10",
+    "num": 136,
+    "difficulty": 3,
+    "question": "下列哪一項不是常見的隱私保護基礎技術？",
+    "options": {
+      "A": "遮蔽（Masking）",
+      "B": "泛化（Generalization）",
+      "C": "知識蒸餾（Knowledge Distillation）",
+      "D": "分桶（Bucketing）"
+    },
+    "answer": "C",
+    "explanation": "知識蒸餾是用於模型壓縮與加速的技術，並非基礎隱私保護技術。隱私 保護常用技術包括遮蔽、泛化及分桶，用來降低個資識別風險。\n\n【來源：AI 應用規劃師官方學習指引課後練習】",
+    "_category": "subject3"
+  },
+  {
+    "id": "mock_1",
+    "num": 1,
+    "difficulty": 3,
+    "question": "Transformer 架構中，多頭注意力（Multi-Head Attention）主要功能是？",
+    "options": {
+      "A": "增加模型深度",
+      "B": "並行捕捉不同子空間的關聯",
+      "C": "減少參數數量",
+      "D": "合成圖像特徵"
+    },
+    "answer": "B",
+    "explanation": "Multi-Head Attention 可讓模型從不同表示子空間學習注意力，有助於捕捉語義多\n樣性。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_2",
+    "num": 2,
+    "difficulty": 1,
+    "question": "在 NLP 中，最常見的句子斷詞前處理步驟為何？",
+    "options": {
+      "A": "模型訓練",
+      "B": "分詞（Tokenization）",
+      "C": "梯度下降",
+      "D": "卷積操作"
+    },
+    "answer": "B",
+    "explanation": "Tokenization 是 NLP 最基本的前處理步驟之一，將句子拆解為詞或子詞單位。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_3",
+    "num": 3,
+    "difficulty": 2,
+    "question": "BERT 在預訓練中使用的兩個任務包括 MLM 及哪一項？",
+    "options": {
+      "A": "詞性標註",
+      "B": "序列標註",
+      "C": "下一句預測（NSP）",
+      "D": "注意力選擇"
+    },
+    "answer": "C",
+    "explanation": "BERT 使用 MLM（Masked Language Model）與 NSP（Next Sentence\nPrediction）進行語言建模。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_4",
+    "num": 4,
+    "difficulty": 4,
+    "question": "以下哪一項為 ViT（Vision Transformer）架構中的特點？",
+    "options": {
+      "A": "使用 LSTM 處理圖像",
+      "B": "將圖像分割成 patch 作為 token",
+      "C": "採用卷積層提取特徵",
+      "D": "預先使用 GAN 擴增資料"
+    },
+    "answer": "B",
+    "explanation": "ViT 將圖像切分為 patch，視為 token 餵入 Transformer 架構進行圖像辨識。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_5",
+    "num": 5,
+    "difficulty": 1,
+    "question": "下列哪一個是 YOLO 模型的主要應用？",
+    "options": {
+      "A": "物件偵測",
+      "B": "聲音合成",
+      "C": "句法分析",
+      "D": "語音辨識"
+    },
+    "answer": "A",
+    "explanation": "YOLO（You Only Look Once）為即時物件偵測模型，可同時進行分類與定位。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_6",
+    "num": 6,
+    "difficulty": 3,
+    "question": "卷積神經網路（CNN）中，主要用來進行特徵降維的層為何？",
+    "options": {
+      "A": "捲積層",
+      "B": "掩蔽層",
+      "C": "池化層",
+      "D": "解碼層"
+    },
+    "answer": "C",
+    "explanation": "池化層（Pooling Layer）用來降低特徵圖維度，減少運算量並擷取主要特徵。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_7",
+    "num": 7,
+    "difficulty": 2,
+    "question": "Word2Vec 模型中，CBOW 架構的目標是？",
+    "options": {
+      "A": "根據上下文預測中心詞",
+      "B": "根據中心詞預測上下文",
+      "C": "將詞嵌入成二值向量",
+      "D": "分析詞頻"
+    },
+    "answer": "A",
+    "explanation": "CBOW（Continuous Bag of Words）利用上下文資訊來預測中心詞，是\nWord2Vec 架構之一。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_8",
+    "num": 8,
+    "difficulty": 5,
+    "question": "在多模態模型中，若需同時處理圖像與文本資訊，以下哪一模型最合適？",
+    "options": {
+      "A": "GPT",
+      "B": "ResNet",
+      "C": "BLIP",
+      "D": "BPE"
+    },
+    "answer": "C",
+    "explanation": "BLIP（Bootstrapped Language Image Pretraining）是一種融合圖像與文本的多\n模態預訓練架構。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_9",
+    "num": 9,
+    "difficulty": 1,
+    "question": "下列何者為 CNN 常見應用？",
+    "options": {
+      "A": "機器翻譯",
+      "B": "文本生成",
+      "C": "圖像分類",
+      "D": "情感分析"
+    },
+    "answer": "C",
+    "explanation": "CNN 專長於擷取空間特徵，常應用於圖像分類、辨識等視覺任務。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_10",
+    "num": 10,
+    "difficulty": 2,
+    "question": "自注意力（Self-Attention）機制的輸出與輸入長度關係為何？",
+    "options": {
+      "A": "輸出長度固定為 1",
+      "B": "只與最大權重有關",
+      "C": "輸出長度與輸入相同",
+      "D": "不固定"
+    },
+    "answer": "C",
+    "explanation": "自注意力保留每個位置的輸入資訊，因此輸出與輸入長度相同。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_11",
+    "num": 11,
+    "difficulty": 1,
+    "question": "自然語言處理中，「詞嵌入（Word Embedding）」的主要目的為何？",
+    "options": {
+      "A": "建立語法樹結構",
+      "B": "將文字轉換為稠密向量",
+      "C": "刪除停用詞",
+      "D": "執行主成分分析"
+    },
+    "answer": "B",
+    "explanation": "詞嵌入技術（如 Word2Vec）將文字轉為向量形式，使模型能進行語意運算。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_12",
+    "num": 12,
+    "difficulty": 2,
+    "question": "YOLO 模型的一大特點為何？",
+    "options": {
+      "A": "後處理階段才偵測框",
+      "B": "採用兩階段偵測流程",
+      "C": "直接回歸分類與邊界框",
+      "D": "僅能處理靜態圖像"
+    },
+    "answer": "C",
+    "explanation": "YOLO 是一階段（single-shot）偵測模型，將邊界框與分類同時預測，速度快。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_14",
+    "num": 13,
+    "difficulty": 3,
+    "question": "在 NLP 領域，「句向量（Sentence Embedding）」與「詞向量（Word Embedding）」的主要差異在於？",
+    "options": {
+      "A": "長度不同",
+      "B": "是否可用於圖像任務",
+      "C": "表示單詞 vs. 表示語句整體語意",
+      "D": "是否包含卷積運算"
+    },
+    "answer": "C",
+    "explanation": "詞向量表示個別詞彙語意，句向量（如 BERT embedding）則表示整句語意上下文\n整合。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_15",
+    "num": 14,
+    "difficulty": 1,
+    "question": "自然語言處理中，「停用詞（Stop Words）」通常是指？",
+    "options": {
+      "A": "需特別標註的重要名詞",
+      "B": "無法分詞的英文縮寫",
+      "C": "對語意貢獻較少的常用詞",
+      "D": "被模型排除的稀有詞"
+    },
+    "answer": "C",
+    "explanation": "停用詞為如「的」「是」「了」等常見但無語意貢獻的詞，常在前處理時去除。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  }
+]

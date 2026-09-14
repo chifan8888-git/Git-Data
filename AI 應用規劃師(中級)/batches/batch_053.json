@@ -1,0 +1,227 @@
+[
+  {
+    "id": "mock_465",
+    "num": 405,
+    "difficulty": 2,
+    "question": "企業在初步評估 AI 導入價值時，最應回答哪一個問題？",
+    "options": {
+      "A": "可否將所有流程 AI 化",
+      "B": "是否可產出 100% 精確模型",
+      "C": "哪些業務流程中存在重複、可預測、高頻的作業",
+      "D": "能否將現有模型導入手機"
+    },
+    "answer": "C",
+    "explanation": "重複、高頻、可預測性高的流程最適合優先導入 AI 或自動化，是導入評估的首要\n對象。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_466",
+    "num": 406,
+    "difficulty": 4,
+    "question": "AI 成本模型中，隨規模放大反而成本下降的現象稱為？",
+    "options": {
+      "A": "冗餘效應",
+      "B": "資料爆炸",
+      "C": "規模經濟（Economies of Scale）",
+      "D": "長尾效應"
+    },
+    "answer": "C",
+    "explanation": "投入成本隨產量擴大而攤提，每筆預測成本下降，是 AI 平台化運作的商業模式核\n心。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_467",
+    "num": 407,
+    "difficulty": 3,
+    "question": "流程自動化的「瓶頸識別」通常透過哪種分析？",
+    "options": {
+      "A": "SHAP 模型可解釋性分析",
+      "B": "處理時間與頻率分析（Process Mining）",
+      "C": "ROC 曲線比較",
+      "D": "LSTM 模型效能差異"
+    },
+    "answer": "B",
+    "explanation": "Process Mining 能分析流程中執行時間、等待時間與頻率，是找出瓶頸的有效方\n法。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_469",
+    "num": 408,
+    "difficulty": 2,
+    "question": "自動化導入常見的誤區是？",
+    "options": {
+      "A": "忽略人員訓練與使用者習慣轉變",
+      "B": "模型訓練資料過多",
+      "C": "系統運算太快",
+      "D": "資料格式太整齊"
+    },
+    "answer": "A",
+    "explanation": "流程再設計需搭配使用者適應與教育，否則自動化可能無法被採納或產生排斥。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_470",
+    "num": 409,
+    "difficulty": 3,
+    "question": "AI 成本評估中若忽略「組織變革成本」，將導致什麼結果？",
+    "options": {
+      "A": "實際投入成本被低估",
+      "B": "模型精度偏低",
+      "C": "計算資源過度集中",
+      "D": "模型自動過擬合"
+    },
+    "answer": "A",
+    "explanation": "轉型過程中包含人員調整、溝通、流程重建等隱性成本，忽略將導致成本預估失\n真。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_471",
+    "num": 410,
+    "difficulty": 1,
+    "question": "AI 導入若僅聚焦技術開發，忽略業務整合，最可能導致？",
+    "options": {
+      "A": "訓練時間縮短",
+      "B": "成本下降",
+      "C": "模型無法實際產出價值",
+      "D": "GPU 利用率提升"
+    },
+    "answer": "C",
+    "explanation": "AI 導入成功需技術與業務並重，否則即使模型準確也無法在實務上產生效益。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_473",
+    "num": 411,
+    "difficulty": 3,
+    "question": "AI 成熟度模型中，最初階段通常有哪些特徵？",
+    "options": {
+      "A": "模型部署完全自動化",
+      "B": "無明確策略，開發屬於試驗性質",
+      "C": "訂有跨部門 AI 管理辦法",
+      "D": "全部模型皆具解釋性報告"
+    },
+    "answer": "B",
+    "explanation": "初始階段組織缺乏制度化支持，AI 導入多為單點嘗試，無明確策略或評估標準。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_474",
+    "num": 412,
+    "difficulty": 4,
+    "question": "企業導入流程自動化前應先進行哪項分析？",
+    "options": {
+      "A": "模型卡設計",
+      "B": "模型集成效能評估",
+      "C": "流程現況調查與價值流（Value Stream）分析",
+      "D": "建立模型 API"
+    },
+    "answer": "C",
+    "explanation": "了解流程現況與瓶頸有助辨識最適合自動化的區段，是成功導入前的基礎分析。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_475",
+    "num": 413,
+    "difficulty": 2,
+    "question": "AI 成本中「技術債（Technical Debt）」指的是？",
+    "options": {
+      "A": "未償還的財務借款",
+      "B": "模型過度預測",
+      "C": "系統快速交付造成的結構或品質問題，需後續投入修復",
+      "D": "訓練樣本數過多"
+    },
+    "answer": "C",
+    "explanation": "技術債來自快速實作導致系統設計不佳，日後需花費更多資源維護與調整。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_477",
+    "num": 414,
+    "difficulty": 3,
+    "question": "導入流程自動化後，若未進行職責再設計，可能造成什麼問題？",
+    "options": {
+      "A": "資料表過大",
+      "B": "作業流程停滯或人員混亂",
+      "C": "模型過度更新",
+      "D": "成本過低"
+    },
+    "answer": "B",
+    "explanation": "流程變動後需同步調整人員職責與資源配置，否則易造成斷點與職責模糊。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_478",
+    "num": 415,
+    "difficulty": 2,
+    "question": "導入 IPA 系統時常與下列哪一技術整合以處理非結構化資料？",
+    "options": {
+      "A": "SSH 加密",
+      "B": "區塊鏈驗證",
+      "C": "NLP（自然語言處理）模組",
+      "D": "預設視覺主題"
+    },
+    "answer": "C",
+    "explanation": "IPA 結合 NLP 可處理如客服紀錄、文本分類等非結構資料，是與 RPA 最大差異\n之一。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_479",
+    "num": 416,
+    "difficulty": 4,
+    "question": "企業在規劃 AI 成本預算時，以下哪一項經常被低估？",
+    "options": {
+      "A": "資料收集與清理成本",
+      "B": "模型壓縮技術選型成本",
+      "C": "雲端儲存硬體建置成本",
+      "D": "網頁前端開發時間"
+    },
+    "answer": "A",
+    "explanation": "資料前處理通常需花費大量人力與時間，但常在專案規劃時低估其比重。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_491",
+    "num": 417,
+    "difficulty": 1,
+    "question": "AI 導入初期若尚未建立資料標準與格式一致性，最常見的後果是？",
+    "options": {
+      "A": "成本大幅下降",
+      "B": "模型運作加快",
+      "C": "模型訓練與部署失敗或不穩定",
+      "D": "模型立即達到最佳精度"
+    },
+    "answer": "C",
+    "explanation": "資料格式不一致會導致模型無法成功訓練或預測，常見於多部門資料源未整合前。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_492",
+    "num": 418,
+    "difficulty": 2,
+    "question": "下列哪一項屬於導入流程自動化後的「直接效益」？",
+    "options": {
+      "A": "顧客終身價值提升",
+      "B": "員工轉職率上升",
+      "C": "作業時間縮短與人力節省",
+      "D": "營運長聘任"
+    },
+    "answer": "C",
+    "explanation": "流程自動化主要提升效率、降低人工作業時間與錯誤，是最直接的生產力提升來\n源。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  },
+  {
+    "id": "mock_493",
+    "num": 419,
+    "difficulty": 3,
+    "question": "若 AI 導入後無定期效益回顧與調整機制，將可能造成什麼風險？",
+    "options": {
+      "A": "雲端資源過剩",
+      "B": "模型壓縮失敗",
+      "C": "模型無法持續對齊業務目標，產生價值斷層",
+      "D": "僅能離線部署"
+    },
+    "answer": "C",
+    "explanation": "AI 模型若未定期調整，可能逐漸偏離業務策略或資料變化，造成績效下降與使用率\n降低。\n\n【來源：全真模擬測驗專屬考題】",
+    "_category": "mock_questions"
+  }
+]
