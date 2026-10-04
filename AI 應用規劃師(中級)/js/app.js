@@ -636,6 +636,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const statusIndicator = explBox.querySelector('.status-indicator');
     if (isCorrect) {
       statusIndicator.innerHTML = '<span class="badge badge-success"><i class="fa-solid fa-circle-check"></i> 回答正確</span>';
+      
+      // 灑花特效
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+      }
     } else {
       statusIndicator.innerHTML = '<span class="badge badge-danger"><i class="fa-solid fa-circle-xmark"></i> 回答錯誤</span>';
       
@@ -719,6 +728,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const score = Math.round((correctCount / exam.questions.length) * 100);
     const isPassed = score >= 70; // 中級合格標準為 70 分
+
+    if (isPassed && typeof confetti === 'function') {
+      confetti({
+        particleCount: 150,
+        spread: 100,
+        origin: { y: 0.6 }
+      });
+    }
 
     // 2. 儲存至考試歷史
     const historyItem = {
