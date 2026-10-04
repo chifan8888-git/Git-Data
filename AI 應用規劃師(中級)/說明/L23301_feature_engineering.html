@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L23301 數據準備與特徵工程｜互動教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F5; --surface:#FFFFFF; --surface2:#F6F8FB; --ink:#18202E; --muted:#5A6475; --line:#D5DBE4;
+  --txt:#3B4CCA; --img:#0E8A7A; --aud:#B87812; --sen:#B8336A;
+  --ok:#1F8A4C; --bad:#C23B2E; --warn:#D9822B;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+    --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+  --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75}
+h1,h2,h3{font-family:var(--serif);line-height:1.3;margin:0}
+p{margin:0 0 1em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--txt);outline-offset:2px;border-radius:4px}
+svg{max-width:100%;height:auto;display:block}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1180px;margin:0 auto;gap:40px;padding:0 24px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;padding:32px 0;height:100vh;overflow:auto}
+nav.toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14.5px}
+nav.toc a span{font-variant-numeric:tabular-nums;font-size:13px;opacity:.8}
+nav.toc a.on{background:var(--surface);color:var(--ink);font-weight:700}
+.toc-title{font-family:var(--serif);font-weight:900;font-size:18px;padding:0 10px 14px}
+main{min-width:0;padding-bottom:80px}
+section{padding:56px 0 8px;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.sec-head{display:flex;gap:16px;align-items:baseline;margin-bottom:18px}
+.sec-no{font-family:var(--serif);font-weight:900;font-size:40px;color:var(--line);line-height:1}
+h2{font-size:28px;font-weight:900}
+h3{font-size:19px;margin:34px 0 10px}
+.lead{color:var(--muted);max-width:66ch}
+.prose{max-width:68ch}
+
+/* hero */
+.hero{padding:44px 0 24px}
+.hero .code{font-size:14px;color:var(--muted);margin-bottom:6px}
+.hero h1{font-size:clamp(34px,5.5vw,56px);font-weight:900;letter-spacing:.02em}
+.hero .one{font-size:18px;max-width:60ch;margin:16px 0 0;color:var(--muted)}
+.hero-fig{background:var(--surface);border-radius:20px;margin-top:28px;padding:14px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+.goal{border-left:4px solid var(--c);padding:6px 0 6px 14px;font-size:15px}
+
+/* panels */
+.panel{background:var(--surface);border-radius:16px;padding:22px;margin:16px 0}
+.panel.flat{background:var(--surface2)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font-size:15px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hint{font-size:14px;color:var(--muted)}
+.callout{border-left:4px solid var(--warn);background:var(--surface2);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;font-size:15px}
+.callout.exam{border-color:var(--txt)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:14px}
+
+/* modality chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+
+/* matcher */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.match .col{display:flex;flex-direction:column;gap:10px}
+.mitem{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15px;transition:border-color .2s,background .2s,transform .2s}
+.mitem small{display:block;color:var(--muted);font-size:13px}
+.mitem.sel{border-color:var(--ink);transform:translateX(4px)}
+.mitem.done{border-color:var(--c,var(--ok));background:var(--surface2);cursor:default}
+.mitem.wrong{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:1.8em;margin-top:12px;font-size:15px}
+.feedback.ok{color:var(--ok)} .feedback.bad{color:var(--bad)}
+
+/* timeline */
+.steps{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stage-viz{min-height:130px;display:flex;align-items:center;justify-content:center}
+.stage-viz .blk{display:inline-block;width:34px;height:34px;border-radius:6px;margin:2px;transition:all .5s}
+
+/* align toggle */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.compare>div{padding:18px}
+.compare>div+div{border-left:1px solid var(--line)}
+.compare .big{font-family:var(--serif);font-weight:900;font-size:22px;margin-bottom:6px}
+
+/* fusion */
+.meter{height:14px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:6px 0}
+.meter>i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .7s cubic-bezier(.3,.8,.3,1),background .4s}
+.flow{stroke-dasharray:6 7;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.jitter{animation:jit .25s steps(2) infinite}
+@keyframes jit{50%{transform:translate(1.5px,-1px)}}
+.fusion-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.pc{font-size:15px}
+.pc b{display:block;font-size:14px;color:var(--muted);font-weight:500}
+
+/* clip */
+.mat{display:grid;gap:4px;font-size:13px}
+.mat .cell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;transition:background .5s,color .5s}
+.mat .lab{display:flex;align-items:center;justify-content:center;font-size:22px}
+.mat .tlab{font-size:12px;text-align:center;color:var(--muted);display:flex;align-items:flex-end;justify-content:center;line-height:1.3}
+.zs-imgs{display:flex;gap:10px;flex-wrap:wrap}
+.zs-img{font-size:38px;width:72px;height:72px;border-radius:16px;border:2px solid var(--line);background:var(--surface2);display:flex;align-items:center;justify-content:center}
+.zs-img[aria-pressed="true"]{border-color:var(--img);box-shadow:0 0 0 3px color-mix(in srgb,var(--img) 25%,transparent)}
+.bar{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.bar .track{height:22px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;width:0;background:var(--txt);border-radius:6px;transition:width .8s cubic-bezier(.3,.8,.3,1)}
+.bar.win .fill{background:var(--img)}
+.bar.win{font-weight:700}
+.bar .num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.flip{perspective:900px;height:150px;border:0;background:none;padding:0;text-align:left}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flip[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:center}
+.flip .f{background:var(--surface);border:1.5px solid var(--line)}
+.flip .f strong{font-family:var(--serif);font-size:22px}
+.flip .f span{color:var(--muted);font-size:14px}
+.flip .b{background:var(--ink);color:var(--bg);transform:rotateY(180deg);font-size:15px}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.pnode{border:2px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;font-size:14px;background:var(--surface);transition:all .35s}
+.pnode b{display:block;font-size:16px}
+.pnode.on{border-color:var(--aud);background:color-mix(in srgb,var(--aud) 14%,var(--surface));transform:translateY(-3px)}
+.pnode.past{border-color:color-mix(in srgb,var(--aud) 45%,var(--line))}
+.pout{background:var(--surface2);border-radius:12px;padding:14px 16px;min-height:84px;font-size:15px}
+.wave{display:flex;gap:3px;align-items:center;height:30px}
+.wave i{width:4px;background:var(--aud);border-radius:2px;animation:wv 1s ease-in-out infinite}
+@keyframes wv{50%{transform:scaleY(.3)}}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+
+/* strategies */
+.strat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.strat button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;text-align:left;font-size:15px}
+.strat button[aria-pressed="true"]{border-color:var(--ink)}
+.verdict{font-family:var(--serif);font-weight:900;font-size:20px}
+
+details{border-bottom:1px solid var(--line)}
+details summary{cursor:pointer;padding:12px 4px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"+";font-weight:900;width:14px;color:var(--muted)}
+details[open] summary::before{content:"−"}
+details .body{padding:0 4px 14px 30px;font-size:15px}
+.tag{font-size:12.5px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums;min-width:80px}
+
+/* quiz */
+.qcard{background:var(--surface);border-radius:16px;padding:24px}
+.qtop{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
+.qtext{font-size:18px;font-weight:700;margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15.5px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+.opt.wrongpick{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.opt:disabled{cursor:default}
+.expl{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15px;display:none}
+.expl.show{display:block}
+.progress{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;margin-bottom:14px}
+.progress i{display:block;height:100%;background:var(--txt);transition:width .4s}
+
+.traps label{display:flex;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:15px}
+.traps input{width:18px;height:18px;margin-top:4px;flex:none;accent-color:var(--ok)}
+.traps label.chk>span{color:var(--muted)}
+.traps em{font-style:normal;font-weight:700}
+
+/* ---------- page-specific ---------- */
+code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9em;background:var(--surface2);padding:1px 6px;border-radius:6px;overflow-wrap:anywhere}
+pre{background:var(--surface2);border-radius:12px;padding:14px 16px;font-size:13.5px;line-height:1.6;overflow-x:auto;margin:10px 0;white-space:pre}
+pre code{background:none;padding:0}
+a{color:var(--txt)}
+label.slider{display:grid;grid-template-columns:150px minmax(0,1fr) 64px;gap:12px;align-items:center;font-size:15px;margin:8px 0}
+label.slider b{text-align:right;font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--txt);margin:0}
+.cbar{display:grid;grid-template-columns:30px minmax(0,1fr) 52px;gap:8px;align-items:center;margin:7px 0;font-size:14px}
+.cbar .track{position:relative;height:18px;background:var(--surface2);border-radius:5px}
+.cbar .track::after{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;width:1.5px;background:var(--muted)}
+.cbar .fill{position:absolute;top:0;bottom:0;border-radius:5px;transition:all .35s cubic-bezier(.3,.8,.3,1)}
+.cbar .num{text-align:right;font-variant-numeric:tabular-nums}
+.cbar.zero .num{color:var(--bad);font-weight:700}
+.wiz{display:flex;flex-direction:column;gap:8px}
+.wiz .qq{font-weight:700;margin-bottom:4px}
+.ball{width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700;transition:background .3s}
+#sumTbl tr{transition:opacity .3s}
+#sumTbl tr.dim{opacity:.22}
+#sumTbl tr.hi td:first-child{font-weight:700;color:var(--txt)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:15px}
+.kv b{font-variant-numeric:tabular-nums}
+
+/* mobile */
+@media (max-width:860px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+  nav.toc{position:sticky;top:0;height:auto;z-index:10;background:var(--bg);display:flex;overflow-x:auto;padding:8px 0;padding-top:calc(8px + env(safe-area-inset-top,0px));gap:4px;border-bottom:1px solid var(--line)}
+  .toc-title{display:none}
+  nav.toc a{white-space:nowrap;flex:none}
+  .match,.stage,.fusion-meta,.compare{grid-template-columns:1fr}
+  .compare>div+div{border-left:0;border-top:1px solid var(--line)}
+  .pipe{grid-template-columns:repeat(5,minmax(90px,1fr));overflow-x:auto}
+  .bar{grid-template-columns:110px 1fr 56px}
+  h2{font-size:24px}
+  label.slider{grid-template-columns:84px minmax(0,1fr) 52px;gap:8px;font-size:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="toc" aria-label="章節">
+  <div class="toc-title">數據準備與特徵工程</div>
+  <a href="#intro"><span>●</span>導覽與目標</a>
+  <a href="#s1"><span>48.1</span>資料清理</a>
+  <a href="#s2"><span>48.2</span>特徵選擇與降維</a>
+  <a href="#s3"><span>48.3</span>特徵轉換與標準化</a>
+  <a href="#s4"><span>48.4</span>資料增強</a>
+  <a href="#s5"><span>48.5</span>資料洩漏</a>
+  <a href="#s6"><span>48.6</span>特徵工程策略</a>
+  <a href="#s7"><span>48.7</span>官方考題</a>
+  <a href="#s8"><span>48.8</span>易錯與測驗</a>
+</nav>
+
+<main>
+<!-- HERO -->
+<section id="intro" class="hero">
+  <div class="code">L23301　中級 AI 應用規劃師・科目 3　建議 50 分鐘</div>
+  <h1>數據準備與特徵工程</h1>
+  <p class="one">初級的 L112 只要求你認得「缺失值要補、類別要編碼、數值要縮放」這些名詞；中級則要你在情境題裡判斷<b>這個步驟該用哪一種、放在流程的哪個位置</b> —— 而「位置放錯」正是本知識點最致命也最常考的失分點：<b>資料洩漏（Data Leakage）</b>。</p>
+  <div class="hero-fig" aria-hidden="true">
+    <svg id="heroSvg" viewBox="0 0 720 300">
+      <defs><path id="hpath" d="M40 120 L 680 120"/></defs>
+      <line x1="40" y1="120" x2="680" y2="120" stroke="var(--ink)" stroke-width="2" opacity=".25"/>
+      <g font-family="Noto Sans TC, sans-serif" font-size="15" font-weight="700">
+        <rect x="40" y="90" width="130" height="60" rx="14" fill="var(--txt)"/><text x="105" y="126" text-anchor="middle" fill="#fff">清理</text>
+        <rect x="205" y="90" width="130" height="60" rx="14" fill="var(--img)"/><text x="270" y="126" text-anchor="middle" fill="#fff">選擇・降維</text>
+        <rect x="370" y="90" width="130" height="60" rx="14" fill="var(--aud)"/><text x="435" y="126" text-anchor="middle" fill="#fff">轉換・編碼</text>
+        <rect x="535" y="90" width="145" height="60" rx="14" fill="var(--sen)"/><text x="607" y="126" text-anchor="middle" fill="#fff">增強・建模</text>
+        <rect x="205" y="190" width="475" height="70" rx="14" fill="none" stroke="var(--bad)" stroke-width="2.5" stroke-dasharray="7 6"/>
+        <text x="442" y="222" text-anchor="middle" fill="var(--bad)">交叉驗證的每一折裡：只用訓練折 fit</text>
+        <text x="442" y="246" text-anchor="middle" fill="var(--muted)" font-size="13" font-weight="500">放錯位置 → 資料洩漏</text>
+        <text x="40" y="60" fill="var(--muted)" font-size="13" font-weight="500">原始資料 →</text>
+        <text x="680" y="60" text-anchor="end" fill="var(--muted)" font-size="13" font-weight="500">→ 模型</text>
+      </g>
+      <g class="movers">
+        <rect width="16" height="16" rx="4" y="-8" x="-8" fill="var(--ink)"><animateMotion dur="3.2s" repeatCount="indefinite"><mpath href="#hpath"/></animateMotion></rect>
+        <rect width="16" height="16" rx="4" y="-8" x="-8" fill="var(--ink)" opacity=".5"><animateMotion dur="3.2s" begin="1.06s" repeatCount="indefinite"><mpath href="#hpath"/></animateMotion></rect>
+        <rect width="16" height="16" rx="4" y="-8" x="-8" fill="var(--ink)" opacity=".3"><animateMotion dur="3.2s" begin="2.13s" repeatCount="indefinite"><mpath href="#hpath"/></animateMotion></rect>
+      </g>
+    </svg>
+  </div>
+  <h3>學完這一課，你應該能夠</h3>
+  <div class="goals">
+    <div class="goal" style="--c:var(--txt)">依缺失機制、離群值性質與模型容忍度，選出對應的資料清理策略</div>
+    <div class="goal" style="--c:var(--img)">分辨<b>特徵選擇</b>（Filter／Wrapper／Embedded）與<b>降維</b>（PCA／LDA／t-SNE／SVD）解決的是不同問題</div>
+    <div class="goal" style="--c:var(--aud)">判斷 Min-Max、Z-score、Robust Scaling 與各類別編碼方式的適用情境與副作用</div>
+    <div class="goal" style="--c:var(--sen)">指出流程中的資料洩漏來源，說明哪些前處理步驟<b>必須</b>包進交叉驗證迴圈內</div>
+  </div>
+  <p class="hint" style="margin-top:20px">本頁顏色對應流程階段：<span class="chip" style="--c:var(--txt)"><i class="dot"></i>清理</span>　<span class="chip" style="--c:var(--img)"><i class="dot"></i>選擇・降維</span>　<span class="chip" style="--c:var(--aud)"><i class="dot"></i>轉換・編碼</span>　<span class="chip" style="--c:var(--sen)"><i class="dot"></i>增強・洩漏</span></p>
+</section>
+
+<!-- 48.1 -->
+<section id="s1">
+  <div class="sec-head"><span class="sec-no">48.1</span><h2>資料清理</h2></div>
+
+  <h3>缺失值實驗室：每種手段的副作用</h3>
+  <div class="panel">
+    <p class="hint">一欄右偏的「月收入」（示意資料，單位：萬），其中有 6 筆缺值。點選處理方式，看分佈與統計量怎麼變。橘色是填進去的值。</p>
+    <div class="tabs" id="miTabs"></div>
+    <svg id="miSvg" viewBox="0 0 640 150" role="img" aria-label="缺失值填補示意"></svg>
+    <div class="pout" id="miOut"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>方法</th><th>做法</th><th>適用條件</th><th>副作用</th></tr>
+      <tr><td><b>刪除法</b></td><td>直接丟掉含缺值的列或欄</td><td>缺失比例極低、樣本充足、缺失分佈無偏</td><td>缺失若有系統性（非隨機），刪除就等於製造取樣偏差</td></tr>
+      <tr><td><b>統計量填補</b></td><td>均值／中位數／眾數</td><td>快速基線；偏態資料用中位數優於均值</td><td><b>壓縮變異數</b>，人為拉高集中趨勢</td></tr>
+      <tr><td><b>相似樣本填補</b></td><td>Hot Deck、KNN Imputer</td><td>特徵間有鄰近結構</td><td>需先做尺度調整，否則距離被大數值欄位主導</td></tr>
+      <tr><td><b>預測模型填補</b></td><td>用迴歸／分類模型預測缺值</td><td>特徵間高度相關</td><td>最容易夾帶洩漏：若拿目標變數去填補特徵，就是目標洩漏</td></tr>
+      <tr><td><b>缺失指標編碼</b></td><td>新增 <code>is_missing</code> 欄位</td><td>缺失本身帶訊息（沒填收入 vs 收入為 0）</td><td>增加維度；對樹模型效益最明顯</td></tr>
+    </table>
+  </div>
+  <div class="compare" style="margin-top:14px">
+    <div><div class="big">樹模型</div>XGBoost、LightGBM、Random Forest<br>XGBoost <b>原生支援缺失值</b>：訓練時為每個分裂學一個「預設方向」，缺值樣本直接走預設分支，不必事先填補。<br><span class="hint">114Q2 第 18 題把「支援缺失值自動處理」列為 XGBoost 相對 GBDT 的改進之一。</span></div>
+    <div><div class="big">線性／SVM／KNN／神經網路</div><b>不接受 NaN</b>，必須填補；且對填補品質與尺度都敏感。</div>
+  </div>
+
+  <h3>異常值偵測：Z 分數 vs IQR</h3>
+  <div class="panel">
+    <p class="hint">19 個正常值＋1 個可疑值（示意）。拖動可疑值，看兩種統計判準何時把它抓出來。</p>
+    <svg id="olSvg" viewBox="0 0 640 170" role="img" aria-label="異常值判準示意"></svg>
+    <label class="slider">可疑值<input type="range" id="olR" min="40" max="160" step="1" value="95"><b id="olRV"></b></label>
+    <div class="pout" id="olOut"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>層次</th><th>手段</th><th>判準／說明</th></tr>
+      <tr><td><b>統計法</b></td><td>Z 分數</td><td>常見取 |z| &gt; 3；前提是資料近似常態</td></tr>
+      <tr><td></td><td>四分位距（IQR）</td><td>落在 Q1 − 1.5×IQR 與 Q3 + 1.5×IQR 之外</td></tr>
+      <tr><td><b>視覺化</b></td><td>箱型圖、散佈圖、殘差圖</td><td>迴歸的殘差圖是高頻考點</td></tr>
+      <tr><td><b>機器學習法</b></td><td>Isolation Forest、LOF、One-Class SVM、自編碼器重建誤差</td><td>適合高維、無標註的場景</td></tr>
+    </table>
+  </div>
+
+  <div class="panel">
+    <h3 style="margin-top:0">處理策略三選一：配對遊戲</h3>
+    <p class="hint">先點左邊情境，再點右邊策略。</p>
+    <div class="match" id="olMatch"></div>
+    <div class="feedback" id="olFb" aria-live="polite"></div>
+  </div>
+
+  <h3>殘差圖的兩個經典判讀（各考一題）</h3>
+  <div class="panel">
+    <div class="tabs" id="resTabs"></div>
+    <div class="stage">
+      <div class="stage-viz"><svg id="resSvg" viewBox="0 0 320 200" role="img" aria-label="殘差圖示意"></svg></div>
+      <div id="resTxt"></div>
+    </div>
+  </div>
+
+  <h3>重複樣本、一致性與型別轉換</h3>
+  <details><summary>重複偵測</summary><div class="body">主鍵比對或欄位相似度；重複樣本會讓特定樣本在訓練時被加權放大。</div></details>
+  <details><summary>單位與格式標準化</summary><div class="body">公克 vs 公斤、<code>2026/3/14</code> vs <code>2026-03-14</code>、<code>male</code> vs <code>男</code>。</div></details>
+  <details><summary>型別轉換</summary><div class="body">數值型與類別型要正確標示，否則後續編碼與縮放全錯。</div></details>
+  <details><summary>資料血緣（Data Lineage）</summary><div class="body">每個清理動作（填補方法、異常值判準、欄位邏輯）都要留紀錄，才能重現、稽核與符合治理要求。這是中級才強調的治理面，初級不考。</div></details>
+</section>
+
+<!-- 48.2 -->
+<section id="s2">
+  <div class="sec-head"><span class="sec-no">48.2</span><h2>特徵選擇與降維</h2></div>
+  <p class="lead">先分清楚：<b>選擇 ≠ 降維</b>。一個是「挑出」原始欄位，一個是「壓成」新座標軸。</p>
+
+  <h3>同一張表，兩種瘦身法</h3>
+  <div class="panel">
+    <p class="hint">6 個原始欄位（示意）。按下兩個按鈕比較結果 —— 哪一種還能向審查單位解釋？</p>
+    <div class="row"><button class="btn" id="fsSel" aria-pressed="false">特徵選擇：挑 2 欄</button><button class="btn" id="fsRed" aria-pressed="false">降維：壓成 2 軸</button><button class="btn" id="fsReset">還原</button></div>
+    <div id="fsCols" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-top:14px"></div>
+    <div class="pout" id="fsOut" style="margin-top:12px"></div>
+  </div>
+
+  <h3>特徵選擇三大類</h3>
+  <div class="panel">
+    <div class="tabs" id="fsTabs"></div>
+    <div id="fsBody"></div>
+  </div>
+
+  <h3>L1 vs L2：共線特徵下的「挑選」與「穩定」</h3>
+  <div class="panel">
+    <p class="hint">月收入、季收入、年收入三個特徵高度相關。按「重新訓練一次」（每次抽樣與初始化不同），比較兩種正則化的係數（示意）。</p>
+    <div class="fusion-meta" style="margin-top:0">
+      <div><b style="color:var(--sen)">L1（Lasso）</b><div id="l1Bars"></div></div>
+      <div><b style="color:var(--txt)">L2（Ridge）</b><div id="l2Bars"></div></div>
+    </div>
+    <div class="row" style="margin-top:10px"><button class="btn primary" id="l12Btn">重新訓練一次</button><span class="hint" id="l12Info"></span></div>
+    <div class="pout" id="l12Out" style="margin-top:10px"></div>
+  </div>
+  <div class="callout exam"><b>Embedded 法是官方最愛考的一類，考了四題：</b><br>
+  • <b>114Q2 第 2 題／第 32 題</b>：L1 在損失函數加上<b>權重絕對值</b>懲罰，把不重要特徵的係數壓成 <b>0</b> → 自動特徵選擇；L2 只把權重同步縮小但不歸零。<br>
+  • <b>114Q2 第 8 題</b>：資訊增益以熵的下降量衡量特徵貢獻，是<b>決策樹</b>在每個節點挑分裂特徵的依據。<br>
+  • <b>115Q1 第 33 題</b>：150 個特徵、高度共線（建坪 vs 總面積），要「控制過擬合、共線性下穩定、<b>不讓任何係數歸零</b>」→ <b>Ridge（L2）</b>。Elastic Net 含 L1 成分仍會歸零。<br>
+  • <b>115Q1 第 7 題</b>：月收入／年收入／季收入，重要特徵清單每次重訓都在跳 → <b>L1 的稀疏性</b>：留哪一個都能把損失壓到相近水準，留誰受抽樣與初始化影響。<br>
+  <b>L1 幫你挑特徵但不穩定；L2 不挑特徵但穩定。</b></div>
+
+  <h3>降維方法：情境配對</h3>
+  <div class="panel">
+    <p class="hint">先點左邊情境，再點右邊方法。</p>
+    <div class="match" id="drMatch"></div>
+    <div class="feedback" id="drFb" aria-live="polite"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>方法</th><th>線性？</th><th>用到標籤？</th><th>可轉換新資料？</th><th>典型用途</th><th>上限</th></tr>
+      <tr><td><b>PCA</b></td><td>線性</td><td>否（無監督）</td><td>可（用既有主成分矩陣投影）</td><td>視覺化、雜訊過濾、建模加速</td><td>最多 min(樣本數, 特徵數)</td></tr>
+      <tr><td><b>LDA</b></td><td>線性</td><td><b>是（監督式）</b></td><td>可</td><td>分類前降維，最大化類間／類內變異比</td><td><b>最多「類別數 − 1」維</b></td></tr>
+      <tr><td><b>t-SNE</b></td><td>非線性</td><td>否</td><td><b>不可</b>（無外推函數）</td><td><b>只用於視覺化探索</b></td><td>2～3 維</td></tr>
+      <tr><td><b>UMAP</b></td><td>非線性</td><td>可選</td><td>可</td><td>視覺化為主</td><td>—</td></tr>
+      <tr><td><b>SVD</b></td><td>線性</td><td>否</td><td>可</td><td>文字分析（LSA）、推薦系統</td><td>—</td></tr>
+    </table>
+  </div>
+  <div class="callout"><b>115Q1 第 6 題整題就是這張表：</b>正解是「t-SNE 保留<b>局部鄰域</b>結構適合視覺化，但不保留全局結構，<b>不適合作為模型輸入特徵</b>」。三個誘答把 t-SNE 說成保留全局線性（顛倒）、把 PCA 說成非線性（錯）、說兩者都可對新資料線性外推（t-SNE 做不到）。</div>
+
+  <h3>PCA 的兩個計算型考法</h3>
+  <div class="panel">
+    <div class="tabs" id="pcaTabs"><button class="btn" data-m="var" aria-pressed="true">解釋變異量（114Q2 第 35 題）</button><button class="btn" data-m="noise" aria-pressed="false">PCA 降噪（114Q2 第 46 題）</button></div>
+    <div id="pcaVar">
+      <p class="hint">預設是考題數字。拖動看看要保留幾個主成分才達 80%。</p>
+      <label class="slider">λ₁<input type="range" id="pl1" min="0.5" max="10" step="0.5" value="6"><b id="pl1V"></b></label>
+      <label class="slider">λ₂<input type="range" id="pl2" min="0.5" max="10" step="0.5" value="3"><b id="pl2V"></b></label>
+      <label class="slider">λ₃<input type="range" id="pl3" min="0.5" max="10" step="0.5" value="1"><b id="pl3V"></b></label>
+      <div id="pcaBars"></div>
+      <div class="pout" id="pcaOut"></div>
+    </div>
+    <div id="pcaNoise" style="display:none">
+      <p class="hint">一條平滑訊號加上雜訊（示意）。用 PCA 保留前幾個成分再 inverse_transform 重建。拖動 n_components。</p>
+      <svg id="pnSvg" viewBox="0 0 640 200" role="img" aria-label="PCA 降噪示意"></svg>
+      <label class="slider">n_components<input type="range" id="pnK" min="1" max="40" step="1" value="2"><b id="pnKV"></b></label>
+      <div class="pout" id="pnOut"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 48.3 -->
+<section id="s3">
+  <div class="sec-head"><span class="sec-no">48.3</span><h2>特徵轉換與資料標準化</h2></div>
+
+  <h3>尺度調整三選一：加一個離群值看看</h3>
+  <div class="panel">
+    <p class="hint">9 個一般值（示意）。按「加入極端值」，比較三種縮放後一般值（藍點）被擠成什麼樣子。</p>
+    <button class="btn" id="scOut" aria-pressed="false">加入極端值</button>
+    <svg id="scSvg" viewBox="0 0 640 250" style="margin-top:10px" role="img" aria-label="三種縮放比較"></svg>
+    <div class="pout" id="scTxt"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>方法</th><th>公式</th><th>輸出</th><th>對離群值</th><th>適用情境</th></tr>
+      <tr><td><b>Min-Max</b></td><td>(x − min) / (max − min)</td><td>[0, 1]</td><td><b>極敏感</b>（一個極端值會把其餘全部壓扁）</td><td>分佈有界、需要固定範圍（影像像素、部分神經網路輸入）</td></tr>
+      <tr><td><b>Z-score</b></td><td>(x − μ) / σ</td><td>均值 0、標準差 1（<b>不是 0～1</b>）</td><td>敏感</td><td>近似常態；線性模型、SVM、PCA 的標準搭配</td></tr>
+      <tr><td><b>Robust Scaling</b></td><td>(x − 中位數) / IQR</td><td>不固定</td><td><b>抵抗力最強</b></td><td><b>分佈偏態或含離群值時的首選</b></td></tr>
+    </table>
+  </div>
+  <div class="callout"><b>「有離群值 → Robust Scaling」是可以直接反射的配對。</b>Min-Max 與 Z-score 都用到會被極端值污染的統計量（min／max／μ／σ），Robust Scaling 改用中位數與 IQR。代價是轉換後不保證符合任何標準分佈。</div>
+
+  <h3>分類練習：哪些模型需要縮放？</h3>
+  <div class="panel">
+    <p class="hint">每個模型點「要縮放」或「不需要」。</p>
+    <div id="needSort"></div>
+    <p class="hint" id="needCount" style="margin:8px 0 0"></p>
+  </div>
+  <p class="prose"><b>114Q2 第 9 題：</b>建構 KNN、SVM 這類距離型模型時，<b>最關鍵</b>的前處理是<b>特徵縮放</b>；「缺失值補齊」「平衡資料筆數」雖有幫助，但不是核心需求。<br><b>115Q1 第 14 題</b>是反面：樸素貝氏誤判促銷信，原因是類別條件機率受訓練分佈影響，不是「未做特徵標準化」。</p>
+
+  <h3>同一組觀念的兩面：判斷敘述對錯</h3>
+  <div class="panel">
+    <div class="tabs" id="zTabs"></div>
+    <div id="zBody"></div>
+  </div>
+
+  <h3>分佈轉換：log 對誰有效？（115Q1 第 25 題）</h3>
+  <div class="panel">
+    <p class="hint">兩個特徵與房價（示意資料）。分別對它們開關 log 轉換，看線性擬合的 R² 是升還是降。</p>
+    <div class="row"><button class="btn" id="lgD" aria-pressed="false">對「距捷運站距離」取 log</button><button class="btn" id="lgA" aria-pressed="false">對「屋齡」取 log</button></div>
+    <div class="fusion-meta">
+      <div><b>距捷運站距離 vs 房價</b><svg id="lgSvgD" viewBox="0 0 300 200" role="img" aria-label="距離散佈圖"></svg><div class="hint" id="lgTD"></div></div>
+      <div><b>屋齡 vs 房價</b><svg id="lgSvgA" viewBox="0 0 300 200" role="img" aria-label="屋齡散佈圖"></svg><div class="hint" id="lgTA"></div></div>
+    </div>
+    <div class="callout" style="margin-bottom:0"><b>記憶點：轉換要依「每個特徵自己的分佈」個別決定，不是全表一起套。</b>屋齡與房價若原本就呈線性關係，log 反而破壞此結構。誘答「兩特徵須套用相同轉換否則尺度不一致」是錯的 —— 尺度問題用標準化解決。</div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>轉換</th><th>適用</th><th>限制</th></tr>
+      <tr><td><b>對數 Log</b></td><td>右偏長尾（收入、銷售額、距離）</td><td>只能用於正值；把乘性關係轉成加性</td></tr>
+      <tr><td><b>平方根／立方根</b></td><td>中度偏態</td><td>壓縮較溫和</td></tr>
+      <tr><td><b>Box-Cox</b></td><td>自動找最適指數 λ</td><td><b>只能用於正值</b>；λ 是估出來的參數</td></tr>
+      <tr><td><b>Yeo-Johnson</b></td><td>同上，但<b>可含 0 與負值</b></td><td>—</td></tr>
+    </table>
+  </div>
+
+  <h3>類別編碼工作台</h3>
+  <div class="panel">
+    <p class="hint">選一種編碼，看同一份資料變成什麼樣子；再拖動「類別數（基數）」看會產生幾個欄位。（資料與目標值為示意）</p>
+    <div class="tabs" id="encTabs"></div>
+    <div class="tbl-wrap" id="encTbl"></div>
+    <label class="slider">類別數（基數）<input type="range" id="encK" min="3" max="3000" step="1" value="3"><b id="encKV"></b></label>
+    <div class="pout" id="encOut"></div>
+  </div>
+  <div class="callout exam"><b>115Q1 第 24 題：</b>3,000 種商品項目，何者最容易造成維度爆炸 → <b>One-Hot</b>。Target Encoding 的風險是<b>目標洩漏不是維度</b>；Label Encoding 的缺點是<b>硬塞順序不是維度</b>；Embedding 正是為了避開維度爆炸而設計。<br><span class="hint">官方《學習指引》：「樹模型對類別編碼敏感，避免使用標籤編碼造成誤解。」作答以指引口徑為準：<b>標籤編碼只給有序類別用</b>，不論下游是什麼模型。</span></div>
+
+  <h3>週期性特徵：23 點和 0 點有多遠？</h3>
+  <div class="panel">
+    <p class="hint">拖動兩個時刻，比較「直接用 0～23」與「sin/cos 成對編碼」算出的距離。</p>
+    <label class="slider">時刻 A<input type="range" id="hA" min="0" max="23" step="1" value="23"><b id="hAV"></b></label>
+    <label class="slider">時刻 B<input type="range" id="hB" min="0" max="23" step="1" value="0"><b id="hBV"></b></label>
+    <div class="stage">
+      <div class="stage-viz"><svg id="hSvg" viewBox="0 0 240 240" style="max-width:240px" role="img" aria-label="時鐘圓周"></svg></div>
+      <div class="pc" id="hOut"></div>
+    </div>
+  </div>
+
+  <h3>滑動窗口：建立滯後特徵（115Q1 第 26 題）</h3>
+  <div class="panel">
+    <p class="hint">把 t−1 到 t−k 的觀測值攤平成同一筆樣本的多個欄位。拖動窗口大小 k（銷量為示意數字）。</p>
+    <label class="slider">窗口 k<input type="range" id="swK" min="1" max="5" step="1" value="3"><b id="swKV"></b></label>
+    <div class="tbl-wrap" id="swTbl"></div>
+    <div class="pout" id="swOut"></div>
+  </div>
+  <p class="prose hint">其他時間特徵：時間戳拆解成年、月、日、星期幾、時段、是否假日；序列特徵如滯後值（lag）、移動平均（rolling mean）、時間間隔、事件次數。</p>
+</section>
+
+<!-- 48.4 -->
+<section id="s4">
+  <div class="sec-head"><span class="sec-no">48.4</span><h2>資料增強</h2></div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>資料型態</th><th>常見手法</th><th>典型應用</th></tr>
+      <tr><td><b>影像</b></td><td>隨機翻轉、旋轉、裁剪、縮放、色彩變換</td><td>人臉辨識、醫學影像、AOI 瑕疵檢測</td></tr>
+      <tr><td><b>文字</b></td><td>同義字替換、隨機插入／刪除／交換、回譯</td><td>情感分析、主題分類</td></tr>
+      <tr><td><b>時序</b></td><td>加噪、Jittering、Scaling、窗口裁切</td><td>設備故障預測、股市趨勢</td></tr>
+      <tr><td><b>表格</b></td><td><b>SMOTE</b>（在少數類樣本與其 k 近鄰間<b>線性插值</b>產生新樣本）</td><td>詐欺偵測、疾病診斷等不平衡問題</td></tr>
+    </table>
+  </div>
+
+  <h3>鐵律：不可改變標籤語意（115Q1 第 4 題）</h3>
+  <div class="panel">
+    <p class="hint">多個影像任務統一加入隨機水平翻轉，哪個任務最容易因此引入語意錯誤？</p>
+    <div class="strat" id="flipStrat"></div>
+    <div style="margin-top:18px">
+      <div class="verdict" id="flipV">選一個任務</div>
+      <div class="meter" style="height:18px;margin:10px 0"><i id="flipM" style="width:0"></i></div>
+      <div id="flipWhy" class="hint"></div>
+    </div>
+  </div>
+  <div class="callout"><b>115Q1 第 41 題：</b>OCR 訓練，驗證損失持續下降但部署後 <b>b/d/p/q</b> 錯誤率暴增 —— <code>RandomHorizontalFlip(p=0.5)</code> 讓 b 變 d、p 變 q，標籤不變。<b>因為訓練與驗證套用同一組轉換，驗證損失看起來正常</b>。<br><b>增強應只對訓練集施加</b>，驗證與測試集維持原樣（推論階段的 TTA 是另一回事，屬於推論技巧）。</div>
+
+  <h3>SMOTE：在少數類之間「插值」</h3>
+  <div class="panel">
+    <p class="hint">粉色是少數類樣本（示意）。按「SMOTE 產生一筆」：隨機選一個少數類樣本與它的近鄰，在兩點連線上取一點當新樣本。</p>
+    <svg id="smSvg" viewBox="0 0 640 260" role="img" aria-label="SMOTE 示意"></svg>
+    <div class="row" style="margin-top:8px"><button class="btn primary" id="smBtn">SMOTE 產生一筆</button><button class="btn" id="smReset">重設</button><span class="hint" id="smInfo"></span></div>
+  </div>
+
+  <h3>不平衡資料：Accuracy 的陷阱</h3>
+  <div class="panel">
+    <p class="hint">假設有一個「偷懶模型」：不管輸入是什麼，<b>全部預測為陰性</b>。拖動陽性比例，看它的各項指標。</p>
+    <label class="slider">陽性比例<input type="range" id="imR" min="1" max="50" step="1" value="1"><b id="imRV"></b></label>
+    <div id="imBars"></div>
+    <div class="pout" id="imOut"></div>
+  </div>
+  <div class="tabs" id="imTabs"></div>
+  <div class="panel flat" id="imBody" style="margin-top:0"></div>
+</section>
+
+<!-- 48.5 -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-no">48.5</span><h2>資料洩漏（本知識點的頭號考點）</h2></div>
+  <p class="lead"><b>定義：</b>模型在訓練或評估階段用到了<b>推論時不可能取得的資訊</b>，導致評估結果過度樂觀、上線後表現崩塌。</p>
+
+  <h3>洩漏模擬器：前處理 fit 在哪裡？（115Q1 第 44 題）</h3>
+  <div class="panel">
+    <p class="hint">5 折交叉驗證。切換兩種寫法，按「下一折」看 StandardScaler／LDA 每次是用哪些資料 fit 的。<span style="color:var(--bad)">紅框</span>＝參與 fit 的資料。</p>
+    <div class="tabs" id="lkTabs"><button class="btn" data-m="bad" aria-pressed="true">✘ 先對全部資料 fit_transform</button><button class="btn" data-m="good" aria-pressed="false">✔ Pipeline 包進每一折</button></div>
+    <svg id="lkSvg" viewBox="0 0 640 230" role="img" aria-label="交叉驗證折示意"></svg>
+    <div class="row"><button class="btn primary" id="lkNext">下一折</button></div>
+    <div class="pout" id="lkOut" style="margin-top:10px"></div>
+  </div>
+  <div class="tabs" id="lkCode"></div>
+  <div id="lkCodeBody"></div>
+  <p class="prose"><b>LDA 是監督式降維（要吃標籤），所以它的洩漏比 PCA 更嚴重</b> —— PCA 至少只偷看了特徵分佈，LDA 連答案都看過了。這也是官方挑 LDA 而非 PCA 出題的原因。</p>
+  <div class="panel">
+    <p class="hint" style="margin-top:0">順帶記住 LDA 的上限：最多只能降到「類別數 − 1」維。拖動類別數試試（Iris 有 3 類）。</p>
+    <label class="slider">類別數<input type="range" id="ldaK" min="2" max="10" step="1" value="3"><b id="ldaKV"></b></label>
+    <div class="pout" id="ldaOut"></div>
+  </div>
+
+  <h3>三種洩漏來源：配對</h3>
+  <div class="panel">
+    <p class="hint">先點左邊情境，再點右邊洩漏類型。</p>
+    <div class="match" id="lkMatch"></div>
+    <div class="feedback" id="lkFb" aria-live="polite"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>類型</th><th>典型情境</th><th>症狀</th></tr>
+      <tr><td><b>前處理洩漏</b></td><td>用<b>全體資料</b>去 fit scaler／imputer／PCA／LDA／特徵選擇器，再做交叉驗證</td><td>驗證分數異常高且穩定</td></tr>
+      <tr><td><b>目標洩漏</b></td><td>特徵本身含有答案（拿「理賠金額」預測「是否理賠」）；Target Encoding 未做 out-of-fold；早停用測試集</td><td>某個特徵重要性高得離譜</td></tr>
+      <tr><td><b>時間洩漏</b></td><td>對時間序列做隨機 K-fold，等於用未來預測過去</td><td>離線好、上線衰退</td></tr>
+    </table>
+  </div>
+
+  <h3>分類練習：哪些步驟必須進 CV 迴圈？</h3>
+  <div class="panel">
+    <p class="hint">每個步驟點「進 Pipeline」或「切分前可先做」。判準：<b>是否依賴資料統計量（有沒有要從資料估的參數）</b>。</p>
+    <div id="cvSort"></div>
+    <p class="hint" id="cvCount" style="margin:8px 0 0"></p>
+  </div>
+
+  <h3>SMOTE 的位置更容易錯</h3>
+  <div class="compare">
+    <div><div class="big" style="color:var(--bad)">✘ 先對全體資料 SMOTE，再切分</div>合成樣本是由真實樣本內插產生的，<b>親本可能落在測試集</b> → 測試集等於看過訓練集的內容，評估完全失真。</div>
+    <div><div class="big" style="color:var(--ok)">✔ 先切分 → 只對訓練折 SMOTE</div>驗證／測試折<b>維持原始不平衡分佈</b>。評估必須反映真實世界的分佈，真實世界不會幫你補少數類。</div>
+  </div>
+
+  <h3>時間序列的洩漏（115Q1 第 27 題）</h3>
+  <div class="panel">
+    <p class="hint">零售銷量：以第 1～52 週訓練、第 53 週測試，半年後對第 80 週明顯衰退。切換驗證方式，看訓練資料是否用到「未來」。</p>
+    <div class="tabs" id="tsTabs"><button class="btn" data-m="kf" aria-pressed="true">隨機 K-fold</button><button class="btn" data-m="roll" aria-pressed="false">滾動窗口（TimeSeriesSplit）</button></div>
+    <svg id="tsSvg" viewBox="0 0 640 200" role="img" aria-label="時間序列切分示意"></svg>
+    <div class="pout" id="tsOut"></div>
+  </div>
+</section>
+
+<!-- 48.6 -->
+<section id="s6">
+  <div class="sec-head"><span class="sec-no">48.6</span><h2>特徵工程策略</h2></div>
+  <h3>依任務與模型調整</h3>
+  <div class="panel">
+    <div class="tabs" id="stTabs"></div>
+    <div id="stBody" class="pout"></div>
+  </div>
+
+  <h3>互動特徵（114Q2 第 20 題）</h3>
+  <div class="panel">
+    <p class="hint">想捕捉「商品價格」與「顧客滿意度」的交互效果，該怎麼做？</p>
+    <div class="strat" id="ixStrat"></div>
+    <div style="margin-top:18px">
+      <div class="verdict" id="ixV">選一個做法</div>
+      <div class="meter" style="height:18px;margin:10px 0"><i id="ixM" style="width:0"></i></div>
+      <div id="ixWhy" class="hint"></div>
+    </div>
+  </div>
+  <p class="prose"><b>衍生與聚合：</b>合成特徵（單價 × 數量 = 總價、體重 ÷ 身高² = BMI）；統計聚合（使用者過去 7 天點擊次數、近 30 日平均消費）；序列特徵（lag、rolling mean、時間間隔、事件次數）。</p>
+
+  <h3>金融評分卡的標準流程（114Q2 第 25 題）</h3>
+  <div class="panel">
+    <p class="hint">點每個步驟判斷它是不是傳統信用評分卡（邏輯迴歸）的常見步驟。</p>
+    <div id="scList"></div>
+  </div>
+  <p class="prose">原因很單純：評分卡受監理要求，<b>可解釋性優先</b>，生成式模型的特徵學習是黑箱，不符合標準化開發流程。</p>
+</section>
+
+<!-- 48.7 -->
+<section id="s7">
+  <div class="sec-head"><span class="sec-no">48.7</span><h2>官方考過什麼</h2></div>
+  <p class="lead">114-2 與 115-1 兩份官方公告試題（共 100 題）中，可直接歸入本知識點的核心題共 <b>20 題</b>，另有 5 題觀念交叉。約 20%，是 L23 命中率最高的知識點之一。</p>
+  <div class="tabs" id="exTabs"></div>
+  <div id="examList"></div>
+  <div class="callout exam">準備方向：把「<b>流程位置</b>（什麼該進 CV）」「<b>A vs B 對照</b>（Min-Max/Z-score/Robust、Filter/Wrapper/Embedded、PCA/LDA/t-SNE、L1/L2、各種編碼）」「<b>轉換的副作用</b>（log 破壞線性、翻轉破壞語意、One-Hot 爆維度）」三組練到能秒答。</div>
+</section>
+
+<!-- 48.8 -->
+<section id="s8">
+  <div class="sec-head"><span class="sec-no">48.8</span><h2>易錯與陷阱</h2></div>
+  <p class="lead">逐條確認自己真的懂了再打勾（打勾狀態會記在這台裝置上）。</p>
+  <div class="traps" id="traps"></div>
+  <p class="hint" id="trapCount" style="margin-top:10px"></p>
+
+  <h3>情境測驗</h3>
+  <div class="qcard" id="quiz"></div>
+
+  <h3>延伸練習</h3>
+  <p class="prose"><b>L23 主題庫 326 題：</b>篩選「特徵工程／資料前處理／降維／編碼／資料洩漏」相關題目，重點練<b>程式碼判讀</b>與<b>流程順序</b>兩類題型。<br>
+  <b>各科歷屆 100 題：</b>本節與 <a href="L23303_training_evaluation.html">L23303（模型訓練、評估與驗證）</a>高度交疊 —— 交叉驗證、分層切分、時序切分的題目請兩節一起複習，官方常把「前處理」與「驗證流程」寫在同一題裡考。<br>
+  <b>L21 主題庫 311 題：</b>對照 L21 的資料治理與資料品質題，補強「為什麼要留資料血緣紀錄」這類治理面敘述題。<br>
+  <b>回頭複習 02_L112：</b>初級的 ETL 與特徵工程基礎若還有斷點，先補齊再回來練本節的情境題。</p>
+</section>
+</main>
+
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce){const m=document.querySelector('#heroSvg .movers');if(m)m.remove();}
+const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function gauss(r){let u=0,v=0;while(!u)u=r();while(!v)v=r();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+function slider(id,fmt,cb){const el=$(id),out=$(id+'V')||null;const f=()=>{if(out)out.textContent=fmt?fmt(+el.value):el.value;cb(+el.value);};el.addEventListener('input',f);f();return el;}
+
+/* ---------- generic matcher ---------- */
+function matcher(root,fb,left,right,doneMsg){
+  let sel=null,done=0;
+  const L=document.createElement('div');L.className='col';
+  const R=document.createElement('div');R.className='col';
+  left.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;
+    b.innerHTML=it.html;if(it.c)b.style.setProperty('--c',it.c);
+    b.onclick=()=>{if(b.classList.contains('done'))return;L.querySelectorAll('.mitem').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;fb.textContent='';fb.className='feedback';};
+    L.appendChild(b);
+  });
+  right.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;b.innerHTML=it.html;
+    b.onclick=()=>{
+      if(b.classList.contains('done'))return;
+      if(!sel){fb.textContent='請先點左邊一個項目。';fb.className='feedback';return;}
+      if(sel.dataset.k===b.dataset.k){
+        const c=sel.style.getPropertyValue('--c');
+        [sel,b].forEach(x=>{x.classList.remove('sel');x.classList.add('done');if(c)x.style.setProperty('--c',c);});
+        fb.textContent='✓ '+(it.ok||'答對了！');fb.className='feedback ok';sel=null;done++;
+        if(done===left.length){fb.textContent='✓ 全部配對完成！'+doneMsg;}
+      }else{
+        b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');
+        fb.textContent='✗ '+(it.bad||'不太對，再想想看。');fb.className='feedback bad';
+      }
+    };
+    R.appendChild(b);
+  });
+  root.append(L,R);
+}
+
+/* ---------- simple tabs ---------- */
+function tabs(btnRoot,body,data,after){
+  function s(i){btnRoot.querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));body.innerHTML=data[i][1];if(after)after(i);}
+  data.forEach((x,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=x[0];b.onclick=()=>s(i);btnRoot.appendChild(b);});
+  s(0);
+}
+/* toggle group: buttons already in HTML with data attr */
+function group(sel,cb){const bs=document.querySelectorAll(sel);bs.forEach(b=>b.onclick=()=>{bs.forEach(x=>x.setAttribute('aria-pressed',x===b));cb(b);});}
+
+/* ---------- flip cards ---------- */
+function flipCards(root,list){
+  list.forEach(([n,o,d])=>{
+    const b=document.createElement('button');b.className='flip';b.setAttribute('aria-pressed','false');
+    b.innerHTML=`<div class="in"><div class="f"><strong>${n}</strong><span>${o}</span><span style="margin-top:auto;font-size:12.5px">點我翻面</span></div><div class="b">${d}</div></div>`;
+    b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');
+    root.appendChild(b);
+  });
+}
+
+/* ---------- strategy chooser: [label, verdict, pct, color, why] ---------- */
+function strategies(root,V,M,W,list,order){
+  (order||list.map((_,i)=>i)).forEach(i=>{const b=document.createElement('button');b.innerHTML=list[i][0];b.setAttribute('aria-pressed','false');b.onclick=()=>{root.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));const x=list[i];V.textContent=x[1];V.style.color=x[3];M.style.width=x[2]+'%';M.style.background=x[3];W.innerHTML=x[4];};root.appendChild(b);});
+}
+
+/* ---------- pipeline ---------- */
+function pipeline(pipeEl,outEl,nextBtn,resetBtn,nodes,out){
+  let i=0;const last=nodes.length-1;
+  pipeEl.style.gridTemplateColumns=`repeat(${nodes.length},minmax(90px,1fr))`;
+  pipeEl.innerHTML=nodes.map(([a,b])=>`<div class="pnode"><b>${a}</b>${b}</div>`).join('');
+  function r(){pipeEl.querySelectorAll('.pnode').forEach((n,j)=>{n.classList.toggle('on',j===i);n.classList.toggle('past',j<i);});outEl.innerHTML=out[i];nextBtn.disabled=i===last;nextBtn.style.opacity=i===last?.4:1;}
+  nextBtn.onclick=()=>{if(i<last){i++;r();}};
+  resetBtn.onclick=()=>{i=0;r();};
+  r();
+}
+
+/* ---------- exam list ---------- */
+function examList(root,list){
+  list.forEach(([n,k,q,a])=>{root.insertAdjacentHTML('beforeend',`<details><summary><span class="tag">${n}</span>${k}</summary><div class="body"><p style="margin:0 0 6px"><span class="hint">怎麼問：</span>${q}</p><p style="margin:0"><span class="hint">正解思路：</span>${a}</p></div></details>`);});
+}
+
+/* ---------- traps ---------- */
+function traps(root,countEl,key,T){
+  let saved=[];try{saved=JSON.parse(localStorage.getItem(key)||'[]')||[];}catch(e){saved=[];}
+  T.forEach(([a,b],i)=>{
+    const l=document.createElement('label');const c=saved.includes(i);if(c)l.classList.add('chk');
+    l.innerHTML=`<input type="checkbox" ${c?'checked':''}><div><em>${a}</em><br><span>${b}</span></div>`;
+    l.querySelector('input').onchange=e=>{const on=e.target.checked;l.classList.toggle('chk',on);saved=on?[...new Set([...saved,i])]:saved.filter(x=>x!==i);try{localStorage.setItem(key,JSON.stringify(saved));}catch(err){}count();};
+    root.appendChild(l);
+  });
+  function count(){countEl.textContent=`已確認 ${saved.length}／${T.length} 條`;}
+  count();
+}
+
+/* ---------- quiz ---------- */
+function quiz(box,Q,msgs){
+  let i=0,score=0;
+  function show(){
+    if(i>=Q.length){
+      const msg=score>=Q.length-1?msgs[0]:score>=Math.ceil(Q.length*.65)?msgs[1]:msgs[2];
+      box.innerHTML=`<div class="progress"><i style="width:100%"></i></div><div class="qtext" style="font-size:24px;font-family:var(--serif)">得分 ${score}／${Q.length}</div><p>${msg}</p><button class="btn primary" id="qr">重新測驗</button>`;
+      $('#qr').onclick=()=>{i=0;score=0;show();};return;
+    }
+    const [q,opts,ex]=Q[i];
+    const order=shuffle(opts.map((o,k)=>({o,k})));
+    box.innerHTML=`<div class="progress"><i style="width:${i/Q.length*100}%"></i></div><div class="qtop"><span>第 ${i+1}／${Q.length} 題</span><span>得分 ${score}</span></div><div class="qtext">${q}</div><div class="opts">${order.map(x=>`<button class="opt" data-k="${x.k}">${x.o}</button>`).join('')}</div><div class="expl" id="qe"></div><div class="row" style="margin-top:14px;justify-content:flex-end"><button class="btn primary" id="qn" style="display:none">${i===Q.length-1?'看結果':'下一題'}</button></div>`;
+    box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.k==='0';if(ok)score++;
+      box.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.k==='0')x.classList.add('right');});
+      if(!ok)b.classList.add('wrongpick');
+      const e=$('#qe');e.innerHTML=(ok?'<b style="color:var(--ok)">答對了。</b>':'<b style="color:var(--bad)">這題要小心。</b>')+ex;e.classList.add('show');
+      $('#qn').style.display='';$('#qn').focus();
+    });
+    $('#qn').onclick=()=>{i++;show();};
+  }
+  show();
+}
+
+/* ---------- nav highlight ---------- */
+function navHighlight(){
+  const links=[...document.querySelectorAll('nav.toc a')];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on&&window.innerWidth<=860)a.scrollIntoView({inline:'center',block:'nearest'});});}});},{rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('main section').forEach(s=>io.observe(s));
+}
+
+const mean=a=>a.reduce((s,v)=>s+v,0)/a.length;
+const std=a=>{const m=mean(a);return Math.sqrt(mean(a.map(v=>(v-m)**2)));};
+const median=a=>{const s=a.slice().sort((x,y)=>x-y),n=s.length;return n%2?s[(n-1)/2]:(s[n/2-1]+s[n/2])/2;};
+const quant=(a,q)=>{const s=a.slice().sort((x,y)=>x-y),p=(s.length-1)*q,lo=Math.floor(p),hi=Math.ceil(p);return s[lo]+(s[hi]-s[lo])*(p-lo);};
+
+/* generic: sort items into two bins */
+function sorter(root,countEl,cats,items){
+  let ok=0;
+  items.forEach(([label,ans,why])=>{
+    const row=document.createElement('div');row.className='row';row.style.cssText='justify-content:space-between;border-bottom:1px solid var(--line);padding:8px 0;gap:8px';
+    row.innerHTML=`<div style="flex:1;min-width:160px"><b>${label}</b><div class="hint fbk"></div></div><div class="row" style="gap:6px">${cats.map((c,i)=>`<button class="btn" data-i="${i}" style="padding:4px 12px;font-size:14px">${c}</button>`).join('')}</div>`;
+    row.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+      if(row.dataset.done)return;
+      const good=+b.dataset.i===ans;const f=row.querySelector('.fbk');
+      if(good){row.dataset.done='1';ok++;b.setAttribute('aria-pressed','true');f.innerHTML='<span style="color:var(--ok)">✓</span> '+why;countEl.textContent=`已完成 ${ok}／${items.length}`;}
+      else{b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');f.innerHTML='<span style="color:var(--bad)">✗ 再想想。</span>';}
+    });
+    root.appendChild(row);
+  });
+  countEl.textContent=`已完成 0／${items.length}`;
+}
+/* generic: true/false statements */
+function tfList(root,items,labels){
+  labels=labels||['正確','錯誤'];
+  root.innerHTML='';
+  items.forEach(([s,t,why])=>{
+    const row=document.createElement('div');row.style.cssText='border-bottom:1px solid var(--line);padding:9px 0';
+    row.innerHTML=`<div class="row" style="justify-content:space-between;gap:8px"><span style="flex:1;min-width:180px">${s}</span><span class="row" style="gap:6px"><button class="btn" data-v="1" style="padding:3px 12px;font-size:14px">${labels[0]}</button><button class="btn" data-v="0" style="padding:3px 12px;font-size:14px">${labels[1]}</button></span></div><div class="hint fbk"></div>`;
+    row.querySelectorAll('button').forEach(b=>b.onclick=()=>{const g=(b.dataset.v==='1')===t;row.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));row.querySelector('.fbk').innerHTML=(g?'<span style="color:var(--ok)">✓ 判斷正確。</span>':'<span style="color:var(--bad)">✗ 判斷錯誤。</span>')+why;});
+    root.appendChild(row);
+  });
+}
+
+/* ---------- 48.1 missing values ---------- */
+(function(){
+  const obs=[2.5,3,3.2,3.5,3.8,4,4.2,4.5,4.8,5,5.2,5.5,6,6.5,7,7.5,8.5,9,10,12,14,18,25,32],miss=6;
+  const W=640,X=v=>30+v/34*590;
+  const M=[
+    ['原始（含缺值）',null],['刪除法','del'],['均值填補','mean'],['中位數填補','med'],['缺失指標＋中位數','ind']
+  ];
+  function show(i){
+    $('#miTabs').querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));
+    const m=M[i][1];let fill=null,vals=obs.slice();
+    if(m==='mean')fill=mean(obs);else if(m==='med'||m==='ind')fill=median(obs);
+    if(fill!==null)vals=obs.concat(Array(miss).fill(fill));
+    let h=`<line x1="30" y1="90" x2="620" y2="90" stroke="var(--line)"/>`;
+    for(let t=0;t<=30;t+=5)h+=`<text x="${X(t)}" y="108" text-anchor="middle" font-size="11" fill="var(--muted)">${t}</text>`;
+    obs.forEach((v,k)=>h+=`<circle cx="${X(v)}" cy="${78-(k%3)*10}" r="6" fill="var(--txt)" opacity=".75"/>`);
+    if(fill!==null)for(let k=0;k<miss;k++)h+=m==='ind'?`<rect x="${X(fill)-6}" y="${36-k*7}" width="12" height="12" rx="2" fill="var(--aud)" stroke="var(--surface)" stroke-width="1.5"/>`:`<circle cx="${X(fill)}" cy="${48-k*7}" r="6" fill="var(--aud)" stroke="var(--surface)" stroke-width="1.5"/>`;
+    if(m===null)h+=`<text x="620" y="40" text-anchor="end" font-size="13" fill="var(--bad)">另有 ${miss} 筆缺值 ？？？？？？</text>`;
+    if(m==='del')h+=`<text x="620" y="40" text-anchor="end" font-size="13" fill="var(--muted)">${miss} 筆含缺值的列被丟掉了</text>`;
+    h+=`<text x="${X(mean(vals))}" y="132" text-anchor="middle" font-size="12" fill="var(--sen)">▲ 均值</text><text x="${X(median(vals))}" y="146" text-anchor="middle" font-size="12" fill="var(--img)">▲ 中位數</text>`;
+    $('#miSvg').innerHTML=h;
+    const notes={
+      null:'右偏分佈：少數高收入把均值往右拉。',
+      del:'樣本數從 30 掉到 24。如果「沒填收入」的人有系統性（例如高收入者較不願填），刪除就等於<b>製造取樣偏差</b>。',
+      mean:`6 筆都填進均值 ${fill&&fill.toFixed(2)}。偏態資料的均值被長尾拉高，填的值偏大；而且 6 個一模一樣的值<b>壓縮了變異數</b>。`,
+      med:`6 筆都填進中位數 ${fill&&fill.toFixed(2)}：<b>偏態資料用中位數優於均值</b>，但同樣會壓縮變異數、人為拉高集中趨勢。`,
+      ind:'填中位數之外，再加一欄 <code>is_missing</code>（方塊＝1）。當「沒填」本身帶訊息時，模型（尤其樹模型）能直接利用它；代價是增加維度。'
+    };
+    $('#miOut').innerHTML=`<div class="kv"><span>樣本數</span><b>${vals.length}</b><span>均值</span><b>${mean(vals).toFixed(2)}</b><span>中位數</span><b>${median(vals).toFixed(2)}</b><span>標準差</span><b>${std(vals).toFixed(2)}${m&&m!=='del'?`（原 ${std(obs).toFixed(2)}）`:''}</b></div><p class="hint" style="margin:8px 0 0">${notes[m]}</p>`;
+  }
+  M.forEach((x,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=x[0];b.onclick=()=>show(i);$('#miTabs').appendChild(b);});
+  show(0);
+})();
+
+/* ---------- 48.1 outliers ---------- */
+(function(){
+  const r=rng(9),base=Array.from({length:19},()=>50+gauss(r)*7);
+  const X=v=>20+(v-20)/150*600;
+  slider('#olR',null,v=>{
+    const a=base.concat([v]),m=mean(a),s=std(a),z=(v-m)/s,q1=quant(a,.25),q3=quant(a,.75),iqr=q3-q1,lo=q1-1.5*iqr,hi=q3+1.5*iqr;
+    const zf=Math.abs(z)>3,qf=v<lo||v>hi;
+    let h=`<line x1="20" y1="100" x2="620" y2="100" stroke="var(--line)"/>`;
+    for(let t=20;t<=170;t+=25)h+=`<text x="${X(t)}" y="118" text-anchor="middle" font-size="11" fill="var(--muted)">${t}</text>`;
+    const band=(a1,b1,y,c,lab)=>`<rect x="${X(Math.max(20,a1))}" y="${y}" width="${Math.max(0,X(Math.min(170,b1))-X(Math.max(20,a1)))}" height="12" rx="4" fill="${c}" opacity=".22"/><text x="${X(Math.min(170,b1))+4}" y="${y+10}" font-size="11" fill="${c}">${lab}</text>`;
+    h+=band(m-3*s,m+3*s,20,'var(--txt)','μ±3σ');h+=band(lo,hi,40,'var(--img)','IQR 圍欄');
+    base.forEach((x,k)=>h+=`<circle cx="${X(x)}" cy="${90-(k%3)*8}" r="5" fill="var(--muted)" opacity=".7"/>`);
+    h+=`<circle cx="${X(v)}" cy="90" r="8" fill="${zf||qf?'var(--bad)':'var(--warn)'}"/>`;
+    h+=`<text x="${X(v)}" y="148" text-anchor="middle" font-size="12" fill="var(--ink)">z = ${z.toFixed(2)}</text>`;
+    $('#olSvg').innerHTML=h;
+    $('#olOut').innerHTML=`<div class="kv"><span>Z 分數（|z| &gt; 3）</span><b style="color:${zf?'var(--bad)':'var(--ok)'}">${zf?'判為異常':'未判為異常'}（z = ${z.toFixed(2)}）</b><span>IQR（Q1−1.5×IQR ～ Q3+1.5×IQR）</span><b style="color:${qf?'var(--bad)':'var(--ok)'}">${qf?'判為異常':'未判為異常'}（${lo.toFixed(1)} ～ ${hi.toFixed(1)}）</b></div><p class="hint" style="margin:8px 0 0">兩種判準不一定同時亮燈。Z 分數的前提是資料近似常態；IQR 只看四分位數。偵測出來之後，要不要刪還得看情境（見下方配對）。</p>`;
+  });
+})();
+
+matcher($('#olMatch'),$('#olFb'),[
+  {k:'d',c:'var(--txt)',html:'資料裡出現「年齡 256 歲」「負數金額」'},
+  {k:'w',c:'var(--aud)',html:'收入值本身合理，但右尾拖得很長'},
+  {k:'k',c:'var(--sen)',html:'詐欺偵測中的異常交易、AOI 瑕疵、設備故障'}
+],[
+  {k:'k',html:'標記保留<small>當作特徵或預測目標</small>',ok:'異常值本身就是預測目標 —— 刪掉等於刪掉答案。'},
+  {k:'x',html:'一律刪除所有偵測到的異常值',bad:'異常值不一定要刪。詐欺、瑕疵、故障任務裡，異常值就是答案。'},
+  {k:'d',html:'移除<small>可確認是輸入錯誤</small>',ok:'可確認是錯誤輸入才移除。'},
+  {k:'w',html:'截尾（Winsorize）或轉換<small>限制上下界、取對數／Box-Cox</small>',ok:'值合理但尾巴太長時採用。'}
+],'');
+
+/* ---------- 48.1 residual plots ---------- */
+(function(){
+  const r=rng(17),W=320,H=200,P=28,n=60,xs=Array.from({length:n},(_,i)=>(i+.5)/n);
+  const ax=`<line x1="${P}" y1="${H/2}" x2="${W-8}" y2="${H/2}" stroke="var(--line)" stroke-width="1.5"/><line x1="${P}" y1="10" x2="${P}" y2="${H-14}" stroke="var(--line)" stroke-width="1.5"/><text x="${W-10}" y="${H-2}" text-anchor="end" font-size="11" fill="var(--muted)">預測值</text><text x="${P+4}" y="20" font-size="11" fill="var(--muted)">殘差</text>`;
+  const dots=(pts,c)=>pts.map(([x,y])=>`<circle cx="${P+x*(W-P-12)}" cy="${H/2-y*70}" r="3.2" fill="${c}" opacity=".85"/>`).join('');
+  const D=[
+    ['系統性彎曲（114Q2 第 24 題）',ax+dots(xs.map(x=>[x,x>.65?(x-.65)*(x-.65)*-12+gauss(r)*.12:gauss(r)*.15]).concat([[.93,-1.25],[.97,1.1]]),'var(--bad)'),'殘差在高值區出現<b>系統性彎曲</b>、少數點誤差極大 → <b>異常值或非線性關係</b>，違反迴歸假設。','誘答「過度擬合」不對 —— 過擬合的症狀是訓練好、測試差，不是殘差呈結構性偏差。'],
+    ['喇叭狀擴散（115Q1 第 5 題）',ax+dots(xs.map(x=>[x,gauss(r)*(.05+x*.5)]),'var(--bad)'),'殘差隨預測值增大而<b>呈喇叭狀擴散</b> → <b>異質變異數（Heteroscedasticity）</b>，等變異假設被違反。','誘答「特徵高度相關」是多重共線性，要用 <b>VIF</b> 診斷，殘差圖看不出來。'],
+    ['對照：健康的殘差',ax+dots(xs.map(x=>[x,gauss(r)*.25]),'var(--ok)'),'殘差隨機散佈在 0 附近、沒有形狀。','—']
+  ];
+  D.forEach((d,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=d[0];b.onclick=()=>s(i);$('#resTabs').appendChild(b);});
+  function s(i){$('#resTabs').querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));$('#resSvg').innerHTML=D[i][1];$('#resTxt').innerHTML=`<p>${D[i][2]}</p><p class="hint" style="margin:0">${D[i][3]}</p>`;}
+  s(0);
+})();
+
+/* ---------- 48.2 selection vs reduction ---------- */
+(function(){
+  const F=['月收入','年齡','負債比','信用卡張數','居住年數','職業別'];
+  function draw(mode){
+    $('#fsSel').setAttribute('aria-pressed',mode==='sel');$('#fsRed').setAttribute('aria-pressed',mode==='red');
+    let h=F.map((f,i)=>{const keep=mode==='sel'&&(i===0||i===2);const fade=mode&&!keep;return `<div class="pnode" style="transition:all .4s;opacity:${fade?.3:1};${keep?'border-color:var(--img);background:color-mix(in srgb,var(--img) 14%,var(--surface));transform:translateY(-3px)':''}"><b>${f}</b>${keep?'保留':mode==='red'?'→ 被壓進新軸':'原始欄位'}</div>`;}).join('');
+    if(mode==='red')h+=['PC1','PC2'].map((p,i)=>`<div class="pnode" style="border-color:var(--sen);background:color-mix(in srgb,var(--sen) 14%,var(--surface))"><b>${p}</b><small>${i?'0.61×年齡 − 0.44×信用卡張數 + …':'0.52×月收入 + 0.41×負債比 − 0.30×年齡 + …'}</small></div>`).join('');
+    $('#fsCols').innerHTML=h;
+    $('#fsOut').innerHTML=mode==='sel'?'<b>特徵選擇</b>：從原始欄位中「挑出」2 個 → 保留的是原始欄位，<b>可解釋性完整</b>（審查單位看得懂「月收入」）。':mode==='red'?'<b>降維</b>：把 6 欄「壓成」2 個新座標軸 → 新軸是原始欄位的線性（或非線性）組合（係數為示意），<b>不再對應任何業務意義</b>。':'選一種方法看看。講義例子是「200 個欄位 → 30 個」。';
+  }
+  $('#fsSel').onclick=()=>draw('sel');$('#fsRed').onclick=()=>draw('red');$('#fsReset').onclick=()=>draw(null);
+  draw(null);
+})();
+
+tabs($('#fsTabs'),$('#fsBody'),[
+  ['Filter 過濾法','<p><b>代表方法：</b>皮爾森相關係數、卡方檢定、ANOVA、互資訊</p><p><b>需要訓練模型？</b>否</p><p><b>優點：</b>速度快、與模型無關</p><p style="margin:0"><b>限制：</b><b>無法考慮特徵間交互作用</b></p>'],
+  ['Wrapper 包裝法','<p><b>代表方法：</b>遞迴特徵消除（RFE）、前向／後向選擇</p><p><b>需要訓練模型？</b>是，反覆訓練</p><p><b>優點：</b>精確考量特徵互動</p><p style="margin:0"><b>限制：</b>計算成本高、<b>容易過擬合</b></p>'],
+  ['Embedded 嵌入法','<p><b>代表方法：</b>Lasso（L1）、決策樹／隨機森林特徵重要性、資訊增益</p><p><b>需要訓練模型？</b>是，一次訓練即完成</p><p><b>優點：</b>建模與選擇同時完成</p><p style="margin:0"><b>限制：</b>受模型與超參數影響。<span class="hint">官方最愛考的一類。</span></p>']
+]);
+
+/* ---------- 48.2 L1 vs L2 ---------- */
+(function(){
+  const F=['月收入','季收入','年收入'];let hist=[],n=0;
+  const bars=(el,v,c)=>el.innerHTML=v.map((x,i)=>`<div class="bar" style="grid-template-columns:70px 1fr 48px"><span>${F[i]}</span><div class="track"><div class="fill" style="width:${x*100}%;background:${c}"></div></div><span class="num" style="${x<1e-9?'color:var(--bad);font-weight:700':''}">${x<1e-9?'0':x.toFixed(2)}</span></div>`).join('');
+  function train(){
+    n++;const k=Math.floor(Math.random()*3);
+    const l1=[0,0,0];l1[k]=.9+Math.random()*.08;
+    const l2=[0,0,0].map(()=>.3+(Math.random()-.5)*.03);
+    bars($('#l1Bars'),l1,'var(--sen)');bars($('#l2Bars'),l2,'var(--txt)');
+    hist.push(F[k]);if(hist.length>6)hist.shift();
+    $('#l12Info').textContent=`已訓練 ${n} 次`;
+    $('#l12Out').innerHTML=`L1 歷次保留：<b>${hist.join(' → ')}</b><div class="hint">L1 每次只留一個、留誰不一定 → 重要特徵清單跳動（115Q1 第 7 題）。L2 三個都保留、權重平均分攤 → 穩定，但不會幫你挑特徵（115Q1 第 33 題要「不歸零」就選它）。</div>`;
+  }
+  $('#l12Btn').onclick=train;train();
+})();
+
+matcher($('#drMatch'),$('#drFb'),[
+  {k:'t',c:'var(--img)',html:'512 維詞嵌入要畫成 2D 圖探索'},
+  {k:'p',c:'var(--txt)',html:'200 個製程特徵要當 XGBoost 輸入'},
+  {k:'l',c:'var(--aud)',html:'分類前降維，想利用標籤最大化類間差異'},
+  {k:'s',c:'var(--sen)',html:'文字分析（LSA）、推薦系統'}
+],[
+  {k:'l',html:'LDA<small>監督式；最多類別數 − 1 維</small>',ok:'LDA 會用到標籤。'},
+  {k:'s',html:'SVD',ok:'LSA 與推薦系統的經典工具。'},
+  {k:'t',html:'t-SNE<small>保留局部鄰域</small>',ok:'只用於視覺化探索。'},
+  {k:'p',html:'PCA<small>可直接投影新資料</small>',ok:'t-SNE 無外推函數，不能當模型輸入；PCA 可以。'}
+],'這就是 115Q1 第 6 題的整張表。');
+
+/* ---------- 48.2 PCA ---------- */
+(function(){
+  const v=[6,3,1];
+  $('#pcaBars').innerHTML=[1,2,3].map(i=>`<div class="bar" id="pb${i}"><span>PC${i}</span><div class="track"><div class="fill"></div></div><span class="num">—</span></div>`).join('');
+  function upd(){
+    const s=v[0]+v[1]+v[2],ord=v.slice().sort((a,b)=>b-a);let cum=0,k=0;
+    ord.forEach((x,i)=>{cum+=x/s;if(!k&&cum>=.8-1e-9)k=i+1;});
+    [1,2,3].forEach(i=>{const e=$('#pb'+i),p=ord[i-1]/s;e.classList.toggle('win',i<=k);e.querySelector('.fill').style.width=p*100+'%';e.querySelector('.num').textContent=(p*100).toFixed(0)+'%';});
+    const ck=ord.slice(0,k).reduce((a,b)=>a+b,0)/s;
+    $('#pcaOut').innerHTML=`總變異量 = ${s.toFixed(1)}；PC1 = ${(ord[0]/s*100).toFixed(0)}%、PC1+PC2 = ${((ord[0]+ord[1])/s*100).toFixed(0)}%<br>→ 保留 <b>${k}</b> 維即達 80% 門檻（累積 ${(ck*100).toFixed(0)}%）`+(v.join()==='6,3,1'?'<div class="hint">考題答案：降到二維；第三主成分僅 10%，可捨。</div>':'');
+  }
+  [1,2,3].forEach(i=>slider('#pl'+i,x=>x.toFixed(1),x=>{v[i-1]=x;upd();}));
+  // noise demo (DCT basis as stand-in for ordered components)
+  const N=40,r=rng(31),clean=Array.from({length:N},(_,i)=>Math.sin(i/N*2*Math.PI)*.8+.3*Math.cos(i/N*4*Math.PI)),noisy=clean.map(c=>c+gauss(r)*.25);
+  const phi=(k,i)=>Math.cos(Math.PI/N*(i+.5)*k);
+  const C=Array.from({length:N},(_,k)=>noisy.reduce((s,x,i)=>s+x*phi(k,i),0)*(k?2/N:1/N));
+  const X=i=>20+i/(N-1)*600,Y=y=>100-y*60;
+  slider('#pnK',null,K=>{
+    const rec=Array.from({length:N},(_,i)=>{let s=0;for(let k=0;k<K;k++)s+=C[k]*phi(k,i);return s;});
+    let h=`<polyline fill="none" stroke="var(--ok)" stroke-width="2" stroke-dasharray="6 5" points="${clean.map((y,i)=>`${X(i)},${Y(y)}`).join(' ')}"/>`;
+    h+=noisy.map((y,i)=>`<circle cx="${X(i)}" cy="${Y(y)}" r="3.5" fill="var(--muted)" opacity=".6"/>`).join('');
+    h+=`<polyline fill="none" stroke="var(--img)" stroke-width="3" points="${rec.map((y,i)=>`${X(i)},${Y(y)}`).join(' ')}"/>`;
+    h+=`<text x="620" y="190" text-anchor="end" font-size="12" fill="var(--muted)">灰點：含雜訊資料　藍線：重建結果　綠虛線：真實訊號</text>`;
+    $('#pnSvg').innerHTML=h;
+    const err=Math.sqrt(mean(rec.map((y,i)=>(y-clean[i])**2)));
+    $('#pnOut').innerHTML=`重建結果與真實訊號的誤差 RMSE = <b>${err.toFixed(3)}</b>（示意：以由低頻到高頻排序的平滑成分代替主成分）`+(K>=N?'<div class="hint" style="color:var(--bad)">保留全部成分 = 原樣重建，<b>雜訊原封不動</b>，完全沒降噪。</div>':K<=4?'<div class="hint">只保留主要變異方向，雜訊被留在丟棄的成分裡 → 降噪成功。</div>':'<div class="hint">成分越多，重建越貼近含雜訊的原資料。<b>降噪的關鍵是 n_components 設得夠低。</b></div>');
+  });
+  group('#pcaTabs .btn',b=>{$('#pcaVar').style.display=b.dataset.m==='var'?'':'none';$('#pcaNoise').style.display=b.dataset.m==='noise'?'':'none';});
+})();
+
+/* ---------- 48.3 scaling ---------- */
+(function(){
+  const base=[12,15,18,20,22,25,27,30,33];let out=false;
+  const S={
+    'Min-Max':a=>{const mn=Math.min(...a),mx=Math.max(...a);return a.map(v=>(v-mn)/(mx-mn));},
+    'Z-score':a=>{const m=mean(a),s=std(a);return a.map(v=>(v-m)/s);},
+    'Robust':a=>{const md=median(a),iqr=quant(a,.75)-quant(a,.25);return a.map(v=>(v-md)/iqr);}
+  };
+  function draw(){
+    const a=out?base.concat([300]):base.slice();
+    let h='',txt='';
+    Object.entries(S).forEach(([n,f],row)=>{
+      const t=f(a),ref=f(base),rlo=Math.min(...ref),rhi=Math.max(...ref),pad=(rhi-rlo)*.15,lo=rlo-pad,hi=rhi+pad,y=40+row*75;
+      const X=v=>150+(Math.min(hi,Math.max(lo,v))-lo)/(hi-lo)*440;
+      h+=`<text x="10" y="${y+5}" font-size="14" font-weight="700" fill="var(--ink)">${n}</text><line x1="150" y1="${y}" x2="590" y2="${y}" stroke="var(--line)"/>`;
+      h+=`<text x="150" y="${y+24}" font-size="11" fill="var(--muted)">${lo.toFixed(2)}</text><text x="590" y="${y+24}" text-anchor="end" font-size="11" fill="var(--muted)">${hi.toFixed(2)}</text>`;
+      t.forEach((v,i)=>{if(i===9)h+=`<path d="M596 ${y} l12 0 m-6 -6 l6 6 l-6 6" stroke="var(--bad)" stroke-width="2.5" fill="none"/><text x="630" y="${y-10}" text-anchor="end" font-size="11" fill="var(--bad)">${v.toFixed(2)}</text>`;else h+=`<circle cx="${X(v)}" cy="${y}" r="5.5" fill="var(--txt)" opacity=".8"/>`;});
+      const nt=t.slice(0,9);txt+=`<span>${n}</span><b>${Math.min(...nt).toFixed(2)} ～ ${Math.max(...nt).toFixed(2)}</b>`;
+    });
+    $('#scSvg').innerHTML=h;
+    $('#scTxt').innerHTML=`<p style="margin:0 0 6px">每列的座標窗固定為「沒有極端值時」的範圍；紅箭頭＝極端值（在窗外）。一般值（藍點）縮放後的範圍：</p><div class="kv">${txt}</div><p class="hint" style="margin:8px 0 0">${out?'Min-Max：一個極端值把其餘 9 個<b>全部壓扁</b>在 0 附近（範圍不到 0.1）。Z-score：μ 與 σ 被拉偏，一般值也被擠在一起。Robust：用中位數與 IQR，一般值的分佈幾乎不受影響。':'沒有極端值時三者都正常。注意 Z-score 的輸出是「均值 0、標準差 1」，<b>不是 0～1</b>。'}</p>`;
+  }
+  $('#scOut').onclick=()=>{out=!out;$('#scOut').setAttribute('aria-pressed',out);$('#scOut').textContent=out?'移除極端值':'加入極端值';draw();};
+  draw();
+})();
+
+sorter($('#needSort'),$('#needCount'),['要縮放','不需要'],[
+  ['KNN、SVM、K-means',0,'距離導向，大尺度特徵會主導距離。'],
+  ['決策樹、隨機森林',1,'分裂是比大小，與單位無關。'],
+  ['線性／邏輯迴歸（加了正則化）',0,'懲罰項對尺度敏感。'],
+  ['XGBoost／LightGBM',1,'同樣是樹模型，分裂比大小。'],
+  ['PCA、LDA',0,'變異量會被大量級欄位主導。'],
+  ['樸素貝氏',1,'處理的是詞頻與機率，不是距離。'],
+  ['神經網路',0,'穩定梯度、加速收斂。']
+]);
+
+/* ---------- 48.3 z-score vs /255 ---------- */
+(function(){
+  const A=['<pre><code># 114Q2-48：這是 Z-score 標準化\nX_train -= X_train.mean(axis=0)\nX_train /= X_train.std(axis=0)</code></pre><div id="tfA"></div>',
+           '<pre><code># 115Q1-46：這是線性縮放，不是 Z-score\nx_train = x_train / 255.0\ny_train = to_categorical(y_train, 10)</code></pre><div id="tfB"></div>'];
+  tabs($('#zTabs'),$('#zBody'),[['114Q2 第 48 題',A[0]],['115Q1 第 46 題',A[1]]],i=>{
+    if(i===0)tfList($('#tfA'),[
+      ['各特徵的均值被調成 0',true,'減去平均即均值為 0。'],
+      ['各特徵的標準差被調成 0',false,'除以標準差後，標準差變成 <b>1</b>，不是 0。'],
+      ['資料被壓縮到 0 和 1 之間',false,'那是 Min-Max。Z-score 的輸出範圍不固定。'],
+      ['有助穩定梯度，避免梯度爆炸／消失',true,'這是官方正確敘述之一。'],
+      ['標準化屬於特徵選擇',false,'標準化是<b>特徵縮放</b>，不是特徵選擇 —— 官方直接設過的誘答。']
+    ]);
+    else tfList($('#tfB'),[
+      ['像素被線性縮放到 0～1',true,'除以 255，上界是 1。'],
+      ['縮放後上界是 31',false,'255 / 255 = 1，不是 31。'],
+      ['這就是 z-score 標準化',false,'除以固定常數 ≠ z-score；z-score 必須減平均再除以標準差。'],
+      ['to_categorical 把整數標籤轉成 10 維獨熱編碼',true,'整數標籤 → 10 維 One-Hot。'],
+      ['獨熱標籤應搭配 softmax + categorical_crossentropy',true,'輸出層 softmax，損失 categorical_crossentropy。']
+    ]);
+  });
+})();
+
+/* ---------- 48.3 log transform ---------- */
+(function(){
+  const r=rng(55);
+  const D=Array.from({length:40},()=>Math.exp(Math.log(100)+r()*(Math.log(5000)-Math.log(100))));
+  const PD=D.map(d=>95-9*Math.log(d)+gauss(r)*2.5);
+  const A=Array.from({length:40},()=>1+r()*39);
+  const PA=A.map(a=>60-.8*a+gauss(r)*3);
+  const fit=(x,y)=>{const mx=mean(x),my=mean(y);let sxy=0,sxx=0;x.forEach((v,i)=>{sxy+=(v-mx)*(y[i]-my);sxx+=(v-mx)**2;});const b=sxy/sxx,a=my-b*mx;const ssr=y.reduce((s,v,i)=>s+(v-(a+b*x[i]))**2,0),sst=y.reduce((s,v)=>s+(v-my)**2,0);return{a,b,r2:1-ssr/sst};};
+  const st={d:false,a:false},base={d:fit(D,PD).r2,a:fit(A,PA).r2};
+  function plot(svg,x,y,lab){
+    const lo=Math.min(...x),hi=Math.max(...x),ylo=Math.min(...y),yhi=Math.max(...y);
+    const X=v=>30+(v-lo)/(hi-lo)*255,Y=v=>180-(v-ylo)/(yhi-ylo)*160;
+    const f=fit(x,y);
+    let h=`<line x1="30" y1="182" x2="290" y2="182" stroke="var(--line)"/><line x1="30" y1="15" x2="30" y2="182" stroke="var(--line)"/><text x="290" y="197" text-anchor="end" font-size="11" fill="var(--muted)">${lab}</text><text x="34" y="14" font-size="11" fill="var(--muted)">房價</text>`;
+    h+=x.map((v,i)=>`<circle cx="${X(v)}" cy="${Y(y[i])}" r="3.5" fill="var(--aud)" opacity=".75"/>`).join('');
+    h+=`<line x1="${X(lo)}" y1="${Y(f.a+f.b*lo)}" x2="${X(hi)}" y2="${Y(f.a+f.b*hi)}" stroke="var(--ink)" stroke-width="2.5"/>`;
+    $(svg).innerHTML=h;return f.r2;
+  }
+  function draw(){
+    const xd=st.d?D.map(Math.log):D,xa=st.a?A.map(Math.log):A;
+    const rd=plot('#lgSvgD',xd,PD,st.d?'log(距離)':'距離（公尺）'),ra=plot('#lgSvgA',xa,PA,st.a?'log(屋齡)':'屋齡（年）');
+    const tag=(r,b,on)=>`線性擬合 R² = <b>${r.toFixed(3)}</b>`+(on?`（原本 ${b.toFixed(3)}，<b style="color:${r>b?'var(--ok)':'var(--bad)'}">${r>b?'改善':'變差'}</b>）`:'');
+    $('#lgTD').innerHTML=tag(rd,base.d,st.d)+(st.d?'　右偏長尾被拉開，關係變直。':'　右偏長尾，近處擠成一團。');
+    $('#lgTA').innerHTML=tag(ra,base.a,st.a)+(st.a?'　本來就是直線，log 反而把它彎掉了。':'　本來就近似線性。');
+  }
+  $('#lgD').onclick=()=>{st.d=!st.d;$('#lgD').setAttribute('aria-pressed',st.d);draw();};
+  $('#lgA').onclick=()=>{st.a=!st.a;$('#lgA').setAttribute('aria-pressed',st.a);draw();};
+  draw();
+})();
+
+/* ---------- 48.3 encoding workbench ---------- */
+(function(){
+  const col=['紅','藍','綠','藍','紅'],y=[1,0,1,0,1];
+  const E=[
+    ['Label',()=>{const m={紅:0,藍:1,綠:2};return [['Label 編碼'],col.map(c=>[m[c]])];},'有序類別（Ordinal）：教育程度、Basic／Premium／VIP','用在<b>無序</b>的顏色上，線性與距離模型會讀成「紅 &lt; 藍 &lt; 綠」的<b>虛假順序與虛假間距</b>。官方指引：標籤編碼只給有序類別用。',k=>1],
+    ['One-Hot',()=>[['是紅','是藍','是綠'],col.map(c=>['紅','藍','綠'].map(x=>x===c?1:0))],'無序類別、基數低','<b>高基數時維度爆炸</b>：每個類別開一欄。',k=>k],
+    ['Target',()=>{const m={};['紅','藍','綠'].forEach(c=>{const idx=col.map((x,i)=>x===c?i:-1).filter(i=>i>=0);m[c]=mean(idx.map(i=>y[i]));});return [['目標平均'],col.map(c=>[m[c].toFixed(2)])];},'高基數且與目標高度關聯','<b>目標洩漏</b>：看「紅」那兩列 —— 編碼值 1.00 就是由它們自己的答案算出來的。必須用 out-of-fold 或加平滑。',k=>1],
+    ['Frequency',()=>{const m={};col.forEach(c=>m[c]=(m[c]||0)+1/col.length);return [['出現頻率'],col.map(c=>[m[c].toFixed(1)])];},'高基數、快速基線','不同類別頻率相同時會被混淆：紅與藍都是 0.4，模型分不出來。',k=>1],
+    ['Embedding',()=>{const v={紅:[.8,-.2,.1,.5],藍:[-.6,.4,.3,-.1],綠:[.1,.9,-.4,.2]};return [['e₁','e₂','e₃','e₄'],col.map(c=>v[c].map(x=>x.toFixed(1)))];},'超高基數、深度模型','需要訓練，小資料易過擬合。向量值為示意；實務常用 32／64 維。',k=>32]
+  ];
+  let cur=1;
+  function draw(){
+    const [n,f,use,risk,dim]=E[cur],[hdr,rows]=f();
+    $('#encTbl').innerHTML=`<table><tr><th>顏色（原始）</th><th>是否購買（目標）</th>${hdr.map(x=>`<th style="color:var(--aud)">${x}</th>`).join('')}</tr>${col.map((c,i)=>`<tr><td>${c}</td><td>${y[i]}</td>${rows[i].map(v=>`<td><b>${v}</b></td>`).join('')}</tr>`).join('')}</table>`;
+    const K=+$('#encK').value,d=dim(K);
+    $('#encOut').innerHTML=`<p style="margin:0 0 6px"><b>${n} 適用：</b>${use}</p><p style="margin:0 0 6px"><b>主要風險：</b>${risk}</p><p style="margin:0">基數 = ${K.toLocaleString()} 時，這種編碼會產生 <b style="color:${d>100?'var(--bad)':'var(--ok)'}">${d.toLocaleString()}</b> 個欄位${n==='One-Hot'&&K>=1000?' → <b style="color:var(--bad)">維度爆炸</b>（115Q1 第 24 題）':''}。</p>`;
+  }
+  E.forEach((e,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=e[0];b.onclick=()=>{cur=i;$('#encTabs').querySelectorAll('.btn').forEach((x,j)=>x.setAttribute('aria-pressed',i===j));draw();};$('#encTabs').appendChild(b);});
+  $('#encTabs').children[1].setAttribute('aria-pressed','true');
+  slider('#encK',v=>v.toLocaleString(),draw);
+})();
+
+/* ---------- 48.3 cyclic hour ---------- */
+(function(){
+  function draw(){
+    const a=+$('#hA').value,b=+$('#hB').value;$('#hAV').textContent=a+' 點';$('#hBV').textContent=b+' 點';
+    const P=h=>[Math.sin(2*Math.PI*h/24),Math.cos(2*Math.PI*h/24)];
+    const C=120,R=88,xy=h=>{const [s,c]=P(h);return [C+R*s,C-R*c];};
+    let g=`<circle cx="${C}" cy="${C}" r="${R}" fill="none" stroke="var(--line)" stroke-width="2"/>`;
+    for(let h=0;h<24;h++){const [x,y]=xy(h);g+=`<circle cx="${x}" cy="${y}" r="2.5" fill="var(--muted)"/>`;if(h%6===0){const [tx,ty]=[C+(R+16)*P(h)[0],C-(R+16)*P(h)[1]];g+=`<text x="${tx}" y="${ty+4}" text-anchor="middle" font-size="12" fill="var(--muted)">${h}</text>`;}}
+    const [ax,ay]=xy(a),[bx,by]=xy(b);
+    g+=`<line x1="${ax}" y1="${ay}" x2="${bx}" y2="${by}" stroke="var(--aud)" stroke-width="3"/><circle cx="${ax}" cy="${ay}" r="9" fill="var(--txt)"/><circle cx="${bx}" cy="${by}" r="9" fill="var(--sen)"/><text x="${ax}" y="${ay+4}" text-anchor="middle" font-size="10" fill="#fff" font-weight="700">A</text><text x="${bx}" y="${by+4}" text-anchor="middle" font-size="10" fill="#fff" font-weight="700">B</text>`;
+    $('#hSvg').innerHTML=g;
+    const [sa,ca]=P(a),[sb,cb]=P(b),d=Math.hypot(sa-sb,ca-cb),gap=Math.min(Math.abs(a-b),24-Math.abs(a-b));
+    $('#hOut').innerHTML=`<p style="margin:0 0 8px"><b>直接用 0～23</b>|${a} − ${b}| = <b>${Math.abs(a-b)}</b></p><p style="margin:0 0 8px"><b>sin/cos 成對編碼</b>距離 = <b>${d.toFixed(2)}</b>（圓周上實際相差 ${gap} 小時）</p><p class="hint" style="margin:0">hour_sin = sin(2π × hour / 24)、hour_cos = cos(2π × hour / 24)。<b>兩欄一起用</b>，才能把「首尾相接」的圓周關係保住。${Math.abs(a-b)>12?' 現在原始數字說它們很遠，圓周上卻很近。':''}</p>`;
+  }
+  ['#hA','#hB'].forEach(s=>$(s).addEventListener('input',draw));draw();
+})();
+
+/* ---------- 48.3 sliding window ---------- */
+(function(){
+  const s=[12,15,14,18,20,19,23,25];
+  slider('#swK',null,k=>{
+    let h=`<table style="min-width:0"><tr><th>樣本</th>${Array.from({length:k},(_,j)=>`<th style="color:var(--aud)">lag ${k-j}（t−${k-j}）</th>`).join('')}<th>目標 y_t</th></tr>`;
+    for(let t=k;t<s.length;t++)h+=`<tr><td>t=${t+1}</td>${Array.from({length:k},(_,j)=>`<td>${s[t-k+j]}</td>`).join('')}<td><b>${s[t]}</b></td></tr>`;
+    $('#swTbl').innerHTML=h+'</table>';
+    $('#swOut').innerHTML=`原序列：${s.join('、')}<br>每筆樣本有 <b>${k}</b> 個滯後特徵 —— 維度是<b>增加</b> ${k} 倍。<div class="hint">它只是把既有觀測重組成欄位：不是資料增強（沒有產生新資訊）、不是去雜訊（沒做平滑或濾波）、更不是降維。</div>`;
+  });
+})();
+
+/* ---------- 48.4 flip ---------- */
+strategies($('#flipStrat'),$('#flipV'),$('#flipM'),$('#flipWhy'),[
+  ['手寫數字辨識','⚠ 最容易出錯',95,'var(--bad)','字形方向本身就是辨識依據，鏡像後<b>標籤沒跟著改</b>，等於餵錯誤標註。這是 115Q1 第 4 題正解。'],
+  ['貓狗分類','✓ 安全',10,'var(--ok)','左右鏡像的貓還是貓。'],
+  ['車型分類','✓ 安全',10,'var(--ok)','與左右無關。'],
+  ['行人偵測','✓ 安全',10,'var(--ok)','與左右無關。']
+],[1,2,0,3]);
+
+/* ---------- 48.4 SMOTE ---------- */
+(function(){
+  const r=rng(13);const maj=Array.from({length:70},()=>[.55+gauss(r)*.17,.5+gauss(r)*.16]);
+  const min0=Array.from({length:7},()=>[.2+gauss(r)*.06,.72+gauss(r)*.07]);
+  let syn=[],lines=[];
+  const X=v=>20+v*600,Y=v=>250-v*240;
+  function draw(){
+    let h=maj.map(p=>`<circle cx="${X(p[0])}" cy="${Y(p[1])}" r="4.5" fill="var(--txt)" opacity=".35"/>`).join('');
+    h+=lines.map(([a,b])=>`<line x1="${X(a[0])}" y1="${Y(a[1])}" x2="${X(b[0])}" y2="${Y(b[1])}" stroke="var(--sen)" stroke-dasharray="4 4" opacity=".6"/>`).join('');
+    h+=min0.map(p=>`<circle cx="${X(p[0])}" cy="${Y(p[1])}" r="7" fill="var(--sen)"/>`).join('');
+    h+=syn.map((p,i)=>`<circle cx="${X(p[0])}" cy="${Y(p[1])}" r="6" fill="none" stroke="var(--sen)" stroke-width="2.5"${i===syn.length-1?' style="filter:drop-shadow(0 0 4px var(--sen))"':''}/>`).join('');
+    $('#smSvg').innerHTML=h;
+    $('#smInfo').textContent=`少數類：原始 ${min0.length} 筆＋合成 ${syn.length} 筆（空心圈）｜多數類 ${maj.length} 筆`;
+  }
+  $('#smBtn').onclick=()=>{const all=min0;const i=Math.floor(Math.random()*all.length),p=all[i];const nb=all.map((q,j)=>[j,Math.hypot(q[0]-p[0],q[1]-p[1])]).filter(x=>x[0]!==i).sort((a,b)=>a[1]-b[1]).slice(0,3);const q=all[nb[Math.floor(Math.random()*nb.length)][0]],l=Math.random();syn.push([p[0]+l*(q[0]-p[0]),p[1]+l*(q[1]-p[1])]);lines.push([p,q]);draw();};
+  $('#smReset').onclick=()=>{syn=[];lines=[];draw();};
+  draw();
+})();
+
+/* ---------- 48.4 imbalance ---------- */
+(function(){
+  $('#imBars').innerHTML=['Accuracy','Recall（抓到幾成陽性）','F1'].map((n,i)=>`<div class="bar" id="ib${i}"><span>${n}</span><div class="track"><div class="fill"></div></div><span class="num">—</span></div>`).join('');
+  slider('#imR',v=>v+'%',p=>{
+    const acc=1-p/100;
+    [[acc,'var(--ok)'],[0,'var(--bad)'],[0,'var(--bad)']].forEach(([v,c],i)=>{const e=$('#ib'+i);e.querySelector('.fill').style.width=v*100+'%';e.querySelector('.fill').style.background=c;e.querySelector('.num').textContent=(v*100).toFixed(1)+'%';});
+    $('#imOut').innerHTML=`陽性 ${p}% 時，「全部猜陰性」就有 <b>${(acc*100).toFixed(1)}%</b> Accuracy，卻<b>一個陽性都沒抓到</b>。<div class="hint">在極度不平衡下，Accuracy 幾乎完全由多數類決定，漏診風險被徹底掩蓋（114Q2 第 19 題：正樣本 3%；115Q1 第 12 題：陽性 1%、Accuracy 99.1%）。「用 Accuracy 當評估指標」才是最不適合的那一個。</div>`;
+  });
+})();
+tabs($('#imTabs'),$('#imBody'),[
+  ['資料層','SMOTE 過採樣／欠採樣多數類／SMOTE-NC（含類別欄位）'],
+  ['演算法層','class_weight 類別權重、focal loss'],
+  ['決策層','調整分類門檻（不用預設 0.5）'],
+  ['評估層','改用 Recall、F1、PR-AUC —— <b>絕不能只看 Accuracy</b>']
+]);
+
+/* ---------- 48.5 leakage simulator ---------- */
+(function(){
+  let mode='bad',fold=0;
+  function draw(){
+    const W=640,bw=100,x0=50;let h='';
+    for(let f=0;f<=fold;f++){
+      const y=12+f*42;
+      h+=`<text x="10" y="${y+22}" font-size="12" fill="var(--muted)">第${f+1}折</text>`;
+      for(let b=0;b<5;b++){const test=b===f;h+=`<rect x="${x0+b*(bw+12)}" y="${y}" width="${bw}" height="30" rx="6" fill="${test?'var(--warn)':'var(--txt)'}" opacity="${test?.9:.55}"/><text x="${x0+b*(bw+12)+bw/2}" y="${y+20}" text-anchor="middle" font-size="12" fill="#fff" font-weight="700">${test?'測試折':'訓練折'}</text>`;}
+      if(mode==='bad')h+=`<rect x="${x0-4}" y="${y-4}" width="${5*bw+4*12+8}" height="38" rx="9" fill="none" stroke="var(--bad)" stroke-width="2.5"/>`;
+      else for(let b=0;b<5;b++)if(b!==f)h+=`<rect x="${x0+b*(bw+12)-3}" y="${y-3}" width="${bw+6}" height="36" rx="8" fill="none" stroke="var(--bad)" stroke-width="2.5"/>`;
+    }
+    $('#lkSvg').innerHTML=h;
+    $('#lkOut').innerHTML=mode==='bad'?`<b style="color:var(--bad)">紅框包住了測試折。</b> <code>lda.fit_transform(X, y)</code> 在交叉驗證之前就用全部樣本（含每一折的測試資料與它們的<b>標籤</b>）擬合了降維 → 每一折的測試資料早已參與降維擬合。官方題目的準確率 0.9733 有一部分是洩漏來的。`:`<b style="color:var(--ok)">紅框只包住訓練折。</b> Pipeline 讓每一折只以「該折的訓練資料」fit scaler 與 LDA，再 transform 測試折 —— 測試折從頭到尾沒被偷看。`;
+    $('#lkNext').textContent=fold>=4?'從第 1 折重來':'下一折';
+  }
+  group('#lkTabs .btn',b=>{mode=b.dataset.m;fold=0;draw();});
+  $('#lkNext').onclick=()=>{fold=fold>=4?0:fold+1;draw();};
+  draw();
+})();
+tabs($('#lkCode'),$('#lkCodeBody'),[
+  ['✘ 官方題目中的錯誤寫法','<pre><code>X_new = lda.fit_transform(X, y)                 # LDA 已看過「全部樣本的標籤」\nscores = cross_val_score(knn, X_new, y, cv=5)   # 每一折的測試資料早已參與降維擬合\n# → 準確率 0.9733 有一部分是洩漏來的</code></pre>'],
+  ['✔ 正確寫法：Pipeline','<pre><code>from sklearn.pipeline import make_pipeline\nfrom sklearn.model_selection import cross_val_score, StratifiedKFold\n\npipe = make_pipeline(StandardScaler(), LDA(n_components=2), KNeighborsClassifier())\nscores = cross_val_score(pipe, X, y, cv=StratifiedKFold(n_splits=5, shuffle=True))\n# 每一折只以「該折的訓練資料」擬合 scaler 與 LDA，再 transform 測試折</code></pre>']
+]);
+slider('#ldaK',null,k=>{$('#ldaOut').innerHTML=`${k} 類 → LDA 最多降到 <b>${k} − 1 = ${k-1}</b> 維`+(k===3?'（Iris 就是這個情況：最多 2 維）':'')+'<div class="hint">PCA 沒有這個上限（最多 min(樣本數, 特徵數)）。</div>';});
+
+matcher($('#lkMatch'),$('#lkFb'),[
+  {k:'p',c:'var(--img)',html:'先用全體資料 fit StandardScaler／PCA，再做交叉驗證'},
+  {k:'t',c:'var(--sen)',html:'拿「理賠金額」去預測「是否理賠」'},
+  {k:'m',c:'var(--aud)',html:'對時間序列做隨機 K-fold'}
+],[
+  {k:'m',html:'時間洩漏<small>症狀：離線好、上線衰退</small>',ok:'等於用未來預測過去。'},
+  {k:'x',html:'沒有洩漏，只是模型太強',bad:'驗證分數異常好時，先懷疑洩漏。'},
+  {k:'p',html:'前處理洩漏<small>症狀：驗證分數異常高且穩定</small>',ok:'scaler／imputer／PCA／LDA／特徵選擇器都要在每折內 fit。'},
+  {k:'t',html:'目標洩漏<small>症狀：某個特徵重要性高得離譜</small>',ok:'特徵本身含有答案。Target Encoding 未做 out-of-fold、早停用測試集也屬此類。'}
+],'');
+
+sorter($('#cvSort'),$('#cvCount'),['進 Pipeline','切分前可先做'],[
+  ['均值／中位數／KNN 填補',0,'要從資料算統計量。'],
+  ['欄位型別轉換、單位統一',1,'不依賴資料統計量。'],
+  ['StandardScaler／MinMax／RobustScaler',0,'μ、σ、min、max、中位數、IQR 都是從資料估的。'],
+  ['去除重複列、修正明顯錯誤輸入',1,'不依賴資料統計量。'],
+  ['PCA／LDA／SVD／特徵選擇（SelectKBest、RFE）',0,'115Q1 第 44 題的考點。'],
+  ['時間欄位拆解（年／月／星期幾）',1,'固定規則，不需估參數。'],
+  ['Target Encoding',0,'需 out-of-fold。'],
+  ['固定函數轉換（log、sqrt）',1,'沒有待估參數。'],
+  ['Box-Cox／Yeo-Johnson',0,'λ 是從資料估出來的參數，必須進 Pipeline。'],
+  ['SMOTE／過採樣',0,'而且只對訓練折做。'],
+  ['One-Hot（類別清單以訓練集為準）',1,'可先做，但類別清單須以訓練集為準，不可含測試集才出現的類別。']
+]);
+
+/* ---------- 48.5 time series ---------- */
+(function(){
+  function draw(m){
+    const n=12,bw=44,x0=70;let h='';
+    h+=`<text x="${x0}" y="14" font-size="12" fill="var(--muted)">時間 →（每格代表一段週次，示意）</text>`;
+    const rows=m==='kf'?[[2,7,10],[0,5,9],[3,8,11]]:[[0,6],[1,7],[2,8]];
+    rows.forEach((r,ri)=>{
+      const y=26+ri*54;h+=`<text x="8" y="${y+24}" font-size="12" fill="var(--muted)">切分${ri+1}</text>`;
+      let lastTest=m==='kf'?-1:r[1]+0;
+      for(let b=0;b<n;b++){
+        let kind='none';
+        if(m==='kf'){kind=r.includes(b)?'test':'train';}
+        else{if(b>=r[0]&&b<r[1]+0)kind='train';if(b===r[1])kind='test';}
+        const minTest=m==='kf'?Math.min(...r):r[1];
+        const future=m==='kf'&&kind==='train'&&b>minTest;
+        const fill=kind==='test'?'var(--warn)':kind==='train'?(future?'var(--bad)':'var(--txt)'):'var(--surface2)';
+        h+=`<rect x="${x0+b*(bw+3)}" y="${y}" width="${bw}" height="34" rx="5" fill="${fill}" opacity="${kind==='none'?1:.8}" stroke="var(--line)"/>`;
+        if(kind==='test')h+=`<text x="${x0+b*(bw+3)+bw/2}" y="${y+22}" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">測</text>`;
+        if(future)h+=`<text x="${x0+b*(bw+3)+bw/2}" y="${y+22}" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">未來</text>`;
+      }
+    });
+    $('#tsSvg').innerHTML=h;
+    $('#tsOut').innerHTML=m==='kf'?'<b style="color:var(--bad)">紅格＝出現在測試段之後、卻被拿來訓練的「未來」資料。</b> K-fold 隨機打散樣本，導致用未來資料預測過去 → 時間洩漏。分層 K-fold 管的是類別比例不是時間順序；留一法同樣忽略時間先後。':'<b style="color:var(--ok)">每次都只用測試段之前的資料訓練</b>，而且窗口隨時間往前滾動 → 每次訓練皆基於最新時間區間。這是 115Q1 第 27 題正解：滾動窗口驗證（Rolling Window Validation／TimeSeriesSplit）。';
+  }
+  group('#tsTabs .btn',b=>draw(b.dataset.m));draw('kf');
+})();
+
+/* ---------- 48.6 ---------- */
+tabs($('#stTabs'),$('#stBody'),[
+  ['分類任務','偏好具離散分群能力的特徵：類別指標、區間編碼、分箱'],
+  ['迴歸任務','偏好與數值趨勢密切相關的連續特徵'],
+  ['線性模型','注意尺度與<b>多重共線性</b>（VIF 診斷）'],
+  ['樹模型','不需縮放；<b>避免標籤編碼造成順序誤解</b>'],
+  ['距離式模型（KNN）','必須保證特徵間單位一致']
+]);
+strategies($('#ixStrat'),$('#ixV'),$('#ixM'),$('#ixWhy'),[
+  ['將兩個或多個特徵相乘或交互組合','✓ 正解',100,'var(--ok)','互動特徵（Interaction Features）才能表達特徵<b>之間</b>的關係。'],
+  ['對價格取平方','✗',20,'var(--bad)','只是單一特徵的非線性項。'],
+  ['對兩個特徵各自取對數','✗',15,'var(--bad)','單變數的尺度調整，表達不了特徵之間的關係。'],
+  ['對兩個特徵各自做標準化','✗',15,'var(--bad)','同樣只是單變數的尺度調整。']
+],[1,0,3,2]);
+tfList($('#scList'),[
+  ['特徵選擇 + 多重共線性（Multicollinearity）分析',true,'標準步驟。'],
+  ['分箱（Binning）+ 資訊值（Information Value, IV）檢定',true,'標準步驟。'],
+  ['使用生成式模型進行特徵學習',false,'這就是正解（「不是」常見步驟的那一個）：黑箱，不符監理與可解釋性要求。'],
+  ['以 PSI（Population Stability Index）監控模型穩定性',true,'標準步驟。']
+],['是常見步驟','不是']);
+
+/* ---------- 48.7 exam list ---------- */
+(function(){
+  const core=[
+    ['115Q1-44','資料洩漏（最高頻）','先用整體資料 LDA 降維再 CV 測 KNN，此寫法對嗎','<b>存在資料洩漏，應把 LDA 納入 CV 流程（Pipeline）</b>'],
+    ['115Q1-27','時間洩漏','固定時間切分導致對最新資料衰退，該改用什麼','<b>滾動窗口驗證</b>；隨機 K-fold 對時序造成洩漏'],
+    ['114Q2-9','特徵縮放','KNN／SVM 最關鍵的前處理','<b>特徵縮放</b>，讓各特徵數值範圍相近'],
+    ['114Q2-48','Z-score 判讀','減均值除標準差的程式碼敘述何者正確','均值變 0、有助穩定梯度；<b>標準差變 1 不是 0</b>、不是 0～1 縮放、<b>標準化屬特徵縮放非特徵選擇</b>'],
+    ['115Q1-46','縮放 vs 標準化','<code>/255.0</code> 與 <code>to_categorical</code> 的敘述組合','線性縮放到 0～1（<b>不等於 z-score</b>）；獨熱編碼配 softmax + categorical_crossentropy'],
+    ['115Q1-24','高基數編碼','3,000 種商品，何者最易維度爆炸','<b>One-Hot</b>；Target Encoding 的風險是洩漏、Label Encoding 的風險是虛假順序'],
+    ['115Q1-25','分佈轉換','log 對「距離」有效、對「屋齡」反而變差','屋齡原已線性，<b>log 破壞線性結構</b>；轉換須逐特徵決定'],
+    ['115Q1-6','降維選型','詞嵌入視覺化 vs XGBoost 輸入特徵','<b>t-SNE 保留局部鄰域適合視覺化，不適合當模型輸入</b>'],
+    ['114Q2-35','PCA 解釋變異量','λ = 6／3／1，取到 80% 門檻該留幾維','PC1+PC2 = 90%，<b>降到二維</b>'],
+    ['114Q2-46','PCA 降噪','程式跑完雜訊仍在，該改哪一段','<b>n_components（主成分數量）設太高</b>，重建後雜訊原封不動'],
+    ['114Q2-8','Filter／Embedded','資訊增益用於哪類模型','<b>決策樹</b>的遞迴分裂依據'],
+    ['114Q2-2 / 32','Embedded 選擇','L1 的主要效果／如何自動篩特徵','<b>Lasso 產生稀疏模型，係數壓為 0</b>'],
+    ['115Q1-33','L1 vs L2','共線性下要控過擬合但<b>不歸零</b>','<b>Ridge（L2）</b>；Elastic Net 仍會歸零'],
+    ['115Q1-7','L1 的副作用','重要特徵清單每次重訓都在跳','<b>L1 面對高相關特徵隨機保留其一</b>，結果不穩定'],
+    ['114Q2-24','異常值','殘差高值區系統性彎曲','<b>異常值或非線性關係</b>違反迴歸假設'],
+    ['114Q2-25','特徵工程流程','評分卡「不」包含哪一步','<b>生成式模型特徵學習</b>（黑箱，不符監理）'],
+    ['114Q2-20','互動特徵','如何捕捉價格 × 滿意度的聯合效應','<b>兩個以上特徵相乘或交互組合</b>'],
+    ['115Q1-26','時序特徵','滑動窗口的主要目的','<b>建立滯後特徵</b>；不是增強、不是降噪、不是降維'],
+    ['115Q1-4','資料增強語意','哪個任務最易因水平翻轉引入語意錯誤','<b>手寫數字辨識</b>'],
+    ['115Q1-41','資料增強語意','OCR 的 b/d/p/q 錯誤率暴增','<b>RandomHorizontalFlip 造成鏡像錯誤標籤</b>，驗證損失看不出來']
+  ];
+  const cross=[
+    ['114Q2-19','不平衡（交叉）','3% 正樣本，何者最不適合','用 Accuracy 當評估指標'],
+    ['115Q1-12','不平衡（交叉）','1% 陽性卻有 99.1% Accuracy','Accuracy 被多數類主導，掩蓋漏診'],
+    ['114Q2-18','缺失值（交叉）','XGBoost 相對 GBDT 的改進','正則化 + <b>缺失值自動處理</b> + 並行化'],
+    ['115Q1-14','縮放適用性（交叉）','樸素貝氏誤判促銷信','成因是類別條件機率，<b>不是</b>未標準化'],
+    ['115Q1-5','異常值診斷（交叉）','殘差呈喇叭狀擴散','異質變異數（不是共線性）']
+  ];
+  const html=l=>l.map(([n,k,q,a])=>`<details><summary><span class="tag">${n}</span>${k}</summary><div class="body"><p style="margin:0 0 6px"><span class="hint">怎麼問：</span>${q}</p><p style="margin:0"><span class="hint">正解思路：</span>${a}</p></div></details>`).join('');
+  tabs($('#exTabs'),$('#examList'),[[`核心題（${core.length}）`,html(core)],[`觀念交叉（${cross.length}）`,html(cross)]]);
+})();
+
+/* ---------- 48.8 traps ---------- */
+traps($('#traps'),$('#trapCount'),'l23301-traps',[
+  ['前處理要在交叉驗證「裡面」做，不是「前面」做','降維、縮放、填補、特徵選擇都必須每一折用該折訓練資料重新 fit，用 Pipeline 串接；先用全體資料做就是資料洩漏。'],
+  ['LDA 是監督式降維，PCA 是非監督式','LDA 會吃標籤，洩漏更嚴重；且 LDA 最多降到「類別數 − 1」維，PCA 沒有這個上限。'],
+  ['Z-score 是「均值 0、標準差 1」，不是「壓到 0～1」','壓到 0～1 的是 Min-Max；除以 255 也只是線性縮放，不等於 z-score。'],
+  ['標準化屬於特徵縮放，不是特徵選擇','這是官方直接設過的誘答。'],
+  ['有離群值就用 Robust Scaling','Min-Max 與 Z-score 用的 min／max／μ／σ 都會被極端值污染。'],
+  ['Label Encoding 只給有序類別','用在無序類別上，線性與距離模型會讀出「紅 < 藍 < 綠」的虛假順序與虛假間距。'],
+  ['One-Hot 的問題是維度爆炸，Target Encoding 的問題是目標洩漏','兩者風險不同，題目常故意交換。'],
+  ['t-SNE 只能視覺化，不能當模型輸入','它不保留全局結構，也沒有可套用到新樣本的固定轉換函數。'],
+  ['特徵選擇保留原始欄位、降維產生新座標軸','要「向審查單位解釋」時選前者，PCA 的主成分沒有業務意義。'],
+  ['L1 會挑特徵但不穩定，L2 穩定但不挑特徵','共線性下要穩定解釋用 Ridge；要稀疏化用 Lasso，但接受清單會跳動。'],
+  ['log 轉換是給右偏長尾用的，不是萬用','對原本就線性的特徵取 log 反而破壞結構；轉換要逐特徵決定，不是全表一起套。'],
+  ['Box-Cox 只吃正值、λ 要估參數','含 0 或負值改用 Yeo-Johnson；兩者都必須進 Pipeline。'],
+  ['SMOTE 只能對訓練折做','切分前做或對測試折做，合成樣本的親本會跨集，評估完全失真；測試集必須維持真實的不平衡分佈。'],
+  ['資料增強不可改變標籤語意','水平翻轉對貓狗、車型、行人偵測安全，對手寫數字與 b/d/p/q 是災難；訓練與驗證同時套用時，驗證損失完全看不出問題。'],
+  ['滑動窗口是建立滯後特徵，維度是增加不是減少','它既不是資料增強（沒有新資訊），也不是降噪。'],
+  ['異常值不一定要刪','詐欺、瑕疵、故障這類任務裡，異常值就是答案本身，應標記保留作為特徵。'],
+  ['樹模型不需縮放、樸素貝氏也不需要','需要縮放的是距離型（KNN、SVM、K-means）、線性型與神經網路，以及 PCA／LDA。']
+]);
+
+/* ---------- 48.8 quiz ---------- */
+quiz($('#quiz'),[
+  ['先用整體資料做 LDA 降維，再用交叉驗證評估 KNN，得到準確率 0.9733。這個寫法的問題是？',['存在資料洩漏，應把 LDA 納入交叉驗證流程（Pipeline）','完全正確，這是標準做法','準確率被低估，應改用測試集調參','只要把 LDA 改成 PCA 就不會有任何洩漏'],'每一折的測試資料早已參與降維擬合。PCA 雖然不看標籤，但先對全體 fit 仍屬前處理洩漏。'],
+  ['零售銷量模型以第 1～52 週訓練、第 53 週測試，半年後對第 80 週明顯衰退。要讓每次訓練都基於最新時間區間，應改用？',['滾動窗口驗證（TimeSeriesSplit）','隨機 K-fold 交叉驗證','分層 K-fold','留一法交叉驗證'],'隨機 K-fold 會用未來預測過去；分層管的是類別比例；留一法同樣忽略時間先後。'],
+  ['對 X_train 執行「減去均值、再除以標準差」，下列敘述何者正確？',['各特徵均值變為 0，有助穩定梯度、避免梯度爆炸或消失','各特徵標準差變為 0','資料被壓縮到 0 與 1 之間','這是一種特徵選擇方法'],'標準差變 1；壓到 0～1 是 Min-Max；標準化屬於特徵縮放。'],
+  ['商品類別欄位有 3,000 種，下列哪一種編碼最容易造成維度爆炸？',['One-Hot Encoding','Target Encoding','Label Encoding','Categorical Embedding'],'Target 的風險是目標洩漏；Label 的風險是虛假順序；Embedding 正是為避開維度爆炸而設計。'],
+  ['對「距捷運站距離」取 log 後模型改善，同樣套到「屋齡」卻變差。最合理的解釋是？',['屋齡與房價原本就呈線性關係，log 反而破壞了這個結構','兩個特徵必須套用相同轉換，否則尺度不一致','log 只能用在類別特徵上','屋齡含有負值，log 無法計算'],'轉換要依每個特徵自己的分佈個別決定；尺度問題用標準化解決。'],
+  ['150 個特徵且高度共線（建坪 vs 總面積），要控制過擬合、在共線下穩定，且「不讓任何係數歸零」，應選？',['Ridge（L2）','Lasso（L1）','Elastic Net','不加任何正則化'],'Lasso 會歸零；Elastic Net 含 L1 成分仍會歸零。'],
+  ['月收入、季收入、年收入三個特徵高度相關，每次重訓後的「重要特徵清單」都在跳動。最可能的原因是？',['L1 的稀疏性：面對高相關特徵時隨機只保留其一','L2 把所有係數壓成 0','發生了資料洩漏','學習率設得太大'],'留哪一個都能把損失壓到相近水準，留誰受抽樣與初始化影響。'],
+  ['時間序列中使用滑動窗口，把 t−1 到 t−k 的觀測攤平成同一筆樣本的多個欄位，主要目的是？',['建立滯後特徵（Lag Features）','資料增強','去除雜訊','降低維度'],'只是重組既有觀測，沒有新資訊、沒有平滑；維度是增加 k 倍。'],
+  ['某資料集正樣本僅 3%，下列處理方式何者「最不適合」？',['以 Accuracy 作為主要評估指標','使用 SMOTE 過採樣','設定類別權重（class_weight）','對多數類做欠採樣'],'極度不平衡下 Accuracy 幾乎由多數類決定，全部猜多數類就能拿高分。'],
+  ['某欄位分佈偏態且含明顯離群值，最適合的縮放方式是？',['Robust Scaling','Min-Max Normalization','Z-score Standardization','直接除以最大值'],'Robust 用中位數與 IQR，不受尾端影響；其他方法的統計量都會被極端值污染。'],
+  ['迴歸模型的殘差隨預測值增大而呈喇叭狀擴散，這代表？',['異質變異數，等變異假設被違反','特徵之間存在多重共線性','模型過度擬合','發生資料洩漏'],'多重共線性要用 VIF 診斷，殘差圖看不出來。'],
+  ['處理不平衡資料時使用 SMOTE，正確的順序是？',['先切分資料，只對訓練折做 SMOTE，測試折維持原始分佈','先對全體資料做 SMOTE，再切分訓練／測試','對訓練與測試資料都做 SMOTE','只對測試資料做 SMOTE'],'切分前做 SMOTE，合成樣本的親本可能落在測試集，評估完全失真。']
+],['太強了，「流程位置」與各種 A vs B 對照已能秒答。','不錯！回頭看看答錯的題目對應哪一節。','建議重新操作 48.5 的洩漏模擬器與 48.3 的縮放比較，再來一次。']);
+
+navHighlight();
+
+</script>
+</body>
+</html>

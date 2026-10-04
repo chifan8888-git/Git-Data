@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L22402 大數據在鑑別式AI中的應用｜互動教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F5; --surface:#FFFFFF; --surface2:#F6F8FB; --ink:#18202E; --muted:#5A6475; --line:#D5DBE4;
+  --txt:#3B4CCA; --img:#0E8A7A; --aud:#B87812; --sen:#B8336A;
+  --ok:#1F8A4C; --bad:#C23B2E; --warn:#D9822B;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+    --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+  --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75}
+h1,h2,h3{font-family:var(--serif);line-height:1.3;margin:0}
+p{margin:0 0 1em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--txt);outline-offset:2px;border-radius:4px}
+svg{max-width:100%;height:auto;display:block}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1180px;margin:0 auto;gap:40px;padding:0 24px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;padding:32px 0;height:100vh;overflow:auto}
+nav.toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14.5px}
+nav.toc a span{font-variant-numeric:tabular-nums;font-size:13px;opacity:.8}
+nav.toc a.on{background:var(--surface);color:var(--ink);font-weight:700}
+.toc-title{font-family:var(--serif);font-weight:900;font-size:18px;padding:0 10px 14px}
+main{min-width:0;padding-bottom:80px}
+section{padding:56px 0 8px;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.sec-head{display:flex;gap:16px;align-items:baseline;margin-bottom:18px}
+.sec-no{font-family:var(--serif);font-weight:900;font-size:40px;color:var(--line);line-height:1}
+h2{font-size:28px;font-weight:900}
+h3{font-size:19px;margin:34px 0 10px}
+.lead{color:var(--muted);max-width:66ch}
+.prose{max-width:68ch}
+
+/* hero */
+.hero{padding:44px 0 24px}
+.hero .code{font-size:14px;color:var(--muted);margin-bottom:6px}
+.hero h1{font-size:clamp(34px,5.5vw,56px);font-weight:900;letter-spacing:.02em}
+.hero .one{font-size:18px;max-width:60ch;margin:16px 0 0;color:var(--muted)}
+.hero-fig{background:var(--surface);border-radius:20px;margin-top:28px;padding:14px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+.goal{border-left:4px solid var(--c);padding:6px 0 6px 14px;font-size:15px}
+
+/* panels */
+.panel{background:var(--surface);border-radius:16px;padding:22px;margin:16px 0}
+.panel.flat{background:var(--surface2)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font-size:15px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hint{font-size:14px;color:var(--muted)}
+.callout{border-left:4px solid var(--warn);background:var(--surface2);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;font-size:15px}
+.callout.exam{border-color:var(--txt)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:14px}
+
+/* modality chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+
+/* matcher */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.match .col{display:flex;flex-direction:column;gap:10px}
+.mitem{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15px;transition:border-color .2s,background .2s,transform .2s}
+.mitem small{display:block;color:var(--muted);font-size:13px}
+.mitem.sel{border-color:var(--ink);transform:translateX(4px)}
+.mitem.done{border-color:var(--c,var(--ok));background:var(--surface2);cursor:default}
+.mitem.wrong{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:1.8em;margin-top:12px;font-size:15px}
+.feedback.ok{color:var(--ok)} .feedback.bad{color:var(--bad)}
+
+/* timeline */
+.steps{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stage-viz{min-height:130px;display:flex;align-items:center;justify-content:center}
+.stage-viz .blk{display:inline-block;width:34px;height:34px;border-radius:6px;margin:2px;transition:all .5s}
+
+/* align toggle */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.compare>div{padding:18px}
+.compare>div+div{border-left:1px solid var(--line)}
+.compare .big{font-family:var(--serif);font-weight:900;font-size:22px;margin-bottom:6px}
+
+/* fusion */
+.meter{height:14px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:6px 0}
+.meter>i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .7s cubic-bezier(.3,.8,.3,1),background .4s}
+.flow{stroke-dasharray:6 7;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.jitter{animation:jit .25s steps(2) infinite}
+@keyframes jit{50%{transform:translate(1.5px,-1px)}}
+.fusion-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.pc{font-size:15px}
+.pc b{display:block;font-size:14px;color:var(--muted);font-weight:500}
+
+/* clip */
+.mat{display:grid;gap:4px;font-size:13px}
+.mat .cell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;transition:background .5s,color .5s}
+.mat .lab{display:flex;align-items:center;justify-content:center;font-size:22px}
+.mat .tlab{font-size:12px;text-align:center;color:var(--muted);display:flex;align-items:flex-end;justify-content:center;line-height:1.3}
+.zs-imgs{display:flex;gap:10px;flex-wrap:wrap}
+.zs-img{font-size:38px;width:72px;height:72px;border-radius:16px;border:2px solid var(--line);background:var(--surface2);display:flex;align-items:center;justify-content:center}
+.zs-img[aria-pressed="true"]{border-color:var(--img);box-shadow:0 0 0 3px color-mix(in srgb,var(--img) 25%,transparent)}
+.bar{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.bar .track{height:22px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;width:0;background:var(--txt);border-radius:6px;transition:width .8s cubic-bezier(.3,.8,.3,1)}
+.bar.win .fill{background:var(--img)}
+.bar.win{font-weight:700}
+.bar .num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.flip{perspective:900px;height:150px;border:0;background:none;padding:0;text-align:left}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flip[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:center}
+.flip .f{background:var(--surface);border:1.5px solid var(--line)}
+.flip .f strong{font-family:var(--serif);font-size:22px}
+.flip .f span{color:var(--muted);font-size:14px}
+.flip .b{background:var(--ink);color:var(--bg);transform:rotateY(180deg);font-size:15px}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.pnode{border:2px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;font-size:14px;background:var(--surface);transition:all .35s}
+.pnode b{display:block;font-size:16px}
+.pnode.on{border-color:var(--aud);background:color-mix(in srgb,var(--aud) 14%,var(--surface));transform:translateY(-3px)}
+.pnode.past{border-color:color-mix(in srgb,var(--aud) 45%,var(--line))}
+.pout{background:var(--surface2);border-radius:12px;padding:14px 16px;min-height:84px;font-size:15px}
+.wave{display:flex;gap:3px;align-items:center;height:30px}
+.wave i{width:4px;background:var(--aud);border-radius:2px;animation:wv 1s ease-in-out infinite}
+@keyframes wv{50%{transform:scaleY(.3)}}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+
+/* strategies */
+.strat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.strat button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;text-align:left;font-size:15px}
+.strat button[aria-pressed="true"]{border-color:var(--ink)}
+.verdict{font-family:var(--serif);font-weight:900;font-size:20px}
+
+details{border-bottom:1px solid var(--line)}
+details summary{cursor:pointer;padding:12px 4px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"+";font-weight:900;width:14px;color:var(--muted)}
+details[open] summary::before{content:"−"}
+details .body{padding:0 4px 14px 30px;font-size:15px}
+.tag{font-size:12.5px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums;min-width:80px}
+
+/* quiz */
+.qcard{background:var(--surface);border-radius:16px;padding:24px}
+.qtop{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
+.qtext{font-size:18px;font-weight:700;margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15.5px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+.opt.wrongpick{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.opt:disabled{cursor:default}
+.expl{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15px;display:none}
+.expl.show{display:block}
+.progress{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;margin-bottom:14px}
+.progress i{display:block;height:100%;background:var(--txt);transition:width .4s}
+
+.traps label{display:flex;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:15px}
+.traps input{width:18px;height:18px;margin-top:4px;flex:none;accent-color:var(--ok)}
+.traps label.chk>span{color:var(--muted)}
+.traps em{font-style:normal;font-weight:700}
+
+/* mobile */
+@media (max-width:860px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+  nav.toc{position:sticky;top:0;height:auto;z-index:10;background:var(--bg);display:flex;overflow-x:auto;padding:8px 0;padding-top:calc(8px + env(safe-area-inset-top,0px));gap:4px;border-bottom:1px solid var(--line)}
+  .toc-title{display:none}
+  nav.toc a{white-space:nowrap;flex:none}
+  .match,.stage,.fusion-meta,.compare{grid-template-columns:1fr}
+  .compare>div+div{border-left:0;border-top:1px solid var(--line)}
+  .pipe{grid-template-columns:repeat(5,minmax(90px,1fr));overflow-x:auto}
+  .bar{grid-template-columns:110px 1fr 56px}
+  h2{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* ---- page-specific ---- */
+pre.cb{background:var(--surface2);border-radius:10px;padding:12px 14px;overflow-x:auto;font-size:13.5px;line-height:1.6;margin:10px 0;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;max-width:100%}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em;background:var(--surface2);padding:1px 5px;border-radius:5px;word-break:break-word}
+.strat button code{background:transparent;padding:0}
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-top:12px}
+.nums div{background:var(--surface2);border-radius:10px;padding:8px 10px;font-size:14px}
+.nums b{display:block;font-size:18px;font-variant-numeric:tabular-nums}
+.pick{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.pick button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 12px;text-align:left;font-size:14.5px}
+.pick button[aria-pressed="true"]{border-color:var(--ink);background:var(--surface2)}
+.pick small{display:block;color:var(--muted);font-size:12.5px}
+.chart-out{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:18px;align-items:center;margin-top:16px}
+.chart-out.even{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+@media (max-width:860px){
+  .chart-out,.chart-out.even{grid-template-columns:1fr}
+}
+.srt{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 4px;border-bottom:1px solid var(--line);font-size:15px}
+.srt .row{gap:6px}
+.srt .btn{padding:5px 12px;font-size:14px}
+.srt .btn.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--surface))}
+.srt .btn.no{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,var(--surface))}
+.srt small{display:block;color:var(--muted);font-size:13px}
+#cmTbl td,#cmTbl th{text-align:center;font-variant-numeric:tabular-nums}
+#cmTbl td.tp{background:color-mix(in srgb,var(--ok) 18%,transparent)}
+#cmTbl td.fn,#cmTbl td.fp{background:color-mix(in srgb,var(--bad) 12%,transparent)}
+.flat-tbl{font-size:13.5px;min-width:0}
+@media (max-width:860px){.srt{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="toc" aria-label="章節">
+  <div class="toc-title">鑑別式 AI</div>
+  <a href="#intro"><span>●</span>導覽與目標</a>
+  <a href="#s1"><span>38.1</span>鑑別式 vs 生成式</a>
+  <a href="#s2"><span>38.2</span>五大應用場域</a>
+  <a href="#s3"><span>38.3</span>輸入資料型態</a>
+  <a href="#s4"><span>38.4</span>標註策略</a>
+  <a href="#s5"><span>38.5</span>整合與品質</a>
+  <a href="#s6"><span>38.6</span>不平衡評估</a>
+  <a href="#s7"><span>38.7</span>官方考題</a>
+  <a href="#s8"><span>38.8</span>易錯與測驗</a>
+</nav>
+
+<main>
+<!-- HERO -->
+<section id="intro" class="hero">
+  <div class="code">L22402　中級 AI 應用規劃師（科目 2）　建議 40 分鐘</div>
+  <h1>大數據在鑑別式 AI 中的應用</h1>
+  <p class="one">L224「大數據在人工智慧之應用」的第二節，與下一節 <a href="L22403_bigdata_generative_ai.html">L22403 生成式 AI 應用</a>互為對照。初級只要認得「分類 vs 迴歸」，中級要能在<b>不平衡、多來源、標註昂貴</b>的真實大數據條件下，選對模型、選對切分方式、選對評估指標。</p>
+  <div class="hero-fig" aria-hidden="true">
+    <svg id="heroSvg" viewBox="0 0 720 280">
+      <g font-family="Noto Sans TC, sans-serif" font-size="14" font-weight="700">
+        <rect x="10" y="10" width="420" height="260" rx="16" fill="var(--surface2)"/>
+        <g id="heroPts"></g>
+        <line x1="120" y1="260" x2="330" y2="20" stroke="var(--ink)" stroke-width="3" stroke-dasharray="8 6" class="flow"/>
+        <text x="300" y="44" fill="var(--ink)">決策邊界 P(Y|X)</text>
+        <rect x="470" y="40" width="230" height="56" rx="12" fill="var(--txt)"/>
+        <text x="585" y="74" text-anchor="middle" fill="#fff">分類：屬於哪一類？</text>
+        <rect x="470" y="112" width="230" height="56" rx="12" fill="var(--aud)"/>
+        <text x="585" y="146" text-anchor="middle" fill="#fff">預測：數值是多少？</text>
+        <rect x="470" y="184" width="230" height="56" rx="12" fill="var(--sen)"/>
+        <text x="585" y="218" text-anchor="middle" fill="#fff">異常偵測：偏離常態？</text>
+      </g>
+      <g class="movers">
+        <circle r="9" fill="var(--bad)" stroke="var(--surface)" stroke-width="2"><animateMotion dur="3s" repeatCount="indefinite" path="M60 60 C 150 120, 260 200, 380 230"/></circle>
+      </g>
+    </svg>
+  </div>
+  <h3>學完這一課，你應該能夠</h3>
+  <div class="goals">
+    <div class="goal" style="--c:var(--txt)">用 <b>P(Y|X)</b> 與 P(X)／P(X,Y) 說清楚鑑別式與生成式的根本差異，並正確歸類常見模型</div>
+    <div class="goal" style="--c:var(--img)">對五大應用場域說出「任務目標 → 需要什麼大數據支撐 → 常見模型 → 主要挑戰」四段式</div>
+    <div class="goal" style="--c:var(--aud)">依標註成本、資料量與專業門檻，選出人工／弱監督／群眾外包／主動式學習的正確策略</div>
+    <div class="goal" style="--c:var(--sen)">在類別極不平衡的大數據下，判斷該看哪個<b>評估指標</b>、該用哪種<b>切分法</b>、該在哪一步做<b>重抽樣</b></div>
+  </div>
+  <div class="callout" style="margin-top:20px">官方篇幅 5,487 字（不計空白，與 28 號總覽同一基準），在 L224 四節中排第三（<a href="L22401_bigdata_machine_learning.html">L22401</a> 8,671 字 ＞ <a href="L22404_privacy_security_compliance.html">L22404</a> 7,521 字 ＞ 本節 ＞ <a href="L22403_bigdata_generative_ai.html">L22403</a> 3,066 字），但<b>出題密度最高</b>：在 L22 兩份官方試題（共 100 題）裡，逐題判讀後<b>直接對應 16 題、部分交集 3 題</b>（計數基準見 38.7）。</div>
+</section>
+
+<!-- 38.1 -->
+<section id="s1">
+  <div class="sec-head"><span class="sec-no">38.1</span><h2>鑑別式 vs 生成式：學的東西根本不同</h2></div>
+  <p class="lead">這是本節與 L22403 共同的主軸，也是整個 L224 最容易被誘答的一格。<b>差別不在「能做什麼」，而在「模型學的是哪一個機率」。</b></p>
+
+  <div class="panel">
+    <div class="tabs" id="dgTabs">
+      <button class="btn" data-m="d" aria-pressed="true">鑑別式：學 P(Y|X)</button>
+      <button class="btn" data-m="g" aria-pressed="false">生成式：學 P(X)／P(X,Y)</button>
+    </div>
+    <div class="chart-out even">
+      <svg id="dgSvg" viewBox="0 0 320 240" role="img" aria-label="鑑別式與生成式示意"></svg>
+      <div id="dgTxt"></div>
+    </div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>維度</th><th>鑑別式 AI（Discriminative）</th><th>生成式 AI（Generative）</th></tr>
+      <tr><td><b>學的機率</b></td><td>條件機率 <b>P(Y|X)</b>，或直接學決策邊界／判別函數</td><td>資料分佈 <b>P(X)</b>，或聯合分佈 <b>P(X,Y)</b></td></tr>
+      <tr><td><b>白話</b></td><td>「給我一筆資料，它屬於哪一類／數值是多少」</td><td>「資料長什麼樣子，我能再產生一筆像它的」</td></tr>
+      <tr><td><b>核心動作</b></td><td>區分、分類、預測</td><td>生成、合成、重建</td></tr>
+      <tr><td><b>輸出</b></td><td>類別標籤、機率、分數</td><td>新的文字／影像／聲音／表格樣本</td></tr>
+      <tr><td><b>是否需標籤</b></td><td>監督式為主，<b>高度依賴標註品質</b></td><td>可大量使用未標註資料做自監督預訓練</td></tr>
+      <tr><td><b>代表模型</b></td><td>邏輯迴歸、SVM、決策樹／隨機森林、XGBoost／LightGBM、CNN 分類器、BERT 分類頭、GNN</td><td>樸素貝氏、GMM、HMM、VAE、GAN、Diffusion、大型語言模型</td></tr>
+      <tr><td><b>典型任務</b></td><td>信用評分、詐欺偵測、流失預測、影像診斷、情感分類、異常偵測</td><td>文案生成、影像生成、資料增強、合成資料</td></tr>
+    </table>
+  </div>
+
+  <h3>分類遊戲：這個模型是鑑別式還是生成式？</h3>
+  <div class="panel">
+    <p class="hint">每個模型點一個答案。特別小心兩個「名稱陷阱」。</p>
+    <div id="sorter"></div>
+    <p class="feedback" id="sortFb" aria-live="polite"></p>
+  </div>
+  <div class="callout"><b>「生成式模型不能分類」是錯的。</b>樸素貝氏（Naive Bayes）建模 P(X|Y)·P(Y)，是標準的生成式模型，卻被大量用於垃圾信與文本分類。反過來，<b>邏輯迴歸雖然名字有「迴歸」，學的是 P(Y=1|X)，是鑑別式分類模型</b>。這兩個名稱陷阱是同一類誘答的兩面。</div>
+  <div class="compare">
+    <div><div class="big">鑑別式</div>不管資料「怎麼來的」，只關心「界線在哪裡」<br>→ 不建模 P(X)，所以樣本分佈一旦偏移（Data Drift），<b>模型本身無從察覺</b>，只能靠外部監控</div>
+    <div><div class="big">生成式</div>先學會「資料長什麼樣」，再用<b>貝氏定理</b>推回 P(Y|X)<br>→ 所以生成式模型<b>也可以拿來做分類</b>（樸素貝氏就是最典型的例子）</div>
+  </div>
+
+  <h3>為什麼企業先導入鑑別式 AI</h3>
+  <div class="panel">
+    <div class="tabs" id="entTabs"></div>
+    <div class="compare" id="entBody"></div>
+  </div>
+</section>
+
+<!-- 38.2 -->
+<section id="s2">
+  <div class="sec-head"><span class="sec-no">38.2</span><h2>五大應用場域：每一個需要什麼樣的大數據</h2></div>
+  <p class="lead">官方把鑑別式 AI 的落地情境分成五類。<b>背的時候用「輸入資料型態」串起來最快</b>，因為考題通常給情境、問模型或問挑戰。點一個場域，按四段式逐步展開。</p>
+  <div class="panel">
+    <div class="tabs" id="domTabs"></div>
+    <div class="pipe" id="domPipe" style="grid-template-columns:repeat(4,1fr)"></div>
+    <div class="pout" id="domOut" aria-live="polite"></div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" id="domNext">下一段</button><button class="btn" id="domAll">全部展開</button></div>
+  </div>
+
+  <h3>官方列出的實務案例（數字偶爾被題幹直接引用）</h3>
+  <div class="cards" id="caseCards"></div>
+
+  <h3>一個常被混淆的邊界：異常偵測 ≠ 預測 ≠ 分類（114-2 #10）</h3>
+  <div class="panel">
+    <p class="hint">官方考過：四個選項中挑出<b>真正屬於異常偵測</b>的情境。點每個情境，看它是哪一種任務。</p>
+    <div class="strat" id="taskPick"></div>
+    <div style="margin-top:14px"><div class="verdict" id="taskV">選一個情境</div><p class="hint" id="taskWhy" style="margin:6px 0 0"></p></div>
+  </div>
+  <pre class="cb">異常偵測（Anomaly Detection）：找出「與正常模式明顯不同」的少數樣本
+  → 即時比對交易行為是否偏離常態、登入是否來自可疑裝置
+
+預測（Regression / Time Series）：用歷史資料推估「未來的數值」
+  → 預測旺季是否缺貨、預測次日登入量
+
+分類（Classification）：判斷樣本屬於哪一個已定義的類別
+  → 預測客戶是否違約、郵件是否為釣魚</pre>
+  <p class="prose hint"><b>三者在官方指引裡都被列為鑑別式 AI 的任務目標，但不是同一種任務。</b>（補充：異常偵測若缺乏標註，實作上會改用孤立森林等非監督方法，這不影響它在應用分類上仍屬鑑別式 AI 的範疇。）</p>
+</section>
+
+<!-- 38.3 -->
+<section id="s3">
+  <div class="sec-head"><span class="sec-no">38.3</span><h2>輸入資料型態與處理前提</h2></div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>型態</th><th>來源</th><th>特性</th><th>進模型前要做什麼</th></tr>
+      <tr><td><b>結構化</b></td><td>ERP／CRM／POS 的關聯式資料庫、感測器讀值</td><td>欄位明確、格式規範</td><td>直接轉成表格式特徵；數值標準化、類別編碼</td></tr>
+      <tr><td><b>半結構化</b></td><td>JSON／XML 的 API 回傳、伺服器日誌、點擊流</td><td>有層次結構但<b>欄位可能動態變動</b></td><td><b>解析（Parsing）與展平（Flattening）</b></td></tr>
+      <tr><td><b>非結構化</b></td><td>文字（對話、評論、郵件）、影像（X 光、商品照、監控）、聲音（客服錄音）</td><td>無固定結構</td><td><b>特徵萃取（Feature Extraction）</b>轉成數值表示（詞向量、CNN 特徵、ASR 轉錄）</td></tr>
+      <tr><td><b>多模態</b></td><td>上述型態的組合，如用戶屬性＋評論文字＋商品圖</td><td>需要多輸入架構</td><td><b>特徵級融合</b>或多分支模型</td></tr>
+    </table>
+  </div>
+  <div class="panel">
+    <h3 style="margin-top:0">動手看：什麼叫「展平」</h3>
+    <p class="hint">一筆巢狀的點擊流 JSON（示意）。按按鈕把它攤成欄位。</p>
+    <div class="chart-out even">
+      <pre class="cb" id="jsonBox" style="margin:0"></pre>
+      <div id="flatBox"></div>
+    </div>
+    <div class="row" style="margin-top:10px"><button class="btn primary" id="flatBtn">解析並展平</button></div>
+  </div>
+  <div class="panel">
+    <h3 style="margin-top:0">配對：資料型態 → 進模型前的關鍵動作</h3>
+    <p class="hint">先點左邊的型態，再點右邊的動作。這兩個動詞（展平／特徵萃取）不要互換。</p>
+    <div class="match" id="typeMatch"></div>
+    <div class="feedback" id="typeFb" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- 38.4 -->
+<section id="s4">
+  <div class="sec-head"><span class="sec-no">38.4</span><h2>標註策略：四選一的判斷依據</h2></div>
+  <p class="lead">鑑別式 AI 靠監督學習，<b>標籤的成本與品質直接決定專案可行性</b>。跟著決策流回答問題，看會走到哪個策略。</p>
+  <div class="panel">
+    <div id="treeQ" class="verdict" style="font-size:19px"></div>
+    <div class="row" id="treeBtns" style="margin-top:12px"></div>
+    <div id="treeOut" style="margin-top:14px"></div>
+    <p class="hint" id="treePath" style="margin:10px 0 0"></p>
+  </div>
+  <details>
+    <summary>展開四種策略完整對照表</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>策略</th><th>做法</th><th>優點</th><th>限制</th><th>什麼情境選它</th></tr>
+        <tr><td><b>人工標註</b></td><td>由具備專業的人逐筆標</td><td>準確度最高</td><td>成本高、耗時、<b>難以規模化</b></td><td>醫療影像、法律文件等<b>需要專業知識</b></td></tr>
+        <tr><td><b>弱監督式標註</b></td><td>用規則、啟發式或第三方資料（如情緒詞典）自動產生標籤</td><td>速度快、成本低、適合大規模</td><td><b>誤標風險高</b>、品質不穩定，需後續清理</td><td>社群貼文情感、商品粗分類等可先求有</td></tr>
+        <tr><td><b>群眾外包</b></td><td>透過 MTurk、Appen 等平台分散給大量非專業者</td><td>成本低、速度快</td><td>品質參差，需<b>一致性檢查與多工審核</b></td><td>圖片是否含某物件等<b>簡單任務</b></td></tr>
+        <tr><td><b>主動式學習</b></td><td>模型挑出<b>低置信度樣本</b>優先交人工標</td><td>用最少標註量換最大效益</td><td>需初始標註資料與迭代訓練，技術門檻高</td><td>標註<b>成本高且資料量大</b>（醫療影像、詐欺專家審核）</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <h3>主動式學習：挑「不確定的」，不是隨機挑</h3>
+  <div class="panel">
+    <p class="hint">官方例子：詐欺偵測模型挑出<b>置信度 &lt; 0.6</b> 的交易交專家標註。每個點上的數字是模型置信度（示意）。</p>
+    <div class="tabs" id="alTabs">
+      <button class="btn" data-m="rand" aria-pressed="false">隨機抽 5 筆</button>
+      <button class="btn" data-m="al" aria-pressed="false">挑置信度 &lt; 0.6</button>
+      <button class="btn" data-m="sure" aria-pressed="false">挑最有把握的</button>
+    </div>
+    <svg id="alSvg" viewBox="0 0 600 220" role="img" aria-label="主動式學習示意"></svg>
+    <p id="alNote" style="margin:6px 0 0"></p>
+  </div>
+</section>
+
+<!-- 38.5 -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-no">38.5</span><h2>跨來源整合與資料品質</h2></div>
+  <h3 style="margin-top:0">四類整合障礙（點卡片翻面看官方舉例）</h3>
+  <div class="cards" id="obsCards"></div>
+
+  <h3>重複值 vs 異常值：考題最愛對調的一組</h3>
+  <div class="panel">
+    <p class="hint">左邊是一個簡單的二元分類器（示意）。分別加入重複值、異常值，看哪一個會「拉歪決策邊界」。</p>
+    <div class="row">
+      <button class="btn" id="dupBtn" aria-pressed="false">加入重複值</button>
+      <button class="btn" id="outBtn" aria-pressed="false">加入異常值</button>
+    </div>
+    <div class="chart-out even">
+      <svg id="qSvg" viewBox="0 0 320 240" role="img" aria-label="資料品質示意"></svg>
+      <div>
+        <div class="row" style="justify-content:space-between"><b>藍類所佔比例（示意）</b><span id="qPct"></span></div>
+        <div class="meter"><i id="qMeter"></i></div>
+        <p id="qNote" style="margin:10px 0 0"></p>
+      </div>
+    </div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>問題</th><th>對鑑別式模型的影響</th><th>對統計推論的影響</th></tr>
+      <tr><td><b>缺失值</b></td><td>特徵不完整，線性模型訓練失真</td><td>影響 t 檢定的均值估計</td></tr>
+      <tr><td><b>異常值</b></td><td>放大誤差、<b>扭曲決策邊界</b></td><td>影響獨立樣本 t 檢定</td></tr>
+      <tr><td><b>重複值</b></td><td><b>高估樣本權重</b>，類別比例失真</td><td>影響卡方檢定</td></tr>
+      <tr><td><b>一致性錯誤</b></td><td>格式不統一導致無法正確聚合特徵</td><td>影響 ANOVA 等檢定結果</td></tr>
+      <tr><td><b>邏輯錯誤（錯誤標籤）</b></td><td>模型<b>學到錯誤模式</b>，預測準確度直接下降</td><td>分組結論失效</td></tr>
+    </table>
+  </div>
+
+  <h3>特徵一致性：多團隊共用的管理問題</h3>
+  <p class="prose">當公司裡 A 隊做信用評分、B 隊做詐欺偵測，兩邊都要「使用者過去 30 天交易行為」時，各做各的會導致<b>同一份特徵邏輯被實作兩次、定義一改要兩邊同步、訓練與線上口徑不一致</b>。導入特徵平台統一管理共用特徵，主要目的是<b>消除跨團隊重複開發、降低長期維護成本</b>——不是為了解決推論延遲、儲存空間或模型版本管理（後者屬於模型註冊表與實驗追蹤的範圍）。互動示意見 <a href="L22401_bigdata_machine_learning.html#s6">L22401 的 Feature Store 模擬</a>。</p>
+</section>
+
+<!-- 38.6 -->
+<section id="s6">
+  <div class="sec-head"><span class="sec-no">38.6</span><h2>不平衡大數據下的評估與切分</h2></div>
+  <p class="lead">本節最高頻考點。先用一台「門檻模擬器」把混淆矩陣、五個指標、ROC 與 PR 曲線一次看懂。</p>
+
+  <div class="panel">
+    <h3 style="margin-top:0">門檻模擬器（220 筆交易、20 筆詐欺，分數為示意）</h3>
+    <p class="hint">上方是模型給每筆交易的「詐欺分數」：紅＝真的詐欺、藍＝正常。分數 ≥ 門檻就報警。調整門檻，看所有數字一起動。</p>
+    <div class="row">
+      <button class="btn" id="thDown">門檻 −0.05</button>
+      <button class="btn" id="thUp">門檻 ＋0.05</button>
+      <button class="btn" id="thLow">「寧可錯殺」</button>
+      <button class="btn" id="thHigh">「特異度要 100%」</button>
+      <button class="btn" id="thMid">回到 0.5</button>
+    </div>
+    <svg id="thSvg" viewBox="0 0 640 150" style="margin-top:10px" role="img" aria-label="分數分佈與門檻"></svg>
+    <div class="chart-out even" style="align-items:start">
+      <div>
+        <div class="tbl-wrap"><table id="cmTbl" style="min-width:0"></table></div>
+        <div class="nums" id="thNums"></div>
+      </div>
+      <div>
+        <div class="tabs" id="curveTabs" style="margin-bottom:6px">
+          <button class="btn" data-c="roc" aria-pressed="true">ROC 曲線</button>
+          <button class="btn" data-c="pr" aria-pressed="false">PR 曲線</button>
+        </div>
+        <svg id="curveSvg" viewBox="0 0 300 260" role="img" aria-label="ROC 或 PR 曲線"></svg>
+      </div>
+    </div>
+    <p id="thNote" style="margin:10px 0 0"></p>
+  </div>
+  <div class="callout exam"><b>兩條曲線的軸，寫反就整題錯：</b><br>ROC 曲線：X 軸 = FPR（假陽率）　Y 軸 = TPR（真陽率，即 Recall）<br>PR 曲線：X 軸 = Recall（召回率）　Y 軸 = Precision（精確率）<br><span class="hint">scikit-learn 的 <code>confusion_matrix(y_true, y_pred)</code>：橫列（row）＝真實類別，直欄（column）＝預測類別。</span></div>
+
+  <details>
+    <summary>展開五個指標的公式對照表</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>指標</th><th>公式</th><th>回答什麼問題</th><th>何時該看它</th></tr>
+        <tr><td><b>準確率 Accuracy</b></td><td>(TP+TN)／全部</td><td>整體對了幾成</td><td>類別大致平衡時才有意義</td></tr>
+        <tr><td><b>精確率 Precision</b></td><td>TP／(TP+FP)</td><td><b>報警的裡面有幾成是真的</b></td><td>誤報成本高（誤凍結帳號、誤召回商品）</td></tr>
+        <tr><td><b>召回率 Recall</b></td><td>TP／(TP+FN)</td><td><b>真的裡面被抓到幾成</b></td><td>漏抓成本高（詐欺、疾病、外掛）</td></tr>
+        <tr><td><b>F1</b></td><td>2·P·R／(P+R)</td><td>兩者的<b>調和平均</b></td><td>要同時兼顧，且不想被單一項偏高騙</td></tr>
+        <tr><td><b>AUC-ROC</b></td><td>ROC 曲線下面積</td><td>跨所有門檻的整體區辨力</td><td>類別不至於極端不平衡時</td></tr>
+        <tr><td><b>PR-AUC</b></td><td>PR 曲線下面積</td><td>對<b>少數類</b>的區辨力</td><td>正例比例極低時比 AUC-ROC 更敏感</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <h3>哪一條「最不可能」是 ROC 曲線？（115-1 #23）</h3>
+  <div class="panel">
+    <div class="strat" id="rocPick"></div>
+    <div style="margin-top:14px"><div class="verdict" id="rocV">點一條曲線</div><p class="hint" id="rocWhy" style="margin:6px 0 0"></p></div>
+  </div>
+  <p class="prose">ROC 曲線是<b>同一個模型</b>在門檻由高到低移動時描出的軌跡。門檻放寬時被判為陽性的樣本只增不減，所以 TPR 與 FPR 都<b>單調不減</b>，曲線必定從 (0,0) 單調上升到 (1,1)，<b>中途不會下降</b>。對角線 TPR = FPR 代表隨機猜測，AUC = 0.5。</p>
+
+  <h3>F1 是調和平均；weighted ≠ macro（115-1 #50）</h3>
+  <div class="panel">
+    <div class="tabs" id="f1Tabs"></div>
+    <div id="f1Body"></div>
+  </div>
+
+  <h3>準確率陷阱：改善方向有三層</h3>
+  <p class="prose">在正常交易佔 99.5%、詐欺佔 0.5% 的資料上，<b>一個永遠預測「正常」的空模型就有 99.5% 準確率，但詐欺的召回率是 0%。</b>此時準確率幾乎只反映多數類的比例，<b>喪失區辨模型好壞的能力</b>。</p>
+  <div class="panel">
+    <div class="steps" id="layBtns"></div>
+    <div class="stage">
+      <div class="stage-viz" id="layViz"></div>
+      <div id="layTxt"></div>
+    </div>
+  </div>
+  <div class="callout"><b>只改看 Precision 不是解方。</b>模型只要更保守、幾乎不發警報就能把 Precision 拉高，反而讓真正的詐欺更攔不到。風控場景要壓的是<b>偽陰性</b>。</div>
+
+  <h3>重抽樣三選一</h3>
+  <div class="cards" id="rsCards"></div>
+  <div class="callout"><b>SMOTE 必須在訓練／測試切分之後、只對訓練集執行。</b>若先對全體資料做 SMOTE 再切分，由測試集樣本插值產生的合成點會落進訓練集，測試集資訊等同外洩，AUC 會虛高而不可信。同樣的道理適用於<b>標準化與特徵篩選</b>：任何會「從資料學參數」的步驟，都必須只用訓練集擬合、再套用到測試集。在含測試集的全體資料上算相關係數來刪特徵，就是典型的資料洩漏（Data Leakage）。</div>
+
+  <h3>切分方式要對症</h3>
+  <div class="panel">
+    <p class="hint">先點左邊的資料特性，再點右邊的切分方式。</p>
+    <div class="match" id="splitMatch"></div>
+    <div class="feedback" id="splitFb" aria-live="polite"></div>
+  </div>
+  <div class="callout">降低 K 值、改用拔靴法（Bootstrap）、或刻意調整測試集的類別比例，<b>都不能修正類別失衡造成的評估偏差</b>——這三個是同一題的三個誘答。</div>
+</section>
+
+<!-- 38.7 -->
+<section id="s7">
+  <div class="sec-head"><span class="sec-no">38.7</span><h2>官方考過什麼</h2></div>
+  <p class="lead"><b>計數基準：</b>逐題判讀 L22 官方試題全部 100 題（114-2 第 1～50 題、115-1 第 1～50 題），以「題幹情境或正解涉及鑑別式任務（分類／預測／異常偵測／推薦／風險評分）的模型選型、資料支撐或效能評估」為納入標準，得到<b>直接對應 16 題</b>；另有 3 題與本節主題部分交集但主要歸屬其他知識點。只考統計檢定、視覺化、資料庫架構、隱私合規者不計入。</p>
+  <div class="callout"><b>與第 38 份（<a href="L22401_bigdata_machine_learning.html">L22401 大數據與機器學習</a>）的重疊：</b>114Q2 第 11、12、37 題與 115Q1 第 17、20、25、31 題兩邊都收，切角不同（38 看資料供給與訓練流程，39 看任務型態與評估指標）。<b>兩份的題數不可相加</b>，各自的計數基準不同。</div>
+  <div class="panel">
+    <div class="row" style="justify-content:space-between"><b>直接對應 16 題中，圍繞「類別不平衡」的題數</b><span id="imbCnt">8／16</span></div>
+    <div class="meter" style="height:18px"><i id="imbMeter" style="width:0;background:var(--sen)"></i></div>
+    <p class="hint" style="margin:6px 0 0">114-2 #12、#37、#39，115-1 #17、#20、#25、#32、#43。時間有限的話，這一節就先把 38.6 讀熟。</p>
+  </div>
+  <h3>直接對應 16 題</h3>
+  <div id="examList"></div>
+  <h3>部分交集（主要歸屬其他知識點，但觀念互相支援）</h3>
+  <div id="examList2"></div>
+</section>
+
+<!-- 38.8 -->
+<section id="s8">
+  <div class="sec-head"><span class="sec-no">38.8</span><h2>易錯與陷阱</h2></div>
+  <p class="lead">逐條確認自己真的懂了再打勾（打勾狀態會記在這台裝置上）。</p>
+  <div class="traps" id="traps"></div>
+  <p class="hint" id="trapCount" style="margin-top:10px"></p>
+
+  <h3>情境測驗</h3>
+  <div class="qcard" id="quiz"></div>
+
+  <h3>延伸練習</h3>
+  <p class="prose"><b>L22 主題庫（290 題）→ 大數據在鑑別式 AI 中的應用：</b>先掃「不平衡處理」與「評估指標」兩類，錯了回頭看 38.6。</p>
+  <p class="prose"><b>L22 歷屆 100 題：</b>本節直接對應 16 題、部分交集 3 題，是 L22 出題密度最高的知識點之一；情境題讀完先判斷「這是分類、預測還是異常偵測」，再看限制條件。</p>
+  <p class="prose"><b>跨知識點交叉複習：</b>往前接 38（<a href="L22401_bigdata_machine_learning.html">L22401 大數據與機器學習</a>）——那裡談的是 5V 挑戰、分散式訓練與 MLOps 生命週期，本節則是把那套流程套到「分類／預測」這一類任務上；往後接 40（<a href="L22403_bigdata_generative_ai.html">L22403 大數據在生成式 AI 中的應用</a>），把 38.1 的 P(Y|X) 對 P(X)、P(X,Y) 那張表再對照一次，兩節就串起來了。不平衡處理與評估指標另與 <a href="L23303_training_evaluation.html">L23303（模型訓練、評估與驗證）</a>大幅重疊，差別在 L23 問「原理為何」、L22 問「在大數據條件下該怎麼做」。</p>
+</section>
+</main>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce){document.querySelectorAll('#heroSvg .movers').forEach(m=>m.remove());}
+
+/* ---------- generic matcher ---------- */
+function matcher(root,fb,left,right,doneMsg){
+  let sel=null,done=0;
+  const L=document.createElement('div');L.className='col';
+  const R=document.createElement('div');R.className='col';
+  left.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;
+    b.innerHTML=it.html;if(it.c)b.style.setProperty('--c',it.c);
+    b.onclick=()=>{if(b.classList.contains('done'))return;L.querySelectorAll('.mitem').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;fb.textContent='';fb.className='feedback';};
+    L.appendChild(b);
+  });
+  right.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;b.innerHTML=it.html;
+    b.onclick=()=>{
+      if(b.classList.contains('done'))return;
+      if(!sel){fb.textContent='請先點左邊一個項目。';fb.className='feedback';return;}
+      if(sel.dataset.k===b.dataset.k){
+        const c=sel.style.getPropertyValue('--c');
+        [sel,b].forEach(x=>{x.classList.remove('sel');x.classList.add('done');if(c)x.style.setProperty('--c',c);});
+        fb.textContent='✓ '+(it.ok||'答對了！');fb.className='feedback ok';sel=null;done++;
+        if(done===left.length){fb.textContent='✓ 全部配對完成！'+doneMsg;}
+      }else{
+        b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');
+        fb.textContent='✗ '+(it.bad||'不太對，再想想看。');fb.className='feedback bad';
+      }
+    };
+    R.appendChild(b);
+  });
+  root.append(L,R);
+}
+
+/* ---------- flip cards ---------- */
+function flipCards(root,arr){
+  arr.forEach(([n,o,d])=>{
+    const b=document.createElement('button');b.className='flip';b.setAttribute('aria-pressed','false');
+    b.innerHTML=`<div class="in"><div class="f"><strong>${n}</strong><span>${o}</span><span style="margin-top:auto;font-size:12.5px">點我翻面</span></div><div class="b">${d}</div></div>`;
+    b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');
+    root.appendChild(b);
+  });
+}
+
+/* ---------- tabs helper ---------- */
+function tabset(btnRoot,bodyRoot,items,render,after){
+  items.forEach((x,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=x[0];b.onclick=()=>s(i);btnRoot.appendChild(b);});
+  function s(i){btnRoot.querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));bodyRoot.innerHTML=render(items[i],i);if(after)after(items[i],i);}
+  s(0);
+}
+
+/* ---------- step stage helper ---------- */
+function stepper(btnRoot,vizRoot,txtRoot,items){
+  items.forEach((e,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=e.b;b.onclick=()=>show(i);btnRoot.appendChild(b);});
+  function show(i){btnRoot.querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));vizRoot.innerHTML=items[i].viz;txtRoot.innerHTML=items[i].txt;}
+  show(0);
+}
+
+/* ---------- exam list ---------- */
+function examList(root,rows){
+  rows.forEach(([n,k,q,a])=>{root.insertAdjacentHTML('beforeend',`<details><summary><span class="tag">${n}</span>${k}</summary><div class="body">${q?`<p style="margin:0 0 6px"><span class="hint">怎麼問：</span>${q}</p>`:''}<p style="margin:0"><span class="hint">正解思路：</span>${a}</p></div></details>`);});
+}
+
+/* ---------- traps ---------- */
+function traps(key,T){
+  let saved=[];try{saved=JSON.parse(localStorage.getItem(key)||'[]')||[];}catch(e){saved=[];}
+  T.forEach(([a,b],i)=>{
+    const l=document.createElement('label');const c=saved.includes(i);if(c)l.classList.add('chk');
+    l.innerHTML=`<input type="checkbox" ${c?'checked':''}><div><em>${a}</em><br><span>${b}</span></div>`;
+    l.querySelector('input').onchange=e=>{const on=e.target.checked;l.classList.toggle('chk',on);saved=on?[...new Set([...saved,i])]:saved.filter(x=>x!==i);try{localStorage.setItem(key,JSON.stringify(saved));}catch(err){}count();};
+    $('#traps').appendChild(l);
+  });
+  function count(){$('#trapCount').textContent=`已確認 ${saved.length}／${T.length} 條`;}
+  count();
+}
+
+/* ---------- quiz ---------- */
+function quiz(Q,msgs){
+  let i=0,score=0;const box=$('#quiz');
+  const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+  function show(){
+    if(i>=Q.length){
+      const r=score/Q.length;
+      const msg=r>=.9?msgs[0]:r>=.65?msgs[1]:msgs[2];
+      box.innerHTML=`<div class="progress"><i style="width:100%"></i></div><div class="qtext" style="font-size:24px;font-family:var(--serif)">得分 ${score}／${Q.length}</div><p>${msg}</p><button class="btn primary" id="qr">重新測驗</button>`;
+      $('#qr').onclick=()=>{i=0;score=0;show();};return;
+    }
+    const [q,opts,ex]=Q[i];
+    const order=shuffle(opts.map((o,k)=>({o,k})));
+    box.innerHTML=`<div class="progress"><i style="width:${i/Q.length*100}%"></i></div><div class="qtop"><span>第 ${i+1}／${Q.length} 題</span><span>得分 ${score}</span></div><div class="qtext">${q}</div><div class="opts">${order.map(x=>`<button class="opt" data-k="${x.k}">${x.o}</button>`).join('')}</div><div class="expl" id="qe"></div><div class="row" style="margin-top:14px;justify-content:flex-end"><button class="btn primary" id="qn" style="display:none">${i===Q.length-1?'看結果':'下一題'}</button></div>`;
+    box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.k==='0';if(ok)score++;
+      box.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.k==='0')x.classList.add('right');});
+      if(!ok)b.classList.add('wrongpick');
+      const e=$('#qe');e.innerHTML=(ok?'<b style="color:var(--ok)">答對了。</b>':'<b style="color:var(--bad)">這題要小心。</b>')+ex;e.classList.add('show');
+      $('#qn').style.display='';$('#qn').focus();
+    });
+    $('#qn').onclick=()=>{i++;show();};
+  }
+  show();
+}
+
+/* ---------- nav highlight ---------- */
+function navHighlight(){
+  const links=[...document.querySelectorAll('nav.toc a')];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on&&window.innerWidth<=860)a.scrollIntoView({inline:'center',block:'nearest'});});}});},{rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('main section').forEach(s=>io.observe(s));
+}
+
+/* deterministic random */
+function rng(seed){let s=seed;return()=>{s=(s*9301+49297)%233280;return s/233280;};}
+function gauss(r){let u=0;for(let k=0;k<6;k++)u+=r();return (u-3)/0.7071;}
+
+/* hero points */
+(function(){
+  const r=rng(4);let h='';
+  for(let i=0;i<14;i++){const y=30+r()*220,xl=120+(260-y)*.875;h+=`<circle cx="${(30+r()*(xl-60)).toFixed(1)}" cy="${y.toFixed(1)}" r="7" fill="var(--txt)" opacity=".8"/>`;}
+  for(let i=0;i<14;i++){const y=30+r()*220,xl=120+(260-y)*.875;h+=`<circle cx="${(xl+30+r()*(400-xl-30)).toFixed(1)}" cy="${y.toFixed(1)}" r="7" fill="var(--sen)" opacity=".8"/>`;}
+  $('#heroPts').innerHTML=h;
+})();
+
+/* ================= 38.1 ================= */
+(function(){
+  const r=rng(9);
+  const A=Array.from({length:22},()=>[95+gauss(r)*20,150+gauss(r)*21]);
+  const B=Array.from({length:22},()=>[220+gauss(r)*20,90+gauss(r)*21]);
+  function draw(m){
+    let h='';
+    if(m==='g'){
+      h+=`<ellipse cx="95" cy="150" rx="70" ry="72" fill="color-mix(in srgb,var(--txt) 12%,transparent)" stroke="var(--txt)" stroke-width="2"/><ellipse cx="95" cy="150" rx="38" ry="40" fill="none" stroke="var(--txt)" stroke-dasharray="4 3"/>`;
+      h+=`<ellipse cx="220" cy="90" rx="70" ry="72" fill="color-mix(in srgb,var(--sen) 12%,transparent)" stroke="var(--sen)" stroke-width="2"/><ellipse cx="220" cy="90" rx="38" ry="40" fill="none" stroke="var(--sen)" stroke-dasharray="4 3"/>`;
+      h+=`<text x="20" y="232" font-size="12" fill="var(--txt)">P(X|Y=藍)</text><text x="230" y="14" font-size="12" fill="var(--sen)">P(X|Y=紅)</text>`;
+    }else{
+      h+=`<line x1="60" y1="0" x2="270" y2="240" stroke="var(--ink)" stroke-width="3" stroke-dasharray="8 6"/><text x="200" y="232" font-size="12" fill="var(--ink)">決策邊界</text>`;
+    }
+    A.forEach(p=>h+=`<circle cx="${p[0]}" cy="${p[1]}" r="5" fill="var(--txt)" opacity=".75"/>`);
+    B.forEach(p=>h+=`<circle cx="${p[0]}" cy="${p[1]}" r="5" fill="var(--sen)" opacity=".75"/>`);
+    $('#dgSvg').innerHTML=h;
+    $('#dgTxt').innerHTML=m==='d'?'<p class="verdict" style="margin:0 0 8px">只畫一條界線</p><p style="margin:0 0 6px">學 <b>P(Y|X)</b>：「給我一筆資料，它屬於哪一類」。</p><p class="hint" style="margin:0">不建模 P(X)——資料分佈偏移時，模型本身<b>無從察覺</b>，只能靠外部監控。代表：邏輯迴歸、SVM、隨機森林、XGBoost、CNN 分類器、BERT 分類頭、GNN。</p>':'<p class="verdict" style="margin:0 0 8px">先學每一類長什麼樣</p><p style="margin:0 0 6px">學 <b>P(X)</b> 或 <b>P(X,Y)</b>：「資料長什麼樣子，我能再產生一筆像它的」。</p><p class="hint" style="margin:0">再用<b>貝氏定理</b>推回 P(Y|X)，所以也能做分類（樸素貝氏建模 P(X|Y)·P(Y)）。代表：樸素貝氏、GMM、HMM、VAE、GAN、Diffusion、LLM。</p>';
+  }
+  document.querySelectorAll('#dgTabs .btn').forEach(b=>b.onclick=()=>{document.querySelectorAll('#dgTabs .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));draw(b.dataset.m);});
+  draw('d');
+})();
+(function(){
+  const M=[['邏輯迴歸','d','名字有「迴歸」，學的卻是 P(Y=1|X)，是<b>鑑別式分類模型</b>。'],['樸素貝氏','g','建模 P(X|Y)·P(Y)，是<b>生成式</b>，卻大量用於垃圾信與文本分類。'],['SVM','d','直接學決策邊界。'],['GMM','g','高斯混合模型建模資料分佈。'],['XGBoost／LightGBM','d','擅長不平衡的表格資料分類。'],['HMM','g','隱馬可夫模型建模序列的聯合分佈。'],['BERT 分類頭','d','在 BERT 表示上接分類層，輸出類別機率。'],['GAN','g','學資料分佈以生成新樣本。'],['GNN','d','AML 轉帳網路關係的分類。'],['Diffusion','g','條件化去噪生成。']];
+  let ok=0,done=0;
+  M.forEach(([n,a,why])=>{
+    const d=document.createElement('div');d.className='srt';
+    d.innerHTML=`<div><b>${n}</b><small></small></div><div class="row"><button class="btn" data-v="d">鑑別式</button><button class="btn" data-v="g">生成式</button></div>`;
+    d.querySelectorAll('.btn').forEach(b=>b.onclick=()=>{
+      if(d.dataset.done)return;d.dataset.done=1;done++;
+      const right=b.dataset.v===a;if(right)ok++;
+      b.classList.add(right?'ok':'no');if(!right)d.querySelector(`[data-v="${a}"]`).classList.add('ok');
+      d.querySelector('small').innerHTML=(right?'✓ ':'✗ ')+why;
+      $('#sortFb').textContent=`已作答 ${done}／${M.length}，答對 ${ok}`+(done===M.length?(ok===M.length?'——全對！名稱陷阱沒騙到你。':'——回頭看看邏輯迴歸與樸素貝氏這兩個陷阱。'):'');
+      $('#sortFb').className='feedback '+(right?'ok':'bad');
+    });
+    $('#sorter').appendChild(d);
+  });
+})();
+tabset($('#entTabs'),$('#entBody'),[
+  ['商業價值衡量','可直接換算成攔截率、壞帳率、回應率等 KPI','較難量化，多為效率與體驗提升'],
+  ['驗收方式','有標準答案，可用混淆矩陣客觀評估','常需人工評分或間接指標'],
+  ['資料門檻','需要<b>有標籤</b>的歷史資料，企業內部通常已累積','需要極大規模語料與算力'],
+  ['風險型態','誤判成本明確（誤攔／漏抓）','幻覺、著作權、個資外洩等較難窮舉']
+],x=>`<div><div class="big">鑑別式</div>${x[1]}</div><div><div class="big">生成式</div>${x[2]}</div>`);
+
+/* ================= 38.2 ================= */
+(function(){
+  const D=[
+    ['金融與風險管理','信用評分、詐欺偵測、反洗錢（AML）異常辨識','長時間跨度的交易紀錄（金額／時間／地點）、客戶屬性、API 交易日誌；AML 另需<b>轉帳關係圖（Graph Data）</b>','邏輯迴歸（可解釋，適合信用評分）、隨機森林、<b>XGBoost／LightGBM</b>（不平衡）、<b>GNN</b>（AML 網路關係）','類別極不平衡、個資法遵循與欄位匿名化、異常值未處理造成誤判'],
+    ['零售與電商推薦','顧客流失預測、客戶分群與精準行銷、商品分類／價格預測','購買紀錄＋用戶屬性（結構化）、點擊日誌 JSON（半結構化）、評論文字與商品圖片（非結構化）→ <b>典型多模態</b>','決策樹／隨機森林、LSTM（價格時序）、CLIP 等多模態模型','多來源格式不一致、商品分類標註成本高、推薦需<b>即時處理串流</b>（如 Kafka）'],
+    ['客服與文本分類','對話分類、情感分析、內容過濾與審查','大量<b>標註一致</b>的對話與評論語料；在地化詞典','樸素貝氏／SVM（簡單文本）、<b>BERT／RoBERTa</b>（高準確度）、正規表示式（簡單違規檢測）','標註一致性、台灣用語在地化、高缺失或邏輯錯誤污染統計檢定'],
+    ['醫療與健康科技','疾病預測與診斷、保險理賠異常分析、臨床決策支援','結構化病歷＋醫療影像＋醫師筆記的<b>多模態</b>資料；<b>必須由專家標註</b>','<b>CNN</b>（ResNet／VGG 影像分類）、隨機森林／XGBoost（病歷）、CNN＋BERT 多模態','隱私與加密、<b>專家標註成本極高 → 用主動式學習</b>、生理訊號異常值'],
+    ['資安與異常偵測','登入行為異常辨識、惡意流量分類、釣魚郵件分類','高頻登入紀錄與封包元資料、JSON／CSV 日誌串流；要求<b>低延遲</b>','<b>孤立森林（Isolation Forest）</b>、LSTM（流量序列）、BERT（郵件）、正規表示式','異常樣本比例極低、即時性依賴串流平台、<b>日誌重複值</b>扭曲統計']
+  ];
+  const H=['任務目標','大數據支撐','常見模型','主要挑戰'];
+  let d=0,k=0;
+  $('#domPipe').innerHTML=H.map(h=>`<div class="pnode"><b>${h}</b></div>`).join('');
+  function r(){
+    document.querySelectorAll('#domPipe .pnode').forEach((n,j)=>{n.classList.toggle('on',j===k);n.classList.toggle('past',j<k);});
+    $('#domOut').innerHTML=Array.from({length:k+1},(_,j)=>`<p style="margin:0 0 6px"><span class="hint">${H[j]}：</span>${D[d][j+1]}</p>`).join('');
+    $('#domNext').disabled=k===3;$('#domNext').style.opacity=k===3?.4:1;
+  }
+  D.forEach((x,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=x[0];b.onclick=()=>{d=i;k=0;$('#domTabs').querySelectorAll('.btn').forEach((y,j)=>y.setAttribute('aria-pressed',i===j));r();};$('#domTabs').appendChild(b);});
+  $('#domTabs .btn').setAttribute('aria-pressed','true');
+  $('#domNext').onclick=()=>{if(k<3){k++;r();}};
+  $('#domAll').onclick=()=>{k=3;r();};
+  r();
+})();
+flipCards($('#caseCards'),[
+  ['金融','XGBoost 預測違約','某銀行以 XGBoost 結合交易與信用資料預測違約：準確率提升至 <b>85%</b>，壞帳損失減少 <b>20%</b>。'],
+  ['電商','隨機森林預測流失','某平台以隨機森林預測顧客流失：識別 <b>90%</b> 高風險顧客，行銷回應率提升 <b>12%</b>。'],
+  ['客服','BERT 分類對話','某電信以 BERT 分類客服對話：識別 <b>95%</b> 物流問題，人工處理時間減少 <b>30%</b>。'],
+  ['醫療','ResNet 分析 X 光','某醫院以 ResNet 分析 X 光片：肺炎診斷準確率 <b>92%</b>，誤診率減少 <b>25%</b>。'],
+  ['資安','孤立森林分析登入','某企業以孤立森林分析登入日誌：識別 <b>98%</b> 異常登入，安全事件減少 <b>40%</b>。']
+]);
+(function(){
+  const T=[
+    ['即時分析金融交易資料流，偵測與平常行為明顯不同的可疑紀錄','異常偵測 ✓','正解：找出「與正常模式明顯不同」的少數樣本。','var(--ok)'],
+    ['預測旺季是否缺貨','預測（迴歸／時間序列）','用歷史資料推估未來的數值，不是異常偵測。','var(--bad)'],
+    ['預測次日登入量','預測（迴歸／時間序列）','推估未來數值，不是找偏離常態的樣本。','var(--bad)'],
+    ['預測客戶是否違約','分類','判斷樣本屬於哪一個已定義的類別（違約／不違約）。','var(--bad)']
+  ];
+  T.forEach(t=>{const b=document.createElement('button');b.textContent=t[0];b.setAttribute('aria-pressed','false');b.onclick=()=>{$('#taskPick').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#taskV').textContent=t[1];$('#taskV').style.color=t[3];$('#taskWhy').textContent=t[2];};$('#taskPick').appendChild(b);});
+})();
+
+/* ================= 38.3 ================= */
+(function(){
+  const J=`{
+  "user": {
+    "id": "U1024",
+    "device": { "os": "iOS", "ver": "17" }
+  },
+  "event": "click",
+  "item": { "sku": "A-778", "price": 590 },
+  "ts": "2025-11-02T08:15:00Z"
+}`;
+  $('#jsonBox').textContent=J;
+  let on=false;
+  function draw(){
+    $('#flatBox').innerHTML=on?'<div class="tbl-wrap"><table class="flat-tbl"><tr><th>欄位</th><th>值</th></tr>'+[['user.id','U1024'],['user.device.os','iOS'],['user.device.ver','17'],['event','click'],['item.sku','A-778'],['item.price','590'],['ts','2025-11-02T08:15:00Z']].map(([a,b])=>`<tr><td><code>${a}</code></td><td>${b}</td></tr>`).join('')+'</table></div><p class="hint" style="margin:6px 0 0">巢狀結構被攤成一列一欄的表格特徵，才能進鑑別式模型。欄位若動態變動，解析規則也要跟著維護。</p>':'<div class="pout">巢狀的層次結構，欄位可能動態增減——模型無法直接吃。</div>';
+    $('#flatBtn').textContent=on?'還原 JSON':'解析並展平';
+  }
+  $('#flatBtn').onclick=()=>{on=!on;draw();};
+  draw();
+})();
+matcher($('#typeMatch'),$('#typeFb'),[
+  {k:'s',c:'var(--txt)',html:'結構化<small>ERP／CRM／POS、感測器讀值</small>'},
+  {k:'h',c:'var(--img)',html:'半結構化<small>JSON／XML、伺服器日誌、點擊流</small>'},
+  {k:'u',c:'var(--aud)',html:'非結構化<small>對話、X 光、客服錄音</small>'},
+  {k:'m',c:'var(--sen)',html:'多模態<small>用戶屬性＋評論文字＋商品圖</small>'}
+],[
+  {k:'u',html:'特徵萃取<small>詞向量、CNN 特徵、ASR 轉錄</small>',ok:'非結構化 → 特徵萃取轉成數值表示。'},
+  {k:'m',html:'特徵級融合或多分支模型',ok:'多模態需要多輸入架構。'},
+  {k:'s',html:'數值標準化、類別編碼',ok:'結構化直接轉成表格式特徵。'},
+  {k:'h',html:'解析（Parsing）與展平（Flattening）',ok:'半結構化最常被問的就是「展平」。'}
+],'兩個動詞（展平／特徵萃取）分清楚了。');
+
+/* ================= 38.4 ================= */
+(function(){
+  const S={
+    al:['主動式學習','模型挑出<b>低置信度樣本</b>優先交人工標','用最少標註量換最大效益','需初始標註資料與迭代訓練，技術門檻高','標註<b>成本高且資料量大</b>（醫療影像、詐欺專家審核）'],
+    hu:['人工標註','由具備專業的人逐筆標','準確度最高','成本高、耗時、<b>難以規模化</b>','醫療影像、法律文件等<b>需要專業知識</b>'],
+    ws:['弱監督式標註','用規則、啟發式或第三方資料（如情緒詞典）自動產生標籤','速度快、成本低、適合大規模','<b>誤標風險高</b>、品質不穩定，需後續清理','社群貼文情感、商品粗分類等可先求有'],
+    cr:['群眾外包','透過 MTurk、Appen 等平台分散給大量非專業者','成本低、速度快','品質參差，需<b>一致性檢查與多工審核</b>','圖片是否含某物件等<b>簡單任務</b>']
+  };
+  const Q={
+    q1:['需要專業判斷？',[['是','q2'],['否','q3']]],
+    q2:['標註成本是瓶頸？',[['是','al'],['否','hu']]],
+    q3:['任務能寫成規則或查詞典？',[['是','ws'],['否（需人眼但不需專業）','cr']]]
+  };
+  let path=[];
+  function show(k){
+    if(Q[k]){
+      $('#treeQ').textContent=Q[k][0];$('#treeOut').innerHTML='';
+      $('#treeBtns').innerHTML='';
+      Q[k][1].forEach(([t,n])=>{const b=document.createElement('button');b.className='btn';b.textContent=t;b.onclick=()=>{path.push(Q[k][0]+' '+t);show(n);};$('#treeBtns').appendChild(b);});
+    }else{
+      const s=S[k];
+      $('#treeQ').innerHTML='→ <span style="color:var(--ok)">'+s[0]+'</span>';
+      $('#treeBtns').innerHTML='';const b=document.createElement('button');b.className='btn primary';b.textContent='重新走一次';b.onclick=()=>{path=[];show('q1');};$('#treeBtns').appendChild(b);
+      $('#treeOut').innerHTML=`<div class="nums" style="margin-top:0"><div>做法<b style="font-size:15px">${s[1]}</b></div><div>優點<b style="font-size:15px">${s[2]}</b></div><div>限制<b style="font-size:15px">${s[3]}</b></div><div>什麼情境選它<b style="font-size:15px">${s[4]}</b></div></div>`;
+    }
+    $('#treePath').textContent=path.length?'路徑：'+path.join(' → '):'';
+  }
+  show('q1');
+})();
+(function(){
+  const r=rng(31);
+  const P=Array.from({length:24},(_,i)=>({x:30+(i%8)*72+r()*20,y:40+Math.floor(i/8)*65+r()*20,c:+(0.35+r()*0.64).toFixed(2)}));
+  P[3].c=.42;P[10].c=.55;P[17].c=.38;P[21].c=.58;P[6].c=.51;
+  const randIdx=[0,5,9,14,22];
+  const sure=P.map((p,i)=>[p.c,i]).sort((a,b)=>b[0]-a[0]).slice(0,5).map(v=>v[1]);
+  function draw(m){
+    const sel=m==='rand'?randIdx:m==='al'?P.map((p,i)=>p.c<.6?i:-1).filter(i=>i>=0):m==='sure'?sure:[];
+    let h='';
+    P.forEach((p,i)=>{const s=sel.includes(i);h+=`<circle cx="${p.x}" cy="${p.y}" r="18" fill="${p.c<.6?'color-mix(in srgb,var(--warn) 30%,var(--surface2))':'var(--surface2)'}" stroke="${s?'var(--ink)':'var(--line)'}" stroke-width="${s?4:1.5}" style="transition:all .4s"/><text x="${p.x}" y="${p.y+4}" text-anchor="middle" font-size="11" fill="var(--ink)">${p.c.toFixed(2)}</text>`;});
+    $('#alSvg').innerHTML=h;
+    const msg={rand:'隨機抽樣：挑到的多半是模型早就有把握的樣本，專家的時間被浪費在「不需要教」的地方。',al:'✓ 主動式學習：只把模型<b>不確定（置信度 &lt; 0.6）</b>的交易交專家標註——用最少標註量換最大效益。',sure:'✗ 挑最有把握的：這些模型早就判對了，標了也學不到新東西。',none:'選一種挑法，看會把哪些樣本交給專家（黑框）。'};
+    $('#alNote').innerHTML=msg[m];
+  }
+  document.querySelectorAll('#alTabs .btn').forEach(b=>b.onclick=()=>{document.querySelectorAll('#alTabs .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));draw(b.dataset.m);});
+  draw('none');
+})();
+
+/* ================= 38.5 ================= */
+flipCards($('#obsCards'),[
+  ['主鍵不一致','用戶 ID／裝置 ID／訂單編號定義不同','<b>症狀：</b>各系統無法直接對應。<br><b>例：</b>CRM 與 POS 用不同客戶 ID，資料合不起來。'],
+  ['時間戳記與時區','延遲、格式差異、時區不一','<b>例：</b>網站日誌用 UTC、POS 交易用台北時間。'],
+  ['更新頻率不一致','即時串流 vs 批次同步','<b>症狀：</b>時間視窗對不齊。<br><b>例：</b>即時點擊流 vs 每日更新的庫存資料。'],
+  ['資料品質不均','缺失、格式不一、單位不統一','<b>例：</b>API 缺關鍵欄位；ERP 一邊寫「1,000 克」一邊寫「1 公斤」。']
+]);
+(function(){
+  const r=rng(17);
+  const B=Array.from({length:14},()=>[90+gauss(r)*18,140+gauss(r)*18]);
+  const R=Array.from({length:14},()=>[220+gauss(r)*18,90+gauss(r)*18]);
+  let dup=false,out=false;
+  function draw(){
+    let Bs=B.slice();
+    let dups=[];if(dup){B.slice(0,8).forEach(p=>{for(let k=0;k<3;k++){Bs.push(p);}dups.push(p);});}
+    const outs=out?[[300,20],[295,30],[305,15]]:[];
+    Bs=Bs.concat(outs);
+    const mean=a=>[a.reduce((s,p)=>s+p[0],0)/a.length,a.reduce((s,p)=>s+p[1],0)/a.length];
+    const mb=out?mean(B.concat(outs.map(p=>p).concat(outs).concat(outs))):mean(B),mr=mean(R);
+    const m=[(mb[0]+mr[0])/2,(mb[1]+mr[1])/2],n=[mr[0]-mb[0],mr[1]-mb[1]],d=[-n[1],n[0]],L=Math.hypot(...d);
+    const u=[d[0]/L*400,d[1]/L*400];
+    let h=`<line x1="${m[0]-u[0]}" y1="${m[1]-u[1]}" x2="${m[0]+u[0]}" y2="${m[1]+u[1]}" stroke="var(--ink)" stroke-width="3" stroke-dasharray="8 6" style="transition:all .5s"/>`;
+    if(out)h+=`<line x1="${(mean(B)[0]+mr[0])/2-(-(mr[1]-mean(B)[1]))/Math.hypot(mr[0]-mean(B)[0],mr[1]-mean(B)[1])*400}" y1="${(mean(B)[1]+mr[1])/2-((mr[0]-mean(B)[0]))/Math.hypot(mr[0]-mean(B)[0],mr[1]-mean(B)[1])*400}" x2="${(mean(B)[0]+mr[0])/2+(-(mr[1]-mean(B)[1]))/Math.hypot(mr[0]-mean(B)[0],mr[1]-mean(B)[1])*400}" y2="${(mean(B)[1]+mr[1])/2+((mr[0]-mean(B)[0]))/Math.hypot(mr[0]-mean(B)[0],mr[1]-mean(B)[1])*400}" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="3 4"/>`;
+    B.forEach(p=>h+=`<circle cx="${p[0]}" cy="${p[1]}" r="6" fill="var(--txt)" opacity=".8"/>`);
+    R.forEach(p=>h+=`<circle cx="${p[0]}" cy="${p[1]}" r="6" fill="var(--sen)" opacity=".8"/>`);
+    dups.forEach(p=>h+=`<circle cx="${p[0]}" cy="${p[1]}" r="10" fill="none" stroke="var(--txt)" stroke-width="2"/><text x="${p[0]+10}" y="${p[1]-8}" font-size="10" fill="var(--txt)">×4</text>`);
+    outs.forEach(p=>h+=`<circle cx="${p[0]}" cy="${p[1]}" r="7" fill="var(--txt)" stroke="var(--bad)" stroke-width="3"/>`);
+    $('#qSvg').innerHTML=h;
+    const nb=B.length+(dup?24:0)+outs.length,tot=nb+R.length,pct=Math.round(nb/tot*100);
+    $('#qPct').textContent=pct+'%';$('#qMeter').style.width=pct+'%';$('#qMeter').style.background=pct>60?'var(--bad)':'var(--txt)';
+    const notes=[];
+    if(dup)notes.push('<b>重複值：</b>8 筆藍點各重複 4 次，藍類比例從 50% 衝到 '+Math.round((B.length+24)/(B.length+24+R.length)*100)+'%——<b>樣本權重被高估、類別比例失真</b>；但點的位置沒變，邊界幾乎不動。');
+    if(out)notes.push('<b>異常值：</b>3 筆極端藍點落在右上角，把決策邊界從細虛線拉到粗虛線——<b>扭曲決策邊界</b>的是異常值。');
+    $('#qNote').innerHTML=notes.length?notes.join('<br>'):'兩類各 14 筆，邊界在兩群中間（以兩類中心連線的中垂線示意）。';
+    $('#dupBtn').setAttribute('aria-pressed',dup);$('#outBtn').setAttribute('aria-pressed',out);
+    $('#dupBtn').textContent=dup?'移除重複值':'加入重複值';$('#outBtn').textContent=out?'移除異常值':'加入異常值';
+  }
+  $('#dupBtn').onclick=()=>{dup=!dup;draw();};
+  $('#outBtn').onclick=()=>{out=!out;draw();};
+  draw();
+})();
+
+/* ================= 38.6 threshold simulator ================= */
+(function(){
+  const r=rng(77);
+  const clip=v=>Math.min(.99,Math.max(.01,v));
+  const neg=Array.from({length:200},()=>clip(.32+gauss(r)*.12));
+  const pos=Array.from({length:20},()=>clip(.6+gauss(r)*.14));
+  let th=.5,curve='roc';
+  const all=[...neg.map(s=>[s,0]),...pos.map(s=>[s,1])];
+  function cm(t){const tp=pos.filter(s=>s>=t).length,fp=neg.filter(s=>s>=t).length;return {tp,fp,fn:pos.length-tp,tn:neg.length-fp};}
+  const ths=[1.01,...[...new Set(all.map(a=>a[0]))].sort((a,b)=>b-a),0];
+  const rocPts=ths.map(t=>{const c=cm(t);return [c.fp/neg.length,c.tp/pos.length];});
+  const prPts=ths.map(t=>{const c=cm(t);return [c.tp/pos.length,c.tp+c.fp?c.tp/(c.tp+c.fp):1];}).filter(p=>p[0]>0);
+  let auc=0;for(let i=1;i<rocPts.length;i++)auc+=(rocPts[i][0]-rocPts[i-1][0])*(rocPts[i][1]+rocPts[i-1][1])/2;
+  let prauc=0;for(let i=1;i<prPts.length;i++)prauc+=(prPts[i][0]-prPts[i-1][0])*prPts[i][1];
+  const maxNeg=Math.max(...neg);
+  const X=s=>20+s*600;
+  function draw(){
+    const c=cm(th);
+    let h=`<line x1="20" y1="130" x2="620" y2="130" stroke="var(--muted)"/>`;
+    [0,.25,.5,.75,1].forEach(v=>h+=`<text x="${X(v)}" y="146" text-anchor="middle" font-size="11" fill="var(--muted)">${v}</text>`);
+    const r2=rng(5);
+    neg.forEach(s=>{const fl=s>=th;h+=`<circle cx="${X(s)}" cy="${18+r2()*60}" r="3.5" fill="var(--txt)" opacity="${fl?.95:.35}"/>`;});
+    pos.forEach(s=>{const fl=s>=th;h+=`<circle cx="${X(s)}" cy="${92+r2()*28}" r="5" fill="var(--bad)" opacity="${fl?1:.4}" stroke="${fl?'none':'var(--bad)'}"/>`;});
+    h+=`<rect x="${X(th)}" y="6" width="${620-X(th)}" height="122" fill="color-mix(in srgb,var(--warn) 10%,transparent)"/><line x1="${X(th)}" y1="4" x2="${X(th)}" y2="130" stroke="var(--warn)" stroke-width="3"/><text x="${Math.min(X(th)+6,560)}" y="16" font-size="12" font-weight="700" fill="var(--warn)">門檻 ${th.toFixed(2)} → 右側報警</text>`;
+    $('#thSvg').innerHTML=h;
+    $('#cmTbl').innerHTML=`<tr><th></th><th>預測陽性</th><th>預測陰性</th></tr><tr><th>實際陽性（詐欺）</th><td class="tp">TP ${c.tp}</td><td class="fn">FN ${c.fn}<br><small>漏抓</small></td></tr><tr><th>實際陰性（正常）</th><td class="fp">FP ${c.fp}<br><small>誤報</small></td><td>TN ${c.tn}</td></tr>`;
+    const N=neg.length+pos.length,acc=(c.tp+c.tn)/N,P=c.tp+c.fp?c.tp/(c.tp+c.fp):null,R=c.tp/pos.length,F=P&&R?2*P*R/(P+R):0,spec=c.tn/neg.length,fpr=c.fp/neg.length;
+    const pc=v=>v===null?'—':(v*100).toFixed(1)+'%';
+    $('#thNums').innerHTML=`<div>Accuracy<b>${pc(acc)}</b></div><div>Precision<b>${pc(P)}</b></div><div>Recall／TPR<b>${pc(R)}</b></div><div>F1<b>${F.toFixed(2)}</b></div><div>Specificity<b>${pc(spec)}</b></div><div>FPR<b>${pc(fpr)}</b></div>`;
+    // curve
+    let g='<line x1="40" y1="220" x2="290" y2="220" stroke="var(--muted)"/><line x1="40" y1="220" x2="40" y2="10" stroke="var(--muted)"/>';
+    const cx=v=>40+v*250,cy=v=>220-v*210;
+    if(curve==='roc'){
+      g+=`<line x1="${cx(0)}" y1="${cy(0)}" x2="${cx(1)}" y2="${cy(1)}" stroke="var(--line)" stroke-dasharray="5 4"/><text x="${cx(.62)}" y="${cy(.5)}" font-size="11" fill="var(--muted)">隨機猜 AUC=0.5</text>`;
+      g+=`<polyline points="${rocPts.map(p=>`${cx(p[0]).toFixed(1)},${cy(p[1]).toFixed(1)}`).join(' ')}" fill="none" stroke="var(--txt)" stroke-width="3"/>`;
+      g+=`<circle cx="${cx(fpr)}" cy="${cy(R)}" r="7" fill="var(--warn)" stroke="var(--surface)" stroke-width="2"/>`;
+      g+=`<text x="165" y="250" text-anchor="middle" font-size="12" fill="var(--ink)">X：FPR（假陽率）</text><text x="14" y="115" font-size="12" fill="var(--ink)" transform="rotate(-90 14 115)">Y：TPR（Recall）</text><text x="200" y="200" font-size="12" font-weight="700" fill="var(--txt)">AUC ≈ ${auc.toFixed(2)}</text>`;
+    }else{
+      const base=pos.length/N;
+      g+=`<line x1="${cx(0)}" y1="${cy(base)}" x2="${cx(1)}" y2="${cy(base)}" stroke="var(--line)" stroke-dasharray="5 4"/><text x="${cx(.45)}" y="${cy(base)-5}" font-size="11" fill="var(--muted)">隨機猜＝正例比例 ${(base*100).toFixed(0)}%</text>`;
+      g+=`<polyline points="${prPts.map(p=>`${cx(p[0]).toFixed(1)},${cy(p[1]).toFixed(1)}`).join(' ')}" fill="none" stroke="var(--sen)" stroke-width="3"/>`;
+      if(P!==null)g+=`<circle cx="${cx(R)}" cy="${cy(P)}" r="7" fill="var(--warn)" stroke="var(--surface)" stroke-width="2"/>`;
+      g+=`<text x="165" y="250" text-anchor="middle" font-size="12" fill="var(--ink)">X：Recall（召回率）</text><text x="14" y="115" font-size="12" fill="var(--ink)" transform="rotate(-90 14 115)">Y：Precision</text><text x="60" y="30" font-size="12" font-weight="700" fill="var(--sen)">PR-AUC ≈ ${prauc.toFixed(2)}</text>`;
+    }
+    $('#curveSvg').innerHTML=g;
+    let note=`門檻 ${th.toFixed(2)}：`;
+    if(c.fp===0)note+='<b>特異度 100%</b>——不許誤判任何正常樣本，模型幾乎不敢報警，<b>Recall 被壓到 '+pc(R)+'</b>。這是「寧可錯殺」的相反要求。';
+    else if(th<=.3)note+='<b>「寧可錯殺、不可放過」</b>：降低門檻 → 更多樣本被判陽性 → TP↑、FN↓ → <b>Recall↑</b>；FP 也增加 → Precision 通常↓。誤判的再交人工覆核（115-1 #44）。';
+    else note+='門檻↓ → Recall↑、Precision 通常↓；門檻↑ → 模型更保守 → Precision↑、Recall↓。注意 Accuracy 一直很高——因為 9 成以上都是正常交易。';
+    note+='<br><span class="hint">橘點＝目前門檻在曲線上的位置；整條曲線是門檻從高到低掃過的軌跡。</span>';
+    $('#thNote').innerHTML=note;
+  }
+  const set=v=>{th=Math.round(Math.min(.99,Math.max(.01,v))*100)/100;draw();};
+  $('#thDown').onclick=()=>set(th-.05);$('#thUp').onclick=()=>set(th+.05);
+  $('#thLow').onclick=()=>set(.25);$('#thHigh').onclick=()=>set(Math.ceil((maxNeg+.005)*100)/100);$('#thMid').onclick=()=>set(.5);
+  document.querySelectorAll('#curveTabs .btn').forEach(b=>b.onclick=()=>{curve=b.dataset.c;document.querySelectorAll('#curveTabs .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));draw();});
+  draw();
+})();
+(function(){
+  const C=[
+    ['A：平滑上凸','M10 90 C 15 30, 40 12, 90 10',true,'✓ 可能是 ROC：從 (0,0) 單調上升到 (1,1)，區辨力不錯。'],
+    ['B：對角線','M10 90 L 90 10',true,'✓ 可能是 ROC：TPR = FPR，代表隨機猜測，AUC = 0.5。'],
+    ['C：階梯狀','M10 90 L10 60 L30 60 L30 35 L55 35 L55 18 L90 18 L90 10',true,'✓ 可能是 ROC：樣本有限時，真實 ROC 本來就是階梯狀，但依然單調不減。'],
+    ['D：先升後降','M10 90 C 20 20, 40 15, 55 40 S 80 30, 90 10',false,'✗ 最不可能是 ROC（正解）：門檻放寬時被判陽性的樣本只增不減，TPR 不可能中途下降。']
+  ];
+  C.forEach(c=>{const b=document.createElement('button');b.setAttribute('aria-pressed','false');b.innerHTML=`<svg viewBox="0 0 100 100" style="width:90px;height:90px;display:block;margin-bottom:6px"><rect x="10" y="10" width="80" height="80" fill="none" stroke="var(--line)"/><path d="${c[1]}" fill="none" stroke="var(--txt)" stroke-width="3"/></svg>${c[0]}`;b.onclick=()=>{$('#rocPick').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#rocV').textContent=c[2]?'可能是 ROC':'最不可能是 ROC';$('#rocV').style.color=c[2]?'var(--ok)':'var(--bad)';$('#rocWhy').textContent=c[3];};$('#rocPick').appendChild(b);});
+})();
+(function(){
+  const T=[
+    ['P 0.9 ／ R 0.1',.9,.1],['P 0.6 ／ R 0.6',.6,.6],['P 1.0 ／ R 0.2',1,.2],['weighted vs macro',null]
+  ];
+  tabset($('#f1Tabs'),$('#f1Body'),T,(t)=>{
+    if(t[1]===null){
+      const cls=[['A',900,.95],['B',80,.60],['C',20,.20]];
+      const macro=cls.reduce((s,c)=>s+c[2],0)/3,weighted=cls.reduce((s,c)=>s+c[1]*c[2],0)/1000;
+      return `<div class="tbl-wrap"><table style="min-width:0"><tr><th>類別</th><th>樣本數（support）</th><th>該類 F1</th></tr>${cls.map(c=>`<tr><td>${c[0]}</td><td>${c[1]}</td><td>${c[2].toFixed(2)}</td></tr>`).join('')}</table></div><div class="bar"><span>average="macro"</span><div class="track"><div class="fill" style="width:${macro*100}%"></div></div><span class="num">${macro.toFixed(3)}</span></div><div class="bar win"><span>average="weighted"</span><div class="track"><div class="fill" style="width:${weighted*100}%"></div></div><span class="num">${weighted.toFixed(3)}</span></div><p class="hint" style="margin:6px 0 0">（數值為示意）<b>weighted</b> 依各類別樣本數加權，大類 A 主導結果；<b>macro</b> 才是各類別的算術平均，小類 C 的差表現會被看見。樣本數不均時兩者結果不同。</p>`;
+    }
+    const P=t[1],R=t[2],ar=(P+R)/2,hm=2*P*R/(P+R);
+    return `<div class="bar"><span>算術平均</span><div class="track"><div class="fill" style="width:${ar*100}%"></div></div><span class="num">${ar.toFixed(2)}</span></div><div class="bar win"><span>F1（調和平均）</span><div class="track"><div class="fill" style="width:${hm*100}%"></div></div><span class="num">${hm.toFixed(2)}</span></div><p class="hint" style="margin:6px 0 0">F1 = 2·P·R／(P+R)。${P===R?'P 與 R 相等時，兩種平均一樣。':'只要 Precision 或 Recall 有一項偏低，F1 就會被拉低——不會被單一項偏高騙。'}</p>`;
+  });
+})();
+stepper($('#layBtns'),$('#layViz'),$('#layTxt'),[
+  {b:'評估層',viz:'<div style="font-family:var(--serif);font-size:30px;font-weight:900;color:var(--txt)">Precision<br>Recall・F1<br>PR-AUC</div>',txt:'<p><b>評估層：</b>改看 Precision／Recall／F1／PR-AUC，不再以 Accuracy 為唯一指標。</p><p class="hint">對應題目情境：反詐欺 99.5%、外掛偵測 99.95%（115-1 #20、#43）。</p>'},
+  {b:'學習層',viz:'<div style="font-family:var(--serif);font-size:26px;font-weight:900;color:var(--img)">Loss = Σ w<sub>y</sub>·ℓ<br><span style="font-size:16px;color:var(--muted)">少數類 w 放大</span></div>',txt:'<p><b>學習層：</b><b>Class Weight 或成本敏感學習（Cost-sensitive Learning）</b>，在損失函數中放大少數類誤判的懲罰。</p><p class="hint">對應題目情境：信用卡詐欺 99.6% 準確率卻攔不到詐欺（115-1 #25）。</p>'},
+  {b:'資料層',viz:'<div style="font-family:var(--serif);font-size:28px;font-weight:900;color:var(--aud)">過採樣<br>欠採樣<br>SMOTE</div>',txt:'<p><b>資料層：</b>重抽樣（過採樣／欠採樣／SMOTE）。</p><p class="hint">對應題目情境：罕見疾病確診樣本不到 1%（114-2 #37）。</p>'}
+]);
+flipCards($('#rsCards'),[
+  ['隨機過採樣','直接複製少數類樣本','<b>副作用：過擬合風險升高</b>——複製樣本與原樣本完全相同，模型容易死記（114-2 #12）。'],
+  ['隨機欠採樣','刪掉部分多數類樣本','<b>副作用：丟失多數類資訊</b>；少數類本就稀少時更不可取。'],
+  ['SMOTE','少數類特徵空間插值','多樣性較高、過擬合風險較低，但<b>只能在訓練集上做</b>（115-1 #32）。']
+]);
+matcher($('#splitMatch'),$('#splitFb'),[
+  {k:'s',c:'var(--txt)',html:'類別不平衡<small>如 80% 為良性腫瘤（114-2 #39）</small>'},
+  {k:'g',c:'var(--img)',html:'同一個體有多筆紀錄<small>同一病患、同一用戶（115-1 #17）</small>'},
+  {k:'t',c:'var(--aud)',html:'時間序列<small>銷售、流量預測（115-1 #22）</small>'}
+],[
+  {k:'g',html:'分組交叉驗證（Group K-Fold）',ok:'避免同一個體同時出現在訓練與測試集而高估效能。'},
+  {k:'x',html:'改用拔靴法（Bootstrap）或降低 K 值',bad:'這是誘答：降低 K、拔靴法、調整測試集比例都不能修正類別失衡造成的評估偏差。'},
+  {k:'t',html:'依時間順序切分＋前進式驗證',ok:'隨機切分會讓未來資料混進訓練集，造成洩漏。'},
+  {k:'s',html:'分層 K 折交叉驗證（Stratified K-Fold）',ok:'確保每一折的類別比例與整體一致。'}
+],'三種資料特性、三種處方。');
+
+/* ================= 38.7 ================= */
+(function(){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){$('#imbMeter').style.width='50%';io.disconnect();}}));io.observe($('#imbMeter'));})();
+examList($('#examList'),[
+  ['114-2 #10','異常偵測情境辨識','四個情境挑出最適合異常偵測者','<b>即時偵測與平常行為明顯不同的可疑交易</b>；缺貨／登入量是預測，違約是分類'],
+  ['114-2 #11','即時異常監控架構','即時監控大量 IoT 裝置異常的最佳組合','<b>大數據平台＋即時資料分析技術</b>'],
+  ['114-2 #12','隨機過採樣副作用','過採樣最常造成什麼問題','<b>過擬合風險升高</b>（複製樣本被死記）'],
+  ['114-2 #37','極不平衡的重抽樣選型','罕見疾病不到 1%、無法再取資料、要避免過擬合','<b>SMOTE 合成少數類樣本</b>；隨機過採樣易過擬合、欠採樣丟資訊、只調門檻治標'],
+  ['114-2 #39','不平衡下的交叉驗證','80% 良性樣本直接用 5-fold 會偏差','<b>分層 K 折交叉驗證</b>'],
+  ['115-1 #17','多問題資料的完整處方','ICU 敗血症 3.2% 正例＋連續缺失＋感測器漂移＋標註誤差','前向填補＋缺失指標特徵、滾動中位數校正漂移、<b>病患分組交叉驗證</b>、<b>PR-AUC 與 Recall</b>'],
+  ['115-1 #20','準確率陷阱（觀念）','只用 Accuracy 選模型會怎樣','永遠預測正常即達 99.5%，<b>詐欺 Recall 為 0%，準確率失去判別能力</b>'],
+  ['115-1 #22','時間序列預測的切分','500 間門市 14 天銷售預測','<b>依時間順序切分＋前進式驗證</b>，加時間／滯後／滾動統計特徵與節日事件，RMSE＋MAPE'],
+  ['115-1 #23','ROC 曲線性質','哪條曲線最不可能是 ROC','<b>中途下降者</b>（違反 TPR、FPR 的單調性）'],
+  ['115-1 #25','準確率陷阱（處方）','99.6% 準確率卻攔不到詐欺，該怎麼改','<b>Class Weight／成本敏感學習</b>；只改看 Precision 反而更漏抓'],
+  ['115-1 #32','重抽樣的執行順序','先對全體 SMOTE 再切分，AUC 0.91 可信嗎','<b>切分前做 SMOTE 造成資訊洩漏，分數虛高</b>'],
+  ['115-1 #33','多類別分類選型','8 類、數十萬筆、要訓練效率與線上部署','<b>多類別羅吉斯迴歸</b>（Softmax 一次輸出 8 類機率）；SVM 搭 One-vs-One 要訓練 28 個分類器'],
+  ['115-1 #34','要可解釋機率的二元分類','需輸出「73% 機率為高銷量」','<b>羅吉斯迴歸</b>（Sigmoid 壓到 (0,1)，是可讀成機率的輸出）'],
+  ['115-1 #43','準確率陷阱（反向題）','哪一項<b>不是</b>質疑 99.95% 準確率的合理理由','<b>「異常偵測不可用分類模型、只能用分群或離群值」是錯的</b>——有可靠標註時監督式分類正是常見做法'],
+  ['115-1 #44','門檻調整方向','「零容忍、寧可錯殺」該怎麼調門檻','<b>降低門檻以最大化 Recall</b>'],
+  ['115-1 #50','F1 與混淆矩陣','F1 的定義與 average="weighted" 的意義','<b>Precision 與 Recall 的調和平均</b>，依各類別樣本數加權；混淆矩陣<b>橫列是真實、直欄是預測</b>']
+]);
+examList($('#examList2'),[
+  ['115-1 #10','特徵篩選造成的資料洩漏','','在含測試集的全體資料上算相關係數刪特徵＝洩漏；且線性相關抓不到非線性關係。<span class="hint">主要歸屬：<a href="L22302_bigdata_analysis_methods.html">L22302 常見的大數據分析方法</a></span>'],
+  ['115-1 #15','資料層面抑制過擬合','','預先轉成固定特徵並快取、反覆用同一批資料，會凍結多樣性、使過擬合惡化。<span class="hint">主要歸屬：<a href="L22401_bigdata_machine_learning.html">L22401 大數據與機器學習</a></span>'],
+  ['115-1 #31','共用特徵的管理目的','','<b>降低跨團隊重複開發的維護成本</b>。<span class="hint">主要歸屬：<a href="L22302_bigdata_analysis_methods.html">L22302</a>／MLOps</span>']
+]);
+
+/* ================= 38.8 ================= */
+traps('l22402-traps',[
+  ['鑑別式學的是 P(Y|X) 或決策邊界，不是 P(X) 或 P(X,Y)','後者才是生成式。'],
+  ['樸素貝氏是生成式模型卻常用於文本分類','不是「生成式模型不能分類」。'],
+  ['邏輯迴歸是鑑別式分類模型','不是因為名字有「迴歸」就歸到迴歸任務。'],
+  ['異常偵測找的是偏離常態的少數樣本，不是推估未來數值','後者是迴歸／時間序列。'],
+  ['有可靠標註時，監督式二元分類可以做異常偵測','分群與離群值法是缺標註時的替代方案，不是唯一途徑。'],
+  ['半結構化資料要做的是解析與展平，非結構化才是特徵萃取','兩個動詞不要互換。'],
+  ['主動式學習挑的是模型低置信度的樣本','不是隨機抽樣，也不是挑模型最有把握的。'],
+  ['弱監督式標註靠規則或詞典自動產標，瓶頸是誤標；群眾外包靠大量非專業人力，瓶頸是品質參差','兩者卡的點不同。'],
+  ['重複值造成樣本權重高估與比例失真；異常值才是扭曲決策邊界的那一個','考題很愛把兩者的後果對調。'],
+  ['極不平衡時，「永遠猜多數類」就能拿到等於多數類比例的 Accuracy','高準確率不等於模型有用。'],
+  ['Precision 是報警之中有幾成為真（分母 TP+FP）；Recall 是真的之中抓到幾成（分母 TP+FN）','分母記清楚就不會混。'],
+  ['ROC 曲線 X 軸是 FPR、Y 軸是 TPR；PR 曲線 X 軸是 Recall、Y 軸是 Precision','寫反就整題錯。'],
+  ['ROC 曲線必定單調不減','中途下降的曲線不會是 ROC。'],
+  ['F1 是調和平均，不是算術平均','average="weighted" 依樣本數加權，average="macro" 才是算術平均。'],
+  ['降低門檻是提高 Recall、壓低偽陰性；提高門檻才是提高 Precision','「寧可錯殺」要往下調。'],
+  ['隨機過採樣的主要副作用是過擬合','不是收斂變慢，也不會減少資料總筆數。'],
+  ['SMOTE、標準化、特徵篩選都必須在切分後只用訓練集擬合','順序錯了就是資料洩漏。'],
+  ['類別不平衡用分層 K 折；同一個體多筆紀錄用分組 K 折；時間序列要依時間切分','三者處方不同。'],
+  ['降低 K 值、改用拔靴法、調整測試集比例，都不能修正類別失衡造成的評估偏差','這三個是同一題的三個誘答。'],
+  ['共用特徵平台的主要目的是降低跨團隊重複開發成本','不是解決推論延遲或模型版本管理。']
+]);
+quiz([
+  ['下列哪個情境最適合使用「異常偵測」？',['即時分析金融交易資料流，偵測與平常行為明顯不同的可疑紀錄','預測旺季是否缺貨','預測次日登入量','預測客戶是否違約'],'114-2 #10：缺貨與登入量是迴歸／時間序列預測，違約是分類。'],
+  ['關於鑑別式與生成式模型，下列敘述何者正確？',['樸素貝氏是生成式模型，但常用於文本分類','生成式模型不能用來做分類','邏輯迴歸屬於迴歸任務，不是分類模型','鑑別式模型學的是聯合分佈 P(X,Y)'],'樸素貝氏建模 P(X|Y)·P(Y)；邏輯迴歸學 P(Y=1|X)，是鑑別式分類；P(X,Y) 是生成式。'],
+  ['罕見疾病確診樣本不到 1%、無法再取得資料，且要避免過擬合，最合適的資料層處理是？',['SMOTE 在少數類特徵空間插值合成樣本','隨機複製少數類樣本','大量刪除多數類樣本','只調整決策門檻'],'114-2 #37：隨機過採樣易過擬合、欠採樣丟資訊、只調門檻治標。'],
+  ['良性腫瘤佔 80%，直接用一般 5-fold 交叉驗證會造成評估偏差，應改用？',['分層 K 折交叉驗證（Stratified K-Fold）','降低 K 值為 3','改用拔靴法（Bootstrap）','刻意調整測試集的類別比例'],'114-2 #39：後三者是同一題的三個誘答，都不能修正類別失衡造成的評估偏差。'],
+  ['信用卡詐欺模型 99.6% 準確率卻攔不到詐欺，最適當的改善方向是？',['使用 Class Weight／成本敏感學習，放大少數類誤判的懲罰','改以 Precision 為唯一指標','增加多數類樣本','提高決策門檻'],'115-1 #25：只看 Precision 會鼓勵模型保守不報，反而更漏抓。'],
+  ['下列哪一條曲線「最不可能」是 ROC 曲線？',['先上升、中途下降、再上升的曲線','沿對角線的直線','階梯狀單調上升的曲線','平滑上凸、從 (0,0) 到 (1,1) 的曲線'],'115-1 #23：門檻放寬時 TPR、FPR 都單調不減，ROC 不會中途下降。'],
+  ['反詐欺系統要求「零容忍、寧可錯殺」，決策門檻應如何調整？',['降低門檻以最大化 Recall','提高門檻以最大化 Precision','要求特異度達 100%','維持 0.5 不變'],'115-1 #44：降低門檻 → TP↑、FN↓；誤判的再交人工覆核。特異度 100% 是相反的要求。'],
+  ['先對全體資料做 SMOTE 再切分訓練／測試集，得到 AUC 0.91，這個分數？',['不可信，測試集資訊經合成樣本洩漏，分數虛高','可信，SMOTE 不影響測試集','可信，只要 AUC 大於 0.9','不可信，因為 SMOTE 會減少資料量'],'115-1 #32：SMOTE、標準化、特徵篩選都必須切分後只用訓練集擬合。'],
+  ['8 個類別、數十萬筆資料，需要訓練效率與線上部署，最合適的模型是？',['多類別羅吉斯迴歸（Softmax）','SVM 搭配 One-vs-One','每類各訓練一個深度網路','K-Means 分群'],'115-1 #33：Softmax 一次輸出 8 類機率；One-vs-One 要訓練 28 個分類器。'],
+  ['scikit-learn 的 F1 設定 average="weighted"，意義是？',['各類別 F1 依樣本數（support）加權平均','各類別 F1 的算術平均','Precision 與 Recall 的算術平均','只計算多數類的 F1'],'115-1 #50：macro 才是算術平均；F1 本身是 P 與 R 的調和平均。'],
+  ['資料中出現大量「重複值」，對鑑別式模型最主要的影響是？',['高估樣本權重、類別比例失真','扭曲決策邊界','模型學到錯誤標籤的模式','造成梯度爆炸'],'扭曲決策邊界的是異常值；學到錯誤模式的是邏輯錯誤（錯誤標籤）。'],
+  ['醫療影像專家標註成本極高、資料量又大，最合適的標註策略是？',['主動式學習：挑模型低置信度的樣本優先交專家標','群眾外包給非專業人員','弱監督：用規則自動產標','隨機抽樣交專家標註'],'需要專業判斷且成本是瓶頸 → 主動式學習。']
+],['太強了，不平衡下的指標、切分與重抽樣都能秒答。','不錯！回頭看看答錯的那幾題對應的段落。','建議重新操作 38.6 的門檻模擬器與 ROC 曲線判讀，再來一次。']);
+
+navHighlight();
+</script>
+</body>
+</html>

@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L21203 AI風險管理｜互動教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F5; --surface:#FFFFFF; --surface2:#F6F8FB; --ink:#18202E; --muted:#5A6475; --line:#D5DBE4;
+  --txt:#3B4CCA; --img:#0E8A7A; --aud:#B87812; --sen:#B8336A;
+  --ok:#1F8A4C; --bad:#C23B2E; --warn:#D9822B;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+    --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+  --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75}
+h1,h2,h3{font-family:var(--serif);line-height:1.3;margin:0}
+p{margin:0 0 1em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--txt);outline-offset:2px;border-radius:4px}
+svg{max-width:100%;height:auto;display:block}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1180px;margin:0 auto;gap:40px;padding:0 24px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;padding:32px 0;height:100vh;overflow:auto}
+nav.toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14.5px}
+nav.toc a span{font-variant-numeric:tabular-nums;font-size:13px;opacity:.8}
+nav.toc a.on{background:var(--surface);color:var(--ink);font-weight:700}
+.toc-title{font-family:var(--serif);font-weight:900;font-size:18px;padding:0 10px 14px}
+main{min-width:0;padding-bottom:80px}
+section{padding:56px 0 8px;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.sec-head{display:flex;gap:16px;align-items:baseline;margin-bottom:18px}
+.sec-no{font-family:var(--serif);font-weight:900;font-size:40px;color:var(--line);line-height:1}
+h2{font-size:28px;font-weight:900}
+h3{font-size:19px;margin:34px 0 10px}
+.lead{color:var(--muted);max-width:66ch}
+.prose{max-width:68ch}
+
+/* hero */
+.hero{padding:44px 0 24px}
+.hero .code{font-size:14px;color:var(--muted);margin-bottom:6px}
+.hero h1{font-size:clamp(34px,5.5vw,56px);font-weight:900;letter-spacing:.02em}
+.hero .one{font-size:18px;max-width:60ch;margin:16px 0 0;color:var(--muted)}
+.hero-fig{background:var(--surface);border-radius:20px;margin-top:28px;padding:14px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+.goal{border-left:4px solid var(--c);padding:6px 0 6px 14px;font-size:15px}
+
+/* panels */
+.panel{background:var(--surface);border-radius:16px;padding:22px;margin:16px 0}
+.panel.flat{background:var(--surface2)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font-size:15px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hint{font-size:14px;color:var(--muted)}
+.callout{border-left:4px solid var(--warn);background:var(--surface2);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;font-size:15px}
+.callout.exam{border-color:var(--txt)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:14px}
+
+/* modality chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+
+/* matcher */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.match .col{display:flex;flex-direction:column;gap:10px}
+.mitem{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15px;transition:border-color .2s,background .2s,transform .2s}
+.mitem small{display:block;color:var(--muted);font-size:13px}
+.mitem.sel{border-color:var(--ink);transform:translateX(4px)}
+.mitem.done{border-color:var(--c,var(--ok));background:var(--surface2);cursor:default}
+.mitem.wrong{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:1.8em;margin-top:12px;font-size:15px}
+.feedback.ok{color:var(--ok)} .feedback.bad{color:var(--bad)}
+
+/* timeline */
+.steps{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stage-viz{min-height:130px;display:flex;align-items:center;justify-content:center}
+.stage-viz .blk{display:inline-block;width:34px;height:34px;border-radius:6px;margin:2px;transition:all .5s}
+
+/* align toggle */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.compare>div{padding:18px}
+.compare>div+div{border-left:1px solid var(--line)}
+.compare .big{font-family:var(--serif);font-weight:900;font-size:22px;margin-bottom:6px}
+
+/* fusion */
+.meter{height:14px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:6px 0}
+.meter>i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .7s cubic-bezier(.3,.8,.3,1),background .4s}
+.flow{stroke-dasharray:6 7;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.jitter{animation:jit .25s steps(2) infinite}
+@keyframes jit{50%{transform:translate(1.5px,-1px)}}
+.fusion-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.pc{font-size:15px}
+.pc b{display:block;font-size:14px;color:var(--muted);font-weight:500}
+
+/* clip */
+.mat{display:grid;gap:4px;font-size:13px}
+.mat .cell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;transition:background .5s,color .5s}
+.mat .lab{display:flex;align-items:center;justify-content:center;font-size:22px}
+.mat .tlab{font-size:12px;text-align:center;color:var(--muted);display:flex;align-items:flex-end;justify-content:center;line-height:1.3}
+.zs-imgs{display:flex;gap:10px;flex-wrap:wrap}
+.zs-img{font-size:38px;width:72px;height:72px;border-radius:16px;border:2px solid var(--line);background:var(--surface2);display:flex;align-items:center;justify-content:center}
+.zs-img[aria-pressed="true"]{border-color:var(--img);box-shadow:0 0 0 3px color-mix(in srgb,var(--img) 25%,transparent)}
+.bar{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.bar .track{height:22px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;width:0;background:var(--txt);border-radius:6px;transition:width .8s cubic-bezier(.3,.8,.3,1)}
+.bar.win .fill{background:var(--img)}
+.bar.win{font-weight:700}
+.bar .num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.flip{perspective:900px;height:150px;border:0;background:none;padding:0;text-align:left}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flip[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:center}
+.flip .f{background:var(--surface);border:1.5px solid var(--line)}
+.flip .f strong{font-family:var(--serif);font-size:22px}
+.flip .f span{color:var(--muted);font-size:14px}
+.flip .b{background:var(--ink);color:var(--bg);transform:rotateY(180deg);font-size:15px}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.pnode{border:2px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;font-size:14px;background:var(--surface);transition:all .35s}
+.pnode b{display:block;font-size:16px}
+.pnode.on{border-color:var(--aud);background:color-mix(in srgb,var(--aud) 14%,var(--surface));transform:translateY(-3px)}
+.pnode.past{border-color:color-mix(in srgb,var(--aud) 45%,var(--line))}
+.pout{background:var(--surface2);border-radius:12px;padding:14px 16px;min-height:84px;font-size:15px}
+.wave{display:flex;gap:3px;align-items:center;height:30px}
+.wave i{width:4px;background:var(--aud);border-radius:2px;animation:wv 1s ease-in-out infinite}
+@keyframes wv{50%{transform:scaleY(.3)}}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+
+/* strategies */
+.strat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.strat button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;text-align:left;font-size:15px}
+.strat button[aria-pressed="true"]{border-color:var(--ink)}
+.verdict{font-family:var(--serif);font-weight:900;font-size:20px}
+
+details{border-bottom:1px solid var(--line)}
+details summary{cursor:pointer;padding:12px 4px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"+";font-weight:900;width:14px;color:var(--muted)}
+details[open] summary::before{content:"−"}
+details .body{padding:0 4px 14px 30px;font-size:15px}
+.tag{font-size:12.5px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums;min-width:80px}
+
+/* quiz */
+.qcard{background:var(--surface);border-radius:16px;padding:24px}
+.qtop{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
+.qtext{font-size:18px;font-weight:700;margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15.5px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+.opt.wrongpick{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.opt:disabled{cursor:default}
+.expl{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15px;display:none}
+.expl.show{display:block}
+.progress{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;margin-bottom:14px}
+.progress i{display:block;height:100%;background:var(--txt);transition:width .4s}
+
+.traps label{display:flex;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:15px}
+.traps input{width:18px;height:18px;margin-top:4px;flex:none;accent-color:var(--ok)}
+.traps label.chk>span{color:var(--muted)}
+.traps em{font-style:normal;font-weight:700}
+
+/* mobile */
+@media (max-width:860px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+  nav.toc{position:sticky;top:0;height:auto;z-index:10;background:var(--bg);display:flex;overflow-x:auto;padding:8px 0;padding-top:calc(8px + env(safe-area-inset-top,0px));gap:4px;border-bottom:1px solid var(--line)}
+  .toc-title{display:none}
+  nav.toc a{white-space:nowrap;flex:none}
+  .match,.stage,.fusion-meta,.compare{grid-template-columns:1fr}
+  .compare>div+div{border-left:0;border-top:1px solid var(--line)}
+  .pipe{grid-template-columns:repeat(5,minmax(90px,1fr));overflow-x:auto}
+  .bar{grid-template-columns:110px 1fr 56px}
+  h2{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+/* extras: sliders, ordering game, kpis */
+.pipe{overflow-x:auto}
+.ctrl{display:grid;grid-template-columns:150px 1fr 74px;gap:10px;align-items:center;margin:6px 0;font-size:15px}
+.ctrl input[type=range]{width:100%;accent-color:var(--txt)}
+.ctrl output{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:14px}
+.kpi{background:var(--surface2);border-radius:12px;padding:12px 14px;border-top:4px solid var(--c,var(--line))}
+.kpi b{display:block;font-size:13px;color:var(--muted);font-weight:500}
+.kpi .v{font-family:var(--serif);font-weight:900;font-size:26px;font-variant-numeric:tabular-nums;line-height:1.3}
+.kpi small{color:var(--muted);font-size:13px}
+.og-slots{list-style:none;padding:0;margin:0 0 14px;display:flex;flex-direction:column;gap:6px}
+.og-slots li{display:flex;gap:12px;align-items:center;border:2px dashed var(--line);border-radius:12px;padding:8px 12px;min-height:46px;transition:border-color .3s,background .3s}
+.og-slots li.fill{border-style:solid;border-color:var(--ok);background:var(--surface2)}
+.og-n{font-family:var(--serif);font-weight:900;font-size:20px;color:var(--muted);width:22px;flex:none}
+.og-t small{display:block;color:var(--muted);font-size:13px}
+.og-pool{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+.chk-list label{display:flex;gap:10px;padding:7px 2px;font-size:15px;cursor:pointer;align-items:flex-start}
+.chk-list input{width:18px;height:18px;margin-top:5px;flex:none;accent-color:var(--ok)}
+.sortq{font-size:17px;font-weight:700;margin:6px 0 12px;min-height:2.4em}
+@media (max-width:860px){
+  .ctrl{grid-template-columns:96px 1fr 62px;font-size:14px}
+  .kpi .v{font-size:22px}
+}
+main a{color:var(--txt);text-underline-offset:3px}
+
+.sym{font-size:18px;font-weight:700;margin:4px 0 14px;min-height:2.4em}
+.bins{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.bins .mitem{text-align:center}
+.tree{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.tree .lv{border-top:5px solid var(--c);background:var(--surface2);border-radius:12px;padding:12px 14px;font-size:14.5px}
+.tree .lv h4{margin:0 0 6px;font-family:var(--serif);font-size:17px;color:var(--c)}
+.tree .lv div{padding:5px 0;border-bottom:1px dashed var(--line)}
+.tree .lv div:last-child{border:0}
+.rulers{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:860px){.tree,.rulers{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="toc" aria-label="章節">
+  <div class="toc-title">AI 風險管理</div>
+  <a href="#intro"><span>●</span>導覽與目標</a>
+  <a href="#s1"><span>24.1</span>徵狀→類型→手段</a>
+  <a href="#s2"><span>24.2</span>四種漂移</a>
+  <a href="#s3"><span>24.3</span>法規與合規</a>
+  <a href="#s4"><span>24.4</span>偏見與倫理</a>
+  <a href="#s5"><span>24.5</span>緩解策略與工具</a>
+  <a href="#s6"><span>24.6</span>官方考題</a>
+  <a href="#s7"><span>24.7</span>解題通則</a>
+  <a href="#s8"><span>24.8</span>易錯與測驗</a>
+</nav>
+
+<main>
+<!-- HERO -->
+<section id="intro" class="hero">
+  <div class="code">L21203　中級 AI 應用規劃師　建議 50 分鐘</div>
+  <h1>AI 風險管理</h1>
+  <p class="one">科目 1「AI 導入評估規劃」的收尾，把可行性評估、資源盤點與流程規劃收束到一個問題：<b>這套 AI 上線後會出什麼事？事前怎麼擋、事後怎麼發現、出事後誰負責。</b></p>
+  <div class="hero-fig" aria-hidden="true">
+    <svg id="heroSvg" viewBox="0 0 720 280">
+      <defs><path id="hp0" d="M20 140 L 700 140"/></defs>
+      <line x1="20" y1="140" x2="700" y2="140" stroke="var(--line)" stroke-width="4"/>
+      <g font-family="Noto Sans TC, sans-serif" font-weight="700" text-anchor="middle">
+        <rect x="150" y="60" width="26" height="160" rx="6" fill="var(--txt)"/><text x="163" y="48" font-size="14" fill="var(--txt)">事前預防</text><text x="163" y="245" font-size="12" fill="var(--muted)">DPIA・審查</text>
+        <rect x="340" y="60" width="26" height="160" rx="6" fill="var(--img)" opacity=".85"/><text x="353" y="48" font-size="14" fill="var(--img)">上線隔離</text><text x="353" y="245" font-size="12" fill="var(--muted)">金絲雀・HITL</text>
+        <rect x="530" y="60" width="26" height="160" rx="6" fill="var(--aud)" opacity=".85"/><text x="543" y="48" font-size="14" fill="var(--aud)">持續監控</text><text x="543" y="245" font-size="12" fill="var(--muted)">PSI・告警</text>
+        <rect x="620" y="115" width="90" height="50" rx="12" fill="var(--ink)"/><text x="665" y="146" font-size="14" fill="var(--bg)">事後究責</text>
+        <text x="60" y="120" font-size="14" fill="var(--sen)">風險</text>
+      </g>
+      <g class="movers">
+        <circle r="8" fill="var(--sen)"><animateMotion dur="3s" keyPoints="0;0.2;0.2" keyTimes="0;.5;1" calcMode="linear" repeatCount="indefinite"><mpath href="#hp0"/></animateMotion></circle>
+        <circle r="8" fill="var(--sen)"><animateMotion dur="3s" begin="1s" keyPoints="0;0.48;0.48" keyTimes="0;.6;1" calcMode="linear" repeatCount="indefinite"><mpath href="#hp0"/></animateMotion></circle>
+        <circle r="8" fill="var(--sen)"><animateMotion dur="3s" begin="2s" keyPoints="0;0.76;0.76" keyTimes="0;.7;1" calcMode="linear" repeatCount="indefinite"><mpath href="#hp0"/></animateMotion></circle>
+      </g>
+    </svg>
+  </div>
+  <h3>學完這一課，你應該能夠</h3>
+  <div class="goals">
+    <div class="goal" style="--c:var(--txt)">依「<b>技術層／組織人力層／法規層</b>」三層架構，指認任一情境屬於哪一類 AI 風險</div>
+    <div class="goal" style="--c:var(--img)">區辨<b>資料漂移、模型漂移、概念漂移、訓練服務偏差</b>四者的判別依據與作法</div>
+    <div class="goal" style="--c:var(--aud)">說出 <b>GDPR、PDPA、HIPAA、PCI-DSS</b> 的適用對象與核心要求，判斷合規手段是否對症</div>
+    <div class="goal" style="--c:var(--sen)">為情境選出正確的控管策略（<b>迴避／轉移／緩解／接受</b>）與監控工具</div>
+  </div>
+  <div class="callout" style="margin-top:20px"><b>與初級的落差：</b>初級 L111 只要求認得「偏誤、可解釋性、EU AI Act」這些名詞；中級要看一段情境就判斷<b>這是哪一類風險、該用哪種手段、這手段屬事前預防還是事後追溯</b>。本知識點在 114-2／115-1 官方試題的實測命中率僅 <b>21%</b>，失分主因是「徵狀 → 類型」的對應沒背熟，誘答一換包裝就選錯。</div>
+  <p class="hint">本頁顏色代表風險層級：<span class="chip" style="--c:var(--txt)"><i class="dot"></i>技術層</span>　<span class="chip" style="--c:var(--img)"><i class="dot"></i>組織人力層</span>　<span class="chip" style="--c:var(--aud)"><i class="dot"></i>法規層</span>　<span class="chip" style="--c:var(--sen)"><i class="dot"></i>風險／告警</span></p>
+</section>
+
+<!-- 24.1 -->
+<section id="s1">
+  <div class="sec-head"><span class="sec-no">24.1</span><h2>風險徵狀 → 風險類型 → 對應手段</h2></div>
+  <p class="lead">本節必背。中級考題幾乎不直接問定義，而是丟一段<b>徵狀描述</b>要你倒推類型與手段。先用快打練習試試手感。</p>
+  <div class="panel">
+    <div class="row" style="justify-content:space-between"><h3 style="margin:0">徵狀快打：這是哪一類風險？</h3><span class="hint" id="symScore"></span></div>
+    <div class="progress" style="margin-top:12px"><i id="symProg" style="width:0"></i></div>
+    <div class="sym" id="symQ"></div>
+    <div class="bins" id="symOpts"></div>
+    <div class="feedback" id="symFb" aria-live="polite"></div>
+    <div class="row"><button class="btn primary" id="symNext" style="display:none">下一題</button><button class="btn" id="symReset">重新開始</button></div>
+  </div>
+  <details><summary>展開完整對照表（12 種徵狀）</summary><div class="body tbl-wrap"><table id="symTable"></table></div></details>
+
+  <h3>三層風險地圖</h3>
+  <div class="tree">
+    <div class="lv" style="--c:var(--txt)"><h4>A. 技術層</h4><div><b>資料品質風險</b>：資料遺漏、資料偏頗、不正確標註、資料漂移<br><span class="hint">案例：信用評分系統因歷史資料偏差，導致特定族群被歧視</span></div><div><b>模型穩定性風險</b>：模型漂移、過擬合<br><span class="hint">案例：製造業瑕疵辨識系統在產線微調後精準度下降，成本上升</span></div><div><b>概念漂移</b>：資料背後的潛在關係改變</div></div>
+    <div class="lv" style="--c:var(--img)"><h4>B. 組織人力層</h4><div><b>跨部門溝通風險</b>：資訊不透明、角色責任不清</div><div><b>技能短缺風險</b>：技能落差、人才流動過快</div><div><b>變革抵制風險</b>：員工視 AI 為職位威脅，配合度低</div></div>
+    <div class="lv" style="--c:var(--aud)"><h4>C. 法規層</h4><div><b>個資與隱私保護</b>：GDPR、台灣個資法</div><div><b>產業特定監管</b>：HIPAA、PCI-DSS、醫療器材管理法</div><div><b>侵權風險</b>：第三方資料／演算法／開源授權條款</div></div>
+  </div>
+  <div class="callout exam"><b>考點提醒：</b>AI 風險「不同於傳統 IT 專案」之處，在於 B 與 C 之外，<b>多了資料偏誤、模型不透明這種 A 層特有的風險</b>。題目問「AI 專案相較傳統 IT 專案額外要考量什麼」，答案往往落在資料品質、模型透明度、倫理合規。</div>
+</section>
+
+<!-- 24.2 -->
+<section id="s2">
+  <div class="sec-head"><span class="sec-no">24.2</span><h2>四種「漂移」的辨別</h2></div>
+  <p class="lead">最常被混淆的一組。用模擬器看：左邊是<b>輸入特徵分佈</b>（灰＝訓練、彩＝上線後），右邊是<b>特徵與標籤的關係</b>（實線＝真實關係、虛線＝模型學到的邊界），下面是準確率走勢。所有數值皆為示意。</p>
+  <div class="panel">
+    <div class="tabs" id="drTabs"></div>
+    <svg id="drSvg" viewBox="0 0 660 330" role="img" aria-label="漂移模擬圖"></svg>
+    <div class="kpis" id="drK"></div>
+    <div class="callout" id="drNote" style="margin-bottom:0"></div>
+  </div>
+  <div class="tbl-wrap"><table>
+    <tr><th>名稱</th><th>定義</th><th>判別關鍵（題幹線索）</th><th>對應作法</th></tr>
+    <tr><td><b>資料漂移</b> Data Drift</td><td>輸入特徵的<b>分佈</b>隨時間改變</td><td>「輸入特徵分佈與訓練資料明顯不同」</td><td>PSI、KL 散度偵測分佈差異；VAE 監控潛在空間</td></tr>
+    <tr><td><b>概念漂移</b> Concept Drift</td><td>特徵與<b>目標標籤之間的關聯</b>改變</td><td>「特徵分佈<b>沒有</b>明顯變化」但真實風險性質已變</td><td>重新標註、再訓練、調整業務規則</td></tr>
+    <tr><td><b>模型漂移</b> Model Drift</td><td>模型預測準確度隨時間變差（統稱現象）</td><td>「上線後準確率逐漸下降」</td><td>效能監控＋自動重新訓練</td></tr>
+    <tr><td><b>訓練服務偏差</b> Training-Serving Skew</td><td>離線與線上<b>特徵處理邏輯不一致</b></td><td>「一上線就不對」，且改過特徵工程</td><td>統一特徵管線、Feature Store</td></tr>
+  </table></div>
+  <div class="callout exam"><b>最高頻的誘答設計：</b>題幹寫「特徵分佈未出現明顯變化，但攔截率下降」—— 這是<b>概念漂移</b>，不是資料漂移。只要看到「特徵分佈沒變」五個字，立刻排除 Data Drift。（115Q1-48）</div>
+</section>
+
+<!-- 24.3 -->
+<section id="s3">
+  <div class="sec-head"><span class="sec-no">24.3</span><h2>法規與合規性評估</h2></div>
+  <h3 style="margin-top:0">GDPR：資料主體的權利與企業義務</h3>
+  <div class="panel">
+    <p class="hint">先點左邊的條文，再點右邊的內容。特別注意兩個天數。</p>
+    <div class="match" id="gdprMatch"></div>
+    <div class="feedback" id="gdprFb" aria-live="polite"></div>
+  </div>
+  <details><summary>展開 GDPR 完整對照表</summary><div class="body tbl-wrap"><table>
+    <tr><th>權利／原則</th><th>條文</th><th>白話理解</th><th>常見考法</th></tr>
+    <tr><td>刪除權（被遺忘權）</td><td>第 17 條</td><td>要求企業刪除個資</td><td>法律要求保留或公共利益時<b>不完全適用</b></td></tr>
+    <tr><td>修正權</td><td>第 16 條</td><td>資料錯誤或不完整可要求更正</td><td>—</td></tr>
+    <tr><td>資料可攜權</td><td>第 20 條</td><td>以結構化、機器可讀格式取回並轉移</td><td>易與「查閱權」混淆</td></tr>
+    <tr><td>反對自動化決策權</td><td>第 22 條</td><td>重大自動化決策可要求<b>人工介入</b></td><td>對應信用評分、招聘場景</td></tr>
+    <tr><td>查閱權</td><td>第 15 條</td><td>了解處理目的、類型、保存期限，<b>一個月內</b>（約 30 日）回覆，複雜案件可再延長兩個月</td><td>資料主體八項權利中唯一有明確期限者</td></tr>
+    <tr><td>處理限制權</td><td>第 18 條</td><td>爭議期間暫停處理，但不刪除</td><td>—</td></tr>
+    <tr><td>同意原則</td><td>第 6 條</td><td>明確、自由給予，且<b>可隨時撤回</b>（不溯及既往）</td><td>—</td></tr>
+    <tr><td>資料最小化</td><td>第 5 條</td><td>只收集達成目的所必需的資料</td><td>對應「蒐集越多越好」的錯誤選項</td></tr>
+    <tr><td>問責制</td><td>第 5、24 條</td><td>必須能<b>證明</b>已落實措施並保留紀錄</td><td>對應稽核、文件化</td></tr>
+    <tr><td>DPIA 資料保護影響評估</td><td>第 35 條</td><td>高風險處理前必須先做評估</td><td>屬<b>事前</b>機制</td></tr>
+    <tr><td>資料外洩通報</td><td>第 33 條</td><td>知悉外洩後 <b>72 小時內</b>通報監管機關</td><td>企業義務而非資料主體權利，與查閱權的一個月常被對調</td></tr>
+  </table></div></details>
+  <div class="compare" style="margin-top:16px">
+    <div><div class="big">一個月內</div>查閱權（第 15 條）<br><span class="hint">資料主體的權利；複雜案件可再延長兩個月</span></div>
+    <div><div class="big">72 小時內</div>資料外洩通報（第 33 條）<br><span class="hint">企業的義務；通報監管機關</span></div>
+  </div>
+
+  <h3>各法規適用範圍</h3>
+  <div class="panel">
+    <div class="tabs" id="lawTabs"></div>
+    <div id="lawBody" class="pout"></div>
+  </div>
+
+  <h3>HIPAA 三類保護措施分類</h3>
+  <div class="panel">
+    <p class="hint" style="margin:0">最容易出「下列何者屬於行政性保護措施」。把每個措施放進正確的類別。</p>
+    <div class="sym" id="hipQ"></div>
+    <div class="bins" id="hipBins"></div>
+    <div class="feedback" id="hipFb" aria-live="polite"></div>
+  </div>
+  <p class="prose"><b>記憶捷徑：</b>員工培訓、安全政策、定期風險評估屬<b>行政性</b>；加密與存取控制屬<b>技術性</b>；機房與備份屬<b>實體性</b>。</p>
+</section>
+
+<!-- 24.4 -->
+<section id="s4">
+  <div class="sec-head"><span class="sec-no">24.4</span><h2>偏見與倫理</h2></div>
+  <h3 style="margin-top:0">偏見的四種來源</h3>
+  <div class="panel">
+    <p class="hint">先點左邊的典型情境，再點右邊的偏見來源。</p>
+    <div class="match" id="biasMatch"></div>
+    <div class="feedback" id="biasFb" aria-live="polite"></div>
+  </div>
+  <p class="prose">歧視性結果的兩大衝擊：<b>弱勢群體受到不公平待遇</b>（貸款、招聘、醫療資源分配）、<b>企業品牌與信譽損害</b>（輿論反彈、訴訟與監管處罰）。</p>
+
+  <h3>四大倫理原則（點卡片翻面）</h3>
+  <div class="cards" id="ethCards"></div>
+
+  <h3>透明度 vs 可解釋性（高頻誘答）</h3>
+  <div class="panel">
+    <p class="hint">點選題幹描述，判斷它考的是哪一個。</p>
+    <div class="sym" id="teQ"></div>
+    <div class="row"><button class="btn" id="teT">透明度（整體系統）</button><button class="btn" id="teE">可解釋性（單一決策）</button></div>
+    <div class="feedback" id="teFb" aria-live="polite"></div>
+    <button class="btn primary" id="teNext" style="display:none">下一句</button>
+  </div>
+  <div class="compare">
+    <div><div class="big">透明度</div>對<b>整體系統</b>的公開揭露<br><span class="hint">用了什麼資料、運作邏輯、社會影響</span></div>
+    <div><div class="big">可解釋性</div>對<b>單一決策</b>的理由說明<br><span class="hint">哪些特徵、貢獻多少、方向為何</span></div>
+  </div>
+  <p class="prose hint" style="margin-top:12px">國際依據：歐盟《可信任 AI 倫理指導原則》（AI HLEG, 2019）、OECD《人工智慧高級準則》（2019）、聯合國／UNESCO、GPAI、ISO/IEC 標準。</p>
+
+  <h3>企業內部倫理治理框架（四件事）</h3>
+  <details><summary><span class="tag">常設</span>倫理委員會</summary><div class="body">跨技術、法律、人權、風險管理的獨立審查組織。</div></details>
+  <details><summary><span class="tag">部署前必經</span>AI 審查流程</summary><div class="body">風險評估、影響分析、預防措施建議 ——<b>模型部署前</b>必經環節。</div></details>
+  <details><summary><span class="tag">定期</span>內部教育訓練</summary><div class="body">提升員工對偏見、歧視等倫理風險的敏感度。</div></details>
+  <details><summary><span class="tag">持續</span>透明度與對外溝通</summary><div class="body">公開使用原則與社會影響，接受外部回饋。</div></details>
+</section>
+
+<!-- 24.5 -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-no">24.5</span><h2>風險緩解策略與工具</h2></div>
+  <h3 style="margin-top:0">四種風險控管策略：分類練習</h3>
+  <div class="panel">
+    <p class="hint" style="margin:0">官方舉例逐一出現，判斷它屬於哪一種策略。</p>
+    <div class="sym" id="stQ"></div>
+    <div class="bins" id="stBins"></div>
+    <div class="feedback" id="stFb" aria-live="polite"></div>
+  </div>
+  <div class="tbl-wrap"><table>
+    <tr><th>策略</th><th>定義</th><th>適用時機</th></tr>
+    <tr><td><b>迴避</b> Avoidance</td><td>不執行該活動，從根本避免</td><td>潛在損害嚴重且難以控制、法規限制嚴格</td></tr>
+    <tr><td><b>轉移</b> Transfer</td><td>透過第三方承擔潛在損失</td><td>損失可量化、有市場化的承擔者</td></tr>
+    <tr><td><b>緩解</b> Mitigation</td><td>主動降低發生機率或影響（<b>最常見</b>）</td><td>多數技術與法規風險</td></tr>
+    <tr><td><b>接受</b> Acceptance</td><td>承認並持續監控，不額外投入</td><td><b>低衝擊</b>且控管成本高於效益</td></tr>
+  </table></div>
+  <div class="callout"><b>判題訣竅：</b>「損害嚴重且無法控制」→ 迴避；「找第三方賠」→ 轉移；「投入措施把風險壓下來」→ 緩解；「影響很小、修不划算」→ 接受。注意<b>接受 ≠ 不管</b>，仍須設定監控指標（如準確率下降閾值）以避免累積效應。</div>
+
+  <h3>風險管理計畫必備四要素</h3>
+  <div class="panel">
+    <div class="pipe" id="planPipe"></div>
+    <div class="pout" id="planOut" aria-live="polite"></div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" id="planNext">下一步</button><button class="btn" id="planReset">從頭開始</button></div>
+  </div>
+
+  <h3>MLOps：為什麼 PSI 是「最具預測效力」的預警指標？</h3>
+  <div class="panel">
+    <p class="hint">MLOps 把建置、部署、監控與修正自動化，管理模型<b>全生命週期</b>。情境：輸入分佈開始偏移。按播放，看哪個指標最早亮燈（時間軸為示意）。</p>
+    <div class="row"><button class="btn primary" id="warnPlay">▶ 播放</button><span class="hint" id="warnT">第 0 週</span></div>
+    <div id="warnBars" style="margin-top:12px"></div>
+    <p class="hint" id="warnNote" style="margin:8px 0 0"></p>
+  </div>
+  <div class="tbl-wrap"><table>
+    <tr><th>監控情境</th><th>偵測什麼</th><th>常用指標／工具</th></tr>
+    <tr><td><b>模型漂移監控</b></td><td>效能下降與其原因</td><td>準確率／AUC 趨勢、定期回收人工標註比對</td></tr>
+    <tr><td><b>資料漂移監控</b></td><td>輸入分佈與訓練資料的差異</td><td><b>PSI</b>（族群穩定度指數）、<b>KL 散度</b></td></tr>
+    <tr><td><b>效能異常警示</b></td><td>錯誤率超出閾值即時告警</td><td>預警閾值（如錯誤率 &gt; 5%）</td></tr>
+    <tr><td><b>自動重新訓練</b></td><td>偵測到漂移或效能下降後自動觸發</td><td>再訓練管線（Pipeline）</td></tr>
+  </table></div>
+
+  <h3>分群監控：整體指標會騙人（115Q1-42）</h3>
+  <div class="panel">
+    <p class="hint">保險理賠預測。整體 RMSE 看起來沒變，切換到分群檢視看看（數值為示意）。</p>
+    <div class="row"><button class="btn" id="segAll" aria-pressed="true">整體指標</button><button class="btn" id="segBy" aria-pressed="false">依理賠金額分群</button></div>
+    <svg id="segSvg" viewBox="0 0 640 230" style="margin-top:10px" role="img" aria-label="分群監控示意"></svg>
+    <p class="hint" id="segNote" style="margin:4px 0 0"></p>
+  </div>
+
+  <h3>上線階段的風險隔離手段</h3>
+  <div class="panel">
+    <div class="tabs" id="isoTabs"></div>
+    <div id="isoBody" class="pout"></div>
+  </div>
+</section>
+
+<!-- 24.6 -->
+<section id="s6">
+  <div class="sec-head"><span class="sec-no">24.6</span><h2>官方考過什麼</h2></div>
+  <h3 style="margin-top:0">A. 《學習指引》章末練習（直接相關 4 題）</h3>
+  <div id="examA"></div>
+  <h3>B. 114-2／115-1 官方公告試題（15 題）</h3>
+  <div id="examB"></div>
+</section>
+
+<!-- 24.7 -->
+<section id="s7">
+  <div class="sec-head"><span class="sec-no">24.7</span><h2>解題通則：正解長什麼樣子</h2></div>
+  <p class="lead">本知識點的正解方向高度一致。選項讀不懂時，用這四把尺篩（點卡片翻面看例子）。</p>
+  <div class="cards" id="rulerCards"></div>
+  <h3>分辨題意的兩條提醒</h3>
+  <div class="panel">
+    <div class="tabs" id="askTabs"></div>
+    <div id="askBody"></div>
+  </div>
+</section>
+
+<!-- 24.8 -->
+<section id="s8">
+  <div class="sec-head"><span class="sec-no">24.8</span><h2>易錯與陷阱</h2></div>
+  <p class="lead">逐條確認自己真的懂了再打勾（打勾狀態會記在這台裝置上）。</p>
+  <div class="traps" id="traps"></div>
+  <p class="hint" id="trapCount" style="margin-top:10px"></p>
+
+  <h3>情境測驗</h3>
+  <div class="qcard" id="quiz"></div>
+
+  <h3>延伸練習</h3>
+  <p class="prose"><b>L21 主題庫（311 題）：</b>篩「風險管理／法規合規／偏誤與倫理／MLOps 監控」四個標籤，本知識點的題目集中在此。<br><b>各科歷屆 100 題：</b>重做 114-2 第 22～25、30、32、42、46、49 題與 115-1 第 25～27、42、46、48 題，這 15 題就是本知識點的官方實測樣貌。<br><b>交叉複習：</b>本節與 11_L124_ModelMonitoring_Maintenance（漂移與監控的技術細節）、07_L117_AIGovernance（初級治理基礎）、10_L123_AI_Adoption_Planning（導入規劃前段）連著讀，效果最好；中級導入規劃見 <a href="L21202_adoption_planning.html">L21202</a>。<br><b>自我檢核：</b>把 24.1 的對照表遮住右兩欄，只看「徵狀」欄，要能在 5 秒內說出風險類型與對應手段 —— 也就是本頁最上方的「徵狀快打」。</p>
+</section>
+</main>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce){const m=document.querySelector('#heroSvg .movers');if(m)m.remove();}
+const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+
+/* ---------- generic matcher ---------- */
+function matcher(root,fb,left,right,doneMsg){
+  let sel=null,done=0;
+  const L=document.createElement('div');L.className='col';
+  const R=document.createElement('div');R.className='col';
+  left.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;
+    b.innerHTML=it.html;if(it.c)b.style.setProperty('--c',it.c);
+    b.onclick=()=>{if(b.classList.contains('done'))return;L.querySelectorAll('.mitem').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;fb.textContent='';fb.className='feedback';};
+    L.appendChild(b);
+  });
+  right.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;b.innerHTML=it.html;
+    b.onclick=()=>{
+      if(b.classList.contains('done'))return;
+      if(!sel){fb.textContent='請先點左邊一個項目。';fb.className='feedback';return;}
+      if(sel.dataset.k===b.dataset.k){
+        const c=sel.style.getPropertyValue('--c');
+        [sel,b].forEach(x=>{x.classList.remove('sel');x.classList.add('done');if(c)x.style.setProperty('--c',c);});
+        fb.textContent='✓ '+(it.ok||'答對了！');fb.className='feedback ok';sel=null;done++;
+        if(done===left.length){fb.textContent='✓ 全部配對完成！'+doneMsg;}
+      }else{
+        b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');
+        fb.textContent='✗ '+(it.bad||'不太對，再想想看。');fb.className='feedback bad';
+      }
+    };
+    R.appendChild(b);
+  });
+  root.append(L,R);
+}
+
+/* ---------- flip cards ---------- */
+function flipCards(root,arr){
+  arr.forEach(([n,o,d])=>{
+    const b=document.createElement('button');b.className='flip';b.setAttribute('aria-pressed','false');
+    b.innerHTML=`<div class="in"><div class="f"><strong>${n}</strong><span>${o}</span><span style="margin-top:auto;font-size:12.5px">點我翻面</span></div><div class="b">${d}</div></div>`;
+    b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');
+    root.appendChild(b);
+  });
+}
+
+/* ---------- tabs ---------- */
+function tabs(btnRoot,body,items,render){
+  items.forEach((x,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=x.t||x[0];b.onclick=()=>s(i);btnRoot.appendChild(b);});
+  function s(i){btnRoot.querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));body.innerHTML=render(items[i],i);}
+  s(0);return s;
+}
+
+/* ---------- strategy picker ---------- */
+function strat(root,list,order,V,M,W,prefix){
+  (order||list.map((_,i)=>i)).forEach(i=>{const b=document.createElement('button');b.innerHTML=list[i][0];b.setAttribute('aria-pressed','false');b.onclick=()=>{root.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));const x=list[i];V.textContent=x[1];V.style.color=x[3];M.style.width=x[2]+'%';M.style.background=x[3];W.innerHTML=(prefix||'')+x[2]+'%　'+x[4];};root.appendChild(b);});
+}
+
+/* ---------- exam list ---------- */
+function examList(root,arr){
+  arr.forEach(([n,k,q,a])=>{root.insertAdjacentHTML('beforeend',`<details><summary><span class="tag">${n}</span>${k}</summary><div class="body"><p style="margin:0 0 6px"><span class="hint">怎麼問：</span>${q}</p><p style="margin:0"><span class="hint">正解思路：</span>${a}</p></div></details>`);});
+}
+
+/* ---------- traps ---------- */
+function traps(root,countEl,key,T){
+  let saved=[];try{saved=JSON.parse(localStorage.getItem(key)||'[]')||[];}catch(e){saved=[];}
+  T.forEach(([a,b],i)=>{
+    const l=document.createElement('label');const c=saved.includes(i);if(c)l.classList.add('chk');
+    l.innerHTML=`<input type="checkbox" ${c?'checked':''}><div><em>${a}</em><br><span>${b}</span></div>`;
+    l.querySelector('input').onchange=e=>{const on=e.target.checked;l.classList.toggle('chk',on);saved=on?[...new Set([...saved,i])]:saved.filter(x=>x!==i);try{localStorage.setItem(key,JSON.stringify(saved));}catch(err){}count();};
+    root.appendChild(l);
+  });
+  function count(){countEl.textContent=`已確認 ${saved.length}／${T.length} 條`;}
+  count();
+}
+
+/* ---------- quiz ---------- */
+function quiz(box,Q,msgs){
+  let i=0,score=0;
+  function show(){
+    if(i>=Q.length){
+      const r=score/Q.length;
+      const msg=r>=.9?msgs[0]:r>=.65?msgs[1]:msgs[2];
+      box.innerHTML=`<div class="progress"><i style="width:100%"></i></div><div class="qtext" style="font-size:24px;font-family:var(--serif)">得分 ${score}／${Q.length}</div><p>${msg}</p><button class="btn primary" data-qr>重新測驗</button>`;
+      box.querySelector('[data-qr]').onclick=()=>{i=0;score=0;show();};return;
+    }
+    const [q,opts,ex]=Q[i];
+    const order=shuffle(opts.map((o,k)=>({o,k})));
+    box.innerHTML=`<div class="progress"><i style="width:${i/Q.length*100}%"></i></div><div class="qtop"><span>第 ${i+1}／${Q.length} 題</span><span>得分 ${score}</span></div><div class="qtext">${q}</div><div class="opts">${order.map(x=>`<button class="opt" data-k="${x.k}">${x.o}</button>`).join('')}</div><div class="expl" data-qe></div><div class="row" style="margin-top:14px;justify-content:flex-end"><button class="btn primary" data-qn style="display:none">${i===Q.length-1?'看結果':'下一題'}</button></div>`;
+    const qn=box.querySelector('[data-qn]');
+    box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.k==='0';if(ok)score++;
+      box.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.k==='0')x.classList.add('right');});
+      if(!ok)b.classList.add('wrongpick');
+      const e=box.querySelector('[data-qe]');e.innerHTML=(ok?'<b style="color:var(--ok)">答對了。</b>':'<b style="color:var(--bad)">這題要小心。</b>')+ex;e.classList.add('show');
+      qn.style.display='';qn.focus({preventScroll:true});
+    });
+    qn.onclick=()=>{i++;show();};
+  }
+  show();
+}
+
+/* ---------- step-through pipeline ---------- */
+function pipeline(pipeEl,outEl,nextBtn,resetBtn,nodes,out){
+  let i=0;const n=nodes.length;
+  pipeEl.style.gridTemplateColumns=`repeat(${n},minmax(90px,1fr))`;
+  pipeEl.innerHTML=nodes.map(([a,b])=>`<div class="pnode"><b>${a}</b>${b}</div>`).join('');
+  function r(){pipeEl.querySelectorAll('.pnode').forEach((x,j)=>{x.classList.toggle('on',j===i);x.classList.toggle('past',j<i);});outEl.innerHTML=out[i];nextBtn.disabled=i===n-1;nextBtn.style.opacity=i===n-1?.4:1;}
+  nextBtn.onclick=()=>{if(i<n-1){i++;r();}};
+  resetBtn.onclick=()=>{i=0;r();};
+  pipeEl.querySelectorAll('.pnode').forEach((x,j)=>{x.style.cursor='pointer';x.onclick=()=>{i=j;r();};});
+  r();
+}
+
+/* ---------- ordering game ---------- */
+function orderGame(root,fb,items,doneMsg){
+  // items: correct order array of {t,d}
+  let next=0;
+  const pool=document.createElement('div');pool.className='og-pool';
+  const slots=document.createElement('ol');slots.className='og-slots';
+  items.forEach((_,i)=>{const li=document.createElement('li');li.innerHTML=`<span class="og-n">${i+1}</span><span class="og-t hint">？</span>`;slots.appendChild(li);});
+  function build(){
+    pool.innerHTML='';next=0;
+    slots.querySelectorAll('li').forEach(li=>{li.classList.remove('fill');li.querySelector('.og-t').innerHTML='？';li.querySelector('.og-t').className='og-t hint';});
+    shuffle(items.map((x,i)=>({x,i}))).forEach(({x,i})=>{
+      const b=document.createElement('button');b.className='mitem';b.innerHTML=x.t;
+      b.onclick=()=>{
+        if(b.classList.contains('done'))return;
+        if(i===next){
+          b.classList.add('done');b.style.setProperty('--c','var(--ok)');
+          const li=slots.children[next];li.classList.add('fill');const t=li.querySelector('.og-t');t.className='og-t';t.innerHTML=`<b>${x.t}</b><small>${x.d||''}</small>`;
+          next++;fb.className='feedback ok';fb.textContent=next===items.length?'✓ 順序全對！'+doneMsg:'✓ 對，下一步呢？';
+        }else{b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');fb.className='feedback bad';fb.textContent='✗ '+(x.bad||'還不是這一步，想想前面還缺什麼。');}
+      };
+      pool.appendChild(b);
+    });
+    fb.textContent='';fb.className='feedback';
+  }
+  const rs=document.createElement('button');rs.className='btn';rs.textContent='重新排序';rs.onclick=build;
+  root.append(slots,pool);root.parentNode.insertBefore(rs,fb.nextSibling);
+  build();
+}
+
+/* ---------- nav highlight ---------- */
+function navHighlight(){
+  const links=[...document.querySelectorAll('nav.toc a')];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on&&window.innerWidth<=860)a.scrollIntoView({inline:'center',block:'nearest'});});}});},{rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('main section').forEach(s=>io.observe(s));
+}
+
+
+/* ---------- generic sorter ---------- */
+function sorter(qEl,binsEl,fbEl,bins,items,doneMsg){
+  let order=[],i=0,sc=0;
+  binsEl.innerHTML='';
+  bins.forEach(([k,t,c])=>{const b=document.createElement('button');b.className='mitem';b.dataset.k=k;b.innerHTML=`<b>${t}</b>`;if(c)b.style.setProperty('--c',c);b.onclick=()=>pick(b);binsEl.appendChild(b);});
+  let lock=false;
+  function start(){order=shuffle(items.map((_,j)=>j));i=0;sc=0;show();}
+  function show(){lock=false;binsEl.querySelectorAll('.mitem').forEach(b=>b.classList.remove('done'));qEl.textContent=`（${i+1}／${items.length}）${items[order[i]][0]}`;}
+  function pick(b){
+    if(lock)return;const it=items[order[i]];
+    if(b.dataset.k===it[1]){lock=true;sc++;b.classList.add('done');fbEl.className='feedback ok';fbEl.innerHTML='✓ '+it[2];
+      setTimeout(()=>{i++;if(i>=items.length){qEl.textContent='全部分類完成！';fbEl.innerHTML='✓ '+doneMsg+' <button class="btn" data-again>再玩一次</button>';fbEl.querySelector('[data-again]').onclick=start;}else show();},reduce?200:1100);}
+    else{b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');fbEl.className='feedback bad';fbEl.textContent='✗ 不是這一類，再想想。';}
+  }
+  start();
+}
+
+/* ---------- 24.1 symptom drill ---------- */
+const SYM=[
+  ['輸出不穩定且缺乏邏輯可解釋性','決策透明性風險','技術／倫理','導入 SHAP、LIME、反事實解釋，提供個案層級的特徵貢獻說明'],
+  ['特定族群預測結果不公平','模型偏誤風險','技術／倫理','檢視資料分布與標註、分群評估、公平性約束訓練'],
+  ['輸入資料分佈長期改變、準確率緩降','概念漂移／資料漂移','技術','建置漂移監控（PSI、KL 散度）並觸發模型再訓練流程'],
+  ['資料缺值、標註錯誤、樣本不具代表性','資料品質風險','技術','資料清洗、標註品質稽核、補足代表性樣本'],
+  ['訓練集表現好、上線後表現差','模型穩定性風險','技術','交叉驗證、正則化、上線後持續監控與再訓練'],
+  ['業務單位與 IT 需求脫節、責任不清','跨部門溝通風險','組織人力','建立跨部門協作機制與明確角色分工'],
+  ['團隊缺乏資料科學／模型維運人員','技能短缺風險','組織人力','教育訓練、外部專家、關鍵角色補實'],
+  ['員工擔心被取代、系統使用率低落','變革抵制風險','組織人力','溝通 AI 定位、內部培訓、以人機協作而非取代為訴求'],
+  ['未取得使用者同意即使用個資','個資與隱私保護風險','法規','檢視個資使用的合法性、同意機制、資料最小化'],
+  ['生成內容疑似抄襲、使用第三方資料未授權','侵權風險','法規','從<b>訓練資料源頭</b>建立篩選與授權驗證機制'],
+  ['醫療／金融導入未符產業規範','產業特定監管法規風險','法規','對照 HIPAA／PCI-DSS／醫療器材管理法逐項合規'],
+  ['事後無法證明某筆決策由誰、何時做出','不可否認性／可稽核性不足','法規／資安','推論輸入輸出留存雜湊值並加數位簽章']
+];
+const LVC=l=>l.startsWith('組織')?'var(--img)':l.startsWith('法規')?'var(--aud)':'var(--txt)';
+$('#symTable').innerHTML='<tr><th>題幹出現的徵狀</th><th>風險類型</th><th>層級</th><th>對應手段</th></tr>'+SYM.map(s=>`<tr><td>${s[0]}</td><td><b>${s[1]}</b></td><td><span class="chip" style="--c:${LVC(s[2])}"><i class="dot"></i>${s[2]}</span></td><td>${s[3]}</td></tr>`).join('');
+(function(){
+  let order=[],i=0,sc=0,done=false;
+  function start(){order=shuffle(SYM.map((_,j)=>j));i=0;sc=0;show();}
+  function show(){
+    done=false;const s=SYM[order[i]];
+    $('#symProg').style.width=(i/SYM.length*100)+'%';$('#symScore').textContent=`答對 ${sc}／${SYM.length}`;
+    $('#symQ').textContent=`徵狀：「${s[0]}」`;
+    const others=shuffle(SYM.filter(x=>x!==s)).slice(0,3);
+    $('#symOpts').innerHTML='';
+    shuffle([s,...others]).forEach(o=>{const b=document.createElement('button');b.className='mitem';b.textContent=o[1];b.onclick=()=>{
+      if(done)return;done=true;const ok=o===s;if(ok)sc++;
+      $$('#symOpts .mitem').forEach(x=>{if(x.textContent===s[1]){x.classList.add('done');x.style.setProperty('--c',LVC(s[2]));}});
+      if(!ok){b.classList.add('wrong');}
+      $('#symFb').className='feedback '+(ok?'ok':'bad');
+      $('#symFb').innerHTML=(ok?'✓ ':'✗ 正解是「'+s[1]+'」。')+`層級：<b>${s[2]}</b>　手段：${s[3]}`;
+      $('#symScore').textContent=`答對 ${sc}／${SYM.length}`;
+      $('#symNext').style.display='';$('#symNext').textContent=i===SYM.length-1?'看結果':'下一題';
+    };$('#symOpts').appendChild(b);});
+    $('#symFb').textContent='';$('#symFb').className='feedback';$('#symNext').style.display='none';
+  }
+  $('#symNext').onclick=()=>{i++;if(i>=SYM.length){$('#symProg').style.width='100%';$('#symQ').textContent=`完成！答對 ${sc}／${SYM.length}。目標是每題 5 秒內說出類型與手段。`;$('#symOpts').innerHTML='';$('#symFb').textContent='';$('#symNext').style.display='none';}else show();};
+  $('#symReset').onclick=start;
+  start();
+})();
+
+/* ---------- 24.2 drift simulator ---------- */
+(function(){
+  let seed=7;const rnd=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646;};
+  const gauss=()=>{let u=0;for(let k=0;k<6;k++)u+=rnd();return (u-3)/1.6;};
+  const base=Array.from({length:40},()=>({x:gauss(),y:rnd()}));
+  const M={
+    normal:{t:'正常',mu:.45,sd:.12,shift:0,trueB:.5,modelB:.5,acc:[90,90,89,90,90,89,90,90,89,90,90,89],key:'分佈相同、關係相同，模型照常運作。',fix:'持續監控即可。'},
+    data:{t:'資料漂移',mu:.62,sd:.13,shift:.17,trueB:.5,modelB:.5,acc:[90,89,88,86,84,82,80,79,77,76,75,74],key:'「輸入特徵分佈與訓練資料明顯不同」—— 彩色曲線整個移位，PSI 升高。關係（實線）沒變，但大量樣本落到模型在訓練時很少見過的區域（橘圈），預測可靠度隨之下降。',fix:'PSI、KL 散度偵測分佈差異；VAE 監控潛在空間。（114Q2-22、42）'},
+    concept:{t:'概念漂移',mu:.45,sd:.12,shift:0,trueB:.36,modelB:.5,acc:[90,89,87,85,83,81,80,78,77,76,75,74],key:'<b>特徵分佈沒變</b>（PSI 幾乎為 0），但真實關係（實線）移動了，虛線邊界之間的點被判錯。看到「特徵分佈沒變」就排除 Data Drift。',fix:'重新標註、再訓練、調整業務規則。（115Q1-48）'},
+    model:{t:'模型漂移',mu:.53,sd:.12,shift:.08,trueB:.45,modelB:.5,acc:[90,90,89,88,87,86,85,84,83,82,81,80],key:'「上線後準確率逐漸下降」的<b>統稱現象</b>，要再往下找原因（資料變了？關係變了？）。',fix:'效能監控＋自動重新訓練。'},
+    skew:{t:'訓練服務偏差',mu:.72,sd:.12,shift:0,trueB:.5,modelB:.23,acc:[71,71,70,71,71,70,71,71,70,71,71,70],key:'<b>一上線就不對</b>：不是隨時間變，而是線上特徵處理邏輯和離線不一致（例如改過特徵工程），線上的特徵從第一天就被算歪 —— 左圖彩色曲線是「線上算出來的特徵」，等於模型邊界（虛線）一開始就對錯了位置。',fix:'統一特徵管線、Feature Store。'}
+  };
+  const N=v=>Math.exp(-v*v/2);
+  function psi(a,b){let s=0;
+    const bins=10,e=[],o=[];for(let k=0;k<bins;k++){const c=(k+.5)/bins;e.push(N((c-.45)/.12));o.push(N((c-a)/b));}
+    const se=e.reduce((x,y)=>x+y,0),so=o.reduce((x,y)=>x+y,0);
+    for(let k=0;k<bins;k++){const pe=e[k]/se+1e-4,po=o[k]/so+1e-4;s+=(po-pe)*Math.log(po/pe);}return s;}
+  function draw(k){
+    const m=M[k];let h='';
+    // left: distributions
+    const X=x=>20+x*290,Y=v=>190-v*140;
+    const curve=(mu,sd,col,fill)=>{let d=`M${X(0)} ${Y(0)}`;for(let i=0;i<=60;i++){const x=i/60;d+=` L${X(x).toFixed(1)} ${Y(N((x-mu)/sd)).toFixed(1)}`;}d+=` L${X(1)} ${Y(0)} Z`;return `<path d="${d}" fill="${fill}" stroke="${col}" stroke-width="2" style="transition:d .6s"/>`;};
+    h+=`<text x="165" y="22" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">輸入特徵分佈</text>`;
+    h+=curve(.45,.12,'var(--muted)','color-mix(in srgb,var(--muted) 18%,transparent)');
+    h+=curve(m.mu,m.sd,k==='normal'?'var(--ok)':'var(--sen)','color-mix(in srgb,var(--sen) 16%,transparent)');
+    h+=`<line x1="20" y1="190" x2="310" y2="190" stroke="var(--line)"/><text x="30" y="210" font-size="13" fill="var(--muted)">■ 訓練</text><text x="100" y="210" font-size="13" fill="var(--sen)">■ 上線後</text>`;
+    // right: relation
+    const RX=x=>350+x*290,RY=y=>40+y*150;
+    h+=`<text x="495" y="22" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">特徵 → 標籤的關係</text><rect x="350" y="40" width="290" height="150" rx="8" fill="var(--surface2)"/>`;
+    let wrong=0;
+    base.forEach(p=>{const x=Math.min(.98,Math.max(.02,.45+p.x*.27+m.shift));const lab=x>m.trueB+ (p.y-.5)*.1;const pred=x>m.modelB+(p.y-.5)*.1;const bad=lab!==pred,far=x>.75;if(bad||far)wrong++;
+      h+=`<circle cx="${RX(x).toFixed(1)}" cy="${RY(p.y).toFixed(1)}" r="5.5" fill="${lab?'var(--txt)':'var(--aud)'}" ${bad?'stroke="var(--bad)" stroke-width="3"':far?'stroke="var(--warn)" stroke-width="3"':''}/>`;});
+    const ln=(b,dash,col)=>`<line x1="${RX(b-.05)}" y1="${RY(0)}" x2="${RX(b+.05)}" y2="${RY(1)}" stroke="${col}" stroke-width="2.5" ${dash?'stroke-dasharray="7 5"':''}/>`;
+    h+=ln(m.trueB,false,'var(--ink)')+ln(m.modelB,true,'var(--sen)');
+    h+=`<text x="360" y="210" font-size="13" fill="var(--ink)">— 真實關係</text><text x="460" y="210" font-size="13" fill="var(--sen)">- - 模型邊界</text><text x="560" y="210" font-size="13" fill="var(--bad)">○ 判錯</text><text x="560" y="226" font-size="13" fill="var(--warn)">○ 罕見區</text>`;
+    // bottom accuracy sparkline
+    const AX=i=>60+i*50,AY=v=>322-(v-65)*2.2;
+    h+=`<text x="20" y="250" font-size="14" font-weight="700" fill="var(--ink)">準確率走勢（上線後 12 期）</text><line x1="60" y1="${AY(65)}" x2="620" y2="${AY(65)}" stroke="var(--line)"/>`;
+    h+=`<polyline points="${m.acc.map((v,i)=>`${AX(i)},${AY(v)}`).join(' ')}" fill="none" stroke="${k==='normal'?'var(--ok)':'var(--sen)'}" stroke-width="3"/>`;
+    h+=`<text x="${AX(0)-8}" y="${AY(m.acc[0])+4}" text-anchor="end" font-size="12" fill="var(--muted)">${m.acc[0]}%</text><text x="${AX(11)+8}" y="${AY(m.acc[11])+4}" font-size="12" fill="var(--muted)">${m.acc[11]}%</text>`;
+    $('#drSvg').innerHTML=h;
+    const p=psi(m.mu,m.sd);
+    $('#drK').innerHTML=`<div class="kpi" style="--c:${p>.25?'var(--bad)':p>.1?'var(--warn)':'var(--ok)'}"><b>PSI（示意）</b><div class="v">${p.toFixed(2)}</div><small>${p>.25?'分佈明顯偏移':p>.1?'輕微偏移':'分佈穩定'}</small></div><div class="kpi" style="--c:${wrong>3?'var(--bad)':'var(--ok)'}"><b>判錯＋罕見區樣本（示意）</b><div class="v">${wrong}／${base.length}</div><small>右圖紅圈</small></div><div class="kpi" style="--c:var(--txt)"><b>對應作法</b><small style="color:var(--ink);font-size:14px">${m.fix}</small></div>`;
+    $('#drNote').innerHTML=`<b>${m.t}：</b>${m.key}`;
+  }
+  tabs($('#drTabs'),{set innerHTML(v){}},Object.entries(M).map(([k,v])=>({t:v.t,k})),x=>{draw(x.k);return '';});
+})();
+
+/* ---------- 24.3 GDPR ---------- */
+matcher($('#gdprMatch'),$('#gdprFb'),[
+  {k:'15',c:'var(--txt)',html:'第 15 條　查閱權'},
+  {k:'17',c:'var(--img)',html:'第 17 條　刪除權（被遺忘權）'},
+  {k:'20',c:'var(--aud)',html:'第 20 條　資料可攜權'},
+  {k:'22',c:'var(--sen)',html:'第 22 條　反對自動化決策權'},
+  {k:'33',c:'var(--txt)',html:'第 33 條　資料外洩通報'},
+  {k:'35',c:'var(--img)',html:'第 35 條　DPIA'}
+],[
+  {k:'33',html:'知悉後 <b>72 小時內</b>通報監管機關',ok:'這是企業義務，不是資料主體權利。',bad:'72 小時是外洩通報（第 33 條），別和查閱權的一個月對調。'},
+  {k:'22',html:'重大自動化決策可要求<b>人工介入</b>',ok:'對應信用評分、招聘場景。'},
+  {k:'15',html:'了解處理目的、類型、保存期限，<b>一個月內</b>回覆',ok:'資料主體八項權利中唯一有明確期限者。',bad:'一個月是查閱權（第 15 條）。'},
+  {k:'35',html:'高風險處理<b>前</b>必須先做評估',ok:'DPIA 屬事前機制，不是出事後的調查報告。'},
+  {k:'20',html:'以結構化、機器可讀格式取回並轉移',ok:'易與查閱權混淆：可攜權重點在「取回並轉移」。'},
+  {k:'17',html:'要求刪除個資，但法律要求保留或公共利益時<b>不完全適用</b>',ok:'刪除權不是絕對的。'}
+],'記住：查閱權一個月、外洩通報 72 小時。');
+tabs($('#lawTabs'),$('#lawBody'),[
+  ['GDPR','歐盟','處理歐盟居民個資者，<b>不論企業是否在歐盟境內</b>','八項權利與原則、DPIA'],
+  ['PDPA 台灣個資法','台灣','在台或涉台灣居民個資處理的組織','特定目的告知、查閱／複製／更正／刪除、停止蒐集處理使用、安全維護措施'],
+  ['CDPA','美國州法（如維吉尼亞州）','特定州境內個資處理','查閱／修正／刪除／可攜；敏感資料更嚴格保護'],
+  ['HIPAA','美國','醫療機構、保險公司與第三方合作廠商','技術性（加密、存取控制、安全傳輸儲存）／實體性（設備管控、備份災復）／行政性（政策程序、員工培訓、定期風險評估）'],
+  ['PCI-DSS','PCI SSC','所有處理支付卡資訊的機構','防火牆與入侵偵測、TLS／AES 加密、多因素認證與權限最小化、弱點掃描與滲透測試、員工訓練與內部稽核'],
+  ['金融科技創新實驗條例','金管會','金融創新業務測試','沙盒審核、個資安全、試行合規確認'],
+  ['醫療器材管理法','衛福部 TFDA','含醫療 AI 產品','上市許可、品質與安全標準'],
+  ['電信管理法','NCC','含 AI 通訊服務業者','網路安全、資安管理、消費者權益'],
+  ['智慧財產權法','經濟部智慧局 TIPO','AI 模型與資料集','著作權、專利、商標的取得與使用範圍']
+],x=>`<b>${x[0]}</b>　<span class="hint">主管或來源：${x[1]}</span><div style="margin-top:6px"><b>適用對象：</b>${x[2]}</div><div><b>核心要求：</b>${x[3]}</div>`);
+sorter($('#hipQ'),$('#hipBins'),$('#hipFb'),[['t','技術性','var(--txt)'],['p','實體性','var(--img)'],['a','行政性','var(--aud)']],[
+  ['資料加密','t','加密屬技術性。'],['存取控制','t','存取控制屬技術性。'],['安全傳輸與儲存','t','屬技術性。'],
+  ['設備管控','p','設備管控屬實體性。'],['備份與災難復原','p','機房與備份屬實體性。'],
+  ['員工培訓','a','員工培訓屬行政性 —— 最常考的一個。'],['政策與程序','a','安全政策屬行政性。'],['定期風險評估','a','定期風險評估屬行政性，不是技術性。']
+],'技術＝加密與存取控制；實體＝設備與備份；行政＝政策、培訓、風險評估。');
+
+/* ---------- 24.4 bias / ethics ---------- */
+matcher($('#biasMatch'),$('#biasFb'),[
+  {k:'i',c:'var(--txt)',html:'醫療資料缺某性別／年齡層，診斷準確度不均'},
+  {k:'h',c:'var(--img)',html:'過去信用審核紀錄含種族或性別偏見，模型繼承並放大'},
+  {k:'l',c:'var(--aud)',html:'情緒標註對特定族群書寫風格判斷不一致'},
+  {k:'a',c:'var(--sen)',html:'推薦系統以多數用戶偏好為準，忽略少數群體'}
+],[
+  {k:'h',html:'歷史偏見 Historical Bias<small>歷史資料本身反映既有社會不公</small>'},
+  {k:'a',html:'演算法偏見 Algorithmic Bias<small>為整體效能最佳化而犧牲特定群體</small>'},
+  {k:'i',html:'資料分布不均 Imbalanced Data<small>某群體樣本不足</small>'},
+  {k:'l',html:'標註偏見 Labeling Bias<small>標註者的主觀、文化背景或刻板印象</small>'}
+],'偏誤要從資料分布與標註處理，不是調整輸出閾值。');
+flipCards($('#ethCards'),[
+  ['透明度','Transparency','對外說明模型如何處理資料、如何決策、可能影響'],
+  ['可解釋性','Explainability','對「這一筆」決策說出理由，讓當事人能理解並申訴'],
+  ['公平性','Fairness','積極避免對特定群體的歧視，最小化偏差'],
+  ['問責性','Accountability','明確的責任人、可快速識別與修正問題']
+]);
+(function(){
+  const S=[['監理要求對被拒絕的<b>每一筆</b>貸款申請提供具體理由','e','「每一筆」→ 可解釋性（115Q1-26），以 SHAP／LIME／反事實解釋提供特徵貢獻說明。'],['企業公開說明 AI 系統用了哪些資料、運作邏輯與社會影響','t','對整體系統的公開揭露 → 透明度。'],['告訴這位求職者：他被篩掉主要是因為哪幾個特徵、各貢獻多少','e','單一決策的理由 → 可解釋性。'],['對外公開 AI 使用原則並接受外部回饋','t','對整體系統 → 透明度。']];
+  let i=0,ans=false;
+  function r(){$('#teQ').innerHTML=S[i][0];$('#teFb').textContent='';$('#teFb').className='feedback';$('#teNext').style.display='none';ans=false;}
+  function a(k){if(ans)return;ans=true;const ok=k===S[i][1];$('#teFb').className='feedback '+(ok?'ok':'bad');$('#teFb').textContent=(ok?'✓ ':'✗ ')+S[i][2];$('#teNext').style.display='';}
+  $('#teT').onclick=()=>a('t');$('#teE').onclick=()=>a('e');$('#teNext').onclick=()=>{i=(i+1)%S.length;r();};r();
+})();
+
+/* ---------- 24.5 strategies ---------- */
+sorter($('#stQ'),$('#stBins'),$('#stFb'),[['av','迴避','var(--bad)'],['tr','轉移','var(--txt)'],['mi','緩解','var(--ok)'],['ac','接受','var(--aud)']],[
+  ['醫療 AI 訓練資料不足、誤診風險過高 → 暫緩專案','av','損害嚴重且難以控制 → 不做該活動。'],
+  ['金融機構無法符合新隱私法規 → 取消雲端部署','av','法規限制嚴格 → 迴避。'],
+  ['購買 AI 系統故障保險','tr','透過第三方承擔損失 → 轉移。'],
+  ['與供應商簽 SLA，延遲超標由供應商賠償','tr','找第三方賠 → 轉移，不是緩解。'],
+  ['資料清洗移除異常值以提升準確率','mi','自己動手把風險壓下來 → 緩解。'],
+  ['導入資料加密與合規培訓以通過 HIPAA 審查','mi','投入措施降低風險 → 緩解（最常見）。'],
+  ['小規模資料漂移僅影響 1% 推薦準確率，修復成本高於收益','ac','低衝擊且修不划算 → 接受，但仍須持續監控。']
+],'迴避＝不做、轉移＝找人賠、緩解＝自己壓、接受＝小到不划算修（但要監控）。');
+pipeline($('#planPipe'),$('#planOut'),$('#planNext'),$('#planReset'),
+  [['1 識別評估','風險清單'],['2 對應措施','行動＋時程'],['3 責任分工','負責團隊'],['4 監控回報','頻率與管道']],
+  ['<b>風險識別與評估結果</b> → 風險清單＋影響評分','<b>風險對應措施</b> → 具體行動＋時程','<b>責任人與分工</b> → 指定負責團隊（資安團隊負責加密、資料科學家調整偏誤）','<b>監控與回報機制</b> → 報告頻率與管道（如每週向管理層回報）']);
+(function(){
+  const I=[['PSI（輸入分佈）',2,'標籤尚未回收前就能發現輸入分佈偏移'],['置信度分佈',5,'有參考價值，但較滯後且受校準影響'],['準確率／AUC',8,'要等標籤回收才算得出來'],['CPU／記憶體／API 延遲',99,'系統資源面，反映負載而非模型品質']];
+  $('#warnBars').innerHTML=I.map(x=>`<div class="bar"><span>${x[0]}</span><div class="track"><div class="fill"></div></div><span class="num">—</span></div>`).join('');
+  let t=0,timer=null;
+  function r(){$('#warnT').textContent=`第 ${t} 週`;$$('#warnBars .bar').forEach((row,j)=>{const on=t>=I[j][1];row.classList.toggle('win',on&&j===0);row.querySelector('.fill').style.width=(I[j][1]>20?4:Math.min(100,t/I[j][1]*100))+'%';row.querySelector('.fill').style.background=on?'var(--sen)':'var(--txt)';row.querySelector('.num').textContent=on?'亮燈':I[j][1]>20?'無反應':'…';});
+    const lit=I.filter(x=>t>=x[1]);$('#warnNote').innerHTML=lit.length?`最早亮燈：<b>${lit[0][0]}</b> —— ${lit[0][2]}。${t>=10?'CPU／延遲始終沒反應：'+I[3][2]+'。（114Q2-32）':''}`:'輸入分佈正在悄悄改變…';}
+  $('#warnPlay').onclick=()=>{clearInterval(timer);t=0;r();timer=setInterval(()=>{t++;r();if(t>=10)clearInterval(timer);},reduce?30:450);};
+  r();
+})();
+(function(){
+  const segs=[['低額',.9,.85],['中額',1.1,1.05],['高額',1.6,3.2]];
+  let by=false;
+  function d(){
+    const svg=$('#segSvg');let h='';const W=640,l=60,yb=190,sc=40;
+    const pts=t=>t;
+    h+=`<line x1="${l}" y1="${yb}" x2="${W-20}" y2="${yb}" stroke="var(--line)"/><text x="${l}" y="20" font-size="14" font-weight="700" fill="var(--ink)">RMSE（示意）　上線初期 → 現在</text>`;
+    if(!by){
+      h+=`<rect x="200" y="${yb-1.15*sc*2}" width="90" height="${1.15*sc*2}" rx="6" fill="var(--muted)"/><rect x="340" y="${yb-1.18*sc*2}" width="90" height="${1.18*sc*2}" rx="6" fill="var(--ok)"/><text x="245" y="${yb+20}" text-anchor="middle" font-size="14" fill="var(--muted)">初期 1.15</text><text x="385" y="${yb+20}" text-anchor="middle" font-size="14" fill="var(--ok)">現在 1.18</text>`;
+      $('#segNote').textContent='整體 RMSE 幾乎沒變，看起來一切正常。';
+    }else{
+      segs.forEach((s,i)=>{const x=l+30+i*180;h+=`<rect x="${x}" y="${yb-s[1]*sc}" width="60" height="${s[1]*sc}" rx="6" fill="var(--muted)"/><rect x="${x+68}" y="${yb-s[2]*sc}" width="60" height="${s[2]*sc}" rx="6" fill="${s[2]>s[1]*1.3?'var(--bad)':'var(--ok)'}"/><text x="${x+64}" y="${yb+20}" text-anchor="middle" font-size="14" fill="var(--ink)">${s[0]}理賠</text>`;});
+      $('#segNote').innerHTML='高額理賠的誤差大幅惡化，但它樣本少，被多數樣本主導的整體指標<b>掩蓋</b>了。正解：<b>只監控整體指標、未依區間分群監控</b>；改監控頻率或改用 MAE 都救不了「切面錯誤」。';
+    }
+    svg.innerHTML=h;
+  }
+  $('#segAll').onclick=()=>{by=false;$('#segAll').setAttribute('aria-pressed','true');$('#segBy').setAttribute('aria-pressed','false');d();};
+  $('#segBy').onclick=()=>{by=true;$('#segBy').setAttribute('aria-pressed','true');$('#segAll').setAttribute('aria-pressed','false');d();};
+  d();
+})();
+tabs($('#isoTabs'),$('#isoBody'),[
+  ['漸進式部署','從單一專科／低風險場域開始，逐步擴展','限縮影響範圍、便於收斂回饋'],
+  ['金絲雀發布','導入 1～5% 真實流量','可控曝險下量測<b>真實業務指標</b>，可隨時回滾'],
+  ['影子模式','新舊模型同時預測，僅顯示舊模型結果','安全比對輸出差異與系統負載，但<b>量不到真實互動行為</b>'],
+  ['人機協作 HITL','AI 僅提供建議，人類審核簽署','人命攸關情境下確保<b>責任由人類承擔</b>'],
+  ['回滾 Rollback','退回前一版模型','需搭配 Model Registry 的版本可追溯性'],
+  ['分群監控','依區間／族群各自設定告警門檻','避免全域指標掩蓋少數族群或長尾案件的惡化']
+],x=>`<b>${x[0]}</b><div style="margin-top:4px"><span class="hint">做法：</span>${x[1]}</div><div><span class="hint">風險控管價值：</span>${x[2]}</div>`);
+
+/* ---------- 24.6 exams ---------- */
+examList($('#examA'),[
+  ['指引','決策透明性','模型輸出不穩定且缺乏邏輯可解釋性，帶來何種風險','<b>決策透明性不足</b>；誘答刻意寫成「效率過高」「公平性過度提升」這種語意不成立的選項'],
+  ['指引','模型偏誤','何者屬於 AI 模型偏誤造成的風險','<b>特定族群預測結果不公平</b>；語法錯誤、格式錯誤、壓縮後效能下降都不是偏誤'],
+  ['指引','法律與合規風險','企業應採取何種措施管理','<b>檢視個資使用的合法性</b>；強化演算法複雜度、加速部署都與合規無關'],
+  ['指引','概念漂移','長期輸入資料分佈改變導致效能下降，如何風險管理','<b>建置概念漂移監控與觸發再訓練流程</b>；重啟伺服器、縮減層數與風險無關，冗餘模型雖有備援概念但不處理資料變異']
+]);
+examList($('#examB'),[
+  ['114Q2-22','資料漂移偵測','懷疑顧客行為改變導致輸入分佈不同，如何確認','<b>KL 散度</b>量化新舊分佈差異。重新訓練是「因應」不是「偵測」'],
+  ['114Q2-23','漸進式部署','醫院部署輔助診斷，何種 Phased Rollout 最合適','<b>從單一專科或特定病房起步</b>；急診風險高、夜班代表性不足'],
+  ['114Q2-24','對抗性攻擊（選非）','何者<b>並非</b>針對模型自身脆弱性的手段','<b>網路防火牆</b>屬網路層，擋不了合法輸入中的惡意擾動；對抗樣本訓練、前處理過濾、後階段規則引擎才是多層防禦'],
+  ['114Q2-25','侵權風險','生成內容疑似侵權，何種策略最能<b>預防</b>','<b>建立訓練資料篩選與授權驗證機制</b>（從源頭）；相似度比對與浮水印是事後偵測／追溯'],
+  ['114Q2-30','不可否認性','金融監管要求可法務追蹤與稽核','<b>每筆推論記錄輸入輸出雜湊值並數位簽章</b>；備援與負載平衡是可用性'],
+  ['114Q2-32','預警指標','何種監控指標最具<b>預測效力</b>','<b>PSI</b>；CPU／延遲是系統面，置信度分佈較滯後'],
+  ['114Q2-42','資料偏移偵測','上線後輸入分佈與訓練集明顯不同','以 <b>VAE 監控潛在空間分佈</b>；換簡單模型或加大容量都不解決漂移'],
+  ['114Q2-46','MLOps 主動偵測','系統正常但準確率下降、輸入分佈偏移','<b>建立即時資料漂移與概念漂移監測機制</b>；量化、調參、固定隨機種子都無助於偵測'],
+  ['114Q2-49','偏誤（選非）','跨語言／族群情緒判斷不一致，何者描述<b>不正確</b>','<b>詞嵌入正規化</b>只影響數值穩定，非根本原因；訓練語料文化偏向、來源不平衡才是'],
+  ['115Q1-25','NIST AI RMF 可驗證性','讓第三方稽核能獨立重現評估結果','<b>保存可追溯的測試資料與評估流程、記錄關鍵設定</b>（超參數、隨機種子、環境版本）'],
+  ['115Q1-26','可解釋性','監理要求對被拒申請人提供<b>每筆</b>決策理由','<b>可解釋性能力</b>，以 SHAP／LIME／反事實解釋提供特徵貢獻說明'],
+  ['115Q1-27','HITL','人命攸關且責任須由人類承擔','<b>人機協作架構由醫師最終審核</b>；信心低即自動關機反而停擺，正解是轉人工複判'],
+  ['115Q1-42','分群監控','整體 RMSE 沒變，但高額理賠誤差變大','<b>只監控整體指標、未依區間分群監控</b>；改監控頻率或改用 MAE 都救不了'],
+  ['115Q1-46','HIPAA 合規架構','要用公有雲算力但原始影像不得離院','<b>聯邦學習</b>，僅上傳模型更新；AES 加密上傳與 VPN 都仍讓資料離院'],
+  ['115Q1-48','概念漂移','特徵分佈未變、AUC 幾乎不變，但攔截率下降','<b>概念漂移</b>；題幹已明講特徵分佈沒變，直接排除 Data Drift']
+]);
+
+/* ---------- 24.7 rulers ---------- */
+flipCards($('#rulerCards'),[
+  ['尺 1','多層防禦 > 單點手段','正解通常同時涵蓋「訓練期＋推論期＋流程面」。「選非」題的錯誤選項常是層次錯置（用網路層手段解模型層問題）。'],
+  ['尺 2','從源頭處理 > 事後補救','侵權看訓練資料授權，不是輸出端加浮水印；偏誤看資料分布與標註，不是調整輸出閾值。'],
+  ['尺 3','事前預防 > 事後追溯','DPIA、AI 審查、漸進式部署、對抗樣本訓練屬事前。但題幹明問「事後可稽核」就換成雜湊＋簽章、版本紀錄、可重現評估。'],
+  ['尺 4','持續監控 > 一次性動作','「定期重啟伺服器」「再訓練一次就好」「準確率衝到 99%」幾乎都是誘答。正解常含「監控＋告警閾值＋觸發再訓練」的完整迴圈。']
+]);
+tabs($('#askTabs'),$('#askBody'),[
+  ['問「偵測」還是「因應」','問「<b>偵測</b>」就別選處置手段','例：確認輸入分佈是否改變 → KL 散度（偵測）；重新訓練是因應。問「<b>因應</b>」才選再訓練。'],
+  ['問「責任歸屬」','找<b>有人類節點</b>的選項','HITL、審核簽署、角色分工 —— 不要選純技術優化。']
+],x=>`<div class="compare"><div><div class="big">判斷</div>${x[1]}</div><div><div class="big">例子</div>${x[2]}</div></div>`);
+
+/* ---------- traps ---------- */
+traps($('#traps'),$('#trapCount'),'l21203-traps',[
+  ['概念漂移是特徵與標籤的關聯改變，不是輸入特徵分佈改變','題幹寫「特徵分佈未明顯變化」就是概念漂移。'],
+  ['訓練服務偏差是離線與線上特徵處理邏輯不一致','通常一上線就出現，不是穩定運行一年後才發生。'],
+  ['可解釋性對單一決策，透明度對整體系統','監理要求「每筆拒貸理由」考的是可解釋性。'],
+  ['「接受」風險不等於不處理','仍須設定監控指標；完全不管是漏洞不是策略。'],
+  ['迴避是不做該活動','「做但小心一點」是緩解。'],
+  ['買保險、簽 SLA 是轉移，不是緩解','緩解是自己動手把風險壓下來。'],
+  ['GDPR 的刪除權不是絕對的','法律要求保留或公共利益時不完全適用。'],
+  ['GDPR 的兩個天數不要對調','查閱權一個月內回覆（資料主體權利）；外洩通報知悉後 72 小時內（企業義務）。'],
+  ['DPIA 是事前的高風險處理評估','不是出事後的調查報告。'],
+  ['HIPAA 的員工培訓與定期風險評估屬行政性保護措施','不是技術性。'],
+  ['防火牆、VPN 屬網路層防護','擋不住對抗樣本，也不能讓原始資料「不離開」院內（那要靠聯邦學習）。'],
+  ['差分隱私防的是隱私外洩與樣本記憶','對著作權侵權的預防效果有限。'],
+  ['浮水印與數位指紋是事後追溯','不能預防侵權發生。'],
+  ['影子模式量不到真實互動行為','要量 CTR、轉換率必須用金絲雀發布。'],
+  ['整體指標會掩蓋少數族群或長尾案件的惡化','RMSE、AUC 被多數樣本主導，必須分群監控。'],
+  ['提高監控頻率解決不了「監控切面錯誤」','切面錯了，看得再勤也看不到。'],
+  ['Model Registry 管版本與部署狀態','上線後的漂移監控屬 Model Monitoring，兩者分工不同。'],
+  ['AI 風險管理貫穿全生命週期','是前瞻機制，不是部署後才做的輔助工作。']
+]);
+
+/* ---------- quiz ---------- */
+quiz($('#quiz'),[
+  ['詐欺偵測模型上線一段時間後，特徵分佈未出現明顯變化、AUC 幾乎不變，但實際攔截率下降。最可能的原因是？',['概念漂移：特徵與標籤之間的關聯改變','資料漂移：輸入特徵分佈改變','訓練服務偏差','伺服器資源不足'],'題幹已明講特徵分佈沒變，直接排除資料漂移。'],
+  ['懷疑顧客行為改變導致輸入分佈與訓練時不同，想先「確認」是否發生，最適合的做法是？',['用 KL 散度量化新舊分佈差異','立即重新訓練模型','改用更大的模型','重啟推論伺服器'],'問「偵測」就別選處置。重新訓練是因應，不是偵測。'],
+  ['監理機關要求銀行對被拒絕的每一筆貸款申請提供具體理由，這主要要求的是？',['可解釋性能力（如 SHAP、LIME、反事實解釋）','透明度：公開整體系統運作邏輯','公平性約束訓練','提高模型準確率'],'「每一筆」→ 單一決策的理由 → 可解釋性。'],
+  ['生成式 AI 的內容疑似侵犯著作權，下列何種策略最能「預防」？',['建立訓練資料篩選與授權驗證機制','在輸出內容加上浮水印','對輸出做相似度比對','導入差分隱私'],'從源頭處理 > 事後補救。浮水印與相似度比對是事後追溯；差分隱私對侵權預防效果有限。'],
+  ['金融監管要求每筆 AI 決策可法務追蹤與稽核，最合適的做法是？',['每筆推論記錄輸入輸出雜湊值並加數位簽章','建立備援系統','導入負載平衡','提高模型準確率'],'題幹問事後究責 → 不可否認性。備援與負載平衡是可用性。'],
+  ['下列哪一個監控指標對模型品質最具「預測效力」？',['PSI（族群穩定度指數）','CPU 使用率','API 回應延遲','記憶體使用量'],'PSI 在標籤尚未回收前就能發現輸入分佈偏移；系統資源指標反映負載而非模型品質。'],
+  ['保險理賠模型整體 RMSE 沒變，但高額理賠的預測誤差大幅變大。問題的根源是？',['只監控整體指標、未依區間分群監控','監控頻率太低','應改用 MAE','模型參數量不足'],'整體指標被多數樣本主導；提高頻率或換指標都救不了切面錯誤。'],
+  ['小規模資料漂移僅影響 1% 推薦準確率，修復成本高於收益。最適合的策略是？',['接受，並設定監控指標持續追蹤','迴避，直接停用推薦系統','轉移，購買保險','完全不管'],'低衝擊且修不划算 → 接受，但接受 ≠ 不管。'],
+  ['企業與雲端供應商簽 SLA，延遲超標由供應商賠償，屬於哪一種風險控管策略？',['轉移','緩解','迴避','接受'],'透過第三方承擔損失是轉移。'],
+  ['依 GDPR，企業知悉個資外洩後應在多久內通報監管機關？',['72 小時內','一個月內','三個月內','一週內'],'一個月是查閱權的回覆期限，兩者常被對調。'],
+  ['下列何者屬於 HIPAA 的「行政性」保護措施？',['員工培訓與定期風險評估','資料加密','存取控制','機房設備管控與備份'],'加密與存取控制屬技術性，機房與備份屬實體性。'],
+  ['輔助診斷系統攸關人命且責任必須由人類承擔，最合適的架構是？',['人機協作（HITL）：AI 提供建議，醫師最終審核','模型信心低時自動關機','完全由 AI 自動決策','提高模型準確率到 99%'],'信心低即關機會在疑難案例上停擺；問責任歸屬就找有人類節點的選項。']
+],['太強了，徵狀到類型的對應已經很熟。','不錯！回頭看看答錯的題目對應的段落。','建議重新操作 24.1 的徵狀快打與 24.2 的漂移模擬器，再來一次。']);
+
+navHighlight();
+</script>
+</body>
+</html>

@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L21302 AI技術系統集成與部署｜互動教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F5; --surface:#FFFFFF; --surface2:#F6F8FB; --ink:#18202E; --muted:#5A6475; --line:#D5DBE4;
+  --txt:#3B4CCA; --img:#0E8A7A; --aud:#B87812; --sen:#B8336A;
+  --ok:#1F8A4C; --bad:#C23B2E; --warn:#D9822B;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+    --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+  --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75}
+h1,h2,h3{font-family:var(--serif);line-height:1.3;margin:0}
+p{margin:0 0 1em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--txt);outline-offset:2px;border-radius:4px}
+svg{max-width:100%;height:auto;display:block}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1180px;margin:0 auto;gap:40px;padding:0 24px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;padding:32px 0;height:100vh;overflow:auto}
+nav.toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14.5px}
+nav.toc a span{font-variant-numeric:tabular-nums;font-size:13px;opacity:.8}
+nav.toc a.on{background:var(--surface);color:var(--ink);font-weight:700}
+.toc-title{font-family:var(--serif);font-weight:900;font-size:18px;padding:0 10px 14px}
+main{min-width:0;padding-bottom:80px}
+section{padding:56px 0 8px;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.sec-head{display:flex;gap:16px;align-items:baseline;margin-bottom:18px}
+.sec-no{font-family:var(--serif);font-weight:900;font-size:40px;color:var(--line);line-height:1}
+h2{font-size:28px;font-weight:900}
+h3{font-size:19px;margin:34px 0 10px}
+.lead{color:var(--muted);max-width:66ch}
+.prose{max-width:68ch}
+
+/* hero */
+.hero{padding:44px 0 24px}
+.hero .code{font-size:14px;color:var(--muted);margin-bottom:6px}
+.hero h1{font-size:clamp(34px,5.5vw,56px);font-weight:900;letter-spacing:.02em}
+.hero .one{font-size:18px;max-width:60ch;margin:16px 0 0;color:var(--muted)}
+.hero-fig{background:var(--surface);border-radius:20px;margin-top:28px;padding:14px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+.goal{border-left:4px solid var(--c);padding:6px 0 6px 14px;font-size:15px}
+
+/* panels */
+.panel{background:var(--surface);border-radius:16px;padding:22px;margin:16px 0}
+.panel.flat{background:var(--surface2)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font-size:15px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hint{font-size:14px;color:var(--muted)}
+.callout{border-left:4px solid var(--warn);background:var(--surface2);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;font-size:15px}
+.callout.exam{border-color:var(--txt)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:14px}
+
+/* modality chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+
+/* matcher */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.match .col{display:flex;flex-direction:column;gap:10px}
+.mitem{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15px;transition:border-color .2s,background .2s,transform .2s}
+.mitem small{display:block;color:var(--muted);font-size:13px}
+.mitem.sel{border-color:var(--ink);transform:translateX(4px)}
+.mitem.done{border-color:var(--c,var(--ok));background:var(--surface2);cursor:default}
+.mitem.wrong{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:1.8em;margin-top:12px;font-size:15px}
+.feedback.ok{color:var(--ok)} .feedback.bad{color:var(--bad)}
+
+/* timeline */
+.steps{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stage-viz{min-height:130px;display:flex;align-items:center;justify-content:center}
+.stage-viz .blk{display:inline-block;width:34px;height:34px;border-radius:6px;margin:2px;transition:all .5s}
+
+/* align toggle */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.compare>div{padding:18px}
+.compare>div+div{border-left:1px solid var(--line)}
+.compare .big{font-family:var(--serif);font-weight:900;font-size:22px;margin-bottom:6px}
+
+/* fusion */
+.meter{height:14px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:6px 0}
+.meter>i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .7s cubic-bezier(.3,.8,.3,1),background .4s}
+.flow{stroke-dasharray:6 7;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.jitter{animation:jit .25s steps(2) infinite}
+@keyframes jit{50%{transform:translate(1.5px,-1px)}}
+.fusion-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.pc{font-size:15px}
+.pc b{display:block;font-size:14px;color:var(--muted);font-weight:500}
+
+/* clip */
+.mat{display:grid;gap:4px;font-size:13px}
+.mat .cell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;transition:background .5s,color .5s}
+.mat .lab{display:flex;align-items:center;justify-content:center;font-size:22px}
+.mat .tlab{font-size:12px;text-align:center;color:var(--muted);display:flex;align-items:flex-end;justify-content:center;line-height:1.3}
+.zs-imgs{display:flex;gap:10px;flex-wrap:wrap}
+.zs-img{font-size:38px;width:72px;height:72px;border-radius:16px;border:2px solid var(--line);background:var(--surface2);display:flex;align-items:center;justify-content:center}
+.zs-img[aria-pressed="true"]{border-color:var(--img);box-shadow:0 0 0 3px color-mix(in srgb,var(--img) 25%,transparent)}
+.bar{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.bar .track{height:22px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;width:0;background:var(--txt);border-radius:6px;transition:width .8s cubic-bezier(.3,.8,.3,1)}
+.bar.win .fill{background:var(--img)}
+.bar.win{font-weight:700}
+.bar .num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.flip{perspective:900px;height:150px;border:0;background:none;padding:0;text-align:left}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flip[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:center}
+.flip .f{background:var(--surface);border:1.5px solid var(--line)}
+.flip .f strong{font-family:var(--serif);font-size:22px}
+.flip .f span{color:var(--muted);font-size:14px}
+.flip .b{background:var(--ink);color:var(--bg);transform:rotateY(180deg);font-size:15px}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.pnode{border:2px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;font-size:14px;background:var(--surface);transition:all .35s}
+.pnode b{display:block;font-size:16px}
+.pnode.on{border-color:var(--aud);background:color-mix(in srgb,var(--aud) 14%,var(--surface));transform:translateY(-3px)}
+.pnode.past{border-color:color-mix(in srgb,var(--aud) 45%,var(--line))}
+.pout{background:var(--surface2);border-radius:12px;padding:14px 16px;min-height:84px;font-size:15px}
+.wave{display:flex;gap:3px;align-items:center;height:30px}
+.wave i{width:4px;background:var(--aud);border-radius:2px;animation:wv 1s ease-in-out infinite}
+@keyframes wv{50%{transform:scaleY(.3)}}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+
+/* strategies */
+.strat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.strat button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;text-align:left;font-size:15px}
+.strat button[aria-pressed="true"]{border-color:var(--ink)}
+.verdict{font-family:var(--serif);font-weight:900;font-size:20px}
+
+details{border-bottom:1px solid var(--line)}
+details summary{cursor:pointer;padding:12px 4px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"+";font-weight:900;width:14px;color:var(--muted)}
+details[open] summary::before{content:"−"}
+details .body{padding:0 4px 14px 30px;font-size:15px}
+.tag{font-size:12.5px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums;min-width:80px}
+
+/* quiz */
+.qcard{background:var(--surface);border-radius:16px;padding:24px}
+.qtop{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
+.qtext{font-size:18px;font-weight:700;margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15.5px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+.opt.wrongpick{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.opt:disabled{cursor:default}
+.expl{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15px;display:none}
+.expl.show{display:block}
+.progress{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;margin-bottom:14px}
+.progress i{display:block;height:100%;background:var(--txt);transition:width .4s}
+
+.traps label{display:flex;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:15px}
+.traps input{width:18px;height:18px;margin-top:4px;flex:none;accent-color:var(--ok)}
+.traps label.chk>span{color:var(--muted)}
+.traps em{font-style:normal;font-weight:700}
+
+/* mobile */
+@media (max-width:860px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+  nav.toc{position:sticky;top:0;height:auto;z-index:10;background:var(--bg);display:flex;overflow-x:auto;padding:8px 0;padding-top:calc(8px + env(safe-area-inset-top,0px));gap:4px;border-bottom:1px solid var(--line)}
+  .toc-title{display:none}
+  nav.toc a{white-space:nowrap;flex:none}
+  .match,.stage,.fusion-meta,.compare{grid-template-columns:1fr}
+  .compare>div+div{border-left:0;border-top:1px solid var(--line)}
+  .pipe{grid-template-columns:repeat(5,minmax(90px,1fr));overflow-x:auto}
+  .bar{grid-template-columns:110px 1fr 56px}
+  h2{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+/* extras: sliders, ordering game, kpis */
+.pipe{overflow-x:auto}
+.ctrl{display:grid;grid-template-columns:150px 1fr 74px;gap:10px;align-items:center;margin:6px 0;font-size:15px}
+.ctrl input[type=range]{width:100%;accent-color:var(--txt)}
+.ctrl output{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:14px}
+.kpi{background:var(--surface2);border-radius:12px;padding:12px 14px;border-top:4px solid var(--c,var(--line))}
+.kpi b{display:block;font-size:13px;color:var(--muted);font-weight:500}
+.kpi .v{font-family:var(--serif);font-weight:900;font-size:26px;font-variant-numeric:tabular-nums;line-height:1.3}
+.kpi small{color:var(--muted);font-size:13px}
+.og-slots{list-style:none;padding:0;margin:0 0 14px;display:flex;flex-direction:column;gap:6px}
+.og-slots li{display:flex;gap:12px;align-items:center;border:2px dashed var(--line);border-radius:12px;padding:8px 12px;min-height:46px;transition:border-color .3s,background .3s}
+.og-slots li.fill{border-style:solid;border-color:var(--ok);background:var(--surface2)}
+.og-n{font-family:var(--serif);font-weight:900;font-size:20px;color:var(--muted);width:22px;flex:none}
+.og-t small{display:block;color:var(--muted);font-size:13px}
+.og-pool{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+.chk-list label{display:flex;gap:10px;padding:7px 2px;font-size:15px;cursor:pointer;align-items:flex-start}
+.chk-list input{width:18px;height:18px;margin-top:5px;flex:none;accent-color:var(--ok)}
+.sortq{font-size:17px;font-weight:700;margin:6px 0 12px;min-height:2.4em}
+@media (max-width:860px){
+  .ctrl{grid-template-columns:96px 1fr 62px;font-size:14px}
+  .kpi .v{font-size:22px}
+}
+main a{color:var(--txt);text-underline-offset:3px}
+
+.sym{font-size:18px;font-weight:700;margin:4px 0 14px;min-height:2.4em}
+.bins{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.bins .mitem{text-align:center}
+.layers{display:flex;flex-direction:column;gap:6px}
+.layer{border:2px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--surface);text-align:left;font-size:15px;display:flex;gap:12px;align-items:center;transition:all .3s}
+.layer .n{font-family:var(--serif);font-weight:900;font-size:20px;color:var(--muted);width:22px;flex:none}
+.layer small{display:block;color:var(--muted);font-size:13px}
+.layer.hit{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.layer.okk{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 10%,var(--surface))}
+.boxes{display:grid;grid-template-columns:repeat(20,1fr);gap:3px;margin:6px 0}
+.boxes i{height:26px;border-radius:4px;background:var(--line);transition:background .4s}
+.boxes i.nw{background:var(--img)} .boxes i.b{background:var(--aud)} .boxes i.sh{background:transparent;border:2px dashed var(--img)}
+.rlab{font-size:13px;color:var(--muted)}
+.compare.c3{grid-template-columns:1fr 1fr 1fr}
+@media (max-width:860px){.compare.c3{grid-template-columns:1fr}}
+.bar .fill.over{background:var(--bad)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="toc" aria-label="章節">
+  <div class="toc-title">系統集成與部署</div>
+  <a href="#intro"><span>●</span>導覽與目標</a>
+  <a href="#s1"><span>26.1</span>集成五面向</a>
+  <a href="#s2"><span>26.2</span>系統架構設計</a>
+  <a href="#s3"><span>26.3</span>四種部署模式</a>
+  <a href="#s4"><span>26.4</span>效能三指標</a>
+  <a href="#s5"><span>26.5</span>MLOps 與維運</a>
+  <a href="#s6"><span>26.6</span>兩種漂移</a>
+  <a href="#s7"><span>26.7</span>跨部門整合</a>
+  <a href="#s8"><span>26.8</span>官方考題</a>
+  <a href="#s9"><span>26.9</span>易錯與測驗</a>
+</nav>
+
+<main>
+<!-- HERO -->
+<section id="intro" class="hero">
+  <div class="code">L21302　中級 AI 應用規劃師　建議 60 分鐘</div>
+  <h1>AI 技術系統集成與部署</h1>
+  <p class="one"><b>本科實測命中率最高的知識點（42%）</b>，但官方指引篇幅只有 7,753 字（倒數第二少）—— 投報率最高的一節。初級「模型監控與維護」只教到「要監控」，中級要求你<b>設計架構、選部署模式、判讀指標</b>。</p>
+  <div class="hero-fig" aria-hidden="true">
+    <svg id="heroSvg" viewBox="0 0 720 280">
+      <defs>
+        <path id="hp0" d="M40 140 L 200 140"/>
+        <path id="hp1" d="M260 140 C 320 140, 330 60, 400 60"/>
+        <path id="hp2" d="M260 140 L 400 140"/>
+        <path id="hp3" d="M260 140 C 320 140, 330 220, 400 220"/>
+        <path id="hp4" d="M480 140 L 590 140"/>
+      </defs>
+      <g fill="none" stroke-width="2" opacity=".35"><use href="#hp0" stroke="var(--ink)"/><use href="#hp1" stroke="var(--img)"/><use href="#hp2" stroke="var(--img)"/><use href="#hp3" stroke="var(--img)"/><use href="#hp4" stroke="var(--ink)"/></g>
+      <g font-family="Noto Sans TC, sans-serif" font-size="14" font-weight="700" text-anchor="middle">
+        <text x="40" y="120" fill="var(--muted)">請求</text>
+        <rect x="200" y="110" width="60" height="60" rx="12" fill="var(--ink)"/><text x="230" y="145" fill="var(--bg)" font-size="13">LB</text>
+        <rect x="400" y="38" width="80" height="44" rx="10" fill="var(--img)"/><text x="440" y="65" fill="#fff">容器 A</text>
+        <rect x="400" y="118" width="80" height="44" rx="10" fill="var(--img)"/><text x="440" y="145" fill="#fff">容器 B</text>
+        <rect x="400" y="198" width="80" height="44" rx="10" fill="var(--img)"/><text x="440" y="225" fill="#fff">容器 C</text>
+        <rect x="590" y="110" width="110" height="60" rx="12" fill="var(--aud)"/><text x="645" y="138" fill="#fff">回寫</text><text x="645" y="157" fill="#fff" font-size="12">ERP／CRM</text>
+        <text x="440" y="270" fill="var(--txt)" font-size="13">延遲・吞吐量・可用率</text>
+      </g>
+      <g class="movers">
+        <circle r="6" fill="var(--txt)"><animateMotion dur="1.2s" repeatCount="indefinite"><mpath href="#hp0"/></animateMotion></circle>
+        <circle r="6" fill="var(--txt)"><animateMotion dur="1.2s" begin=".4s" repeatCount="indefinite"><mpath href="#hp0"/></animateMotion></circle>
+        <circle r="6" fill="var(--img)"><animateMotion dur="1.2s" begin=".2s" repeatCount="indefinite"><mpath href="#hp1"/></animateMotion></circle>
+        <circle r="6" fill="var(--img)"><animateMotion dur="1.2s" begin=".6s" repeatCount="indefinite"><mpath href="#hp2"/></animateMotion></circle>
+        <circle r="6" fill="var(--img)"><animateMotion dur="1.2s" begin="1s" repeatCount="indefinite"><mpath href="#hp3"/></animateMotion></circle>
+        <circle r="6" fill="var(--aud)"><animateMotion dur="1s" begin=".5s" repeatCount="indefinite"><mpath href="#hp4"/></animateMotion></circle>
+      </g>
+    </svg>
+  </div>
+  <h3>學完這一課，你應該能夠</h3>
+  <div class="goals">
+    <div class="goal" style="--c:var(--txt)">掌握系統集成的<b>五個面向</b>，判斷「整合失敗」題型的癥結在哪一層</div>
+    <div class="goal" style="--c:var(--img)">分辨<b>四種部署模式</b>的適用情境與各自的挑戰</div>
+    <div class="goal" style="--c:var(--aud)">精準區辨<b>延遲、吞吐量、可用率</b>三個效能指標（中文關鍵詞掃描達 18 題）</div>
+    <div class="goal" style="--c:var(--sen)">分辨<b>資料漂移與概念漂移</b>，知道對應的偵測與處置流程</div>
+  </div>
+  <p class="hint" style="margin-top:20px">本頁效能段落的顏色：<span class="chip" style="--c:var(--txt)"><i class="dot"></i>延遲</span>　<span class="chip" style="--c:var(--img)"><i class="dot"></i>吞吐量</span>　<span class="chip" style="--c:var(--aud)"><i class="dot"></i>可用率</span>　<span class="chip" style="--c:var(--sen)"><i class="dot"></i>代價／告警</span></p>
+</section>
+
+<!-- 26.1 -->
+<section id="s1">
+  <div class="sec-head"><span class="sec-no">26.1</span><h2>系統集成的五個面向</h2></div>
+  <p class="lead">AI 系統不是獨立模組，要與企業既有資訊架構<b>無縫整合</b>。點每一層看它整合什麼、常考什麼。</p>
+  <div class="panel">
+    <div class="layers" id="layers"></div>
+    <div class="pout" id="layerOut" style="margin-top:12px" aria-live="polite"></div>
+  </div>
+
+  <h3>診斷遊戲：整合失敗卡在哪一層？</h3>
+  <div class="panel">
+    <p class="hint" style="margin:0">讀情境（依各層常考點改寫的示意情境），點出癥結所在的面向。</p>
+    <div class="sym" id="dxQ"></div>
+    <div class="bins" id="dxBins"></div>
+    <div class="feedback" id="dxFb" aria-live="polite"></div>
+  </div>
+  <div class="callout exam"><b>考點提醒：</b>「模型準確率很高但沒人用」這類情境題，癥結多半在<b>第二層（沒有整合回 ERP/CRM 等日常作業流程）</b>，不是模型不夠好。</div>
+
+  <h3>資料倉儲 vs 資料湖</h3>
+  <div class="compare">
+    <div><div class="big">資料倉儲</div>Data Warehouse<br>• 結構化為主<br>• <b>Schema-on-Write</b>（先定義結構）<br>• BI 報表、固定分析</div>
+    <div><div class="big">資料湖</div>Data Lake<br>• 大規模<b>非結構化</b>資料<br>• <b>Schema-on-Read</b>（先存再說）<br>• 原始資料保存、探索式分析、模型訓練</div>
+  </div>
+</section>
+
+<!-- 26.2 -->
+<section id="s2">
+  <div class="sec-head"><span class="sec-no">26.2</span><h2>系統架構設計</h2></div>
+  <h3 style="margin-top:0">四種架構手段</h3>
+  <div class="panel">
+    <div class="tabs" id="archTabs"></div>
+    <div id="archBody"></div>
+  </div>
+  <div class="panel flat">
+    <p style="margin:0 0 10px"><b>官方考題：</b>容器技術（Docker）的主要優點是什麼？</p>
+    <div class="strat" id="ctnStrat"></div>
+    <div style="margin-top:14px">
+      <div class="verdict" id="ctnV">選一個答案</div>
+      <div class="meter" style="height:18px;margin:10px 0"><i id="ctnM" style="width:0"></i></div>
+      <div id="ctnWhy" class="hint"></div>
+    </div>
+  </div>
+
+  <h3>高可用性設計：讓節點故障看看</h3>
+  <div class="panel">
+    <div class="row">
+      <button class="btn" id="haRed" aria-pressed="false">冗餘部署（多節點）</button>
+      <button class="btn" id="haFo" aria-pressed="false">容錯切換 Failover</button>
+      <button class="btn primary" id="haKill">讓節點 A 故障</button>
+    </div>
+    <svg id="haSvg" viewBox="0 0 640 240" style="margin-top:12px" role="img" aria-label="高可用性示意"></svg>
+    <div class="row" style="justify-content:space-between"><b>請求成功率（示意）</b><span id="haNum" style="font-variant-numeric:tabular-nums">100%</span></div>
+    <div class="meter" style="height:16px"><i id="haM" style="width:100%"></i></div>
+    <p class="hint" id="haNote" style="margin:6px 0 0"></p>
+  </div>
+  <details><summary>四個高可用手段速記</summary><div class="body">
+    <b>冗餘部署（Redundancy）</b>── 多節點，避免單點故障<br>
+    <b>容錯切換（Failover）</b>── 節點故障自動切到備援<br>
+    <b>負載平衡（Load Balancing）</b>── 多推論節點分擔請求<br>
+    <b>自動擴縮（Autoscaling）</b>── 依流量調整容器數量
+  </div></details>
+</section>
+
+<!-- 26.3 -->
+<section id="s3">
+  <div class="sec-head"><span class="sec-no">26.3</span><h2>四種部署模式</h2></div>
+  <div class="tbl-wrap"><table>
+    <tr><th>模式</th><th>優勢</th><th>適用情境</th><th>挑戰</th></tr>
+    <tr><td><b>公有雲</b></td><td>彈性擴充、部署快、按量付費、全球節點</td><td>新創、跨地區、GPU 密集訓練</td><td>法規遵循、<b>資料主權</b>、供應商鎖定</td></tr>
+    <tr><td><b>私有雲／地端</b></td><td>資安可控、<b>資料不外流</b>、可依產業法規客製</td><td><b>政府、金融、醫療</b></td><td>建置與維運成本高、擴展性受限</td></tr>
+    <tr><td><b>邊緣運算</b></td><td><b>即時反應、降低延遲、提升隱私</b></td><td>工業設備監控、智慧城市、車聯網</td><td>運算資源有限、更新同步需另外設計</td></tr>
+    <tr><td><b>混合部署</b></td><td>兼顧算力、速度與資料保護</td><td>雲端訓練＋邊緣推論</td><td>整合難度高，需同步與一致性機制</td></tr>
+  </table></div>
+  <h3>判準口訣：聽關鍵字選模式</h3>
+  <div class="panel">
+    <div class="sym" id="kwQ"></div>
+    <div class="bins" id="kwBins"></div>
+    <div class="feedback" id="kwFb" aria-live="polite"></div>
+  </div>
+  <div class="callout exam"><b>官方考過：</b>「在邊緣運算架構中，AI 模型的推論通常會發生在哪裡？」正解：<b>終端裝置本地端</b>（不是雲端或閘道器）。</div>
+
+  <h3>發布策略：流量怎麼切到新版本？</h3>
+  <div class="panel">
+    <p class="hint">選一個策略再按播放。<span class="chip" style="--c:var(--img)"><i class="dot"></i>新版本</span>　<span class="chip" style="--c:var(--line)"><i class="dot"></i>舊版本</span>（比例與時間軸為示意）</p>
+    <div class="row" style="justify-content:space-between"><div class="tabs" id="relTabs" style="margin:0"></div><button class="btn primary" id="relPlay">▶ 播放</button></div>
+    <div class="rlab" style="margin-top:12px">服務使用者的版本</div>
+    <div class="boxes" id="relBoxes"></div>
+    <div id="relShadowWrap" style="display:none"><div class="rlab">影子推論（只算不回傳）</div><div class="boxes" id="relShadow"></div></div>
+    <div class="row" style="justify-content:space-between"><span class="hint" id="relT">時間 0</span><span class="hint" id="relPct"></span></div>
+    <div class="pout" id="relOut" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- 26.4 -->
+<section id="s4">
+  <div class="sec-head"><span class="sec-no">26.4</span><h2>效能三指標</h2></div>
+  <p class="lead">中文關鍵詞掃描達 18 題。判準是問題描述的主體：單次請求的<b>時間</b>＝延遲；單位時間的<b>數量</b>＝吞吐量；長時間的<b>不中斷</b>＝可用率。</p>
+  <div class="cards" id="kpiCards"></div>
+
+  <h3>症狀 → 該測哪個指標？</h3>
+  <div class="panel">
+    <div class="sym" id="pmQ"></div>
+    <div class="bins" id="pmBins"></div>
+    <div class="feedback" id="pmFb" aria-live="polite"></div>
+  </div>
+
+  <h3>權衡模擬器：批次化換吞吐量、壓縮換延遲、多節點換可用率</h3>
+  <div class="panel">
+    <p class="hint">情境（示意）：推薦 API 必須在 <b>100ms</b> 內回應，尖峰約 <b>300 請求／秒</b>。調三個旋鈕，找出同時達標的組合。所有數值為示意模型，只用來看趨勢。</p>
+    <div class="ctrl"><label for="pB">批次大小</label><input type="range" id="pB" min="0" max="5" step="1" value="0"><output id="oB">1</output></div>
+    <div class="ctrl"><label for="pN">節點數量</label><input type="range" id="pN" min="1" max="6" step="1" value="1"><output id="oN">1</output></div>
+    <div class="row" style="margin:8px 0"><span class="hint">模型壓縮：</span><div class="tabs" id="pC" style="margin:0"></div></div>
+    <div id="pBars" style="margin-top:8px"></div>
+    <div class="callout" id="pNote" style="margin-bottom:0"></div>
+  </div>
+  <details><summary>三組權衡關係（原文）</summary><div class="body">
+    <b>批次大小 ↑</b>：吞吐量 ↑（同一批處理更多請求）、延遲 ↑（每個請求要等整批湊滿才被處理）<br>
+    <b>節點數量 ↑</b>：吞吐量 ↑（多節點分擔）、可用率 ↑（單點故障不致全掛）、成本 ↑（資源費用）<br>
+    <b>模型壓縮（量化／蒸餾）</b>：延遲 ↓（推論變快）、準確率 ↓（精度略降）
+  </div></details>
+
+  <h3>三層 KPI（官方明示的分層）</h3>
+  <div class="panel">
+    <p class="hint">先點左邊的指標，再點右邊的層級。</p>
+    <div class="match" id="kpiMatch"></div>
+    <div class="feedback" id="kpiFb" aria-live="polite"></div>
+  </div>
+  <div class="tbl-wrap"><table>
+    <tr><th>層級</th><th>指標</th></tr>
+    <tr><td>系統層級</td><td>推論延遲、吞吐量、服務可用率、資源使用率（GPU 記憶體）</td></tr>
+    <tr><td>應用層級</td><td>推薦點擊率（CTR）、準確率、F1-Score、異常偵測精確度</td></tr>
+    <tr><td>業務層級</td><td>轉換率提升、成本節省、客戶留存率、ROI</td></tr>
+  </table></div>
+  <div class="callout exam">官方建議採「<b>技術指標＋業務指標雙軌制</b>」，讓工程與業務有共同語言。這正是「離線 AUC 很漂亮但 CTR 反而下降」那類題目的判準來源。</div>
+</section>
+
+<!-- 26.5 -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-no">26.5</span><h2>MLOps 與持續維運</h2></div>
+  <p class="lead"><b>MLOps 是 DevOps 在 AI 領域的延伸</b>，把訓練、測試、部署、監控做持續整合與自動化。</p>
+  <div class="callout exam"><b>官方考過：</b>「MLOps 的主要目的為何？」正解：<b>實現 AI 模型的自動化開發、部署與持續維運流程</b>。誘答會寫「提升模型準確率」—— MLOps 管的是<b>流程</b>，不是精度。</div>
+
+  <h3>CI/CD 在 AI 的樣貌：誰能觸發？</h3>
+  <div class="panel">
+    <div class="row"><button class="btn" id="trgCode">提交新程式碼</button><button class="btn" id="trgData">資料集更新</button><button class="btn" id="trgDrift">監控發現漂移超過門檻</button></div>
+    <div class="pipe" id="ciPipe" style="margin-top:12px"></div>
+    <div class="pout" id="ciOut" aria-live="polite"></div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" id="ciNext">下一步</button><button class="btn" id="ciReset">從頭開始</button></div>
+  </div>
+  <div class="tbl-wrap"><table>
+    <tr><th>階段</th><th>內容</th></tr>
+    <tr><td>CI 持續整合</td><td>原始碼或<b>資料</b>變動即觸發訓練與測試；整合單元測試、準確率驗證、效能基準比較</td></tr>
+    <tr><td>CD 持續部署</td><td>通過門檻的模型自動部署到測試／生產；支援 A/B 測試或藍綠部署控制風險</td></tr>
+    <tr><td>模型版本控管</td><td>MLflow（實驗記錄、訓練、部署、版本）、DVC（資料集與模型的版本追蹤）</td></tr>
+  </table></div>
+  <div class="callout"><b>AI 的 CI 與一般軟體不同：</b>觸發條件不只程式碼，<b>資料變動也要觸發</b>；測試不只單元測試，還要驗證模型準確率與效能基準。</div>
+
+  <h3>監控與回饋：偵測 → 觸發 → 處置</h3>
+  <div class="compare c3">
+    <div><div class="big">偵測</div>模型漂移、資料漂移、錯誤率、延遲、吞吐量</div>
+    <div><div class="big">觸發</div>設定門檻（例如準確率下降 5%）</div>
+    <div><div class="big">處置</div>再訓練 Pipeline／熱更新（Hot Swap）／滾動更新</div>
+  </div>
+  <p class="prose" style="margin-top:12px">可視化與預警：<b>Prometheus + Grafana</b> 整合 Log 分析與 Dashboard，異常時自動通知工程人員。</p>
+
+  <h3>回收週期（官方給的節奏）</h3>
+  <div class="panel">
+    <div class="tabs" id="cadTabs"></div>
+    <div id="cadBody"></div>
+  </div>
+</section>
+
+<!-- 26.6 -->
+<section id="s6">
+  <div class="sec-head"><span class="sec-no">26.6</span><h2>兩種漂移</h2></div>
+  <p class="lead">高頻考點（7 題）。一句話判準：<b>變的是輸入分布，還是輸入與輸出的關係？</b></p>
+  <div class="panel">
+    <div class="tabs" id="dfTabs"></div>
+    <svg id="dfSvg" viewBox="0 0 640 230" role="img" aria-label="漂移示意"></svg>
+    <div class="pout" id="dfOut" aria-live="polite"></div>
+  </div>
+  <div class="tbl-wrap"><table>
+    <tr><th>類型</th><th>定義</th><th>判準</th><th>典型情境</th></tr>
+    <tr><td><b>資料漂移</b></td><td>輸入資料的統計特徵改變</td><td>變的是 <b>X 的分布</b></td><td>新客群湧入、感測器換型號、欄位分佈改變</td></tr>
+    <tr><td><b>概念漂移</b></td><td>輸入與輸出的關係改變</td><td>變的是 <b>X → Y 的映射</b></td><td>疫情改變消費行為、詐騙手法演化</td></tr>
+    <tr><td>模型漂移</td><td>模型<b>預測分佈</b>與訓練時期不同</td><td>是前兩者造成的結果</td><td>預測值整體偏移</td></tr>
+  </table></div>
+  <p class="prose" style="margin-top:14px">偵測方法：KS 檢定、KL 散度、<b>PSI（Population Stability Index）</b>。處置流程：漂移超過門檻 → 自動觸發再訓練 → 更新資料集與標註品質 → 版本控管後滾動釋出。變化快速的場景可搭配 <b>AutoML 或線上學習（Online Learning）</b>做持續微調。</p>
+  <div class="callout exam"><b>官方考過：</b>「持續監控部署後 AI 模型效能的主要目的為何？」正解：<b>偵測模型概念漂移與效能下降</b>。</div>
+
+  <h3>從症狀反推病因</h3>
+  <div class="panel">
+    <div class="sym" id="cuQ"></div>
+    <div class="bins" id="cuBins"></div>
+    <div class="feedback" id="cuFb" aria-live="polite"></div>
+  </div>
+  <div class="callout"><b>最容易誤判：</b>訓練好、上線差，很多人第一反應是「模型過擬合」，但如果離線驗證分數也很好，那更可能是<b>線上與離線的特徵處理不一致</b>（Training-Serving Skew），要去比對兩邊的前處理程式碼，不是重訓模型。</div>
+</section>
+
+<!-- 26.7 -->
+<section id="s7">
+  <div class="sec-head"><span class="sec-no">26.7</span><h2>跨部門整合</h2></div>
+  <p class="lead">模型上線不是資訊部門一個人的事，官方明列四個角色的責任。</p>
+  <div class="panel">
+    <p class="hint">先點左邊的職責，再點右邊的部門。</p>
+    <div class="match" id="deptMatch"></div>
+    <div class="feedback" id="deptFb" aria-live="polite"></div>
+  </div>
+  <div class="callout exam"><b>官方考過：</b>「為確保模型可與業務流程無縫對接，通常需要哪種角色？」正解：<b>產品經理與工程人員</b>。</div>
+</section>
+
+<!-- 26.8 -->
+<section id="s8">
+  <div class="sec-head"><span class="sec-no">26.8</span><h2>官方考過什麼</h2></div>
+  <p class="lead">九個考點，點開看「怎麼問」與「正解思路」。</p>
+  <div id="examList"></div>
+</section>
+
+<!-- 26.9 -->
+<section id="s9">
+  <div class="sec-head"><span class="sec-no">26.9</span><h2>易錯與陷阱</h2></div>
+  <p class="lead">逐條確認自己真的懂了再打勾（打勾狀態會記在這台裝置上）。</p>
+  <div class="traps" id="traps"></div>
+  <p class="hint" id="trapCount" style="margin-top:10px"></p>
+
+  <h3>情境測驗</h3>
+  <div class="qcard" id="quiz"></div>
+
+  <h3>延伸練習</h3>
+  <div class="tbl-wrap"><table>
+    <tr><th>資源</th><th>用法</th></tr>
+    <tr><td>L21 主題庫（311 題）→ Ch09 AI技術系統集成與部署（45 題）</td><td><b>本科最大章，務必刷完</b></td></tr>
+    <tr><td>L21 歷屆 100 題</td><td>部署題佔比最高，整卷做完要回頭統計自己在這塊的答對率</td></tr>
+  </table></div>
+  <p class="prose" style="margin-top:14px">上一節：<a href="L21301_dataprep_model_selection.html">25. L21301 數據準備與模型選擇</a>　｜　回到 <a href="L21_overview.html">17. L21 科目總覽</a></p>
+</section>
+</main>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce){const m=document.querySelector('#heroSvg .movers');if(m)m.remove();}
+const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+
+/* ---------- generic matcher ---------- */
+function matcher(root,fb,left,right,doneMsg){
+  let sel=null,done=0;
+  const L=document.createElement('div');L.className='col';
+  const R=document.createElement('div');R.className='col';
+  left.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;
+    b.innerHTML=it.html;if(it.c)b.style.setProperty('--c',it.c);
+    b.onclick=()=>{if(b.classList.contains('done'))return;L.querySelectorAll('.mitem').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;fb.textContent='';fb.className='feedback';};
+    L.appendChild(b);
+  });
+  right.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;b.innerHTML=it.html;
+    b.onclick=()=>{
+      if(b.classList.contains('done'))return;
+      if(!sel){fb.textContent='請先點左邊一個項目。';fb.className='feedback';return;}
+      if(sel.dataset.k===b.dataset.k){
+        const c=sel.style.getPropertyValue('--c');
+        [sel,b].forEach(x=>{x.classList.remove('sel');x.classList.add('done');if(c)x.style.setProperty('--c',c);});
+        fb.textContent='✓ '+(it.ok||'答對了！');fb.className='feedback ok';sel=null;done++;
+        if(done===left.length){fb.textContent='✓ 全部配對完成！'+doneMsg;}
+      }else{
+        b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');
+        fb.textContent='✗ '+(it.bad||'不太對，再想想看。');fb.className='feedback bad';
+      }
+    };
+    R.appendChild(b);
+  });
+  root.append(L,R);
+}
+
+/* ---------- flip cards ---------- */
+function flipCards(root,arr){
+  arr.forEach(([n,o,d])=>{
+    const b=document.createElement('button');b.className='flip';b.setAttribute('aria-pressed','false');
+    b.innerHTML=`<div class="in"><div class="f"><strong>${n}</strong><span>${o}</span><span style="margin-top:auto;font-size:12.5px">點我翻面</span></div><div class="b">${d}</div></div>`;
+    b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');
+    root.appendChild(b);
+  });
+}
+
+/* ---------- tabs ---------- */
+function tabs(btnRoot,body,items,render){
+  items.forEach((x,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=x.t||x[0];b.onclick=()=>s(i);btnRoot.appendChild(b);});
+  function s(i){btnRoot.querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));body.innerHTML=render(items[i],i);}
+  s(0);return s;
+}
+
+/* ---------- strategy picker ---------- */
+function strat(root,list,order,V,M,W,prefix){
+  (order||list.map((_,i)=>i)).forEach(i=>{const b=document.createElement('button');b.innerHTML=list[i][0];b.setAttribute('aria-pressed','false');b.onclick=()=>{root.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));const x=list[i];V.textContent=x[1];V.style.color=x[3];M.style.width=x[2]+'%';M.style.background=x[3];W.innerHTML=(prefix||'')+x[2]+'%　'+x[4];};root.appendChild(b);});
+}
+
+/* ---------- exam list ---------- */
+function examList(root,arr){
+  arr.forEach(([n,k,q,a])=>{root.insertAdjacentHTML('beforeend',`<details><summary><span class="tag">${n}</span>${k}</summary><div class="body"><p style="margin:0 0 6px"><span class="hint">怎麼問：</span>${q}</p><p style="margin:0"><span class="hint">正解思路：</span>${a}</p></div></details>`);});
+}
+
+/* ---------- traps ---------- */
+function traps(root,countEl,key,T){
+  let saved=[];try{saved=JSON.parse(localStorage.getItem(key)||'[]')||[];}catch(e){saved=[];}
+  T.forEach(([a,b],i)=>{
+    const l=document.createElement('label');const c=saved.includes(i);if(c)l.classList.add('chk');
+    l.innerHTML=`<input type="checkbox" ${c?'checked':''}><div><em>${a}</em><br><span>${b}</span></div>`;
+    l.querySelector('input').onchange=e=>{const on=e.target.checked;l.classList.toggle('chk',on);saved=on?[...new Set([...saved,i])]:saved.filter(x=>x!==i);try{localStorage.setItem(key,JSON.stringify(saved));}catch(err){}count();};
+    root.appendChild(l);
+  });
+  function count(){countEl.textContent=`已確認 ${saved.length}／${T.length} 條`;}
+  count();
+}
+
+/* ---------- quiz ---------- */
+function quiz(box,Q,msgs){
+  let i=0,score=0;
+  function show(){
+    if(i>=Q.length){
+      const r=score/Q.length;
+      const msg=r>=.9?msgs[0]:r>=.65?msgs[1]:msgs[2];
+      box.innerHTML=`<div class="progress"><i style="width:100%"></i></div><div class="qtext" style="font-size:24px;font-family:var(--serif)">得分 ${score}／${Q.length}</div><p>${msg}</p><button class="btn primary" data-qr>重新測驗</button>`;
+      box.querySelector('[data-qr]').onclick=()=>{i=0;score=0;show();};return;
+    }
+    const [q,opts,ex]=Q[i];
+    const order=shuffle(opts.map((o,k)=>({o,k})));
+    box.innerHTML=`<div class="progress"><i style="width:${i/Q.length*100}%"></i></div><div class="qtop"><span>第 ${i+1}／${Q.length} 題</span><span>得分 ${score}</span></div><div class="qtext">${q}</div><div class="opts">${order.map(x=>`<button class="opt" data-k="${x.k}">${x.o}</button>`).join('')}</div><div class="expl" data-qe></div><div class="row" style="margin-top:14px;justify-content:flex-end"><button class="btn primary" data-qn style="display:none">${i===Q.length-1?'看結果':'下一題'}</button></div>`;
+    const qn=box.querySelector('[data-qn]');
+    box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.k==='0';if(ok)score++;
+      box.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.k==='0')x.classList.add('right');});
+      if(!ok)b.classList.add('wrongpick');
+      const e=box.querySelector('[data-qe]');e.innerHTML=(ok?'<b style="color:var(--ok)">答對了。</b>':'<b style="color:var(--bad)">這題要小心。</b>')+ex;e.classList.add('show');
+      qn.style.display='';qn.focus({preventScroll:true});
+    });
+    qn.onclick=()=>{i++;show();};
+  }
+  show();
+}
+
+/* ---------- step-through pipeline ---------- */
+function pipeline(pipeEl,outEl,nextBtn,resetBtn,nodes,out){
+  let i=0;const n=nodes.length;
+  pipeEl.style.gridTemplateColumns=`repeat(${n},minmax(90px,1fr))`;
+  pipeEl.innerHTML=nodes.map(([a,b])=>`<div class="pnode"><b>${a}</b>${b}</div>`).join('');
+  function r(){pipeEl.querySelectorAll('.pnode').forEach((x,j)=>{x.classList.toggle('on',j===i);x.classList.toggle('past',j<i);});outEl.innerHTML=out[i];nextBtn.disabled=i===n-1;nextBtn.style.opacity=i===n-1?.4:1;}
+  nextBtn.onclick=()=>{if(i<n-1){i++;r();}};
+  resetBtn.onclick=()=>{i=0;r();};
+  pipeEl.querySelectorAll('.pnode').forEach((x,j)=>{x.style.cursor='pointer';x.onclick=()=>{i=j;r();};});
+  r();
+}
+
+/* ---------- ordering game ---------- */
+function orderGame(root,fb,items,doneMsg){
+  // items: correct order array of {t,d}
+  let next=0;
+  const pool=document.createElement('div');pool.className='og-pool';
+  const slots=document.createElement('ol');slots.className='og-slots';
+  items.forEach((_,i)=>{const li=document.createElement('li');li.innerHTML=`<span class="og-n">${i+1}</span><span class="og-t hint">？</span>`;slots.appendChild(li);});
+  function build(){
+    pool.innerHTML='';next=0;
+    slots.querySelectorAll('li').forEach(li=>{li.classList.remove('fill');li.querySelector('.og-t').innerHTML='？';li.querySelector('.og-t').className='og-t hint';});
+    shuffle(items.map((x,i)=>({x,i}))).forEach(({x,i})=>{
+      const b=document.createElement('button');b.className='mitem';b.innerHTML=x.t;
+      b.onclick=()=>{
+        if(b.classList.contains('done'))return;
+        if(i===next){
+          b.classList.add('done');b.style.setProperty('--c','var(--ok)');
+          const li=slots.children[next];li.classList.add('fill');const t=li.querySelector('.og-t');t.className='og-t';t.innerHTML=`<b>${x.t}</b><small>${x.d||''}</small>`;
+          next++;fb.className='feedback ok';fb.textContent=next===items.length?'✓ 順序全對！'+doneMsg:'✓ 對，下一步呢？';
+        }else{b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');fb.className='feedback bad';fb.textContent='✗ '+(x.bad||'還不是這一步，想想前面還缺什麼。');}
+      };
+      pool.appendChild(b);
+    });
+    fb.textContent='';fb.className='feedback';
+  }
+  const rs=document.createElement('button');rs.className='btn';rs.textContent='重新排序';rs.onclick=build;
+  root.append(slots,pool);root.parentNode.insertBefore(rs,fb.nextSibling);
+  build();
+}
+
+/* ---------- nav highlight ---------- */
+function navHighlight(){
+  const links=[...document.querySelectorAll('nav.toc a')];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on&&window.innerWidth<=860)a.scrollIntoView({inline:'center',block:'nearest'});});}});},{rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('main section').forEach(s=>io.observe(s));
+}
+
+
+/* ---------- generic sorter ---------- */
+function sorter(qEl,binsEl,fbEl,bins,items,doneMsg){
+  let order=[],i=0,lock=false;
+  binsEl.innerHTML='';
+  bins.forEach(([k,t,c])=>{const b=document.createElement('button');b.className='mitem';b.dataset.k=k;b.innerHTML=`<b>${t}</b>`;if(c)b.style.setProperty('--c',c);b.onclick=()=>pick(b);binsEl.appendChild(b);});
+  function start(){order=shuffle(items.map((_,j)=>j));i=0;show();}
+  function show(){lock=false;binsEl.querySelectorAll('.mitem').forEach(b=>b.classList.remove('done'));qEl.innerHTML=`（${i+1}／${items.length}）${items[order[i]][0]}`;}
+  function pick(b){
+    if(lock)return;const it=items[order[i]];
+    if(b.dataset.k===it[1]){lock=true;b.classList.add('done');fbEl.className='feedback ok';fbEl.innerHTML='✓ '+it[2];
+      setTimeout(()=>{i++;if(i>=items.length){qEl.textContent='全部完成！';fbEl.innerHTML='✓ '+doneMsg+' <button class="btn" data-again>再玩一次</button>';fbEl.querySelector('[data-again]').onclick=start;}else show();},reduce?200:1200);}
+    else{b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');fbEl.className='feedback bad';fbEl.textContent='✗ '+(it[3]||'不是這個，再想想。');}
+  }
+  start();
+}
+
+/* ---------- 26.1 layers ---------- */
+const LY=[
+  ['資料來源與資料管線','資料倉儲、資料湖、IoT 感測、第三方 API','資料管線涵蓋擷取→轉換→清理→入庫'],
+  ['企業內部系統','ERP、CRM、POS、MES','<b>模型輸出要回寫到既有系統才有價值</b>'],
+  ['API 與平台接軌','RESTful API、gRPC、Webhooks','要納入容錯、快取、負載管理'],
+  ['安全與權限控管','OAuth2／JWT 驗證、角色權限、API Gateway','只有部分用戶可重訓或調參'],
+  ['跨雲與異質系統','本地訓練＋邊緣／雲端推論','用中介整合層或 Service Mesh 避免資訊孤島']
+];
+(function(){
+  LY.forEach((l,i)=>{const b=document.createElement('button');b.className='layer';b.innerHTML=`<span class="n">${i+1}</span><span><b>${l[0]}</b><small>${l[1]}</small></span>`;b.onclick=()=>{$$('#layers .layer').forEach(x=>x.classList.remove('okk'));b.classList.add('okk');$('#layerOut').innerHTML=`<b>第 ${i+1} 層：${l[0]}</b><br>整合什麼：${l[1]}<br><span class="hint">常考點：</span>${l[2]}`;};$('#layers').appendChild(b);});
+  $$('#layers .layer')[1].click();
+})();
+sorter($('#dxQ'),$('#dxBins'),$('#dxFb'),LY.map((l,i)=>[String(i),`${i+1}. ${l[0]}`]),[
+  ['模型準確率很高，但業務人員每天還是在 ERP 裡手動作業，沒人用預測結果','1','模型輸出沒有回寫到 ERP／CRM 等日常作業流程 —— 最常考的一格。','不是模型或管線的問題：預測有了，但沒進到大家每天用的系統。'],
+  ['任何登入的員工都能對正式模型發動重新訓練、修改參數','3','安全與權限控管：只有部分用戶可重訓或調參（OAuth2／JWT、角色權限、API Gateway）。'],
+  ['推論 API 一到尖峰就整個卡死，沒有快取也沒有負載管理','2','API 與平台接軌：要納入容錯、快取、負載管理。'],
+  ['本地訓練、邊緣推論、雲端報表各自為政，資料互不相通','4','跨雲與異質系統：用中介整合層或 Service Mesh 避免資訊孤島。'],
+  ['IoT 感測資料進來後沒有清理與轉換，直接被丟進模型','0','資料來源與資料管線：管線要涵蓋擷取→轉換→清理→入庫。']
+],'五層都能對上了。');
+
+/* ---------- 26.2 arch ---------- */
+tabs($('#archTabs'),$('#archBody'),[
+  ['微服務','拆成一組小型服務，各自獨立部署','錯誤隔離、跨團隊並行開發、可依模組彈性擴充','介接需標準 API、分散式管理複雜'],
+  ['容器化（Docker）','把應用與依賴環境封裝在一起','<b>跨平台部署一致性</b>（官方原文考點）','需搭配編排工具管理'],
+  ['容器編排（K8s）','資源調度、故障恢復','滾動更新、自動擴縮、負載平衡','學習曲線陡'],
+  ['模型服務化','封裝成 HTTP/REST 推論服務','多版本管理、API 安全、記錄與監控','需設計版本切換策略']
+],x=>`<p style="margin:0 0 10px"><b>做什麼：</b>${x[1]}</p><div class="compare"><div><div class="big" style="color:var(--ok)">優點</div>${x[2]}</div><div><div class="big" style="color:var(--bad)">挑戰</div>${x[3]}</div></div>`);
+strat($('#ctnStrat'),[
+  ['促進模型跨平台部署與環境一致性','✓ 官方正解',92,'var(--ok)','容器解決的是<b>環境問題</b>：把應用與依賴環境封裝在一起。'],
+  ['加快模型推論速度','✗ 誘答',15,'var(--bad)','容器不負責效能。要降延遲是模型壓縮（量化／蒸餾）的事。'],
+  ['提升模型準確率','✗ 誘答',10,'var(--bad)','容器不碰精度。'],
+  ['自動偵測資料漂移','✗ 答非所問',10,'var(--bad)','漂移偵測屬 MLOps 監控（PSI、KL 散度）。']
+],[1,0,2,3],$('#ctnV'),$('#ctnM'),$('#ctnWhy'),'正確程度（示意）：');
+
+/* ---------- HA simulator ---------- */
+(function(){
+  let red=false,fo=false,dead=false;
+  function d(){
+    const nodes=red?['A','B','C']:['A'];const ys=red?[50,120,190]:[120];
+    let h=`<rect x="20" y="95" width="90" height="50" rx="10" fill="var(--surface2)" stroke="var(--line)"/><text x="65" y="125" text-anchor="middle" font-size="14" fill="var(--ink)">使用者請求</text>`;
+    h+=`<path d="M110 120 L190 120" stroke="var(--muted)" stroke-width="2" fill="none" class="flow"/><rect x="190" y="90" width="90" height="60" rx="10" fill="var(--ink)"/><text x="235" y="118" text-anchor="middle" font-size="14" fill="var(--bg)" font-weight="700">負載平衡</text><text x="235" y="137" text-anchor="middle" font-size="12" fill="var(--bg)">LB</text>`;
+    let okN=0;
+    nodes.forEach((n,i)=>{const down=dead&&n==='A';const routed=!down||false;const alive=!down;if(alive)okN++;
+      const sendTo=!(down&&fo);
+      h+=`<path d="M280 120 C 330 120, 340 ${ys[i]}, 400 ${ys[i]}" stroke="${down?(fo?'var(--line)':'var(--bad)'):'var(--img)'}" stroke-width="${down&&!fo?3:2}" fill="none" ${sendTo?'class="flow"':''} ${down&&fo?'stroke-dasharray="3 6"':''}/>`;
+      h+=`<rect x="400" y="${ys[i]-24}" width="130" height="48" rx="10" fill="${down?'var(--bad)':'var(--img)'}"/><text x="465" y="${ys[i]+5}" text-anchor="middle" font-size="14" fill="#fff" font-weight="700">${down?'✗ 節點 '+n+' 故障':'推論節點 '+n}</text>`;});
+    $('#haSvg').innerHTML=h;
+    let rate,note;
+    if(!dead){rate=100;note=red?'三個節點分擔請求：負載平衡讓吞吐量上升，代價是資源成本。':'只有一個節點：這就是「單點故障」的風險所在。按「讓節點 A 故障」試試。';}
+    else if(!red){rate=0;note='<b>單一節點故障導致全掛</b> —— 這是「可用率」問題，對策是冗餘部署＋容錯切換。';}
+    else if(!fo){rate=67;note='有冗餘，但負載平衡仍把約 1/3 請求送進壞掉的節點 A。需要容錯切換自動繞開故障節點。';}
+    else {rate=100;note='冗餘＋容錯切換：節點 A 故障後請求自動切到 B、C，服務不中斷 —— 可用率維持。';}
+    $('#haNum').textContent=rate+'%';$('#haM').style.width=rate+'%';$('#haM').style.background=rate>90?'var(--ok)':rate>50?'var(--warn)':'var(--bad)';$('#haNote').innerHTML=note;
+    $('#haKill').textContent=dead?'修復節點 A':'讓節點 A 故障';
+  }
+  $('#haRed').onclick=()=>{red=!red;$('#haRed').setAttribute('aria-pressed',red);d();};
+  $('#haFo').onclick=()=>{fo=!fo;$('#haFo').setAttribute('aria-pressed',fo);d();};
+  $('#haKill').onclick=()=>{dead=!dead;d();};
+  d();
+})();
+
+/* ---------- 26.3 deploy keywords ---------- */
+sorter($('#kwQ'),$('#kwBins'),$('#kwFb'),[['pv','私有雲／地端','var(--txt)'],['ed','邊緣運算','var(--sen)'],['pu','公有雲','var(--img)'],['hy','混合部署','var(--aud)']],[
+  ['題幹講到「資料隱私、本地控制、法規嚴格」','pv','→ 私有雲／地端（政府、金融、醫療）。官方考題：資料隱私與本地控制需求 → 地端私有部署。'],
+  ['題幹講到「低延遲、離線可用、頻寬有限」','ed','→ 邊緣運算，推論發生在終端裝置本地端。'],
+  ['題幹講到「快速試驗、彈性擴充、GPU 需求」','pu','→ 公有雲：彈性擴充、部署快、按量付費。'],
+  ['題幹講到「訓練在雲端、推論在現場」','hy','→ 混合部署：兼顧算力、速度與資料保護，但整合難度高。'],
+  ['工業設備監控，需要即時反應','ed','→ 邊緣運算的典型場域。'],
+  ['新創公司要跨地區服務、GPU 密集訓練','pu','→ 公有雲的典型情境；挑戰是資料主權與供應商鎖定。']
+],'口訣：隱私→地端、延遲→邊緣、彈性→公有雲、雲訓邊推→混合。');
+
+/* ---------- release strategies ---------- */
+(function(){
+  const S=[
+    ['藍綠部署',s=>s<6?0:100,'兩套環境並存，<b>一次性切換</b>。','需要能快速整批回滾 —— 出事就整批切回藍色環境。'],
+    ['金絲雀發布',s=>[0,5,5,10,10,25,25,50,50,100,100][s],'先導流極小比例，<b>逐步放大</b>。','風險高、要邊觀察邊放量。'],
+    ['滾動更新',s=>s*10,'分批替換容器版本，<b>不中斷服務</b>。','例行版本更新。圖中每格可想成一個容器被逐批換掉。'],
+    ['A/B 測試',s=>s===0?0:50,'兩版本同時服務<b>不同群體</b>。','要比較業務成效。'],
+    ['影子模式',s=>0,'新模型<b>只推論、不影響決策</b>。','上線前最後驗證。使用者看到的全是舊版，新版在旁邊默默算。不是分流給部分使用者。']
+  ];
+  let cur=0,s=0,timer=null;
+  $('#relBoxes').innerHTML='<i></i>'.repeat(20);$('#relShadow').innerHTML='<i></i>'.repeat(20);
+  function r(){
+    const x=S[cur],p=x[1](s),n=Math.round(p/5);
+    $$('#relBoxes i').forEach((b,j)=>{b.className=cur===3&&s>0?(j<10?'':'b'):(j<n?'nw':'');});
+    $('#relShadowWrap').style.display=cur===4?'':'none';
+    $$('#relShadow i').forEach(b=>b.className=cur===4&&s>0?'sh':'');
+    $('#relT').textContent='時間 '+s;
+    $('#relPct').textContent=cur===3?(s>0?'A 群 50%／B 群 50%':''):cur===4?(s>0?'新版：0% 影響決策（100% 影子推論）':''):`新版本承接 ${p}%`;
+    $('#relOut').innerHTML=`<b>${x[0]}：</b>${x[2]}<div class="hint">何時用：${x[3]}</div>`;
+  }
+  tabs($('#relTabs'),{set innerHTML(v){}},S,(x,i)=>{cur=i;clearInterval(timer);s=0;r();return '';});
+  $('#relPlay').onclick=()=>{clearInterval(timer);s=0;r();timer=setInterval(()=>{s++;r();if(s>=10)clearInterval(timer);},reduce?20:380);};
+})();
+
+/* ---------- 26.4 metrics ---------- */
+flipCards($('#kpiCards'),[
+  ['延遲','Latency｜單次請求的時間','單次請求從輸入到回覆的時間 —— 使用者感受到的「卡頓」'],
+  ['吞吐量','Throughput｜單位時間的數量','單位時間能處理的請求數 —— 系統的「容量」'],
+  ['服務可用率','Uptime｜長時間不中斷','長時間運行不中斷的比例 —— 穩定性']
+]);
+sorter($('#pmQ'),$('#pmBins'),$('#pmFb'),[['l','延遲','var(--txt)'],['t','吞吐量','var(--img)'],['u','可用率','var(--aud)'],['r','資源使用率','var(--sen)']],[
+  ['「使用者反映互動過程卡頓，已排除網路與前端問題」','l','單次請求的時間 → 延遲（官方考過，不是吞吐量、不是長時間穩定度）。','卡頓是「單次請求的時間」。'],
+  ['「尖峰時段大量請求排隊、部分請求逾時」','t','單位時間的數量 → 吞吐量（擴增節點、批次化）。','排隊是容量不夠：單位時間處理不完。'],
+  ['「系統偶發中斷、單一節點故障導致全掛」','u','長時間的不中斷 → 可用率（冗餘、容錯切換）。','關鍵字是「中斷」「全掛」。'],
+  ['「GPU 記憶體吃滿」','r','資源使用率，屬系統層級指標。']
+],'判準是問題描述的主體：時間、數量、不中斷。');
+
+(function(){
+  const BS=[1,2,4,8,16,32];
+  const C=[['不壓縮',1,92],['量化',.5,91],['蒸餾',.6,90.5]];
+  let ci=0;
+  $('#pBars').innerHTML=['延遲（越低越好）','吞吐量','可用率','成本','準確率'].map(t=>`<div class="bar"><span>${t}</span><div class="track"><div class="fill"></div></div><span class="num">—</span></div>`).join('');
+  tabs($('#pC'),{set innerHTML(v){}},C,(x,i)=>{ci=i;calc();return '';});
+  function calc(){
+    const B=BS[+$('#pB').value],N=+$('#pN').value,c=C[ci];
+    $('#oB').textContent=B;$('#oN').textContent=N;
+    const comp=20*c[1]*(1+.15*(B-1)),lat=comp+(B-1)*4,thr=Math.round(B/comp*1000*N),up=(1-Math.pow(.01,N))*100,cost=N,acc=c[2];
+    const rows=$$('#pBars .bar');
+    const set=(i,w,txt,bad,col)=>{const f=rows[i].querySelector('.fill');f.style.width=Math.max(2,Math.min(100,w))+'%';f.style.background=bad?'var(--bad)':col;rows[i].querySelector('.num').textContent=txt;};
+    set(0,lat/200*100,Math.round(lat)+'ms',lat>100,'var(--txt)');
+    set(1,thr/600*100,thr+'/s',thr<300,'var(--img)');
+    set(2,N===1?60:N===2?85:100,up>=99.99?'99.99%+':up.toFixed(2)+'%',false,'var(--aud)');
+    set(3,N/6*100,'×'+N,false,'var(--sen)');
+    set(4,(acc-80)/15*100,acc+'%',false,'var(--ok)');
+    const okL=lat<=100,okT=thr>=300;
+    let msg=[];
+    if(!okL)msg.push(`延遲 ${Math.round(lat)}ms 超過 100ms：${B>1?'批次太大，請求要等整批湊滿；':''}可試模型壓縮（量化／蒸餾）換延遲。`);
+    if(!okT)msg.push(`吞吐量 ${thr}/s 撐不住尖峰 300/s：請求會排隊逾時。可加大批次或增加節點。`);
+    if(okL&&okT)msg.push(`<b>同時達標！</b>${N>1?'多節點也順便拉高了可用率，代價是成本 ×'+N+'。':'但只有 1 個節點，單點故障就全掛 —— 可用率是另一個面向。'}${ci>0?' 壓縮讓延遲下降，代價是準確率略降。':''}`);
+    $('#pNote').innerHTML=msg.join('<br>');
+  }
+  $('#pB').oninput=calc;$('#pN').oninput=calc;calc();
+})();
+matcher($('#kpiMatch'),$('#kpiFb'),[
+  {k:'s',c:'var(--txt)',html:'推論延遲、GPU 記憶體使用率'},
+  {k:'a',c:'var(--img)',html:'推薦點擊率（CTR）、F1-Score'},
+  {k:'b',c:'var(--aud)',html:'轉換率提升、客戶留存率、ROI'}
+],[
+  {k:'b',html:'業務層級',ok:'業務層級：轉換率、成本節省、留存率、ROI。'},
+  {k:'s',html:'系統層級',ok:'系統層級：延遲、吞吐量、可用率、資源使用率。'},
+  {k:'a',html:'應用層級',ok:'應用層級：CTR、準確率、F1、異常偵測精確度。'}
+],'技術指標＋業務指標雙軌制。');
+
+/* ---------- 26.5 CI/CD ---------- */
+(function(){
+  const nodes=[['觸發','程式碼或資料'],['CI 測試','單元＋準確率＋基準'],['門檻','通過才放行'],['CD 部署','A/B 或藍綠'],['版本控管','MLflow／DVC']];
+  let src='提交新程式碼';
+  const out=()=>[
+    `<b>觸發來源：${src}</b><div class="hint">AI 的 CI 觸發條件不只程式碼，<b>資料變動也要觸發</b>；監控發現漂移超過門檻也會觸發再訓練。</div>`,
+    '<b>CI 持續整合：</b>觸發訓練與測試，整合<b>單元測試、準確率驗證、效能基準比較</b>。<div class="hint">一般軟體只有單元測試；AI 還要驗證模型準確率與效能基準。</div>',
+    '<b>門檻檢查：</b>通過門檻的模型才進入部署。',
+    '<b>CD 持續部署：</b>自動部署到測試／生產；支援 A/B 測試或藍綠部署控制風險。',
+    '<b>模型版本控管：</b>MLflow（實驗記錄、訓練、部署、版本）、DVC（資料集與模型的版本追蹤）。之後滾動釋出，進入下一輪監控。'];
+  let i=0;const pe=$('#ciPipe');
+  pe.style.gridTemplateColumns='repeat(5,minmax(90px,1fr))';
+  pe.innerHTML=nodes.map(([a,b])=>`<div class="pnode"><b>${a}</b>${b}</div>`).join('');
+  function r(){pe.querySelectorAll('.pnode').forEach((x,j)=>{x.classList.toggle('on',j===i);x.classList.toggle('past',j<i);});$('#ciOut').innerHTML=out()[i];$('#ciNext').disabled=i===4;$('#ciNext').style.opacity=i===4?.4:1;}
+  $('#ciNext').onclick=()=>{if(i<4){i++;r();}};$('#ciReset').onclick=()=>{i=0;r();};
+  [['#trgCode','提交新程式碼'],['#trgData','資料集更新'],['#trgDrift','監控發現漂移超過門檻']].forEach(([id,t])=>$(id).onclick=()=>{src=t;i=0;r();});
+  r();
+})();
+tabs($('#cadTabs'),$('#cadBody'),[['每日','監控推論效能與使用情況'],['每週','收集錯誤樣本與業務回饋'],['每月','模型重新評估或確認 retraining 需求']],x=>`<p style="margin:0"><b>${x[0]}：</b>${x[1]}</p><p class="hint" style="margin:6px 0 0">注意：再訓練是由<b>漂移門檻觸發</b>，不是固定每月重訓就好。</p>`);
+
+/* ---------- 26.6 drift viz ---------- */
+(function(){
+  const M={
+    none:['正常',0,0,'X 的分布與 X→Y 的關係都沒變。'],
+    data:['資料漂移',90,0,'<b>X 的分布變了</b>（新客群湧入、感測器換型號），但 X→Y 的關係（曲線）仍成立。<br>該做：用新分佈資料再訓練。'],
+    concept:['概念漂移',0,1,'<b>X 的分布沒變，但 X→Y 的映射變了</b>（疫情改變消費行為、詐騙手法演化），準確率持續下滑。<br>該做：重新定義標籤、重新訓練。']
+  };
+  tabs($('#dfTabs'),{set innerHTML(v){}},Object.entries(M).map(([k,v])=>({t:v[0],k})),x=>{draw(x.k);return '';});
+  function draw(k){
+    const m=M[k];let h='';
+    h+=`<text x="150" y="20" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">X 的分布</text><text x="480" y="20" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">X → Y 的映射</text>`;
+    const g=(mu,col,op)=>{let d='M20 190';for(let i=0;i<=50;i++){const x=20+i*5.2,v=Math.exp(-Math.pow((x-mu)/38,2)/2);d+=` L${x.toFixed(1)} ${(190-v*140).toFixed(1)}`;}return `<path d="${d} L280 190 Z" fill="${col}" fill-opacity="${op}" stroke="${col}" stroke-width="2"/>`;};
+    h+=g(120,'var(--muted)',.15)+g(120+m[1],k==='none'?'var(--ok)':'var(--sen)',.15);
+    h+=`<line x1="20" y1="190" x2="280" y2="190" stroke="var(--line)"/><text x="20" y="214" font-size="13" fill="var(--muted)">灰＝訓練時　彩＝現在</text>`;
+    h+=`<rect x="350" y="35" width="260" height="155" rx="8" fill="var(--surface2)"/>`;
+    const f=(x,c)=>c?190-140/(1+Math.exp(-(x-430)/18)):190-140/(1+Math.exp(-(x-520)/18));
+    let d1='',d2='';for(let x=350;x<=610;x+=5){d1+=(x===350?'M':'L')+x+' '+f(x,0).toFixed(1)+' ';d2+=(x===350?'M':'L')+x+' '+f(x,1).toFixed(1)+' ';}
+    h+=`<path d="${d1}" fill="none" stroke="var(--muted)" stroke-width="3" ${m[2]?'stroke-dasharray="6 5"':''}/>`;
+    if(m[2])h+=`<path d="${d2}" fill="none" stroke="var(--sen)" stroke-width="3"/>`;
+    h+=`<text x="350" y="214" font-size="13" fill="var(--muted)">${m[2]?'虛線＝模型學到的關係　彩＝現在真實關係':'曲線＝X→Y 的關係（未改變）'}</text>`;
+    $('#dfSvg').innerHTML=h;$('#dfOut').innerHTML=`<b>${m[0]}：</b>${m[3]}`;
+  }
+})();
+sorter($('#cuQ'),$('#cuBins'),$('#cuFb'),[['d','資料漂移','var(--txt)'],['c','概念漂移','var(--img)'],['s','訓練／服務偏差','var(--aud)'],['g','分群效能落差','var(--sen)'],['k','容量問題','var(--warn)']],[
+  ['輸入欄位分佈明顯改變，但模型邏輯仍成立','d','→ 資料漂移：用新分佈資料再訓練。'],
+  ['輸入分佈沒變，但預測準確率持續下滑','c','→ 概念漂移（X→Y 關係變了）：重新定義標籤、重新訓練。'],
+  ['訓練時表現好、離線驗證也好，上線後立刻就差','s','→ 訓練／服務偏差（前處理不一致）：檢查線上線下的特徵管線是否相同，不是重訓。','最容易誤判的一格：不是過擬合，離線驗證也很好。'],
+  ['整體指標正常，但某個客群表現特別差','g','→ 分群效能落差：分群監控，不要只看整體平均。'],
+  ['尖峰時段準確率不變，但逾時率上升','k','→ 容量問題，不是模型問題：擴增節點／批次調整。']
+],'五種症狀都能反推病因了。');
+
+/* ---------- 26.7 dept ---------- */
+matcher($('#deptMatch'),$('#deptFb'),[
+  {k:'b',c:'var(--txt)',html:'提供需求情境與績效指標，依模型輸出調整策略並回饋'},
+  {k:'o',c:'var(--img)',html:'回收實際互動案例與異常反應，供持續優化'},
+  {k:'l',c:'var(--aud)',html:'審查資料隱私、模型公平性、風險揭露，建立合規使用框架'},
+  {k:'i',c:'var(--sen)',html:'部署、權限管理、API 整合與維運支援'}
+],[
+  {k:'l',html:'法務與風險'},{k:'i',html:'資訊部門'},{k:'b',html:'業務與行銷'},{k:'o',html:'客服與營運'}
+],'模型上線不是資訊部門一個人的事。');
+
+/* ---------- 26.8 exams ---------- */
+examList($('#examList'),[
+  ['容器技術','Docker 主要優點','使用 Docker 的主要優點','<b>促進跨平台部署與環境一致性</b>（不是加速推論）'],
+  ['MLOps','MLOps 主要目的','MLOps 的主要目的','<b>自動化開發、部署與持續維運流程</b>'],
+  ['邊緣運算','推論位置','推論發生在哪裡','<b>終端裝置本地端</b>'],
+  ['持續監控','監控目的','監控的主要目的','<b>偵測概念漂移與效能下降</b>'],
+  ['跨部門','無縫對接角色','無縫對接需要哪種角色','<b>產品經理與工程人員</b>'],
+  ['效能指標','卡頓要測什麼','「互動卡頓、已排除網路與前端」要測什麼','<b>延遲</b>（不是吞吐量、不是長時間穩定度）'],
+  ['漂移辨識','資料 vs 概念','資料分佈長期改變 vs 輸入輸出關係改變','X 的分布 → 資料漂移；X→Y 的關係 → 概念漂移'],
+  ['部署模式','隱私與本地控制','資料隱私與本地控制需求','<b>地端私有部署</b>'],
+  ['成效追蹤','離線 vs 線上','離線 AUC 好但 CTR 下滑、成本上升','<b>只看離線指標、忽略線上業務指標與成本</b>']
+]);
+
+/* ---------- traps ---------- */
+traps($('#traps'),$('#trapCount'),'l21302-traps',[
+  ['容器的優點是環境一致性與跨平台','不是加速推論或提升準確率。'],
+  ['MLOps 管的是流程自動化','不是提升模型精度。'],
+  ['邊緣推論發生在終端裝置本地端','不是雲端或閘道器。'],
+  ['延遲是單次請求的時間、吞吐量是單位時間的數量','兩者不同。'],
+  ['可用率是「不中斷的比例」','與延遲、吞吐量是三個面向。'],
+  ['資料漂移看 X 的分布；概念漂移看 X→Y 的關係','一句話判準：變的是輸入分布，還是輸入與輸出的關係。'],
+  ['模型漂移是結果','資料／概念漂移才是成因。'],
+  ['金絲雀＝逐步放大流量；藍綠＝一次性切換；滾動＝分批替換','三種發布策略不要混。'],
+  ['影子模式只推論不影響決策','不是分流給部分使用者。'],
+  ['私有雲的優勢是資料不外流','代價是成本高與擴展性受限。'],
+  ['AI 的 CI 要由資料變動觸發','不是只看程式碼。'],
+  ['模型輸出要回寫到 ERP／CRM 才產生業務價值','「準確率高但沒人用」癥結在第二層。'],
+  ['資料倉儲是結構化 Schema-on-Write；資料湖是非結構化 Schema-on-Read','先定義結構 vs 先存再說。'],
+  ['離線指標好不等於導入成功','要看業務層級 KPI 與成本。'],
+  ['再訓練是由漂移門檻觸發','不是固定每月重訓就好。']
+]);
+
+/* ---------- quiz ---------- */
+quiz($('#quiz'),[
+  ['企業使用 Docker 容器部署 AI 模型，主要優點是？',['促進模型跨平台部署與環境一致性','加快模型推論速度','提升模型準確率','自動偵測資料漂移'],'容器解決的是環境問題，不是效能或精度。'],
+  ['MLOps 的主要目的為何？',['實現 AI 模型的自動化開發、部署與持續維運流程','提升模型準確率','取代資料科學家','降低 GPU 價格'],'MLOps 管的是流程，不是精度。'],
+  ['在邊緣運算架構中，AI 模型的推論通常會發生在哪裡？',['終端裝置本地端','雲端資料中心','閘道器','第三方 API 平台'],'邊緣運算的優勢正是即時反應、降低延遲、提升隱私。'],
+  ['使用者反映互動過程卡頓，已排除網路與前端問題。應優先測量哪個指標？',['延遲','吞吐量','服務可用率','長時間運行穩定度'],'單次請求的時間 ＝ 延遲。'],
+  ['尖峰時段大量請求排隊、部分請求逾時，但準確率不變。最合理的處置是？',['擴增節點或調整批次以提高吞吐量','重新訓練模型','改用更大的模型','導入概念漂移偵測'],'這是容量問題，不是模型問題。'],
+  ['把推論批次大小調大，最可能出現的結果是？',['吞吐量上升，但單一請求的延遲上升','吞吐量與延遲都下降','可用率大幅上升','準確率上升'],'每個請求要等整批湊滿才被處理：批次化換吞吐量。'],
+  ['持續監控部署後 AI 模型效能的主要目的為何？',['偵測模型概念漂移與效能下降','減少伺服器數量','取代人工標註','提升訓練速度'],'官方考過的正解。'],
+  ['輸入資料分佈沒有變化，但預測準確率持續下滑，最可能是？',['概念漂移（X→Y 的關係改變）','資料漂移','服務可用率下降','容器版本不一致'],'變的是映射關係，不是 X 的分布。'],
+  ['模型訓練與離線驗證都表現很好，但一上線就明顯變差。最該先做的是？',['比對線上與離線的特徵前處理程式碼是否一致','立刻用更多資料重新訓練','加入正則化防止過擬合','改用邊緣部署'],'這多半是訓練／服務偏差，不是過擬合，不是重訓能解。'],
+  ['需要能快速「整批回滾」的發布策略是？',['藍綠部署','金絲雀發布','滾動更新','影子模式'],'藍綠＝兩套環境並存、一次性切換；金絲雀是逐步放大流量。'],
+  ['模型準確率很高，但業務單位幾乎沒人使用。最可能的癥結是？',['模型輸出沒有回寫整合到 ERP／CRM 等日常作業系統','模型準確率還不夠高','缺少 GPU','資料湖容量不足'],'模型輸出要回寫到既有系統才有價值。'],
+  ['為確保模型可與業務流程無縫對接，通常需要哪種角色？',['產品經理與工程人員','只需要資料科學家','只需要法務人員','外部稽核人員'],'官方考過的正解。']
+],['太強了，延遲、吞吐量、可用率已經能秒分。','不錯！回頭看看答錯的題目對應的段落。','建議重新操作 26.4 的權衡模擬器與 26.6 的症狀反推，再來一次。']);
+
+navHighlight();
+</script>
+</body>
+</html>

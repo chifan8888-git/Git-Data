@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L22101 敘述性統計與資料摘要技術｜互動教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F5; --surface:#FFFFFF; --surface2:#F6F8FB; --ink:#18202E; --muted:#5A6475; --line:#D5DBE4;
+  --txt:#3B4CCA; --img:#0E8A7A; --aud:#B87812; --sen:#B8336A;
+  --ok:#1F8A4C; --bad:#C23B2E; --warn:#D9822B;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+    --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+  --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75}
+h1,h2,h3{font-family:var(--serif);line-height:1.3;margin:0}
+p{margin:0 0 1em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--txt);outline-offset:2px;border-radius:4px}
+svg{max-width:100%;height:auto;display:block}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1180px;margin:0 auto;gap:40px;padding:0 24px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;padding:32px 0;height:100vh;overflow:auto}
+nav.toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14.5px}
+nav.toc a span{font-variant-numeric:tabular-nums;font-size:13px;opacity:.8}
+nav.toc a.on{background:var(--surface);color:var(--ink);font-weight:700}
+.toc-title{font-family:var(--serif);font-weight:900;font-size:18px;padding:0 10px 14px}
+main{min-width:0;padding-bottom:80px}
+section{padding:56px 0 8px;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.sec-head{display:flex;gap:16px;align-items:baseline;margin-bottom:18px}
+.sec-no{font-family:var(--serif);font-weight:900;font-size:40px;color:var(--line);line-height:1}
+h2{font-size:28px;font-weight:900}
+h3{font-size:19px;margin:34px 0 10px}
+.lead{color:var(--muted);max-width:66ch}
+.prose{max-width:68ch}
+
+/* hero */
+.hero{padding:44px 0 24px}
+.hero .code{font-size:14px;color:var(--muted);margin-bottom:6px}
+.hero h1{font-size:clamp(34px,5.5vw,56px);font-weight:900;letter-spacing:.02em}
+.hero .one{font-size:18px;max-width:60ch;margin:16px 0 0;color:var(--muted)}
+.hero-fig{background:var(--surface);border-radius:20px;margin-top:28px;padding:14px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+.goal{border-left:4px solid var(--c);padding:6px 0 6px 14px;font-size:15px}
+
+/* panels */
+.panel{background:var(--surface);border-radius:16px;padding:22px;margin:16px 0}
+.panel.flat{background:var(--surface2)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font-size:15px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hint{font-size:14px;color:var(--muted)}
+.callout{border-left:4px solid var(--warn);background:var(--surface2);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;font-size:15px}
+.callout.exam{border-color:var(--txt)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:14px}
+
+/* modality chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+
+/* matcher */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.match .col{display:flex;flex-direction:column;gap:10px}
+.mitem{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15px;transition:border-color .2s,background .2s,transform .2s}
+.mitem small{display:block;color:var(--muted);font-size:13px}
+.mitem.sel{border-color:var(--ink);transform:translateX(4px)}
+.mitem.done{border-color:var(--c,var(--ok));background:var(--surface2);cursor:default}
+.mitem.wrong{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:1.8em;margin-top:12px;font-size:15px}
+.feedback.ok{color:var(--ok)} .feedback.bad{color:var(--bad)}
+
+/* timeline */
+.steps{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stage-viz{min-height:130px;display:flex;align-items:center;justify-content:center}
+.stage-viz .blk{display:inline-block;width:34px;height:34px;border-radius:6px;margin:2px;transition:all .5s}
+
+/* align toggle */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.compare>div{padding:18px}
+.compare>div+div{border-left:1px solid var(--line)}
+.compare .big{font-family:var(--serif);font-weight:900;font-size:22px;margin-bottom:6px}
+
+/* fusion */
+.meter{height:14px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:6px 0}
+.meter>i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .7s cubic-bezier(.3,.8,.3,1),background .4s}
+.flow{stroke-dasharray:6 7;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.jitter{animation:jit .25s steps(2) infinite}
+@keyframes jit{50%{transform:translate(1.5px,-1px)}}
+.fusion-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.pc{font-size:15px}
+.pc b{display:block;font-size:14px;color:var(--muted);font-weight:500}
+
+/* clip */
+.mat{display:grid;gap:4px;font-size:13px}
+.mat .cell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;transition:background .5s,color .5s}
+.mat .lab{display:flex;align-items:center;justify-content:center;font-size:22px}
+.mat .tlab{font-size:12px;text-align:center;color:var(--muted);display:flex;align-items:flex-end;justify-content:center;line-height:1.3}
+.zs-imgs{display:flex;gap:10px;flex-wrap:wrap}
+.zs-img{font-size:38px;width:72px;height:72px;border-radius:16px;border:2px solid var(--line);background:var(--surface2);display:flex;align-items:center;justify-content:center}
+.zs-img[aria-pressed="true"]{border-color:var(--img);box-shadow:0 0 0 3px color-mix(in srgb,var(--img) 25%,transparent)}
+.bar{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.bar .track{height:22px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;width:0;background:var(--txt);border-radius:6px;transition:width .8s cubic-bezier(.3,.8,.3,1)}
+.bar.win .fill{background:var(--img)}
+.bar.win{font-weight:700}
+.bar .num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.flip{perspective:900px;height:150px;border:0;background:none;padding:0;text-align:left}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flip[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:center}
+.flip .f{background:var(--surface);border:1.5px solid var(--line)}
+.flip .f strong{font-family:var(--serif);font-size:22px}
+.flip .f span{color:var(--muted);font-size:14px}
+.flip .b{background:var(--ink);color:var(--bg);transform:rotateY(180deg);font-size:15px}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.pnode{border:2px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;font-size:14px;background:var(--surface);transition:all .35s}
+.pnode b{display:block;font-size:16px}
+.pnode.on{border-color:var(--aud);background:color-mix(in srgb,var(--aud) 14%,var(--surface));transform:translateY(-3px)}
+.pnode.past{border-color:color-mix(in srgb,var(--aud) 45%,var(--line))}
+.pout{background:var(--surface2);border-radius:12px;padding:14px 16px;min-height:84px;font-size:15px}
+.wave{display:flex;gap:3px;align-items:center;height:30px}
+.wave i{width:4px;background:var(--aud);border-radius:2px;animation:wv 1s ease-in-out infinite}
+@keyframes wv{50%{transform:scaleY(.3)}}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+
+/* strategies */
+.strat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.strat button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;text-align:left;font-size:15px}
+.strat button[aria-pressed="true"]{border-color:var(--ink)}
+.verdict{font-family:var(--serif);font-weight:900;font-size:20px}
+
+details{border-bottom:1px solid var(--line)}
+details summary{cursor:pointer;padding:12px 4px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"+";font-weight:900;width:14px;color:var(--muted)}
+details[open] summary::before{content:"−"}
+details .body{padding:0 4px 14px 30px;font-size:15px}
+.tag{font-size:12.5px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums;min-width:80px}
+
+/* quiz */
+.qcard{background:var(--surface);border-radius:16px;padding:24px}
+.qtop{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
+.qtext{font-size:18px;font-weight:700;margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15.5px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+.opt.wrongpick{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.opt:disabled{cursor:default}
+.expl{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15px;display:none}
+.expl.show{display:block}
+.progress{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;margin-bottom:14px}
+.progress i{display:block;height:100%;background:var(--txt);transition:width .4s}
+
+.traps label{display:flex;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:15px}
+.traps input{width:18px;height:18px;margin-top:4px;flex:none;accent-color:var(--ok)}
+.traps label.chk>span{color:var(--muted)}
+.traps em{font-style:normal;font-weight:700}
+
+/* mobile */
+@media (max-width:860px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+  nav.toc{position:sticky;top:0;height:auto;z-index:10;background:var(--bg);display:flex;overflow-x:auto;padding:8px 0;padding-top:calc(8px + env(safe-area-inset-top,0px));gap:4px;border-bottom:1px solid var(--line)}
+  .toc-title{display:none}
+  nav.toc a{white-space:nowrap;flex:none}
+  .match,.stage,.fusion-meta,.compare{grid-template-columns:1fr}
+  .compare>div+div{border-left:0;border-top:1px solid var(--line)}
+  .pipe{grid-template-columns:repeat(5,minmax(90px,1fr));overflow-x:auto}
+  .bar{grid-template-columns:110px 1fr 56px}
+  h2{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* ---- page extras (L22101) ---- */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:10px;margin-top:12px}
+.kpi{background:var(--surface2);border-radius:12px;padding:10px 12px;transition:box-shadow .3s}
+.kpi b{display:block;font-size:13px;color:var(--muted);font-weight:500}
+.kpi span{font-family:var(--serif);font-weight:900;font-size:21px;font-variant-numeric:tabular-nums}
+.kpi.hot{box-shadow:0 0 0 2px var(--bad) inset}
+.kpi.cool{box-shadow:0 0 0 2px var(--ok) inset}
+.toggles{display:flex;flex-wrap:wrap;gap:8px}
+input[type=range]{width:100%;accent-color:var(--txt)}
+input[type=text],input[type=number]{font:inherit;color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:7px 12px;width:100%;max-width:100%}
+.lbl{display:flex;justify-content:space-between;gap:10px;font-weight:700;margin-top:10px}
+.lbl span{font-variant-numeric:tabular-nums;font-weight:500}
+.sent{font-size:18px;font-weight:700;background:var(--surface2);border-radius:12px;padding:14px 16px;margin-bottom:12px}
+.flowq{font-size:18px;font-weight:700;margin:6px 0 12px}
+.trail{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.trail span{font-size:13px;background:var(--surface2);border-radius:99px;padding:3px 10px;color:var(--muted)}
+.result{font-family:var(--serif);font-weight:900;font-size:26px;color:var(--txt)}
+.code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;background:var(--surface2);border-radius:12px;padding:12px 14px;white-space:pre-wrap;word-break:break-word;min-height:90px;margin-top:10px}
+.code .k{color:var(--txt);font-weight:700}
+.trip{display:grid;grid-template-columns:80px 1fr;gap:8px;align-items:center;font-size:14px;margin:6px 0}
+.trip .seg{height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;transition:width .6s cubic-bezier(.3,.8,.3,1)}
+.execs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}
+.exe{border:2px solid var(--line);border-radius:10px;padding:8px;text-align:center;font-size:13px;background:var(--surface);transition:all .4s}
+.exe.on{border-color:var(--img);background:color-mix(in srgb,var(--img) 12%,var(--surface))}
+.exe.bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.driver{border:2px solid var(--ink);border-radius:12px;padding:10px 14px;text-align:center;font-size:14px;transition:all .4s}
+.driver.boom{border-color:var(--bad);color:var(--bad);animation:shake .4s}
+@media (max-width:860px){.execs{grid-template-columns:repeat(2,1fr)}.trip{grid-template-columns:62px 1fr}}
+code{overflow-wrap:anywhere}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="toc" aria-label="章節">
+  <div class="toc-title">敘述性統計</div>
+  <a href="#intro"><span>●</span>導覽與目標</a>
+  <a href="#s1"><span>28.1</span>負責什麼</a>
+  <a href="#s2"><span>28.2</span>集中趨勢</a>
+  <a href="#s3"><span>28.3</span>離散程度</a>
+  <a href="#s4"><span>28.4</span>偏度與峰度</a>
+  <a href="#s5"><span>28.5</span>箱形圖</a>
+  <a href="#s6"><span>28.6</span>pandas 與大數據</a>
+  <a href="#s7"><span>28.7</span>官方考題</a>
+  <a href="#s8"><span>28.8</span>易錯與測驗</a>
+</nav>
+
+<main>
+<!-- HERO -->
+<section id="intro" class="hero">
+  <div class="code">L22101　中級 AI 應用規劃師（數據分析）　建議 45 分鐘</div>
+  <h1>敘述性統計與資料摘要技術</h1>
+  <p class="one">這是 L22 全科的計算底座。初級只要你「認得平均數與標準差」，中級要你<b>算得出來、讀得懂輸出</b>，還要在<b>有離群值與上億筆資料</b>時選對指標。</p>
+  <div class="hero-fig" aria-hidden="true">
+    <svg id="heroSvg" viewBox="0 0 720 300">
+      <style>.static{display:none}@media (prefers-reduced-motion:reduce){.static{display:inline}}</style>
+      <line x1="40" y1="240" x2="690" y2="240" stroke="var(--line)" stroke-width="2"/>
+      <g font-family="Noto Sans TC, sans-serif" font-size="12" fill="var(--muted)" text-anchor="middle">
+        <text x="91" y="262">30</text><text x="184" y="262">45</text><text x="339" y="262">70</text><text x="494" y="262">95</text><text x="649" y="262">120</text>
+        <text x="365" y="290">8 筆月薪（千元）：一筆 120 掉進來，平均數被拖著走，中位數幾乎不動</text>
+      </g>
+      <g fill="var(--txt)">
+        <circle cx="91" cy="226" r="9"/><circle cx="103" cy="226" r="9"/><circle cx="116" cy="226" r="9"/><circle cx="122" cy="208" r="9"/>
+        <circle cx="128" cy="226" r="9"/><circle cx="141" cy="208" r="9"/><circle cx="153" cy="226" r="9"/>
+      </g>
+      <line x1="125" y1="70" x2="125" y2="240" stroke="var(--img)" stroke-width="3"/>
+      <text x="118" y="62" text-anchor="end" font-size="14" font-weight="700" fill="var(--img)">中位數 35→35.5</text>
+      <g class="static">
+        <circle cx="649" cy="226" r="9" fill="var(--sen)"/>
+        <line x1="188" y1="90" x2="188" y2="240" stroke="var(--aud)" stroke-width="3" stroke-dasharray="7 5"/>
+        <text x="196" y="86" font-size="14" font-weight="700" fill="var(--aud)">平均數 35→45.6</text>
+      </g>
+      <g class="movers">
+        <circle cx="649" r="9" fill="var(--sen)">
+          <animate attributeName="cy" dur="4.5s" repeatCount="indefinite" values="-20;226;226;226" keyTimes="0;.3;.92;1"/>
+          <animate attributeName="opacity" dur="4.5s" repeatCount="indefinite" values="1;1;1;0" keyTimes="0;.3;.92;1"/>
+        </circle>
+        <line y1="90" y2="240" stroke="var(--aud)" stroke-width="3" stroke-dasharray="7 5">
+          <animate attributeName="x1" dur="4.5s" repeatCount="indefinite" values="122;122;188;188;122" keyTimes="0;.3;.5;.92;1"/>
+          <animate attributeName="x2" dur="4.5s" repeatCount="indefinite" values="122;122;188;188;122" keyTimes="0;.3;.5;.92;1"/>
+        </line>
+        <text y="86" font-size="14" font-weight="700" fill="var(--aud)">平均數 35→45.6
+          <animate attributeName="x" dur="4.5s" repeatCount="indefinite" values="130;130;196;196;130" keyTimes="0;.3;.5;.92;1"/>
+        </text>
+      </g>
+      <text x="649" y="200" text-anchor="middle" font-size="13" font-weight="700" fill="var(--sen)">離群值 120</text>
+    </svg>
+  </div>
+  <h3>學完這一課，你應該能夠</h3>
+  <div class="goals">
+    <div class="goal" style="--c:var(--txt)">區分算術／幾何／調和平均、中位數與眾數，在<b>速率、成長率、長尾</b>三種情境選對代表值</div>
+    <div class="goal" style="--c:var(--img)">計算變異數、標準差、四分位數、IQR 與 Z 分數，說明<b>÷N 與 ÷(n−1)</b> 造成的差異</div>
+    <div class="goal" style="--c:var(--aud)">由<b>偏度、峰度與箱形圖</b>判讀分佈形狀，推導補值、轉換與縮放的決策</div>
+    <div class="goal" style="--c:var(--sen)">寫出 pandas／NumPy 敘述統計語法，說明大數據下改用<b>近似分位數與分散式彙總</b>的理由</div>
+  </div>
+  <p class="hint" style="margin-top:20px">本頁顏色固定代表：<span class="chip" style="--c:var(--txt)"><i class="dot"></i>集中趨勢</span>　<span class="chip" style="--c:var(--img)"><i class="dot"></i>離散量度</span>　<span class="chip" style="--c:var(--aud)"><i class="dot"></i>分佈形狀</span>　<span class="chip" style="--c:var(--sen)"><i class="dot"></i>離群值</span></p>
+</section>
+
+<!-- 28.1 -->
+<section id="s1">
+  <div class="sec-head"><span class="sec-no">28.1</span><h2>敘述性統計的座標：它負責什麼、不負責什麼</h2></div>
+  <h3>三大面向</h3>
+  <div class="panel">
+    <div class="tabs" id="aspTabs"></div>
+    <div class="stage">
+      <div class="stage-viz"><svg id="aspSvg" viewBox="0 0 300 150" role="img" aria-label="面向示意"></svg></div>
+      <div id="aspTxt"></div>
+    </div>
+  </div>
+
+  <h3>敘述 vs 推論：界線在哪</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th></th><th>敘述性統計（Descriptive Statistics）</th><th>推論統計（Inferential Statistics）</th></tr>
+      <tr><td><b>對象</b></td><td>手上這批資料本身</td><td>用樣本推論母體</td></tr>
+      <tr><td><b>產出</b></td><td>摘要數值與圖表</td><td>p 值、信賴區間、檢定結論</td></tr>
+      <tr><td><b>是否談不確定性</b></td><td>不談</td><td>核心就是不確定性</td></tr>
+      <tr><td><b>典型語句</b></td><td>「這批交易的中位數是 128.6 元」</td><td>「母體平均數與 100 萬無顯著差異」</td></tr>
+      <tr><td><b>對應知識點</b></td><td><b>L22101（本節）</b></td><td><a href="L22103_hypothesis_testing.html">L22103 假設檢定與統計推論</a></td></tr>
+    </table>
+  </div>
+  <div class="panel">
+    <h3 style="margin-top:0">歸屬判斷：這句話歸誰管？</h3>
+    <p class="hint">題目只要在問「這組數字長什麼樣」，答案就在本節；一旦出現顯著水準 α、p 值、檢定力，那是 L22103 的地盤。</p>
+    <div class="qtop"><span id="dsPos"></span><span id="dsScore"></span></div>
+    <div class="sent" id="dsSent"></div>
+    <div class="toggles"><button class="btn" id="dsA">敘述統計 L22101</button><button class="btn" id="dsB">推論統計 L22103</button><button class="btn primary" id="dsNext">下一句</button></div>
+    <div class="feedback" id="dsFb" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- 28.2 -->
+<section id="s2">
+  <div class="sec-head"><span class="sec-no">28.2</span><h2>集中趨勢：四個「平均」與中位數、眾數</h2></div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>指標</th><th>公式概念</th><th>最適用</th><th>致命弱點</th></tr>
+      <tr><td><b>算術平均</b>（Arithmetic Mean）</td><td>總和 ÷ 筆數</td><td>對稱、無極端值的數量型資料</td><td>對離群值極敏感</td></tr>
+      <tr><td><b>幾何平均</b>（Geometric Mean）</td><td>n 個值連乘後開 n 次方</td><td>成長率、報酬率等<b>連乘</b>效應</td><td>資料必須全為正值</td></tr>
+      <tr><td><b>調和平均</b>（Harmonic Mean）</td><td>n ÷（各值倒數之和）</td><td><b>同距離不同速率</b>、效率類倒數加權</td><td>不能有 0 或負值</td></tr>
+      <tr><td><b>中位數</b>（Median）</td><td>排序後的中間位置值</td><td>長尾、有離群值（收入、房價）</td><td>不呈現離散程度</td></tr>
+      <tr><td><b>眾數</b>（Mode）</td><td>出現次數最多的值</td><td>類別型資料</td><td>連續資料須先分箱；可能不只一個</td></tr>
+    </table>
+  </div>
+
+  <h3>三種平均計算機：HM ＜ GM ＜ AM</h3>
+  <div class="panel">
+    <p class="hint">輸入一組正數（以逗號分隔），或按範例。對全為正數且不全相等的資料，恆有 調和 ＜ 幾何 ＜ 算術；所有數值完全相同時三者相等。</p>
+    <div class="toggles" id="avgEx"></div>
+    <input type="text" id="avgIn" value="60, 40" aria-label="輸入數值" style="margin-top:10px">
+    <div id="avgBars" style="margin-top:12px"></div>
+    <p class="hint" id="avgNote" style="margin:6px 0 0"></p>
+  </div>
+
+  <h3>為什麼「平均速度」不是算術平均</h3>
+  <div class="panel">
+    <p class="hint">去程 60 km/h、回程 40 km/h。切換前提，看「時間」怎麼分配。</p>
+    <div class="tabs" id="spTabs"></div>
+    <div id="spViz"></div>
+    <div class="verdict" id="spV" style="margin-top:8px"></div>
+    <p class="hint" id="spNote" style="margin:4px 0 0"></p>
+  </div>
+
+  <h3>為什麼「平均報酬」要用幾何平均</h3>
+  <div class="compare">
+    <div><div class="big">算術平均 ✗</div>第 1 年 +100%（×2.0），第 2 年 −50%（×0.5）<br>(100% + (−50%)) / 2 = <b style="color:var(--bad)">+25%</b>　← 與事實不符</div>
+    <div><div class="big">幾何平均 ✓</div>√(2.0 × 0.5) = 1.0 → 年化 <b style="color:var(--ok)">0%</b><br>本金 100 → 200 → 100，確實原地踏步</div>
+  </div>
+
+  <h3>選用決策：一路回答是／否</h3>
+  <div class="panel">
+    <div class="trail" id="flTrail"></div>
+    <div class="flowq" id="flQ"></div>
+    <div class="row" id="flBtns"></div>
+    <div class="result" id="flR" style="margin-top:10px"></div>
+    <p class="hint" id="flWhy" style="margin:4px 0 0"></p>
+  </div>
+</section>
+
+<!-- 28.3 -->
+<section id="s3">
+  <div class="sec-head"><span class="sec-no">28.3</span><h2>離散程度：從標準差到 IQR</h2></div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>指標</th><th>定義</th><th>對離群值</th></tr>
+      <tr><td><b>全距</b>（Range）</td><td>最大值 − 最小值（只用到 2 個點）</td><td>極度敏感</td></tr>
+      <tr><td><b>變異數</b>（Variance）</td><td>各值與平均數差的平方之平均</td><td>敏感（差被平方放大）</td></tr>
+      <tr><td><b>標準差</b>（Standard Deviation）</td><td>變異數開根號，單位與原資料相同</td><td>敏感</td></tr>
+      <tr><td><b>四分位距</b>（IQR）</td><td>Q3 − Q1，涵蓋<b>中間 50%</b> 的資料</td><td>穩健</td></tr>
+      <tr><td><b>MAD</b>（Median Absolute Deviation）</td><td>各值與中位數之差的絕對值的中位數</td><td>最穩健</td></tr>
+    </table>
+  </div>
+
+  <h3>月薪實驗室：一筆離群值能把指標拉多遠？</h3>
+  <div class="panel">
+    <p class="hint">8 筆月薪（千元）<code>[30, 32, 34, 35, 36, 38, 40, 最高]</code>。拖動「最高月薪」，或直接移除它；紅框是被拉動最多的指標，綠框是穩健指標。</p>
+    <div class="lbl">最高那一筆月薪<span id="mxV"></span></div>
+    <input type="range" id="mxR" min="40" max="200" value="120" aria-label="最高月薪">
+    <div class="row" style="margin-top:8px"><button class="btn" id="dropBtn" aria-pressed="false">移除這一筆</button><button class="btn" id="resetBtn">回到 120</button></div>
+    <svg id="salSvg" viewBox="0 0 640 120" style="margin-top:10px" role="img" aria-label="月薪點圖"></svg>
+    <div class="kpis" id="salK"></div>
+    <p class="hint" id="salNote" style="margin:10px 0 0"></p>
+  </div>
+
+  <h3>分母要用 N 還是 n−1？</h3>
+  <div class="panel">
+    <p class="hint">同一批 8 筆月薪，不同套件預設不同。點一行程式看結果。</p>
+    <div class="toggles" id="ddofBtns"></div>
+    <div class="code" id="ddofOut"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th></th><th>母體變異數</th><th>樣本變異數</th></tr>
+      <tr><td>分母</td><td>N</td><td>n − 1（Bessel 校正，無偏估計）</td></tr>
+      <tr><td>NumPy</td><td><code>np.std(x)</code> 預設 <code>ddof=0</code> ← <b>除以 N</b></td><td><code>np.std(x, ddof=1)</code></td></tr>
+      <tr><td>pandas</td><td><code>s.std(ddof=0)</code></td><td><code>s.std()</code> 預設 <code>ddof=1</code> ← <b>除以 n−1</b></td></tr>
+    </table>
+  </div>
+  <div class="callout">兩個套件的預設值剛好相反，這是計算題最容易被扣分的地方。</div>
+
+  <h3>Z 分數計算機</h3>
+  <div class="panel">
+    <p class="hint">Z ＝（觀測值 − 平均數）／標準差。正負號＝方向，絕對值＝偏離平均幾個標準差。預設值就是 114-2 #16 的題目數字。</p>
+    <div class="row" style="flex-wrap:nowrap;gap:8px">
+      <label style="flex:1;min-width:0"><span class="hint">平均數</span><input type="number" id="zM" value="2000"></label>
+      <label style="flex:1;min-width:0"><span class="hint">標準差</span><input type="number" id="zS" value="400"></label>
+      <label style="flex:1;min-width:0"><span class="hint">觀測值</span><input type="number" id="zX" value="3200"></label>
+    </div>
+    <div class="row" style="margin-top:10px"><span class="hint">門檻（由分析者設定）：</span><div class="tabs" id="zTh" style="margin:0"></div></div>
+    <svg id="zSvg" viewBox="0 0 640 170" style="margin-top:8px" role="img" aria-label="Z 分數位置"></svg>
+    <div class="verdict" id="zV"></div>
+    <p class="hint" id="zNote" style="margin:4px 0 0"></p>
+  </div>
+
+  <h3>三種縮放方式的分工</h3>
+  <div class="panel">
+    <p class="hint">把同一批 8 筆月薪（含 120）丟進三種縮放。注意綠色的 7 位一般員工被擠成什麼樣子。</p>
+    <svg id="scaleSvg" viewBox="0 0 640 250" role="img" aria-label="三種縮放比較"></svg>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>方法</th><th>用到的統計量</th><th>轉換後</th><th>對離群值</th></tr>
+      <tr><td><b>Min-Max 正規化</b></td><td>最小值、最大值</td><td>範圍壓到 <b>[0, 1]</b></td><td>最脆弱（被極值主導）</td></tr>
+      <tr><td><b>Z-score 標準化</b></td><td>平均數、標準差</td><td>平均 0、標準差 1，<b>範圍不受限</b></td><td>易被拉偏</td></tr>
+      <tr><td><b>Robust Scaling</b></td><td><b>中位數、IQR</b></td><td>以中位數為中心、IQR 為尺度</td><td>穩健</td></tr>
+    </table>
+  </div>
+  <div class="callout">這三種都只做平移與縮放，<b>分佈形狀（偏度、峰度）不會因此改變</b>。要改變形狀得靠<b>對數或 Box-Cox 轉換</b>。</div>
+</section>
+
+<!-- 28.4 -->
+<section id="s4">
+  <div class="sec-head"><span class="sec-no">28.4</span><h2>分佈形狀：偏度與峰度</h2></div>
+  <h3>偏度模擬器：把尾巴往左或往右拉</h3>
+  <div class="panel">
+    <p class="hint">拖動滑桿改變偏斜程度（示意分佈）。觀察長尾在哪一側、分佈主體在哪一側，以及平均數、中位數、眾數的順序。</p>
+    <div class="lbl">偏斜方向與程度<span id="skV"></span></div>
+    <input type="range" id="skR" min="-8" max="8" step="0.5" value="4" aria-label="偏斜程度">
+    <svg id="skSvg" viewBox="0 0 640 240" style="margin-top:8px" role="img" aria-label="偏度示意"></svg>
+    <div class="verdict" id="skName"></div>
+    <p class="hint" id="skNote" style="margin:4px 0 0"></p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>偏度值</th><th>名稱</th><th>長尾在</th><th>分佈主體在</th><th>典型資料</th></tr>
+      <tr><td><b>&gt; 0</b></td><td>正偏態／右偏（Right-skewed）</td><td><b>右側</b></td><td><b>左側</b></td><td>收入、房價、故障時間</td></tr>
+      <tr><td><b>≈ 0</b></td><td>對稱</td><td>—</td><td>中央</td><td>常態分佈、產品重量</td></tr>
+      <tr><td><b>&lt; 0</b></td><td>負偏態／左偏（Left-skewed）</td><td><b>左側</b></td><td><b>右側</b></td><td>設備壽命（少數早期故障拉出左尾）、偏高分的考試成績</td></tr>
+    </table>
+  </div>
+  <div class="callout">單峰連續分佈下，右偏時<b>通常</b>有 平均數 ＞ 中位數 ＞ 眾數，左偏時方向相反。這是判題用的<b>經驗法則，不是定理</b> —— 離散型或多峰資料可以構造出不成立的例子，題目若附了直方圖或箱形圖，<b>以圖形為準</b>。</div>
+
+  <h3>峰度：兩套基準值</h3>
+  <div class="panel">
+    <div class="tabs" id="kuTabs"></div>
+    <svg id="kuSvg" viewBox="0 0 640 210" role="img" aria-label="峰度示意"></svg>
+    <div id="kuTxt"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>定義</th><th>常態分佈的基準</th><th>高峰厚尾</th><th>扁平輕尾</th></tr>
+      <tr><td><b>Pearson 峰度</b>（官方指引採用）</td><td><b>3</b></td><td>Kurtosis &gt; 3（Leptokurtic）</td><td>Kurtosis &lt; 3（Platykurtic）</td></tr>
+      <tr><td><b>超額峰度</b>（Excess／Fisher）</td><td><b>0</b></td><td>Excess &gt; 0</td><td>Excess &lt; 0</td></tr>
+    </table>
+  </div>
+  <p class="prose"><code>scipy.stats.kurtosis()</code>（預設 <code>fisher=True</code>）與 <code>pandas.Series.kurt()</code> 回傳的都是<b>超額峰度</b>，基準是 0。看到「峰度 = 0」不代表沒有峰態，而代表接近常態。8 筆月薪：Pearson 峰度 ≈ 6.02（＞ 3，高峰厚尾），對應超額峰度 ≈ 3.02；<code>pandas.Series.kurt()</code> 另做了小樣本校正，同一批資料會回傳 ≈ 7.74。<b>先確認用的是哪個定義，再談數值大小。</b></p>
+
+  <h3>形狀 → 決策（配對）</h3>
+  <div class="panel">
+    <p class="hint">先點左邊觀察到的形狀，再點右邊合理的後續動作。</p>
+    <div class="match" id="shMatch"></div>
+    <div class="feedback" id="shFb" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- 28.5 -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-no">28.5</span><h2>箱形圖與離群值判定</h2></div>
+  <h3>五數綜合與圍籬：一步一步畫出箱形圖</h3>
+  <div class="panel">
+    <p class="hint">用 8 筆月薪逐步建出箱形圖。注意最後一步：上鬚停在哪裡？</p>
+    <div class="steps" id="bxBtns"></div>
+    <svg id="bxSvg" viewBox="0 0 640 200" role="img" aria-label="箱形圖建構"></svg>
+    <div id="bxTxt" class="pout"></div>
+  </div>
+  <div class="callout">官方指引把上／下鬚直接寫成 <code>Q3 + 1.5×IQR</code> 與 <code>Q1 − 1.5×IQR</code>，那是<b>圍籬（fence）</b>的位置；matplotlib、seaborn 實際畫出的鬚線則延伸到圍籬內最遠的資料點。兩種說法在考題中都收斂到同一個考點：<b>鬚端不等於資料集的最大／最小值</b>。</div>
+
+  <h3>由箱形圖判讀形狀（附直方圖對照）</h3>
+  <div class="panel">
+    <p class="hint">切換不同形狀的資料（示意），上方是直方圖、下方是同一批資料的箱形圖。</p>
+    <div class="tabs" id="bsTabs"></div>
+    <svg id="bsSvg" viewBox="0 0 640 230" role="img" aria-label="直方圖與箱形圖對照"></svg>
+    <p id="bsTxt" style="margin:6px 0 0"></p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>圖形特徵</th><th>代表什麼</th></tr>
+      <tr><td>盒子短、鬚很長</td><td>中段高度集中，但存在偏離中段甚遠的極端值</td></tr>
+      <tr><td>盒子長且上下對稱</td><td>變異大且分佈接近對稱</td></tr>
+      <tr><td><b>中位數貼近盒子下緣</b></td><td>上半段被拉長 → <b>右偏</b>（Right-skewed）</td></tr>
+      <tr><td><b>中位數貼近盒子上緣</b></td><td>下半段被拉長 → <b>左偏</b>（Left-skewed）</td></tr>
+      <tr><td>盒外有大量點</td><td>離群值多，需檢查來源（量測錯誤 vs 真實極端事件）</td></tr>
+    </table>
+  </div>
+  <div class="callout"><b>箱形圖看不到什麼：</b>多峰（Bimodal）結構。兩個峰的資料仍可能畫出一個看似正常的盒子，要看峰數必須搭配直方圖或核密度圖。上面切到「雙峰」就看得到。</div>
+</section>
+
+<!-- 28.6 -->
+<section id="s6">
+  <div class="sec-head"><span class="sec-no">28.6</span><h2>資料摘要的實作：pandas／NumPy 與大數據下的近似摘要</h2></div>
+  <h3>模擬執行：對 8 筆月薪跑跑看</h3>
+  <div class="panel">
+    <p class="hint"><code>s = pd.Series([30, 32, 34, 35, 36, 38, 40, 120])</code>。點一行指令看輸出。</p>
+    <div class="toggles" id="pyBtns"></div>
+    <div class="code" id="pyOut" aria-live="polite"></div>
+  </div>
+  <p class="prose"><code>describe()</code> 輸出<b>不含</b>眾數、偏度、峰度；那三個要另外呼叫 <code>.mode()</code>、<code>.skew()</code>、<code>.kurt()</code>。對文字欄位呼叫 <code>describe()</code> 回傳的是 <code>count / unique / top / freq</code>；要一次看所有欄位用 <code>df.describe(include='all')</code>。</p>
+  <details>
+    <summary>展開常用語法速查</summary>
+    <div class="body"><div class="code" style="margin:0">import numpy as np, pandas as pd
+
+df['x'].mean()      df['x'].median()    df['x'].mode()      # 集中趨勢
+df['x'].std()       # ddof=1（樣本）    np.std(a)           # ddof=0（母體）
+df['x'].var()       df['x'].quantile([0.25, 0.75])
+df['x'].skew()      df['x'].kurt()      # kurt 回傳超額峰度
+
+# IQR 與離群值遮罩
+q1, q3 = df['x'].quantile(0.25), df['x'].quantile(0.75)
+iqr = q3 - q1
+mask = (df['x'] &lt; q1 - 1.5 * iqr) | (df['x'] &gt; q3 + 1.5 * iqr)
+
+# Z 分數（母體定義）
+z = (df['x'] - df['x'].mean()) / df['x'].std(ddof=0)
+
+# 分組摘要
+df.groupby('Platform')['Global_Sales'].sum()           # 各組總額
+df.groupby('Platform')['Global_Sales'].agg(['mean', 'median', 'std'])
+df.groupby('CustomerID')['Revenue'].sum().nlargest(3)  # 總額前三名
+
+# 先條件篩選再統計：比較運算要寫在中括號外側，產生布林遮罩
+df[df['Category'] == 'Electronics']['Revenue'].mean()</div></div>
+  </details>
+
+  <h3>讀 describe() 推形狀，再決定怎麼補值（115-1 #41）</h3>
+  <div class="panel">
+    <div class="code" style="margin-top:0">mean = 223.41    50% = 128.55    max = 4500.00</div>
+    <p class="hint" style="margin-top:8px">平均數約為中位數的 1.7 倍，且 max 遠離中位數 ⇒ 右偏長尾且含離群值。5% 缺失值要怎麼補？</p>
+    <div class="strat" id="fillStrat"></div>
+    <div style="margin-top:18px">
+      <div class="verdict" id="fillV">選一個做法試試</div>
+      <div class="meter" style="height:18px;margin:10px 0"><i id="fillM" style="width:0"></i></div>
+      <div id="fillWhy" class="hint"></div>
+    </div>
+  </div>
+
+  <h3>上億筆資料怎麼摘要：分散式標準差</h3>
+  <div class="panel">
+    <p class="hint">十億筆資料分散在 4 個 Executor。比較兩種算標準差的做法（115-1 #21）。</p>
+    <div class="tabs" id="spkTabs"></div>
+    <div class="execs" id="execs"></div>
+    <div class="driver" id="driver">Driver</div>
+    <div class="pout" id="spkTxt" style="margin-top:10px"></div>
+    <div class="row" style="margin-top:10px"><button class="btn primary" id="spkRun">執行</button></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>需求</th><th>單機做法</th><th>大數據做法</th><th>為什麼</th></tr>
+      <tr><td>分位數／中位數</td><td>全量排序後取位置</td><td><b>近似分位數</b>（t-digest、Greenwald-Khanna）；Spark <code>approxQuantile()</code></td><td>精確分位數要全域排序，成本極高；近似法<b>在可容忍誤差內</b>換取速度與記憶體，且適用於串流</td></tr>
+      <tr><td>標準差</td><td><code>np.std()</code></td><td><code>DataFrame.agg({'col': 'stddev'})</code> 或 <code>RDD.aggregate()</code></td><td>各 Executor 先在自己分區算出<b>局部統計量</b>（筆數、總和、平方和），再彙總成全域值；只掃一次資料、網路傳輸量極小</td></tr>
+    </table>
+  </div>
+  <div class="callout">反面做法要能一眼認出：<code>collect()</code> 把十億筆拉回 Driver 幾乎必然 OOM；為了算標準差先做全域 <code>sortBy</code> 是白付一次昂貴的 shuffle（標準差根本不需要排序）；匯出 CSV 用 Excel 算則超過列數上限。</div>
+</section>
+
+<!-- 28.7 -->
+<section id="s7">
+  <div class="sec-head"><span class="sec-no">28.7</span><h2>官方考過什麼</h2></div>
+  <p class="lead"><b>計數基準：</b>以 114-2（50 題）＋ 115-1（50 題）共 100 題為母數，逐題檢視<b>題幹或選項</b>是否直接涉及本知識點內容（集中趨勢、離散量度、分佈形狀、箱形圖、敘述統計摘要運算，以及作為摘要指標的相關性度量），不含只在解析中提及者。相關係數本身的取捨與檢定歸 <a href="L22103_hypothesis_testing.html">L22103</a>，熱力圖等圖表選型歸 <a href="L22303_data_visualization.html">L22303</a>，因此 114-2 第 22 題（熱力圖選型）不計入。</p>
+  <div class="kpis">
+    <div class="kpi"><b>核心命中</b><span>8 題</span></div>
+    <div class="kpi"><b>與鄰近知識點共用</b><span>7 題</span></div>
+    <div class="kpi"><b>合計</b><span>15 題（15%）</span></div>
+  </div>
+  <p class="hint" style="margin-top:10px">核心：114-2 第 2、3、25、27、48 題；115-1 第 1、21、41 題。共用：114-2 第 1、16、30、33、36 題；115-1 第 5、24 題。</p>
+  <div id="examList"></div>
+  <div class="callout exam"><b>相鄰題可一併掃過：</b>114-2 第 9 題（有離群值時用 <b>Robust Scaling</b>，因為它以中位數與 IQR 為基準）、第 6 題（標準化是平均 0、標準差 1，<b>壓到 [0,1] 的是 Min-Max</b>）—— 這兩題主場在 <a href="L22201_data_collection_cleaning.html">L22201</a>／<a href="L22301_statistics_bigdata.html">L22301</a>，但判斷依據全在本節。</div>
+</section>
+
+<!-- 28.8 -->
+<section id="s8">
+  <div class="sec-head"><span class="sec-no">28.8</span><h2>易錯與陷阱</h2></div>
+  <p class="lead">逐條確認自己真的懂了再打勾（打勾狀態會記在這台裝置上）。</p>
+  <div class="traps" id="traps"></div>
+  <p class="hint" id="trapCount" style="margin-top:10px"></p>
+
+  <h3>情境測驗</h3>
+  <div class="qcard" id="quiz"></div>
+
+  <h3>延伸練習</h3>
+  <p class="prose"><b>L22 主題庫 290 題：</b>優先刷「敘述性統計／資料摘要」與「pandas 語法」兩類，特別練 <code>describe()</code> 輸出判讀與 <code>groupby().agg()</code> 的組合題。<br><b>L22 歷屆 100 題：</b>直接做 114-2 第 1、2、3、16、25、27、30、33、36、48 題與 115-1 第 1、5、21、24、41 題，這 15 題就是本節的完整考古範圍。<br><b>動手驗證：</b>用本節的 8 筆月薪資料 <code>[30, 32, 34, 35, 36, 38, 40, 120]</code>，分別以 <code>np.std()</code>、<code>pd.Series.std()</code>、<code>.describe()</code>、<code>.skew()</code>、<code>.kurt()</code> 跑一次，親眼確認 ddof 與峰度定義造成的數值差異（28.6 的模擬執行可先預習結果）。</p>
+</section>
+</main>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce){const m=document.querySelector('#heroSvg .movers');if(m)m.remove();}
+const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+
+/* ---------- generic matcher ---------- */
+function matcher(root,fb,left,right,doneMsg,badMsg){
+  let sel=null,done=0;
+  const L=document.createElement('div');L.className='col';
+  const R=document.createElement('div');R.className='col';
+  left.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;
+    b.innerHTML=it.html;if(it.c)b.style.setProperty('--c',it.c);
+    b.onclick=()=>{if(b.classList.contains('done'))return;L.querySelectorAll('.mitem').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;fb.textContent='';fb.className='feedback';};
+    L.appendChild(b);
+  });
+  right.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;b.innerHTML=it.html;
+    b.onclick=()=>{
+      if(b.classList.contains('done'))return;
+      if(!sel){fb.textContent='請先點左邊一個項目。';fb.className='feedback';return;}
+      if(sel.dataset.k===b.dataset.k){
+        const c=sel.style.getPropertyValue('--c');
+        [sel,b].forEach(x=>{x.classList.remove('sel');x.classList.add('done');if(c)x.style.setProperty('--c',c);});
+        fb.textContent='✓ '+(it.ok||'答對了！');fb.className='feedback ok';sel=null;done++;
+        if(done===left.length){fb.textContent='✓ 全部配對完成！'+(doneMsg||'');}
+      }else{
+        b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');
+        fb.textContent='✗ '+(it.bad||badMsg||'不太對，再想想。');fb.className='feedback bad';
+      }
+    };
+    R.appendChild(b);
+  });
+  root.append(L,R);
+}
+
+/* ---------- step buttons ---------- */
+function stepper(btnRoot,items,render,labelFn){
+  const show=i=>{btnRoot.querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));render(i);};
+  items.forEach((e,i)=>{const b=document.createElement('button');b.className='btn';b.setAttribute('aria-pressed','false');b.textContent=labelFn?labelFn(e,i):e.t;b.onclick=()=>show(i);btnRoot.appendChild(b);});
+  show(0);return show;
+}
+
+/* ---------- flip cards ---------- */
+function flips(root,arr){
+  arr.forEach(([n,o,d])=>{
+    const b=document.createElement('button');b.className='flip';b.setAttribute('aria-pressed','false');
+    b.innerHTML=`<div class="in"><div class="f"><strong>${n}</strong><span>${o}</span><span style="margin-top:auto;font-size:12.5px">點我翻面</span></div><div class="b">${d}</div></div>`;
+    b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');
+    root.appendChild(b);
+  });
+}
+
+/* ---------- strategy picker ---------- */
+function strategies(root,vEl,mEl,whyEl,st,order){
+  (order||st.map((_,i)=>i)).forEach(i=>{const b=document.createElement('button');b.innerHTML=st[i][0];b.setAttribute('aria-pressed','false');b.onclick=()=>{root.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));const x=st[i];vEl.textContent=x[1];vEl.style.color=x[3];mEl.style.width=x[2]+'%';mEl.style.background=x[3];whyEl.innerHTML=x[4];};root.appendChild(b);});
+}
+
+/* ---------- exam list ---------- */
+function examList(root,arr){
+  arr.forEach(([n,k,q,a])=>{root.insertAdjacentHTML('beforeend',`<details><summary><span class="tag">${n}</span>${k}</summary><div class="body"><p style="margin:0 0 6px"><span class="hint">怎麼問：</span>${q}</p><p style="margin:0"><span class="hint">正解思路：</span>${a}</p></div></details>`);});
+}
+
+/* ---------- traps ---------- */
+function traps(key,T){
+  let saved=[];try{saved=JSON.parse(localStorage.getItem(key)||'[]')||[];}catch(e){saved=[];}
+  T.forEach(([a,b],i)=>{
+    const l=document.createElement('label');const c=saved.includes(i);if(c)l.classList.add('chk');
+    l.innerHTML=`<input type="checkbox" ${c?'checked':''}><div><em>${a}</em><br><span>${b}</span></div>`;
+    l.querySelector('input').onchange=e=>{const on=e.target.checked;l.classList.toggle('chk',on);saved=on?[...new Set([...saved,i])]:saved.filter(x=>x!==i);try{localStorage.setItem(key,JSON.stringify(saved));}catch(err){}count();};
+    $('#traps').appendChild(l);
+  });
+  function count(){$('#trapCount').textContent=`已確認 ${saved.length}／${T.length} 條`;}
+  count();
+}
+
+/* ---------- quiz ---------- */
+function quiz(Q,msgs){
+  let i=0,score=0;const box=$('#quiz');
+  function show(){
+    if(i>=Q.length){
+      const msg=score>=Q.length-1?msgs[0]:score>=Math.ceil(Q.length*.65)?msgs[1]:msgs[2];
+      box.innerHTML=`<div class="progress"><i style="width:100%"></i></div><div class="qtext" style="font-size:24px;font-family:var(--serif)">得分 ${score}／${Q.length}</div><p>${msg}</p><button class="btn primary" id="qr">重新測驗</button>`;
+      $('#qr').onclick=()=>{i=0;score=0;show();};return;
+    }
+    const [q,opts,ex]=Q[i];
+    const order=shuffle(opts.map((o,k)=>({o,k})));
+    box.innerHTML=`<div class="progress"><i style="width:${i/Q.length*100}%"></i></div><div class="qtop"><span>第 ${i+1}／${Q.length} 題</span><span>得分 ${score}</span></div><div class="qtext">${q}</div><div class="opts">${order.map(x=>`<button class="opt" data-k="${x.k}">${x.o}</button>`).join('')}</div><div class="expl" id="qe"></div><div class="row" style="margin-top:14px;justify-content:flex-end"><button class="btn primary" id="qn" style="display:none">${i===Q.length-1?'看結果':'下一題'}</button></div>`;
+    box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.k==='0';if(ok)score++;
+      box.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.k==='0')x.classList.add('right');});
+      if(!ok)b.classList.add('wrongpick');
+      const e=$('#qe');e.innerHTML=(ok?'<b style="color:var(--ok)">答對了。</b>':'<b style="color:var(--bad)">這題要小心。</b>')+ex;e.classList.add('show');
+      $('#qn').style.display='';$('#qn').focus({preventScroll:true});
+    });
+    $('#qn').onclick=()=>{i++;show();};
+  }
+  show();
+}
+
+/* ---------- nav highlight ---------- */
+function navHighlight(){
+  const links=[...document.querySelectorAll('nav.toc a')];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on&&window.innerWidth<=860)a.scrollIntoView({inline:'center',block:'nearest'});});}});},{rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('main section').forEach(s=>io.observe(s));
+}
+
+/* ---------- seeded rng ---------- */
+function rng(seed){let s=seed>>>0||1;return()=>{s^=s<<13;s>>>=0;s^=s>>17;s^=s<<5;s>>>=0;return s/4294967296;};}
+function gauss(r){let u=0,v=0;while(u===0)u=r();while(v===0)v=r();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+
+/* ================= L22101 page script (part 1) ================= */
+const ST={
+  mean:a=>a.reduce((s,v)=>s+v,0)/a.length,
+  q:(a,p)=>{const b=[...a].sort((x,y)=>x-y),h=(b.length-1)*p,l=Math.floor(h);return b[l]+(h-l)*((b[l+1]??b[l])-b[l]);},
+  median:a=>ST.q(a,.5),
+  std:(a,d=1)=>{const m=ST.mean(a);return Math.sqrt(a.reduce((s,v)=>s+(v-m)**2,0)/(a.length-d));},
+  mad:a=>{const m=ST.median(a);return ST.median(a.map(v=>Math.abs(v-m)));},
+  skewP:a=>{const n=a.length,m=ST.mean(a),m2=a.reduce((s,v)=>s+(v-m)**2,0)/n,m3=a.reduce((s,v)=>s+(v-m)**3,0)/n;const g1=m3/m2**1.5;return Math.sqrt(n*(n-1))/(n-2)*g1;},
+  kurtP:a=>{const n=a.length,m=ST.mean(a),s2=a.reduce((s,v)=>s+(v-m)**2,0),s4=a.reduce((s,v)=>s+(v-m)**4,0);return n*(n+1)*(n-1)*s4/((n-2)*(n-3)*s2*s2)-3*(n-1)**2/((n-2)*(n-3));}
+};
+const SAL=[30,32,34,35,36,38,40,120];
+const f2=v=>(+v).toFixed(2);
+
+/* ---------- aspects ---------- */
+(function(){
+  const A=[
+    {t:'集中趨勢',c:'var(--txt)',q:'資料的「核心位置」在哪？',m:'平均數、中位數、眾數',g:'直方圖的峰位',e:'Central Tendency'},
+    {t:'離散量度',c:'var(--img)',q:'資料「散得多開」？',m:'變異數、標準差、全距、IQR',g:'箱形圖的盒寬',e:'Variability／Dispersion'},
+    {t:'分佈形狀',c:'var(--aud)',q:'對不對稱？尾巴厚不厚？',m:'偏度（Skewness）、峰度（Kurtosis）',g:'直方圖、箱形圖',e:'Shape'}
+  ];
+  const curve=(mu,sd,sk)=>{let d='';for(let i=0;i<=60;i++){const x=i/60*280+10,z=(x-mu)/sd;let y=Math.exp(-z*z/2);if(sk)y*=1/(1+Math.exp(-sk*z));d+=(i?'L':'M')+x.toFixed(1)+' '+(130-y*100*(sk?1.6:1)).toFixed(1);}return d;};
+  stepper($('#aspTabs'),A,i=>{
+    const a=A[i];let h=`<line x1="10" y1="130" x2="290" y2="130" stroke="var(--line)"/>`;
+    if(i===0)h+=`<path d="${curve(150,35)}" fill="none" stroke="${a.c}" stroke-width="3"/><line x1="150" y1="25" x2="150" y2="130" stroke="${a.c}" stroke-dasharray="4 4"/><text x="150" y="18" text-anchor="middle" font-size="12" fill="${a.c}">核心位置</text>`;
+    if(i===1)h+=`<path d="${curve(150,18)}" fill="none" stroke="var(--muted)" stroke-width="2"/><path d="${curve(150,50)}" fill="none" stroke="${a.c}" stroke-width="3"/><path d="M60 110 L240 110" stroke="${a.c}" stroke-width="2" marker-end="url(#ar)" marker-start="url(#ar)"/><defs><marker id="ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="${a.c}"/></marker></defs><text x="150" y="104" text-anchor="middle" font-size="12" fill="${a.c}">散得多開</text>`;
+    if(i===2)h+=`<path d="${curve(100,40,3)}" fill="none" stroke="${a.c}" stroke-width="3"/><text x="230" y="105" text-anchor="middle" font-size="12" fill="${a.c}">尾巴 →</text>`;
+    $('#aspSvg').innerHTML=h;
+    $('#aspTxt').innerHTML=`<p><b style="color:${a.c}">${a.t}</b> <span class="hint">${a.e}</span></p><p>${a.q}</p><p class="hint" style="margin:0">主要指標：${a.m}<br>對應圖表：${a.g}</p>`;
+  },x=>x.t);
+})();
+
+/* ---------- descriptive vs inferential sorter ---------- */
+(function(){
+  const S=[
+    ['「這批交易的中位數是 128.6 元」',0,'只描述手上這批資料本身。'],
+    ['「母體平均數與 100 萬無顯著差異」',1,'用樣本推論母體，還談到「顯著」→ L22103。'],
+    ['「這組資料的 IQR 為 5.0」',0,'離散量度的摘要數值。'],
+    ['「在顯著水準 α 下拒絕虛無假設」',1,'出現顯著水準 α → 推論統計。'],
+    ['「直方圖顯示這批資料右偏」',0,'描述分佈形狀，屬敘述統計。'],
+    ['「這個檢定的 p 值很小」',1,'p 值是推論統計的產出。'],
+    ['「本月訂單的標準差大於上月」（只比較這兩批資料）',0,'只比較手上兩批資料的摘要值，不推論母體。'],
+    ['「以信賴區間估計全體顧客的平均消費」',1,'信賴區間＝談不確定性 → 推論。']
+  ];
+  let i=0,sc=0,done=false;
+  function show(){done=false;$('#dsPos').textContent=`第 ${i+1}／${S.length} 句`;$('#dsScore').textContent=`答對 ${sc}`;$('#dsSent').textContent=S[i][0];$('#dsFb').textContent='';$('#dsFb').className='feedback';['#dsA','#dsB'].forEach(s=>$(s).setAttribute('aria-pressed','false'));$('#dsNext').textContent=i===S.length-1?'再玩一次':'下一句';}
+  function ans(k){const ok=S[i][1]===k;if(!done){done=true;if(ok)sc++;$('#dsScore').textContent=`答對 ${sc}`;}$(k?'#dsB':'#dsA').setAttribute('aria-pressed','true');$(k?'#dsA':'#dsB').setAttribute('aria-pressed','false');$('#dsFb').textContent=(ok?'✓ ':'✗ ')+S[i][2];$('#dsFb').className='feedback '+(ok?'ok':'bad');}
+  $('#dsA').onclick=()=>ans(0);$('#dsB').onclick=()=>ans(1);
+  $('#dsNext').onclick=()=>{if(i===S.length-1){i=0;sc=0;}else i++;show();};
+  show();
+})();
+
+/* ---------- averages calculator ---------- */
+(function(){
+  const EX=[['速度 60、40','60, 40'],['成長倍數 ×2.0、×0.5','2.0, 0.5'],['8 筆月薪','30, 32, 34, 35, 36, 38, 40, 120'],['全部相同','50, 50, 50']];
+  EX.forEach(([t,v])=>{const b=document.createElement('button');b.className='btn';b.textContent=t;b.onclick=()=>{$('#avgIn').value=v;run();};$('#avgEx').appendChild(b);});
+  function run(){
+    const a=$('#avgIn').value.split(/[,，\s]+/).map(Number).filter(x=>!isNaN(x)&&String(x)!=='');
+    if(!a.length){$('#avgBars').innerHTML='';$('#avgNote').textContent='請輸入數值。';return;}
+    const pos=a.every(v=>v>0);
+    const am=ST.mean(a),gm=pos?Math.exp(ST.mean(a.map(Math.log))):NaN,hm=pos?a.length/a.reduce((s,v)=>s+1/v,0):NaN,md=ST.median(a);
+    const cnt={};a.forEach(v=>cnt[v]=(cnt[v]||0)+1);const mc=Math.max(...Object.values(cnt));const modes=Object.keys(cnt).filter(k=>cnt[k]===mc);
+    const R=[['調和平均 HM',hm,'var(--sen)'],['幾何平均 GM',gm,'var(--aud)'],['算術平均 AM',am,'var(--txt)'],['中位數',md,'var(--img)']];
+    const mx=Math.max(...R.map(r=>isNaN(r[1])?0:Math.abs(r[1])))||1;
+    $('#avgBars').innerHTML=R.map(([n,v,c])=>`<div class="bar"><span>${n}</span><div class="track"><div class="fill" style="width:0;background:${c}" data-w="${isNaN(v)?0:Math.abs(v)/mx*100}"></div></div><span class="num">${isNaN(v)?'—':(Math.abs(v)<10?v.toFixed(3):v.toFixed(2))}</span></div>`).join('');
+    setTimeout(()=>$$('#avgBars .fill').forEach(f=>f.style.width=f.dataset.w+'%'),30);
+    let note=pos?(new Set(a).size===1?'所有數值完全相同 → 三種平均相等。':`HM ${hm.toFixed(2)} ＜ GM ${gm.toFixed(2)} ＜ AM ${am.toFixed(2)}。`):'含 0 或負值：幾何平均需全為正值、調和平均不能有 0 或負值。';
+    note+=mc>1?`　眾數：${modes.join('、')}`:`　眾數：每個值只出現一次，沒有明確眾數（連續資料須先分箱）。`;
+    $('#avgNote').textContent=note;
+  }
+  $('#avgIn').oninput=run;run();
+})();
+
+/* ---------- speed ---------- */
+(function(){
+  const T=[
+    {t:'同距離（來回同一段路）',seg:[[60,2],[40,3]],tot:5,dist:240,v:'調和平均 48 km/h',c:'var(--ok)',note:'假設單程 120 km（示意）：去程花 2 小時、回程花 3 小時。慢的那一段花掉更多「時間」，時間才是加權的基礎 → 240 km ÷ 5 h ＝ 48 km/h ＝ 2 ÷ (1/60 + 1/40)。'},
+    {t:'同時間（各開 1 小時）',seg:[[60,1],[40,1]],tot:2,dist:100,v:'算術平均 50 km/h',c:'var(--txt)',note:'前 1 小時開 60、後 1 小時開 40：兩段時間一樣長，平均速度就是 (60 + 40) / 2 ＝ 50 km/h。前提換了，答案就換了。'}
+  ];
+  stepper($('#spTabs'),T,i=>{
+    const x=T[i];
+    $('#spViz').innerHTML=`<div class="trip"><span>時間軸</span><div style="display:flex;gap:3px">${x.seg.map(([v,h],j)=>`<div class="seg" style="width:${h/x.tot*100}%;background:${j?'var(--aud)':'var(--txt)'}">${v} km/h × ${h} h</div>`).join('')}</div></div><div class="trip"><span>距離</span><div style="display:flex;gap:3px">${x.seg.map(([v,h],j)=>`<div class="seg" style="width:${v*h/x.dist*100}%;background:${j?'var(--aud)':'var(--txt)'};opacity:.7">${v*h} km</div>`).join('')}</div></div>`;
+    $('#spV').textContent=`總距離 ${x.dist} km ÷ 總時間 ${x.tot} h ＝ ${x.v}`;$('#spV').style.color=x.c;
+    $('#spNote').textContent=x.note;
+  },x=>x.t);
+})();
+
+/* ---------- decision flow ---------- */
+(function(){
+  const N=[
+    ['資料是類別型？','眾數','類別型資料只能數「出現最多次」的類別。'],
+    ['是比率／成長率（連乘）？','幾何平均','連乘效應要開 n 次方，例如 √(2.0 × 0.5) ＝ 1.0。'],
+    ['是速率且各段距離相同？','調和平均','同距離不同速率，以時間加權。'],
+    ['有明顯離群值或長尾？','中位數','長尾、有離群值（收入、房價）時，中位數不被拖著走。']
+  ];
+  let i=0,trail=[];
+  function r(){
+    $('#flTrail').innerHTML=trail.map(t=>`<span>${t}</span>`).join('');
+    if(i<0){return;}
+    $('#flQ').textContent=N[i][0];$('#flR').textContent='';$('#flWhy').textContent='';
+    $('#flBtns').innerHTML='<button class="btn" id="flY">是 YES</button><button class="btn" id="flN">否 NO</button><button class="btn" id="flRe">重新開始</button>';
+    $('#flY').onclick=()=>{trail.push(N[i][0]+' 是');end(N[i][1],N[i][2]);};
+    $('#flN').onclick=()=>{trail.push(N[i][0]+' 否');i++;if(i>=N.length)end('算術平均','對稱、無極端值的數量型資料，用總和 ÷ 筆數即可。');else r();};
+    $('#flRe').onclick=()=>{i=0;trail=[];r();};
+  }
+  function end(res,why){
+    $('#flTrail').innerHTML=trail.map(t=>`<span>${t}</span>`).join('');
+    $('#flQ').textContent='→ 該用：';$('#flR').textContent=res;$('#flWhy').textContent=why;
+    $('#flBtns').innerHTML='<button class="btn primary" id="flRe2">重新開始</button>';
+    $('#flRe2').onclick=()=>{i=0;trail=[];r();};
+  }
+  r();
+})();
+
+/* ---------- salary lab ---------- */
+(function(){
+  const base=[30,32,34,35,36,38,40];let mx=120,drop=false;
+  const X=v=>30+(v-25)/(205-25)*580;
+  function draw(){
+    const a=drop?base:[...base,mx];
+    const m=ST.mean(a),md=ST.median(a),q1=ST.q(a,.25),q3=ST.q(a,.75),sd=ST.std(a,1),rg=Math.max(...a)-Math.min(...a),mad=ST.mad(a);
+    $('#mxV').textContent=drop?'（已移除）':mx+' 千元';
+    let h=`<line x1="30" y1="80" x2="610" y2="80" stroke="var(--line)" stroke-width="2"/>`;
+    [25,70,115,160,205].forEach(t=>{h+=`<text x="${X(t)}" y="100" text-anchor="middle" font-size="11" fill="var(--muted)">${t}</text>`;});
+    h+=`<line x1="${X(md)}" y1="20" x2="${X(md)}" y2="80" stroke="var(--img)" stroke-width="3"/><text x="${X(md)+4}" y="14" font-size="12" font-weight="700" fill="var(--img)">中位數 ${md.toFixed(1)}</text>`;
+    h+=`<line x1="${X(m)}" y1="38" x2="${X(m)}" y2="80" stroke="var(--aud)" stroke-width="3" stroke-dasharray="6 4"/><text x="${X(m)+4}" y="34" font-size="12" font-weight="700" fill="var(--aud)">平均 ${m.toFixed(2)}</text>`;
+    a.forEach((v,i)=>{const o=i===7;h+=`<circle cx="${X(v)}" cy="${o?72:72-(i%2)*10}" r="7" fill="${o?'var(--sen)':'var(--txt)'}" opacity=".9"/>`;});
+    $('#salSvg').innerHTML=h;
+    const K=[['平均數',m.toFixed(3),'hot'],['中位數',md.toFixed(1),'cool'],['全距',rg.toFixed(0),'hot'],['Q1／Q3',q1.toFixed(1)+'／'+q3.toFixed(1),''],['IQR',(q3-q1).toFixed(1),'cool'],['標準差 ddof=1',sd.toFixed(2),'hot'],['MAD',mad.toFixed(1),'cool']];
+    $('#salK').innerHTML=K.map(([n,v,c])=>`<div class="kpi ${drop?'':c}"><b>${n}</b><span>${v}</span></div>`).join('');
+    const sd0=ST.std(base,1);
+    $('#salNote').innerHTML=drop?`移除後：平均 = 35.0、中位數 = 35.0、標準差(ddof=1) ≈ ${sd0.toFixed(2)}。`:`一筆 ${mx} 把標準差從 ${sd0.toFixed(2)} 拉到 <b>${sd.toFixed(2)}</b>（${(sd/sd0).toFixed(1)} 倍），中位數卻只從 35.0 動到 ${md.toFixed(1)}。${mx===120?'平均數遠大於中位數 ⇒ <b>右偏</b>。':''}`;
+  }
+  $('#mxR').oninput=()=>{mx=+$('#mxR').value;drop=false;$('#dropBtn').setAttribute('aria-pressed','false');$('#dropBtn').textContent='移除這一筆';draw();};
+  $('#dropBtn').onclick=()=>{drop=!drop;$('#dropBtn').setAttribute('aria-pressed',drop);$('#dropBtn').textContent=drop?'加回這一筆':'移除這一筆';draw();};
+  $('#resetBtn').onclick=()=>{mx=120;$('#mxR').value=120;drop=false;$('#dropBtn').setAttribute('aria-pressed','false');$('#dropBtn').textContent='移除這一筆';draw();};
+  draw();
+})();
+
+/* ---------- ddof ---------- */
+(function(){
+  const ss=SAL.reduce((s,v)=>s+(v-45.625)**2,0);
+  const C=[
+    ['np.std(a)',0,'NumPy 預設 ddof=0 → 除以 N'],
+    ['s.std()',1,'pandas 預設 ddof=1 → 除以 n−1'],
+    ['np.std(a, ddof=1)',1,'明確指定 ddof=1 → 除以 n−1'],
+    ['s.std(ddof=0)',0,'明確指定 ddof=0 → 除以 N']
+  ];
+  C.forEach(([c,d,n])=>{const b=document.createElement('button');b.className='btn';b.innerHTML=`<code>${c}</code>`;b.onclick=()=>{$$('#ddofBtns .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));const v=Math.sqrt(ss/(8-d));$('#ddofOut').innerHTML=`<span class="k">&gt;&gt;&gt; ${c}</span>\n${v.toFixed(2)}\n\n# ${n}\n# 平方和 ${ss.toFixed(3)} ÷ ${8-d} ＝ ${(ss/(8-d)).toFixed(2)}，開根號 ≈ ${v.toFixed(2)}`;};$('#ddofBtns').appendChild(b);});
+  $('#ddofBtns .btn').click();
+})();
+
+/* ---------- Z score ---------- */
+(function(){
+  let th=3;
+  ['|Z| ≥ 2','|Z| ≥ 3'].forEach((t,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=t;b.dataset.t=i+2;b.onclick=()=>{th=i+2;draw();};$('#zTh').appendChild(b);});
+  const X=z=>320+z*60,Y=z=>140-Math.exp(-z*z/2)*110;
+  function draw(){
+    $$('#zTh .btn').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.t===th));
+    const m=+$('#zM').value,s=+$('#zS').value,x=+$('#zX').value;
+    if(!(s>0)){$('#zV').textContent='標準差必須大於 0';$('#zV').style.color='var(--bad)';return;}
+    const z=(x-m)/s,zc=Math.max(-4.8,Math.min(4.8,z));
+    let d='';for(let i=0;i<=96;i++){const t=-4.8+i*.1;d+=(i?'L':'M')+X(t).toFixed(1)+' '+Y(t).toFixed(1);}
+    const tail=(a,b)=>{let p=`M${X(a)} 140`;for(let t=a;t<=b+1e-9;t+=.1)p+=`L${X(t).toFixed(1)} ${Y(t).toFixed(1)}`;return p+`L${X(b)} 140Z`;};
+    let h=`<path d="${tail(-4.8,-th)}" fill="var(--sen)" opacity=".25"/><path d="${tail(th,4.8)}" fill="var(--sen)" opacity=".25"/><path d="${d}" fill="none" stroke="var(--ink)" stroke-width="2"/><line x1="20" y1="140" x2="620" y2="140" stroke="var(--line)"/>`;
+    [-4,-3,-2,-1,0,1,2,3,4].forEach(t=>{h+=`<text x="${X(t)}" y="158" font-size="11" text-anchor="middle" fill="${Math.abs(t)===th?'var(--sen)':'var(--muted)'}">${t}</text>`;});
+    const out=Math.abs(z)>=th;
+    h+=`<line x1="${X(zc)}" y1="22" x2="${X(zc)}" y2="140" stroke="${out?'var(--bad)':'var(--ok)'}" stroke-width="3"/><circle cx="${X(zc)}" cy="22" r="7" fill="${out?'var(--bad)':'var(--ok)'}"/><text x="${X(zc)+(zc>3?-10:10)}" y="18" text-anchor="${zc>3?'end':'start'}" font-size="13" font-weight="700" fill="${out?'var(--bad)':'var(--ok)'}">Z = ${z.toFixed(2)}</text>`;
+    $('#zSvg').innerHTML=h;
+    $('#zV').textContent=`(${x} − ${m}) / ${s} = ${z.toFixed(2)} → ${out?'標記為異常':'不算異常'}`;$('#zV').style.color=out?'var(--bad)':'var(--ok)';
+    $('#zNote').textContent=`${z>=0?'高於':'低於'}平均 ${Math.abs(z).toFixed(2)} 個標準差。在 |Z| ≥ ${th} 的規則下${out?'達到':'未達'}門檻${Math.abs(z)===th?'（恰好達到門檻也算）':''}。Z = 2 不等於「必為離群值」，要看門檻。`;
+  }
+  ['#zM','#zS','#zX'].forEach(s=>$(s).oninput=draw);draw();
+})();
+
+/* ---------- scaling ---------- */
+(function(){
+  const a=SAL,mn=30,mxv=120,m=ST.mean(a),sd=ST.std(a,0),md=ST.median(a),iqr=ST.q(a,.75)-ST.q(a,.25);
+  const L=[
+    ['Min-Max 正規化：(x − min)/(max − min)',v=>(v-mn)/(mxv-mn),0,1,[0,.5,1]],
+    ['Z-score 標準化：(x − 平均)/標準差',v=>(v-m)/sd,-1,3,[-1,0,1,2,3]],
+    ['Robust Scaling：(x − 中位數)/IQR',v=>(v-md)/iqr,-2,4,[-2,0,2,4]]
+  ];
+  let h='';
+  L.forEach(([t,f,lo,hi,ticks],k)=>{
+    const y=60+k*80,X=v=>40+(Math.min(hi,v)-lo)/(hi-lo)*540;
+    h+=`<text x="40" y="${y-26}" font-size="13" font-weight="700" fill="var(--ink)">${t}</text><line x1="40" y1="${y}" x2="580" y2="${y}" stroke="var(--line)" stroke-width="2"/>`;
+    ticks.forEach(tk=>{h+=`<text x="${X(tk)}" y="${y+18}" font-size="10.5" text-anchor="middle" fill="var(--muted)">${tk}</text>`;});
+    const vals=a.map(f),nor=vals.slice(0,7),spread=Math.max(...nor)-Math.min(...nor);
+    vals.forEach((v,i)=>{const o=i===7;if(o&&v>hi){h+=`<path d="M572 ${y-8} L586 ${y} L572 ${y+8}Z" fill="var(--sen)"/><text x="600" y="${y+4}" font-size="11" fill="var(--sen)">${v.toFixed(1)}</text>`;}else h+=`<circle cx="${X(v)}" cy="${y}" r="${o?7:5.5}" fill="${o?'var(--sen)':'var(--ok)'}" opacity=".85"/>${o?`<text x="${X(v)}" y="${y-10}" font-size="11" text-anchor="middle" fill="var(--sen)">${v.toFixed(2)}</text>`:''}`;});
+    h+=`<text x="580" y="${y-26}" font-size="11.5" text-anchor="end" fill="var(--ok)">7 位一般員工的散開寬度：${spread.toFixed(2)}</text>`;
+  });
+  $('#scaleSvg').innerHTML=h;
+})();
+
+/* ================= part 2 ================= */
+function erf(x){const s=Math.sign(x);x=Math.abs(x);const t=1/(1+.3275911*x);const y=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-.284496736)*t+.254829592)*t*Math.exp(-x*x);return s*y;}
+const Phi=x=>.5*(1+erf(x/Math.SQRT2));
+
+/* ---------- skewness simulator ---------- */
+(function(){
+  const X=x=>40+(x+3)/6*560;
+  function draw(){
+    const al=+$('#skR').value;
+    const xs=[],fs=[];for(let i=0;i<=300;i++){const x=-3+i*.02;xs.push(x);fs.push(2*Math.exp(-x*x/2)/Math.sqrt(2*Math.PI)*Phi(al*x));}
+    const dx=.02,tot=fs.reduce((s,v)=>s+v,0)*dx;const p=fs.map(v=>v/tot);
+    const mean=xs.reduce((s,x,i)=>s+x*p[i]*dx,0);
+    let c=0,med=0;for(let i=0;i<xs.length;i++){c+=p[i]*dx;if(c>=.5){med=xs[i];break;}}
+    const mode=xs[p.indexOf(Math.max(...p))];
+    const m2=xs.reduce((s,x,i)=>s+(x-mean)**2*p[i]*dx,0),m3=xs.reduce((s,x,i)=>s+(x-mean)**3*p[i]*dx,0),sk=m3/m2**1.5;
+    const fm=Math.max(...p);
+    let d='';xs.forEach((x,i)=>{d+=(i?'L':'M')+X(x).toFixed(1)+' '+(205-p[i]/fm*160).toFixed(1);});
+    let h=`<path d="${d} L${X(3)} 205 L${X(-3)} 205Z" fill="var(--aud)" opacity=".15"/><path d="${d}" fill="none" stroke="var(--aud)" stroke-width="3"/><line x1="40" y1="205" x2="600" y2="205" stroke="var(--line)"/>`;
+    const L=[['眾數',mode,'var(--sen)',30],['中位數',med,'var(--img)',14],['平均數',mean,'var(--txt)',46]];
+    if(Math.abs(al)<.3)h+=`<line x1="${X(0)}" y1="40" x2="${X(0)}" y2="205" stroke="var(--ink)" stroke-width="2.5"/><text x="${X(0)}" y="34" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">平均數 ＝ 中位數 ＝ 眾數</text>`;
+    else{const srt=[...L].sort((a,b)=>a[1]-b[1]);srt.forEach(([n,v,c],j)=>{const y=[22,22,22][j],anc=['end','middle','start'][j],dx=[-6,0,6][j],yy=[40,16,40][j];h+=`<line x1="${X(v)}" y1="${yy+6}" x2="${X(v)}" y2="205" stroke="${c}" stroke-width="2.5" ${n==='平均數'?'stroke-dasharray="6 4"':''}/><text x="${X(v)+dx}" y="${yy}" text-anchor="${anc}" font-size="12" font-weight="700" fill="${c}">${n}</text>`;});}
+    if(al>=.3)h+=`<text x="${X(2.6)}" y="190" text-anchor="middle" font-size="13" font-weight="700" fill="var(--aud)">長尾在右 →</text><text x="${X(mode)}" y="225" text-anchor="middle" font-size="12" fill="var(--muted)">主體在左</text>`;
+    if(al<=-.3)h+=`<text x="${X(-2.6)}" y="190" text-anchor="middle" font-size="13" font-weight="700" fill="var(--aud)">← 長尾在左</text><text x="${X(mode)}" y="225" text-anchor="middle" font-size="12" fill="var(--muted)">主體在右</text>`;
+    $('#skSvg').innerHTML=h;
+    $('#skV').textContent='偏度 ≈ '+sk.toFixed(2);
+    const nm=al>=.3?'正偏態／右偏（偏度 > 0）':al<=-.3?'負偏態／左偏（偏度 < 0）':'對稱（偏度 ≈ 0）';
+    $('#skName').textContent=nm;$('#skName').style.color='var(--aud)';
+    $('#skNote').textContent=al>=.3?'右偏：平均數 ＞ 中位數 ＞ 眾數（單峰連續分佈下的經驗法則）。典型資料：收入、房價、故障時間。':al<=-.3?'左偏：平均數 ＜ 中位數 ＜ 眾數。典型資料：設備壽命（少數早期故障拉出左尾）、偏高分的考試成績。':'對稱：三者幾乎重合。典型資料：常態分佈、產品重量。';
+  }
+  $('#skR').oninput=draw;draw();
+})();
+
+/* ---------- kurtosis ---------- */
+(function(){
+  const D=[
+    ['常態分佈',x=>Math.exp(-x*x/2)/Math.sqrt(2*Math.PI),'var(--ink)',3,0,''],
+    ['拉普拉斯分佈（示意）',x=>{const b=Math.SQRT1_2;return Math.exp(-Math.abs(x)/b)/(2*b);},'var(--sen)',6,3,'高峰厚尾（Leptokurtic）'],
+    ['均勻分佈（示意）',x=>Math.abs(x)<=Math.sqrt(3)?1/(2*Math.sqrt(3)):0,'var(--img)',1.8,-1.2,'扁平輕尾（Platykurtic）']
+  ];
+  const X=x=>40+(x+4)/8*560,Y=y=>180-y/.75*150;
+  stepper($('#kuTabs'),[{t:'Pearson 峰度（官方指引）'},{t:'超額峰度（scipy／pandas）'}],k=>{
+    let h=`<line x1="40" y1="180" x2="600" y2="180" stroke="var(--line)"/>`;
+    D.forEach(([n,f,c,p,e],j)=>{let d='';for(let i=0;i<=400;i++){const x=-4+i*.02;d+=(i?'L':'M')+X(x).toFixed(1)+' '+Y(f(x)).toFixed(1);}h+=`<path d="${d}" fill="none" stroke="${c}" stroke-width="${j?2.5:2}" ${j?'':'stroke-dasharray="5 4"'}/>`;
+      h+=`<rect x="${410}" y="${20+j*24}" width="14" height="4" fill="${c}"/><text x="430" y="${26+j*24}" font-size="12" fill="${c}">${n}：${k?e:p}</text>`;});
+    $('#kuSvg').innerHTML=h;
+    $('#kuTxt').innerHTML=k?`<p style="margin:0">超額峰度 ＝ Pearson 峰度 − 3。<b>常態 ＝ 0</b>；＞ 0 高峰厚尾、＜ 0 扁平輕尾。8 筆月薪：<code>scipy.stats.kurtosis()</code> ≈ <b>3.02</b>，<code>pandas.Series.kurt()</code> 再做小樣本校正 ≈ <b>7.74</b>。</p>`:`<p style="margin:0"><b>常態 ＝ 3</b>；＞ 3 高峰厚尾（Leptokurtic）、＜ 3 扁平輕尾（Platykurtic）。8 筆月薪的 Pearson 峰度 ≈ <b>6.02</b>（＞ 3，高峰厚尾）。</p>`;
+  },x=>x.t);
+})();
+
+matcher($('#shMatch'),$('#shFb'),[
+  {k:'a',c:'var(--txt)',html:'右偏且有離群值，要補缺失值<small>115-1 #41</small>'},
+  {k:'b',c:'var(--img)',html:'應變數 Y 右偏且變異數隨 X 增大<small>114-2 #36</small>'},
+  {k:'c',c:'var(--aud)',html:'報酬率非對稱且厚尾，要評估極端風險<small>114-2 #33</small>'},
+  {k:'d',c:'var(--sen)',html:'長尾資料要在圖上分層<small>114-2 #25</small>'}
+],[
+  {k:'c',html:'分位數迴歸<small>聚焦尾部分位</small>',ok:'厚尾風險要直接建模尾部分位。'},
+  {k:'x',html:'把資料裁到 ±3σ 再建模',bad:'裁到 ±3σ 等於刪掉要評估的風險事件（114-2 #33 誘答）。'},
+  {k:'a',html:'用中位數補，不用平均數',ok:'右偏含離群值，中位數不被拖著走。'},
+  {k:'d',html:'改用對數刻度，而非刪掉離群值',ok:'刪離群值等於刪掉關鍵客群。'},
+  {k:'b',html:'Box-Cox／對數轉換 Y',ok:'同時改善偏態與異質變異；標準化 X 解決不了 Y 的問題。'}
+],'四種形狀都找到對應決策了。');
+
+/* ---------- box plot builder ---------- */
+(function(){
+  const a=SAL,X=v=>40+(v-20)/(125-20)*560;
+  const S=[
+    {t:'1. 排序',d:'把 8 筆資料排好：30, 32, 34, 35, 36, 38, 40, 120。'},
+    {t:'2. 中位數',d:'n = 8 為偶數，中位數 = (35 + 36) / 2 = <b>35.5</b>。'},
+    {t:'3. Q1、Q3 與盒子',d:'Q1 = <b>33.5</b>、Q3 = <b>38.5</b>，盒子涵蓋<b>中間 50%</b> 的資料，IQR = 5.0。'},
+    {t:'4. 圍籬',d:'圍籬下界 = Q1 − 1.5 × IQR = 33.5 − 7.5 = <b>26.0</b><br>圍籬上界 = Q3 + 1.5 × IQR = 38.5 + 7.5 = <b>46.0</b>'},
+    {t:'5. 鬚與離群值',d:'120 ＞ 46.0 → 標記為<b style="color:var(--sen)">離群值</b>。上鬚只畫到圍籬內最遠的實際資料點 <b>40</b>，不是資料集最大值 120；下鬚畫到 30。'}
+  ];
+  stepper($('#bxBtns'),S,k=>{
+    let h=`<line x1="40" y1="170" x2="600" y2="170" stroke="var(--line)"/>`;
+    [20,40,60,80,100,120].forEach(t=>{h+=`<text x="${X(t)}" y="188" font-size="11" text-anchor="middle" fill="var(--muted)">${t}</text>`;});
+    a.forEach((v,i)=>{const o=v===120;h+=`<circle cx="${X(v)}" cy="${k>=4?100:150-(i%2)*10}" r="6" fill="${o&&k>=4?'var(--sen)':'var(--txt)'}" opacity="${k>=4&&!o?.25:.9}" style="transition:all .5s"/>`;});
+    if(k>=1)h+=`<line x1="${X(35.5)}" y1="${k>=2?75:60}" x2="${X(35.5)}" y2="125" stroke="var(--img)" stroke-width="3"/><text x="${X(35.5)}" y="${k>=2?52:52}" text-anchor="middle" font-size="12" font-weight="700" fill="var(--img)">35.5</text>`;
+    if(k>=2)h+=`<rect x="${X(33.5)}" y="75" width="${X(38.5)-X(33.5)}" height="50" fill="none" stroke="var(--ink)" stroke-width="2.5"/><text x="${X(33.5)}" y="140" text-anchor="end" font-size="11" fill="var(--ink)">Q1 33.5</text><text x="${X(38.5)}" y="140" font-size="11" fill="var(--ink)">Q3 38.5</text>`;
+    if(k>=3)[[26,'下圍籬 26.0'],[46,'上圍籬 46.0']].forEach(([v,t])=>{h+=`<line x1="${X(v)}" y1="40" x2="${X(v)}" y2="165" stroke="var(--warn)" stroke-width="2" stroke-dasharray="5 4"/><text x="${X(v)}" y="34" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--warn)">${t}</text>`;});
+    if(k>=4)h+=`<line x1="${X(30)}" y1="100" x2="${X(33.5)}" y2="100" stroke="var(--ink)" stroke-width="2.5"/><line x1="${X(30)}" y1="88" x2="${X(30)}" y2="112" stroke="var(--ink)" stroke-width="2.5"/><line x1="${X(38.5)}" y1="100" x2="${X(40)}" y2="100" stroke="var(--ink)" stroke-width="2.5"/><line x1="${X(40)}" y1="88" x2="${X(40)}" y2="112" stroke="var(--ink)" stroke-width="2.5"/><text x="${X(40)+4}" y="84" font-size="11.5" fill="var(--ink)">上鬚＝40</text><text x="${X(120)}" y="84" text-anchor="middle" font-size="12" font-weight="700" fill="var(--sen)">離群值 120</text>`;
+    $('#bxSvg').innerHTML=h;$('#bxTxt').innerHTML=S[k].d;
+  },x=>x.t);
+})();
+
+/* ---------- box vs histogram shapes ---------- */
+(function(){
+  const r=rng(5),gen=f=>Array.from({length:400},()=>f()).map(v=>Math.max(0,Math.min(100,v)));
+  const sets=[
+    {t:'對稱',a:gen(()=>50+11*gauss(r)),d:'盒子長且上下對稱、中位數在中央 → 變異大且分佈接近對稱。'},
+    {t:'右偏',a:gen(()=>8+Math.exp(3.0+.55*gauss(r))),d:'<b>中位數貼近盒子下緣</b>：上半段被拉長 → <b>右偏</b>。上鬚比下鬚長，盒外右側有點。'},
+    {t:'左偏',a:null,d:'<b>中位數貼近盒子上緣</b>：下半段被拉長 → <b>左偏</b>。'},
+    {t:'盒短鬚長',a:gen(()=>r()<.8?50+3*gauss(r):50+16*gauss(r)),d:'盒子短、鬚很長 → 中段高度集中，但存在偏離中段甚遠的極端值；盒外有點時需檢查來源（量測錯誤 vs 真實極端事件）。'},
+    {t:'雙峰',a:gen(()=>r()<.5?30+6*gauss(r):70+6*gauss(r)),d:'直方圖明明有<b>兩個峰</b>，箱形圖卻畫出一個看似正常的盒子 —— <b>箱形圖看不到多峰結構</b>，要搭配直方圖或核密度圖。'}
+  ];
+  sets[2].a=sets[1].a.map(v=>100-v);
+  const X=v=>40+v/100*560;
+  stepper($('#bsTabs'),sets,k=>{
+    const a=sets[k].a,B=new Array(25).fill(0);a.forEach(v=>B[Math.min(24,Math.floor(v/4))]++);const bm=Math.max(...B);
+    let h='';B.forEach((b,i)=>{const hh=b/bm*110;h+=`<rect x="${X(i*4)+1}" y="${125-hh}" width="${560/25-2}" height="${hh}" rx="2" fill="var(--aud)" opacity=".75"/>`;});
+    h+=`<line x1="40" y1="125" x2="600" y2="125" stroke="var(--line)"/>`;
+    const q1=ST.q(a,.25),q2=ST.q(a,.5),q3=ST.q(a,.75),iq=q3-q1,lo=q1-1.5*iq,hi=q3+1.5*iq;
+    const inn=a.filter(v=>v>=lo&&v<=hi),wl=Math.min(...inn),wh=Math.max(...inn),outs=a.filter(v=>v<lo||v>hi);
+    const y=180;
+    h+=`<line x1="${X(wl)}" y1="${y}" x2="${X(q1)}" y2="${y}" stroke="var(--ink)" stroke-width="2"/><line x1="${X(q3)}" y1="${y}" x2="${X(wh)}" y2="${y}" stroke="var(--ink)" stroke-width="2"/><line x1="${X(wl)}" y1="${y-12}" x2="${X(wl)}" y2="${y+12}" stroke="var(--ink)" stroke-width="2"/><line x1="${X(wh)}" y1="${y-12}" x2="${X(wh)}" y2="${y+12}" stroke="var(--ink)" stroke-width="2"/>`;
+    h+=`<rect x="${X(q1)}" y="${y-20}" width="${X(q3)-X(q1)}" height="40" fill="var(--surface2)" stroke="var(--ink)" stroke-width="2"/><line x1="${X(q2)}" y1="${y-20}" x2="${X(q2)}" y2="${y+20}" stroke="var(--img)" stroke-width="3.5"/>`;
+    outs.forEach(v=>{h+=`<circle cx="${X(v)}" cy="${y}" r="3" fill="none" stroke="var(--sen)" stroke-width="1.5"/>`;});
+    h+=`<text x="40" y="225" font-size="11" fill="var(--muted)">上：直方圖　下：箱形圖（橫向）　示意資料 400 筆</text>`;
+    $('#bsSvg').innerHTML=h;$('#bsTxt').innerHTML=sets[k].d;
+  },x=>x.t);
+})();
+
+/* ---------- python runner ---------- */
+(function(){
+  const a=SAL,sd1=ST.std(a,1),sd0=ST.std(a,0);
+  const P=[
+    ['s.describe()',`count      8.000000
+mean      45.625000
+std       ${sd1.toFixed(6)}
+min       30.000000
+25%       33.500000
+50%       35.500000
+75%       38.500000
+max      120.000000
+dtype: float64
+
+# std 用 ddof=1；輸出不含眾數、偏度、峰度`],
+    ['s.mode()',a.map((v,i)=>`${i}     ${v}`).join('\n')+`
+dtype: int64
+
+# 每個值都只出現一次 → 8 個值全是「眾數」。連續資料須先分箱。`],
+    ['s.skew()',`${ST.skewP(a).toFixed(6)}
+
+# 正值 → 右偏`],
+    ['s.kurt()',`${ST.kurtP(a).toFixed(6)}
+
+# 超額峰度（基準 0），且做了小樣本校正
+# scipy.stats.kurtosis(a) ≈ 3.02；Pearson 定義 ≈ 6.02`],
+    ['np.std(a)',`${sd0.toFixed(6)}
+
+# NumPy 預設 ddof=0（÷N）`],
+    ['s.std()',`${sd1.toFixed(6)}
+
+# pandas 預設 ddof=1（÷n−1）`],
+    ["s.quantile([0.25, 0.75])",`0.25    33.5
+0.75    38.5
+dtype: float64
+
+# 預設 linear 插值；Excel 的 QUARTILE.INC／QUARTILE.EXC 結果可能不同`]
+  ];
+  P.forEach(([c,o])=>{const b=document.createElement('button');b.className='btn';b.innerHTML=`<code>${c}</code>`;b.onclick=()=>{$$('#pyBtns .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#pyOut').innerHTML=`<span class="k">&gt;&gt;&gt; ${c}</span>\n${o}`;};$('#pyBtns').appendChild(b);});
+  $('#pyBtns .btn').click();
+})();
+
+strategies($('#fillStrat'),$('#fillV'),$('#fillM'),$('#fillWhy'),[
+  ['用 median() 補','✓ 正解',92,'var(--ok)','右偏含離群值 → 中位數不被極端值拖著走。'],
+  ['用 mean() 補','✗ 分佈被右推',40,'var(--bad)','用 mean() 會把分佈整體右推並縮小變異。'],
+  ['用 max() 補','✗ 製造離群值',15,'var(--bad)','用最大值補等於親手製造離群值。'],
+  ['數值型欄位不能補值，只能刪列','✗ 過度保守',35,'var(--bad)','數值欄位可以補值；重點是依分佈形狀選對代表值。']
+],[1,0,3,2]);
+
+/* ---------- spark std ---------- */
+(function(){
+  const M=[
+    {t:'agg stddev／RDD.aggregate()',ok:true,ex:'局部：筆數 n、總和 Σx、平方和 Σx²',dr:'彙總 4 組 (n, Σx, Σx²) → 全域標準差 σ ✓',txt:'各 Executor 先在自己分區算出<b>局部統計量</b>（筆數、總和、平方和），Driver 只收到 4 組三個數字，再彙總成全域值。<b>只掃一次資料、網路傳輸量極小</b>。'},
+    {t:'collect() 拉回 Driver',ok:false,ex:'把 2.5 億筆原始資料整批送出',dr:'十億筆塞進 Driver 記憶體 → OOM 💥',txt:'<code>collect()</code> 把十億筆拉回 Driver，幾乎必然 <b>OOM</b>。'},
+    {t:'先全域 sortBy 再算',ok:false,ex:'跨節點 shuffle 交換資料',dr:'排序完才開始算 → 白付一次 shuffle',txt:'標準差<b>根本不需要排序</b>；為了算它先做全域 <code>sortBy</code> 是白付一次昂貴的 shuffle。（要排序的是精確分位數，大數據下改用 <code>approxQuantile()</code>。）'}
+  ];
+  let cur=0;
+  $('#execs').innerHTML=[1,2,3,4].map(i=>`<div class="exe">Executor ${i}<br><small class="hint">約 2.5 億筆（示意）</small></div>`).join('');
+  function reset(){$$('#execs .exe').forEach(e=>{e.className='exe';e.innerHTML=e.innerHTML.split('<br>')[0]+'<br><small class="hint">約 2.5 億筆（示意）</small>';});$('#driver').className='driver';$('#driver').textContent='Driver';$('#spkTxt').innerHTML=M[cur].txt;}
+  stepper($('#spkTabs'),M,i=>{cur=i;reset();},x=>x.t);
+  $('#spkRun').onclick=()=>{
+    const m=M[cur];reset();
+    $$('#execs .exe').forEach((e,i)=>setTimeout(()=>{e.classList.add(m.ok?'on':'bad');e.innerHTML=e.innerHTML.split('<br>')[0]+'<br><small>'+m.ex+'</small>';},reduce?0:i*180));
+    setTimeout(()=>{$('#driver').textContent=m.dr;if(!m.ok)$('#driver').classList.add('boom');},reduce?0:900);
+  };
+})();
+
+/* ---------- exam list ---------- */
+examList($('#examList'),[
+  ['114-2 #2','describe() 語法','要一次取得平均值、標準差等敘述統計量該用哪個方法','<code>describe()</code>。<code>sum()</code> 只有總和、<code>sort_values()</code> 是排序、<code>stats()</code> 不是 Series 的方法'],
+  ['114-2 #48','讀 describe() 輸出','給 <code>describe()</code> 結果，問哪個四分位數敘述正確','對準 <code>25% / 50% / 75%</code> 橫列逐一核數字，別憑印象'],
+  ['114-2 #3','由圖判偏態','給分佈圖問 Skewness 的正負','尾巴在左 → Skewness < 0；只要有資料就算得出偏度，沒有「無法計算」'],
+  ['115-1 #1','箱形圖判讀','三城市的盒長、鬚長、中位數位置組合判斷','盒短鬚長＝中段集中但有極端值；<b>中位數偏下 = 右偏</b>'],
+  ['114-2 #25','長尾資料的視覺化','IQR 極小但上鬚長、高金額多離群值，如何分層','改<b>對數刻度</b>；刪離群值等於刪掉關鍵客群，等距分箱在偏態下失效'],
+  ['114-2 #27','近似分位數','上億筆資料用 Approximate Quantile 的核心目的','<b>在可容忍誤差內快速估算</b>以支援即時分析；不是追求完全精確，也不是用 ML 預測'],
+  ['115-1 #21','分散式統計','Spark 上十億筆算標準差的正確策略','<code>agg({\'col\':\'stddev\'})</code>／<code>RDD.aggregate()</code>，局部統計量再彙總；不可 <code>collect()</code>'],
+  ['115-1 #41','由摘要決定補值','mean 遠大於 median、max 極大，5% 缺失怎麼補','右偏含離群值 → 用 <b>median</b> 補；用 mean 會右推分佈、用 max 是製造離群值'],
+  ['114-2 #1、115-1 #5','Z 分數意義','Z = 2 或 Z = −2 代表什麼','正負是方向、絕對值是幾個標準差；<b>Z = 2 不等於「必為離群值」</b>，要看門檻'],
+  ['114-2 #16','Z 分數計算','平均 2000、標準差 400、金額 3200，門檻 |Z| ≥ 3','(3200 − 2000) / 400 = 3，恰達門檻 → 標記為異常'],
+  ['114-2 #30','相關係數選用','線性趨勢明顯、無離群值，量測關聯強度與方向','<b>Pearson</b>。共變異數受單位影響無法直接判強度，RMSE／MAE 是預測誤差指標'],
+  ['115-1 #24','三種相關係數','Pearson／Spearman／Kendall 的特性比較','三者值域都在 [−1, 1]；Spearman 等於把值換成排名再代入 Pearson；<b>Kendall 比 Spearman 更穩健</b>'],
+  ['114-2 #36','偏態驅動的轉換','Y 右偏且變異數隨 X 增大','<b>Box-Cox</b>，同時改善偏態與異質變異；標準化 X 解決不了 Y 的問題'],
+  ['114-2 #33','厚尾風險建模','報酬率非對稱、多次極端損失','<b>分位數迴歸</b>；裁到 ±3σ 等於刪掉要評估的風險事件']
+]);
+
+/* ---------- traps ---------- */
+traps('l22101-traps',[
+  ['np.std() 預設 ddof=0（÷N）；pandas.Series.std() 預設 ddof=1（÷n−1）','同一批資料兩者數值不同（本節範例：28.27 vs 30.22）。'],
+  ['IQR 涵蓋的是中間 50% 的資料','涵蓋全部範圍、只用到最大與最小兩個點的是全距。'],
+  ['箱形圖的上鬚是「圍籬內最遠的實際資料點」','Q3 + 1.5×IQR 是圍籬位置，而非鬚端的資料值。'],
+  ['中位數貼近盒子下緣代表右偏','上半段被拉長，不是左偏。'],
+  ['右偏的長尾在右側、分佈主體在左側','不是主體在右側。'],
+  ['「右偏 ⇒ 平均數 > 中位數」是單峰連續分佈下的經驗法則','不是定理；離散或多峰資料可構造反例，題目附圖時以圖為準。'],
+  ['峰度先確認定義：Pearson 常態 = 3，超額峰度常態 = 0','scipy.stats.kurtosis() 與 pandas.Series.kurt() 預設回傳超額峰度；值為 0 代表接近常態。'],
+  ['Z-score 標準化讓平均 0、標準差 1，不會把數值壓進 [0, 1]','壓進 [0, 1] 的是 Min-Max 正規化。'],
+  ['標準化只做平移與縮放，偏度與峰度不變','不是「標準化之後資料就變成常態分佈」。'],
+  ['Z = 2 表示高於平均 2 個標準差，不是原始值等於 2','|Z| ≥ 3 規則下不算異常，|Z| ≥ 2 規則下才算。'],
+  ['幾何平均用於連乘型成長率；調和平均用於同距離不同速率','同時間不同速率該用算術平均。'],
+  ['Robust Scaling 用中位數與 IQR','用平均數與標準差的是 Z-score 標準化。'],
+  ['右偏且含離群值的欄位，補值用中位數','不是「一律用平均數補」，也不是「數值型欄位只能刪列」。'],
+  ['近似分位數是以可容忍誤差換取記憶體與速度','不是用機器學習預測分位數，也不是只能批次處理（它正好適用於串流）。'],
+  ['分散式標準差：各 Executor 先算局部統計量再彙總','不是 collect() 搬回 Driver，也不需要先做全域排序。'],
+  ['describe() 不含眾數、偏度、峰度','要用 .mode()、.skew()、.kurt() 另外取。'],
+  ['四分位數會隨插值方法而異','NumPy／pandas 預設 linear，Excel 的 QUARTILE.INC 與 QUARTILE.EXC 又各自不同。']
+]);
+
+/* ---------- quiz ---------- */
+quiz([
+  ['同一批 8 筆月薪，<code>np.std(a)</code> 得 28.27、<code>pd.Series(a).std()</code> 得 30.22。原因是？',['NumPy 預設 ddof=0（÷N），pandas 預設 ddof=1（÷n−1）','pandas 會自動移除離群值','NumPy 使用中位數計算','兩者使用不同的四分位數插值法'],'兩個套件預設剛好相反，這是計算題最容易被扣分的地方。'],
+  ['去程 60 km/h、回程 40 km/h，來回同一段路。平均速度是？',['48 km/h（調和平均）','50 km/h（算術平均）','約 48.99 km/h（幾何平均）','無法計算'],'同距離不同速率 → 調和平均。慢的那一段花掉更多時間。若是「各開 1 小時」才是 50。'],
+  ['投資第 1 年 +100%、第 2 年 −50%，年化平均報酬應為？',['0%（幾何平均）','+25%（算術平均）','+50%','−25%'],'√(2.0 × 0.5) = 1.0，本金確實原地踏步。'],
+  ['箱形圖中，中位數線貼近盒子下緣，代表？',['右偏（上半段被拉長）','左偏（下半段被拉長）','分佈對稱','資料有兩個峰'],'115-1 #1 的判讀重點：中位數偏下 = 右偏。'],
+  ['資料為 30、32、34、35、36、38、40、120，Q1 = 33.5、Q3 = 38.5。依 1.5×IQR 規則，箱形圖的上鬚畫到哪裡？',['40（圍籬內最遠的實際資料點）','46.0（圍籬上界）','120（資料最大值）','38.5（Q3）'],'圍籬上界 46.0 是判斷離群值的界線；鬚端停在圍籬內最遠的實際資料點。'],
+  ['交易金額平均 2000、標準差 400，某筆 3200，異常門檻 |Z| ≥ 3。結論是？',['Z = 3，恰達門檻，標記為異常','Z = 3，未超過門檻，不算異常','Z = 1.6，不算異常','需先做 Min-Max 才能判斷'],'114-2 #16：(3200 − 2000) / 400 = 3，「≥」包含等於。'],
+  ['某欄位 describe() 顯示 mean = 223.41、50% = 128.55、max = 4500，且有 5% 缺失。最合理的補值方式是？',['以中位數補值','以平均數補值','以最大值補值','數值型欄位不能補值，只能刪列'],'115-1 #41：右偏含離群值。平均數會右推分佈並縮小變異；最大值是製造離群值。'],
+  ['<code>pandas.Series.kurt()</code> 對某欄位回傳接近 0 的值，代表？',['分佈峰態接近常態（超額峰度基準為 0）','分佈沒有峰態','分佈為高峰厚尾','無法判斷，需重算'],'pandas 與 scipy 預設回傳超額峰度；Pearson 定義下常態才是 3。'],
+  ['關於 Z-score 標準化，何者正確？',['轉換後平均 0、標準差 1，範圍不受限','轉換後數值必落在 [0, 1]','轉換後資料會變成常態分佈','轉換後離群值會被移除'],'壓到 [0, 1] 的是 Min-Max；標準化只做平移與縮放，偏度峰度不變。'],
+  ['資料含明顯離群值，要做特徵縮放，較穩健的選擇是？',['Robust Scaling（中位數與 IQR）','Min-Max 正規化','Z-score 標準化','直接除以最大值'],'114-2 第 9 題的判斷依據：Robust Scaling 以中位數與 IQR 為基準，不被極值主導。'],
+  ['Spark 上有十億筆資料要計算標準差，正確策略是？',['用 agg 的 stddev 或 RDD.aggregate()，各分區算局部統計量再彙總','collect() 拉回 Driver 用 NumPy 計算','先全域 sortBy 再計算','匯出 CSV 用 Excel 計算'],'115-1 #21。collect() 會 OOM、排序是白付 shuffle、Excel 超過列數上限。'],
+  ['上億筆資料使用近似分位數（Approximate Quantile）的核心目的是？',['在可容忍誤差內快速估算，以支援即時分析','追求完全精確的分位數','以機器學習模型預測分位數位置','只能用於結構化批次資料'],'114-2 #27。近似法以可容忍誤差換取速度與記憶體，且適用於串流。']
+],['太強了，本節的計算與判讀都很穩。','不錯！回頭看看答錯題對應的段落。','建議重新操作 28.3 的月薪實驗室與 28.5 的箱形圖建構，再來一次。']);
+
+navHighlight();
+
+</script>
+</body>
+</html>

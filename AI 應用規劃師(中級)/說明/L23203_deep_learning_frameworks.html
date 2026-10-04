@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L23203 深度學習原理與框架｜互動教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F5; --surface:#FFFFFF; --surface2:#F6F8FB; --ink:#18202E; --muted:#5A6475; --line:#D5DBE4;
+  --txt:#3B4CCA; --img:#0E8A7A; --aud:#B87812; --sen:#B8336A;
+  --ok:#1F8A4C; --bad:#C23B2E; --warn:#D9822B;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+    --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+  --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75}
+h1,h2,h3{font-family:var(--serif);line-height:1.3;margin:0}
+p{margin:0 0 1em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--txt);outline-offset:2px;border-radius:4px}
+svg{max-width:100%;height:auto;display:block}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1180px;margin:0 auto;gap:40px;padding:0 24px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;padding:32px 0;height:100vh;overflow:auto}
+nav.toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14.5px}
+nav.toc a span{font-variant-numeric:tabular-nums;font-size:13px;opacity:.8}
+nav.toc a.on{background:var(--surface);color:var(--ink);font-weight:700}
+.toc-title{font-family:var(--serif);font-weight:900;font-size:18px;padding:0 10px 14px}
+main{min-width:0;padding-bottom:80px}
+section{padding:56px 0 8px;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.sec-head{display:flex;gap:16px;align-items:baseline;margin-bottom:18px}
+.sec-no{font-family:var(--serif);font-weight:900;font-size:40px;color:var(--line);line-height:1}
+h2{font-size:28px;font-weight:900}
+h3{font-size:19px;margin:34px 0 10px}
+.lead{color:var(--muted);max-width:66ch}
+.prose{max-width:68ch}
+
+/* hero */
+.hero{padding:44px 0 24px}
+.hero .code{font-size:14px;color:var(--muted);margin-bottom:6px}
+.hero h1{font-size:clamp(34px,5.5vw,56px);font-weight:900;letter-spacing:.02em}
+.hero .one{font-size:18px;max-width:60ch;margin:16px 0 0;color:var(--muted)}
+.hero-fig{background:var(--surface);border-radius:20px;margin-top:28px;padding:14px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+.goal{border-left:4px solid var(--c);padding:6px 0 6px 14px;font-size:15px}
+
+/* panels */
+.panel{background:var(--surface);border-radius:16px;padding:22px;margin:16px 0}
+.panel.flat{background:var(--surface2)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font-size:15px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hint{font-size:14px;color:var(--muted)}
+.callout{border-left:4px solid var(--warn);background:var(--surface2);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;font-size:15px}
+.callout.exam{border-color:var(--txt)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:14px}
+
+/* modality chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+
+/* matcher */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.match .col{display:flex;flex-direction:column;gap:10px}
+.mitem{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15px;transition:border-color .2s,background .2s,transform .2s}
+.mitem small{display:block;color:var(--muted);font-size:13px}
+.mitem.sel{border-color:var(--ink);transform:translateX(4px)}
+.mitem.done{border-color:var(--c,var(--ok));background:var(--surface2);cursor:default}
+.mitem.wrong{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:1.8em;margin-top:12px;font-size:15px}
+.feedback.ok{color:var(--ok)} .feedback.bad{color:var(--bad)}
+
+/* timeline */
+.steps{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stage-viz{min-height:130px;display:flex;align-items:center;justify-content:center}
+.stage-viz .blk{display:inline-block;width:34px;height:34px;border-radius:6px;margin:2px;transition:all .5s}
+
+/* align toggle */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.compare>div{padding:18px}
+.compare>div+div{border-left:1px solid var(--line)}
+.compare .big{font-family:var(--serif);font-weight:900;font-size:22px;margin-bottom:6px}
+
+/* fusion */
+.meter{height:14px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:6px 0}
+.meter>i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .7s cubic-bezier(.3,.8,.3,1),background .4s}
+.flow{stroke-dasharray:6 7;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.jitter{animation:jit .25s steps(2) infinite}
+@keyframes jit{50%{transform:translate(1.5px,-1px)}}
+.fusion-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.pc{font-size:15px}
+.pc b{display:block;font-size:14px;color:var(--muted);font-weight:500}
+
+/* clip */
+.mat{display:grid;gap:4px;font-size:13px}
+.mat .cell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;transition:background .5s,color .5s}
+.mat .lab{display:flex;align-items:center;justify-content:center;font-size:22px}
+.mat .tlab{font-size:12px;text-align:center;color:var(--muted);display:flex;align-items:flex-end;justify-content:center;line-height:1.3}
+.zs-imgs{display:flex;gap:10px;flex-wrap:wrap}
+.zs-img{font-size:38px;width:72px;height:72px;border-radius:16px;border:2px solid var(--line);background:var(--surface2);display:flex;align-items:center;justify-content:center}
+.zs-img[aria-pressed="true"]{border-color:var(--img);box-shadow:0 0 0 3px color-mix(in srgb,var(--img) 25%,transparent)}
+.bar{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.bar .track{height:22px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;width:0;background:var(--txt);border-radius:6px;transition:width .8s cubic-bezier(.3,.8,.3,1)}
+.bar.win .fill{background:var(--img)}
+.bar.win{font-weight:700}
+.bar .num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.flip{perspective:900px;height:150px;border:0;background:none;padding:0;text-align:left}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flip[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:center}
+.flip .f{background:var(--surface);border:1.5px solid var(--line)}
+.flip .f strong{font-family:var(--serif);font-size:22px}
+.flip .f span{color:var(--muted);font-size:14px}
+.flip .b{background:var(--ink);color:var(--bg);transform:rotateY(180deg);font-size:15px}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.pnode{border:2px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;font-size:14px;background:var(--surface);transition:all .35s}
+.pnode b{display:block;font-size:16px}
+.pnode.on{border-color:var(--aud);background:color-mix(in srgb,var(--aud) 14%,var(--surface));transform:translateY(-3px)}
+.pnode.past{border-color:color-mix(in srgb,var(--aud) 45%,var(--line))}
+.pout{background:var(--surface2);border-radius:12px;padding:14px 16px;min-height:84px;font-size:15px}
+.wave{display:flex;gap:3px;align-items:center;height:30px}
+.wave i{width:4px;background:var(--aud);border-radius:2px;animation:wv 1s ease-in-out infinite}
+@keyframes wv{50%{transform:scaleY(.3)}}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+
+/* strategies */
+.strat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.strat button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;text-align:left;font-size:15px}
+.strat button[aria-pressed="true"]{border-color:var(--ink)}
+.verdict{font-family:var(--serif);font-weight:900;font-size:20px}
+
+details{border-bottom:1px solid var(--line)}
+details summary{cursor:pointer;padding:12px 4px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"+";font-weight:900;width:14px;color:var(--muted)}
+details[open] summary::before{content:"−"}
+details .body{padding:0 4px 14px 30px;font-size:15px}
+.tag{font-size:12.5px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums;min-width:80px}
+
+/* quiz */
+.qcard{background:var(--surface);border-radius:16px;padding:24px}
+.qtop{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
+.qtext{font-size:18px;font-weight:700;margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15.5px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+.opt.wrongpick{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.opt:disabled{cursor:default}
+.expl{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15px;display:none}
+.expl.show{display:block}
+.progress{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;margin-bottom:14px}
+.progress i{display:block;height:100%;background:var(--txt);transition:width .4s}
+
+.traps label{display:flex;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:15px}
+.traps input{width:18px;height:18px;margin-top:4px;flex:none;accent-color:var(--ok)}
+.traps label.chk>span{color:var(--muted)}
+.traps em{font-style:normal;font-weight:700}
+
+/* ---------- page-specific ---------- */
+code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9em;background:var(--surface2);padding:1px 6px;border-radius:6px;overflow-wrap:anywhere}
+pre{background:var(--surface2);border-radius:12px;padding:14px 16px;font-size:13.5px;line-height:1.6;overflow-x:auto;margin:10px 0;white-space:pre}
+pre code{background:none;padding:0}
+a{color:var(--txt)}
+label.slider{display:grid;grid-template-columns:150px minmax(0,1fr) 64px;gap:12px;align-items:center;font-size:15px;margin:8px 0}
+label.slider b{text-align:right;font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--txt);margin:0}
+.cbar{display:grid;grid-template-columns:30px minmax(0,1fr) 52px;gap:8px;align-items:center;margin:7px 0;font-size:14px}
+.cbar .track{position:relative;height:18px;background:var(--surface2);border-radius:5px}
+.cbar .track::after{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;width:1.5px;background:var(--muted)}
+.cbar .fill{position:absolute;top:0;bottom:0;border-radius:5px;transition:all .35s cubic-bezier(.3,.8,.3,1)}
+.cbar .num{text-align:right;font-variant-numeric:tabular-nums}
+.cbar.zero .num{color:var(--bad);font-weight:700}
+.wiz{display:flex;flex-direction:column;gap:8px}
+.wiz .qq{font-weight:700;margin-bottom:4px}
+.ball{width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700;transition:background .3s}
+#sumTbl tr{transition:opacity .3s}
+#sumTbl tr.dim{opacity:.22}
+#sumTbl tr.hi td:first-child{font-weight:700;color:var(--txt)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:15px}
+.kv b{font-variant-numeric:tabular-nums}
+
+/* mobile */
+@media (max-width:860px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+  nav.toc{position:sticky;top:0;height:auto;z-index:10;background:var(--bg);display:flex;overflow-x:auto;padding:8px 0;padding-top:calc(8px + env(safe-area-inset-top,0px));gap:4px;border-bottom:1px solid var(--line)}
+  .toc-title{display:none}
+  nav.toc a{white-space:nowrap;flex:none}
+  .match,.stage,.fusion-meta,.compare{grid-template-columns:1fr}
+  .compare>div+div{border-left:0;border-top:1px solid var(--line)}
+  .pipe{grid-template-columns:repeat(5,minmax(90px,1fr));overflow-x:auto}
+  .bar{grid-template-columns:110px 1fr 56px}
+  h2{font-size:24px}
+  label.slider{grid-template-columns:84px minmax(0,1fr) 52px;gap:8px;font-size:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="toc" aria-label="章節">
+  <div class="toc-title">深度學習原理與框架</div>
+  <a href="#intro"><span>●</span>導覽與目標</a>
+  <a href="#s1"><span>47.1</span>神經元到訓練迴圈</a>
+  <a href="#s2"><span>47.2</span>激活函數</a>
+  <a href="#s3"><span>47.3</span>模型架構</a>
+  <a href="#s4"><span>47.4</span>摘要表判讀</a>
+  <a href="#s5"><span>47.5</span>框架與語法</a>
+  <a href="#s6"><span>47.6</span>官方考題</a>
+  <a href="#s7"><span>47.7</span>易錯與測驗</a>
+</nav>
+
+<main>
+<!-- HERO -->
+<section id="intro" class="hero">
+  <div class="code">L23203　中級 AI 應用規劃師・科目 3　建議 60 分鐘</div>
+  <h1>深度學習原理與框架</h1>
+  <p class="one">這是 L23 科目 3 篇幅最大、出題最密集的知識點。初級只要「認得 CNN 處理影像、RNN 處理序列」；中級要你<b>看得懂 <code>model.summary()</code> 的參數表</b>、判斷輸出層該配哪個激活與損失函數，並在 PyTorch 訓練迴圈裡指出<b>梯度裁剪該插在第幾行</b>。</p>
+  <div class="hero-fig" aria-hidden="true">
+    <svg id="heroSvg" viewBox="0 0 720 300">
+      <g id="heroNet"></g>
+      <g class="movers" id="heroMovers"></g>
+      <g font-family="Noto Sans TC, sans-serif" font-size="13" font-weight="700">
+        <text x="110" y="290" text-anchor="middle" fill="var(--txt)">輸入層</text>
+        <text x="300" y="290" text-anchor="middle" fill="var(--img)">隱藏層</text>
+        <text x="490" y="290" text-anchor="middle" fill="var(--aud)">隱藏層</text>
+        <text x="640" y="290" text-anchor="middle" fill="var(--sen)">輸出</text>
+        <text x="360" y="22" text-anchor="middle" fill="var(--muted)" font-weight="500">→ 前向傳播：做預測　　← 反向傳播：算梯度</text>
+      </g>
+    </svg>
+  </div>
+  <h3>學完這一課，你應該能夠</h3>
+  <div class="goals">
+    <div class="goal" style="--c:var(--txt)">依任務型態正確搭配<b>輸出層激活函數與損失函數</b>（Keras 與 PyTorch 兩套寫法都要會）</div>
+    <div class="goal" style="--c:var(--img)">判讀模型摘要表，用公式推算 Conv2d 與 Linear 的 <b>Param 數</b>，並解釋參數／FLOPs 的分佈落差</div>
+    <div class="goal" style="--c:var(--aud)">區辨 MLP／CNN／RNN／LSTM／Transformer 的機制差異，從題幹症狀反推架構或修正</div>
+    <div class="goal" style="--c:var(--sen)">讀懂 PyTorch 遷移學習、資料增強與訓練迴圈語法，<b>指出被刻意改錯的那一行</b></div>
+  </div>
+  <p class="hint" style="margin-top:20px">本頁顏色：<span class="chip" style="--c:var(--txt)"><i class="dot"></i>神經元與訓練</span>　<span class="chip" style="--c:var(--img)"><i class="dot"></i>CNN／影像</span>　<span class="chip" style="--c:var(--aud)"><i class="dot"></i>RNN／序列</span>　<span class="chip" style="--c:var(--sen)"><i class="dot"></i>Transformer／輸出</span></p>
+</section>
+
+<!-- 47.1 -->
+<section id="s1">
+  <div class="sec-head"><span class="sec-no">47.1</span><h2>從人工神經元到訓練迴圈</h2></div>
+  <p class="lead">一個神經元只做兩件事：<b>加權求和</b> Z = w₁x₁ + w₂x₂ + … + b（線性部分），再送進<b>激活函數</b> Output = A(Z)（非線性部分）。</p>
+
+  <h3>神經元實驗室：AND 做得到，XOR 做不到</h3>
+  <div class="panel">
+    <p class="hint">調整權重 w₁、w₂ 與偏置 b，讓輸出符合真值表（輸出 ≥ 0.5 視為 1）。<b>偏置</b>等於調整激活門檻。用「步階函數」就是 1957 年 Rosenblatt 的感知器 —— 試試看 XOR 能不能全對。</p>
+    <div class="row" style="justify-content:space-between">
+      <div class="tabs" id="nTask" style="margin:0"><button class="btn" data-t="and" aria-pressed="true">任務：AND</button><button class="btn" data-t="xor" aria-pressed="false">任務：XOR</button></div>
+      <div class="tabs" id="nAct" style="margin:0"><button class="btn" data-a="step" aria-pressed="true">步階</button><button class="btn" data-a="sig" aria-pressed="false">Sigmoid</button><button class="btn" data-a="relu" aria-pressed="false">ReLU</button></div>
+    </div>
+    <label class="slider">權重 w₁<input type="range" id="nw1" min="-2" max="2" step="0.1" value="1"><b id="nw1V"></b></label>
+    <label class="slider">權重 w₂<input type="range" id="nw2" min="-2" max="2" step="0.1" value="1"><b id="nw2V"></b></label>
+    <label class="slider">偏置 b<input type="range" id="nb" min="-3" max="2" step="0.1" value="-0.5"><b id="nbV"></b></label>
+    <div class="stage" style="margin-top:10px">
+      <div class="stage-viz"><svg id="nSvg" viewBox="0 0 300 200" role="img" aria-label="輸入平面與決策線"></svg></div>
+      <div id="nTbl" class="tbl-wrap"></div>
+    </div>
+    <p class="hint" id="nNote" style="margin:8px 0 0"></p>
+  </div>
+  <p class="prose">感知器只能做二元分類，且<b>只能處理線性可分問題</b>，著名反例就是 XOR。現代人工神經元把步階函數換成 ReLU／Sigmoid／Tanh 等<b>可微分</b>的非線性函數，才讓反向傳播成立。</p>
+
+  <h3>前向傳播 vs 反向傳播：一個做預測，一個修參數</h3>
+  <div class="panel">
+    <p class="hint">按「下一步」跟著一筆資料走完一次訓練。注意最後一步：真正更新參數的是誰？</p>
+    <div class="pipe" id="pipe"></div>
+    <div class="pout" id="pout" aria-live="polite"></div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" id="pipeNext">下一步</button><button class="btn" id="pipeReset">從頭開始</button></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th></th><th>前向傳播 Forward</th><th>反向傳播 Backpropagation</th></tr>
+      <tr><td>目的</td><td><b>做預測</b></td><td><b>算梯度、修參數</b></td></tr>
+      <tr><td>方向</td><td>輸入層 → 輸出層</td><td>輸出層 → 輸入層</td></tr>
+      <tr><td>核心數學</td><td>加權求和 + 激活函數</td><td>微積分<b>連鎖律（Chain Rule）</b></td></tr>
+      <tr><td>產出</td><td>預測值 ŷ</td><td>損失對每個 w、b 的偏導數</td></tr>
+      <tr><td>常見誤解</td><td>—</td><td>反向傳播<b>只負責算梯度</b>，真正更新參數的是<b>優化器</b></td></tr>
+    </table>
+  </div>
+  <p class="prose">RNN 因為有時間維度，用的是特殊形式的 <b>BPTT（Backpropagation Through Time）</b>：把序列沿時間軸展開成一個無迴圈的深層網路，再從最後一個時間步的損失往回推。</p>
+
+  <h3>損失函數：誰對離群值最敏感？</h3>
+  <div class="panel">
+    <p class="hint">四個一般樣本的誤差固定（示意），拖動第五個「極端值」的誤差，看它在三種損失中佔總損失的比例。</p>
+    <label class="slider">極端值誤差<input type="range" id="lossR" min="0.5" max="10" step="0.5" value="5"><b id="lossRV"></b></label>
+    <div id="lossBars"></div>
+    <p class="hint" id="lossNote" style="margin:8px 0 0"></p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>任務</th><th>損失函數</th><th>關鍵特性</th></tr>
+      <tr><td>迴歸</td><td><b>MSE</b></td><td>誤差取平方 → 大誤差懲罰被放大、梯度與誤差成正比，<b>對離群值最敏感</b></td></tr>
+      <tr><td>迴歸</td><td><b>MAE</b></td><td>線性懲罰、梯度近似定值，<b>刻意壓低離群值影響</b></td></tr>
+      <tr><td>迴歸</td><td><b>Huber Loss</b></td><td>小誤差平方、大誤差轉線性，介於 MSE 與 MAE 之間</td></tr>
+      <tr><td>二元分類</td><td><b>Binary Cross-Entropy</b></td><td>輸出一個機率</td></tr>
+      <tr><td>多類別分類</td><td><b>Categorical Cross-Entropy</b></td><td>衡量預測機率分佈與真實分佈的距離</td></tr>
+    </table>
+  </div>
+  <div class="callout exam"><b>115-1 第 2 題與第 10 題：</b>「希望模型對極端值<b>更敏感</b>」→ MSE；「希望<b>降低</b>離群值影響」→ MAE 或 Huber。方向搞反就全錯。第 10 題「時長預測 + 是否流失」→ <b>MSE + Binary Cross-Entropy</b>。</div>
+
+  <h3>學習率模擬器：W_new = W_old − α × ∂L/∂W</h3>
+  <div class="panel">
+    <p class="hint">在一條碗狀損失曲線上做梯度下降（示意：L = w²）。調整學習率 α，按「走 10 步」看看會發生什麼。</p>
+    <svg id="lrSvg" viewBox="0 0 640 260" role="img" aria-label="梯度下降路徑"></svg>
+    <div class="row">
+      <label class="slider" style="flex:1;min-width:220px">學習率 α<input type="range" id="lrR" min="0.02" max="1.1" step="0.02" value="0.1"><b id="lrRV"></b></label>
+      <button class="btn primary" id="lrGo">走 10 步</button>
+    </div>
+    <div class="pout" id="lrOut"></div>
+  </div>
+
+  <h3>優化器速記（點卡片翻面）</h3>
+  <div class="cards" id="optCards"></div>
+  <div class="callout exam"><b>114-2 第 17 題、115-1 第 9 題：</b>內建動量的是 <b>Adam</b>（一階動量 + 自適應學習率，逐參數調步長）；RMSProp、Adagrad 只有自適應學習率；「所有參數相同學習率」是 SGD 的作法。</div>
+
+  <h3>批次大小的取捨（115-1 第 11 題）</h3>
+  <div class="panel">
+    <p class="hint">點選每種策略，看梯度穩定性與 GPU 吞吐量（長條為示意）。</p>
+    <div class="strat" id="batchStrat"></div>
+    <div style="margin-top:18px">
+      <div class="verdict" id="batchV">選一種策略試試</div>
+      <div class="meter" style="height:18px;margin:10px 0"><i id="batchM" style="width:0"></i></div>
+      <div id="batchWhy" class="hint"></div>
+    </div>
+  </div>
+
+  <h3>症狀判讀：先診斷，再開藥</h3>
+  <div class="panel">
+    <p class="hint">考試第一步是讀懂症狀。先點左邊的現象，再點右邊的診斷。</p>
+    <div class="match" id="symMatch"></div>
+    <div class="feedback" id="symFb" aria-live="polite"></div>
+  </div>
+
+  <h3>正則化：Dropout 動起來</h3>
+  <div class="panel">
+    <p class="hint">按「訓練一步」：每一步隨機把部分隱藏神經元的<b>輸出設為 0</b>（不是設為 1、也不是把權重設為 0），打斷神經元共適應。</p>
+    <svg id="dropSvg" viewBox="0 0 640 220" role="img" aria-label="Dropout 示意"></svg>
+    <div class="row"><button class="btn primary" id="dropBtn">訓練一步</button><button class="btn" id="dropInf">推論模式</button><span class="hint" id="dropInfo"></span></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>技術</th><th>做法</th><th>特色</th></tr>
+      <tr><td><b>L1（Lasso）</b></td><td>損失 += λΣ|W|</td><td>產生<b>稀疏解</b>，部分權重歸零 → 自動特徵選擇；面對高度相關特徵時會<b>隨機只留一個</b>，重要特徵清單不穩定</td></tr>
+      <tr><td><b>L2（Ridge／Weight Decay）</b></td><td>損失 += λΣW²</td><td>壓小權重但<b>不歸零</b>，把相關特徵的權重<b>平均分攤</b>，表現較穩定</td></tr>
+      <tr><td>Elastic Net</td><td>L1 + L2</td><td>兼顧特徵選擇與平滑</td></tr>
+      <tr><td><b>Dropout</b></td><td>訓練時隨機把部分神經元輸出<b>設為 0</b></td><td>打斷神經元共適應，等同集成效果</td></tr>
+      <tr><td><b>Early Stopping</b></td><td>監控<b>驗證集</b>損失，設 <b>Patience</b></td><td>連續多輪未改善才停，避免被單次波動誤判</td></tr>
+      <tr><td>Batch Normalization</td><td>對每批次激活值標準化</td><td>穩定各層輸入分佈、緩解梯度消失與爆炸</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 47.2 -->
+<section id="s2">
+  <div class="sec-head"><span class="sec-no">47.2</span><h2>激活函數（本知識點最高頻考點）</h2></div>
+
+  <h3>激活函數觀察台：看形狀，也看導數</h3>
+  <div class="panel">
+    <p class="hint">實線是函數本身，虛線是導數（梯度）。拖動 x，留意 Sigmoid／Tanh 兩端的<b>飽和區</b>導數趨近 0。</p>
+    <div class="tabs" id="actTabs"></div>
+    <svg id="actSvg" viewBox="0 0 640 250" role="img" aria-label="激活函數圖"></svg>
+    <label class="slider">輸入 x<input type="range" id="actX" min="-6" max="6" step="0.1" value="2"><b id="actXV"></b></label>
+    <div class="pout" id="actOut"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>激活函數</th><th>數學式</th><th>輸出範圍</th><th>主要用途</th><th>主要缺點</th></tr>
+      <tr><td><b>Sigmoid</b></td><td>1/(1+e⁻ˣ)</td><td>(0, 1)</td><td><b>二元分類輸出層</b>、LSTM 門控</td><td>兩端飽和導致<b>梯度消失</b>；輸出非零中心</td></tr>
+      <tr><td><b>Tanh</b></td><td>(eˣ−e⁻ˣ)/(eˣ+e⁻ˣ)</td><td>(−1, 1)</td><td>RNN 隱藏狀態</td><td>仍會飽和，但梯度優於 Sigmoid</td></tr>
+      <tr><td><b>ReLU</b></td><td>max(0, x)</td><td>[0, ∞)</td><td><b>隱藏層預設值</b></td><td><b>Dying ReLU</b>：神經元輸出恆為 0、停止更新</td></tr>
+      <tr><td><b>Softmax</b></td><td>eᶻⁱ/Σeᶻʲ</td><td>(0, 1)，<b>總和為 1</b></td><td><b>多類別單標籤輸出層</b></td><td>只能用於單標籤，多標籤不適用</td></tr>
+    </table>
+  </div>
+
+  <h3>三個必須分清楚的誤區</h3>
+  <div class="tabs" id="mythTabs"></div>
+  <div class="panel flat" id="mythBody" style="margin-top:0"></div>
+
+  <h3>Softmax vs Sigmoid：總和是不是 1？</h3>
+  <div class="panel">
+    <p class="hint">同一組三個輸出分數（logits），分別用 Softmax 與 Sigmoid 轉換。拖動看看兩者的總和差在哪。</p>
+    <label class="slider">貓 的分數 z₁<input type="range" id="z1" min="-4" max="4" step="0.1" value="2"><b id="z1V"></b></label>
+    <label class="slider">狗 的分數 z₂<input type="range" id="z2" min="-4" max="4" step="0.1" value="1.5"><b id="z2V"></b></label>
+    <label class="slider">鳥 的分數 z₃<input type="range" id="z3" min="-4" max="4" step="0.1" value="-1"><b id="z3V"></b></label>
+    <div class="fusion-meta">
+      <div><b style="color:var(--sen)">Softmax（多類別單標籤）</b><div id="smBars"></div><div class="hint" id="smSum"></div></div>
+      <div><b style="color:var(--img)">Sigmoid（多標籤）</b><div id="sgBars"></div><div class="hint" id="sgSum"></div></div>
+    </div>
+  </div>
+
+  <h3>輸出層配對：情境 → 激活</h3>
+  <div class="panel">
+    <p class="hint">判準是「輸出總和是否為 1」，不是「類別有幾個」。先點情境，再點輸出層設計。</p>
+    <div class="match" id="outMatch"></div>
+    <div class="feedback" id="outFb" aria-live="polite"></div>
+  </div>
+
+  <h3>激活函數之外的「非線性來源」辨識（115-1 第 18 題）</h3>
+  <div class="panel">
+    <p class="hint">CNN 加入池化層（Max Pooling），主要解決什麼問題？</p>
+    <div class="strat" id="poolStrat"></div>
+    <div style="margin-top:18px">
+      <div class="verdict" id="poolV">選一個答案</div>
+      <div class="meter" style="height:18px;margin:10px 0"><i id="poolM" style="width:0"></i></div>
+      <div id="poolWhy" class="hint"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 47.3 -->
+<section id="s3">
+  <div class="sec-head"><span class="sec-no">47.3</span><h2>深度學習模型架構</h2></div>
+  <h3>五種架構的問題空間</h3>
+  <div class="panel">
+    <div class="tabs" id="archTabs"></div>
+    <div class="stage">
+      <div class="stage-viz" id="archViz"></div>
+      <div id="archTxt"></div>
+    </div>
+  </div>
+  <div class="panel">
+    <h3 style="margin-top:0">配對遊戲：題幹情境 → 架構</h3>
+    <p class="hint">先點左邊情境，再點右邊架構。（114-2 第 7 題、115-1 第 19 題的辨識點）</p>
+    <div class="match" id="archMatch"></div>
+    <div class="feedback" id="archFb" aria-live="polite"></div>
+  </div>
+
+  <h3>卷積怎麼掃：區域感知＋參數共享</h3>
+  <div class="panel">
+    <p class="hint">同一個 3×3 卷積核（這裡是偵測「垂直邊緣」的示意核）一格一格掃過整張 6×6 影像。每個輸出只看一小塊（區域感知），整張圖共用同一組 9 個權重（參數共享）。</p>
+    <div class="fusion-meta" style="margin-top:0;align-items:start">
+      <div><b>輸入影像 6×6</b><div id="convIn" class="mat" style="grid-template-columns:repeat(6,1fr);max-width:270px;margin-top:6px"></div></div>
+      <div><b>輸出特徵圖 4×4</b><div id="convOut" class="mat" style="grid-template-columns:repeat(4,1fr);max-width:190px;margin-top:6px"></div><div class="pout" id="convCalc" style="margin-top:10px;min-height:0"></div></div>
+    </div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" id="convStep">卷積核移動一格</button><button class="btn" id="convAll">一次掃完</button><button class="btn" id="convReset">重設</button></div>
+  </div>
+  <div class="callout exam"><b>114-2 第 6 題：</b>CNN 比全連接網路有效率的原因是<b>區域感知（Local Receptive Field）＋參數共享（Parameter Sharing）</b>。誘答「自動具備旋轉與比例不變性」—— CNN 對小幅平移較穩健，但<b>旋轉與尺度不變性並非天生具備</b>，仍需資料增強。<br><b>114-2 第 5 題：</b>第一層卷積層負責<b>自動提取局部特徵</b>（邊緣、紋理、角點）；降維是池化層、輸出分類是全連接層。</div>
+
+  <h3>CNN 的四種層各司其職</h3>
+  <div class="panel">
+    <div class="pipe" id="cnnPipe"></div>
+    <div class="pout" id="cnnOut" aria-live="polite"></div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" id="cnnNext">下一步</button><button class="btn" id="cnnReset">從頭開始</button></div>
+  </div>
+
+  <h3>深層網路的梯度傳遞：為什麼需要 ResNet</h3>
+  <div class="panel">
+    <p class="hint">反向傳播時，梯度每往前傳一層就乘上該層的導數。長條顯示梯度傳回各層時還剩多少（示意：Sigmoid 取其導數最大值 0.25 的理想情況，ReLU 取作用區導數 1）。</p>
+    <div class="row" style="justify-content:space-between">
+      <div class="tabs" id="gvAct" style="margin:0"><button class="btn" data-a="sig" aria-pressed="true">激活：Sigmoid</button><button class="btn" data-a="relu" aria-pressed="false">激活：ReLU</button></div>
+      <button class="btn" id="gvRes" aria-pressed="false">加上殘差連接</button>
+    </div>
+    <label class="slider">網路層數<input type="range" id="gvN" min="3" max="20" step="1" value="10"><b id="gvNV"></b></label>
+    <svg id="gvSvg" viewBox="0 0 640 200" role="img" aria-label="各層梯度大小"></svg>
+    <p class="hint" id="gvNote" style="margin:6px 0 0"></p>
+  </div>
+  <div class="callout exam"><b>115-1 第 17 題：</b>3 層升到 16 層後<b>訓練損失反而更高</b> → 最佳化失敗（梯度消失），對策是 <b>ResNet 殘差連接</b>；把 ReLU 改 Sigmoid 反而惡化。<br><b>115-1 第 49 題：</b>「超過 50 層又怕梯度消失」→ <b>ResNet</b>。VGG 只是單純堆疊、沒有緩解梯度消失的機制；GoogLeNet 的 Inception 是提升參數效率而非治本。</div>
+
+  <h3>CNN 衍生架構時間軸</h3>
+  <div class="panel">
+    <div class="steps" id="cnnEvo"></div>
+    <div class="pout" id="cnnEvoTxt"></div>
+  </div>
+
+  <h3>RNN 家族的門控機制（點卡片翻面）</h3>
+  <div class="cards" id="rnnCards"></div>
+  <p class="prose" style="margin-top:14px">114-2 第 7 題：<b>「預測未來七天的電力需求趨勢」＝時間序列 → LSTM</b>。誘答分別對應 CNN（物件辨識）、聚類（自動分群）、自編碼器（高維壓縮成低維）。</p>
+
+  <h3>RNN vs 自注意力：第 1 個字怎麼影響第 20 個字？</h3>
+  <div class="panel">
+    <p class="hint">情境（115-1 第 19 題）：合約首頁定義了「甲方」，第 20 頁責任條款又提到甲方。點下方任一個 token，看資訊怎麼流到它（權重為示意）。</p>
+    <div class="row" style="justify-content:space-between">
+      <div class="tabs" id="attMode" style="margin:0"><button class="btn" data-m="rnn" aria-pressed="true">RNN／LSTM：逐步傳遞</button><button class="btn" data-m="att" aria-pressed="false">Self-Attention：直接關聯</button></div>
+    </div>
+    <svg id="attSvg" viewBox="0 0 480 230" style="margin-top:10px;max-width:640px" role="img" aria-label="注意力示意"></svg>
+    <div class="pout" id="attOut"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>組件</th><th>功能</th><th>常考重點</th></tr>
+      <tr><td><b>自注意力 Self-Attention</b></td><td>每個 token 對序列所有其他 token 算相關性權重</td><td>Q（我在找什麼）／K（我能提供什麼）／V（被關注時提供什麼）；<b>任意兩位置直接建立關聯，不受距離限制</b></td></tr>
+      <tr><td><b>多頭注意力 Multi-Head</b></td><td>拆成 h 個頭在不同<b>表示子空間</b>並行計算</td><td>目的是<b>同時捕捉多樣化關聯</b>，<b>不是</b>為了減少參數或加速</td></tr>
+      <tr><td><b>位置編碼 Positional Encoding</b></td><td>用正弦餘弦把位置資訊加進詞嵌入</td><td>因為拋棄了循環結構，模型本身無法感知順序</td></tr>
+      <tr><td><b>殘差連接 + LayerNorm</b></td><td>緩解梯度消失、穩定訓練</td><td><b>LayerNorm 不依賴批次大小</b>，故比 BatchNorm 更適合序列模型</td></tr>
+      <tr><td>前饋網路 FFN</td><td>兩層線性 + ReLU，逐位置獨立套用</td><td>—</td></tr>
+    </table>
+  </div>
+  <div class="callout">115-1 第 19 題的誘答「內建位置編碼使模型天生理解章節結構」是張冠李戴 —— <b>位置編碼只提供順序資訊</b>。正解是 Self-Attention 讓任意 token 直接建立關聯<b>且可平行運算</b>。</div>
+
+  <h3>編碼器 vs 解碼器：能不能偷看未來？</h3>
+  <div class="panel">
+    <p class="hint">注意力矩陣的每一列是「這個 token 能看到哪些 token」。切換看看。</p>
+    <div class="tabs" id="edTabs"></div>
+    <div class="stage">
+      <div class="stage-viz"><div id="edMat" class="mat" style="grid-template-columns:44px repeat(5,1fr);width:100%;max-width:300px"></div></div>
+      <div id="edTxt"></div>
+    </div>
+  </div>
+
+  <h3>生成式模型</h3>
+  <div class="compare">
+    <div><div class="big">自編碼器 Autoencoder</div>編碼器 → 瓶頸層 → 解碼器；最小化<b>重構誤差</b>。<br><span class="hint">用途：降維、特徵學習、<b>去噪</b>、<b>異常偵測</b>（重構誤差大＝異常）。它是「重構」，不是生成全新樣本。</span></div>
+    <div><div class="big">GAN</div>生成器 + 判別器，零和博弈，對抗至納許均衡。<br><span class="hint">用途：逼真影像生成、資料增強、風格遷移、超解析度。三大缺點：<b>訓練不穩定（模式崩潰 Mode Collapse）</b>、<b>超參數敏感</b>、<b>缺乏客觀量化指標</b>（只能靠 IS／FID 或人工判斷）。</span></div>
+  </div>
+</section>
+
+<!-- 47.4 -->
+<section id="s4">
+  <div class="sec-head"><span class="sec-no">47.4</span><h2>模型摘要表判讀（附圖題主戰場）</h2></div>
+  <p class="lead">L23 官方公告試題 100 題中有 <b>23 題附圖</b>，影像多為程式碼截圖或 <code>summary()</code> 輸出表。下面兩條公式必須背到能心算。</p>
+
+  <h3>參數量計算器</h3>
+  <div class="panel">
+    <div class="tabs" id="pTabs"><button class="btn" data-t="lin" aria-pressed="true">Linear／Dense</button><button class="btn" data-t="conv" aria-pressed="false">Conv2d</button><button class="btn" data-t="zero" aria-pressed="false">ReLU／Pool／Flatten／Dropout</button></div>
+    <div id="pLin">
+      <label class="slider">輸入維度<input type="range" id="pIn" min="1" max="1024" step="1" value="784"><b id="pInV"></b></label>
+      <label class="slider">神經元數<input type="range" id="pU" min="1" max="512" step="1" value="64"><b id="pUV"></b></label>
+    </div>
+    <div id="pConv" style="display:none">
+      <label class="slider">卷積核大小 k×k<input type="range" id="pK" min="1" max="7" step="2" value="3"><b id="pKV"></b></label>
+      <label class="slider">輸入通道數<input type="range" id="pCi" min="1" max="512" step="1" value="3"><b id="pCiV"></b></label>
+      <label class="slider">輸出通道數<input type="range" id="pCo" min="1" max="512" step="1" value="32"><b id="pCoV"></b></label>
+    </div>
+    <div class="pout" id="pOut" style="margin-top:10px"></div>
+  </div>
+
+  <h3>Keras 摘要表填空（114-2 第 49 題型）</h3>
+  <div class="panel">
+    <p class="hint">用 <code>Param = in × units + units</code> 逐格驗算。點空格下方的選項作答。</p>
+    <div class="tbl-wrap"><table id="kTbl"></table></div>
+    <div class="feedback" id="kFb" aria-live="polite"></div>
+  </div>
+  <div class="callout">反推：若某層 Output 為 (None, 10)、Param 為 110 → 110 = in × 10 + 10 → in = 10，代表前一層輸出也是 10 維。<b>空格互換就是最主要的誘答</b>，務必逐格驗算不要憑印象。</div>
+
+  <h3>VGG16：參數在哪？運算在哪？（114-2 第 42~45 題組）</h3>
+  <div class="panel">
+    <div class="tabs" id="vggTabs"><button class="btn" data-m="p" aria-pressed="true">看參數量</button><button class="btn" data-m="f" aria-pressed="false">看運算量 FLOPs</button></div>
+    <div id="vggBars"></div>
+    <div class="pout" id="vggOut"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>層別</th><th>參數量</th><th>佔比</th><th>說明</th></tr>
+      <tr><td>13 層卷積層合計</td><td>約 <b>1,470 萬</b></td><td>~11%</td><td>層數最多，但權重共享使參數少</td></tr>
+      <tr><td><b>Linear-33（第一個全連接層）</b></td><td><b>102,764,544</b></td><td><b>~74%</b></td><td>25088 × 4096 + 4096</td></tr>
+      <tr><td>3 層全連接層合計</td><td>約 <b>1.23 億</b></td><td>~89%</td><td>參數量的絕大部分</td></tr>
+      <tr><td>ReLU / MaxPool / AdaptiveAvgPool</td><td><b>0</b></td><td>0%</td><td>無可訓練參數</td></tr>
+      <tr><td><b>Total params</b></td><td><b>138,357,544（約 138.36M）</b></td><td>100%</td><td>VGG16 = 13 conv + 3 FC</td></tr>
+    </table>
+  </div>
+
+  <h3>這個題組的另外兩個坑</h3>
+  <div class="panel">
+    <div class="tabs" id="vggTrap"></div>
+    <div id="vggTrapBody"></div>
+  </div>
+</section>
+
+<!-- 47.5 -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-no">47.5</span><h2>深度學習框架與必備語法</h2></div>
+  <h3>三大框架定位</h3>
+  <div class="panel">
+    <div class="tabs" id="fwTabs"></div>
+    <div id="fwBody"></div>
+  </div>
+
+  <h3>必備語法一：Keras 輸出層／損失函數配對器</h3>
+  <div class="panel">
+    <p class="hint">選任務與標籤格式，看 Keras 該怎麼寫。</p>
+    <div class="tabs" id="kTask"></div>
+    <pre id="kCode"></pre>
+    <p class="hint" id="kNote" style="margin:0"></p>
+  </div>
+  <div class="callout exam"><code>categorical_crossentropy</code> 與 <code>sparse_categorical_crossentropy</code> 的差別<b>只在標籤格式</b>：前者吃 One-Hot，後者吃整數索引。115-1 第 40 題的誘答 (D) 就是把 <code>sparse_</code> 配上 One-Hot 標籤；正解 <b>(A) softmax ＋ (B) categorical_crossentropy</b>。</div>
+
+  <h3>必備語法二：PyTorch 輸出層（與 Keras 相反的坑）</h3>
+  <div class="compare">
+    <div><div class="big">Keras</div>輸出層<b>要</b>明確寫 <code>activation='softmax'</code>，再配 <code>categorical_crossentropy</code>。</div>
+    <div><div class="big">PyTorch</div><code>nn.CrossEntropyLoss()</code> 內部已串接 LogSoftmax + NLLLoss → 輸出層<b>不要</b>再加 softmax，直接輸出 logits，維度 = 類別數。</div>
+  </div>
+  <div class="tbl-wrap" style="margin-top:14px">
+    <table>
+      <tr><th>PyTorch 損失函數</th><th>內建的激活</th><th>輸出層該給什麼</th></tr>
+      <tr><td><code>nn.CrossEntropyLoss()</code></td><td><b>內含 LogSoftmax</b></td><td><b>原始 logits，維度 = 類別數，不加 softmax</b></td></tr>
+      <tr><td><code>nn.BCEWithLogitsLoss()</code></td><td><b>內含 Sigmoid</b></td><td>原始 logits</td></tr>
+      <tr><td><code>nn.BCELoss()</code></td><td>無</td><td>必須先自己過 <code>sigmoid</code></td></tr>
+      <tr><td><code>nn.MSELoss()</code></td><td>無</td><td>連續值</td></tr>
+    </table>
+  </div>
+
+  <h3>抓錯行挑戰：哪一行被改錯了？</h3>
+  <div class="panel">
+    <p class="hint">每一關都有一行被刻意改錯。點你認為錯的那一行。涵蓋 PyTorch 輸出層、遷移學習、Keras 損失與資料增強。</p>
+    <div class="qtop"><span id="bugTitle"></span><span id="bugScore"></span></div>
+    <div id="bugCode" class="opts" style="gap:4px"></div>
+    <div class="expl" id="bugExpl"></div>
+    <div class="row" style="margin-top:12px;justify-content:flex-end"><button class="btn primary" id="bugNext">下一關</button></div>
+  </div>
+
+  <h3>必備語法三：遷移學習的三個必考判斷</h3>
+  <div class="cards" id="tlCards"></div>
+  <pre><code># 寫法 A：VGG16，凍結 features（卷積部分），只訓練 classifier
+model = models.vgg16(pretrained=True)
+for param in model.features.parameters():   # ← 關鍵：凍結 features
+    param.requires_grad = False
+model.classifier[6] = nn.Linear(4096, num_classes)
+optimizer = torch.optim.Adam(model.classifier.parameters(), lr=1e-4)
+
+# 寫法 B：ResNet50，凍結全部主幹，換掉分類頭
+model = models.resnet50(pretrained=True)
+for p in model.parameters():
+    p.requires_grad = False
+model.fc = nn.Linear(2048, 2)               # 只有 fc 是新的、可訓練
+optimizer = torch.optim.Adam(model.fc.parameters(), lr=1e-4)</code></pre>
+
+  <h3>必備語法四：資料增強的語義陷阱（115-1 第 41 題）</h3>
+  <div class="panel">
+    <p class="hint">按下「套用 RandomHorizontalFlip」，看樣本被鏡像後，<b>標籤有沒有跟著改</b>。</p>
+    <div id="augGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:10px"></div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" id="augBtn" aria-pressed="false">套用 RandomHorizontalFlip</button></div>
+    <div class="pout" id="augOut" style="margin-top:10px"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>誘答</th><th>為何錯</th></tr>
+      <tr><td><code>RandomRotation(15)</code> 角度過大</td><td>旋轉 15 度不會讓字母互換身分，屬合理幅度</td></tr>
+      <tr><td><code>ColorJitter</code> 使邊緣特徵失真</td><td>只調亮度，不改變筆畫形狀語意</td></tr>
+      <tr><td><code>ToTensor()</code> 應放在幾何變換之前</td><td><b>相反</b>，幾何變換作用在 PIL 影像上，<code>ToTensor()</code> 放最後</td></tr>
+    </table>
+  </div>
+
+  <h3>必備語法五：梯度裁剪插在哪？（115-1 第 50 題）</h3>
+  <div class="panel">
+    <p class="hint">點一個「插入點」放 <code>clip_grad_norm_(model.parameters(), max_norm=1.0)</code>。</p>
+    <div id="clipCode"></div>
+    <div class="pout" id="clipOut" style="margin-top:10px">選一個插入點。</div>
+  </div>
+
+  <h3>必備語法六：Keras CNN 形狀追蹤（115-1 第 46、47 題）</h3>
+  <div class="panel">
+    <p class="hint">按「下一層」，看張量形狀與參數怎麼變；形狀依 Keras 規則推算，Param 依 47.4 公式計算（BatchNormalization 的參數此處略）。</p>
+    <div class="pipe" id="kcPipe"></div>
+    <div class="pout" id="kcOut" aria-live="polite"></div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" id="kcNext">下一層</button><button class="btn" id="kcReset">從頭開始</button></div>
+  </div>
+  <details open>
+    <summary>四個常被設成錯誤描述的點</summary>
+    <div class="body">
+      <p>• 除以 255.0 是把上界縮到 <b>1</b>，不是 31；且這是<b>縮放不是 z-score 標準化</b>（z-score 要減平均再除標準差）。</p>
+      <p>• 縮放到一致尺度有助泛化，也能<b>避免數值過大造成梯度爆炸、過小造成梯度消失</b>。</p>
+      <p>• <code>Conv2D(32, padding='same')</code> 輸入 (32,32,3) → 輸出 <b>(32, 32, 32)</b>：長寬因補零維持，<b>通道數變成濾波器數量 32</b>。</p>
+      <p style="margin:0">• <code>Dropout</code> 是把選中的神經元輸出<b>設為 0</b>，不是設為 1。</p>
+    </div>
+  </details>
+</section>
+
+<!-- 47.6 -->
+<section id="s6">
+  <div class="sec-head"><span class="sec-no">47.6</span><h2>官方考過什麼</h2></div>
+  <p class="lead">114-2 與 115-1 官方公告試題中，與本知識點直接相關的題目濃縮。用分類鈕切換。</p>
+  <div class="tabs" id="exTabs"></div>
+  <div id="examList"></div>
+</section>
+
+<!-- 47.7 -->
+<section id="s7">
+  <div class="sec-head"><span class="sec-no">47.7</span><h2>易錯與陷阱</h2></div>
+  <p class="lead">逐條確認自己真的懂了再打勾（打勾狀態會記在這台裝置上）。</p>
+  <div class="traps" id="traps"></div>
+  <p class="hint" id="trapCount" style="margin-top:10px"></p>
+
+  <h3>情境測驗</h3>
+  <div class="qcard" id="quiz"></div>
+
+  <h3>延伸練習</h3>
+  <p class="prose"><b>L23 主題庫 326 題：</b>優先刷「深度學習原理」與「框架實作」兩個標籤，本知識點的題量在 L23 各知識點中最多。<br>
+  <b>L23 歷屆 100 題：</b>重點回做 114-2 第 42~45、48~50 題組與 115-1 第 40~43、46~50 題組 —— 這兩批幾乎全是附圖程式碼題，是本知識點的實際考法。<br>
+  <b>L21 主題庫 311 題：</b>若對 CNN／Transformer 的應用情境判斷仍不穩，可補做 L21 中與模型選型相關的題目。<br>
+  <b>自我檢核：</b>闔上講義，默寫 (1) Keras 五種任務的輸出層／損失函數配對表、(2) Conv2d 與 Linear 的參數量公式、(3) PyTorch 訓練迴圈五個位置的順序與梯度裁剪插入點。三項都能默寫正確，本知識點才算過關。</p>
+</section>
+</main>
+
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce){const m=document.querySelector('#heroSvg .movers');if(m)m.remove();}
+const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function gauss(r){let u=0,v=0;while(!u)u=r();while(!v)v=r();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+function slider(id,fmt,cb){const el=$(id),out=$(id+'V')||null;const f=()=>{if(out)out.textContent=fmt?fmt(+el.value):el.value;cb(+el.value);};el.addEventListener('input',f);f();return el;}
+
+/* ---------- generic matcher ---------- */
+function matcher(root,fb,left,right,doneMsg){
+  let sel=null,done=0;
+  const L=document.createElement('div');L.className='col';
+  const R=document.createElement('div');R.className='col';
+  left.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;
+    b.innerHTML=it.html;if(it.c)b.style.setProperty('--c',it.c);
+    b.onclick=()=>{if(b.classList.contains('done'))return;L.querySelectorAll('.mitem').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;fb.textContent='';fb.className='feedback';};
+    L.appendChild(b);
+  });
+  right.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;b.innerHTML=it.html;
+    b.onclick=()=>{
+      if(b.classList.contains('done'))return;
+      if(!sel){fb.textContent='請先點左邊一個項目。';fb.className='feedback';return;}
+      if(sel.dataset.k===b.dataset.k){
+        const c=sel.style.getPropertyValue('--c');
+        [sel,b].forEach(x=>{x.classList.remove('sel');x.classList.add('done');if(c)x.style.setProperty('--c',c);});
+        fb.textContent='✓ '+(it.ok||'答對了！');fb.className='feedback ok';sel=null;done++;
+        if(done===left.length){fb.textContent='✓ 全部配對完成！'+doneMsg;}
+      }else{
+        b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');
+        fb.textContent='✗ '+(it.bad||'不太對，再想想看。');fb.className='feedback bad';
+      }
+    };
+    R.appendChild(b);
+  });
+  root.append(L,R);
+}
+
+/* ---------- simple tabs ---------- */
+function tabs(btnRoot,body,data,after){
+  function s(i){btnRoot.querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));body.innerHTML=data[i][1];if(after)after(i);}
+  data.forEach((x,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=x[0];b.onclick=()=>s(i);btnRoot.appendChild(b);});
+  s(0);
+}
+/* toggle group: buttons already in HTML with data attr */
+function group(sel,cb){const bs=document.querySelectorAll(sel);bs.forEach(b=>b.onclick=()=>{bs.forEach(x=>x.setAttribute('aria-pressed',x===b));cb(b);});}
+
+/* ---------- flip cards ---------- */
+function flipCards(root,list){
+  list.forEach(([n,o,d])=>{
+    const b=document.createElement('button');b.className='flip';b.setAttribute('aria-pressed','false');
+    b.innerHTML=`<div class="in"><div class="f"><strong>${n}</strong><span>${o}</span><span style="margin-top:auto;font-size:12.5px">點我翻面</span></div><div class="b">${d}</div></div>`;
+    b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');
+    root.appendChild(b);
+  });
+}
+
+/* ---------- strategy chooser: [label, verdict, pct, color, why] ---------- */
+function strategies(root,V,M,W,list,order){
+  (order||list.map((_,i)=>i)).forEach(i=>{const b=document.createElement('button');b.innerHTML=list[i][0];b.setAttribute('aria-pressed','false');b.onclick=()=>{root.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));const x=list[i];V.textContent=x[1];V.style.color=x[3];M.style.width=x[2]+'%';M.style.background=x[3];W.innerHTML=x[4];};root.appendChild(b);});
+}
+
+/* ---------- pipeline ---------- */
+function pipeline(pipeEl,outEl,nextBtn,resetBtn,nodes,out){
+  let i=0;const last=nodes.length-1;
+  pipeEl.style.gridTemplateColumns=`repeat(${nodes.length},minmax(90px,1fr))`;
+  pipeEl.innerHTML=nodes.map(([a,b])=>`<div class="pnode"><b>${a}</b>${b}</div>`).join('');
+  function r(){pipeEl.querySelectorAll('.pnode').forEach((n,j)=>{n.classList.toggle('on',j===i);n.classList.toggle('past',j<i);});outEl.innerHTML=out[i];nextBtn.disabled=i===last;nextBtn.style.opacity=i===last?.4:1;}
+  nextBtn.onclick=()=>{if(i<last){i++;r();}};
+  resetBtn.onclick=()=>{i=0;r();};
+  r();
+}
+
+/* ---------- exam list ---------- */
+function examList(root,list){
+  list.forEach(([n,k,q,a])=>{root.insertAdjacentHTML('beforeend',`<details><summary><span class="tag">${n}</span>${k}</summary><div class="body"><p style="margin:0 0 6px"><span class="hint">怎麼問：</span>${q}</p><p style="margin:0"><span class="hint">正解思路：</span>${a}</p></div></details>`);});
+}
+
+/* ---------- traps ---------- */
+function traps(root,countEl,key,T){
+  let saved=[];try{saved=JSON.parse(localStorage.getItem(key)||'[]')||[];}catch(e){saved=[];}
+  T.forEach(([a,b],i)=>{
+    const l=document.createElement('label');const c=saved.includes(i);if(c)l.classList.add('chk');
+    l.innerHTML=`<input type="checkbox" ${c?'checked':''}><div><em>${a}</em><br><span>${b}</span></div>`;
+    l.querySelector('input').onchange=e=>{const on=e.target.checked;l.classList.toggle('chk',on);saved=on?[...new Set([...saved,i])]:saved.filter(x=>x!==i);try{localStorage.setItem(key,JSON.stringify(saved));}catch(err){}count();};
+    root.appendChild(l);
+  });
+  function count(){countEl.textContent=`已確認 ${saved.length}／${T.length} 條`;}
+  count();
+}
+
+/* ---------- quiz ---------- */
+function quiz(box,Q,msgs){
+  let i=0,score=0;
+  function show(){
+    if(i>=Q.length){
+      const msg=score>=Q.length-1?msgs[0]:score>=Math.ceil(Q.length*.65)?msgs[1]:msgs[2];
+      box.innerHTML=`<div class="progress"><i style="width:100%"></i></div><div class="qtext" style="font-size:24px;font-family:var(--serif)">得分 ${score}／${Q.length}</div><p>${msg}</p><button class="btn primary" id="qr">重新測驗</button>`;
+      $('#qr').onclick=()=>{i=0;score=0;show();};return;
+    }
+    const [q,opts,ex]=Q[i];
+    const order=shuffle(opts.map((o,k)=>({o,k})));
+    box.innerHTML=`<div class="progress"><i style="width:${i/Q.length*100}%"></i></div><div class="qtop"><span>第 ${i+1}／${Q.length} 題</span><span>得分 ${score}</span></div><div class="qtext">${q}</div><div class="opts">${order.map(x=>`<button class="opt" data-k="${x.k}">${x.o}</button>`).join('')}</div><div class="expl" id="qe"></div><div class="row" style="margin-top:14px;justify-content:flex-end"><button class="btn primary" id="qn" style="display:none">${i===Q.length-1?'看結果':'下一題'}</button></div>`;
+    box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.k==='0';if(ok)score++;
+      box.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.k==='0')x.classList.add('right');});
+      if(!ok)b.classList.add('wrongpick');
+      const e=$('#qe');e.innerHTML=(ok?'<b style="color:var(--ok)">答對了。</b>':'<b style="color:var(--bad)">這題要小心。</b>')+ex;e.classList.add('show');
+      $('#qn').style.display='';$('#qn').focus();
+    });
+    $('#qn').onclick=()=>{i++;show();};
+  }
+  show();
+}
+
+/* ---------- nav highlight ---------- */
+function navHighlight(){
+  const links=[...document.querySelectorAll('nav.toc a')];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on&&window.innerWidth<=860)a.scrollIntoView({inline:'center',block:'nearest'});});}});},{rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('main section').forEach(s=>io.observe(s));
+}
+
+const PAL=['var(--txt)','var(--img)','var(--aud)','var(--sen)','var(--ok)','var(--warn)'];
+const fmtN=n=>n.toLocaleString('en-US');
+
+/* ---------- hero network ---------- */
+(function(){
+  const cols=[[110,3,'var(--txt)'],[300,4,'var(--img)'],[490,4,'var(--aud)'],[640,2,'var(--sen)']];
+  const ys=(n)=>Array.from({length:n},(_,i)=>150+(i-(n-1)/2)*58);
+  let h='<g stroke="var(--ink)" stroke-width="1.2" opacity=".18">';
+  for(let c=0;c<3;c++){const [x1,n1]=cols[c],[x2,n2]=cols[c+1];ys(n1).forEach(a=>ys(n2).forEach(b=>h+=`<line x1="${x1}" y1="${a}" x2="${x2}" y2="${b}"/>`));}
+  h+='</g>';
+  cols.forEach(([x,n,c])=>ys(n).forEach(y=>h+=`<circle cx="${x}" cy="${y}" r="17" fill="${c}"/>`));
+  $('#heroNet').innerHTML=h;
+  if(!reduce){
+    const p=[[0,0,1,1,2,0,3,0],[0,2,1,3,2,2,3,1],[0,1,1,0,2,3,3,1]];
+    let m='';
+    p.forEach((q,k)=>{const pts=[];for(let i=0;i<8;i+=2){pts.push([cols[q[i]][0],ys(cols[q[i]][1])[q[i+1]]]);}
+      const d='M'+pts.map(a=>a.join(' ')).join(' L ');
+      m+=`<circle r="6" fill="var(--ink)"><animateMotion dur="2.4s" begin="${k*.5}s" repeatCount="indefinite" path="${d}"/></circle>`;
+      if(k===0){const rd='M'+pts.slice().reverse().map(a=>a.join(' ')).join(' L ');m+=`<circle r="6" fill="var(--warn)"><animateMotion dur="2.4s" begin="1.4s" repeatCount="indefinite" path="${rd}"/></circle>`;}
+    });
+    $('#heroMovers').innerHTML=m;
+  }
+})();
+
+/* ---------- 47.1 neuron lab ---------- */
+(function(){
+  let task='and',act='step';
+  const T={and:[0,0,0,1],xor:[0,1,1,0]},IN=[[0,0],[0,1],[1,0],[1,1]];
+  const A={step:z=>z>=0?1:0,sig:z=>1/(1+Math.exp(-z)),relu:z=>Math.max(0,z)};
+  const W=300,H=200,X=x=>60+(x+.25)/1.5*180,Y=y=>180-(y+.25)/1.5*160;
+  function draw(){
+    const w1=+$('#nw1').value,w2=+$('#nw2').value,b=+$('#nb').value;
+    const th=act==='relu'?.5:0; // boundary where output = 0.5 (relu) or z=0
+    let h=`<rect x="${X(-.25)}" y="${Y(1.25)}" width="${X(1.25)-X(-.25)}" height="${Y(-.25)-Y(1.25)}" fill="none" stroke="var(--line)"/>`;
+    h+=`<text x="${X(1.25)}" y="${Y(-.25)+16}" text-anchor="end" font-size="11" fill="var(--muted)">x₁</text><text x="${X(-.25)-6}" y="${Y(1.25)+10}" text-anchor="end" font-size="11" fill="var(--muted)">x₂</text>`;
+    // line w1 x + w2 y + b = th, clip to box
+    const pts=[];const lo=-.25,hi=1.25;
+    if(Math.abs(w2)>1e-9){[lo,hi].forEach(x=>{const y=(th-b-w1*x)/w2;if(y>=lo&&y<=hi)pts.push([x,y]);});}
+    if(Math.abs(w1)>1e-9){[lo,hi].forEach(y=>{const x=(th-b-w2*y)/w1;if(x>=lo&&x<=hi)pts.push([x,y]);});}
+    if(pts.length>=2)h+=`<line x1="${X(pts[0][0])}" y1="${Y(pts[0][1])}" x2="${X(pts[1][0])}" y2="${Y(pts[1][1])}" stroke="var(--txt)" stroke-width="3"/>`;
+    let ok=0,rows='';
+    IN.forEach(([a,c],i)=>{const z=w1*a+w2*c+b,o=A[act](z),p=o>=.5?1:0,t=T[task][i],good=p===t;if(good)ok++;
+      h+=`<circle cx="${X(a)}" cy="${Y(c)}" r="11" fill="${t?'var(--img)':'var(--surface)'}" stroke="${good?'var(--ok)':'var(--bad)'}" stroke-width="3.5"/><text x="${X(a)}" y="${Y(c)+4}" text-anchor="middle" font-size="11" font-weight="700" fill="${t?'#fff':'var(--ink)'}">${t}</text>`;
+      rows+=`<tr><td>${a}</td><td>${c}</td><td>${z.toFixed(2)}</td><td>${o.toFixed(2)}</td><td>${t}</td><td style="color:${good?'var(--ok)':'var(--bad)'};font-weight:700">${good?'✓':'✗'}</td></tr>`;});
+    $('#nSvg').innerHTML=h;
+    $('#nTbl').innerHTML=`<table style="min-width:0"><tr><th>x₁</th><th>x₂</th><th>Z</th><th>A(Z)</th><th>目標</th><th></th></tr>${rows}</table>`;
+    $('#nNote').innerHTML=`答對 <b>${ok}／4</b>。`+(task==='xor'?(ok===4?'':'XOR 的 1 在對角線兩端 —— <b>不論怎麼調，一條直線最多只能對 3 個</b>。這就是單一感知器只能處理線性可分問題的反例；要多層網路＋非線性激活才解得開。'):(ok===4?'AND 是線性可分的：一條直線就能把 (1,1) 和其他三點分開。':'提示：試試 w₁=1、w₂=1、b=−1.5。'));
+  }
+  group('#nTask .btn',b=>{task=b.dataset.t;draw();});
+  group('#nAct .btn',b=>{act=b.dataset.a;draw();});
+  ['#nw1','#nw2','#nb'].forEach(s=>slider(s,v=>v.toFixed(1),draw));
+})();
+
+pipeline($('#pipe'),$('#pout'),$('#pipeNext'),$('#pipeReset'),
+  [['輸入','x'],['加權求和','Z'],['激活','A(Z)'],['損失','L'],['反向傳播','連鎖律'],['優化器','更新 w']],
+  ['<b>輸入</b> x = (1, 2)，目前參數 w = (0.6, 0.2)、b = 0.1，真實標籤 y = 1（示意數字）<div class="hint">前向傳播方向：輸入層 → 輸出層。</div>',
+   '<b>加權求和：</b>Z = 0.6×1 + 0.2×2 + 0.1 = <b>1.1</b><div class="hint">線性部分。</div>',
+   '<b>激活：</b>ŷ = Sigmoid(1.1) ≈ <b>0.750</b><div class="hint">非線性部分；二元分類輸出層用 Sigmoid。前向傳播到此完成「做預測」。</div>',
+   '<b>計算損失（Binary Cross-Entropy）：</b>L = −log(0.750) ≈ <b>0.288</b>',
+   '<b>反向傳播：</b>用連鎖律由輸出層往回算偏導數：∂L/∂Z = ŷ − y = −0.25 → ∂L/∂w₁ = −0.25、∂L/∂w₂ = −0.50、∂L/∂b = −0.25<div class="hint">反向傳播<b>只負責算梯度</b>，參數到這裡還沒變。</div>',
+   '<b>優化器更新</b>（α = 0.1）：w₁ = 0.6 − 0.1×(−0.25) = <b>0.625</b>、w₂ = <b>0.25</b>、b = <b>0.125</b><div class="hint">真正修改參數的是<b>優化器</b>：W_new = W_old − α × ∂L/∂W。</div>']);
+
+/* ---------- 47.1 loss sensitivity ---------- */
+(function(){
+  const base=[.5,-.3,.4,-.2];
+  const F={MSE:e=>e*e,MAE:e=>Math.abs(e),Huber:e=>Math.abs(e)<=1?.5*e*e:Math.abs(e)-.5};
+  $('#lossBars').innerHTML=Object.keys(F).map(k=>`<div class="bar" id="lb${k}"><span>${k}</span><div class="track"><div class="fill"></div></div><span class="num">—</span></div>`).join('');
+  slider('#lossR',v=>v.toFixed(1),e=>{
+    Object.entries(F).forEach(([k,f])=>{const o=f(e),s=base.reduce((a,x)=>a+f(x),0)+o,sh=o/s*100;const el=$('#lb'+k);el.querySelector('.fill').style.width=sh+'%';el.querySelector('.fill').style.background=k==='MSE'?'var(--bad)':k==='MAE'?'var(--ok)':'var(--warn)';el.querySelector('.num').textContent=sh.toFixed(0)+'%';});
+    $('#lossNote').innerHTML=`長條＝極端值佔總損失的比例（Huber 的 δ 取 1，示意）。誤差 ${e.toFixed(1)} 時，MSE 中它被平方成 ${(e*e).toFixed(1)}，<b>主導整個損失與梯度</b>；MAE 只算 ${e.toFixed(1)}，影響被壓低。`;
+  });
+})();
+
+/* ---------- 47.1 learning rate ---------- */
+(function(){
+  const W=640,H=260,X=w=>320+w/2.3*290,Y=l=>240-l/5.3*220;
+  let alpha=.1,tm=[];
+  const path=()=>{let w=-1.8;const p=[w];for(let i=0;i<10;i++){w=w-alpha*2*w;p.push(w);}return p;};
+  function draw(n){
+    const p=path();let h='';const c=[];for(let i=0;i<=100;i++){const w=-2.3+i*4.6/100;c.push(`${X(w).toFixed(1)},${Y(w*w).toFixed(1)}`);}
+    h+=`<polyline fill="none" stroke="var(--line)" stroke-width="3" points="${c.join(' ')}"/><text x="${X(0)}" y="256" text-anchor="middle" font-size="12" fill="var(--muted)">最低點</text>`;
+    const vis=p.slice(0,n+1).map(w=>Math.max(-2.3,Math.min(2.3,w)));
+    for(let i=1;i<vis.length;i++)h+=`<line x1="${X(vis[i-1])}" y1="${Y(vis[i-1]**2)}" x2="${X(vis[i])}" y2="${Y(vis[i]**2)}" stroke="var(--txt)" stroke-width="2" opacity=".7"/>`;
+    vis.forEach((w,i)=>h+=`<circle cx="${X(w)}" cy="${Y(w*w)}" r="${i===vis.length-1?7:4.5}" fill="${i===0?'var(--muted)':'var(--txt)'}"/>`);
+    $('#lrSvg').innerHTML=h;
+    const last=Math.abs(p[10]);
+    let v,col;
+    if(alpha>=1){v=alpha>1?'損失發散（Divergence）：越跳越遠':'在兩側來回跳、永遠到不了最低點';col='var(--bad)';}
+    else if(alpha>.5){v='在最低點兩側來回跨越（震盪），收斂變慢';col='var(--warn)';}
+    else if(alpha<.06){v='步伐太小：收斂很慢，10 步後還離最低點很遠';col='var(--warn)';}
+    else{v='穩定往最低點前進';col='var(--ok)';}
+    $('#lrOut').innerHTML=`<div class="verdict" style="color:${col}">${v}</div>10 步後 |w| = ${last>99?'&gt; 99':last.toFixed(3)}<div class="hint">（臨界值 0.5、1 只適用於這條示意曲線）115-1 第 8 題：調高學習率後訓練損失<b>震盪或發散</b>；這與梯度消失無直接關係。</div>`;
+  }
+  slider('#lrR',v=>v.toFixed(2),v=>{alpha=v;tm.forEach(clearTimeout);draw(10);});
+  $('#lrGo').onclick=()=>{tm.forEach(clearTimeout);tm=[];if(reduce){draw(10);return;}for(let i=0;i<=10;i++)tm.push(setTimeout(()=>draw(i),i*140));};
+})();
+
+flipCards($('#optCards'),[
+  ['SGD','動量 ✗｜自適應 ✗','最陽春，所有參數共用同一個學習率。'],
+  ['SGD + Momentum','動量 ✓｜自適應 ✗','沿歷史梯度方向平滑前進，抑制震盪。'],
+  ['Adagrad','動量 ✗｜自適應 ✓','依歷史梯度平方累積縮放步長，後期學習率會過度衰減。'],
+  ['RMSProp','動量 ✗｜自適應 ✓','改用指數移動平均，修正 Adagrad 的衰減問題。'],
+  ['Adam','動量 ✓｜自適應 ✓','同時整合兩者，逐參數自動調步長，實務首選。注意：Adam <b>不內建梯度裁剪</b>。']
+]);
+
+strategies($('#batchStrat'),$('#batchV'),$('#batchM'),$('#batchWhy'),[
+  ['Full-batch GD<br><small>一次用全部資料</small>','✗ 大模型不可行',35,'var(--bad)','梯度穩定性：<b>最穩</b>　GPU 吞吐量：<b>每次更新極慢</b>'],
+  ['SGD（單樣本）<br><small>一次一筆</small>','✗ 不穩',30,'var(--bad)','梯度穩定性：<b>雜訊極大、曲線劇烈震盪</b>　GPU 吞吐量：快但<b>無法平行</b>'],
+  ['Mini-batch GD<br><small>如 256–2048</small>','✓ 業界標準解',95,'var(--ok)','梯度穩定性：<b>樣本平均抵銷雜訊</b>　GPU 吞吐量：<b>一次前向反向充分平行</b>。另：牛頓法在億級參數下不可行。']
+],[1,0,2]);
+
+matcher($('#symMatch'),$('#symFb'),[
+  {k:'o',c:'var(--txt)',html:'訓練損失低、驗證損失高且拉開'},
+  {k:'u',c:'var(--img)',html:'訓練與驗證<b>都</b>偏低（表現都差）'},
+  {k:'g',c:'var(--aud)',html:'加深後<b>訓練損失反而比淺層更高</b>'},
+  {k:'l',c:'var(--sen)',html:'調高學習率後訓練損失震盪'}
+],[
+  {k:'g',html:'最佳化失敗（梯度消失）<small>殘差連接、換激活函數、正規化</small>',ok:'不是過擬合 —— 過擬合的訓練損失是低的。'},
+  {k:'l',html:'學習率過大<small>調小 lr、梯度裁剪</small>',ok:'與梯度消失無關。'},
+  {k:'o',html:'過擬合<small>降複雜度、加資料、正則化</small>',ok:'115-1 第 48 題：訓練 0.81 vs 驗證 0.72 → 過擬合。'},
+  {k:'u',html:'欠擬合<small>加深加寬、換更強架構</small>',ok:'兩者同時偏低才是欠擬合。'}
+],'症狀判讀是考試的第一步。');
+
+/* ---------- 47.1 dropout ---------- */
+(function(){
+  const L=[[90,4],[250,6],[410,6],[560,2]],W=640;
+  const ys=n=>Array.from({length:n},(_,i)=>110+(i-(n-1)/2)*34);
+  let drop=null,stepN=0;
+  function draw(){
+    const off=(l,i)=>drop&&drop[l]&&drop[l][i];
+    let h='';
+    for(let c=0;c<3;c++){const [x1,n1]=L[c],[x2,n2]=L[c+1];ys(n1).forEach((a,i)=>ys(n2).forEach((b,j)=>{if(off(c,i))return;h+=`<line x1="${x1}" y1="${a}" x2="${x2}" y2="${b}" stroke="var(--ink)" stroke-width="1" opacity=".2"/>`;}));}
+    L.forEach(([x,n],l)=>ys(n).forEach((y,i)=>{const o=off(l,i);h+=`<circle cx="${x}" cy="${y}" r="13" fill="${o?'var(--surface2)':l===0?'var(--txt)':l===3?'var(--sen)':'var(--img)'}" stroke="${o?'var(--line)':'none'}" stroke-width="2" stroke-dasharray="${o?'3 3':''}"/>${o?`<text x="${x}" y="${y+5}" text-anchor="middle" font-size="13" font-weight="700" fill="var(--bad)">0</text>`:''}`;}));
+    $('#dropSvg').innerHTML=h;
+  }
+  $('#dropBtn').onclick=()=>{stepN++;drop=L.map(([,n],l)=>Array.from({length:n},()=>l===1||l===2?Math.random()<.5:false));drop.forEach(a=>{if(a.length===6&&a.every(Boolean))a[0]=false;});const k=drop.flat().filter(Boolean).length;$('#dropInfo').textContent=`第 ${stepN} 步：這次有 ${k} 個隱藏神經元輸出被設為 0（每步都不同）`;draw();};
+  $('#dropInf').onclick=()=>{drop=null;$('#dropInfo').textContent='推論時不丟棄：所有神經元都參與（Dropout 只在訓練時作用）。';draw();};
+  draw();$('#dropInfo').textContent='目前：完整網路';
+})();
+
+/* ---------- 47.2 activation explorer ---------- */
+(function(){
+  const F={
+    Sigmoid:[x=>1/(1+Math.exp(-x)),x=>{const s=1/(1+Math.exp(-x));return s*(1-s);},[-.2,1.1],'(0, 1)'],
+    Tanh:[x=>Math.tanh(x),x=>1-Math.tanh(x)**2,[-1.2,1.2],'(−1, 1)'],
+    ReLU:[x=>Math.max(0,x),x=>x>0?1:0,[-.5,6],'[0, ∞)']
+  };
+  let cur='Sigmoid',xv=2;
+  const W=640,H=250,P=30;
+  function draw(){
+    const [f,d,[lo,hi],rg]=F[cur];
+    const X=x=>P+(x+6)/12*(W-2*P),Y=y=>H-20-(y-lo)/(hi-lo)*(H-40);
+    const line=(g,dash,c)=>{const a=[];for(let i=0;i<=240;i++){const x=-6+i*12/240;a.push(`${X(x).toFixed(1)},${Y(g(x)).toFixed(1)}`);}return `<polyline fill="none" stroke="${c}" stroke-width="${dash?2:3}" ${dash?'stroke-dasharray="6 5"':''} points="${a.join(' ')}"/>`;};
+    let h='';
+    if(cur!=='ReLU')h+=`<rect x="${X(-6)}" y="10" width="${X(-4)-X(-6)}" height="${H-30}" fill="var(--bad)" opacity=".07"/><rect x="${X(4)}" y="10" width="${X(6)-X(4)}" height="${H-30}" fill="var(--bad)" opacity=".07"/><text x="${X(-5)}" y="26" text-anchor="middle" font-size="12" fill="var(--bad)">飽和區</text><text x="${X(5)}" y="26" text-anchor="middle" font-size="12" fill="var(--bad)">飽和區</text>`;
+    else h+=`<rect x="${X(-6)}" y="10" width="${X(0)-X(-6)}" height="${H-30}" fill="var(--warn)" opacity=".07"/><text x="${X(-3)}" y="26" text-anchor="middle" font-size="12" fill="var(--warn)">導數 = 0</text>`;
+    h+=`<line x1="${P}" y1="${Y(0)}" x2="${W-P}" y2="${Y(0)}" stroke="var(--line)"/><line x1="${X(0)}" y1="10" x2="${X(0)}" y2="${H-10}" stroke="var(--line)"/>`;
+    h+=line(d,true,'var(--warn)')+line(f,false,'var(--txt)');
+    h+=`<line x1="${X(xv)}" y1="10" x2="${X(xv)}" y2="${H-10}" stroke="var(--muted)" stroke-dasharray="3 3"/><circle cx="${X(xv)}" cy="${Y(f(xv))}" r="6" fill="var(--txt)"/><circle cx="${X(xv)}" cy="${Y(d(xv))}" r="5" fill="var(--warn)"/>`;
+    h+=`<text x="${W-P}" y="${H-4}" text-anchor="end" font-size="12" fill="var(--muted)">實線：函數　虛線：導數</text>`;
+    $('#actSvg').innerHTML=h;
+    const dv=d(xv);
+    let note='';
+    if(cur==='ReLU')note=xv>0?'正區間導數恆為 1，梯度不衰減 → 適合當<b>隱藏層預設值</b>。':'負區間輸出與導數都是 0。若神經元一直落在這裡，就會停止更新 —— <b>Dying ReLU</b>。';
+    else note=Math.abs(xv)>=4?`導數只剩 ${dv.toFixed(4)}：落在<b>飽和區</b>，梯度幾乎傳不回去 → 梯度消失。`:cur==='Sigmoid'?'Sigmoid 的導數最大也只有 0.25（x=0 時），而且輸出非零中心。常用在<b>二元分類輸出層</b>與 LSTM 門控。':'Tanh 輸出以 0 為中心，梯度優於 Sigmoid，但兩端仍會飽和。常用在 RNN 隱藏狀態。';
+    $('#actOut').innerHTML=`<div class="kv"><span>${cur}(${xv.toFixed(1)})</span><b>${f(xv).toFixed(4)}</b><span>導數</span><b style="color:var(--warn)">${dv.toFixed(4)}</b><span>輸出範圍</span><b>${rg}</b></div><p class="hint" style="margin:8px 0 0">${note}</p>`;
+  }
+  Object.keys(F).forEach(k=>{const b=document.createElement('button');b.className='btn';b.textContent=k;b.onclick=()=>{cur=k;$('#actTabs').querySelectorAll('.btn').forEach(x=>x.setAttribute('aria-pressed',x===b));draw();};$('#actTabs').appendChild(b);});
+  $('#actTabs').firstChild.setAttribute('aria-pressed','true');
+  slider('#actX',v=>v.toFixed(1),v=>{xv=v;draw();});
+})();
+
+tabs($('#mythTabs'),$('#mythBody'),[
+  ['誤區一：線性激活',`<p><b>沒有非線性激活＝疊幾層都沒用。</b>線性激活函數的組合仍是線性，無論堆多少卷積層，整個網路的表達能力等同單層線性模型。</p><p class="hint">示意：f(x)=2x、g(x)=3x+1 → g(f(x)) = 6x+1，還是一條直線。</p><p style="margin:0">114-2 第 27 題把「再加深卷積層」設為誘答 —— <b>只要激活仍是線性，加深毫無幫助，正解是改用 ReLU</b>。（Sigmoid 易梯度消失、灰階化無助表達能力，也都不對。）</p>`],
+  ['誤區二：Sigmoid 萬用',`<p><b>Sigmoid 不是萬用解。</b>雖有非線性，但在飽和區導數趨近 0，<b>深層網路用 Sigmoid 會讓梯度消失更嚴重</b>。</p><p style="margin:0">115-1 第 17 題把「ReLU 改 Sigmoid 改善梯度傳遞」設成誘答，方向完全相反。到 47.3 的「梯度傳遞」模擬器親眼看看。</p>`],
+  ['誤區三：Softmax vs Sigmoid',`<p><b>分界是「單標籤 vs 多標籤」</b>，不是類別有幾個。</p><div class="tbl-wrap"><table><tr><th>情境</th><th>輸出層神經元</th><th>激活</th><th>為什麼</th></tr><tr><td>二元分類</td><td>1</td><td><b>Sigmoid</b></td><td>一個機率就夠</td></tr><tr><td><b>多類別「單標籤」</b></td><td><b>類別數 C</b></td><td><b>Softmax</b></td><td>C 個輸出總和為 1，互斥</td></tr><tr><td>多標籤（一張圖可同時有貓和狗）</td><td>C</td><td><b>Sigmoid</b></td><td>每類獨立輸出 0~1，<b>總和不為 1</b></td></tr><tr><td>迴歸</td><td>1 或 k</td><td><b>不加</b>（線性）</td><td>輸出是連續數值，不是機率</td></tr></table></div>`]
+]);
+
+/* ---------- softmax vs sigmoid ---------- */
+(function(){
+  const names=['貓','狗','鳥'];
+  const mk=id=>$(id).innerHTML=names.map((n,i)=>`<div class="bar"><span>${n}</span><div class="track"><div class="fill"></div></div><span class="num">—</span></div>`).join('');
+  mk('#smBars');mk('#sgBars');
+  function upd(){
+    const z=[+$('#z1').value,+$('#z2').value,+$('#z3').value];
+    const mx=Math.max(...z),e=z.map(v=>Math.exp(v-mx)),s=e.reduce((a,b)=>a+b,0),sm=e.map(v=>v/s),sg=z.map(v=>1/(1+Math.exp(-v)));
+    const put=(id,arr,c)=>$(id).querySelectorAll('.bar').forEach((b,i)=>{b.querySelector('.fill').style.width=(arr[i]*100)+'%';b.querySelector('.fill').style.background=c;b.querySelector('.num').textContent=arr[i].toFixed(2);});
+    put('#smBars',sm,'var(--sen)');put('#sgBars',sg,'var(--img)');
+    const t=sg.reduce((a,b)=>a+b,0);
+    $('#smSum').innerHTML=`總和 = <b>1.00</b>：互斥，只能選一個`;
+    $('#sgSum').innerHTML=`總和 = <b>${t.toFixed(2)}</b>：各類獨立判斷，可同時為「是」`;
+  }
+  ['#z1','#z2','#z3'].forEach(s=>slider(s,v=>v.toFixed(1),upd));
+})();
+
+matcher($('#outMatch'),$('#outFb'),[
+  {k:'b',c:'var(--txt)',html:'二元分類<small>例：是否流失</small>'},
+  {k:'m',c:'var(--sen)',html:'多類別單標籤<small>例：手寫數字 0~9</small>'},
+  {k:'l',c:'var(--img)',html:'多標籤<small>例：一張圖可同時有貓和狗</small>'},
+  {k:'r',c:'var(--aud)',html:'迴歸<small>例：預測時長</small>'}
+],[
+  {k:'l',html:'C 個神經元 + Sigmoid<small>每類獨立 0~1，總和不為 1</small>',ok:'多標籤用 Sigmoid，不是 Softmax。'},
+  {k:'r',html:'1 或 k 個神經元，不加激活<small>線性輸出</small>',ok:'輸出是連續數值，不是機率。'},
+  {k:'b',html:'1 個神經元 + Sigmoid<small>一個機率就夠</small>',ok:'二元分類一個機率即可。'},
+  {k:'m',html:'C 個神經元 + Softmax<small>C 個輸出總和為 1</small>',ok:'互斥類別，總和為 1。'}
+],'判準是「總和是否為 1」。');
+
+strategies($('#poolStrat'),$('#poolV'),$('#poolM'),$('#poolWhy'),[
+  ['降低特徵圖空間維度、減少參數與計算量','✓ 正解',100,'var(--ok)','池化層雖然不是線性運算，但它的<b>設計目的是降維</b>，不是提供非線性。'],
+  ['提供非線性表達能力','✗ 誘答',15,'var(--bad)','非線性表達能力來自 <b>ReLU</b> 等激活函數。'],
+  ['緩解梯度消失','✗ 誘答',15,'var(--bad)','緩解梯度消失靠的是 <b>BatchNorm 與殘差連接</b>。']
+],[1,0,2]);
+
+/* ---------- 47.3 architecture tabs ---------- */
+(function(){
+  const sv=(inner)=>`<svg viewBox="0 0 260 130" style="width:100%;max-width:300px">${inner}</svg>`;
+  const mlp=()=>{let h='';const a=[25,55,85,105].slice(0,3),b=[20,50,80,110];a.forEach(y=>b.forEach(y2=>h+=`<line x1="60" y1="${y+10}" x2="190" y2="${y2}" stroke="var(--ink)" opacity=".25"/>`));a.forEach(y=>h+=`<circle cx="60" cy="${y+10}" r="10" fill="var(--txt)"/>`);b.forEach(y=>h+=`<circle cx="190" cy="${y}" r="10" fill="var(--txt)"/>`);return sv(h+'<text x="125" y="128" text-anchor="middle" font-size="11" fill="var(--muted)">全連接：每個都連每個</text>');};
+  const cnn=()=>{let h='';for(let i=0;i<5;i++)for(let j=0;j<5;j++)h+=`<rect x="${60+j*22}" y="${5+i*22}" width="20" height="20" rx="3" fill="var(--img)" opacity="${.2+((i*3+j*5)%7)/10}"/>`;h+=`<rect x="${60+22}" y="${5+22}" width="64" height="64" rx="4" fill="none" stroke="var(--ink)" stroke-width="3"/>`;return sv(h+'<text x="200" y="64" font-size="11" fill="var(--muted)">卷積核</text><text x="200" y="80" font-size="11" fill="var(--muted)">只看局部</text>');};
+  const chain=(lab,c,g)=>{let h='';for(let i=0;i<4;i++){const x=15+i*62;h+=`<rect x="${x}" y="45" width="44" height="40" rx="8" fill="${c}"/><text x="${x+22}" y="70" text-anchor="middle" font-size="12" fill="#fff" font-weight="700">${lab}</text><text x="${x+22}" y="105" text-anchor="middle" font-size="11" fill="var(--muted)">t${i+1}</text>`;if(i<3)h+=`<path d="M${x+44} 65 L${x+62} 65" stroke="var(--ink)" stroke-width="2" marker-end="url(#ar)"/>`;if(g)h+=`<text x="${x+22}" y="38" text-anchor="middle" font-size="10" fill="var(--muted)">門控</text>`;}return sv('<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--ink)"/></marker></defs>'+h+(g?'<line x1="15" y1="18" x2="245" y2="18" stroke="var(--aud)" stroke-width="3"/><text x="130" y="12" text-anchor="middle" font-size="10" fill="var(--aud)">細胞狀態</text>':''));};
+  const tr=()=>{let h='';const xs=[30,80,130,180,230];xs.forEach((a,i)=>xs.forEach((b,j)=>{if(j>i)h+=`<path d="M${a} 80 Q ${(a+b)/2} ${80-(b-a)*.45} ${b} 80" fill="none" stroke="var(--sen)" stroke-width="1.6" opacity=".55"/>`;}));xs.forEach(x=>h+=`<rect x="${x-18}" y="80" width="36" height="28" rx="6" fill="var(--sen)"/>`);return sv(h+'<text x="130" y="126" text-anchor="middle" font-size="11" fill="var(--muted)">任意兩位置直接相連</text>');};
+  const D=[
+    ['MLP',mlp,'特徵彼此獨立','全連接 + 非線性','表格資料分類／迴歸','攤平後<b>丟失空間與順序資訊</b>；參數量爆炸'],
+    ['CNN',cnn,'局部空間相關','卷積 + 權重共享 + 池化','影像分類、瑕疵檢測、影像分割','需大量標註資料、算力需求高'],
+    ['RNN',()=>chain('h','var(--aud)',false),'時間順序依賴','循環連接 + 隱藏狀態','時間序列預測、語音','<b>梯度消失／爆炸</b>、序列計算<b>無法平行</b>'],
+    ['LSTM／GRU',()=>chain('C','var(--aud)',true),'長期時序依賴','門控機制 + 細胞狀態','電力需求預測、機器翻譯','仍然難以平行、超長序列仍吃力'],
+    ['Transformer',tr,'任意位置皆可能相關','自注意力 + 位置編碼','NLP、長文件、ViT','複雜度 <b>O(L²)</b>、記憶體吃重、需大量資料']
+  ];
+  D.forEach((d,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=d[0];b.onclick=()=>s(i);$('#archTabs').appendChild(b);});
+  function s(i){$('#archTabs').querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));const d=D[i];$('#archViz').innerHTML=d[1]();$('#archTxt').innerHTML=`<p style="margin:0 0 6px"><span class="hint">假設的資料結構：</span>${d[2]}</p><p style="margin:0 0 6px"><span class="hint">核心機制：</span><b>${d[3]}</b></p><p style="margin:0 0 6px"><span class="hint">典型任務：</span>${d[4]}</p><p style="margin:0"><span class="hint">致命弱點：</span>${d[5]}</p>`;}
+  s(0);
+})();
+
+matcher($('#archMatch'),$('#archFb'),[
+  {k:'l',c:'var(--aud)',html:'預測未來七天的電力需求趨勢'},
+  {k:'c',c:'var(--img)',html:'產線影像的瑕疵檢測'},
+  {k:'t',c:'var(--sen)',html:'合約首頁定義條款要比對第 20 頁責任條款'},
+  {k:'m',c:'var(--txt)',html:'一般表格資料分類'}
+],[
+  {k:'x',html:'自編碼器',bad:'自編碼器是把高維壓縮成低維（114-2 第 7 題的誘答之一）。'},
+  {k:'t',html:'Transformer<small>Self-Attention</small>',ok:'任意 token 直接關聯，且可平行運算。'},
+  {k:'l',html:'LSTM',ok:'時間序列 → LSTM。'},
+  {k:'m',html:'MLP',ok:'表格資料、特徵彼此獨立。'},
+  {k:'c',html:'CNN',ok:'局部空間相關的影像任務。'}
+],'');
+
+/* ---------- 47.3 convolution ---------- */
+(function(){
+  const img=Array.from({length:6},()=>[0,0,0,1,1,1]);
+  const K=[[-1,0,1],[-1,0,1],[-1,0,1]];
+  let pos=-1,out=Array.from({length:4},()=>Array(4).fill(null));
+  const conv=(r,c)=>{let s=0;for(let i=0;i<3;i++)for(let j=0;j<3;j++)s+=img[r+i][c+j]*K[i][j];return s;};
+  function draw(){
+    const r=pos>=0?Math.floor(pos/4):-1,c=pos>=0?pos%4:-1;
+    $('#convIn').innerHTML=img.map((row,i)=>row.map((v,j)=>{const inW=pos>=0&&i>=r&&i<r+3&&j>=c&&j<c+3;return `<div class="cell" style="background:color-mix(in srgb,var(--img) ${v?75:8}%,var(--surface2));color:${v?'#fff':'var(--ink)'};${inW?'box-shadow:inset 0 0 0 3px var(--warn);':''}">${inW?`<small>${v}×${K[i-r][j-c]}</small>`:v}</div>`;}).join('')).join('');
+    $('#convOut').innerHTML=out.map((row,i)=>row.map((v,j)=>`<div class="cell" style="background:${v===null?'var(--surface2)':`color-mix(in srgb,var(--warn) ${Math.abs(v)/3*80+5}%,var(--surface2))`};${i===r&&j===c?'box-shadow:inset 0 0 0 3px var(--ink);':''}">${v===null?'':v}</div>`).join('')).join('');
+    $('#convCalc').innerHTML=pos<0?'卷積核（9 個權重，整張圖共用）：<br><code>[−1 0 1] [−1 0 1] [−1 0 1]</code>':`位置 (${r},${c})：9 格「輸入×權重」相加 = <b>${conv(r,c)}</b>`+(conv(r,c)?'　← 碰到垂直邊緣':'　← 這塊沒有邊緣')+`<div class="hint">已掃 ${pos+1}／16 格，用的始終是同一組 9 個權重。</div>`;
+    const done=pos>=15;$('#convStep').disabled=done;$('#convStep').style.opacity=done?.4:1;
+  }
+  $('#convStep').onclick=()=>{if(pos<15){pos++;out[Math.floor(pos/4)][pos%4]=conv(Math.floor(pos/4),pos%4);draw();}};
+  $('#convAll').onclick=()=>{while(pos<15){pos++;out[Math.floor(pos/4)][pos%4]=conv(Math.floor(pos/4),pos%4);}draw();};
+  $('#convReset').onclick=()=>{pos=-1;out=Array.from({length:4},()=>Array(4).fill(null));draw();};
+  draw();
+})();
+
+pipeline($('#cnnPipe'),$('#cnnOut'),$('#cnnNext'),$('#cnnReset'),
+  [['卷積','Conv2d'],['激活','ReLU'],['池化','Pooling'],['攤平','Flatten'],['全連接','Linear'],['輸出','Softmax']],
+  ['<b>卷積層 Conv2d：</b>自動提取局部特徵（邊緣、紋理、角點）；權重共享 → 參數少。<div class="hint">輸入影像例如 (32, 32, 3)。卷積→激活→池化會重複數次，特徵由低階 → 高階抽象。</div>',
+   '<b>激活層 ReLU：</b>引入非線性。<div class="hint">無可訓練參數。</div>',
+   '<b>池化層 Pooling：</b>降採樣，縮小特徵圖空間維度、減少參數與計算量。<div class="hint">無可訓練參數；目的是降維，不是提供非線性。</div>',
+   '<b>Flatten：</b>三維特徵圖攤平成一維向量。',
+   '<b>全連接層 Linear：</b>組合特徵做最終分類 —— <b>參數量最大的地方</b>。',
+   '<b>輸出層 Softmax：</b>多類別單標籤時輸出總和為 1 的機率。']);
+
+/* ---------- 47.3 gradient flow ---------- */
+(function(){
+  let act='sig',res=false,n=10;
+  const W=640,H=200;
+  function draw(){
+    const f=act==='sig'?.25:1;
+    const g=Array.from({length:n},(_,i)=>res?1:Math.pow(f,n-1-i)); // i=0 is first layer
+    const bw=(W-60)/n;
+    let h=`<line x1="40" y1="170" x2="${W-10}" y2="170" stroke="var(--line)"/>`;
+    g.forEach((v,i)=>{const bh=Math.max(1,v*140);h+=`<rect x="${44+i*bw}" y="${170-bh}" width="${bw-4}" height="${bh}" rx="3" fill="${v>.3?'var(--ok)':v>.01?'var(--warn)':'var(--bad)'}"/>`;if(n<=12||i%2===0)h+=`<text x="${44+i*bw+(bw-4)/2}" y="186" text-anchor="middle" font-size="10" fill="var(--muted)">${i+1}</text>`;});
+    h+=`<text x="40" y="22" font-size="12" fill="var(--muted)">梯度大小（輸出層 = 1）</text><text x="${W-10}" y="22" text-anchor="end" font-size="12" fill="var(--muted)">← 輸入端　　輸出端 →</text>`;
+    $('#gvSvg').innerHTML=h;
+    const g1=g[0];
+    $('#gvNote').innerHTML=`傳回第 1 層時的梯度：<b>${g1<1e-4?g1.toExponential(1):g1.toFixed(4)}</b>　`+(res?'殘差／跳躍連接讓梯度可以<b>跨層直傳</b>，所以 ResNet 能訓練 50 層以上。':act==='sig'?'每層乘 0.25，層數一多梯度就消失 → 前面的層幾乎學不動。這就是「把 ReLU 改 Sigmoid」會讓情況更糟的原因。':'ReLU 在作用區導數為 1，好得多；但實務上非常深的網路仍會遇到最佳化困難，所以 ResNet 再加上殘差連接。');
+  }
+  group('#gvAct .btn',b=>{act=b.dataset.a;draw();});
+  $('#gvRes').onclick=()=>{res=!res;$('#gvRes').setAttribute('aria-pressed',res);$('#gvRes').textContent=res?'移除殘差連接':'加上殘差連接';draw();};
+  slider('#gvN',null,v=>{n=v;draw();});
+})();
+
+(function(){
+  const E=[['AlexNet','2012','ImageNet 冠軍；ReLU + Dropout + GPU 訓練。'],['VGG','2014','堆疊多個 <b>3×3 小卷積核</b>取代大卷積核，結構規則。<span class="hint">本身沒有緩解梯度消失的機制。</span>'],['GoogLeNet','2014','Inception 模塊並行多尺度卷積核。<span class="hint">提升參數效率，但不是治梯度消失的根本。</span>'],['ResNet','2015','<b>殘差／跳躍連接（Skip Connection）</b>，讓梯度跨層直傳 → <b>能訓練 50 層以上</b>。'],['DenseNet','2016','每層連接所有前層，特徵重用。'],['MobileNet／EfficientNet','2017+','深度可分離卷積／複合縮放，輕量化部署。']];
+  E.forEach((e,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=`${e[1]} ${e[0]}`;b.onclick=()=>{$('#cnnEvo').querySelectorAll('.btn').forEach((x,j)=>x.setAttribute('aria-pressed',i===j));$('#cnnEvoTxt').innerHTML=`<b>${e[0]}（${e[1]}）</b><br>${e[2]}`;};$('#cnnEvo').appendChild(b);});
+  $('#cnnEvo').children[3].click();
+})();
+
+flipCards($('#rnnCards'),[
+  ['標準 RNN','無門控','記憶短，梯度沿時間步指數衰減。'],
+  ['LSTM','3 門 + 細胞狀態','遺忘門、輸入門、輸出門；選擇性保留／遺忘資訊，解決長期依賴。'],
+  ['GRU','2 門','更新門、重置門；LSTM 簡化版，參數更少、效能相當。'],
+  ['Bi-RNN','雙向','正向 + 反向各跑一次，同時看過去與未來上下文。']
+]);
+
+/* ---------- 47.3 attention vs RNN ---------- */
+(function(){
+  const tk=['「甲方」','指','本公司','…','第20頁','甲方'];
+  const W=480,H=230,xs=tk.map((_,i)=>40+i*80);
+  let mode='rnn',tgt=5;
+  function draw(){
+    let h='<defs><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--aud)"/></marker></defs>';
+    if(mode==='rnn'){
+      for(let i=0;i<tgt;i++){const op=Math.pow(.72,tgt-1-i);h+=`<path d="M${xs[i]+28} 170 L${xs[i+1]-28} 170" stroke="var(--aud)" stroke-width="3" opacity="${Math.max(.15,op)}" marker-end="url(#ar2)"/>`;}
+      for(let i=0;i<=tgt;i++){const s=Math.pow(.72,tgt-i);h+=`<rect x="${xs[i]-16}" y="${150-s*100}" width="32" height="${s*100}" rx="4" fill="var(--aud)" opacity=".55"/>`;}
+      h+=`<text x="20" y="22" font-size="13" fill="var(--muted)">長條：傳到目標時剩下的影響力（示意）</text>`;
+    }else{
+      const raw=tk.map((t,i)=>i===tgt?1.5:(t.replace(/[「」]/g,'')===tk[tgt].replace(/[「」]/g,'')?5:1)),s=raw.reduce((a,b)=>a+b,0),wt=raw.map(v=>v/s);
+      tk.forEach((_,i)=>{if(i===tgt)return;const a=xs[tgt],b=xs[i],top=150-Math.abs(a-b)*.22-20;h+=`<path d="M${a} 150 Q ${(a+b)/2} ${top} ${b} 150" fill="none" stroke="var(--sen)" stroke-width="${1+wt[i]*18}" opacity=".7"/>${wt[i]>.2?`<text x="${(a+b)/2}" y="${top+(150-top)/2-4}" text-anchor="middle" font-size="14" font-weight="700" fill="var(--sen)">${wt[i].toFixed(2)}</text>`:''}`;});
+      h+=`<text x="20" y="22" font-size="13" fill="var(--muted)">線粗：注意力權重（示意），一步直達</text>`;
+    }
+    tk.forEach((t,i)=>{const on=i===tgt;h+=`<g class="tok" data-i="${i}" tabindex="0" role="button" aria-label="${t}" style="cursor:pointer"><rect x="${xs[i]-34}" y="152" width="68" height="36" rx="8" fill="${on?'var(--ink)':'var(--surface2)'}" stroke="var(--line)"/><text x="${xs[i]}" y="175" text-anchor="middle" font-size="15" font-weight="700" fill="${on?'var(--bg)':'var(--ink)'}">${t}</text></g>`;});
+    h+=`<text x="${W/2}" y="216" text-anchor="middle" font-size="13" fill="var(--muted)">點任一 token 當作目標</text>`;
+    $('#attSvg').innerHTML=h;
+    $('#attSvg').querySelectorAll('.tok').forEach(g=>{const f=()=>{tgt=+g.dataset.i;draw();};g.onclick=f;g.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();f();}};});
+    $('#attOut').innerHTML=mode==='rnn'?`第 1 個 token 的資訊要依序經過 <b>${tgt}</b> 步才到「${tk[tgt]}」，越傳越淡；而且每一步都得等上一步算完 → <b>無法平行</b>。`:`「${tk[tgt]}」直接對所有 token 算相關性權重，<b>不受距離限制</b>；所有位置可以<b>同時計算</b>。代價是複雜度 O(L²)。`;
+  }
+  group('#attMode .btn',b=>{mode=b.dataset.m;draw();});
+  draw();
+})();
+
+/* ---------- 47.3 encoder / decoder ---------- */
+(function(){
+  const txt=['我','今天','很','開心','。'],pat=['P1','P2','P3','P4','P5'];
+  const D=[
+    ['編碼器 → BERT',txt,(i,j)=>1,'<b>編碼器＝「理解者」</b>：把輸入序列轉成富含上下文的表示（多頭自注意力 + FFN）。每個 token 可看<b>前後全部</b> → BERT 雙向、擅長理解。'],
+    ['解碼器 → GPT',txt,(i,j)=>j<=i?1:0,'<b>解碼器＝「生成者」</b>：自迴歸逐字產生輸出。<b>帶遮罩</b>的多頭自注意力讓每個位置<b>不能偷看未來</b>（右上角全遮住）→ GPT 系列單向、擅長生成。解碼器另有編碼器-解碼器注意力與 FFN。'],
+    ['完整架構 → T5',txt,(i,j)=>j<=i?1:0,'<b>完整 Encoder-Decoder</b>：編碼器雙向理解輸入，解碼器（如圖，帶遮罩）逐字生成輸出。T5 把所有任務統一成 Text-to-Text。'],
+    ['ViT',pat,(i,j)=>1,'<b>ViT</b>：把圖像切成 Patch 當 token 餵進 Transformer。'],
+    ['稀疏注意力',txt,(i,j)=>Math.abs(i-j)<=1||i===0||j===0?1:0,'<b>Longformer、Reformer、Performer</b>：用稀疏／局部注意力（示意：只看相鄰位置＋一個全域 token）降低 O(L²) 的成本。']
+  ];
+  function s(k){
+    $('#edTabs').querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',k===j));
+    const [,t,f,d]=D[k];
+    let h='<div></div>'+t.map(x=>`<div class="tlab">${x}</div>`).join('');
+    t.forEach((x,i)=>{h+=`<div class="tlab" style="align-items:center">${x}</div>`;t.forEach((_,j)=>{const v=f(i,j);h+=`<div class="cell" style="background:${v?'color-mix(in srgb,var(--sen) 70%,var(--surface2))':'var(--surface2)'};color:${v?'#fff':'var(--muted)'}">${v?'✓':'✗'}</div>`;});});
+    $('#edMat').innerHTML=h;$('#edTxt').innerHTML=`<p class="hint" style="margin:0 0 6px">列＝正在計算的 token，欄＝可以看的 token</p><p style="margin:0">${d}</p>`;
+  }
+  D.forEach((d,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=d[0];b.onclick=()=>s(i);$('#edTabs').appendChild(b);});
+  s(0);
+})();
+
+/* ---------- 47.4 param calculator ---------- */
+(function(){
+  let t='lin';
+  function upd(){
+    let h='';
+    if(t==='lin'){const a=+$('#pIn').value,u=+$('#pU').value;h=`<b>Param = 輸入維度 × 神經元數 + 神經元數（bias）</b><br>= ${a} × ${u} + ${u} = <span class="verdict" style="color:var(--txt)">${fmtN(a*u+u)}</span>`+(a===784&&u===64?'<div class="hint">講義例子：784 → Dense(64) = 50,240。</div>':a===25088&&u===4096?'':'');}
+    else if(t==='conv'){const k=+$('#pK').value,ci=+$('#pCi').value,co=+$('#pCo').value;h=`<b>Param = (卷積核高 × 卷積核寬 × 輸入通道數 + 1) × 輸出通道數</b><br>= (${k} × ${k} × ${ci} + 1) × ${co} = <span class="verdict" style="color:var(--img)">${fmtN((k*k*ci+1)*co)}</span><div class="hint">注意：和輸入影像的「長寬」無關 —— 這就是權重共享讓卷積層參數少的原因。</div>`;}
+    else h='<b>ReLU、MaxPool2d、AdaptiveAvgPool2d、Flatten、Dropout：Param = 0</b><div class="hint">完全沒有可訓練參數。摘要表裡看到這些層的 Param # 都是 0。</div>';
+    $('#pOut').innerHTML=h;
+  }
+  group('#pTabs .btn',b=>{t=b.dataset.t;$('#pLin').style.display=t==='lin'?'':'none';$('#pConv').style.display=t==='conv'?'':'none';upd();});
+  ['#pIn','#pU','#pK','#pCi','#pCo'].forEach(s=>slider(s,null,upd));
+})();
+
+/* ---------- 47.4 keras fill-in ---------- */
+(function(){
+  const B=[
+    {o:['50,240','50,176','784','64'],a:0,ok:'784 × 64 + 64 = 50,240。',bad:{1:'忘了加 bias：784 × 64 = 50,176，還要 + 64。'}},
+    {o:['650','640','6,500','74'],a:0,ok:'64 × 10 + 10 = 650。',bad:{1:'忘了加 bias：64 × 10 = 640，還要 + 10。'}},
+    {o:['10','11','100','110'],a:0,ok:'110 = in × 10 + 10 → in = 10。',bad:{3:'110 是 Param，不是前一層維度。'}}
+  ];
+  const cell=i=>`<div style="display:flex;flex-wrap:wrap;gap:4px"><b id="kb${i}" style="min-width:60px">空格 ${i+1}</b>${B[i].o.map((o,j)=>`<button class="btn" style="padding:2px 10px;font-size:13px" data-b="${i}" data-j="${j}">${o}</button>`).join('')}</div>`;
+  $('#kTbl').innerHTML=`<tr><th>Layer (type)</th><th>Output Shape</th><th>Param #</th></tr>
+  <tr><td>dense (Dense)　784 → 64, relu</td><td>(None, 64)</td><td>${cell(0)}</td></tr>
+  <tr><td>dense_1 (Dense)　64 → 10, softmax</td><td>(None, 10)</td><td>${cell(1)}</td></tr>
+  <tr><td colspan="3" class="hint">另一個模型的反推題：某層 Output 為 (None, 10)、Param 為 110，前一層輸出是幾維？</td></tr>
+  <tr><td>？ (Dense)</td><td>(None, 10)</td><td>110　→ 前一層：${cell(2)}</td></tr>`;
+  $('#kTbl').querySelectorAll('button').forEach(b=>b.onclick=()=>{const i=+b.dataset.b,j=+b.dataset.j,q=B[i];const ok=j===q.a;
+    if(ok){$('#kb'+i).textContent=q.o[j];$('#kb'+i).style.color='var(--ok)';b.parentElement.querySelectorAll('button').forEach(x=>x.disabled=true);}
+    else{b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');}
+    $('#kFb').textContent=(ok?'✓ ':'✗ ')+(ok?q.ok:(q.bad[j]||'不對，用公式逐格驗算。'));$('#kFb').className='feedback '+(ok?'ok':'bad');});
+})();
+
+/* ---------- 47.4 VGG ---------- */
+(function(){
+  function draw(m){
+    const rows=m==='p'?[['13 層卷積層合計','約 1,470 萬',11,'var(--img)'],['Linear-33（單層）','102,764,544',74,'var(--sen)'],['3 層全連接合計','約 1.23 億',89,'var(--sen)'],['ReLU／MaxPool／AvgPool','0',0,'var(--muted)']]
+      :[['13 層卷積層','最多',88,'var(--img)'],['3 層全連接','較少',12,'var(--sen)'],['ReLU／MaxPool／AvgPool','（非重點）',2,'var(--muted)']];
+    $('#vggBars').innerHTML=rows.map(r=>`<div class="bar${r[2]>50?' win':''}"><span>${r[0]}</span><div class="track"><div class="fill" style="width:${r[2]}%;background:${r[3]}"></div></div><span class="num">${m==='p'?r[2]+'%':''}</span></div><div class="hint" style="margin:-6px 0 6px">${r[1]}</div>`).join('');
+    $('#vggOut').innerHTML=m==='p'?'<b>參數量最多 → 全連接層</b>（114-2 第 42 題）。Total params 138,357,544（約 138.36M）。':'<b>FLOPs 最多 → 卷積層</b>（114-2 第 43 題；長條比例為<b>示意</b>，非實際數值）。卷積層參數雖少，但要在<b>每個空間位置重複運算</b>、輸出特徵圖尺寸大；全連接層參數多卻只做一次矩陣乘法。<b>「參數多」與「算得久」是兩回事。</b>';
+  }
+  group('#vggTabs .btn',b=>draw(b.dataset.m));draw('p');
+})();
+tabs($('#vggTrap'),$('#vggTrapBody'),[
+  ['攤平維度','<p>VGG16 的 <code>AdaptiveAvgPool2d</code> 固定輸出 <b>7×7</b>：</p><p class="verdict" style="color:var(--ok)">512 × 7 × 7 = 25,088 ✓</p><p class="verdict" style="color:var(--bad);font-size:17px">512 × 4 × 4 = 8,192 ✗（誘答）</p><p class="hint" style="margin:0">Linear-33 的 102,764,544 = 25088 × 4096 + 4096，Linear 參數<b>含 bias</b>。</p>'],
+  ['顯存估計','<p>摘要中的 <code>Estimated Total Size</code>（624.98 MB）<b>只含參數與激活值</b>。</p><div class="meter" style="height:22px"><i style="width:55%;background:var(--txt)"></i></div><p class="hint">↑ 摘要表算到的部分（示意長度）</p><p style="margin:0"><b>訓練還要額外存梯度與 optimizer state</b> → 1 GB 顯示卡不夠用。Estimated Total Size 不等於訓練所需顯存。</p>'],
+  ['結構','<p><b>VGG16 = 13 conv + 3 FC</b>，總參數約 138.36M（114-2 第 44 題的正確敘述）。</p><p class="hint" style="margin:0">同題的錯誤敘述：攤平是 8192、Linear 參數不含 bias、625MB 已足夠訓練。</p>']
+]);
+
+/* ---------- 47.5 frameworks ---------- */
+tabs($('#fwTabs'),$('#fwBody'),[
+  ['TensorFlow','<p><b>開發者：</b>Google（2015）</p><p><b>計算圖：</b>早期<b>靜態計算圖</b>，2.x 起轉向<b>即時執行 Eager Execution</b></p><p style="margin:0"><b>定位與生態：</b>生產部署強 —— TFX（ML 管線）、TF Serving、TF Lite（行動）、TF.js（網頁）、支援 TPU</p>'],
+  ['Keras','<p><b>高階 API</b>，自 TF 2.0 起整合為 <code>tf.keras</code>。</p><p style="margin:0">極簡、模組化、適合快速原型。</p>'],
+  ['PyTorch','<p><b>開發者：</b>Meta FAIR</p><p><b>計算圖：</b><b>動態計算圖</b></p><p style="margin:0"><b>定位與生態：</b>Pythonic、內建 Autograd 自動微分、學術界主流；生態含 torchvision／torchtext／torchaudio、PyTorch Lightning、Hugging Face Transformers</p>'],
+  ['JAX','<p><b>開發者：</b>Google　<b>計算圖：</b>函數式轉換</p><p style="margin:0">非端到端框架，偏高效能數值計算 + 自動微分。</p>'],
+  ['MXNet','<p><b>開發者：</b>Apache / AWS　<b>計算圖：</b>混合式</p><p style="margin:0">多語言綁定。</p>']
+]);
+
+(function(){
+  const T=[
+    ['二元分類','1','sigmoid','binary_crossentropy','一個機率就夠。'],
+    ['多類別單標籤（One-Hot）','C','softmax','categorical_crossentropy','115-1 第 40 題的正解組合。標籤已用 to_categorical 轉成 One-Hot。'],
+    ['多類別單標籤（整數索引）','C','softmax','sparse_categorical_crossentropy','只有標籤格式不同 —— 整數索引才用 sparse_。'],
+    ['多標籤','C','sigmoid','binary_crossentropy','每類獨立判斷，總和不為 1。'],
+    ['迴歸','1 或 k',null,"mse' / 'mae' / 'huber",'不設激活（線性輸出）。']
+  ];
+  T.forEach((t,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=t[0];b.onclick=()=>s(i);$('#kTask').appendChild(b);});
+  function s(i){
+    $('#kTask').querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));
+    const [n,u,a,l,note]=T[i];const units=u==='C'?'C':u==='1 或 k'?'k':'1';
+    $('#kCode').innerHTML=`<code># ${n}：輸出層 ${u} 個神經元\nmodel.add(Dense(${units}${a?`, activation='${a}'`:''}))${a?'':'   # 不設激活'}\nmodel.compile(optimizer='adam',\n              loss='${l}')</code>`;
+    $('#kNote').textContent=note;
+  }
+  s(1);
+})();
+
+/* ---------- 47.5 bug hunt ---------- */
+(function(){
+  const R=[
+    ['PyTorch 三分類（貓/狗/鳥）',['criterion = nn.CrossEntropyLoss()','model_head = nn.Sequential(','    nn.Linear(512, 3),','    nn.Softmax(dim=1))'],3,'<b>CrossEntropyLoss 內部已含 LogSoftmax</b>，輸出層再加 softmax 是最常見的實作錯誤，會讓分布過度平滑、梯度變小而拖累訓練（115-1 第 20 題）。應直接輸出 logits，維度 = 3。'],
+    ['VGG16 遷移學習：凍結卷積層、只訓 classifier',['model = models.vgg16(pretrained=True)','for param in model.classifier.parameters():','    param.requires_grad = False','model.classifier[6] = nn.Linear(4096, num_classes)','optimizer = torch.optim.Adam(model.classifier.parameters(), lr=1e-4)'],1,'凍結對象應是 <code>model.features</code>（卷積部分），不是 classifier。凍錯位置等於把要訓練的層鎖死（114-2 第 45 題）。'],
+    ['Keras 手寫數字 10 類（標籤已 One-Hot）',['y_train = to_categorical(y_train, 10)','model = Sequential([Dense(64, activation=\'relu\', input_shape=(784,)),','                    Dense(10, activation=\'softmax\')])','model.compile(optimizer=\'adam\',','              loss=\'sparse_categorical_crossentropy\')'],4,'One-Hot 標籤要配 <code>categorical_crossentropy</code>；<code>sparse_</code> 吃整數索引。這正是 115-1 第 40 題的誘答 (D)。'],
+    ['字母辨識（b/d/p/q）的資料增強',['transforms.Compose([','    transforms.RandomHorizontalFlip(p=0.5),','    transforms.RandomRotation(15),','    transforms.ColorJitter(brightness=0.2),','    transforms.ToTensor(),','    transforms.Normalize(mean, std)])'],1,'水平翻轉讓 b 變 d、p 變 q，<b>標籤卻不會跟著改</b>。旋轉 15 度屬合理幅度；ColorJitter 只調亮度；ToTensor 放最後是正確順序（115-1 第 41 題）。'],
+    ['加上梯度裁剪的訓練迴圈',['optimizer.zero_grad()','outputs = model(inputs)','loss = criterion(outputs, labels)','loss.backward()','optimizer.step()','torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)'],5,'裁剪必須在 <code>loss.backward()</code> 之後、<code>optimizer.step()</code> <b>之前</b>。step 之後權重已經更新完畢，為時已晚（115-1 第 50 題）。'],
+    ['Keras 10 類輸出層',['model = Sequential([','    Dense(64, activation=\'relu\', input_shape=(784,)),','    Dense(10, activation=\'sigmoid\')])','model.compile(optimizer=\'adam\', loss=\'categorical_crossentropy\')'],2,'<b>sigmoid 用於二元分類（或多標籤），多類別單標籤要用 softmax</b>（114-2 第 49 題的提醒）。']
+  ];
+  let r=0,score=0;
+  function show(){
+    if(r>=R.length){$('#bugTitle').textContent='挑戰完成';$('#bugScore').textContent='';$('#bugCode').innerHTML=`<div class="verdict">抓到 ${score}／${R.length} 個錯誤</div>`;$('#bugExpl').classList.remove('show');$('#bugNext').textContent='重新挑戰';$('#bugNext').style.display='';return;}
+    const [t,lines,bad,ex]=R[r];
+    $('#bugTitle').textContent=`第 ${r+1}／${R.length} 關：${t}`;$('#bugScore').textContent=`已抓到 ${score}`;
+    $('#bugCode').innerHTML=lines.map((l,i)=>`<button class="opt" data-i="${i}" style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;padding:7px 12px;white-space:pre-wrap;overflow-wrap:anywhere">${l.replace(/</g,'&lt;')}</button>`).join('');
+    $('#bugExpl').classList.remove('show');$('#bugNext').style.display='none';$('#bugNext').textContent=r===R.length-1?'看結果':'下一關';
+    $('#bugCode').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const ok=+b.dataset.i===bad;if(ok)score++;
+      $('#bugCode').querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(+x.dataset.i===bad)x.classList.add('right');});if(!ok)b.classList.add('wrongpick');
+      $('#bugExpl').innerHTML=(ok?'<b style="color:var(--ok)">抓到了。</b>':'<b style="color:var(--bad)">錯的是標綠的那一行。</b>')+ex;$('#bugExpl').classList.add('show');$('#bugNext').style.display='';});
+  }
+  $('#bugNext').onclick=()=>{if(r>=R.length){r=0;score=0;}else r++;show();};
+  show();
+})();
+
+flipCards($('#tlCards'),[
+  ['① 凍結誰？','features／主幹','VGG 凍結 <code>model.features</code>；ResNet 凍結全部參數再換 <code>fc</code>。不是凍結 classifier。'],
+  ['② 這叫什麼？','凍結主幹＋只訓分類頭','<b>特徵萃取（Feature Extraction）</b>。不是全面微調、不是零樣本學習、更不是知識蒸餾（需教師與學生兩個模型）。'],
+  ['③ 為何 lr = 1e-4？','微調學習率要很小','避免更新步伐過大<b>破壞預訓練已學好的特徵表示</b>。不是為了省記憶體，也不是為了加速收斂。']
+]);
+
+/* ---------- 47.5 augmentation ---------- */
+(function(){
+  const S=[['b','b','d'],['d','d','b'],['p','p','q'],['q','q','p'],['🐱','貓',null],['🐶','狗',null]];
+  let on=false;
+  function draw(){
+    $('#augGrid').innerHTML=S.map(([g,l,m])=>`<div class="panel flat" style="margin:0;padding:10px;text-align:center"><div style="font-size:44px;line-height:1.1;font-family:var(--serif);font-weight:900;display:inline-block;transition:transform .5s;transform:scaleX(${on?-1:1})">${g}</div><div style="font-size:13px">標籤：<b>${l}</b></div><div style="font-size:12.5px;min-height:1.4em;color:${on&&m?'var(--bad)':'var(--ok)'}">${on?(m?`看起來是 ${m} ✗`:'仍是'+l+' ✓'):''}</div></div>`).join('');
+    $('#augOut').innerHTML=on?'字母被鏡像後<b>標籤沒跟著改</b> → 等於餵進大量錯誤標註；貓狗翻轉則完全無害。更陰險的是：訓練與驗證套用同一組 transform，<b>驗證損失看起來一路下降，問題要到部署後才爆發</b>。<div class="hint">判準：資料增強必須<b>保持標籤語義不變</b>。水平翻轉對字母、數字、交通標誌是災難。</div>':'目前是原始樣本。';
+  }
+  $('#augBtn').onclick=()=>{on=!on;$('#augBtn').setAttribute('aria-pressed',on);$('#augBtn').textContent=on?'還原':'套用 RandomHorizontalFlip';draw();};
+  draw();
+})();
+
+/* ---------- 47.5 clip insertion ---------- */
+(function(){
+  const L=['for inputs, labels in dataloader:','    optimizer.zero_grad()            # 位置 1：清空舊梯度','    outputs = model(inputs)          # 位置 2：前向傳播','    loss = criterion(outputs, labels)  # 位置 3：計算損失','    loss.backward()                  # 位置 4：反向傳播，產生 .grad','    optimizer.step()                 # 位置 5：更新權重'];
+  const msg=['梯度根本還沒算出來（而且下一行就會清空）。','剛清空梯度，此時 .grad 是空的。','還沒算損失，更沒有梯度。','位置 3 之前梯度還沒算出來 —— 要等 loss.backward()。','✓ 正解：梯度已算出、尚未套用。限制梯度範數，避免單次更新步幅失控導致 Loss 飆成 NaN。','位置 5 之後權重已經更新完畢，為時已晚。'];
+  let pick=-1;
+  function draw(){
+    let h='';
+    L.forEach((l,i)=>{h+=`<pre style="margin:0;border-radius:6px;padding:6px 12px"><code>${l}</code></pre>`;if(i>=0){const on=pick===i;h+=`<button class="btn" data-s="${i}" style="margin:4px 0 4px 24px;padding:2px 12px;font-size:13px;${on?(i===4?'background:var(--ok);color:#fff;border-color:var(--ok)':'background:var(--bad);color:#fff;border-color:var(--bad)'):''}">${on?'★ clip_grad_norm_(...) 放這裡':'＋ 插在這裡'}</button>`;}});
+    $('#clipCode').innerHTML=h;
+    $('#clipCode').querySelectorAll('button').forEach(b=>b.onclick=()=>{pick=+b.dataset.s;draw();$('#clipOut').innerHTML=`<b style="color:${pick===4?'var(--ok)':'var(--bad)'}">${pick===4?'答對了':'不對'}</b>：${msg[pick]}<div class="hint">裁剪的對象是參數的 <code>.grad</code>；它不是限制 Loss 數值，也不是用來處理梯度消失。</div>`;});
+  }
+  draw();
+})();
+
+pipeline($('#kcPipe'),$('#kcOut'),$('#kcNext'),$('#kcReset'),
+  [['Input','(32,32,3)'],['Conv2D','(32,32,32)'],['BatchNorm','(32,32,32)'],['MaxPool','(16,16,32)'],['Dropout','(16,16,32)'],['Flatten','(8192)'],['Dense','(128)'],['Dense','(10)']],
+  ['<code>Input(shape=(32, 32, 3))</code>：<b>僅宣告輸入形狀，不做任何標準化</b>。<div class="hint">前處理另外做：<code>x_train / 255.0</code> 把 0~255 縮到 0~1（不是 z-score）；<code>to_categorical(y, 10)</code> 轉 One-Hot。</div>',
+   '<code>Conv2D(32, (3,3), padding=\'same\', activation=\'relu\')</code> → <b>(32, 32, 32)</b><div class="hint">長寬因補零維持；<b>通道數變成濾波器數量 32</b>。Param = (3×3×3+1)×32 = 896。</div>',
+   '<code>BatchNormalization()</code> → (32, 32, 32)<div class="hint">穩定各層輸入分佈，緩解梯度消失／爆炸。</div>',
+   '<code>MaxPooling2D((2,2))</code> → (16, 16, 32)<div class="hint">長寬減半；Param = 0。</div>',
+   '<code>Dropout(0.25)</code> → (16, 16, 32)<div class="hint">訓練時隨機把神經元輸出<b>設為 0</b>（不是 1），抑制過擬合；Param = 0。</div>',
+   '<code>Flatten()</code> → 16×16×32 = <b>8,192</b><div class="hint">三維特徵圖 → 一維向量；Param = 0。</div>',
+   '<code>Dense(128, activation=\'relu\')</code> → (128)<div class="hint">Param = 8192×128 + 128 = 1,048,704 —— 全連接層又是參數大戶。</div>',
+   '<code>Dense(10, activation=\'softmax\')</code> → (10)<div class="hint">Param = 128×10 + 10 = 1,290；配 <code>categorical_crossentropy</code>。</div>']);
+
+/* ---------- 47.6 exam list ---------- */
+(function(){
+  const G=[
+    ['架構選擇與診斷',[
+      ['114-2 第 5 題','CNN 卷積層職責','第一層卷積層負責什麼？','<b>自動提取局部特徵</b>（邊緣、紋理、角點）；降維是池化層、輸出分類是全連接層'],
+      ['114-2 第 6 題','CNN vs FCNN 效率','CNN 為何效率優於全連接網路？','<b>區域感知 + 參數共享</b>降低參數量；旋轉／比例不變性非天生具備'],
+      ['114-2 第 7 題','LSTM 適用情境','哪種應用最適合 LSTM？','<b>預測未來七天電力需求</b>（時間序列）；影像→CNN、分群→聚類、降維→自編碼器'],
+      ['114-2 第 21 題','多頭注意力優點','導入 Multi-head 的主要優點？','<b>從不同表示子空間同時捕捉多樣化關聯</b>；不是減參數、不是加速、不是治梯度消失'],
+      ['115-1 第 17 題','深層 CNN 訓練失敗','3 層升 16 層後<b>訓練損失反而更高</b>','症狀指向<b>最佳化失敗（梯度消失）</b>，對策為 <b>ResNet 殘差連接</b>；ReLU 改 Sigmoid 反而惡化'],
+      ['115-1 第 18 題','池化層職責','加池化層主要解決什麼？','<b>降低特徵圖空間維度、減少參數與計算量</b>；非線性靠 ReLU，梯度消失靠 BN／殘差'],
+      ['115-1 第 19 題','Transformer vs Bi-LSTM','長合約跨段落比對為何改用 Transformer？','<b>Self-Attention 任意 token 直接關聯 + 可平行化</b>；位置編碼只給順序不懂章節'],
+      ['115-1 第 49 題','深層架構選型','要超過 50 層又怕梯度消失','<b>ResNet 殘差連接</b>；VGG 無此機制、Inception 非治本、ViT 訓練同樣不穩']]],
+    ['訓練與優化',[
+      ['114-2 第 12 題','超參數辨識','收斂不穩定該調哪個超參數？','<b>學習率</b>；神經元輸出、權重值、梯度都是訓練<b>產生的結果</b>而非可設定的超參數'],
+      ['114-2 第 17 題','優化器機制','哪個優化器內建動量？','<b>Adam</b>（一階動量 + 二階自適應）；RMSProp、Adagrad 只有自適應學習率'],
+      ['114-2 第 27 題','激活函數非線性','用線性激活導致準確率停滯','<b>改用 ReLU</b>；只加深卷積層仍是線性、Sigmoid 易梯度消失、灰階化無助表達能力'],
+      ['114-2 第 31 題','Early Stopping','驗證損失週期性波動如何早停？','<b>監控驗證集 + 設適度 Patience</b>；用訓練集最低點會過擬合、用測試集會洩漏'],
+      ['115-1 第 8 題','學習率過大','調高 lr 後訓練損失震盪','<b>損失震盪或發散</b>；梯度消失源於激活飽和與網路過深，與 lr 無直接關係'],
+      ['115-1 第 9 題','Adam 原理','Adam 為何改善震盪與收斂慢？','<b>一階動量 + 自適應學習率，逐參數調步長</b>；相同學習率是 SGD 的作法'],
+      ['115-1 第 11 題','批次策略','兼顧梯度穩定與 GPU 吞吐量','<b>Mini-batch GD（256–2048）</b>；牛頓法在億級參數不可行'],
+      ['115-1 第 50 題','梯度裁剪位置','<code>clip_grad_norm_</code> 該插在哪？','<b><code>loss.backward()</code> 之後、<code>optimizer.step()</code> 之前</b>；作用是限制梯度範數避免 NaN']]],
+    ['損失函數與正則化',[
+      ['114-2 第 2 題','L1 效果','L1 正則化主要效果？','<b>產生稀疏模型、部分權重收斂為零</b>'],
+      ['114-2 第 26 題','非防過擬合手段','哪一項<b>不屬於</b>降低複雜度？','<b>擴增輸入特徵變數</b>（反而提高複雜度）；L1/L2、Dropout、Early Stopping 都算'],
+      ['114-2 第 39 題','正則化技術辨識（附圖）','程式碼實現哪種正則化？','隨機關閉／歸零部分神經元 → <b>Dropout</b>'],
+      ['115-1 第 2 題','損失函數選擇','想對極端高價物件<b>更敏感</b>','<b>MSE</b>（平方放大大誤差）；MAE 與 Huber 的設計目的正好相反'],
+      ['115-1 第 7 題','L1 的副作用','高度相關特徵的重要性清單反覆變動','<b>L1 隨機只保留其中之一</b>；L2 會平均分攤故較穩定'],
+      ['115-1 第 10 題','任務配損失','時長預測 + 是否流失','<b>MSE + Binary Cross-Entropy</b>'],
+      ['115-1 第 13 題','降低複雜度','訓練 F1 0.96 / 驗證 0.71','<b>對 Embedding 與全連結層加 L2 Weight Decay</b>'],
+      ['115-1 第 48 題','曲線判讀（附圖）','訓練 0.81 vs 驗證 0.72','<b>過擬合</b>；欠擬合是兩者同時偏低']]],
+    ['框架與程式碼',[
+      ['114-2 第 42 題','參數量分佈','VGG16 何者參數量最多？','<b>全連接層</b>（Linear-33 單層 102,764,544，三層合計約 1.23 億）'],
+      ['114-2 第 43 題','運算量分佈','VGG16 何者 FLOPs 最多？','<b>卷積層</b>（每個空間位置重複運算）—— 與參數量的答案<b>恰好相反</b>'],
+      ['114-2 第 44 題','摘要表敘述','下列敘述何者正確？','<b>13 conv + 3 FC、總參數約 138.36M</b>；攤平是 512×7×7=25088、Linear 參數含 bias、625MB 不含梯度與 optimizer state'],
+      ['114-2 第 45 題','遷移學習語法','凍結卷積層只訓 classifier','<b>先把 <code>features</code> 的 <code>requires_grad</code> 設為 False，再只訓練 classifier</b>'],
+      ['114-2 第 48 題','標準化語義','對 <code>X_train</code> 減平均除標準差','<b>平均變 0（A）+ 防梯度爆炸／消失（D）</b>；除標準差是把標準差變 1、非 0~1 縮放、非特徵選擇'],
+      ['114-2 第 49 題','摘要表填空','空格 1、空格 2 的值','用 <code>Param = in × units + units</code> 逐格驗算；<b>sigmoid 用於二元分類，多類別要用 softmax</b>'],
+      ['115-1 第 20 題','PyTorch 輸出層','<code>CrossEntropyLoss</code> 的輸出層設計','<b>不加激活、直接輸出 logits，維度 = 3</b>；再加 softmax 是最常見錯誤'],
+      ['115-1 第 40 題','Keras 輸出層（附圖）','(A)(B) 該填什麼？','<b><code>softmax</code> + <code>categorical_crossentropy</code></b>（10 類單標籤 + One-Hot 標籤）'],
+      ['115-1 第 41 題','資料增強陷阱（附圖）','b/d/p/q 辨識錯誤率異常','<b><code>RandomHorizontalFlip</code> 破壞字母方向語義</b>，50% 機率產生鏡像錯誤標籤'],
+      ['115-1 第 42 題','遷移學習策略（附圖）','關閉所有既有權重梯度屬於？','<b>特徵萃取（Feature Extraction）</b>'],
+      ['115-1 第 43 題','微調學習率（附圖）','為何 lr 設 1e-4？','<b>避免步伐過大破壞預訓練已學好的特徵表示</b>'],
+      ['115-1 第 46 題','前處理判讀（附圖）','哪組描述正確？','除以 255 → 0~1（非 z-score）、避免梯度爆炸／消失、<code>to_categorical</code> → One-Hot、對應 softmax + categorical_crossentropy'],
+      ['115-1 第 47 題','模型建構判讀（附圖）','哪組描述正確？','BatchNorm 穩定分佈、Dropout(0.25) 抑制過擬合、Flatten 攤平；<code>Input()</code> 不做標準化、<code>padding=\'same\'</code> 輸出為 (32,32,<b>32</b>)、Dropout 設為 <b>0</b>']]]
+  ];
+  const html=list=>list.map(([n,k,q,a])=>`<details><summary><span class="tag">${n}</span>${k}</summary><div class="body"><p style="margin:0 0 6px"><span class="hint">怎麼問：</span>${q}</p><p style="margin:0"><span class="hint">正解思路：</span>${a}</p></div></details>`).join('');
+  tabs($('#exTabs'),$('#examList'),G.map(([t,l])=>[`${t}（${l.length}）`,html(l)]));
+})();
+
+/* ---------- 47.7 traps ---------- */
+traps($('#traps'),$('#trapCount'),'l23203-traps',[
+  ['參數量最多的是全連接層，運算量（FLOPs）最多的是卷積層','兩題連著考，答案不同。'],
+  ['Softmax 用於多類別「單標籤」；Sigmoid 用於二元分類或「多標籤」','判準是「輸出總和是否為 1」，不是「類別有幾個」。'],
+  ['Keras 輸出層要明確寫 softmax；PyTorch 用 CrossEntropyLoss 時反而「不能」加 softmax','兩套框架的慣例相反，最容易張冠李戴。'],
+  ['categorical_crossentropy 配 One-Hot，sparse_categorical_crossentropy 配整數索引','差別只在標籤格式，不在類別數。'],
+  ['反向傳播只負責「算梯度」，更新參數的是優化器','不是「反向傳播更新權重」。'],
+  ['學習率、批次大小、層數是超參數；權重值、神經元輸出、梯度是訓練產生的結果','後者不可「調整」。'],
+  ['「加深後訓練損失反而比淺層更高」是最佳化失敗，不是過擬合','過擬合是訓練損失低、驗證損失高；「調高學習率後震盪」是學習率問題，與梯度消失無關。'],
+  ['加深網路不能解決「激活函數是線性」的問題','線性的組合仍是線性，要換成 ReLU。'],
+  ['Sigmoid 不能拿來「改善梯度傳遞」','它飽和區導數更小，會讓梯度消失更嚴重。'],
+  ['池化層的目的是降維省算力','不是提供非線性、也不是治梯度消失。'],
+  ['Dropout 是把神經元輸出設為 0','不是設為 1，也不是把權重設為 0。'],
+  ['Early Stopping 要監控「驗證集」並設 Patience','用訓練集會過擬合，用測試集會洩漏測試資訊。'],
+  ['L1 產生稀疏解、面對相關特徵時隨機留一個（不穩定）；L2 壓小但不歸零、平均分攤（穩定）','115-1 第 7 題的考點。'],
+  ['MSE 對離群值最敏感；MAE 與 Huber 刻意降低離群值影響','「希望更敏感」→ MSE。'],
+  ['Adam ＝ 動量 + 自適應學習率；Adam 不內建梯度裁剪','梯度裁剪是另一項獨立技巧。'],
+  ['clip_grad_norm_ 必須插在 loss.backward() 之後、optimizer.step() 之前','裁剪的對象是 .grad。'],
+  ['遷移學習「凍結」的是 features／主幹，不是 classifier','凍結主幹只訓分類頭叫特徵萃取，不叫全面微調。'],
+  ['微調的小學習率是為了保護預訓練特徵','不是為了省顯存或加速。'],
+  ['資料增強必須保持標籤語義','水平翻轉對貓狗無害，對 b/d/p/q、數字、文字是災難；訓練與驗證用同一組 transform 時，驗證損失看不出問題。'],
+  ['ToTensor() 放在幾何變換「之後」','幾何變換作用在 PIL 影像上。'],
+  ['除以 255 是縮放到 0~1，不是 z-score 標準化','z-score 要減平均再除標準差。'],
+  ['Conv2D(32, padding=\'same\') 的輸出通道數等於濾波器數量','長寬才是靠補零維持。'],
+  ['LayerNorm 不依賴批次大小，所以適合 Transformer／RNN；BatchNorm 依賴批次','序列模型偏好 LayerNorm。'],
+  ['多頭注意力是為了「捕捉多樣化關聯」','它會增加而非減少參數量，也不是為了加速或治梯度消失。'],
+  ['Transformer 的位置編碼只提供順序資訊','不會讓模型自動理解章節或文件結構。'],
+  ['自編碼器是「重構」不是「生成全新樣本」','能憑空生成多樣化新樣本的是 GAN。'],
+  ['Estimated Total Size 不等於訓練所需顯存','訓練還要存梯度與 optimizer state。']
+]);
+
+/* ---------- 47.7 quiz ---------- */
+quiz($('#quiz'),[
+  ['房價模型希望對「極端高價物件」的預測誤差更敏感，損失函數應選？',['MSE','MAE','Huber Loss','Binary Cross-Entropy'],'MSE 把誤差平方，放大大誤差。MAE 與 Huber 的設計目的正好相反。'],
+  ['CNN 從 3 層加深到 16 層後，訓練損失反而比淺層更高。最合理的診斷與對策是？',['最佳化失敗（梯度消失），加入殘差連接','過擬合，加大 Dropout','把 ReLU 改成 Sigmoid 改善梯度傳遞','訓練資料太多，應減少資料'],'訓練損失變高不是過擬合。改 Sigmoid 會讓梯度消失更嚴重。'],
+  ['在 CNN 中加入池化層，主要解決的是？',['降低特徵圖空間維度，減少參數與計算量','提供非線性表達能力','緩解梯度消失','自動提取邊緣與紋理特徵'],'非線性靠 ReLU；梯度消失靠 BN／殘差；提取局部特徵是卷積層的工作。'],
+  ['長合約要比對首頁定義條款與第 20 頁責任條款，Bi-LSTM 效果差、改用 Transformer。主要原因是？',['Self-Attention 讓任意 token 直接建立關聯，且可平行運算','內建位置編碼使模型天生理解章節結構','多頭注意力能減少參數量','Transformer 不需要大量資料'],'位置編碼只提供順序資訊；多頭注意力會增加參數。'],
+  ['VGG16 中，FLOPs（運算量）最多的是哪一類層？',['卷積層','全連接層','ReLU 層','AdaptiveAvgPool 層'],'參數量最多是全連接層，運算量最多是卷積層 —— 兩題答案恰好相反。'],
+  ['PyTorch 三分類（貓／狗／鳥）使用 nn.CrossEntropyLoss()，輸出層應該是？',['nn.Linear(512, 3)，直接輸出 logits','nn.Linear(512, 3) 後再接 Softmax','nn.Linear(512, 1) 後接 Sigmoid','nn.Linear(512, 3) 後接 ReLU'],'CrossEntropyLoss 內含 LogSoftmax，再加 softmax 是最常見的實作錯誤。'],
+  ['Keras 手寫數字 10 類、標籤已用 to_categorical 轉 One-Hot，輸出層激活 (A) 與損失 (B) 應為？',['softmax、categorical_crossentropy','softmax、sparse_categorical_crossentropy','sigmoid、binary_crossentropy','sigmoid、categorical_crossentropy'],'sparse_ 吃整數索引標籤；sigmoid 用於二元或多標籤。'],
+  ['字母辨識模型對 b／d／p／q 的錯誤率異常高，但驗證損失一路下降。最可能的元兇是？',['RandomHorizontalFlip 破壞了字母方向語義','RandomRotation(15) 角度過大','ColorJitter 使邊緣特徵失真','ToTensor() 應放在幾何變換之前'],'鏡像後 b 變 d 但標籤沒改；訓練與驗證用同一組 transform，所以驗證看不出問題。'],
+  ['PyTorch 訓練迴圈中，clip_grad_norm_ 應該插在哪裡？',['loss.backward() 之後、optimizer.step() 之前','optimizer.zero_grad() 之前','optimizer.step() 之後','計算 loss 之前'],'梯度要先算出來（backward），而且必須在權重更新（step）之前裁剪。'],
+  ['把預訓練模型所有既有權重的 requires_grad 設為 False，只訓練新的分類頭，這種策略稱為？',['特徵萃取（Feature Extraction）','全面微調（Full Fine-Tuning）','零樣本學習','知識蒸餾'],'知識蒸餾需要教師與學生兩個模型。'],
+  ['微調預訓練模型時把學習率設為 1e-4，主要目的是？',['避免步伐過大破壞預訓練已學好的特徵表示','節省顯示卡記憶體','加速收斂','因為 Adam 只接受很小的學習率'],'小學習率是為了保護預訓練特徵，不是省顯存或加速。'],
+  ['驗證損失呈週期性波動，要使用 Early Stopping，較合理的設定是？',['監控驗證集損失並設定適度的 Patience','監控訓練集損失的最低點','監控測試集損失','驗證損失一上升就立刻停止'],'用訓練集會過擬合、用測試集會洩漏；設 Patience 才不會被單次波動誤判。']
+],['太強了，附圖程式碼題已經難不倒你。','不錯！回頭看看答錯的題目對應哪一節。','建議重新玩一次 47.5 的「抓錯行挑戰」與 47.2 的激活函數觀察台，再來一次。']);
+
+navHighlight();
+
+</script>
+</body>
+</html>

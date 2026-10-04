@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L22403 大數據在生成式AI中的應用｜互動教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F5; --surface:#FFFFFF; --surface2:#F6F8FB; --ink:#18202E; --muted:#5A6475; --line:#D5DBE4;
+  --txt:#3B4CCA; --img:#0E8A7A; --aud:#B87812; --sen:#B8336A;
+  --ok:#1F8A4C; --bad:#C23B2E; --warn:#D9822B;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+    --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+  --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75}
+h1,h2,h3{font-family:var(--serif);line-height:1.3;margin:0}
+p{margin:0 0 1em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--txt);outline-offset:2px;border-radius:4px}
+svg{max-width:100%;height:auto;display:block}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1180px;margin:0 auto;gap:40px;padding:0 24px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;padding:32px 0;height:100vh;overflow:auto}
+nav.toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14.5px}
+nav.toc a span{font-variant-numeric:tabular-nums;font-size:13px;opacity:.8}
+nav.toc a.on{background:var(--surface);color:var(--ink);font-weight:700}
+.toc-title{font-family:var(--serif);font-weight:900;font-size:18px;padding:0 10px 14px}
+main{min-width:0;padding-bottom:80px}
+section{padding:56px 0 8px;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.sec-head{display:flex;gap:16px;align-items:baseline;margin-bottom:18px}
+.sec-no{font-family:var(--serif);font-weight:900;font-size:40px;color:var(--line);line-height:1}
+h2{font-size:28px;font-weight:900}
+h3{font-size:19px;margin:34px 0 10px}
+.lead{color:var(--muted);max-width:66ch}
+.prose{max-width:68ch}
+
+/* hero */
+.hero{padding:44px 0 24px}
+.hero .code{font-size:14px;color:var(--muted);margin-bottom:6px}
+.hero h1{font-size:clamp(34px,5.5vw,56px);font-weight:900;letter-spacing:.02em}
+.hero .one{font-size:18px;max-width:60ch;margin:16px 0 0;color:var(--muted)}
+.hero-fig{background:var(--surface);border-radius:20px;margin-top:28px;padding:14px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+.goal{border-left:4px solid var(--c);padding:6px 0 6px 14px;font-size:15px}
+
+/* panels */
+.panel{background:var(--surface);border-radius:16px;padding:22px;margin:16px 0}
+.panel.flat{background:var(--surface2)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font-size:15px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hint{font-size:14px;color:var(--muted)}
+.callout{border-left:4px solid var(--warn);background:var(--surface2);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;font-size:15px}
+.callout.exam{border-color:var(--txt)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:14px}
+
+/* modality chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+
+/* matcher */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.match .col{display:flex;flex-direction:column;gap:10px}
+.mitem{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15px;transition:border-color .2s,background .2s,transform .2s}
+.mitem small{display:block;color:var(--muted);font-size:13px}
+.mitem.sel{border-color:var(--ink);transform:translateX(4px)}
+.mitem.done{border-color:var(--c,var(--ok));background:var(--surface2);cursor:default}
+.mitem.wrong{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:1.8em;margin-top:12px;font-size:15px}
+.feedback.ok{color:var(--ok)} .feedback.bad{color:var(--bad)}
+
+/* timeline */
+.steps{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stage-viz{min-height:130px;display:flex;align-items:center;justify-content:center}
+.stage-viz .blk{display:inline-block;width:34px;height:34px;border-radius:6px;margin:2px;transition:all .5s}
+
+/* align toggle */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.compare>div{padding:18px}
+.compare>div+div{border-left:1px solid var(--line)}
+.compare .big{font-family:var(--serif);font-weight:900;font-size:22px;margin-bottom:6px}
+
+/* fusion */
+.meter{height:14px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:6px 0}
+.meter>i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .7s cubic-bezier(.3,.8,.3,1),background .4s}
+.flow{stroke-dasharray:6 7;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.jitter{animation:jit .25s steps(2) infinite}
+@keyframes jit{50%{transform:translate(1.5px,-1px)}}
+.fusion-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.pc{font-size:15px}
+.pc b{display:block;font-size:14px;color:var(--muted);font-weight:500}
+
+/* clip */
+.mat{display:grid;gap:4px;font-size:13px}
+.mat .cell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;transition:background .5s,color .5s}
+.mat .lab{display:flex;align-items:center;justify-content:center;font-size:22px}
+.mat .tlab{font-size:12px;text-align:center;color:var(--muted);display:flex;align-items:flex-end;justify-content:center;line-height:1.3}
+.zs-imgs{display:flex;gap:10px;flex-wrap:wrap}
+.zs-img{font-size:38px;width:72px;height:72px;border-radius:16px;border:2px solid var(--line);background:var(--surface2);display:flex;align-items:center;justify-content:center}
+.zs-img[aria-pressed="true"]{border-color:var(--img);box-shadow:0 0 0 3px color-mix(in srgb,var(--img) 25%,transparent)}
+.bar{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.bar .track{height:22px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;width:0;background:var(--txt);border-radius:6px;transition:width .8s cubic-bezier(.3,.8,.3,1)}
+.bar.win .fill{background:var(--img)}
+.bar.win{font-weight:700}
+.bar .num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.flip{perspective:900px;height:150px;border:0;background:none;padding:0;text-align:left}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flip[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:center}
+.flip .f{background:var(--surface);border:1.5px solid var(--line)}
+.flip .f strong{font-family:var(--serif);font-size:22px}
+.flip .f span{color:var(--muted);font-size:14px}
+.flip .b{background:var(--ink);color:var(--bg);transform:rotateY(180deg);font-size:15px}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.pnode{border:2px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;font-size:14px;background:var(--surface);transition:all .35s}
+.pnode b{display:block;font-size:16px}
+.pnode.on{border-color:var(--aud);background:color-mix(in srgb,var(--aud) 14%,var(--surface));transform:translateY(-3px)}
+.pnode.past{border-color:color-mix(in srgb,var(--aud) 45%,var(--line))}
+.pout{background:var(--surface2);border-radius:12px;padding:14px 16px;min-height:84px;font-size:15px}
+.wave{display:flex;gap:3px;align-items:center;height:30px}
+.wave i{width:4px;background:var(--aud);border-radius:2px;animation:wv 1s ease-in-out infinite}
+@keyframes wv{50%{transform:scaleY(.3)}}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+
+/* strategies */
+.strat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.strat button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;text-align:left;font-size:15px}
+.strat button[aria-pressed="true"]{border-color:var(--ink)}
+.verdict{font-family:var(--serif);font-weight:900;font-size:20px}
+
+details{border-bottom:1px solid var(--line)}
+details summary{cursor:pointer;padding:12px 4px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"+";font-weight:900;width:14px;color:var(--muted)}
+details[open] summary::before{content:"−"}
+details .body{padding:0 4px 14px 30px;font-size:15px}
+.tag{font-size:12.5px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums;min-width:80px}
+
+/* quiz */
+.qcard{background:var(--surface);border-radius:16px;padding:24px}
+.qtop{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
+.qtext{font-size:18px;font-weight:700;margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15.5px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+.opt.wrongpick{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.opt:disabled{cursor:default}
+.expl{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15px;display:none}
+.expl.show{display:block}
+.progress{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;margin-bottom:14px}
+.progress i{display:block;height:100%;background:var(--txt);transition:width .4s}
+
+.traps label{display:flex;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:15px}
+.traps input{width:18px;height:18px;margin-top:4px;flex:none;accent-color:var(--ok)}
+.traps label.chk>span{color:var(--muted)}
+.traps em{font-style:normal;font-weight:700}
+
+/* mobile */
+@media (max-width:860px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+  nav.toc{position:sticky;top:0;height:auto;z-index:10;background:var(--bg);display:flex;overflow-x:auto;padding:8px 0;padding-top:calc(8px + env(safe-area-inset-top,0px));gap:4px;border-bottom:1px solid var(--line)}
+  .toc-title{display:none}
+  nav.toc a{white-space:nowrap;flex:none}
+  .match,.stage,.fusion-meta,.compare{grid-template-columns:1fr}
+  .compare>div+div{border-left:0;border-top:1px solid var(--line)}
+  .pipe{grid-template-columns:repeat(5,minmax(90px,1fr));overflow-x:auto}
+  .bar{grid-template-columns:110px 1fr 56px}
+  h2{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* ===== page-specific ===== */
+.sld{display:grid;grid-template-columns:150px 1fr 70px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.sld input{width:100%;accent-color:var(--ink)}
+.sld output{text-align:right;font-variant-numeric:tabular-nums}
+.facets{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.facet{border:2px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--surface);font-size:14px;transition:border-color .3s}
+.facet b{display:block;font-size:15px}
+.facet.badf{border-color:var(--bad)}
+.genout{background:var(--surface2);border-radius:12px;padding:14px 16px;margin-top:14px;font-size:15px;min-height:70px}
+.recs{display:flex;flex-direction:column;gap:6px;font-size:14px;font-family:ui-monospace,Menlo,Consolas,monospace}
+.rec{border:1.5px solid var(--line);border-radius:8px;padding:6px 10px;background:var(--surface);transition:all .45s;overflow-wrap:anywhere}
+.rec.gone{opacity:.25;text-decoration:line-through}
+.rec.dup{border-color:var(--warn)}
+.rec.pii{border-color:var(--sen)}
+.rec.fix{border-color:var(--ok)}
+.router{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.rnode{border:2px solid var(--line);border-radius:12px;padding:12px;background:var(--surface);transition:all .35s;font-size:14px}
+.rnode b{display:block;font-size:16px;font-family:var(--serif)}
+.rnode.on{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface));transform:translateY(-3px)}
+.rnode.no{opacity:.45}
+.gate{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.gate button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px;text-align:left;font-size:14.5px}
+.gate button[aria-pressed="true"]{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 10%,var(--surface))}
+.gate button b{display:block;font-size:15.5px}
+.leak{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.leak span{border-radius:999px;padding:4px 12px;font-size:14px;font-weight:700;transition:all .3s}
+.leak .y{background:color-mix(in srgb,var(--bad) 16%,var(--surface));color:var(--bad)}
+.leak .n{background:color-mix(in srgb,var(--ok) 16%,var(--surface));color:var(--ok)}
+@media (max-width:860px){
+  .facets{grid-template-columns:1fr 1fr}
+  .router,.gate{grid-template-columns:1fr}
+  .sld{grid-template-columns:96px 1fr 56px}
+}
+@keyframes pop{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:none}}
+svg g[style*="pop"]{transform-box:fill-box;transform-origin:center}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="toc" aria-label="章節">
+  <div class="toc-title">生成式 AI 的資料</div>
+  <a href="#intro"><span>●</span>導覽與目標</a>
+  <a href="#s1"><span>39.1</span>生成 vs 鑑別</a>
+  <a href="#s2"><span>39.2</span>資料選擇四面向</a>
+  <a href="#s3"><span>39.3</span>語料工程</a>
+  <a href="#s4"><span>39.4</span>重訓 vs RAG</a>
+  <a href="#s5"><span>39.5</span>合成資料</a>
+  <a href="#s6"><span>39.6</span>應用與治理</a>
+  <a href="#s7"><span>39.7</span>官方考題</a>
+  <a href="#s8"><span>39.8</span>易錯與測驗</a>
+</nav>
+
+<main>
+<!-- HERO -->
+<section id="intro" class="hero">
+  <div class="code">L22403　中級 AI 應用規劃師（大數據分析）　建議 35 分鐘</div>
+  <h1>大數據在生成式AI中的應用</h1>
+  <p class="one">本節不考擴散模型或 LoRA 怎麼運作（那是 <a href="L21103_generative_ai.html">L21103</a> 的範圍），只考<b>大數據怎麼「餵養」與「約束」生成式 AI</b>：語料怎麼選、怎麼清、怎麼更新、怎麼治理。讀的時候一直問自己：「這句話是在講<b>模型</b>，還是在講<b>資料</b>？」</p>
+  <div class="hero-fig" aria-hidden="true">
+    <svg id="heroSvg" viewBox="0 0 720 300">
+      <defs>
+        <path id="hp0" d="M130 45 C 230 45, 250 150, 330 150"/>
+        <path id="hp1" d="M130 115 C 230 115, 250 150, 330 150"/>
+        <path id="hp2" d="M130 185 C 230 185, 250 150, 330 150"/>
+        <path id="hp3" d="M130 255 C 230 255, 250 150, 330 150"/>
+        <path id="hp4" d="M450 150 L 590 150"/>
+      </defs>
+      <g fill="none" stroke-width="2" opacity=".35">
+        <use href="#hp0" stroke="var(--txt)"/><use href="#hp1" stroke="var(--img)"/>
+        <use href="#hp2" stroke="var(--aud)"/><use href="#hp3" stroke="var(--sen)"/>
+        <use href="#hp4" stroke="var(--ink)"/>
+      </g>
+      <g font-family="Noto Sans TC, sans-serif" font-size="15" font-weight="700">
+        <rect x="10" y="25" width="120" height="40" rx="20" fill="var(--txt)"/><text x="70" y="50" text-anchor="middle" fill="#fff">① 多樣性</text>
+        <rect x="10" y="95" width="120" height="40" rx="20" fill="var(--img)"/><text x="70" y="120" text-anchor="middle" fill="#fff">② 代表性</text>
+        <rect x="10" y="165" width="120" height="40" rx="20" fill="var(--aud)"/><text x="70" y="190" text-anchor="middle" fill="#fff">③ 品質</text>
+        <rect x="10" y="235" width="120" height="40" rx="20" fill="var(--sen)"/><text x="70" y="260" text-anchor="middle" fill="#fff">④ 時效性</text>
+        <rect x="330" y="95" width="120" height="110" rx="16" fill="var(--surface2)" stroke="var(--ink)" stroke-width="2"/>
+        <text x="390" y="140" text-anchor="middle" fill="var(--ink)" font-size="14">語料工程</text>
+        <text x="390" y="162" text-anchor="middle" fill="var(--ink)" font-size="13" font-weight="500">清洗．去重．治理</text>
+        <rect x="590" y="120" width="120" height="60" rx="12" fill="var(--ink)"/>
+        <text x="650" y="148" text-anchor="middle" fill="var(--bg)">生成式</text>
+        <text x="650" y="168" text-anchor="middle" fill="var(--bg)">AI</text>
+      </g>
+      <g class="movers">
+        <rect width="12" height="12" rx="3" fill="var(--txt)" x="-6" y="-6"><animateMotion dur="2.4s" repeatCount="indefinite"><mpath href="#hp0"/></animateMotion></rect>
+        <rect width="12" height="12" rx="3" fill="var(--img)" x="-6" y="-6"><animateMotion dur="2.4s" begin=".3s" repeatCount="indefinite"><mpath href="#hp1"/></animateMotion></rect>
+        <rect width="12" height="12" rx="3" fill="var(--aud)" x="-6" y="-6"><animateMotion dur="2.4s" begin=".6s" repeatCount="indefinite"><mpath href="#hp2"/></animateMotion></rect>
+        <rect width="12" height="12" rx="3" fill="var(--sen)" x="-6" y="-6"><animateMotion dur="2.4s" begin=".9s" repeatCount="indefinite"><mpath href="#hp3"/></animateMotion></rect>
+        <circle r="6" fill="var(--ink)"><animateMotion dur="1.2s" begin="1.2s" repeatCount="indefinite"><mpath href="#hp4"/></animateMotion></circle>
+      </g>
+    </svg>
+  </div>
+  <h3>學完這一課，你應該能夠</h3>
+  <div class="goals">
+    <div class="goal" style="--c:var(--txt)">說出生成式與鑑別式 AI 在<b>資料需求</b>上的根本差異</div>
+    <div class="goal" style="--c:var(--img)">複述資料選擇<b>四個面向</b>，並辨識題幹是哪一個面向出了問題</div>
+    <div class="goal" style="--c:var(--aud)">判斷大規模異質語料的處理架構，說明為何<b>不宜用生成式模型自動清資料</b></div>
+    <div class="goal" style="--c:var(--sen)">分辨<b>重新訓練</b>與<b>RAG</b> 的分工，並辨識合成資料、Domain Gap 與順序陷阱</div>
+  </div>
+  <p class="hint" style="margin-top:20px">本頁每個顏色固定代表資料選擇的一個面向：<span class="chip" style="--c:var(--txt)"><i class="dot"></i>多樣性</span>　<span class="chip" style="--c:var(--img)"><i class="dot"></i>代表性</span>　<span class="chip" style="--c:var(--aud)"><i class="dot"></i>品質</span>　<span class="chip" style="--c:var(--sen)"><i class="dot"></i>時效性</span></p>
+  <p class="hint">與 <a href="L22402_bigdata_discriminative_ai.html">L22402（大數據在鑑別式AI中的應用）</a>成對出現，兩節合起來是官方第六章的骨幹。官方篇幅 3,066 字（不計空白，與 28 號總覽同一基準），是 L22 十三個知識點裡<b>最短的一個</b>。</p>
+</section>
+
+<!-- 39.1 -->
+<section id="s1">
+  <div class="sec-head"><span class="sec-no">39.1</span><h2>生成式 vs 鑑別式：資料需求的根本落差</h2></div>
+  <p class="lead">官方把兩者放在同一章相鄰兩節，就是要你做對照。先用一張圖看懂「學 P(Y|X)」和「學 P(X)」差在哪。</p>
+
+  <div class="compare">
+    <div><div class="big">鑑別式 P(Y|X)</div>學「輸入 → 輸出」的對應：給一筆資料，判斷它屬於哪一類。<br><span class="hint">產物：一條分界線</span></div>
+    <div><div class="big">生成式 P(X)／P(X, Y)</div>學「資料本身長什麼樣」的分布，再據此產生新內容。<br><span class="hint">產物：可以抽樣的分布</span></div>
+  </div>
+
+  <h3>動手看：同一批資料，兩種學法</h3>
+  <div class="panel">
+    <div class="row" style="justify-content:space-between">
+      <div class="tabs" id="dgTabs" style="margin:0">
+        <button class="btn" data-m="d" aria-pressed="true">鑑別式</button>
+        <button class="btn" data-m="g" aria-pressed="false">生成式</button>
+      </div>
+      <button class="btn primary" id="dgAct">分類一筆新資料</button>
+    </div>
+    <svg id="dgSvg" viewBox="0 0 640 280" style="margin-top:12px" role="img" aria-label="鑑別式與生成式學習示意"></svg>
+    <p class="hint" id="dgNote" style="margin:8px 0 0"></p>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>維度</th><th>鑑別式 AI（<a href="L22402_bigdata_discriminative_ai.html">L22402</a>）</th><th>生成式 AI（本節）</th></tr>
+      <tr><td>學習目標</td><td>學輸入→輸出的對應，即條件機率 P(Y|X)</td><td>學資料本身的分布 P(X)／P(X, Y)，再據此產生新內容</td></tr>
+      <tr><td>資料型態</td><td>多為結構化＋明確標註的樣本</td><td>大量<b>非結構化</b>語料：網頁、開放文本、使用者行為紀錄</td></tr>
+      <tr><td>標註需求</td><td>標註是成本瓶頸，品質直接決定上限</td><td>不以「有標註」為前提，改以<b>語境、邏輯結構、情緒等隱性特徵</b>為學習對象</td></tr>
+      <tr><td>大數據的角色</td><td>提供更多樣本與更細緻的特徵組合，提升泛化與準確度</td><td>官方強調「<b>不只是規模問題</b>」，更關注語料多元性與完整語境維度</td></tr>
+      <tr><td>評估方式</td><td>準確率、F1、AUC 等客觀指標</td><td>自然度、可信度、語境感——偏主觀，且結果不穩定</td></tr>
+      <tr><td>主要風險</td><td>樣本偏差、標註成本、資料不平衡</td><td><b>偏誤放大、內容版權模糊、生成結果不穩定</b></td></tr>
+    </table>
+  </div>
+  <div class="callout exam"><b>關鍵詞：「開放性」與「語意驅動」。</b>官方用這六個字概括生成式 AI 的資料需求。看到題幹強調「輸入不限於標註好的標準格式」「需分析語境與情緒」，就是在問生成式那一欄。</div>
+</section>
+
+<!-- 39.2 -->
+<section id="s2">
+  <div class="sec-head"><span class="sec-no">39.2</span><h2>資料選擇的四個面向</h2></div>
+  <p class="lead">本節的主軸。官方明文列出四項，考題幾乎都能對回其中一項。<b>先判斷「哪個面向壞掉」，再選對策。</b></p>
+
+  <h3>語料調配模擬器</h3>
+  <div class="panel">
+    <p class="hint">拖動滑桿調整訓練語料，看四個面向的健康狀態與模型「生成出來的句子」怎麼變（數值與句子皆為示意）。</p>
+    <div class="sld"><span>涵蓋領域數</span><input type="range" id="sDiv" min="1" max="4" value="4" aria-label="涵蓋領域數"><output id="oDiv"></output></div>
+    <div class="sld"><span>醫師語料男性比例</span><input type="range" id="sRep" min="50" max="95" value="55" aria-label="醫師語料男性比例"><output id="oRep"></output></div>
+    <div class="sld"><span>錯字／雜訊比例</span><input type="range" id="sQ" min="0" max="40" value="2" aria-label="雜訊比例"><output id="oQ"></output></div>
+    <div class="sld"><span>語料最新年份</span><input type="range" id="sT" min="2012" max="2025" value="2025" aria-label="語料年份"><output id="oT"></output></div>
+    <div class="facets" id="facets"></div>
+    <div class="genout" id="genOut" aria-live="polite"></div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>面向</th><th>定義</th><th>壞掉時的症狀</th><th>官方舉例</th></tr>
+      <tr><td><span class="chip" style="--c:var(--txt)"><i class="dot"></i>① 多樣性</span><br><small>Diversity</small></td><td>是否涵蓋不同模態、語言風格（正式／口語）、主題與使用情境</td><td>生成內容單調、不自然、<b>無法適應新場景</b></td><td>僅用科技文章訓練 → 無法生成醫療建議；僅用靜態圖片訓練 → 無法處理動態影像</td></tr>
+      <tr><td><span class="chip" style="--c:var(--img)"><i class="dot"></i>② 代表性與偏誤</span><br><small>Representativeness</small></td><td>是否準確涵蓋所欲建模的<b>整體群體</b>，未過度集中於特定族群、文化、語言或背景</td><td>產生<b>系統性偏見</b>（Systematic Bias），影響公平性與可信度</td><td>醫師／工程師預設男性、護士預設女性</td></tr>
+      <tr><td><span class="chip" style="--c:var(--aud)"><i class="dot"></i>③ 品質與正確性</span><br><small>Quality</small></td><td>語法、格式、資訊真實性、無雜訊；廣義還包含<b>意義正確性</b>與資料穩定度</td><td>語意混亂、視覺失真、輸出不可靠</td><td>錯字 → 生成不標準的繁體中文；模糊圖片 → 生成影像失真；雜訊語音 → 語音不自然</td></tr>
+      <tr><td><span class="chip" style="--c:var(--sen)"><i class="dot"></i>④ 時效性與更新</span><br><small>Timeliness</small></td><td>能否即時反映當前環境變化，並維持更新頻率</td><td>輸出與現況脫節，實用性與信任下降</td><td>語料缺少「元宇宙」「碳中和」等近期詞彙；圖像模型停留在舊有風格</td></tr>
+    </table>
+  </div>
+
+  <h3>分辨訣竅：四步診斷</h3>
+  <div class="panel">
+    <div class="steps" id="diagBtns"></div>
+    <div class="stage">
+      <div class="stage-viz" id="diagViz"></div>
+      <div id="diagTxt"></div>
+    </div>
+  </div>
+
+  <h3>代表性偏誤的四個觀察層面</h3>
+  <p class="hint">官方逐條列出，容易被直接拿來當選項。點分頁看每一層。</p>
+  <div class="panel">
+    <div class="tabs" id="biasTabs"></div>
+    <div id="biasBody"></div>
+  </div>
+
+  <h3>題幹關鍵詞速查：配對練習</h3>
+  <div class="panel">
+    <p class="hint">先點左邊的題幹關鍵詞，再點右邊對應的面向與處方。</p>
+    <div class="match" id="kwMatch"></div>
+    <div class="feedback" id="kwFb" aria-live="polite"></div>
+  </div>
+  <details>
+    <summary>展開完整速查表</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>題幹出現這些字</th><th>指向的面向</th><th>對應處方</th></tr>
+        <tr><td>「無法適應新場景」「只用單一領域語料」「輸出單調」</td><td>多樣性</td><td>擴充來源與模態、涵蓋不同語域與情境</td></tr>
+        <tr><td>「刻板印象」「某族群被邊緣化」「系統性偏見」「特定平台用語」</td><td>代表性</td><td>重新取樣／加權、補齊少數群體語料、偏誤稽核</td></tr>
+        <tr><td>「錯字」「模糊」「雜訊」「不符專業標準」「標註錯誤」</td><td>品質</td><td>清洗、過濾、移除錯標樣本</td></tr>
+        <tr><td>「新興詞彙」「與現況脫節」「舊有風格」「即時環境變化」</td><td>時效性</td><td>定期更新語料、改用 RAG 檢索外部知識</td></tr>
+      </table>
+    </div>
+  </details>
+  <div class="callout">官方明講的品質管理策略很樸素——<b>檢查缺失率</b>這一類基本指標，再搭配資料治理確保符合應用需求與倫理規範（如《個人資料保護法》）。不要在這一節硬塞進階的資料品質框架，官方沒寫，考題也不會問。</div>
+</section>
+
+<!-- 39.3 -->
+<section id="s3">
+  <div class="sec-head"><span class="sec-no">39.3</span><h2>語料工程：大規模、異質、非結構化</h2></div>
+  <p class="lead">生成式 AI 的語料同時是「量大」與「型態雜」，114-2 第 24 題直接考成情境題。按「下一步」，跟著一批原始紀錄走完整條處理管線。</p>
+
+  <div class="panel">
+    <div class="pipe" id="pipe"></div>
+    <div class="stage">
+      <div class="recs" id="recs"></div>
+      <div class="pout" id="pout" aria-live="polite"></div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn primary" id="pipeNext">下一步</button>
+      <button class="btn" id="pipeReset">從頭開始</button>
+    </div>
+  </div>
+
+  <h3>三個常被設計成誘答的做法</h3>
+  <p class="hint">情境：要用客服紀錄、產品評論、影像、表格等數千萬筆異質資料訓練生成式 AI。點選每個做法看結果。</p>
+  <div class="panel">
+    <div class="strat" id="strat"></div>
+    <div style="margin-top:18px">
+      <div class="verdict" id="stratV">選一個做法試試</div>
+      <div class="meter" style="height:18px;margin:10px 0"><i id="stratM" style="width:0"></i></div>
+      <div id="stratWhy" class="hint"></div>
+    </div>
+  </div>
+  <div class="callout"><b>本節最值得記的一句話：生成式模型不適合拿來當資料清洗的裁判。</b>它沒有事實查核能力，錯誤會被寫進語料再被下一輪訓練放大。同樣邏輯延伸：用模型產出的內容再回頭大量訓練同一類模型，研究上已觀察到分布尾端逐漸流失的「<b>模型崩潰（Model Collapse）</b>」風險。</div>
+
+  <h3>去重為什麼在生成式語料特別重要</h3>
+  <details><summary>網路語料天然大量重複</summary><div class="body">轉載、鏡像站、樣板頁到處都是，<b>重複片段會被模型過度記憶</b>。</div></details>
+  <details><summary>記憶化 → 版權與個資風險</summary><div class="body">記憶化（Memorization）會提高<b>逐字吐出訓練內容</b>的機率，直接牽動版權與個資風險。</div></details>
+  <details><summary>評估分數虛高</summary><div class="body">若重複樣本同時出現在訓練與評估集，評估分數會虛高——這與 <a href="L22201_data_collection_cleaning.html">L22201</a>／<a href="L22302_bigdata_analysis_methods.html">L22302</a> 的資料洩漏是同一個病根。</div></details>
+</section>
+
+<!-- 39.4 -->
+<section id="s4">
+  <div class="sec-head"><span class="sec-no">39.4</span><h2>時效性的兩條解法：重新訓練 vs 檢索增強</h2></div>
+  <p class="lead">官方指引只講「要更新」，沒講方法；但 115-1 第 36 題把 RAG 放進選項辨析，所以<b>要知道 RAG 是什麼、更要知道它不適合什麼</b>。</p>
+
+  <h3>情境路由器：這個需求該走哪條路？</h3>
+  <div class="panel">
+    <p class="hint">點一個情境，看哪個解法亮起來。</p>
+    <div class="tabs" id="rtTabs"></div>
+    <div class="router" id="router">
+      <div class="rnode" data-k="ft"><b>重新訓練／微調</b>更新模型權重<br><span class="hint">成本高，週期長</span></div>
+      <div class="rnode" data-k="rag"><b>RAG</b>檢索片段放進提示詞，不改權重<br><span class="hint">成本低，可即時更新</span></div>
+      <div class="rnode" data-k="sql"><b>Text-to-SQL Agent</b>LLM 翻成 SQL，資料庫引擎執行<br><span class="hint">成本中</span></div>
+    </div>
+    <p id="rtWhy" style="margin:14px 0 0" aria-live="polite"></p>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>解法</th><th>做法</th><th>成本</th><th>適合</th><th>不適合</th></tr>
+      <tr><td><b>重新訓練／微調</b></td><td>把新語料納入訓練，更新模型權重</td><td>高，週期長</td><td>需要改變模型的語言風格、領域能力</td><td>每天變動的事實性資訊</td></tr>
+      <tr><td><b>檢索增強生成（RAG）</b></td><td>查詢時先從外部知識庫檢索相關片段，放進提示詞再生成；<b>不改模型權重</b></td><td>低，可即時更新</td><td>企業內部文件問答、法規與產品資訊查詢、降低幻覺</td><td><b>大規模數值聚合與精確統計查詢</b></td></tr>
+      <tr><td><b>Text-to-SQL Agent</b></td><td>由 LLM 把自然語言翻成 SQL，<b>交由資料庫引擎執行</b></td><td>中</td><td>需要高精確性、可擴展、且要沿用資料庫層級權限控管與查詢審計的場景</td><td>沒有結構化資料表可查的自由文本問答</td></tr>
+    </table>
+  </div>
+  <div class="callout exam"><b>115-1 第 36 題分辨關鍵：</b>題幹出現「<b>高精確性</b>」「<b>資料庫層級的權限控管與查詢審計</b>」「結果由<b>資料庫引擎精確執行</b>」→ 選 Text-to-SQL，不是 RAG。RAG 的答案是模型<b>生成</b>的，數百億筆紀錄的聚合無法保證正確，也不可稽核。</div>
+
+  <h3>RAG 一次查詢的旅程</h3>
+  <div class="panel">
+    <div class="steps" id="ragBtns"></div>
+    <svg id="ragSvg" viewBox="0 0 660 230" role="img" aria-label="RAG 流程"></svg>
+    <p id="ragTxt" style="margin:8px 0 0"></p>
+  </div>
+
+  <h3>RAG 的資料面：向量資料庫放哪裡？（115-1 第 13 題）</h3>
+  <div class="panel">
+    <p class="hint">先點需求，再點最適合的資料庫。</p>
+    <div class="match" id="dbMatch"></div>
+    <div class="feedback" id="dbFb" aria-live="polite"></div>
+  </div>
+  <div class="callout">這題的正解概念是<b>多元持久化（Polyglot Persistence）</b>：依各系統需求選最適資料庫，不是「統一技術棧最省事」。這個考點主場在 <a href="L22202_data_storage_management.html">L22202</a>，本節只要能把向量資料庫接回 RAG 即可。</div>
+</section>
+
+<!-- 39.5 -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-no">39.5</span><h2>合成資料與資料增強</h2></div>
+  <p class="lead">官方把 Synthetic Data 列為生成式 AI 的典型應用情境（四大應用之一），用途有三。</p>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>用途</th><th>說明</th><th>常見手法</th></tr>
+      <tr><td><b>增補訓練資料</b></td><td>解決樣本不足或不平衡（如少數族群語料）</td><td>SMOTE、生成模型、資料增強</td></tr>
+      <tr><td><b>模擬罕見情境</b></td><td>生成詐欺行為資料、模擬感測器故障</td><td>模擬器、GAN</td></tr>
+      <tr><td><b>強化模型魯棒性</b></td><td>測試模型在異常情況下的表現</td><td>對抗樣本、擾動增強</td></tr>
+    </table>
+  </div>
+
+  <h3>陷阱 1：SMOTE 的順序（115-1 第 32 題）</h3>
+  <div class="panel">
+    <p class="hint">紅點是少數類（例：罕病確診）。SMOTE 會在少數類樣本之間「內插」出新點。比較兩種順序，注意新點會不會長在<b>測試集</b>樣本旁邊。</p>
+    <div class="tabs" id="smTabs" style="margin-bottom:0">
+      <button class="btn" data-m="bad" aria-pressed="false">先 SMOTE 全體，再切分</button>
+      <button class="btn" data-m="good" aria-pressed="false">先切分，只對訓練集 SMOTE</button>
+    </div>
+    <svg id="smSvg" viewBox="0 0 640 230" style="margin-top:12px" role="img" aria-label="SMOTE 順序示意"></svg>
+    <p class="hint" style="margin:6px 0 10px"><span class="chip" style="--c:var(--bad)"><i class="dot"></i>少數類（訓練）</span>　<span class="chip"><i class="dot" style="background:none;border:2.5px solid var(--bad)"></i>少數類（測試）</span>　<span class="chip" style="--c:color-mix(in srgb,var(--bad) 55%,transparent)"><i class="dot"></i>SMOTE 新點</span>　<span class="chip" style="--c:var(--warn)"><i class="dot"></i>由測試樣本內插出的新點（洩漏）</span></p>
+    <div class="row" style="justify-content:space-between"><b>測試集 AUC（示意）</b><span id="smNum" style="font-variant-numeric:tabular-nums">—</span></div>
+    <div class="meter"><i id="smMeter" style="width:0"></i></div>
+    <p class="hint" id="smNote" style="margin:6px 0 0">選一種順序開始。</p>
+  </div>
+
+  <h3>三個高頻陷阱（點卡片翻面）</h3>
+  <div class="cards" id="cards"></div>
+
+  <h3>陷阱 2：Domain Gap 示意</h3>
+  <div class="panel">
+    <p class="hint">拖動「合成資料占比」，比較模型在<b>合成驗證集</b>與<b>真實世界</b>的表現（示意數值）。</p>
+    <div class="sld"><span>合成資料占比</span><input type="range" id="dgap" min="0" max="100" step="10" value="50" aria-label="合成資料占比"><output id="dgapO"></output></div>
+    <div id="gapBars"></div>
+    <p class="hint" id="gapNote" style="margin:6px 0 0"></p>
+  </div>
+
+  <h3>合成資料 vs 真實資料</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>維度</th><th>真實資料</th><th>合成資料</th></tr>
+      <tr><td>取得成本</td><td>高（蒐集＋標註）</td><td>低，可大量產生</td></tr>
+      <tr><td>隱私風險</td><td>高，需去識別化</td><td>低（若以差分隱私方式生成，隱私預算在生成階段一次付清）</td></tr>
+      <tr><td>罕見情境覆蓋</td><td>不足，天然稀少</td><td><b>可主動補足</b>（詐欺、故障、少數族群語料）</td></tr>
+      <tr><td>分布保真度</td><td>就是真實分布</td><td>有 <b>Domain Gap</b>，尾端與極端情況常失真</td></tr>
+      <tr><td>適合的角色</td><td>訓練＋<b>最終驗證</b></td><td>訓練補強、壓力測試；<b>不宜單獨作為驗收依據</b></td></tr>
+    </table>
+  </div>
+  <div class="callout exam"><b>115-1 第 38 題順帶考的定義：</b><b>差分隱私合成資料</b>是「先以滿足差分隱私的方式訓練生成模型，再由該模型產出可自由發布的合成資料集」，不是「在發布查詢結果或訓練時直接對原始資料加雜訊」——後者講的是差分隱私的一般機制（Laplace／Gaussian 機制）。這題主場在 <a href="L22404_privacy_security_compliance.html">L22404</a>，但語彙會回流到本節。</div>
+</section>
+
+<!-- 39.6 -->
+<section id="s6">
+  <div class="sec-head"><span class="sec-no">39.6</span><h2>應用情境與資料來源治理</h2></div>
+  <h3 style="margin-top:0">官方列出的四類應用</h3>
+  <div class="panel">
+    <div class="tabs" id="appTabs"></div>
+    <div id="appBody"></div>
+  </div>
+
+  <h3>資料來源治理的三道關卡</h3>
+  <div class="panel">
+    <p class="hint">情境（114-2 第 32 題）：模型回覆中出現真實姓名、電話、交易資訊。開關下面的防護，看哪些資訊仍會洩漏（示意）。</p>
+    <div class="gate" id="gate"></div>
+    <div class="leak" id="leak" aria-live="polite"></div>
+    <p id="leakNote" style="margin:12px 0 0"></p>
+  </div>
+  <details><summary>① 入料端（訓練前）</summary><div class="body">來源可追溯：記錄授權狀態、抓取條款、資料卡（Data Card）<br>個資處理：匿名化（Anonymization）／偽匿名化（Pseudonymization）<br>版權過濾：排除明確受保護且未獲授權的內容</div></details>
+  <details><summary>② 訓練端</summary><div class="body">去重與記憶化控制、敏感詞與有害內容過濾</div></details>
+  <details><summary>③ 出料端（生成後）</summary><div class="body">輸出內容稽核機制：攔截真實姓名、電話、交易資訊等可識別內容<br>來源標示：AI 生成內容標記</div></details>
+
+  <div class="callout exam"><b>114-2 第 32 題</b>正解是「<b>訓練前匿名化／偽匿名化 ＋ 建立輸出內容稽核機制</b>」，也就是入料端與出料端要雙重防護。三個誘答錯在：以強化學習微調「教模型別說」無法保證不洩漏已記憶的資訊；同態加密是密文運算情境，防不了模型生成已學得的個資；只隱藏姓名仍會洩漏電話與交易資訊。</div>
+  <p class="prose"><b>版權部分</b>，官方僅以「<b>內容版權模糊</b>」帶過，不會考具體法條；考的是觀念：生成內容的授權狀態取決於<b>訓練資料來源是否可追溯與合法</b>，這與《個人資料保護法》的合規要求是兩條獨立但並行的義務。</p>
+</section>
+
+<!-- 39.7 -->
+<section id="s7">
+  <div class="sec-head"><span class="sec-no">39.7</span><h2>官方考過什麼</h2></div>
+  <p class="lead"><b>計數基準：</b>以 114-2＋115-1 共 100 題的<b>題幹或選項文字</b>是否直接出現「生成式 AI／生成對抗網路／檢索增強生成（RAG）」為準（不計解析中才提及者），直接命中 <b>3 題</b>：114-2 第 24 題、114-2 第 32 題、115-1 第 36 題。另有 <b>5 題</b>與本節的合成資料、資料多樣性、向量檢索重疊，但主場在其他知識點。</p>
+  <div class="row" style="margin-bottom:8px">
+    <button class="btn" data-f="all" aria-pressed="true">全部 8 題</button>
+    <button class="btn" data-f="hit" aria-pressed="false">直接命中 3 題</button>
+    <button class="btn" data-f="ov" aria-pressed="false">重疊 5 題</button>
+  </div>
+  <div id="examList"></div>
+  <div class="callout exam">官方的出題習慣：<b>不考生成式模型怎麼運作，只考它的資料怎麼準備、怎麼治理</b>。題型幾乎都是長情境題，勝負在「題幹裡哪一個限制條件最硬」。</div>
+</section>
+
+<!-- 39.8 -->
+<section id="s8">
+  <div class="sec-head"><span class="sec-no">39.8</span><h2>易錯與陷阱</h2></div>
+  <p class="lead">逐條確認自己真的懂了再打勾（打勾狀態會記在這台裝置上）。</p>
+  <div class="traps" id="traps"></div>
+  <p class="hint" id="trapCount" style="margin-top:10px"></p>
+
+  <h3>情境測驗</h3>
+  <div class="qcard" id="quiz"></div>
+
+  <h3>延伸練習</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>資源</th><th>用法</th></tr>
+      <tr><td>L22 主題庫（290 題）→ 大數據在生成式AI中的應用</td><td>官方篇幅最短、觀念固定，<b>優先刷完再回頭看 39.2 的四面向表</b></td></tr>
+      <tr><td>L22 歷屆 100 題</td><td>本節相關題全是長情境題，練「從題幹抓最硬的限制條件」；卡住就回 39.7 的正解思路欄</td></tr>
+    </table>
+  </div>
+  <p class="prose hint" style="margin-top:12px">建議與 <a href="L22402_bigdata_discriminative_ai.html">L22402（鑑別式 AI）</a>連著讀，兩節的對照表就是 39.1；個資與去識別化的細節則在 <a href="L22404_privacy_security_compliance.html">L22404</a>，本節只需記到「入料匿名化＋出料稽核」的層級。</p>
+</section>
+</main>
+
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce){const m=document.querySelector('#heroSvg .movers');if(m)m.remove();}
+const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+
+/* ---------- generic matcher ---------- */
+function matcher(root,fb,left,right,doneMsg,badMsg){
+  let sel=null,done=0;
+  const L=document.createElement('div');L.className='col';
+  const R=document.createElement('div');R.className='col';
+  left.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;
+    b.innerHTML=it.html;if(it.c)b.style.setProperty('--c',it.c);
+    b.onclick=()=>{if(b.classList.contains('done'))return;L.querySelectorAll('.mitem').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;fb.textContent='';fb.className='feedback';};
+    L.appendChild(b);
+  });
+  right.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;b.innerHTML=it.html;
+    b.onclick=()=>{
+      if(b.classList.contains('done'))return;
+      if(!sel){fb.textContent='請先點左邊一個項目。';fb.className='feedback';return;}
+      if(sel.dataset.k===b.dataset.k){
+        const c=sel.style.getPropertyValue('--c');
+        [sel,b].forEach(x=>{x.classList.remove('sel');x.classList.add('done');if(c)x.style.setProperty('--c',c);});
+        fb.textContent='✓ '+(it.ok||'答對了！');fb.className='feedback ok';sel=null;done++;
+        if(done===left.length){fb.textContent='✓ 全部配對完成！'+doneMsg;}
+      }else{
+        b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');
+        fb.textContent='✗ '+(it.bad||badMsg||'不太對，再想想看。');fb.className='feedback bad';
+      }
+    };
+    R.appendChild(b);
+  });
+  root.append(L,R);
+}
+/* ---------- flip cards ---------- */
+function flips(root,list){
+  list.forEach(([n,o,d])=>{
+    const b=document.createElement('button');b.className='flip';b.setAttribute('aria-pressed','false');
+    b.innerHTML=`<div class="in"><div class="f"><strong>${n}</strong><span>${o}</span><span style="margin-top:auto;font-size:12.5px">點我翻面</span></div><div class="b">${d}</div></div>`;
+    b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');
+    root.appendChild(b);
+  });
+}
+/* ---------- tabs helper ---------- */
+function tabs(btnRoot,list,render){
+  list.forEach((x,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=x;b.onclick=()=>s(i);btnRoot.appendChild(b);});
+  function s(i){btnRoot.querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));render(i);}
+  s(0);
+}
+/* ---------- exam list ---------- */
+function examList(root,list){
+  list.forEach(([n,k,q,a])=>{root.insertAdjacentHTML('beforeend',`<details><summary><span class="tag">${n}</span>${k}</summary><div class="body"><p style="margin:0 0 6px"><span class="hint">怎麼問：</span>${q}</p><p style="margin:0"><span class="hint">正解思路：</span>${a}</p></div></details>`);});
+}
+/* ---------- traps ---------- */
+function traps(key,T){
+  let saved=[];try{saved=JSON.parse(localStorage.getItem(key)||'[]')||[];}catch(e){saved=[];}
+  T.forEach(([a,b],i)=>{
+    const l=document.createElement('label');const c=saved.includes(i);if(c)l.classList.add('chk');
+    l.innerHTML=`<input type="checkbox" ${c?'checked':''}><div><em>${a}</em><br><span>${b}</span></div>`;
+    l.querySelector('input').onchange=e=>{const on=e.target.checked;l.classList.toggle('chk',on);saved=on?[...new Set([...saved,i])]:saved.filter(x=>x!==i);try{localStorage.setItem(key,JSON.stringify(saved));}catch(err){}count();};
+    $('#traps').appendChild(l);
+  });
+  function count(){$('#trapCount').textContent=`已確認 ${saved.length}／${T.length} 條`;}
+  count();
+}
+/* ---------- quiz ---------- */
+function quiz(Q,msgs){
+  let i=0,score=0;const box=$('#quiz');
+  function show(){
+    if(i>=Q.length){
+      const msg=score>=Q.length-1?msgs[0]:score>=Math.ceil(Q.length*.65)?msgs[1]:msgs[2];
+      box.innerHTML=`<div class="progress"><i style="width:100%"></i></div><div class="qtext" style="font-size:24px;font-family:var(--serif)">得分 ${score}／${Q.length}</div><p>${msg}</p><button class="btn primary" id="qr">重新測驗</button>`;
+      $('#qr').onclick=()=>{i=0;score=0;show();};return;
+    }
+    const [q,opts,ex]=Q[i];
+    const order=shuffle(opts.map((o,k)=>({o,k})));
+    box.innerHTML=`<div class="progress"><i style="width:${i/Q.length*100}%"></i></div><div class="qtop"><span>第 ${i+1}／${Q.length} 題</span><span>得分 ${score}</span></div><div class="qtext">${q}</div><div class="opts">${order.map(x=>`<button class="opt" data-k="${x.k}">${x.o}</button>`).join('')}</div><div class="expl" id="qe"></div><div class="row" style="margin-top:14px;justify-content:flex-end"><button class="btn primary" id="qn" style="display:none">${i===Q.length-1?'看結果':'下一題'}</button></div>`;
+    box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.k==='0';if(ok)score++;
+      box.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.k==='0')x.classList.add('right');});
+      if(!ok)b.classList.add('wrongpick');
+      const e=$('#qe');e.innerHTML=(ok?'<b style="color:var(--ok)">答對了。</b>':'<b style="color:var(--bad)">這題要小心。</b>')+ex;e.classList.add('show');
+      $('#qn').style.display='';$('#qn').focus();
+    });
+    $('#qn').onclick=()=>{i++;show();};
+  }
+  show();
+}
+
+/* ---------- 39.1 discriminative vs generative ---------- */
+(function(){
+  const A=[[110,70],[150,110],[90,130],[170,60],[130,160],[200,120],[70,90],[180,170]];
+  const B=[[400,160],[460,120],[430,210],[520,170],[480,230],[380,220],[540,120],[500,80]];
+  let mode='d',extra=[];
+  const rnd=(m,s)=>m+s*(Math.random()+Math.random()+Math.random()-1.5);
+  function draw(){
+    let h='';
+    if(mode==='d'){
+      h+=`<rect x="0" y="0" width="300" height="280" fill="color-mix(in srgb,var(--txt) 8%,transparent)"/><rect x="300" y="0" width="340" height="280" fill="color-mix(in srgb,var(--sen) 8%,transparent)"/>`;
+      h+=`<line x1="250" y1="0" x2="350" y2="280" stroke="var(--ink)" stroke-width="3" stroke-dasharray="8 6"/>`;
+      h+=`<text x="356" y="24" font-size="14" fill="var(--ink)" font-weight="700">學到的「分界線」P(Y|X)</text>`;
+    }else{
+      [[135,115,'var(--txt)'],[465,165,'var(--sen)']].forEach(([x,y,c])=>{[100,70,40].forEach((r,k)=>{h+=`<ellipse cx="${x}" cy="${y}" rx="${r}" ry="${r*.75}" fill="${c}" opacity="${.08+k*.06}"/>`;});});
+      h+=`<text x="20" y="270" font-size="14" fill="var(--ink)" font-weight="700">學到的「資料分布」P(X)：知道每一類資料長什麼樣</text>`;
+    }
+    A.forEach(([x,y])=>h+=`<circle cx="${x}" cy="${y}" r="8" fill="var(--txt)"/>`);
+    B.forEach(([x,y])=>h+=`<rect x="${x-7}" y="${y-7}" width="14" height="14" rx="3" fill="var(--sen)"/>`);
+    extra.forEach(p=>{
+      if(p.kind==='new')h+=`<g><circle cx="${p.x}" cy="${p.y}" r="11" fill="none" stroke="var(--ink)" stroke-width="2.5"/><circle cx="${p.x}" cy="${p.y}" r="7" fill="${p.c}"/><text x="${p.x+14}" y="${p.y-10}" font-size="13" fill="var(--ink)" font-weight="700">${p.l}</text></g>`;
+      else h+=`<g style="animation:pop .5s"><circle cx="${p.x}" cy="${p.y}" r="8" fill="none" stroke="${p.c}" stroke-width="3"/><text x="${p.x}" y="${p.y+4}" text-anchor="middle" font-size="11" fill="${p.c}" font-weight="700">新</text></g>`;
+    });
+    $('#dgSvg').innerHTML=h;
+  }
+  function note(){
+    $('#dgAct').textContent=mode==='d'?'分類一筆新資料':'讓模型生成新樣本';
+    $('#dgNote').innerHTML=mode==='d'?'鑑別式只在乎「線的哪一邊」。它很會判斷，但<b>沒辦法</b>憑空產生一筆新資料——它根本沒學資料長什麼樣。':'生成式學的是整片分布（色塊）。從分布裡抽樣，就能產生「像真的」新樣本。這也是為什麼它需要大量、多元、有完整語境的語料。';
+  }
+  $$('#dgTabs .btn').forEach(b=>b.onclick=()=>{mode=b.dataset.m;extra=[];$$('#dgTabs .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));note();draw();});
+  $('#dgAct').onclick=()=>{
+    if(mode==='d'){
+      const x=Math.round(60+Math.random()*520),y=Math.round(30+Math.random()*220);
+      const left=x<250+(y/280)*100;
+      extra=[{kind:'new',x,y,c:left?'var(--txt)':'var(--sen)',l:left?'判為 ●':'判為 ■'}];
+    }else{
+      const g=Math.random()<.5;
+      if(extra.length>=8)extra=[];
+      extra.push({kind:'gen',x:Math.round(g?rnd(135,70):rnd(465,70)),y:Math.round(g?rnd(115,50):rnd(165,50)),c:g?'var(--txt)':'var(--sen)'});
+    }
+    draw();
+  };
+  note();draw();
+})();
+
+/* ---------- 39.2 corpus simulator ---------- */
+(function(){
+  const doms=['科技','醫療','法律','生活'];
+  const F=[['多樣性','var(--txt)'],['代表性','var(--img)'],['品質','var(--aud)'],['時效性','var(--sen)']];
+  $('#facets').innerHTML=F.map(([n,c],i)=>`<div class="facet" id="fc${i}" style="--c:${c}"><b><span class="chip" style="--c:${c}"><i class="dot"></i>${n}</span></b><div class="meter"><i id="fm${i}"></i></div><span id="ft${i}"></span></div>`).join('');
+  function typo(s,r){if(r<=10)return s;const m={'的':'得','在':'再','建議':'建意','醫師':'醫帥','多喝水':'多和水','休息':'修息'};let o=s;Object.keys(m).forEach((k,i)=>{if(i<Math.ceil(r/8))o=o.split(k).join(m[k]);});return o;}
+  function upd(){
+    const d=+$('#sDiv').value,r=+$('#sRep').value,q=+$('#sQ').value,t=+$('#sT').value;
+    $('#oDiv').textContent=d+' 類';$('#oRep').textContent=r+'%';$('#oQ').textContent=q+'%';$('#oT').textContent=t;
+    const sc=[d*25,Math.max(10,100-(r-50)*2),Math.max(10,100-q*2.2),Math.max(10,100-(2025-t)*7)];
+    const bad=[d<4,r>70,q>10,t<2021];
+    const tip=[d<4?`只涵蓋：${doms.slice(0,d).join('、')}`:'四類領域都有',r>70?'比例失衡 → 系統性偏見':'比例接近整體群體',q>10?'錯字雜訊多 → 語意混亂':'乾淨',t<2021?'缺近期詞彙 → 與現況脫節':'有近期語料'];
+    sc.forEach((v,i)=>{$('#fm'+i).style.width=v+'%';$('#fm'+i).style.background=bad[i]?'var(--bad)':'var(--ok)';$('#ft'+i).textContent=tip[i];$('#fc'+i).classList.toggle('badf',bad[i]);});
+    let out=[];
+    out.push('<b>使用者：</b>「我最近頭痛，該怎麼辦？也想知道碳中和跟我有什麼關係。」');
+    if(d<2){out.push('<b>模型：</b>「建議您更新驅動程式並重新開機。」<span class="hint">（多樣性：只學過科技文章，無法適應醫療場景）</span>');}
+    else{
+      let a=`醫師建議${r>70?'他':'您'}多喝水、好好休息，若持續不適請就醫。`;
+      a=typo(a,q);
+      let line='<b>模型：</b>「'+a+(t<2021?'至於您提到的詞，我不太確定是什麼意思。':'碳中和是指讓排放與吸收達到平衡。')+'」';
+      const why=[];
+      if(d<4)why.push('多樣性：領域仍不完整，換到'+doms.slice(d).join('、')+'情境就會失常');
+      if(r>70)why.push('代表性：語料中醫師幾乎都是男性，模型預設「醫師＝他」');
+      if(q>10)why.push('品質：錯字被學進去，生成不標準的繁體中文');
+      if(t<2021)why.push('時效性：語料缺「碳中和」這類近期詞彙');
+      out.push(line+(why.length?'<div class="hint">'+why.join('；')+'</div>':'<div class="hint" style="color:var(--ok)">四個面向都健康，輸出自然、中立、正確且跟得上現況。</div>'));
+    }
+    $('#genOut').innerHTML=out.join('<br>');
+  }
+  ['#sDiv','#sRep','#sQ','#sT'].forEach(s=>$(s).addEventListener('input',upd));
+  upd();
+})();
+
+/* ---------- 39.2 diagnosis steps ---------- */
+(function(){
+  const blk=(c,o=1,extra='')=>`<span class="blk" style="background:var(--${c});opacity:${o};${extra}"></span>`;
+  const D=[
+    {b:'沒涵蓋到？',c:'txt',t:'① 多樣性',q:'資料「有沒有涵蓋到」該有的主題、語言風格、模態與情境？',a:'沒涵蓋到 → <b>多樣性</b>出問題。處方：擴充來源與模態、涵蓋不同語域與情境。',viz:()=>blk('txt').repeat(8)+'<div class="hint" style="width:100%;text-align:center">全部都是同一類（只有科技文章）</div>'},
+    {b:'比例失衡？',c:'img',t:'② 代表性',q:'涵蓋到了，但比例跟想建模的整體群體一致嗎？',a:'涵蓋了但<b>比例失衡</b> → <b>代表性</b>。處方：重新取樣／加權、補齊少數群體語料、偏誤稽核。',viz:()=>blk('img').repeat(7)+blk('aud')+'<div class="hint" style="width:100%;text-align:center">兩類都有，但 7：1 嚴重傾斜</div>'},
+    {b:'內容髒／錯？',c:'aud',t:'③ 品質',q:'比例也對了，但內容本身正確、乾淨嗎？',a:'比例對了但<b>內容本身是錯的／髒的</b> → <b>品質</b>。處方：清洗、過濾、移除錯標樣本。',viz:()=>[1,1,.3,1,1,.3,1,1].map((o,i)=>blk(o<1?'bad':'aud',1,o<1?'transform:rotate(18deg)':'')).join('')+'<div class="hint" style="width:100%;text-align:center">混著錯字、雜訊、錯標</div>'},
+    {b:'過期了？',c:'sen',t:'④ 時效性',q:'內容也對了，但是不是已經過期？',a:'內容對了但<b>過期</b> → <b>時效性</b>。處方：定期更新語料、改用 RAG 檢索外部知識。',viz:()=>[.25,.3,.35,.4,.5,.6,.7,.8].map(o=>blk('sen',o)).join('')+'<div class="hint" style="width:100%;text-align:center">愈舊愈淡：缺少近期詞彙與風格</div>'}
+  ];
+  D.forEach((d,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=`${i+1}. ${d.b}`;b.onclick=()=>s(i);$('#diagBtns').appendChild(b);});
+  function s(i){$$('#diagBtns .btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));const d=D[i];
+    $('#diagViz').innerHTML=`<div style="display:flex;flex-wrap:wrap;justify-content:center;max-width:200px">${d.viz()}</div>`;
+    $('#diagTxt').innerHTML=`<p><span class="chip" style="--c:var(--${d.c})"><i class="dot"></i>${d.t}</span></p><p><b>問：</b>${d.q}</p><p>${d.a}</p>`;}
+  s(0);
+})();
+
+/* ---------- 39.2 bias layers ---------- */
+(function(){
+  const L=[['性別與族群','語料過度代表某一性別或種族','生成性別刻板印象語句'],['地區與文化','語料主要來自特定語系（如北美英文新聞）','語言風格與話題難以反映其他地區，造成<b>跨語言應用障礙</b>'],['社經地位','集中於高收入、都市區用戶','對中低收入或偏鄉族群需求理解不足，產生商業與倫理風險'],['資料來源平台','語料主要來自特定社群平台或論壇','無法處理較正式或多元語境的輸入']];
+  tabs($('#biasTabs'),L.map(x=>x[0]),i=>{$('#biasBody').innerHTML=`<p style="margin:0 0 6px"><b>偏斜方向：</b>${L[i][1]}</p><p style="margin:0"><b>後果：</b>${L[i][2]}</p>`;});
+})();
+
+/* ---------- 39.2 keyword matcher ---------- */
+matcher($('#kwMatch'),$('#kwFb'),[
+  {k:'d',c:'var(--txt)',html:'「無法適應新場景」「只用單一領域語料」「輸出單調」'},
+  {k:'r',c:'var(--img)',html:'「刻板印象」「某族群被邊緣化」「特定平台用語」'},
+  {k:'q',c:'var(--aud)',html:'「錯字」「模糊」「雜訊」「不符專業標準」「標註錯誤」'},
+  {k:'t',c:'var(--sen)',html:'「新興詞彙」「與現況脫節」「舊有風格」'}
+],[
+  {k:'t',html:'時效性<small>定期更新語料、改用 RAG 檢索外部知識</small>',ok:'內容對了但過期 → 時效性。'},
+  {k:'q',html:'品質<small>清洗、過濾、移除錯標樣本</small>',ok:'內容本身錯或髒 → 品質（含意義正確性）。'},
+  {k:'d',html:'多樣性<small>擴充來源與模態、涵蓋不同語域與情境</small>',ok:'沒涵蓋到 → 多樣性。'},
+  {k:'r',html:'代表性<small>重新取樣／加權、補齊少數群體語料、偏誤稽核</small>',ok:'涵蓋了但比例失衡 → 代表性。'}
+],'記住口訣：沒涵蓋→多樣性、比例歪→代表性、內容髒→品質、過期→時效性。','用四步診斷再想一次：是沒涵蓋、比例歪、內容髒，還是過期？');
+
+/* ---------- 39.3 corpus pipeline ---------- */
+(function(){
+  const nodes=[['① 資料湖','原始格式落地'],['② 清洗','錯字、亂碼、HTML'],['② 去重','雜湊＋MinHash'],['② 過濾／統一','有害、個資、格式'],['③ 訓練管線','Pipeline']];
+  const R=[
+    ['&lt;div&gt;這款耳機音質超讚!!&lt;/div&gt;','這款耳機音質超讚!!'],
+    ['這款耳機音質超讚!!（轉載）',null],
+    ['客服：王小明 0912-345-678 申請退款',null],
+    ['@@#$%亂碼%%@@',null],
+    ['[影像] product_0423.jpg',null],
+    ['[表格] 品項,銷量 / 耳機,320',null]
+  ];
+  const states=[
+    [['',R[0][0]],['',R[1][0]],['',R[2][0]],['',R[3][0]],['',R[4][0]],['',R[5][0]]],
+    [['fix',R[0][1]],['',R[1][0]],['',R[2][0]],['gone',R[3][0]],['',R[4][0]],['',R[5][0]]],
+    [['',R[0][1]],['dup gone',R[1][0]],['',R[2][0]],['gone',R[3][0]],['',R[4][0]],['',R[5][0]]],
+    [['',R[0][1]],['gone',R[1][0]],['pii fix','客服：[姓名] [電話] 申請退款'],['gone',R[3][0]],['fix','影像特徵向量 ＋ 統一格式'],['fix','{品項:耳機, 銷量:320}']],
+    [['fix',R[0][1]],['gone',R[1][0]],['fix','客服：[姓名] [電話] 申請退款'],['gone',R[3][0]],['fix','影像特徵向量 ＋ 統一格式'],['fix','{品項:耳機, 銷量:320}']]
+  ];
+  const out=[
+    '<b>① 資料湖（Data Lake）</b>：客服紀錄、評論、影像、表格先<b>以原始格式落地</b>，不強迫先定 schema。<div class="hint">異質、量大，先收下來再說。</div>',
+    '<b>② 分散式預處理（Apache Spark／Ray）— 清洗</b>：去除錯字、亂碼、HTML 標籤、樣板文字。<div class="hint">亂碼那筆直接移除；HTML 標籤被剝掉。</div>',
+    '<b>② 去重</b>：精確去重（雜湊比對）＋ 近似去重（MinHash／SimHash）。<div class="hint">「轉載」那筆和第一筆幾乎一樣，被近似去重抓到。重複片段若留著，模型會過度記憶。</div>',
+    '<b>② 過濾＋特徵抽取／格式統一</b>：濾掉低品質、有害內容、<b>個資欄位</b>；影像與表格轉成統一格式。<div class="hint">姓名、電話被遮蔽；這一步若被跳過，就是誘答「直接轉向量餵入訓練」。</div>',
+    '<b>③ 串接訓練管線（Pipeline）</b>：乾淨、去重、統一格式的語料才進入訓練。<div class="hint">這就是 114-2 第 24 題的正解：資料湖＋Spark／Ray 分散式預處理 → 串接訓練管線。</div>'
+  ];
+  let i=0;
+  $('#pipe').innerHTML=nodes.map(([a,b])=>`<div class="pnode"><b>${a}</b>${b}</div>`).join('');
+  function r(){
+    $$('.pnode').forEach((n,j)=>{n.classList.toggle('on',j===i);n.classList.toggle('past',j<i);});
+    $('#recs').innerHTML=states[i].map(([c,t])=>`<div class="rec ${c}">${t}</div>`).join('');
+    $('#pout').innerHTML=out[i];$('#pipeNext').disabled=i===4;$('#pipeNext').style.opacity=i===4?.4:1;
+  }
+  $('#pipeNext').onclick=()=>{if(i<4){i++;r();}};
+  $('#pipeReset').onclick=()=>{i=0;r();};
+  r();
+})();
+
+/* ---------- 39.3 strategy ---------- */
+(function(){
+  const st=[
+    ['單節點高效能伺服器＋批次處理','✗ 難以擴展',35,'var(--bad)','在數千萬～數億筆規模下極易成為瓶頸。'],
+    ['所有文字直接轉向量、以索引方式餵入訓練','✗ 流程不完整',40,'var(--bad)','<b>跳過清理與多模態處理</b>，髒資料、重複與個資全數帶進訓練。'],
+    ['用生成式模型自動清理資料再進下游訓練','✗ 反而降低品質',25,'var(--bad)','可能引入<b>幻覺（Hallucination）與不可控誤差</b>；它沒有事實查核能力，錯誤會被寫進語料再被放大。'],
+    ['資料湖＋Spark／Ray 分散式預處理 → 串接訓練管線','✓ 正解',90,'var(--ok)','先落地原始格式，再分散式清洗、去重、過濾、統一格式，兼顧效率與一致性（114-2 第 24 題）。']
+  ];
+  [2,0,3,1].forEach(i=>{const b=document.createElement('button');b.textContent=st[i][0];b.setAttribute('aria-pressed','false');b.onclick=()=>{$$('#strat button').forEach(x=>x.setAttribute('aria-pressed',x===b));const x=st[i];$('#stratV').textContent=x[1];$('#stratV').style.color=x[3];$('#stratM').style.width=x[2]+'%';$('#stratM').style.background=x[3];$('#stratWhy').innerHTML='語料品質與可擴展性（示意）：'+x[2]+'%　'+x[4];};$('#strat').appendChild(b);});
+})();
+
+/* ---------- 39.4 router ---------- */
+(function(){
+  const S=[
+    ['內部規章問答','員工詢問公司內部請假規定，文件每月更新。','rag','企業內部文件問答是 RAG 的主場：查詢時檢索最新文件片段放進提示詞，<b>不改模型權重</b>，文件更新後立即生效。'],
+    ['改變語氣與領域','希望模型改用公司品牌語氣，並具備特定領域的專業表達。','ft','要改變模型的<b>語言風格、領域能力</b>，就得把新語料納入訓練、更新權重。RAG 只補資訊，不改風格。'],
+    ['每日變動的產品資訊','產品價格與規格每天都在變，客服要即時回答。','rag','每天變動的事實性資訊<b>不適合重新訓練</b>（成本高、週期長）；RAG 可即時更新外部知識庫。'],
+    ['數百億筆聚合查詢','資料湖有數百億筆交易，要用自然語言問「上季各區營收總和」，需高精確性與資料庫層級的權限控管、查詢審計。','sql','115-1 第 36 題：高精確性＋資料庫層級權限與審計 → <b>Text-to-SQL</b>，由資料庫引擎精確執行。RAG 的答案是生成的，大規模數值聚合無法保證正確，也不可稽核。'],
+    ['純自由文本問答','只有大量會議記錄與文章，沒有任何結構化資料表。','rag','沒有結構化資料表可查，Text-to-SQL 無用武之地；資訊會更新、又要降低幻覺，用 RAG 檢索相關片段。']
+  ];
+  tabs($('#rtTabs'),S.map(x=>x[0]),i=>{
+    const s=S[i];
+    $$('#router .rnode').forEach(n=>{n.classList.toggle('on',n.dataset.k===s[2]);n.classList.toggle('no',n.dataset.k!==s[2]);});
+    $('#rtWhy').innerHTML=`<span class="hint">情境：</span>${s[1]}<br>${s[3]}`;
+  });
+})();
+
+/* ---------- 39.4 RAG steps ---------- */
+(function(){
+  const N=[['使用者提問',20,30],['外部知識庫',190,30],['檢索相關片段',360,30],['放進提示詞',360,140],['LLM 生成回答',190,140],['回答',20,140]];
+  const T=[
+    '<b>1. 使用者提問：</b>「今年的出差補助標準是多少？」',
+    '<b>2. 外部知識庫：</b>企業文件、法規、產品資訊存在知識庫，文字片段以向量形式存在<b>向量資料庫</b>。更新文件＝更新知識庫，不必重訓。',
+    '<b>3. 檢索：</b>向量資料庫用 <b>ANN（近似最近鄰）索引</b>做高維向量相似度搜尋，找出最相關的幾段。',
+    '<b>4. 放進提示詞：</b>把檢索到的片段和原問題一起組成提示詞。',
+    '<b>5. LLM 生成：</b>模型依提示詞中的片段作答。<b>模型權重完全沒變</b>——RAG 不是微調。',
+    '<b>6. 回答：</b>依據最新文件回答，降低幻覺。但注意：答案仍是「生成」的，大規模數值聚合請交給 Text-to-SQL。'
+  ];
+  let cur=0;
+  N.forEach((n,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=`${i+1}. ${n[0]}`;b.onclick=()=>s(i);$('#ragBtns').appendChild(b);});
+  function s(i){
+    cur=i;$$('#ragBtns .btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));
+    let h='';
+    const ctr=k=>[N[k][1]+75,N[k][2]+30];
+    for(let k=0;k<N.length-1;k++){const[a,b]=ctr(k),[c,d]=ctr(k+1);h+=`<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" stroke="${k<i?'var(--aud)':'var(--line)'}" stroke-width="3" ${k===i-1?'class="flow"':''}/>`;}
+    N.forEach(([t,x,y],k)=>{const on=k===i,past=k<i;h+=`<g><rect x="${x}" y="${y}" width="150" height="60" rx="12" fill="${on?'var(--aud)':'var(--surface)'}" stroke="${past||on?'var(--aud)':'var(--line)'}" stroke-width="2"/><text x="${x+75}" y="${y+36}" text-anchor="middle" font-size="15" font-weight="700" fill="${on?'#fff':'var(--ink)'}">${t}</text></g>`;});
+    h+=`<text x="530" y="215" text-anchor="middle" font-size="13" fill="var(--muted)">模型權重：不變 🔒</text>`;
+    $('#ragSvg').innerHTML=h;$('#ragTxt').innerHTML=T[i];
+  }
+  s(0);
+})();
+
+/* ---------- 39.4 DB matcher ---------- */
+matcher($('#dbMatch'),$('#dbFb'),[
+  {k:'doc',c:'var(--txt)',html:'商品後台<small>巢狀、欄位異質的半結構化資料＋複雜條件查詢</small>'},
+  {k:'vec',c:'var(--aud)',html:'相似商品推薦<small>1,536 維向量的高 QPS 相似度搜尋</small>'},
+  {k:'rel',c:'var(--sen)',html:'即時庫存<small>ACID 交易、10ms 以下延遲</small>'}
+],[
+  {k:'rel',html:'關聯式資料庫',ok:'ACID 交易與低延遲是關聯式資料庫的強項。'},
+  {k:'vec',html:'專用向量資料庫<small>ANN 近似最近鄰索引</small>',ok:'高維向量相似度搜尋 → 向量資料庫，也就是 RAG 的儲存層。'},
+  {k:'doc',html:'文件型資料庫（Document DB）',ok:'巢狀、欄位異質 → 文件型。'},
+  {k:'x',html:'統一用一種資料庫，技術棧最省事',bad:'這是誘答。正解是多元持久化：各司其職。'}
+],'這就是多元持久化（Polyglot Persistence）。');
+
+/* ---------- 39.5 SMOTE order ---------- */
+(function(){
+  const maj=[];for(let k=0;k<46;k++){maj.push([40+((k*53)%560),30+((k*37)%190)]);}
+  const minT=[[300,110],[340,140],[380,100],[320,170]];   // train minority
+  const minS=[[420,150],[360,190]];                        // test minority
+  function seg(a,b,t){return[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t];}
+  function draw(m){
+    let h=`<line x1="470" y1="10" x2="470" y2="240" stroke="var(--line)" stroke-width="2" stroke-dasharray="4 4"/>`;
+    maj.forEach(([x,y])=>h+=`<circle cx="${x}" cy="${y}" r="4" fill="var(--muted)" opacity=".35"/>`);
+    let syn=[],leak=0;
+    if(m==='bad'){
+      const all=minT.concat(minS);
+      for(let a=0;a<all.length;a++)for(let b=a+1;b<all.length;b++){const p=seg(all[a],all[b],.5);const fromTest=a>=4||b>=4;syn.push([p,fromTest]);if(fromTest)leak++;}
+    }else if(m==='good'){
+      for(let a=0;a<minT.length;a++)for(let b=a+1;b<minT.length;b++)syn.push([seg(minT[a],minT[b],.5),false]);
+    }
+    syn.forEach(([p,l],k)=>h+=`<g style="animation:pop .4s ${k*0.04}s both"><circle cx="${p[0]}" cy="${p[1]}" r="6" fill="${l?'var(--warn)':'var(--bad)'}" opacity=".55"/></g>`);
+    minT.forEach(([x,y])=>h+=`<circle cx="${x}" cy="${y}" r="8" fill="var(--bad)"/>`);
+    minS.forEach(([x,y])=>h+=`<circle cx="${x}" cy="${y}" r="9" fill="none" stroke="var(--bad)" stroke-width="3"/><text x="${x+14}" y="${y+5}" font-size="12" fill="var(--bad)" font-weight="700">測試</text>`);
+    $('#smSvg').innerHTML=h;
+    if(!m)return;
+    const v=m==='bad'?.91:.78;
+    $('#smNum').textContent=v.toFixed(2)+(m==='bad'?'（虛高）':'（較可信）');
+    $('#smMeter').style.width=(v*100)+'%';$('#smMeter').style.background=m==='bad'?'var(--warn)':'var(--ok)';
+    $('#smNote').innerHTML=m==='bad'?`先對全體資料 SMOTE，有 <b>${leak}</b> 個新點是用測試樣本內插出來的。切分後它們落進訓練集，等於讓模型「偷看」了測試資料 → AUC 0.91 失真（115-1 第 32 題的情境）。`:'先切分，SMOTE 只用訓練集的少數類樣本內插，測試集完全沒被碰過，分數才可信。（數值示意）';
+  }
+  $$('#smTabs .btn').forEach(b=>b.onclick=()=>{$$('#smTabs .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));draw(b.dataset.m);});
+  draw(null);
+})();
+
+/* ---------- 39.5 flip cards ---------- */
+flips($('#cards'),[
+  ['① 順序','先切分、後採樣','SMOTE／過採樣必須<b>只在訓練集上執行</b>，且先切分後採樣。先對全體過採樣再切分，測試樣本經內插混入訓練集，評估虛高（115-1 第 32 題）。'],
+  ['② Domain Gap','合成≠真實','模擬器再逼真，光照、雜訊、感測器特性與真實世界仍有差距。對策：混合真實資料、領域隨機化，<b>最終驗證以真實資料為準</b>。'],
+  ['③ 增強要動態','別凍結多樣性','為了吞吐量把影像預先轉成固定特徵並快取、反覆用同一批資料，等於凍結多樣性，增強失效，過擬合可能更糟（115-1 第 15 題）。']
+]);
+
+/* ---------- 39.5 domain gap ---------- */
+(function(){
+  $('#gapBars').innerHTML=['合成資料驗證集','真實世界表現'].map((n,i)=>`<div class="bar ${i?'win':''}"><span>${n}</span><div class="track"><div class="fill" id="gb${i}"></div></div><span class="num" id="gn${i}"></span></div>`).join('');
+  function u(){
+    const s=+$('#dgap').value;$('#dgapO').textContent=s+'%';
+    const a=Math.round(70+s*.25),b=Math.round(72+.4*s-.0055*s*s);
+    $('#gb0').style.width=a+'%';$('#gn0').textContent=a;$('#gb1').style.width=b+'%';$('#gn1').textContent=b;
+    $('#gapNote').innerHTML=s===100?'只用合成資料：合成驗證分數最高，真實世界卻最差——這就是 Domain Gap。<b>不能只看合成資料上的分數</b>。':s===0?'只用真實資料：罕見情境（詐欺、故障）覆蓋不足。':'適度混合真實與合成資料，罕見情境被補足；但兩條長條的落差提醒你：最終驗證仍要用真實資料。';
+  }
+  $('#dgap').addEventListener('input',u);u();
+})();
+
+/* ---------- 39.6 applications ---------- */
+(function(){
+  const A=[
+    ['語言生成','新聞摘要、商品描述、智慧客服、程式碼補全','新聞、社群貼文、客服對話、程式碼',['sen','aud'],'時效性、品質'],
+    ['圖像生成','廣告設計、風格轉換、去背、AI 藝術、視覺模擬','產品照片、設計稿、風景影像',['txt','sen'],'多樣性、時效性（審美與市場趨勢）'],
+    ['多模態生成','文字生圖、圖生文、視訊與語音合成、虛擬分身','文字＋圖片＋聲音的對齊資料',['txt'],'多樣性、跨模態對齊品質'],
+    ['資料增強','補少數族群語料、模擬詐欺與故障、魯棒性測試','由模型或模擬器產生',['img'],'代表性、Domain Gap']
+  ];
+  tabs($('#appTabs'),A.map(x=>x[0]),i=>{const a=A[i];$('#appBody').innerHTML=`<p style="margin:0 0 6px"><b>代表任務：</b>${a[1]}</p><p style="margin:0 0 6px"><b>主要資料來源：</b>${a[2]}</p><p style="margin:0"><b>最吃緊的面向：</b>${a[3].map(c=>`<i class="dot" style="--c:var(--${c});display:inline-block;margin:0 4px"></i>`).join('')}${a[4]}</p>`;});
+})();
+
+/* ---------- 39.6 governance gate ---------- */
+(function(){
+  const G=[
+    ['A','訓練前匿名化／偽匿名化','入料端'],
+    ['B','建立輸出內容稽核機制','出料端'],
+    ['C','只在回覆時隱藏姓名','誘答'],
+    ['D','以強化學習微調「教模型別說」','誘答'],
+    ['E','導入同態加密','誘答']
+  ];
+  const on={};
+  G.forEach(([k,t,s])=>{const b=document.createElement('button');b.setAttribute('aria-pressed','false');b.innerHTML=`<b>${t}</b><span class="hint">${s}</span>`;b.onclick=()=>{on[k]=!on[k];b.setAttribute('aria-pressed',!!on[k]);u();};$('#gate').appendChild(b);});
+  function u(){
+    const A=on.A,B=on.B;
+    const items=['姓名','電話','交易資訊'];
+    let leak=items.map(n=>!(A||B)&&!(n==='姓名'&&on.C));
+    if(A&&!B||B&&!A)leak=items.map(()=>'maybe');
+    if(A&&B)leak=items.map(()=>false);
+    $('#leak').innerHTML=items.map((n,i)=>leak[i]===true?`<span class="y">⚠ ${n} 洩漏</span>`:leak[i]==='maybe'?`<span class="y" style="color:var(--warn);background:color-mix(in srgb,var(--warn) 16%,var(--surface))">△ ${n} 仍有風險</span>`:`<span class="n">✓ ${n} 受保護</span>`).join('');
+    let n=[];
+    if(A&&B)n.push('<b style="color:var(--ok)">✓ 入料端＋出料端雙重防護，這就是 114-2 第 32 題的正解。</b>');
+    else if(A)n.push('只做入料端：少了出料端稽核把關，漏網的個資仍可能被生成出來。');
+    else if(B)n.push('只做出料端：模型已經把個資學進去了，只靠事後攔截仍不完整。');
+    else n.push('入料端與出料端都沒防護，個資照樣出現在回覆中。');
+    if(on.C)n.push('「只隱藏姓名」仍會洩漏電話與交易資訊。');
+    if(on.D)n.push('強化學習微調「教模型別說」無法保證不洩漏已記憶的資訊。');
+    if(on.E)n.push('同態加密是密文運算情境，防不了模型生成已學得的個資。');
+    $('#leakNote').innerHTML=n.join('<br>');
+  }
+  u();
+})();
+
+/* ---------- 39.7 exam list ---------- */
+(function(){
+  const E=[
+    ['114-2 第 24 題','hit','異質語料處理架構','生成式 AI 要用非結構化文字＋影像＋表格訓練，如何兼顧效率與一致性？','<b>資料湖 ＋ Spark／Ray 分散式預處理 → 串接訓練管線</b>；不可用生成式模型自動清資料（引入幻覺）'],
+    ['114-2 第 32 題','hit','生成內容洩漏個資','模型回覆中出現真實姓名、電話、交易資訊，如何合規？','<b>訓練前匿名化／偽匿名化 ＋ 輸出內容稽核</b>（雙重防護）'],
+    ['115-1 第 36 題','hit','RAG／GAN／Text-to-SQL 辨析','資料湖要支援自然語言查詢，且需高精確性與資料庫層級稽核','<b>Text-to-SQL Agent</b>；RAG 無法可靠做大規模數值聚合，GAN 是生成合成資料與模擬分布，與查詢無關'],
+    ['115-1 第 13 題','ov','向量資料庫定位','商品後台、1,536 維向量搜尋、即時庫存三種需求','<b>多元持久化</b>：文件型＋專用向量資料庫＋關聯式，各司其職（主場 <a href="L22202_data_storage_management.html">L22202</a>）'],
+    ['115-1 第 15 題','ov','資料多樣性','哪一項「資料處理層面」的調整最無法改善過擬合？','<b>預先轉固定特徵並快取、反覆用同一批資料</b>，凍結多樣性'],
+    ['114-2 第 37 題','ov','合成少數類樣本','罕病確診樣本 &lt;1%，短期無法增資料','<b>SMOTE</b>（內插生成，比單純複製更能增加多樣性）'],
+    ['115-1 第 32 題','ov','合成資料的順序','先對全體資料 SMOTE 再切分，AUC 0.91 為何失真？','<b>資料洩漏</b>：先切分後採樣，且採樣只做在訓練集'],
+    ['115-1 第 38 題','ov','差分隱私合成資料','三種去識別化技術的敘述何者<b>不正確</b>？','合成資料是「以差分隱私訓練生成模型再產出資料集」，不是直接對原始資料加雜訊（主場 <a href="L22404_privacy_security_compliance.html">L22404</a>）']
+  ];
+  function render(f){$('#examList').innerHTML='';examList($('#examList'),E.filter(e=>f==='all'||e[1]===f).map(e=>[e[0],e[2],e[3],e[4]]));}
+  $$('#s7 .row .btn').forEach(b=>b.onclick=()=>{$$('#s7 .row .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));render(b.dataset.f);});
+  render('all');
+})();
+
+/* ---------- traps ---------- */
+traps('l22403-traps',[
+  ['鑑別式學條件機率 P(Y|X)，生成式學資料分布 P(X)／P(X, Y)','不是反過來。'],
+  ['生成式 AI 的資料特色是開放性與語意驅動','不是「一定要有標註」。'],
+  ['大數據對生成式 AI 不只是規模問題','還要語料多元性與完整語境；不是「資料愈多愈好」。'],
+  ['多樣性是「有沒有涵蓋到」，代表性是「比例對不對」','兩者不同義。'],
+  ['資料品質包含意義正確性','是否符合實際情境或專業標準，不只是無錯字、無雜訊。'],
+  ['時效性問題的快解是 RAG 檢索外部知識','不是每次都重新訓練。'],
+  ['RAG 不改模型權重','只是把檢索到的片段放進提示詞；不是微調。'],
+  ['RAG 不適合大規模數值聚合與精確統計','應交給 Text-to-SQL 讓資料庫引擎算。'],
+  ['向量資料庫負責高維向量的近似相似度搜尋（ANN）','不是 ACID 交易，也不是複雜條件查詢。'],
+  ['大規模異質語料應走資料湖＋分散式預處理','不是單節點高效能伺服器批次處理。'],
+  ['不宜用生成式模型自動清理訓練資料','可能引入幻覺與不可控誤差；清洗要靠規則、統計與人工抽查。'],
+  ['文字語料要先清洗與去重再轉向量','不是直接轉向量餵進訓練。'],
+  ['SMOTE／過採樣要先切分、後採樣，且只做在訓練集','不是先對全體資料採樣再切分。'],
+  ['資料增強要在訓練時動態生成才有效','預先轉固定特徵並快取反覆使用會讓增強失效。'],
+  ['合成資料有 Domain Gap，最終驗證仍要用真實資料','不能只看合成資料上的分數。'],
+  ['個資防護要訓練前匿名化 ＋ 輸出端稽核雙管','只在回覆時隱藏姓名並不完整。'],
+  ['同態加密解的是密文運算問題','防不了模型吐出已經學進去的個資。'],
+  ['偏誤來自資料，模型放大它','不是「換個更大的模型就會自動消失」。']
+]);
+
+/* ---------- quiz ---------- */
+quiz([
+  ['生成式 AI 要用客服紀錄、產品評論、影像與表格等數千萬筆異質資料訓練，如何兼顧效率與一致性？',['資料湖＋Spark／Ray 分散式預處理，再串接訓練管線','單節點高效能伺服器＋批次處理','把所有文字直接轉向量、以索引方式餵入訓練','用生成式模型自動清理資料再進下游訓練'],'114-2 第 24 題。單節點難擴展；直接轉向量跳過清理；生成式模型清資料會引入幻覺。'],
+  ['生成式模型的回覆中出現真實姓名、電話與交易資訊，最合規的做法是？',['訓練前匿名化／偽匿名化，並建立輸出內容稽核機制','以強化學習微調，教模型不要說出個資','導入同態加密保護資料','在回覆時隱藏姓名即可'],'114-2 第 32 題：入料端與出料端雙重防護。只藏姓名仍漏電話與交易；同態加密防不了已學得的個資。'],
+  ['資料湖要支援自然語言查詢，且需要高精確性、資料庫層級權限控管與查詢審計，應採用？',['Text-to-SQL Agent','檢索增強生成（RAG）','生成對抗網路（GAN）','重新訓練大型語言模型'],'115-1 第 36 題：結果由資料庫引擎精確執行。RAG 的答案是生成的，大規模聚合無法保證正確也不可稽核。'],
+  ['某生成模型只用科技文章訓練，使用者問醫療問題時完全答不出來，這是哪個面向出了問題？',['多樣性','代表性','品質','時效性'],'沒涵蓋到 → 多樣性。官方舉例正是「僅用科技文章訓練 → 無法生成醫療建議」。'],
+  ['模型生成內容時，常預設醫師、工程師為男性、護士為女性，最直接對應的資料面向是？',['代表性與偏誤','多樣性','品質與正確性','時效性與更新'],'涵蓋到了但比例失衡 → 代表性，產生系統性偏見。'],
+  ['模型對「元宇宙」「碳中和」等新詞彙一無所知，最省成本的快解是？',['以 RAG 檢索外部知識','每週重新訓練整個模型','增加錯字過濾規則','提高語料中男女比例的平衡'],'時效性問題的快解是 RAG，可即時更新且不改權重。'],
+  ['關於 RAG 的敘述，何者正確？',['查詢時檢索相關片段放進提示詞再生成，不改模型權重','RAG 是一種微調技術，會更新模型權重','RAG 最適合大規模數值聚合與精確統計','RAG 需要先把所有語料重新標註'],'RAG 不改權重；大規模數值聚合要交給 Text-to-SQL。'],
+  ['先對全體資料做 SMOTE 再切分訓練／測試集，得到 AUC 0.91，問題出在哪？',['資料洩漏：測試樣本經內插混入訓練集，應先切分後採樣且只做在訓練集','SMOTE 只能用在影像資料','AUC 不適合評估不平衡資料','應該改用生成式模型清洗資料'],'115-1 第 32 題。順序錯誤導致評估虛高。'],
+  ['為了提升吞吐量，把影像預先轉成固定特徵並快取、每個 epoch 反覆使用同一批，對過擬合的影響是？',['凍結了多樣性，資料增強失效，過擬合可能更糟','完全消除過擬合','等同於動態資料增強','只影響訓練速度，與過擬合無關'],'115-1 第 15 題：增強要在訓練時動態生成才有效。'],
+  ['某團隊用模擬器生成大量合成影像訓練，合成驗證集準確率很高，下一步最合理的是？',['以真實資料做最終驗證，留意 Domain Gap','直接上線，合成資料分數已足夠','再生成更多合成資料取代所有真實資料','改用合成資料作為唯一驗收依據'],'合成資料有 Domain Gap，不宜單獨作為驗收依據。'],
+  ['關於「差分隱私合成資料」的定義，何者正確？',['先以滿足差分隱私的方式訓練生成模型，再由模型產出可發布的合成資料集','在發布查詢結果時直接對原始資料加 Laplace 雜訊','只要刪除姓名欄位即可視為合成資料','用同態加密對原始資料加密後發布'],'115-1 第 38 題：直接加雜訊是差分隱私的一般機制，不是合成資料。'],
+  ['商品後台（巢狀異質欄位）、1,536 維向量相似度搜尋、即時庫存（ACID、10ms 以下）三種需求，最佳資料庫規劃是？',['文件型＋專用向量資料庫＋關聯式，各司其職','統一使用關聯式資料庫，技術棧最省事','全部放向量資料庫','全部放文件型資料庫'],'115-1 第 13 題：多元持久化（Polyglot Persistence）。']
+],['太強了，「講模型還是講資料」已經分得很清楚。','不錯！回頭看看答錯的題目對應的段落。','建議重新操作 39.2 的語料調配模擬器與 39.4 的情境路由器，再來一次。']);
+
+/* ---------- nav highlight ---------- */
+(function(){
+  const links=[...document.querySelectorAll('nav.toc a')];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on&&window.innerWidth<=860)a.scrollIntoView({inline:'center',block:'nearest'});});}});},{rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('main section').forEach(s=>io.observe(s));
+})();
+
+</script>
+</body>
+</html>

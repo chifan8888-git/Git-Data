@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L23101 機率統計之機器學習基礎應用｜互動教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F5; --surface:#FFFFFF; --surface2:#F6F8FB; --ink:#18202E; --muted:#5A6475; --line:#D5DBE4;
+  --txt:#3B4CCA; --img:#0E8A7A; --aud:#B87812; --sen:#B8336A;
+  --ok:#1F8A4C; --bad:#C23B2E; --warn:#D9822B;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+    --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+  --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75}
+h1,h2,h3{font-family:var(--serif);line-height:1.3;margin:0}
+p{margin:0 0 1em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--txt);outline-offset:2px;border-radius:4px}
+svg{max-width:100%;height:auto;display:block}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1180px;margin:0 auto;gap:40px;padding:0 24px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;padding:32px 0;height:100vh;overflow:auto}
+nav.toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14.5px}
+nav.toc a span{font-variant-numeric:tabular-nums;font-size:13px;opacity:.8}
+nav.toc a.on{background:var(--surface);color:var(--ink);font-weight:700}
+.toc-title{font-family:var(--serif);font-weight:900;font-size:18px;padding:0 10px 14px}
+main{min-width:0;padding-bottom:80px}
+section{padding:56px 0 8px;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.sec-head{display:flex;gap:16px;align-items:baseline;margin-bottom:18px}
+.sec-no{font-family:var(--serif);font-weight:900;font-size:40px;color:var(--line);line-height:1}
+h2{font-size:28px;font-weight:900}
+h3{font-size:19px;margin:34px 0 10px}
+.lead{color:var(--muted);max-width:66ch}
+.prose{max-width:68ch}
+
+/* hero */
+.hero{padding:44px 0 24px}
+.hero .code{font-size:14px;color:var(--muted);margin-bottom:6px}
+.hero h1{font-size:clamp(34px,5.5vw,56px);font-weight:900;letter-spacing:.02em}
+.hero .one{font-size:18px;max-width:60ch;margin:16px 0 0;color:var(--muted)}
+.hero-fig{background:var(--surface);border-radius:20px;margin-top:28px;padding:14px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+.goal{border-left:4px solid var(--c);padding:6px 0 6px 14px;font-size:15px}
+
+/* panels */
+.panel{background:var(--surface);border-radius:16px;padding:22px;margin:16px 0}
+.panel.flat{background:var(--surface2)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font-size:15px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hint{font-size:14px;color:var(--muted)}
+.callout{border-left:4px solid var(--warn);background:var(--surface2);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;font-size:15px}
+.callout.exam{border-color:var(--txt)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:14px}
+
+/* modality chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+
+/* matcher */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.match .col{display:flex;flex-direction:column;gap:10px}
+.mitem{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15px;transition:border-color .2s,background .2s,transform .2s}
+.mitem small{display:block;color:var(--muted);font-size:13px}
+.mitem.sel{border-color:var(--ink);transform:translateX(4px)}
+.mitem.done{border-color:var(--c,var(--ok));background:var(--surface2);cursor:default}
+.mitem.wrong{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:1.8em;margin-top:12px;font-size:15px}
+.feedback.ok{color:var(--ok)} .feedback.bad{color:var(--bad)}
+
+/* timeline */
+.steps{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stage-viz{min-height:130px;display:flex;align-items:center;justify-content:center}
+.stage-viz .blk{display:inline-block;width:34px;height:34px;border-radius:6px;margin:2px;transition:all .5s}
+
+/* align toggle */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.compare>div{padding:18px}
+.compare>div+div{border-left:1px solid var(--line)}
+.compare .big{font-family:var(--serif);font-weight:900;font-size:22px;margin-bottom:6px}
+
+/* fusion */
+.meter{height:14px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:6px 0}
+.meter>i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .7s cubic-bezier(.3,.8,.3,1),background .4s}
+.flow{stroke-dasharray:6 7;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.jitter{animation:jit .25s steps(2) infinite}
+@keyframes jit{50%{transform:translate(1.5px,-1px)}}
+.fusion-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.pc{font-size:15px}
+.pc b{display:block;font-size:14px;color:var(--muted);font-weight:500}
+
+/* clip */
+.mat{display:grid;gap:4px;font-size:13px}
+.mat .cell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;transition:background .5s,color .5s}
+.mat .lab{display:flex;align-items:center;justify-content:center;font-size:22px}
+.mat .tlab{font-size:12px;text-align:center;color:var(--muted);display:flex;align-items:flex-end;justify-content:center;line-height:1.3}
+.zs-imgs{display:flex;gap:10px;flex-wrap:wrap}
+.zs-img{font-size:38px;width:72px;height:72px;border-radius:16px;border:2px solid var(--line);background:var(--surface2);display:flex;align-items:center;justify-content:center}
+.zs-img[aria-pressed="true"]{border-color:var(--img);box-shadow:0 0 0 3px color-mix(in srgb,var(--img) 25%,transparent)}
+.bar{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.bar .track{height:22px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;width:0;background:var(--txt);border-radius:6px;transition:width .8s cubic-bezier(.3,.8,.3,1)}
+.bar.win .fill{background:var(--img)}
+.bar.win{font-weight:700}
+.bar .num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.flip{perspective:900px;height:150px;border:0;background:none;padding:0;text-align:left}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flip[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:center}
+.flip .f{background:var(--surface);border:1.5px solid var(--line)}
+.flip .f strong{font-family:var(--serif);font-size:22px}
+.flip .f span{color:var(--muted);font-size:14px}
+.flip .b{background:var(--ink);color:var(--bg);transform:rotateY(180deg);font-size:15px}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.pnode{border:2px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;font-size:14px;background:var(--surface);transition:all .35s}
+.pnode b{display:block;font-size:16px}
+.pnode.on{border-color:var(--aud);background:color-mix(in srgb,var(--aud) 14%,var(--surface));transform:translateY(-3px)}
+.pnode.past{border-color:color-mix(in srgb,var(--aud) 45%,var(--line))}
+.pout{background:var(--surface2);border-radius:12px;padding:14px 16px;min-height:84px;font-size:15px}
+.wave{display:flex;gap:3px;align-items:center;height:30px}
+.wave i{width:4px;background:var(--aud);border-radius:2px;animation:wv 1s ease-in-out infinite}
+@keyframes wv{50%{transform:scaleY(.3)}}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+
+/* strategies */
+.strat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.strat button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;text-align:left;font-size:15px}
+.strat button[aria-pressed="true"]{border-color:var(--ink)}
+.verdict{font-family:var(--serif);font-weight:900;font-size:20px}
+
+details{border-bottom:1px solid var(--line)}
+details summary{cursor:pointer;padding:12px 4px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"+";font-weight:900;width:14px;color:var(--muted)}
+details[open] summary::before{content:"−"}
+details .body{padding:0 4px 14px 30px;font-size:15px}
+.tag{font-size:12.5px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums;min-width:80px}
+
+/* quiz */
+.qcard{background:var(--surface);border-radius:16px;padding:24px}
+.qtop{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
+.qtext{font-size:18px;font-weight:700;margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15.5px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+.opt.wrongpick{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.opt:disabled{cursor:default}
+.expl{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15px;display:none}
+.expl.show{display:block}
+.progress{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;margin-bottom:14px}
+.progress i{display:block;height:100%;background:var(--txt);transition:width .4s}
+
+.traps label{display:flex;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:15px}
+.traps input{width:18px;height:18px;margin-top:4px;flex:none;accent-color:var(--ok)}
+.traps label.chk>span{color:var(--muted)}
+.traps em{font-style:normal;font-weight:700}
+
+/* mobile */
+@media (max-width:860px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+  nav.toc{position:sticky;top:0;height:auto;z-index:10;background:var(--bg);display:flex;overflow-x:auto;padding:8px 0;padding-top:calc(8px + env(safe-area-inset-top,0px));gap:4px;border-bottom:1px solid var(--line)}
+  .toc-title{display:none}
+  nav.toc a{white-space:nowrap;flex:none}
+  .match,.stage,.fusion-meta,.compare{grid-template-columns:1fr}
+  .compare>div+div{border-left:0;border-top:1px solid var(--line)}
+  .pipe{grid-template-columns:repeat(5,minmax(90px,1fr));overflow-x:auto}
+  .bar{grid-template-columns:110px 1fr 56px}
+  h2{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* ===== page-specific ===== */
+.sld{display:grid;grid-template-columns:150px 1fr 80px;gap:10px;align-items:center;margin:6px 0;font-size:15px}
+.sld input{width:100%;accent-color:var(--ink)}
+.sld output{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.stat{background:var(--surface2);border-radius:12px;padding:10px 14px;font-variant-numeric:tabular-nums}
+.stat span{display:block;color:var(--muted);font-size:13px}
+.stat b{font-family:var(--serif);font-size:24px}
+.mails{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.mail{display:grid;grid-template-columns:1fr 70px 90px;gap:10px;align-items:center;background:var(--surface2);border-radius:10px;padding:8px 12px;font-size:14.5px;transition:background .3s}
+.mail.spam{background:color-mix(in srgb,var(--bad) 12%,var(--surface))}
+.mail .p{font-variant-numeric:tabular-nums;text-align:right}
+.mail .lab{font-weight:700;text-align:right}
+.codebox{background:var(--surface2);border-radius:12px;padding:10px 0;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;overflow-x:auto}
+.codebox .ln{display:block;padding:2px 14px;white-space:pre}
+.codebox .ln.hl{background:color-mix(in srgb,var(--img) 16%,transparent)}
+.dots{display:grid;grid-template-columns:repeat(40,1fr);gap:2px;margin-top:10px}
+.dots i{aspect-ratio:1;border-radius:50%;background:var(--line);transition:background .4s}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13.5px;margin-top:8px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:11px;height:11px;border-radius:50%;display:inline-block}
+.tf{display:flex;flex-direction:column;gap:8px}
+.tfrow{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:10px 14px;font-size:15px;transition:border-color .3s}
+.tfrow.ok{border-color:var(--ok)} .tfrow.no{border-color:var(--bad)}
+.tfrow .why{grid-column:1/-1;font-size:14px;color:var(--muted);display:none}
+.tfrow.ok .why,.tfrow.no .why{display:block}
+.tfbtn{display:flex;gap:6px}
+.tfbtn .btn{padding:4px 12px}
+@media (max-width:860px){
+  .sld{grid-template-columns:96px 1fr 64px}
+  .stats{grid-template-columns:1fr 1fr}
+  .dots{grid-template-columns:repeat(25,1fr)}
+  .tfrow{grid-template-columns:1fr}
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="toc" aria-label="章節">
+  <div class="toc-title">機率統計</div>
+  <a href="#intro"><span>●</span>導覽與目標</a>
+  <a href="#s1"><span>42.1</span>隨機變數與分佈</a>
+  <a href="#s2"><span>42.2</span>條件機率與貝氏</a>
+  <a href="#s3"><span>42.3</span>假設檢定與推論</a>
+  <a href="#s4"><span>42.4</span>統計量的應用</a>
+  <a href="#s5"><span>42.5</span>官方考題</a>
+  <a href="#s6"><span>42.6</span>易錯與測驗</a>
+</nav>
+
+<main>
+<!-- HERO -->
+<section id="intro" class="hero">
+  <div class="code">L23101　中級 AI 應用規劃師（機器學習）　建議 45 分鐘</div>
+  <h1>機率統計之機器學習基礎應用</h1>
+  <p class="one">初級只要求你知道「機器學習會輸出機率」。中級要你寫出<b>條件機率的分母是誰</b>、指出某個分佈的<b>期望值與變異數</b>、判斷該用<b>蒙地卡羅還是貝氏推論</b>，並看懂<b>殘差圖與 p 值</b>在說什麼。這是科目 3 的數學地基，後面所有演算法章節都踩在它上面。</p>
+  <div class="hero-fig" aria-hidden="true">
+    <svg id="heroSvg" viewBox="0 0 720 300">
+      <g font-family="Noto Sans TC, sans-serif" font-weight="700">
+        <line x1="40" y1="250" x2="680" y2="250" stroke="var(--line)" stroke-width="2"/>
+        <g id="heroBars"></g>
+        <path id="heroCurve" d="" fill="color-mix(in srgb,var(--img) 18%,transparent)" stroke="var(--img)" stroke-width="3"/>
+        <text x="60" y="40" font-size="16" fill="var(--txt)">PMF：單點就有機率</text>
+        <text x="420" y="40" font-size="16" fill="var(--img)">PDF：面積才是機率</text>
+        <text x="360" y="285" text-anchor="middle" font-size="13" fill="var(--muted)" font-weight="500">E(X)、Var(X)、P(A|B)、p 值——機器學習的數學地基</text>
+      </g>
+      <g class="movers">
+        <circle r="6" fill="var(--aud)"><animateMotion dur="3s" repeatCount="indefinite" path="M380 250 C 480 250, 500 80, 540 80 S 600 250, 680 250"/></circle>
+        <circle r="6" fill="var(--sen)"><animateMotion dur="3s" begin="1.5s" repeatCount="indefinite" path="M380 250 C 480 250, 500 80, 540 80 S 600 250, 680 250"/></circle>
+      </g>
+    </svg>
+  </div>
+  <h3>學完這一課，你應該能夠</h3>
+  <div class="goals">
+    <div class="goal" style="--c:var(--txt)">依資料型態選出正確分佈，寫出期望值與變異數（特別是卜瓦松 <b>E = Var = λ</b>）</div>
+    <div class="goal" style="--c:var(--img)">正確套用 <b>P(A|B) = P(A∩B)/P(B)</b> 與貝氏定理，在 Monte Carlo 程式碼中辨認分母</div>
+    <div class="goal" style="--c:var(--aud)">區分參數估計與假設檢定，說明 <b>α、p 值、型一／型二錯誤</b>的關係</div>
+    <div class="goal" style="--c:var(--sen)">用期望值、變異數、標準差、偏態、峰度判讀資料，決定<b>標準化、轉換或離群值</b>處理</div>
+  </div>
+  <p class="hint" style="margin-top:20px">本頁顏色固定代表：<span class="chip" style="--c:var(--txt)"><i class="dot"></i>機率分佈</span>　<span class="chip" style="--c:var(--img)"><i class="dot"></i>條件機率／貝氏</span>　<span class="chip" style="--c:var(--aud)"><i class="dot"></i>假設檢定</span>　<span class="chip" style="--c:var(--sen)"><i class="dot"></i>統計量</span></p>
+</section>
+
+<!-- 42.1 -->
+<section id="s1">
+  <div class="sec-head"><span class="sec-no">42.1</span><h2>資料與隨機變數的機率表示</h2></div>
+  <p class="lead">官方指引開宗明義：機器學習模型學的不是唯一解，而是<b>條件機率分佈 P(Y|X)</b>——X 是輸入特徵（Feature），Y 是目標變數（Label）。</p>
+  <div class="compare">
+    <div><div class="big">確定性思維</div>「這封信是垃圾郵件」<br>輸出：類別<br>用途：直接判斷</div>
+    <div><div class="big">機率思維（中級要求）</div>「P(垃圾|詞彙組合) = 0.93」<br>輸出：分佈 + 信心程度<br>用途：可調門檻、可做風險控管</div>
+  </div>
+  <div class="panel">
+    <h3 style="margin-top:0">有機率輸出，門檻才調得動</h3>
+    <p class="hint">兩層意涵：<b>預測導向</b>（輸出機率而非硬類別）與<b>不確定性評估</b>（機率反映模型信心）。拖動決策門檻，看哪些信被判為垃圾信（機率為示意）。</p>
+    <div class="sld"><span>決策門檻</span><input type="range" id="thr" min="5" max="95" step="5" value="50" aria-label="決策門檻"><output id="thrO"></output></div>
+    <div class="mails" id="mails"></div>
+  </div>
+
+  <h3>離散型 vs 連續型</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>維度</th><th>離散型（Discrete）</th><th>連續型（Continuous）</th></tr>
+      <tr><td>取值</td><td>有限或可數（骰子點數、每日訂單數）</td><td>無限不可數（身高、等待時間、溫度）</td></tr>
+      <tr><td>描述工具</td><td><b>機率質量函數 PMF</b></td><td><b>機率密度函數 PDF</b></td></tr>
+      <tr><td>意義</td><td>P(X = xᵢ)，<b>單點就有機率</b></td><td>面積才是機率，<b>單點機率為 0</b></td></tr>
+      <tr><td>歸一條件</td><td>ΣP(X = xᵢ) = 1</td><td>∫f(x)dx = 1（全域）</td></tr>
+      <tr><td>區間機率</td><td>逐點相加</td><td>P(a ≤ X ≤ b) = ∫ᵃᵇ f(x)dx</td></tr>
+    </table>
+  </div>
+  <div class="callout"><b>高頻陷阱：PDF 的函數值不是機率，可以大於 1。</b>只有積分出來的面積才是機率。看到「PDF 直接給出某個取值的機率」這種敘述就排除。下面的分佈實驗室裡，把常態分佈的 σ 調小就能親眼看到。</div>
+
+  <h3>分佈實驗室：調參數，看 E 與 Var</h3>
+  <div class="panel">
+    <div class="tabs" id="distTabs"></div>
+    <div id="distSliders"></div>
+    <svg id="distSvg" viewBox="0 0 640 240" role="img" aria-label="分佈圖"></svg>
+    <div class="stats">
+      <div class="stat"><span>期望值 E(X)</span><b id="dE"></b></div>
+      <div class="stat"><span>變異數 Var(X)</span><b id="dV"></b></div>
+      <div class="stat"><span>ML 中的角色</span><div id="dRole" style="font-size:14px"></div></div>
+    </div>
+    <p class="hint" id="dNote" style="margin:10px 0 0"></p>
+  </div>
+  <details>
+    <summary>展開常見分佈速查表（背熟 E 與 Var 這兩欄）</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>分佈</th><th>型態</th><th>描述什麼</th><th>E(X)</th><th>Var(X)</th><th>ML 中的角色</th></tr>
+        <tr><td><b>伯努利</b> Bernoulli(p)</td><td>離散</td><td>單次二元試驗（成功／失敗、點擊／未點擊）</td><td>p</td><td>p(1−p)</td><td><b>邏輯迴歸的目標變數假設</b></td></tr>
+        <tr><td><b>二項</b> Binomial(n, p)</td><td>離散</td><td>n 次獨立試驗中成功的<b>次數</b></td><td>np</td><td>np(1−p)</td><td>A/B 測試轉換數</td></tr>
+        <tr><td><b>卜瓦松</b> Poisson(λ)</td><td>離散</td><td>固定時間／空間內事件發生<b>次數</b>（稀有事件）</td><td><b>λ</b></td><td><b>λ</b></td><td>客服來電數、伺服器請求數</td></tr>
+        <tr><td><b>均勻</b> Uniform(a, b)</td><td>連續</td><td>區間內等機率</td><td>(a+b)/2</td><td>(b−a)²/12</td><td>參數初始化、隨機抽樣</td></tr>
+        <tr><td><b>常態</b> Normal(μ, σ²)</td><td>連續</td><td>對稱鐘形</td><td>μ</td><td>σ²</td><td><b>線性迴歸的誤差項假設</b>、標準化</td></tr>
+        <tr><td><b>指數</b> Exponential(λ)</td><td>連續</td><td>事件<b>間隔時間</b>／等待時間</td><td>1/λ</td><td>1/λ²</td><td>故障時間、來電間隔；<b>無記憶性</b></td></tr>
+        <tr><td><b>卡方</b> Chi-square(k)</td><td>連續</td><td>k 個獨立標準常態變數的<b>平方和</b></td><td>k</td><td>2k</td><td>卡方檢定、列聯表獨立性</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <h3>三組最常被混淆的配對：情境配分佈</h3>
+  <div class="panel">
+    <p class="hint">先點左邊的情境，再點右邊的分佈。</p>
+    <div class="match" id="distMatch"></div>
+    <div class="feedback" id="distFb" aria-live="polite"></div>
+  </div>
+  <details><summary>卜瓦松 vs 指數</summary><div class="body">同一個隨機過程的兩面。卜瓦松數「單位時間內發生幾次」（離散），指數量「兩次之間隔多久」（連續）。題幹出現「每小時平均幾件」走卜瓦松，「平均等待多久」走指數。</div></details>
+  <details><summary>二項 vs 卜瓦松</summary><div class="body">二項有明確的試驗次數 n 與固定機率 p；卜瓦松沒有 n，只有平均發生率 λ，用於「次數無上限的稀有事件」。</div></details>
+  <details><summary>卜瓦松的 E = Var = λ</summary><div class="body">這是常考分佈中唯一期望值等於變異數的，也最容易被單獨拉出來問。實務上若觀測到 Var 遠大於 E，稱為<b>過度離散（Overdispersion）</b>，代表卜瓦松假設不成立。</div></details>
+
+  <h3>分佈是「對資料生成機制的先驗假設」（點卡片翻面）</h3>
+  <div class="cards" id="asCards"></div>
+  <div class="callout"><b>注意：</b>線性迴歸假設的是<b>誤差項</b>常態，不是「特徵必須常態」，也不是「目標變數必須常態」。這是選項裡最常見的偷換。</div>
+</section>
+
+<!-- 42.2 -->
+<section id="s2">
+  <div class="sec-head"><span class="sec-no">42.2</span><h2>條件機率與貝氏推論</h2></div>
+  <p class="lead"><b>P(A | B) = P(A ∩ B) / P(B)</b>——分母永遠是「給定的那個條件」B，不是 A。讀法：在 B 已經發生的前提下，A 發生的機率。把樣本空間從「全部」縮小成「只有 B 的那塊」，再看 A 佔多少比例。</p>
+
+  <h3>Monte Carlo 擲骰實驗（114Q2 第 41 題原型）</h3>
+  <div class="panel">
+    <p class="hint">事件 A：擲出偶數 {2, 4, 6}；事件 B：擲出大於 3 {4, 5, 6}。先擲骰子，再選一種分母寫法，看算出來的是什麼。</p>
+    <div class="row"><button class="btn primary" id="rollBtn">擲 100,000 次</button><span class="hint" id="rollInfo">尚未擲骰</span></div>
+    <svg id="dieSvg" viewBox="0 0 640 150" style="margin-top:10px" role="img" aria-label="骰子事件"></svg>
+    <div class="codebox" id="dieCode"></div>
+    <div class="row" id="denBtns" style="margin-top:10px"></div>
+    <div class="pout" id="denOut" style="margin-top:10px" aria-live="polite"></div>
+  </div>
+  <div class="callout exam"><b>這題的狠處：</b>以公正骰子計算，P(A|B) = 2/3，而 P(B|A) 也剛好等於 2/3。你沒辦法靠代數字驗算來排除誘答，只能靠定義判斷分母該放誰。答題時先把 P(A|B) 的 A、B 對號入座，再看程式碼分母是哪個布林陣列的 <code>.sum()</code>。</div>
+  <p class="prose">四種應用場景（官方指引點名）：分類任務的 P(Y|X) 條件預測、生醫與金融風控的風險預估、生成模型（VAE、隱馬可夫模型 HMM）中潛在變數與觀察變數的依存建構。</p>
+
+  <h3>貝氏定理：四個元素一個都不能錯位</h3>
+  <div class="panel flat" style="text-align:center;font-size:18px">
+    <b style="color:var(--img)">P(A|B)</b> = <b style="color:var(--aud)">P(B|A)</b> · <b style="color:var(--txt)">P(A)</b> ÷ <b style="color:var(--sen)">P(B)</b><br>
+    <span class="hint">後驗 Posterior = 似然 Likelihood × 先驗 Prior ÷ 邊際 Marginal</span>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>元素</th><th>名稱</th><th>中級定義（官方用語）</th></tr>
+      <tr><td>P(A)</td><td><b>先驗機率</b> Prior</td><td>尚未觀察 B 之前，對 A 的初始信念</td></tr>
+      <tr><td>P(B|A)</td><td><b>似然</b> Likelihood（條件機率）</td><td>在 A 成立的前提下，觀察到 B 的可能性</td></tr>
+      <tr><td>P(B)</td><td><b>邊際機率</b> Marginal</td><td>B 發生的整體機率＝ΣP(B|Aᵢ)P(Aᵢ)（全機率定理）</td></tr>
+      <tr><td>P(A|B)</td><td><b>後驗機率</b> Posterior</td><td>看到 B 之後重新估計的 A 機率；<b>這是貝氏定理的輸出</b></td></tr>
+    </table>
+  </div>
+
+  <h3>基本率謬誤模擬器</h3>
+  <div class="panel">
+    <p class="hint">預設值為講義範例：盛行率 1%、靈敏度 99%、偽陽性率 5%。下方每個點代表 1,000 人中的一人。檢驗陽性時，真的患病的機率是多少？</p>
+    <div class="sld"><span>盛行率（先驗）</span><input type="range" id="bPrev" min="1" max="30" value="1" aria-label="盛行率"><output id="bPrevO"></output></div>
+    <div class="sld"><span>靈敏度</span><input type="range" id="bSens" min="50" max="99" value="99" aria-label="靈敏度"><output id="bSensO"></output></div>
+    <div class="sld"><span>偽陽性率</span><input type="range" id="bFp" min="1" max="20" value="5" aria-label="偽陽性率"><output id="bFpO"></output></div>
+    <div class="dots" id="bDots"></div>
+    <div class="legend"><span><i style="background:var(--bad)"></i>患病且陽性</span><span><i style="background:var(--warn)"></i>健康卻陽性（偽陽性）</span><span><i style="background:var(--sen);opacity:.5"></i>患病卻陰性</span><span><i style="background:var(--line)"></i>健康且陰性</span></div>
+    <div class="pout" id="bOut" style="margin-top:10px"></div>
+  </div>
+  <p class="prose">靈敏度再高，只要先驗（盛行率）很低，後驗仍然偏低。這解釋了為什麼極度不平衡資料上「準確率 99%」毫無意義，也是類別不平衡章節的機率根源。</p>
+
+  <h3>樸素貝氏與先驗的實務陷阱（115Q1 第 14 題）</h3>
+  <p class="hint">情境：「限時優惠」「立即下單享折扣」這些詞在訓練集幾乎只出現在垃圾信中，正常促銷信被誤判為垃圾信。哪個診斷正確？</p>
+  <div class="panel">
+    <div class="strat" id="nbStrat"></div>
+    <div style="margin-top:16px">
+      <div class="verdict" id="nbV">選一個診斷</div>
+      <div id="nbWhy" class="hint" style="margin-top:6px"></div>
+    </div>
+  </div>
+  <p class="prose">另外記住：Naive Bayes 的「Naive（樸素）」指的是<b>特徵之間條件獨立的假設</b>，不是指模型簡單或不準。</p>
+
+  <h3>蒙地卡羅方法：無法解析求解時的隨機抽樣</h3>
+  <div class="panel">
+    <p class="hint">判準：題幹有沒有出現「先驗／後驗」？沒有就不是貝氏推論；有「隨機抽樣模擬大量情境」就是蒙地卡羅。先點左邊的題幹關鍵字，再點右邊的技術。</p>
+    <div class="match" id="mcMatch"></div>
+    <div class="feedback" id="mcFb" aria-live="polite"></div>
+  </div>
+  <details>
+    <summary>展開四種技術對照表</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>技術</th><th>何時用</th><th>題幹關鍵字</th></tr>
+        <tr><td><b>蒙地卡羅法</b>（Monte Carlo）</td><td>模型太複雜、<b>無法求得解析解</b>，需以大量隨機抽樣逼近機率分佈或數值結果</td><td>「隨機模擬大量情境」「估計損失分佈」「風險區間」</td></tr>
+        <tr><td><b>貝氏推論</b>（Bayesian Inference）</td><td>有明確先驗，要用新資料更新後驗</td><td>「先驗」「更新信念」「後驗」</td></tr>
+        <tr><td><b>馬可夫鏈</b>（Markov Chain）</td><td>描述狀態之間的轉移機率結構</td><td>「狀態」「轉移矩陣」</td></tr>
+        <tr><td><b>梯度下降</b>（Gradient Descent）</td><td>迭代調參最小化損失函數</td><td>「學習率」「收斂」</td></tr>
+      </table>
+    </div>
+  </details>
+  <div class="callout exam">官方兩次都考這條分界（114Q2-23 太陽能發電量風險區間、115Q1-1 投資組合風險值），正解都是<b>蒙地卡羅</b>。</div>
+</section>
+
+<!-- 42.3 -->
+<section id="s3">
+  <div class="sec-head"><span class="sec-no">42.3</span><h2>假設檢定與統計推論</h2></div>
+  <div class="compare">
+    <div><div class="big">參數估計</div>目的：推測母體參數的「值」或「區間」<br>問：這個參數大約是多少？<br>輸出：點估計值＋信賴區間（如 95% CI）<br><span class="hint">例：平均體重估計 68 公斤，95% CI = [66, 70]</span></div>
+    <div><div class="big">假設檢定</div>目的：驗證關於母體參數的「主張」是否成立<br>問：是否有足夠證據拒絕某個假設？<br>輸出：檢定統計量＋p 值，對照 α 做決策<br><span class="hint">例：p = 0.03 &lt; α = 0.05，拒絕虛無假設</span></div>
+  </div>
+
+  <h3>假設檢定五步驟</h3>
+  <div class="panel">
+    <div class="pipe" id="htPipe"></div>
+    <div class="pout" id="htOut" aria-live="polite"></div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" id="htNext">下一步</button><button class="btn" id="htReset">從頭開始</button></div>
+  </div>
+
+  <h3>α、β、檢定力與 p 值模擬器</h3>
+  <div class="panel">
+    <p class="hint">左曲線是 H₀ 為真時樣本平均數的分佈，右曲線是 H₁ 為真時的分佈（σ = 1，單尾檢定，數值為示意）。紅色區是拒絕域，面積＝α；橘色區是 β（型二錯誤）。</p>
+    <div class="sld"><span>顯著水準 α</span><input type="range" id="hA" min="1" max="20" value="5" aria-label="alpha"><output id="hAO"></output></div>
+    <div class="sld"><span>樣本數 n</span><input type="range" id="hN" min="4" max="400" step="4" value="16" aria-label="樣本數"><output id="hNO"></output></div>
+    <div class="sld"><span>真實差異 d</span><input type="range" id="hD" min="2" max="100" step="2" value="50" aria-label="效果大小"><output id="hDO"></output></div>
+    <svg id="htSvg" viewBox="0 0 640 230" role="img" aria-label="假設檢定分佈"></svg>
+    <div class="stats">
+      <div class="stat"><span>型二錯誤 β</span><b id="hB"></b></div>
+      <div class="stat"><span>檢定力 1 − β</span><b id="hP"></b></div>
+      <div class="stat"><span>若觀察到差異 d，p 值</span><b id="hPv"></b></div>
+    </div>
+    <p class="hint" id="htNote" style="margin:10px 0 0"></p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>概念</th><th>定義</th><th>常見誤解（選項最愛的寫法）</th></tr>
+      <tr><td><b>顯著水準 α</b></td><td><b>事前</b>設定的型一錯誤機率上限（常用 0.05）</td><td>誤說成「結論正確的機率」</td></tr>
+      <tr><td><b>p 值</b></td><td>在 H₀ 為真的前提下，<b>觀察到目前或更極端結果</b>的機率</td><td>誤說成「H₀ 為真的機率」或「效果大小」</td></tr>
+      <tr><td><b>型一錯誤（Type I）</b></td><td>H₀ 為真卻被拒絕＝<b>偽陽性</b>，機率＝α</td><td>與型二錯誤方向搞反</td></tr>
+      <tr><td><b>型二錯誤（Type II）</b></td><td>H₀ 為假卻未被拒絕＝<b>偽陰性</b>，機率＝β</td><td>—</td></tr>
+      <tr><td><b>檢定力 Power</b></td><td>1 − β，正確拒絕假 H₀ 的能力</td><td>誤以為與 α 無關（把 α 訂得更嚴會犧牲檢定力）</td></tr>
+    </table>
+  </div>
+  <div class="callout"><b>p 值小 ≠ 效果大。</b>樣本數夠大時，微不足道的差異也能做出 p &lt; 0.05。中級題會用「統計顯著但商業上無意義」的情境來考這一點——在上面的模擬器把 d 調到最小、n 調到最大試試。</div>
+
+  <h3>常見檢定方法：配對練習</h3>
+  <div class="panel">
+    <p class="hint">誘答池就是這張表。先點左邊的 ML 場景，再點右邊的方法。</p>
+    <div class="match" id="testMatch"></div>
+    <div class="feedback" id="testFb" aria-live="polite"></div>
+  </div>
+  <details>
+    <summary>展開檢定方法用途對照表</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>檢定</th><th>用途</th><th>典型 ML 場景</th></tr>
+        <tr><td><b>單樣本 t 檢定</b></td><td>樣本平均 vs 已知標準值</td><td>模型平均延遲是否達 SLA</td></tr>
+        <tr><td><b>配對樣本 t 檢定</b></td><td>兩<b>相關</b>組別的平均差異</td><td>兩模型在<b>同一批 CV 折</b>上的成對表現比較</td></tr>
+        <tr><td><b>獨立樣本 t 檢定</b></td><td>兩獨立組別的平均差異</td><td>A/B 測試兩群使用者</td></tr>
+        <tr><td><b>F 檢定 / ANOVA</b></td><td>比較變異數；迴歸整體顯著性；三組以上平均</td><td>迴歸模型整體檢定、多組比較</td></tr>
+        <tr><td><b>卡方檢定</b></td><td><b>類別變數</b>間的關聯性、適合度檢定</td><td>類別特徵與標籤是否獨立（特徵選擇）</td></tr>
+        <tr><td><b>Shapiro-Wilk／K-S 檢定</b></td><td>常態性檢定</td><td>殘差是否符合常態假設</td></tr>
+      </table>
+    </div>
+  </details>
+  <div class="callout exam"><b>114Q2 第 1 題的關鍵切分：</b>想評估模型「在未觀察資料上的泛化能力與表現穩定性」，答案是<b>交叉驗證（Cross-Validation）</b>，不是任何一種假設檢定。F 檢定、配對 t 檢定、卡方檢定都屬統計假設檢定，處理的是「參數主張是否成立」。配對 t 檢定可以比較<b>兩個模型</b>的成對差異，但不能衡量<b>單一模型</b>的泛化能力。</div>
+
+  <h3>中央極限定理模擬器</h3>
+  <div class="panel">
+    <p class="hint">選一個「一點都不常態」的母體，每次抽 n 個算平均，重複很多次。看<b>樣本平均數</b>的分佈怎麼變。</p>
+    <div class="row" style="justify-content:space-between">
+      <div class="tabs" id="cltTabs" style="margin:0">
+        <button class="btn" data-m="u" aria-pressed="true">均勻母體</button>
+        <button class="btn" data-m="e" aria-pressed="false">指數母體（右偏）</button>
+      </div>
+      <div class="row"><button class="btn primary" id="cltGo">抽 2,000 組樣本</button></div>
+    </div>
+    <div class="sld"><span>每組樣本數 n</span><input type="range" id="cltN" min="1" max="50" value="1" aria-label="樣本數"><output id="cltNO"></output></div>
+    <svg id="cltSvg" viewBox="0 0 640 220" role="img" aria-label="樣本平均數分佈"></svg>
+    <p class="hint" id="cltNote" style="margin:6px 0 0"></p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>定理</th><th>說什麼</th><th>常考陷阱</th></tr>
+      <tr><td><b>大數法則</b>（LLN）</td><td>樣本數越多，<b>樣本平均</b>越接近母體平均</td><td>與 CLT 混用</td></tr>
+      <tr><td><b>中央極限定理</b>（CLT）</td><td>n 夠大時，<b>樣本平均數的抽樣分佈</b>趨近常態，<b>與母體原本是什麼分佈無關</b></td><td>誤以為「原始資料會變常態」</td></tr>
+      <tr><td><b>標準誤</b>（Standard Error）</td><td>SE = σ/√n，是<b>樣本平均數</b>的標準差</td><td>與資料本身的標準差 σ 混淆</td></tr>
+    </table>
+  </div>
+  <p class="prose">CLT 是信賴區間與 t 檢定能成立的理論基礎，也解釋了為什麼樣本數要增加四倍，誤差區間才縮一半（√n 效應）。<b>它描述的對象是統計量（平均數），不是原始觀測值。</b></p>
+</section>
+
+<!-- 42.4 -->
+<section id="s4">
+  <div class="sec-head"><span class="sec-no">42.4</span><h2>統計量與機器學習中的應用</h2></div>
+  <h3 style="margin-top:0">五個核心統計量</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>統計量</th><th>衡量什麼</th><th>單位</th><th>ML 中的用途</th></tr>
+      <tr><td><b>期望值</b> E(X)</td><td>平均趨勢；離散型 E(X) = Σxᵢ·P(xᵢ)</td><td><b>與原資料相同</b></td><td>預測基準、迴歸截距項</td></tr>
+      <tr><td><b>變異數</b> Var(X)</td><td>離散程度＝E[(X−μ)²]</td><td><b>原單位的平方</b></td><td>判斷是否需標準化；偏差-變異拆解</td></tr>
+      <tr><td><b>標準差</b> SD(X)</td><td>√Var(X)</td><td><b>與原資料相同</b></td><td>與平均數同尺度比較、z-score 的分母</td></tr>
+      <tr><td><b>偏態</b> Skewness</td><td>分佈是否對稱</td><td>無單位</td><td>決定是否做對數／Box-Cox 轉換</td></tr>
+      <tr><td><b>峰度</b> Kurtosis</td><td>是否尖峰厚尾</td><td>無單位</td><td>離群值密度與風險擴散的參考</td></tr>
+    </table>
+  </div>
+  <div class="panel">
+    <h3 style="margin-top:0">單位陷阱（必考）</h3>
+    <p class="hint">五位同學的身高（示意）。切換單位，看平均數、變異數、標準差的單位怎麼跟著變。</p>
+    <div class="tabs" id="unitTabs"><button class="btn" data-u="cm" aria-pressed="true">公分</button><button class="btn" data-u="m" aria-pressed="false">公尺</button></div>
+    <div class="stats" id="unitStats"></div>
+    <p class="hint" style="margin:10px 0 0">要跟平均數放在一起討論離散程度、或畫在同一張圖上時，用的是<b>標準差</b>而不是變異數。選項若寫「變異數與原資料同單位」就是錯的。</p>
+  </div>
+
+  <h3>標準化（Z-score）與縮放的分界</h3>
+  <div class="panel">
+    <p class="hint">同一組特徵值，套上不同處理，看它們落在數線的哪裡。</p>
+    <div class="tabs" id="zTabs"></div>
+    <div class="codebox" id="zCode"></div>
+    <svg id="zSvg" viewBox="0 0 640 120" style="margin-top:10px" role="img" aria-label="數線"></svg>
+    <div class="stats" id="zStats"></div>
+    <p class="hint" id="zNote" style="margin:8px 0 0"></p>
+  </div>
+  <h3>114Q2 第 48 題：五句話判對錯</h3>
+  <div class="tf" id="tf"></div>
+  <p class="prose hint" style="margin-top:12px">延伸（115Q1 第 46 題）：影像除以 255.0 只是線性縮放到 0～1，<b>不等於 z-score 標準化</b>；z-score 必須減平均再除標準差。</p>
+
+  <h3>偏態處理：轉換不是越多越好（115Q1 第 25 題）</h3>
+  <div class="panel">
+    <div class="row" style="justify-content:space-between">
+      <div class="tabs" id="skTabs" style="margin:0">
+        <button class="btn" data-m="r" aria-pressed="true">右偏特徵（距離、金額）</button>
+        <button class="btn" data-m="l" aria-pressed="false">原本線性的特徵（屋齡）</button>
+      </div>
+      <button class="btn" id="logBtn" aria-pressed="false">套用 Log 轉換</button>
+    </div>
+    <svg id="skSvg" viewBox="0 0 640 220" style="margin-top:10px" role="img" aria-label="轉換示意"></svg>
+    <p id="skNote" style="margin:6px 0 0"></p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>情況</th><th>該做什麼</th><th>為什麼</th></tr>
+      <tr><td>特徵嚴重<b>右偏</b>（長尾在右，如距離、金額）</td><td>對數（Log）或 Box-Cox 轉換</td><td>壓縮長尾、把乘性關係轉成加性關係，貼近線性假設</td></tr>
+      <tr><td>特徵原本就與目標近似<b>線性</b>（如屋齡）</td><td><b>不要</b>轉換</td><td>Log 會把線性結構扭曲成非線性，表現反而下降</td></tr>
+      <tr><td>有離群值但要保留樣本</td><td>Robust Scaling（用中位數與 IQR）</td><td>不被極端值拉偏</td></tr>
+    </table>
+  </div>
+  <p class="prose">正解邏輯：<b>轉換要依各特徵自己的分佈個別判斷</b>，不是整張表套同一招；尺度差異另以標準化處理即可。</p>
+
+  <h3>殘差診斷：看圖猜病</h3>
+  <div class="panel">
+    <p class="hint">看殘差圖（橫軸：預測值或觀測順序；縱軸：殘差），選出診斷。</p>
+    <svg id="resSvg" viewBox="0 0 640 220" role="img" aria-label="殘差圖"></svg>
+    <div class="row" id="resOpts" style="margin-top:10px"></div>
+    <p id="resFb" style="margin:10px 0 0;min-height:1.6em" aria-live="polite"></p>
+    <div class="row" style="justify-content:flex-end"><button class="btn primary" id="resNext">換一張圖</button></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>殘差圖樣態</th><th>診斷</th><th>正確術語</th></tr>
+      <tr><td>隨預測值增大呈<b>喇叭狀擴散</b></td><td>誤差變異數不是常數</td><td><b>異質變異數</b>（Heteroscedasticity），違反等變異假設（115Q1-5）</td></tr>
+      <tr><td>出現<b>系統性彎曲</b>、高值區殘差極大</td><td>存在離群值或非線性關係</td><td>違反線性假設（114Q2-24）</td></tr>
+      <tr><td>依觀測<b>順序</b>呈現週期或趨勢</td><td>殘差彼此相關</td><td><b>自相關</b>（Autocorrelation），常見於時間序列</td></tr>
+      <tr><td>隨機散佈無結構</td><td>假設成立</td><td>模型 OK</td></tr>
+    </table>
+  </div>
+  <div class="callout">注意分工：<b>常態性看 Q-Q 圖或殘差直方圖</b>，不是看擴散型態；<b>多元共線性用 VIF 或相關矩陣</b>診斷，殘差圖看不出來。異質變異數的實際危害是「係數的標準誤與顯著性檢定失真」——又繞回 42.3 的假設檢定。</div>
+
+  <h3>統計量在模型評估中的兩個高頻讀數</h3>
+  <div class="panel">
+    <h3 style="margin-top:0">PCA 特徵值 λ = 6, 3, 1：要保留幾維？</h3>
+    <p class="hint">點選要保留的主成分數，看累積解釋變異是否過 80% 門檻。</p>
+    <div class="row" id="pcaBtns"></div>
+    <svg id="pcaSvg" viewBox="0 0 640 170" style="margin-top:10px" role="img" aria-label="累積解釋變異"></svg>
+    <p id="pcaNote" style="margin:6px 0 0"></p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>指標</th><th>正確解讀</th><th>誘答</th></tr>
+      <tr><td><b>R²（決定係數）= 0.85</b></td><td>應變數總變異中有 <b>85% 可被模型解釋</b></td><td>「準確率 85%」「誤差 15%」「信心水準 85%」全錯</td></tr>
+      <tr><td><b>PCA 特徵值 λ = 6, 3, 1</b></td><td>總變異 = 10；PC1 解釋 60%，前兩者合計 <b>90%</b>，已過 80% 門檻可降至二維</td><td>「三者差不多所以不能降維」「只留一維即可」</td></tr>
+    </table>
+  </div>
+  <p class="prose"><b>視覺化工具對照：</b>直方圖看分佈形狀與偏態、箱型圖看中位數與離群值（IQR 1.5 倍法則）、Q-Q plot 看常態性、殘差圖看迴歸假設。官方指引明確把這組視覺化列為統計量的輔助解釋工具。</p>
+</section>
+
+<!-- 42.5 -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-no">42.5</span><h2>官方考過什麼</h2></div>
+  <p class="lead">掃描 114-2 與 115-1 兩份官方公告試題（共 100 題），與本知識點的機率統計概念直接相關的有 <b>13 題</b>，約 13%。</p>
+  <div id="examList"></div>
+  <div class="callout exam"><b>命題觀察：</b>純公式計算題只有 114Q2-41 一題，而且是<b>用程式碼包裝的條件機率定義題</b>；其餘全部是「概念對應情境」或「數據解讀」。準備方向不是背推導，而是把「蒙地卡羅 vs 貝氏推論」「假設檢定 vs 交叉驗證」「標準化 vs 正規化」「變異數 vs 標準差」這四組分界練到看到關鍵字就能反射。</div>
+</section>
+
+<!-- 42.6 -->
+<section id="s6">
+  <div class="sec-head"><span class="sec-no">42.6</span><h2>易錯與陷阱</h2></div>
+  <p class="lead">逐條確認自己真的懂了再打勾（打勾狀態會記在這台裝置上）。</p>
+  <div class="traps" id="traps"></div>
+  <p class="hint" id="trapCount" style="margin-top:10px"></p>
+
+  <h3>情境測驗</h3>
+  <div class="qcard" id="quiz"></div>
+
+  <h3>延伸練習</h3>
+  <p class="prose"><b>L23 主題庫 326 題：</b>篩選「機率／分佈／貝氏／假設檢定／標準化／殘差」相關題目，重點練「兩個相似名詞選哪個」的分界題，而非公式推導。<br><b>L23 歷屆 100 題整卷做：</b>本科 23% 為附圖題，條件機率與標準化幾乎都以<b>程式碼截圖</b>出現，只做純文字單題會低估閱讀壓力（見 <a href="L23_overview.html">L23 科目總覽</a>）。<br><b>L21 主題庫 311 題：</b>對照資料治理與模型評估章節中的統計概念（取樣偏差、信賴區間、A/B 測試），兩科的統計詞彙互相流用。<br><b>回頭複習本系列：</b><code>02_L112</code>（資料處理與特徵工程）補標準化與離群值處理，<code>03_L113</code>（機器學習演算法邏輯）補偏差-變異拆解——變異數會在那裡以另一個面貌再考你一次。</p>
+</section>
+</main>
+
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce){const m=document.querySelector('#heroSvg .movers');if(m)m.remove();}
+const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+
+/* ---------- generic matcher ---------- */
+function matcher(root,fb,left,right,doneMsg,badMsg){
+  let sel=null,done=0;
+  const L=document.createElement('div');L.className='col';
+  const R=document.createElement('div');R.className='col';
+  left.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;
+    b.innerHTML=it.html;if(it.c)b.style.setProperty('--c',it.c);
+    b.onclick=()=>{if(b.classList.contains('done'))return;L.querySelectorAll('.mitem').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;fb.textContent='';fb.className='feedback';};
+    L.appendChild(b);
+  });
+  right.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;b.innerHTML=it.html;
+    b.onclick=()=>{
+      if(b.classList.contains('done'))return;
+      if(!sel){fb.textContent='請先點左邊一個項目。';fb.className='feedback';return;}
+      if(sel.dataset.k===b.dataset.k){
+        const c=sel.style.getPropertyValue('--c');
+        [sel,b].forEach(x=>{x.classList.remove('sel');x.classList.add('done');if(c)x.style.setProperty('--c',c);});
+        fb.textContent='✓ '+(it.ok||'答對了！');fb.className='feedback ok';sel=null;done++;
+        if(done===left.length){fb.textContent='✓ 全部配對完成！'+doneMsg;}
+      }else{
+        b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');
+        fb.textContent='✗ '+(it.bad||badMsg||'不太對，再想想看。');fb.className='feedback bad';
+      }
+    };
+    R.appendChild(b);
+  });
+  root.append(L,R);
+}
+/* ---------- flip cards ---------- */
+function flips(root,list){
+  list.forEach(([n,o,d])=>{
+    const b=document.createElement('button');b.className='flip';b.setAttribute('aria-pressed','false');
+    b.innerHTML=`<div class="in"><div class="f"><strong>${n}</strong><span>${o}</span><span style="margin-top:auto;font-size:12.5px">點我翻面</span></div><div class="b">${d}</div></div>`;
+    b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');
+    root.appendChild(b);
+  });
+}
+/* ---------- tabs helper ---------- */
+function tabs(btnRoot,list,render){
+  list.forEach((x,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=x;b.onclick=()=>s(i);btnRoot.appendChild(b);});
+  function s(i){btnRoot.querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));render(i);}
+  s(0);
+}
+/* ---------- exam list ---------- */
+function examList(root,list){
+  list.forEach(([n,k,q,a])=>{root.insertAdjacentHTML('beforeend',`<details><summary><span class="tag">${n}</span>${k}</summary><div class="body"><p style="margin:0 0 6px"><span class="hint">怎麼問：</span>${q}</p><p style="margin:0"><span class="hint">正解思路：</span>${a}</p></div></details>`);});
+}
+/* ---------- traps ---------- */
+function traps(key,T){
+  let saved=[];try{saved=JSON.parse(localStorage.getItem(key)||'[]')||[];}catch(e){saved=[];}
+  T.forEach(([a,b],i)=>{
+    const l=document.createElement('label');const c=saved.includes(i);if(c)l.classList.add('chk');
+    l.innerHTML=`<input type="checkbox" ${c?'checked':''}><div><em>${a}</em><br><span>${b}</span></div>`;
+    l.querySelector('input').onchange=e=>{const on=e.target.checked;l.classList.toggle('chk',on);saved=on?[...new Set([...saved,i])]:saved.filter(x=>x!==i);try{localStorage.setItem(key,JSON.stringify(saved));}catch(err){}count();};
+    $('#traps').appendChild(l);
+  });
+  function count(){$('#trapCount').textContent=`已確認 ${saved.length}／${T.length} 條`;}
+  count();
+}
+/* ---------- quiz ---------- */
+function quiz(Q,msgs){
+  let i=0,score=0;const box=$('#quiz');
+  function show(){
+    if(i>=Q.length){
+      const msg=score>=Q.length-1?msgs[0]:score>=Math.ceil(Q.length*.65)?msgs[1]:msgs[2];
+      box.innerHTML=`<div class="progress"><i style="width:100%"></i></div><div class="qtext" style="font-size:24px;font-family:var(--serif)">得分 ${score}／${Q.length}</div><p>${msg}</p><button class="btn primary" id="qr">重新測驗</button>`;
+      $('#qr').onclick=()=>{i=0;score=0;show();};return;
+    }
+    const [q,opts,ex]=Q[i];
+    const order=shuffle(opts.map((o,k)=>({o,k})));
+    box.innerHTML=`<div class="progress"><i style="width:${i/Q.length*100}%"></i></div><div class="qtop"><span>第 ${i+1}／${Q.length} 題</span><span>得分 ${score}</span></div><div class="qtext">${q}</div><div class="opts">${order.map(x=>`<button class="opt" data-k="${x.k}">${x.o}</button>`).join('')}</div><div class="expl" id="qe"></div><div class="row" style="margin-top:14px;justify-content:flex-end"><button class="btn primary" id="qn" style="display:none">${i===Q.length-1?'看結果':'下一題'}</button></div>`;
+    box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.k==='0';if(ok)score++;
+      box.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.k==='0')x.classList.add('right');});
+      if(!ok)b.classList.add('wrongpick');
+      const e=$('#qe');e.innerHTML=(ok?'<b style="color:var(--ok)">答對了。</b>':'<b style="color:var(--bad)">這題要小心。</b>')+ex;e.classList.add('show');
+      $('#qn').style.display='';$('#qn').focus();
+    });
+    $('#qn').onclick=()=>{i++;show();};
+  }
+  show();
+}
+
+/* ---------- math helpers ---------- */
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function erf(x){const s=Math.sign(x);x=Math.abs(x);const t=1/(1+.3275911*x);const y=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-.284496736)*t+.254829592)*t*Math.exp(-x*x);return s*y;}
+const Phi=z=>.5*(1+erf(z/Math.SQRT2));
+function invPhi(p){let lo=-8,hi=8;for(let k=0;k<80;k++){const m=(lo+hi)/2;if(Phi(m)<p)lo=m;else hi=m;}return (lo+hi)/2;}
+function lgamma(z){const g=7,c=[0.99999999999980993,676.5203681218851,-1259.1392167224028,771.32342877765313,-176.61502916214059,12.507343278686905,-0.13857109526572012,9.9843695780195716e-6,1.5056327351493116e-7];if(z<0.5)return Math.log(Math.PI/Math.sin(Math.PI*z))-lgamma(1-z);z-=1;let x=c[0];for(let i=1;i<g+2;i++)x+=c[i]/(z+i);const t=z+g+.5;return .5*Math.log(2*Math.PI)+(z+.5)*Math.log(t)-t+Math.log(x);}
+const lfact=n=>lgamma(n+1);
+const gaussR=r=>{let u=0,v=0;while(u===0)u=r();v=r();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);};
+const f2=v=>(Math.round(v*1000)/1000).toString();
+
+/* ---------- hero ---------- */
+(function(){
+  const lam=3;let h='';
+  for(let k=0;k<=8;k++){const p=Math.exp(-lam+k*Math.log(lam)-lfact(k));const H=p*700;h+=`<rect x="${60+k*36}" y="${250-H}" width="22" height="${H}" rx="3" fill="var(--txt)" opacity=".85"/>`;}
+  $('#heroBars').innerHTML=h;
+  let d='M380 250';for(let x=0;x<=300;x+=5){const z=(x-160)/50;d+=` L${380+x} ${250-Math.exp(-z*z/2)*170}`;}
+  $('#heroCurve').setAttribute('d',d+' L680 250 Z');
+})();
+
+/* ---------- 42.1 threshold ---------- */
+(function(){
+  const M=[['「限時優惠！點此領取」',0.93],['「您的帳戶異常，請立即登入」',0.81],['「本週部門會議紀錄」',0.08],['「好久不見，週末聚餐？」',0.22],['「您訂購的商品已出貨」',0.41],['「恭喜中獎，請回覆身分證號」',0.97]];
+  function r(){const t=+$('#thr').value/100;$('#thrO').textContent=t.toFixed(2);
+    $('#mails').innerHTML=M.map(([n,p])=>`<div class="mail ${p>=t?'spam':''}"><span>${n}</span><span class="p">${p.toFixed(2)}</span><span class="lab" style="color:${p>=t?'var(--bad)':'var(--ok)'}">${p>=t?'垃圾信':'正常信'}</span></div>`).join('');}
+  $('#thr').addEventListener('input',r);r();
+})();
+
+/* ---------- distribution lab ---------- */
+(function(){
+  const D={
+    ber:{n:'伯努利',t:'d',p:[['p','成功機率 p',0.05,0.95,0.05,0.3]],f:(x,P)=>x===0?1-P.p:x===1?P.p:0,xr:P=>[0,1],E:P=>P.p,V:P=>P.p*(1-P.p),role:'<b>邏輯迴歸的目標變數假設</b>',note:'單次二元試驗：點擊／未點擊。'},
+    bin:{n:'二項',t:'d',p:[['n','試驗次數 n',1,30,1,10],['p','成功機率 p',0.05,0.95,0.05,0.3]],f:(x,P)=>Math.exp(lfact(P.n)-lfact(x)-lfact(P.n-x)+x*Math.log(P.p)+(P.n-x)*Math.log(1-P.p)),xr:P=>[0,P.n],E:P=>P.n*P.p,V:P=>P.n*P.p*(1-P.p),role:'A/B 測試轉換數',note:'有明確的試驗次數 n 與固定機率 p。E = np 與 Var = np(1−p) 不相等。'},
+    poi:{n:'卜瓦松',t:'d',p:[['l','平均發生率 λ',0.5,15,0.5,4]],f:(x,P)=>Math.exp(-P.l+x*Math.log(P.l)-lfact(x)),xr:P=>[0,Math.ceil(P.l+4*Math.sqrt(P.l)+2)],E:P=>P.l,V:P=>P.l,role:'客服來電數、伺服器請求數',note:'<b style="color:var(--txt)">E = Var = λ</b>：常考分佈中唯一期望值等於變異數的。沒有 n，用於「次數無上限的稀有事件」。'},
+    uni:{n:'均勻',t:'c',p:[['a','下界 a',0,5,0.5,1],['w','寬度 b − a',1,8,0.5,4]],f:(x,P)=>x>=P.a&&x<=P.a+P.w?1/P.w:0,xr:P=>[P.a-1,P.a+P.w+1],E:P=>P.a+P.w/2,V:P=>P.w*P.w/12,role:'參數初始化、隨機抽樣',note:'區間內等機率：E = (a+b)/2，Var = (b−a)²/12。'},
+    nor:{n:'常態',t:'c',p:[['m','平均 μ',-3,3,0.5,0],['s','標準差 σ',0.2,3,0.1,1]],f:(x,P)=>Math.exp(-((x-P.m)**2)/(2*P.s*P.s))/(P.s*Math.sqrt(2*Math.PI)),xr:P=>[P.m-4*Math.max(P.s,.5),P.m+4*Math.max(P.s,.5)],E:P=>P.m,V:P=>P.s*P.s,role:'<b>線性迴歸的誤差項假設</b>、標準化',note:'對稱鐘形。把 σ 調到 0.3 以下，峰值會超過 1——<b>PDF 的值不是機率</b>，面積才是。'},
+    exp:{n:'指數',t:'c',p:[['l','發生率 λ',0.2,3,0.1,1]],f:(x,P)=>x<0?0:P.l*Math.exp(-P.l*x),xr:P=>[0,6/P.l],E:P=>1/P.l,V:P=>1/(P.l*P.l),role:'故障時間、來電間隔；<b>無記憶性</b>',note:'量的是「兩次之間隔多久」（連續）。λ > 1 時 f(0) = λ > 1，同樣不是機率。'},
+    chi:{n:'卡方',t:'c',p:[['k','自由度 k',1,10,1,3]],f:(x,P)=>x<=0?0:Math.exp((P.k/2-1)*Math.log(x)-x/2-(P.k/2)*Math.log(2)-lgamma(P.k/2)),xr:P=>[0,Math.max(10,P.k+5*Math.sqrt(2*P.k))],E:P=>P.k,V:P=>2*P.k,role:'卡方檢定、列聯表獨立性',note:'k 個獨立標準常態變數的平方和：E = k，Var = 2k。'}
+  };
+  const keys=Object.keys(D);let cur='poi',P={};
+  function draw(){
+    const d=D[cur];const [x0,x1]=d.xr(P);let h='';const W=560,L=50,B=200,Ht=160;
+    let pts=[];
+    if(d.t==='d'){for(let x=Math.max(0,Math.floor(x0));x<=x1;x++)pts.push([x,d.f(x,P)]);}
+    else{for(let i=0;i<=240;i++){const x=x0+(x1-x0)*i/240;pts.push([x,d.f(x,P)]);}}
+    const mx=Math.max(...pts.map(p=>p[1]));const ymax=Math.max(mx*1.12,0.05);
+    const X=x=>L+(x-x0)/((x1-x0)||1)*W,Y=y=>B-y/ymax*Ht;
+    h+=`<line x1="${L}" y1="${B}" x2="${L+W}" y2="${B}" stroke="var(--line)" stroke-width="2"/><line x1="${L}" y1="${B}" x2="${L}" y2="${B-Ht-10}" stroke="var(--line)" stroke-width="2"/>`;
+    if(1<ymax){h+=`<line x1="${L}" y1="${Y(1)}" x2="${L+W}" y2="${Y(1)}" stroke="var(--bad)" stroke-dasharray="6 5" stroke-width="1.5"/><text x="${L-6}" y="${Y(1)+4}" text-anchor="end" font-size="12" fill="var(--bad)">1</text>`;}
+    h+=`<text x="${L-6}" y="${Y(mx)+4}" text-anchor="end" font-size="11" fill="var(--muted)">${f2(mx)}</text>`;
+    if(d.t==='d'){const bw=Math.min(36,W/(pts.length+1)*.7);pts.forEach(([x,y])=>{h+=`<rect x="${X(x)-bw/2}" y="${Y(y)}" width="${bw}" height="${B-Y(y)}" rx="3" fill="var(--txt)"/>`;});
+      const step=Math.ceil(pts.length/12);pts.forEach(([x],i)=>{if(i%step===0)h+=`<text x="${X(x)}" y="${B+16}" text-anchor="middle" font-size="12" fill="var(--muted)">${x}</text>`;});
+      h+=`<text x="${L+W}" y="22" text-anchor="end" font-size="13" fill="var(--txt)" font-weight="700">PMF：每根長條的高度＝該點的機率</text>`;}
+    else{let p='M'+X(pts[0][0])+' '+B;pts.forEach(([x,y])=>p+=` L${X(x).toFixed(1)} ${Y(y).toFixed(1)}`);p+=` L${X(pts[pts.length-1][0])} ${B} Z`;
+      h+=`<path d="${p}" fill="color-mix(in srgb,var(--img) 20%,transparent)" stroke="var(--img)" stroke-width="2.5"/>`;
+      for(let k=0;k<=4;k++){const x=x0+(x1-x0)*k/4;h+=`<text x="${X(x)}" y="${B+16}" text-anchor="middle" font-size="12" fill="var(--muted)">${f2(x)}</text>`;}
+      h+=`<text x="${L+W}" y="22" text-anchor="end" font-size="13" fill="${mx>1?'var(--bad)':'var(--img)'}" font-weight="700">${mx>1?'PDF 峰值 '+f2(mx)+' > 1，但它不是機率！':'PDF：曲線下面積才是機率'}</text>`;}
+    const Ev=d.E(P);h+=`<line x1="${X(Ev)}" y1="${B}" x2="${X(Ev)}" y2="${B-Ht}" stroke="var(--aud)" stroke-width="2" stroke-dasharray="4 4"/><text x="${X(Ev)+4}" y="${B-Ht+4}" font-size="12" fill="var(--aud)" font-weight="700">E(X)</text>`;
+    $('#distSvg').innerHTML=h;
+    $('#dE').textContent=f2(Ev);$('#dV').textContent=f2(d.V(P));$('#dRole').innerHTML=d.role;$('#dNote').innerHTML=d.note;
+    $('#dV').style.color=cur==='poi'?'var(--txt)':'';$('#dE').style.color=cur==='poi'?'var(--txt)':'';
+  }
+  function pick(k){cur=k;P={};const d=D[k];
+    $('#distSliders').innerHTML=d.p.map(([id,lab,mn,mx,st,df])=>{P[id]=df;return `<div class="sld"><span>${lab}</span><input type="range" data-id="${id}" min="${mn}" max="${mx}" step="${st}" value="${df}" aria-label="${lab}"><output id="po_${id}">${df}</output></div>`;}).join('');
+    $$('#distSliders input').forEach(i=>i.addEventListener('input',()=>{P[i.dataset.id]=+i.value;$('#po_'+i.dataset.id).textContent=i.value;draw();}));
+    draw();}
+  tabs($('#distTabs'),keys.map(k=>D[k].n),i=>pick(keys[i]));
+  $$('#distTabs .btn')[2].click();
+})();
+
+matcher($('#distMatch'),$('#distFb'),[
+  {k:'poi',c:'var(--txt)',html:'客服中心每小時平均接到幾通電話？'},
+  {k:'exp',c:'var(--img)',html:'兩通來電之間平均要等多久？'},
+  {k:'bin',c:'var(--aud)',html:'A/B 測試中 1,000 位訪客有幾人轉換？'},
+  {k:'ber',c:'var(--sen)',html:'某位使用者這次會不會點擊廣告？'},
+  {k:'chi',c:'var(--ok)',html:'類別特徵與標籤是否獨立（列聯表）？'}
+],[
+  {k:'bin',html:'二項 Binomial(n, p)',ok:'有明確的試驗次數 n 與固定機率 p。'},
+  {k:'chi',html:'卡方 Chi-square(k)',ok:'卡方檢定、列聯表獨立性。'},
+  {k:'poi',html:'卜瓦松 Poisson(λ)',ok:'「單位時間內發生幾次」→ 卜瓦松，E = Var = λ。'},
+  {k:'ber',html:'伯努利 Bernoulli(p)',ok:'單次二元試驗，也是邏輯迴歸的目標變數假設。'},
+  {k:'exp',html:'指數 Exponential(λ)',ok:'「兩次之間隔多久」→ 指數，具無記憶性。'}
+],'卜瓦松數次數、指數量間隔；二項有 n、卜瓦松沒有。','看題幹是在數「次數」、量「時間」，還是有固定的 n？');
+
+flips($('#asCards'),[
+  ['邏輯迴歸','Logistic Regression','假設：目標變數服從<b>伯努利分佈</b>。<br>違反：多類別需改用 Softmax／多項分佈。'],
+  ['線性迴歸','Linear Regression','假設：<b>誤差項</b>服從常態分佈、等變異。<br>違反：係數標準誤與顯著性檢定失真（見 42.4 殘差診斷）。'],
+  ['樸素貝氏','Naive Bayes','假設：特徵在給定類別下<b>條件獨立</b>。<br>違反：高度相關的特徵會被重複計票。'],
+  ['VAE','變分自編碼器','假設：潛在變數服從指定的先驗分佈。<br>違反：生成品質與潛在空間結構劣化。']
+]);
+
+/* ---------- 42.2 Monte Carlo dice ---------- */
+(function(){
+  let cnt=null;
+  const code=['import numpy as np','rolls = np.random.randint(1, 7, size=100000)   # 擲骰子模擬','A = (rolls % 2 == 0)          # 事件 A：擲出偶數 → {2, 4, 6}','B = (rolls > 3)               # 事件 B：擲出大於 3 → {4, 5, 6}','A_and_B = A &amp; B               # A ∩ B → {4, 6}',''];
+  const opts=[
+    ['A_and_B.sum() / B.sum()',(a,b,ab)=>ab/b,'✔ 正解：分母是 B，算出的是 <b>P(A|B)</b>。','ok'],
+    ['A_and_B.sum() / A.sum()',(a,b,ab)=>ab/a,'✘ 這是 <b>P(B|A)</b>。注意：公正骰子下它的數值也接近 2/3，代數字驗算救不了你！','bad'],
+    ['A_and_B.sum() / (A.sum() * B.sum())',(a,b,ab)=>ab/(a*b),'✘ 相乘沒有機率意義。','bad'],
+    ['A_and_B.sum() / (A.sum() + B.sum())',(a,b,ab)=>ab/(a+b),'✘ 相加沒有機率意義。','bad']
+  ];
+  let sel=0;
+  function drawDie(){
+    let h='';for(let f=1;f<=6;f++){const x=20+(f-1)*102,inA=f%2===0,inB=f>3;
+      h+=`<rect x="${x}" y="20" width="86" height="86" rx="14" fill="${inB?'color-mix(in srgb,var(--img) 22%,var(--surface))':'var(--surface2)'}" stroke="${inA?'var(--txt)':'var(--line)'}" stroke-width="${inA?4:2}"/><text x="${x+43}" y="72" text-anchor="middle" font-size="30" font-weight="700" fill="var(--ink)">${f}</text><text x="${x+43}" y="126" text-anchor="middle" font-size="12" fill="var(--muted)">${cnt?cnt[f].toLocaleString('en-US')+' 次':'—'}</text>`;}
+    h+=`<text x="20" y="146" font-size="12" fill="var(--txt)" font-weight="700">粗框＝A（偶數）</text><text x="160" y="146" font-size="12" fill="var(--img)" font-weight="700">底色＝B（大於 3）</text><text x="300" y="146" font-size="12" fill="var(--ink)" font-weight="700">粗框且有底色＝A ∩ B {4, 6}</text>`;
+    $('#dieSvg').innerHTML=h;
+  }
+  function out(){
+    $('#dieCode').innerHTML=code.concat(['p = '+opts[sel][0]]).map((l,i)=>`<span class="ln ${i===6?'hl':''}">${l||' '}</span>`).join('');
+    if(!cnt){$('#denOut').textContent='請先擲骰子。';return;}
+    const a=cnt[2]+cnt[4]+cnt[6],b=cnt[4]+cnt[5]+cnt[6],ab=cnt[4]+cnt[6];
+    const v=opts[sel][1](a,b,ab);
+    $('#denOut').innerHTML=`A.sum() = ${a.toLocaleString('en-US')}　B.sum() = ${b.toLocaleString('en-US')}　A_and_B.sum() = ${ab.toLocaleString('en-US')}<br><b style="font-size:20px">p = ${v.toPrecision(4)}</b>　<span style="color:var(--${opts[sel][3]==='ok'?'ok':'bad'})">${opts[sel][2]}</span>`;
+  }
+  opts.forEach((o,i)=>{const b=document.createElement('button');b.className='btn';b.style.fontFamily='ui-monospace,Menlo,Consolas,monospace';b.style.fontSize='13px';b.textContent=o[0];b.setAttribute('aria-pressed',i===0);b.onclick=()=>{sel=i;$$('#denBtns .btn').forEach((x,j)=>x.setAttribute('aria-pressed',j===i));out();};$('#denBtns').appendChild(b);});
+  $('#rollBtn').onclick=()=>{cnt=[0,0,0,0,0,0,0];for(let k=0;k<100000;k++)cnt[1+Math.floor(Math.random()*6)]++;$('#rollInfo').textContent='已擲 100,000 次（每按一次重擲）';drawDie();out();};
+  drawDie();out();
+})();
+
+/* ---------- Bayes base rate ---------- */
+(function(){
+  $('#bDots').innerHTML='<i></i>'.repeat(1000);
+  function r(){
+    const pv=+$('#bPrev').value/100,se=+$('#bSens').value/100,fp=+$('#bFp').value/100;
+    $('#bPrevO').textContent=Math.round(pv*100)+'%';$('#bSensO').textContent=Math.round(se*100)+'%';$('#bFpO').textContent=Math.round(fp*100)+'%';
+    const sick=Math.round(1000*pv),tp=Math.round(sick*se),fn=sick-tp,fpn=Math.round((1000-sick)*fp);
+    const ds=$$('#bDots i');ds.forEach((d,i)=>{d.style.background=i<tp?'var(--bad)':i<tp+fpn?'var(--warn)':i<tp+fpn+fn?'color-mix(in srgb,var(--sen) 50%,var(--line))':'var(--line)';});
+    const post=pv*se/(pv*se+(1-pv)*fp);
+    $('#bOut').innerHTML=`P(病|陽) = (${se.toFixed(2)} × ${pv.toFixed(2)}) / (${se.toFixed(2)} × ${pv.toFixed(2)} + ${fp.toFixed(2)} × ${(1-pv).toFixed(2)}) ≈ <b style="font-size:22px;color:var(--img)">${(post*100).toFixed(1)}%</b><br><span class="hint">1,000 人中陽性 ${tp+fpn} 人，其中真正患病只有 ${tp} 人。${pv<=0.02?'先驗很低時，偽陽性的人數遠多於真陽性。':'把盛行率調高，後驗就跟著上升。'}</span>`;
+  }
+  ['#bPrev','#bSens','#bFp'].forEach(s=>$(s).addEventListener('input',r));r();
+})();
+
+/* ---------- naive bayes strategy ---------- */
+(function(){
+  const st=[
+    ['改用更先進的演算法','✗ 沒回應成因','var(--bad)','樸素貝氏在文字分類仍很有效；問題出在資料。'],
+    ['判定為過擬合，增加 Epoch','✗ 張冠李戴','var(--bad)','樸素貝氏是一次性機率估計，<b>沒有 Epoch 的概念</b>。'],
+    ['未做特徵標準化','✗ 張冠李戴','var(--bad)','樸素貝氏處理詞頻與機率，<b>不需要特徵縮放</b>。'],
+    ['類別條件機率受訓練資料分佈影響','✓ 正解','var(--ok)','這些詞在訓練集幾乎只出現在垃圾信，P(詞|垃圾) 自然偏高。對策：補足正常促銷信樣本、重新平衡資料、調整先驗機率。']
+  ];
+  [1,3,0,2].forEach(i=>{const b=document.createElement('button');b.textContent=st[i][0];b.setAttribute('aria-pressed','false');b.onclick=()=>{$$('#nbStrat button').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#nbV').textContent=st[i][1];$('#nbV').style.color=st[i][2];$('#nbWhy').innerHTML=st[i][3];};$('#nbStrat').appendChild(b);});
+})();
+
+matcher($('#mcMatch'),$('#mcFb'),[
+  {k:'mc',c:'var(--txt)',html:'「隨機模擬大量情境」「估計損失分佈」「風險區間」'},
+  {k:'by',c:'var(--img)',html:'「先驗」「更新信念」「後驗」'},
+  {k:'mk',c:'var(--aud)',html:'「狀態」「轉移矩陣」'},
+  {k:'gd',c:'var(--sen)',html:'「學習率」「收斂」'}
+],[
+  {k:'gd',html:'梯度下降<small>迭代調參最小化損失函數</small>'},
+  {k:'mc',html:'蒙地卡羅法<small>無解析解時以大量隨機抽樣逼近</small>',ok:'114Q2-23、115Q1-1 的正解都是蒙地卡羅。'},
+  {k:'mk',html:'馬可夫鏈<small>狀態之間的轉移機率結構</small>'},
+  {k:'by',html:'貝氏推論<small>有明確先驗，用新資料更新後驗</small>',ok:'題幹沒提先驗／後驗，就不要選它。'}
+],'記住判準：沒有「先驗／後驗」就不是貝氏推論。');
+
+/* ---------- 42.3 hypothesis steps ---------- */
+(function(){
+  const N=[['A','設定 H₀／H₁'],['B','選檢定方法'],['C','決定 α'],['D','算統計量與 p'],['E','比較並決策']];
+  const T=[
+    '<b>A. 設定虛無假設 H₀ 與對立假設 H₁</b><br>例：H₀「新模型平均延遲 ≤ SLA」；H₁「新模型平均延遲 > SLA」。',
+    '<b>B. 選擇適當的檢定方法與檢定統計量</b><br>樣本平均 vs 已知標準值 → 單樣本 t 檢定（見下方配對練習）。',
+    '<b>C. 決定顯著水準 α</b>（常用 0.05）<div class="hint" style="color:var(--bad)">事前決定，不能看完資料才改——看完 p 值再改 α 是統計上的作弊。</div>',
+    '<b>D. 計算檢定統計量與 p 值</b><br>p 值＝在 H₀ 為真的前提下，觀察到目前或更極端結果的機率。',
+    '<b>E. 比較 p 值與 α → 決策</b><br>p ≤ α → 拒絕 H₀（結果「統計上顯著」）<br>p > α → 不拒絕 H₀<div class="hint">注意：是「證據不足」，不是「證明 H₀ 為真」。</div>'
+  ];
+  let i=0;$('#htPipe').innerHTML=N.map(([a,b])=>`<div class="pnode"><b>${a}</b>${b}</div>`).join('');
+  function r(){$$('#htPipe .pnode').forEach((n,j)=>{n.classList.toggle('on',j===i);n.classList.toggle('past',j<i);});$('#htOut').innerHTML=T[i];$('#htNext').disabled=i===4;$('#htNext').style.opacity=i===4?.4:1;}
+  $('#htNext').onclick=()=>{if(i<4){i++;r();}};$('#htReset').onclick=()=>{i=0;r();};r();
+})();
+
+/* ---------- alpha / beta simulator ---------- */
+(function(){
+  function r(){
+    const a=+$('#hA').value/100,n=+$('#hN').value,d=+$('#hD').value/100,se=1/Math.sqrt(n);
+    $('#hAO').textContent=a.toFixed(2);$('#hNO').textContent=n;$('#hDO').textContent=d.toFixed(2);
+    const c=invPhi(1-a)*se,beta=Phi((c-d)/se),pv=1-Phi(d/se);
+    const x0=-4*se,x1=Math.max(d,c)+4*se,W=580,L=30,B=190,Ht=150;
+    const X=x=>L+(x-x0)/(x1-x0)*W,pk=1/(se*Math.sqrt(2*Math.PI)),Y=y=>B-y/pk*Ht;
+    const pdf=(x,m)=>Math.exp(-((x-m)**2)/(2*se*se))/(se*Math.sqrt(2*Math.PI));
+    const curve=(m,from,to,close)=>{let p='';const N=160;for(let k=0;k<=N;k++){const x=from+(to-from)*k/N;p+=(k?' L':'M')+X(x).toFixed(1)+' '+Y(pdf(x,m)).toFixed(1);}return close?p+` L${X(to)} ${B} L${X(from)} ${B} Z`:p;};
+    let h=`<line x1="${L}" y1="${B}" x2="${L+W}" y2="${B}" stroke="var(--line)" stroke-width="2"/>`;
+    h+=`<path d="${curve(0,c,x1,true)}" fill="color-mix(in srgb,var(--bad) 35%,transparent)"/>`;
+    h+=`<path d="${curve(d,x0,c,true)}" fill="color-mix(in srgb,var(--warn) 35%,transparent)"/>`;
+    h+=`<path d="${curve(0,x0,x1)}" fill="none" stroke="var(--ink)" stroke-width="2.5"/><path d="${curve(d,x0,x1)}" fill="none" stroke="var(--aud)" stroke-width="2.5"/>`;
+    h+=`<line x1="${X(c)}" y1="${B}" x2="${X(c)}" y2="${B-Ht-10}" stroke="var(--bad)" stroke-width="2"/><text x="${X(c)+4}" y="${B-Ht}" font-size="12" fill="var(--bad)" font-weight="700">拒絕域 →</text>`;
+    h+=`<text x="${X(0)}" y="${B+18}" text-anchor="middle" font-size="12" fill="var(--ink)" font-weight="700">H₀</text><text x="${X(d)}" y="${B+18}" text-anchor="middle" font-size="12" fill="var(--aud)" font-weight="700">H₁</text>`;
+    $('#htSvg').innerHTML=h;
+    $('#hB').textContent=(beta*100).toFixed(1)+'%';$('#hP').textContent=((1-beta)*100).toFixed(1)+'%';$('#hPv').textContent=pv<0.0001?'< 0.0001':pv.toFixed(4);
+    $('#hPv').style.color=pv<=a?'var(--bad)':'';
+    let n2='';
+    if(pv<=a&&d<=0.1)n2='<b>統計顯著，但真實差異只有 '+d.toFixed(2)+'σ</b>——樣本數夠大，微不足道的差異也能 p &lt; α。p 值小 ≠ 效果大。';
+    else if(pv<=a)n2='p ≤ α → 拒絕 H₀。';
+    else n2='p > α → 不拒絕 H₀（證據不足，不是證明 H₀ 為真）。';
+    $('#htNote').innerHTML=n2+'　把 α 調小（更嚴），紅色變少、橘色 β 變多 → 檢定力下降。';
+  }
+  ['#hA','#hN','#hD'].forEach(s=>$(s).addEventListener('input',r));r();
+})();
+
+matcher($('#testMatch'),$('#testFb'),[
+  {k:'1t',c:'var(--txt)',html:'模型平均延遲是否達 SLA'},
+  {k:'pt',c:'var(--img)',html:'兩模型在同一批 CV 折上的成對表現比較'},
+  {k:'it',c:'var(--aud)',html:'A/B 測試兩群使用者'},
+  {k:'f',c:'var(--sen)',html:'迴歸模型整體顯著性、三組以上平均'},
+  {k:'chi',c:'var(--ok)',html:'類別特徵與標籤是否獨立（特徵選擇）'},
+  {k:'sw',c:'var(--warn)',html:'殘差是否符合常態假設'},
+  {k:'cv',c:'var(--bad)',html:'單一模型在未見資料上的泛化能力'}
+],[
+  {k:'chi',html:'卡方檢定',ok:'類別變數間的關聯性。'},
+  {k:'cv',html:'交叉驗證（不是假設檢定）',ok:'114Q2 第 1 題：泛化能力 → 交叉驗證。'},
+  {k:'1t',html:'單樣本 t 檢定',ok:'樣本平均 vs 已知標準值。'},
+  {k:'sw',html:'Shapiro-Wilk／K-S 檢定',ok:'常態性檢定。'},
+  {k:'pt',html:'配對樣本 t 檢定',ok:'兩相關組別；但不能衡量單一模型的泛化能力。'},
+  {k:'f',html:'F 檢定／ANOVA',ok:'比較變異數、迴歸整體顯著性。'},
+  {k:'it',html:'獨立樣本 t 檢定',ok:'兩獨立組別的平均差異。'}
+],'卡方管類別、t 管平均、F 管變異數與迴歸整體；泛化能力找交叉驗證。');
+
+/* ---------- CLT ---------- */
+(function(){
+  let pop='u';
+  const P={u:{mu:.5,sd:Math.sqrt(1/12),draw:r=>r(),lo:0,hi:1,n:'均勻(0, 1)'},e:{mu:1,sd:1,draw:r=>-Math.log(1-r()),lo:0,hi:3,n:'指數(λ = 1)'}};
+  function run(){
+    const n=+$('#cltN').value;$('#cltNO').textContent=n;const p=P[pop],r=rng(n*31+(pop==='u'?1:2)+Math.floor(Math.random()*1e6));
+    const bins=40,H=new Array(bins).fill(0),M=[];
+    for(let k=0;k<2000;k++){let s=0;for(let j=0;j<n;j++)s+=p.draw(r);const m=s/n;M.push(m);const b=Math.floor((m-p.lo)/(p.hi-p.lo)*bins);if(b>=0&&b<bins)H[b]++;}
+    const W=580,L=30,B=190,Ht=160,bw=W/bins,mx=Math.max(...H),se=p.sd/Math.sqrt(n);
+    let h=`<line x1="${L}" y1="${B}" x2="${L+W}" y2="${B}" stroke="var(--line)" stroke-width="2"/>`;
+    H.forEach((v,i)=>{const hh=v/mx*Ht;h+=`<rect x="${L+i*bw+1}" y="${B-hh}" width="${bw-2}" height="${hh}" rx="2" fill="var(--sen)" opacity=".75"/>`;});
+    const binW=(p.hi-p.lo)/bins,scale=2000*binW/mx*Ht;let d='';
+    for(let k=0;k<=200;k++){const x=p.lo+(p.hi-p.lo)*k/200,y=Math.exp(-((x-p.mu)**2)/(2*se*se))/(se*Math.sqrt(2*Math.PI))*scale;d+=(k?' L':'M')+(L+k/200*W).toFixed(1)+' '+Math.max(B-y,0).toFixed(1);}
+    if(n>=2)h+=`<path d="${d}" fill="none" stroke="var(--ink)" stroke-width="2" stroke-dasharray="6 4"/>`;
+    h+=`<text x="${L}" y="${B+18}" font-size="12" fill="var(--muted)">${p.lo}</text><text x="${L+W}" y="${B+18}" text-anchor="end" font-size="12" fill="var(--muted)">${p.hi}</text><text x="${L+W}" y="18" text-anchor="end" font-size="13" fill="var(--ink)" font-weight="700">母體：${p.n}　SE = σ/√n = ${se.toFixed(3)}</text>`;
+    $('#cltSvg').innerHTML=h;
+    $('#cltNote').innerHTML=n===1?'n = 1：樣本平均數就是原始資料，分佈形狀跟母體一樣'+(pop==='e'?'（右偏）':'（平的）')+'。把 n 拉大試試。':n<5?'n 還小，形狀開始往中間集中。':'n 夠大，<b>樣本平均數的分佈</b>已接近常態（虛線）。注意：<b>母體本身沒有變常態</b>；而且 n 每增加四倍，SE 才縮一半。';
+  }
+  $$('#cltTabs .btn').forEach(b=>b.onclick=()=>{pop=b.dataset.m;$$('#cltTabs .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));run();});
+  $('#cltN').addEventListener('input',run);$('#cltGo').onclick=run;run();
+})();
+
+/* ---------- 42.4 units ---------- */
+(function(){
+  const H=[160,165,170,175,180];
+  function r(u){const k=u==='cm'?1:.01,v=H.map(x=>x*k),m=v.reduce((a,b)=>a+b)/5,va=v.reduce((a,b)=>a+(b-m)**2,0)/5,sd=Math.sqrt(va),U=u==='cm'?'公分':'公尺';
+    $('#unitStats').innerHTML=`<div class="stat"><span>平均數（單位：${U}）</span><b>${f2(m)} ${u}</b></div><div class="stat" style="border:2px solid var(--bad)"><span>變異數（單位：<b style="color:var(--bad)">平方${U}</b>）</span><b>${va<0.01?va.toFixed(4):f2(va)} ${u}²</b></div><div class="stat" style="border:2px solid var(--ok)"><span>標準差（單位：${U}）</span><b>${sd<1?sd.toFixed(4):sd.toFixed(2)} ${u}</b></div>`;}
+  $$('#unitTabs .btn').forEach(b=>b.onclick=()=>{$$('#unitTabs .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));r(b.dataset.u);});r('cm');
+})();
+
+/* ---------- z-score vs scaling ---------- */
+(function(){
+  const X=[30,60,120,200,250];const mean=a=>a.reduce((s,v)=>s+v,0)/a.length,std=a=>{const m=mean(a);return Math.sqrt(a.reduce((s,v)=>s+(v-m)**2,0)/a.length);};
+  const mu=mean(X),sd=std(X),mn=Math.min(...X),mx=Math.max(...X);
+  const T=[
+    ['原始',X,'# 原始特徵值','原始尺度。'],
+    ['減平均',X.map(v=>v-mu),'X_train -= X_train.mean(axis=0)   # 各特徵平均 → 0','z-score 第一步：平均變 0。'],
+    ['z-score',X.map(v=>(v-mu)/sd),'X_train -= X_train.mean(axis=0)   # 各特徵平均 → 0\nX_train /= X_train.std(axis=0)    # 各特徵標準差 → 1','平均 0、標準差 <b>1</b>（不是 0）；<b>有負值也無上界</b>，不會壓到 0～1。屬於特徵縮放，不是特徵選擇。'],
+    ['Min-Max',X.map(v=>(v-mn)/(mx-mn)),'X = (X - X.min()) / (X.max() - X.min())','壓到 0～1 的是 <b>Min-Max 正規化</b>，不是 z-score。'],
+    ['÷ 255',X.map(v=>v/255),'X = X / 255.0','影像除以 255.0 只是<b>線性縮放</b>到 0～1，不等於 z-score 標準化（115Q1 第 46 題）。']
+  ];
+  tabs($('#zTabs'),T.map(t=>t[0]),i=>{
+    const v=T[i][1],lo=Math.min(-2,...v),hi=Math.max(1.5,...v),W=580,L=30,P=x=>L+(x-lo)/(hi-lo)*W;
+    let h=`<line x1="${L}" y1="60" x2="${L+W}" y2="60" stroke="var(--line)" stroke-width="2"/>`;
+    [0,1].forEach(t=>{h+=`<line x1="${P(t)}" y1="48" x2="${P(t)}" y2="72" stroke="var(--muted)" stroke-width="1.5"/><text x="${P(t)}" y="90" text-anchor="middle" font-size="12" fill="var(--muted)">${t}</text>`;});
+    h+=`<rect x="${P(0)}" y="54" width="${P(1)-P(0)}" height="12" fill="color-mix(in srgb,var(--ok) 25%,transparent)"/>`;
+    v.forEach((x,k)=>{h+=`<circle cx="${P(x)}" cy="60" r="8" fill="var(--sen)" style="transition:cx .6s"/><text x="${P(x)}" y="${k%2?112:38}" text-anchor="middle" font-size="11.5" fill="var(--ink)">${f2(x)}</text>`;});
+    h+=`<text x="${L+W}" y="16" text-anchor="end" font-size="12" fill="var(--muted)">綠帶＝0～1 區間</text>`;
+    $('#zSvg').innerHTML=h;
+    $('#zCode').innerHTML=T[i][2].split('\n').map(l=>`<span class="ln">${l}</span>`).join('');
+    $('#zStats').innerHTML=`<div class="stat"><span>平均</span><b>${f2(mean(v))}</b></div><div class="stat"><span>標準差</span><b>${f2(std(v))}</b></div><div class="stat"><span>最小～最大</span><b style="font-size:18px">${f2(Math.min(...v))} ～ ${f2(Math.max(...v))}</b></div>`;
+    $('#zNote').innerHTML=T[i][3];
+  });
+})();
+
+/* ---------- true / false ---------- */
+(function(){
+  const S=[['減去平均後各特徵平均為 0',true,'z-score 第一步。'],['標準化有助穩定梯度、避免梯度爆炸或消失',true,'尺度一致化的主要效益。'],['除以標準差是把標準差調為 0',false,'是調為 <b>1</b>。'],['標準化會把資料壓到 0～1 之間',false,'那是 Min-Max 正規化；z-score 有負值也無上界。'],['標準化屬於特徵選擇（Feature Selection）',false,'屬於<b>特徵縮放</b>（Feature Scaling）。']];
+  S.forEach(([t,a,w])=>{const d=document.createElement('div');d.className='tfrow';d.innerHTML=`<span>${t}</span><span class="tfbtn"><button class="btn">✔ 對</button><button class="btn">✘ 錯</button></span><span class="why"></span>`;
+    d.querySelectorAll('.btn').forEach((b,k)=>b.onclick=()=>{const pick=k===0,ok=pick===a;d.classList.remove('ok','no');d.classList.add(ok?'ok':'no');d.querySelector('.why').innerHTML=(ok?'<b style="color:var(--ok)">答對。</b>':'<b style="color:var(--bad)">再想想。</b>')+'本句'+(a?'正確':'錯誤')+'：'+w;});
+    $('#tf').appendChild(d);});
+})();
+
+/* ---------- skew / log ---------- */
+(function(){
+  let m='r',lg=false;const r=rng(7);
+  const sk=Array.from({length:600},()=>Math.exp(1+0.8*gaussR(r)));
+  const ages=Array.from({length:40},(_,i)=>{const x=1+i*1.2;return [x,100-1.6*x+gaussR(r)*4];});
+  function hist(vals,lo,hi,col){const bins=30,H=new Array(bins).fill(0);vals.forEach(v=>{const b=Math.floor((v-lo)/(hi-lo)*bins);if(b>=0&&b<bins)H[b]++;});const mx=Math.max(...H);return H.map((v,i)=>`<rect x="${30+i*580/bins+1}" y="${190-v/mx*160}" width="${580/bins-2}" height="${v/mx*160}" rx="2" fill="${col}"/>`).join('');}
+  function d(){
+    let h=`<line x1="30" y1="190" x2="610" y2="190" stroke="var(--line)" stroke-width="2"/>`;
+    if(m==='r'){
+      if(!lg){h+=hist(sk,0,30,'var(--sen)')+`<text x="610" y="20" text-anchor="end" font-size="13" font-weight="700" fill="var(--ink)">原始：長尾在右（右偏）</text>`;$('#skNote').innerHTML='右偏特徵：大多數值擠在左邊，少數極大值拖出長尾。';}
+      else{h+=hist(sk.map(Math.log),-1.5,3.5,'var(--ok)')+`<text x="610" y="20" text-anchor="end" font-size="13" font-weight="700" fill="var(--ok)">Log 後：接近對稱 ✓</text>`;$('#skNote').innerHTML='<b style="color:var(--ok)">✓ Log 有效</b>：壓縮長尾、把乘性關係轉成加性關係，貼近線性假設。';}
+    }else{
+      const xs=ages.map(a=>lg?Math.log(a[0]):a[0]),lo=Math.min(...xs),hi=Math.max(...xs),ys=ages.map(a=>a[1]),ylo=Math.min(...ys)-5,yhi=Math.max(...ys)+5;
+      const P=(x,y)=>[30+(x-lo)/(hi-lo)*580,190-(y-ylo)/(yhi-ylo)*170];
+      ages.forEach((a,i)=>{const [px,py]=P(xs[i],a[1]);h+=`<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="5" fill="${lg?'var(--bad)':'var(--txt)'}" opacity=".8"/>`;});
+      const [ax,ay]=P(lo,100-1.6*(lg?Math.exp(lo):lo)),[bx,by]=P(hi,100-1.6*(lg?Math.exp(hi):hi));
+      if(!lg)h+=`<line x1="${ax}" y1="${ay}" x2="${bx}" y2="${by}" stroke="var(--ink)" stroke-width="2" stroke-dasharray="6 4"/>`;
+      h+=`<text x="610" y="20" text-anchor="end" font-size="13" font-weight="700" fill="${lg?'var(--bad)':'var(--ink)'}">${lg?'Log(屋齡) vs 房價：變彎了 ✗':'屋齡 vs 房價：本來就是直線'}</text>`;
+      $('#skNote').innerHTML=lg?'<b style="color:var(--bad)">✗ 反效果</b>：原本線性的關係被 Log <b>扭曲成非線性</b>，線性模型表現反而下降（115Q1 第 25 題）。':'屋齡與目標近似線性，<b>不要</b>轉換。';
+    }
+    $('#skSvg').innerHTML=h;
+  }
+  $$('#skTabs .btn').forEach(b=>b.onclick=()=>{m=b.dataset.m;$$('#skTabs .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));d();});
+  $('#logBtn').onclick=()=>{lg=!lg;$('#logBtn').setAttribute('aria-pressed',lg);$('#logBtn').textContent=lg?'還原原始值':'套用 Log 轉換';d();};
+  d();
+})();
+
+/* ---------- residual quiz ---------- */
+(function(){
+  const r=rng(11);
+  const O=['異質變異數','非線性或離群值','自相關','假設成立'];
+  const G=[
+    [0,()=>Array.from({length:120},(_,i)=>{const x=i/120;return [x,gaussR(r)*(0.05+0.45*x)];}),'喇叭狀擴散：誤差變異數不是常數 → <b>異質變異數</b>（115Q1-5）。'],
+    [1,()=>Array.from({length:120},(_,i)=>{const x=i/120;return [x,1.6*(x-.5)**2-.13+gaussR(r)*.05+(x>.9?.35+r()*.3:0)];}),'系統性彎曲、高值區殘差極大 → <b>非線性或離群值</b>（114Q2-24）。'],
+    [2,()=>Array.from({length:120},(_,i)=>{const x=i/120;return [x,.3*Math.sin(x*18)+gaussR(r)*.06];}),'依觀測順序呈週期 → <b>自相關</b>，常見於時間序列。'],
+    [3,()=>Array.from({length:120},(_,i)=>[i/120,gaussR(r)*.15]),'隨機散佈無結構 → <b>假設成立</b>。']
+  ];
+  let order=[0,1,2,3],i=0,ans=false;
+  function draw(){
+    ans=false;const g=G[order[i]],pts=g[1]();
+    let h=`<line x1="30" y1="110" x2="610" y2="110" stroke="var(--muted)" stroke-dasharray="5 5"/><line x1="30" y1="10" x2="30" y2="210" stroke="var(--line)" stroke-width="2"/><text x="610" y="206" text-anchor="end" font-size="12" fill="var(--muted)">${order[i]===2?'觀測順序 →':'預測值 →'}</text><text x="36" y="20" font-size="12" fill="var(--muted)">殘差</text>`;
+    pts.forEach(([x,y])=>{h+=`<circle cx="${(30+x*580).toFixed(1)}" cy="${(110-y*160).toFixed(1)}" r="4" fill="var(--sen)" opacity=".75"/>`;});
+    $('#resSvg').innerHTML=h;$('#resFb').textContent='';
+    $('#resOpts').innerHTML='';O.forEach((o,k)=>{const b=document.createElement('button');b.className='btn';b.textContent=o;b.onclick=()=>{if(ans)return;ans=true;const ok=k===g[0];b.style.borderColor=ok?'var(--ok)':'var(--bad)';$$('#resOpts .btn')[g[0]].style.borderColor='var(--ok)';$('#resFb').innerHTML=(ok?'<b style="color:var(--ok)">✓ 診斷正確。</b>':'<b style="color:var(--bad)">✗ 不對。</b>')+g[2];};$('#resOpts').appendChild(b);});
+  }
+  $('#resNext').onclick=()=>{i=(i+1)%4;if(i===0)order=shuffle(order);draw();};
+  order=shuffle(order);draw();
+})();
+
+/* ---------- PCA ---------- */
+(function(){
+  const L=[6,3,1];
+  function s(k){$$('#pcaBtns .btn').forEach((b,j)=>b.setAttribute('aria-pressed',j===k-1));
+    let h=`<line x1="40" y1="${150-0.8*130}" x2="620" y2="${150-0.8*130}" stroke="var(--bad)" stroke-dasharray="6 5"/><text x="620" y="${150-0.8*130-6}" text-anchor="end" font-size="12" fill="var(--bad)" font-weight="700">80% 門檻</text>`;
+    let acc=0;L.forEach((l,i)=>{acc+=l;const pct=acc/10,on=i<k;h+=`<rect x="${60+i*180}" y="${150-pct*130}" width="120" height="${pct*130}" rx="8" fill="${on?'var(--sen)':'var(--line)'}" style="transition:fill .4s"/><text x="${120+i*180}" y="${150-pct*130-8}" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">${Math.round(pct*100)}%</text><text x="${120+i*180}" y="166" text-anchor="middle" font-size="12" fill="var(--muted)">PC1${i?'～PC'+(i+1):''}（λ=${l}）</text>`;});
+    $('#pcaSvg').innerHTML=h;
+    $('#pcaNote').innerHTML=k===1?'<b style="color:var(--bad)">✗ 只留一維：60%</b>，未達 80% 門檻（「只留一維即可」是誘答）。':k===2?'<b style="color:var(--ok)">✓ 保留二維：90%</b>，已過 80% 門檻，可降至二維（114Q2-35）。':'保留三維＝100%，等於沒降維。「三者差不多所以不能降維」也是誘答。';}
+  [1,2,3].forEach(k=>{const b=document.createElement('button');b.className='btn';b.textContent=`保留 ${k} 維`;b.onclick=()=>s(k);$('#pcaBtns').appendChild(b);});
+  s(1);
+})();
+
+/* ---------- 42.5 exam ---------- */
+examList($('#examList'),[
+  ['114Q2-1','統計檢定 vs 交叉驗證','評估模型在不同月份新資料上是否維持穩定表現','<b>交叉驗證</b>；F 檢定／配對 t／卡方都是假設檢定，不衡量泛化能力'],
+  ['114Q2-15','R² 解讀','R² = 0.85 代表什麼','<b>85% 的變異可被模型解釋</b>；不是準確率、誤差率或信心水準'],
+  ['114Q2-22','貝氏定理的核心機制','由瀏覽行為推估「會購買的機率」','以<b>條件機率</b>計算屬於各類別的分類機率（先驗×似然→後驗）'],
+  ['114Q2-23','蒙地卡羅 vs 其他方法','氣候高度隨機，以隨機抽樣模擬估算發電量分佈與風險區間','<b>蒙地卡羅方法</b>；K-means／SVR／特徵選取都產不出機率分佈'],
+  ['114Q2-24','殘差圖判讀','高價區殘差極大且呈系統性彎曲','存在<b>離群值或非線性關係</b>，違反迴歸假設'],
+  ['114Q2-28','取樣代表性','只用「購買三次以上」顧客訓練，對新會員失準','<b>取樣偏差</b>（Sampling Bias）；樣本分佈不代表母體'],
+  ['114Q2-35','變異解釋比例','λ = 6, 3, 1，要保留 ≥ 80% 總變異','前兩個主成分合計 <b>90%</b>，可降至二維'],
+  ['114Q2-41','條件機率的分母','Monte Carlo 擲骰估 P(A|B)，選出正確程式碼','<code>A_and_B.sum() / B.sum()</code>；分母放 A 求到的是 P(B|A)'],
+  ['114Q2-48','標準化的語意','z-score 程式碼哪些敘述正確','「平均→0」「穩定梯度」正確；「標準差→0」「壓到 0～1」「屬特徵選擇」皆錯'],
+  ['115Q1-1','蒙地卡羅的定義','定價模型無解析解，以大量情境模擬估損失分佈','<b>蒙地卡羅方法</b>；題幹沒有先驗／後驗就不是貝氏推論'],
+  ['115Q1-5','異質變異數','殘差隨預測值增大而擴散','<b>殘差變異數不一致</b>；常態性看 Q-Q 圖、共線性看 VIF'],
+  ['115Q1-14','類別條件機率與先驗','樸素貝氏把正常促銷信誤判為垃圾信','條件機率受<b>訓練資料分佈</b>影響，應重新平衡資料或調整先驗'],
+  ['115Q1-25','偏態與轉換','右偏特徵 Log 有效，線性特徵 Log 反而變差','原本線性的關係被 Log <b>扭曲成非線性</b>；轉換須逐特徵判斷']
+]);
+
+/* ---------- traps ---------- */
+traps('l23101-traps',[
+  ['條件機率的分母是「條件事件」','P(A|B) 的分母是 P(B)；分母換成 A.sum() 求到的是 P(B|A)，公正骰子兩者都是 2/3，代數字驗算救不了你。'],
+  ['卜瓦松的期望值等於變異數等於 λ','二項是 E = np、Var = np(1−p)，兩者不相等。'],
+  ['變異數的單位是原單位的平方，標準差才與原資料同單位','與平均數並列討論離散程度時用標準差。'],
+  ['卜瓦松數「次數」、指數量「間隔時間」','「每小時幾件」走卜瓦松，「平均等多久」走指數（且具無記憶性）。'],
+  ['PDF 的函數值不是機率，可以大於 1','連續型只有面積才是機率，單點機率為 0；PMF 才是單點就有機率。'],
+  ['CLT 講的是「樣本平均數」的分佈趨近常態，不是原始資料變常態','在母體變異數有限的前提下與母體分佈無關（柯西分佈變異數不存在，是課本級反例）。'],
+  ['p 值不是「虛無假設為真的機率」','是 H₀ 為真時看到目前或更極端結果的機率；p 值小也不等於效果大。'],
+  ['α 是型一錯誤（偽陽性）機率的上限，且必須事前設定','看完 p 值再改 α 是統計上的作弊。'],
+  ['交叉驗證不是假設檢定','評估泛化能力一律選交叉驗證；F／t／卡方回答的是參數主張。'],
+  ['配對 t 檢定比較兩個相關組別（兩模型在同一批折上）','不能拿來衡量單一模型的泛化能力。'],
+  ['卡方管類別關聯、t 管平均數、F 管變異數與迴歸整體顯著性','三者被大量互換當誘答。'],
+  ['Naive Bayes 的「Naive」是特徵條件獨立假設','不是「模型簡單」；它沒有 Epoch，也不需要特徵標準化。'],
+  ['蒙地卡羅是隨機抽樣逼近，貝氏推論是先驗更新後驗','題幹沒提先驗／後驗就不要選貝氏推論。'],
+  ['z-score 把標準差調為 1（不是 0），且不會壓到 0～1','壓到 0～1 是 Min-Max；除以 255 只是線性縮放。'],
+  ['標準化屬於特徵縮放，不是特徵選擇','中文只差一個字，選項最愛換。'],
+  ['喇叭狀＝異質變異數；彎曲＝非線性或離群值；依順序週期＝自相關','常態性看 Q-Q 圖，共線性看 VIF。'],
+  ['線性迴歸假設的是「誤差項」常態','不是特徵或目標變數必須常態。'],
+  ['R² 是「被解釋的變異比例」','不是準確率、誤差率或信心水準。'],
+  ['Log 轉換是為了修正右偏，不是萬用招','原本線性的特徵取對數會破壞結構，要逐特徵決定。'],
+  ['先驗機率低時，再高的靈敏度也撐不起後驗','基本率謬誤，也是不平衡資料上「準確率 99%」無意義的根源。']
+]);
+
+/* ---------- quiz ---------- */
+quiz([
+  ['以 Monte Carlo 擲骰估計 P(A|B)，A＝偶數、B＝大於 3，下列哪段程式碼正確？',['A_and_B.sum() / B.sum()','A_and_B.sum() / A.sum()','A_and_B.sum() / (A.sum() * B.sum())','A_and_B.sum() / (A.sum() + B.sum())'],'114Q2-41。分母是條件事件 B；除以 A.sum() 求到的是 P(B|A)，數值也剛好是 2/3。'],
+  ['客服中心「每小時平均來電 4 通」，來電數的變異數最可能是？',['4','2','16','0.25'],'卜瓦松分佈 E = Var = λ = 4。'],
+  ['某定價模型無法求得解析解，要以大量隨機情境模擬估計損失分佈，應採用？',['蒙地卡羅方法','貝氏推論','馬可夫鏈','梯度下降'],'115Q1-1。題幹沒有先驗／後驗，就不是貝氏推論。'],
+  ['想評估模型在不同月份新資料上是否維持穩定表現，應使用？',['交叉驗證','F 檢定','配對 t 檢定','卡方檢定'],'114Q2-1。假設檢定處理參數主張，不衡量泛化能力。'],
+  ['線性迴歸的 R² = 0.85，正確解讀是？',['應變數總變異中有 85% 可被模型解釋','模型準確率 85%','預測誤差 15%','信心水準 85%'],'114Q2-15。'],
+  ['迴歸殘差圖隨預測值增大呈喇叭狀擴散，代表？',['異質變異數，違反等變異假設','殘差不符合常態，應看 VIF','多元共線性','自相關'],'115Q1-5。常態性看 Q-Q 圖、共線性看 VIF。'],
+  ['PCA 特徵值為 6、3、1，要保留至少 80% 總變異，最少保留幾維？',['二維（90%）','一維（60%）','三維才行','三者差不多，不能降維'],'114Q2-35。'],
+  ['關於 z-score 標準化程式碼，何者正確？',['減去平均後各特徵平均為 0','除以標準差是把標準差調為 0','會把資料壓到 0～1 之間','屬於特徵選擇'],'114Q2-48。標準差調為 1；壓到 0～1 是 Min-Max；屬於特徵縮放。'],
+  ['樸素貝氏把正常促銷信誤判為垃圾信，最合理的診斷是？',['類別條件機率受訓練資料分佈影響，應重新平衡資料或調整先驗','過擬合，應增加 Epoch','未做特徵標準化','演算法太舊，應改用更先進的模型'],'115Q1-14。樸素貝氏沒有 Epoch、也不需要特徵縮放。'],
+  ['某疾病盛行率 1%、靈敏度 99%、偽陽性率 5%，檢驗陽性者真的患病的機率約為？',['約 16.7%','約 99%','約 95%','約 50%'],'基本率謬誤：0.0099 / 0.0594 ≈ 16.7%。'],
+  ['某右偏特徵做 Log 轉換後模型變好，但「屋齡」做 Log 後反而變差，原因是？',['屋齡原本與目標近似線性，Log 把它扭曲成非線性','Log 轉換一定會降低模型表現','屋齡有缺失值','應該對所有特徵一律做 Log'],'115Q1-25。轉換要逐特徵判斷。'],
+  ['關於 p 值，何者正確？',['在 H₀ 為真的前提下，觀察到目前或更極端結果的機率','H₀ 為真的機率','效果的大小','結論正確的機率'],'p 值小也不等於效果大；樣本夠大時微小差異也能顯著。']
+],['太強了，四組分界都能反射作答。','不錯！回頭看看答錯的題目對應的段落。','建議重新操作 42.2 的擲骰實驗與 42.3 的假設檢定模擬器，再來一次。']);
+
+/* ---------- nav highlight ---------- */
+(function(){
+  const links=[...document.querySelectorAll('nav.toc a')];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on&&window.innerWidth<=860)a.scrollIntoView({inline:'center',block:'nearest'});});}});},{rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('main section').forEach(s=>io.observe(s));
+})();
+
+</script>
+</body>
+</html>

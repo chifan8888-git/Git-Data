@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L22102 機率分佈與資料分佈模型｜互動教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F5; --surface:#FFFFFF; --surface2:#F6F8FB; --ink:#18202E; --muted:#5A6475; --line:#D5DBE4;
+  --txt:#3B4CCA; --img:#0E8A7A; --aud:#B87812; --sen:#B8336A;
+  --ok:#1F8A4C; --bad:#C23B2E; --warn:#D9822B;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+    --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+  --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75}
+h1,h2,h3{font-family:var(--serif);line-height:1.3;margin:0}
+p{margin:0 0 1em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--txt);outline-offset:2px;border-radius:4px}
+svg{max-width:100%;height:auto;display:block}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1180px;margin:0 auto;gap:40px;padding:0 24px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;padding:32px 0;height:100vh;overflow:auto}
+nav.toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14.5px}
+nav.toc a span{font-variant-numeric:tabular-nums;font-size:13px;opacity:.8}
+nav.toc a.on{background:var(--surface);color:var(--ink);font-weight:700}
+.toc-title{font-family:var(--serif);font-weight:900;font-size:18px;padding:0 10px 14px}
+main{min-width:0;padding-bottom:80px}
+section{padding:56px 0 8px;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.sec-head{display:flex;gap:16px;align-items:baseline;margin-bottom:18px}
+.sec-no{font-family:var(--serif);font-weight:900;font-size:40px;color:var(--line);line-height:1}
+h2{font-size:28px;font-weight:900}
+h3{font-size:19px;margin:34px 0 10px}
+.lead{color:var(--muted);max-width:66ch}
+.prose{max-width:68ch}
+
+/* hero */
+.hero{padding:44px 0 24px}
+.hero .code{font-size:14px;color:var(--muted);margin-bottom:6px}
+.hero h1{font-size:clamp(34px,5.5vw,56px);font-weight:900;letter-spacing:.02em}
+.hero .one{font-size:18px;max-width:60ch;margin:16px 0 0;color:var(--muted)}
+.hero-fig{background:var(--surface);border-radius:20px;margin-top:28px;padding:14px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+.goal{border-left:4px solid var(--c);padding:6px 0 6px 14px;font-size:15px}
+
+/* panels */
+.panel{background:var(--surface);border-radius:16px;padding:22px;margin:16px 0}
+.panel.flat{background:var(--surface2)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font-size:15px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hint{font-size:14px;color:var(--muted)}
+.callout{border-left:4px solid var(--warn);background:var(--surface2);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;font-size:15px}
+.callout.exam{border-color:var(--txt)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:14px}
+
+/* modality chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+
+/* matcher */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.match .col{display:flex;flex-direction:column;gap:10px}
+.mitem{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15px;transition:border-color .2s,background .2s,transform .2s}
+.mitem small{display:block;color:var(--muted);font-size:13px}
+.mitem.sel{border-color:var(--ink);transform:translateX(4px)}
+.mitem.done{border-color:var(--c,var(--ok));background:var(--surface2);cursor:default}
+.mitem.wrong{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:1.8em;margin-top:12px;font-size:15px}
+.feedback.ok{color:var(--ok)} .feedback.bad{color:var(--bad)}
+
+/* timeline */
+.steps{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stage-viz{min-height:130px;display:flex;align-items:center;justify-content:center}
+.stage-viz .blk{display:inline-block;width:34px;height:34px;border-radius:6px;margin:2px;transition:all .5s}
+
+/* align toggle */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.compare>div{padding:18px}
+.compare>div+div{border-left:1px solid var(--line)}
+.compare .big{font-family:var(--serif);font-weight:900;font-size:22px;margin-bottom:6px}
+
+/* fusion */
+.meter{height:14px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:6px 0}
+.meter>i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .7s cubic-bezier(.3,.8,.3,1),background .4s}
+.flow{stroke-dasharray:6 7;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.jitter{animation:jit .25s steps(2) infinite}
+@keyframes jit{50%{transform:translate(1.5px,-1px)}}
+.fusion-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.pc{font-size:15px}
+.pc b{display:block;font-size:14px;color:var(--muted);font-weight:500}
+
+/* clip */
+.mat{display:grid;gap:4px;font-size:13px}
+.mat .cell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;transition:background .5s,color .5s}
+.mat .lab{display:flex;align-items:center;justify-content:center;font-size:22px}
+.mat .tlab{font-size:12px;text-align:center;color:var(--muted);display:flex;align-items:flex-end;justify-content:center;line-height:1.3}
+.zs-imgs{display:flex;gap:10px;flex-wrap:wrap}
+.zs-img{font-size:38px;width:72px;height:72px;border-radius:16px;border:2px solid var(--line);background:var(--surface2);display:flex;align-items:center;justify-content:center}
+.zs-img[aria-pressed="true"]{border-color:var(--img);box-shadow:0 0 0 3px color-mix(in srgb,var(--img) 25%,transparent)}
+.bar{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.bar .track{height:22px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;width:0;background:var(--txt);border-radius:6px;transition:width .8s cubic-bezier(.3,.8,.3,1)}
+.bar.win .fill{background:var(--img)}
+.bar.win{font-weight:700}
+.bar .num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.flip{perspective:900px;height:150px;border:0;background:none;padding:0;text-align:left}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flip[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:center}
+.flip .f{background:var(--surface);border:1.5px solid var(--line)}
+.flip .f strong{font-family:var(--serif);font-size:22px}
+.flip .f span{color:var(--muted);font-size:14px}
+.flip .b{background:var(--ink);color:var(--bg);transform:rotateY(180deg);font-size:15px}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.pnode{border:2px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;font-size:14px;background:var(--surface);transition:all .35s}
+.pnode b{display:block;font-size:16px}
+.pnode.on{border-color:var(--aud);background:color-mix(in srgb,var(--aud) 14%,var(--surface));transform:translateY(-3px)}
+.pnode.past{border-color:color-mix(in srgb,var(--aud) 45%,var(--line))}
+.pout{background:var(--surface2);border-radius:12px;padding:14px 16px;min-height:84px;font-size:15px}
+.wave{display:flex;gap:3px;align-items:center;height:30px}
+.wave i{width:4px;background:var(--aud);border-radius:2px;animation:wv 1s ease-in-out infinite}
+@keyframes wv{50%{transform:scaleY(.3)}}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+
+/* strategies */
+.strat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.strat button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;text-align:left;font-size:15px}
+.strat button[aria-pressed="true"]{border-color:var(--ink)}
+.verdict{font-family:var(--serif);font-weight:900;font-size:20px}
+
+details{border-bottom:1px solid var(--line)}
+details summary{cursor:pointer;padding:12px 4px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"+";font-weight:900;width:14px;color:var(--muted)}
+details[open] summary::before{content:"−"}
+details .body{padding:0 4px 14px 30px;font-size:15px}
+.tag{font-size:12.5px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums;min-width:80px}
+
+/* quiz */
+.qcard{background:var(--surface);border-radius:16px;padding:24px}
+.qtop{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
+.qtext{font-size:18px;font-weight:700;margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15.5px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+.opt.wrongpick{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.opt:disabled{cursor:default}
+.expl{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15px;display:none}
+.expl.show{display:block}
+.progress{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;margin-bottom:14px}
+.progress i{display:block;height:100%;background:var(--txt);transition:width .4s}
+
+.traps label{display:flex;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:15px}
+.traps input{width:18px;height:18px;margin-top:4px;flex:none;accent-color:var(--ok)}
+.traps label.chk>span{color:var(--muted)}
+.traps em{font-style:normal;font-weight:700}
+
+/* mobile */
+@media (max-width:860px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+  nav.toc{position:sticky;top:0;height:auto;z-index:10;background:var(--bg);display:flex;overflow-x:auto;padding:8px 0;padding-top:calc(8px + env(safe-area-inset-top,0px));gap:4px;border-bottom:1px solid var(--line)}
+  .toc-title{display:none}
+  nav.toc a{white-space:nowrap;flex:none}
+  .match,.stage,.fusion-meta,.compare{grid-template-columns:1fr}
+  .compare>div+div{border-left:0;border-top:1px solid var(--line)}
+  .pipe{grid-template-columns:repeat(5,minmax(90px,1fr));overflow-x:auto}
+  .bar{grid-template-columns:110px 1fr 56px}
+  h2{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* ---- page extras (L22102) ---- */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:10px;margin-top:12px}
+.kpi{background:var(--surface2);border-radius:12px;padding:10px 12px;transition:box-shadow .3s}
+.kpi b{display:block;font-size:13px;color:var(--muted);font-weight:500}
+.kpi span{font-family:var(--serif);font-weight:900;font-size:21px;font-variant-numeric:tabular-nums}
+.kpi.hot{box-shadow:0 0 0 2px var(--bad) inset}
+.kpi.cool{box-shadow:0 0 0 2px var(--ok) inset}
+.toggles{display:flex;flex-wrap:wrap;gap:8px}
+input[type=range]{width:100%;accent-color:var(--txt)}
+input[type=text],input[type=number]{font:inherit;color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:7px 12px;width:100%;max-width:100%}
+.lbl{display:flex;justify-content:space-between;gap:10px;font-weight:700;margin-top:10px}
+.lbl span{font-variant-numeric:tabular-nums;font-weight:500}
+.sent{font-size:18px;font-weight:700;background:var(--surface2);border-radius:12px;padding:14px 16px;margin-bottom:12px}
+.flowq{font-size:18px;font-weight:700;margin:6px 0 12px}
+.trail{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.trail span{font-size:13px;background:var(--surface2);border-radius:99px;padding:3px 10px;color:var(--muted)}
+.result{font-family:var(--serif);font-weight:900;font-size:26px;color:var(--txt)}
+.code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;background:var(--surface2);border-radius:12px;padding:12px 14px;white-space:pre-wrap;word-break:break-word;min-height:90px;margin-top:10px}
+.code .k{color:var(--txt);font-weight:700}
+.trip{display:grid;grid-template-columns:80px 1fr;gap:8px;align-items:center;font-size:14px;margin:6px 0}
+.trip .seg{height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;transition:width .6s cubic-bezier(.3,.8,.3,1)}
+.execs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}
+.exe{border:2px solid var(--line);border-radius:10px;padding:8px;text-align:center;font-size:13px;background:var(--surface);transition:all .4s}
+.exe.on{border-color:var(--img);background:color-mix(in srgb,var(--img) 12%,var(--surface))}
+.exe.bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.driver{border:2px solid var(--ink);border-radius:12px;padding:10px 14px;text-align:center;font-size:14px;transition:all .4s}
+.driver.boom{border-color:var(--bad);color:var(--bad);animation:shake .4s}
+@media (max-width:860px){.execs{grid-template-columns:repeat(2,1fr)}.trip{grid-template-columns:62px 1fr}}
+code{overflow-wrap:anywhere}
+.ctrl{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:4px 18px}
+.tl{position:relative;height:56px;background:var(--surface2);border-radius:10px;margin-top:10px;overflow:hidden}
+.tl i{position:absolute;top:8px;bottom:8px;width:3px;border-radius:2px;background:var(--img)}
+.tl b{position:absolute;top:0;bottom:0;border-left:1.5px dashed var(--line)}
+.tl em{position:absolute;bottom:2px;font-size:10.5px;color:var(--muted);font-style:normal;transform:translateX(-50%)}
+.chk-row{display:flex;gap:10px;align-items:center;font-size:15px;margin:6px 0}
+.chk-row .dot{--c:var(--line)}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="toc" aria-label="章節">
+  <div class="toc-title">機率分佈</div>
+  <a href="#intro"><span>●</span>導覽與目標</a>
+  <a href="#s1"><span>29.1</span>PMF／PDF／CDF</a>
+  <a href="#s2"><span>29.2</span>期望值與變異數</a>
+  <a href="#s3"><span>29.3</span>離散型分佈</a>
+  <a href="#s4"><span>29.4</span>連續型分佈</a>
+  <a href="#s5"><span>29.5</span>CLT 與大數法則</a>
+  <a href="#s6"><span>29.6</span>分佈擬合</a>
+  <a href="#s7"><span>29.7</span>官方考題</a>
+  <a href="#s8"><span>29.8</span>易錯與測驗</a>
+</nav>
+
+<main>
+<!-- HERO -->
+<section id="intro" class="hero">
+  <div class="code">L22102　中級 AI 應用規劃師（數據分析）　建議 45 分鐘</div>
+  <h1>機率分佈與資料分佈模型</h1>
+  <p class="one">初級只要求你認得「常態分佈是鐘形」，中級要求你在一段業務敘述裡認出<b>這筆資料背後是哪個機率模型</b>，並說得出它的期望值、變異數、成立前提，以及前提不成立時該換成什麼。本節上接 <a href="L22101_descriptive_statistics.html">L22101 敘述性統計</a>（描述手上的樣本），下接 <a href="L22103_hypothesis_testing.html">L22103 假設檢定</a>（用分佈當推論的尺）。</p>
+  <div class="hero-fig" aria-hidden="true">
+    <svg id="heroSvg" viewBox="0 0 720 300"></svg>
+  </div>
+  <h3>學完這一課，你應該能夠</h3>
+  <div class="goals">
+    <div class="goal" style="--c:var(--txt)">分辨 <b>PMF／PDF／CDF</b> 的定義與適用對象，說得出連續型分佈為何單點機率為 0</div>
+    <div class="goal" style="--c:var(--img)">背熟並能反向推導<b>七種分佈</b>的期望值與變異數</div>
+    <div class="goal" style="--c:var(--aud)">由情境關鍵字（計數／等待時間／固定次數／獨立／發生率固定）在 <b>30 秒內</b>選出分佈模型</div>
+    <div class="goal" style="--c:var(--sen)">正確敘述<b>中央極限定理與大數法則</b>的作用對象，指出偷換主詞的陷阱</div>
+  </div>
+  <p class="hint" style="margin-top:20px">本頁顏色固定代表：<span class="chip" style="--c:var(--txt)"><i class="dot"></i>離散型（PMF）</span>　<span class="chip" style="--c:var(--img)"><i class="dot"></i>連續型（PDF）</span>　<span class="chip" style="--c:var(--aud)"><i class="dot"></i>累積（CDF）</span>　<span class="chip" style="--c:var(--sen)"><i class="dot"></i>抽樣分佈</span></p>
+</section>
+
+<!-- 29.1 -->
+<section id="s1">
+  <div class="sec-head"><span class="sec-no">29.1</span><h2>機率分佈的三個函數：PMF、PDF、CDF</h2></div>
+  <p class="lead">機率分佈（Probability Distribution）是把「隨機變數的所有可能值」對應到「它們的機率」的數學函數。中級考題不會叫你算積分，但會<b>用定義設誘答</b>。</p>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>函數</th><th>全名</th><th>適用</th><th>回答的問題</th><th>關鍵性質</th></tr>
+      <tr><td><b>PMF</b></td><td>Probability Mass Function（機率質量函數）</td><td>離散型</td><td>「<b>恰好</b>等於某個值」的機率 <code>P(X = k)</code></td><td>所有可能值的機率總和 = 1</td></tr>
+      <tr><td><b>PDF</b></td><td>Probability Density Function（機率密度函數）</td><td>連續型</td><td>某<b>區間</b>的機率 <code>P(a ≤ X ≤ b) = ∫f(x)dx</code></td><td>曲線下總面積 = 1；<code>f(x)</code> 本身<b>不是</b>機率</td></tr>
+      <tr><td><b>CDF</b></td><td>Cumulative Distribution Function（累積分佈函數）</td><td>兩者皆可</td><td>「<b>小於或等於</b>某個值」的機率 <code>F(x) = P(X ≤ x)</code></td><td>單調不減，由 0 遞增到 1</td></tr>
+    </table>
+  </div>
+
+  <h3>三函數實驗室</h3>
+  <div class="panel">
+    <p class="hint">選離散或連續，拖動 x。上圖是 PMF／PDF，下圖是 CDF。看 CDF 的高度怎麼等於上圖塗色部分的「累加」或「面積」。</p>
+    <div class="tabs" id="fnTabs"></div>
+    <div class="lbl">x<span id="fnXv"></span></div>
+    <input type="range" id="fnX" min="0" max="100" value="50" aria-label="x 位置">
+    <svg id="fnSvg" viewBox="0 0 640 330" style="margin-top:6px" role="img" aria-label="PMF/PDF 與 CDF"></svg>
+    <p class="hint" id="fnNote" style="margin:4px 0 0"></p>
+  </div>
+  <div class="callout exam"><b>① CDF 怎麼來的？</b>連續型：CDF 是 PDF 從 −∞ 到 x 的「<b>積分</b>」；離散型：CDF 是 PMF 由小到大的「<b>累加</b>」。官方 114Q2-4 的正解正是「PDF 的積分」；誘答把它寫成 PDF 的平均值／標準差／離散總和。</div>
+
+  <h3>② PDF 的函數值可以大於 1</h3>
+  <div class="panel">
+    <p class="hint">均勻分佈 U(0, b)：拖動 b，看密度 f(x) 與面積。</p>
+    <div class="lbl">上界 b<span id="ubV"></span></div>
+    <input type="range" id="ubR" min="0.2" max="2" step="0.05" value="0.5" aria-label="上界 b">
+    <svg id="ubSvg" viewBox="0 0 640 190" style="margin-top:6px" role="img" aria-label="均勻分佈密度"></svg>
+    <p class="hint" id="ubNote" style="margin:4px 0 0"></p>
+  </div>
+
+  <h3>③ 連續型的單點機率為 0</h3>
+  <div class="panel">
+    <p class="hint">在常態曲線上取區間 [5.3 − w, 5.3 + w]（平均 5、標準差 1，示意）。把寬度 w 縮到 0，機率（面積）跟著消失。</p>
+    <div class="lbl">半寬 w<span id="ptV"></span></div>
+    <input type="range" id="ptR" min="0" max="100" value="60" aria-label="區間半寬">
+    <svg id="ptSvg" viewBox="0 0 640 170" style="margin-top:6px" role="img" aria-label="單點機率"></svg>
+    <div class="verdict" id="ptP"></div>
+  </div>
+  <p class="prose">P(X = 5.3) = 0，因為單點的積分區間寬度為 0。所以連續型才會用「區間」提問，而離散型可以問「恰好 k 個」。</p>
+</section>
+
+<!-- 29.2 -->
+<section id="s2">
+  <div class="sec-head"><span class="sec-no">29.2</span><h2>期望值與變異數對照表（必背）</h2></div>
+  <p class="lead">期望值 <code>E(X)</code> 是隨機變數的加權平均，代表長期的中心位置；變異數 <code>Var(X)</code> 衡量取值的分散程度，標準差是它的平方根，單位與原始資料相同。</p>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>分佈</th><th>參數</th><th>E(X)</th><th>Var(X)</th><th>型態</th><th>一句話記法</th></tr>
+      <tr><td><b>伯努利</b> Bernoulli</td><td>p</td><td>p</td><td>p(1−p)</td><td>離散</td><td>單次成敗，p = 0.5 時變異數最大（0.25）</td></tr>
+      <tr><td><b>二項</b> Binomial</td><td>n, p</td><td>np</td><td>np(1−p)</td><td>離散</td><td>伯努利做 n 次；n = 1 就退回伯努利</td></tr>
+      <tr><td><b>卜瓦松</b> Poisson</td><td>λ</td><td>λ</td><td>λ</td><td>離散</td><td><b>平均等於變異數</b>，這是它的指紋</td></tr>
+      <tr><td><b>常態</b> Normal</td><td>μ, σ</td><td>μ</td><td>σ²</td><td>連續</td><td>參數本身就是答案</td></tr>
+      <tr><td><b>指數</b> Exponential</td><td>λ</td><td>1/λ</td><td>1/λ²</td><td>連續</td><td>平均等待時間 = 發生率的倒數</td></tr>
+      <tr><td><b>均勻</b> Uniform U(a,b)</td><td>a, b</td><td>(a+b)/2</td><td>(b−a)²/12</td><td>連續</td><td>中點；分母 12 是固定的</td></tr>
+      <tr><td><b>卡方</b> Chi-square</td><td>k（自由度）</td><td>k</td><td>2k</td><td>連續</td><td>自由度就是期望值，變異數加倍</td></tr>
+    </table>
+  </div>
+  <p class="hint">均勻分佈不在官方學習指引的條列中，但它在 114Q2-15 是誘答選項，公式仍建議記住。</p>
+
+  <h3>自我測驗：點卡片翻面看 E(X) 與 Var(X)</h3>
+  <div class="cards" id="evCards"></div>
+
+  <h3>離散度三檔對照（115Q1-3 的核心）</h3>
+  <div class="panel">
+    <p class="hint">同樣平均 6 次，三種情況的變異數不同。點選看看「Var ÷ E」落在哪一檔。</p>
+    <div class="tabs" id="dispTabs"></div>
+    <div id="dispBars"></div>
+    <div class="verdict" id="dispV" style="margin-top:8px"></div>
+    <p class="hint" id="dispNote" style="margin:4px 0 0"></p>
+  </div>
+</section>
+
+<!-- 29.3 -->
+<section id="s3">
+  <div class="sec-head"><span class="sec-no">29.3</span><h2>離散型分佈：伯努利、二項、卜瓦松</h2></div>
+  <h3>分佈模擬器：調參數看 PMF 怎麼變</h3>
+  <div class="panel">
+    <div class="tabs" id="dsTabs"></div>
+    <div class="ctrl" id="dsCtrl"></div>
+    <svg id="dsSvg" viewBox="0 0 640 230" style="margin-top:8px" role="img" aria-label="離散分佈 PMF"></svg>
+    <div class="kpis" id="dsK"></div>
+    <p class="hint" id="dsNote" style="margin:8px 0 0"></p>
+  </div>
+  <details>
+    <summary>展開三者的關係與公式</summary>
+    <div class="body"><div class="code" style="margin:0">伯努利（n = 1）
+   │ 重複 n 次獨立試驗、p 固定
+   ▼
+二項 B(n, p)     P(X=k) = C(n,k) · p^k · (1−p)^(n−k)
+   │ n → 很大、p → 很小、np = λ 保持固定
+   ▼
+卜瓦松 Poisson(λ)   P(X=k) = λ^k · e^(−λ) / k!
+   │ 實際資料 Var &gt; Mean（過度離散）
+   ▼
+負二項 Negative Binomial（多一個離散參數）</div></div>
+  </details>
+
+  <h3>30 秒選分佈：看關鍵字</h3>
+  <div class="panel">
+    <div class="qtop"><span id="kwPos"></span><span id="kwScore"></span></div>
+    <div class="sent" id="kwSent"></div>
+    <div class="toggles" id="kwOpts"></div>
+    <div class="feedback" id="kwFb" aria-live="polite"></div>
+    <div class="row" style="margin-top:6px"><button class="btn primary" id="kwNext">下一題</button></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>題幹出現</th><th>指向</th><th>為什麼不是另一個</th></tr>
+      <tr><td>「<b>固定</b> n 件產品中有幾件合格」「投放 n 則廣告的點擊次數」</td><td>二項</td><td>有明確的試驗總次數 n</td></tr>
+      <tr><td>「<b>每小時／每分鐘</b>接到幾通電話」「每小時幾個瑕疵品」</td><td>卜瓦松</td><td>沒有 n，只有單位時間的平均發生率 λ</td></tr>
+      <tr><td>「兩次來電<b>相隔多久</b>」「零件撐到故障的時間」</td><td>指數（連續型）</td><td>問的是<b>等待時間</b>，不是次數</td></tr>
+      <tr><td>「單一產品合格與否（1/0）」「使用者有沒有點廣告」</td><td>伯努利</td><td>只做一次</td></tr>
+    </table>
+  </div>
+
+  <h3>卜瓦松與指數：同一枚硬幣的兩面</h3>
+  <div class="panel">
+    <p class="hint">下面是一條 8 小時的事件時間軸（λ = 3 次／小時，示意模擬）。同一批事件，切換「數幾次」與「量多久」兩種看法。</p>
+    <div class="tl" id="tl" aria-hidden="true"></div>
+    <div class="row" style="margin-top:10px"><div class="tabs" id="peTabs" style="margin:0"></div><button class="btn" id="peNew">重新模擬</button></div>
+    <div id="peBars" style="margin-top:10px"></div>
+    <p class="hint" id="peNote" style="margin:6px 0 0"></p>
+  </div>
+  <p class="prose">若單位時間發生次數服從 <code>Poisson(λ)</code>，則相鄰兩次事件的間隔時間服從 <code>Exponential(λ)</code>。同一個 λ，一個數「幾次」（離散），一個量「多久」（連續）。114Q2-15 就是用指數分佈當誘答來測這件事。</p>
+
+  <h3>成立前提：被破壞時換什麼（配對）</h3>
+  <div class="panel">
+    <p class="hint">考「何者不適用」時的答案來源。先點左邊被破壞的敘述，再點右邊的處理方式。</p>
+    <div class="match" id="preMatch"></div>
+    <div class="feedback" id="preFb" aria-live="polite"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>分佈</th><th>前提</th><th>前提被破壞的典型敘述</th></tr>
+      <tr><td>二項</td><td>試驗<b>獨立</b>、成功機率 p <b>固定</b>、次數 n 固定</td><td>「促銷活動中途改變了轉換率」→ p 不固定，二項失效</td></tr>
+      <tr><td>卜瓦松</td><td>事件<b>獨立</b>、平均發生率 λ <b>固定</b>、發生機率與區間長度成正比</td><td>「尖峰時段來電暴增」→ λ 隨時間變動，需改用非齊次模型</td></tr>
+      <tr><td>指數</td><td>發生率 λ <b>固定</b>（無記憶性）</td><td>「零件有明顯老化、故障率隨使用時間上升」→ 改用 <b>Weibull 分佈</b></td></tr>
+    </table>
+  </div>
+
+  <h3>scipy 的寫法（114Q2-42 直接考）</h3>
+  <div class="panel">
+    <p class="hint"><code>from scipy.stats import poisson</code>　<code>lam = 5</code>（平均每小時 5 個瑕疵品；是「平均」，不是「上限」）。點一行，看它算的是哪幾根長條。</p>
+    <div class="toggles" id="spBtns"></div>
+    <svg id="spSvg" viewBox="0 0 640 210" style="margin-top:8px" role="img" aria-label="卜瓦松 PMF"></svg>
+    <div class="code" id="spOut" style="min-height:0"></div>
+  </div>
+</section>
+
+<!-- 29.4 -->
+<section id="s4">
+  <div class="sec-head"><span class="sec-no">29.4</span><h2>連續型分佈：常態、指數、卡方</h2></div>
+  <h3>常態分佈 N(μ, σ²)：μ 決定中心、σ 決定胖瘦</h3>
+  <div class="panel">
+    <div class="ctrl">
+      <div><div class="lbl">μ<span id="nmV"></span></div><input type="range" id="nmR" min="-2" max="2" step="0.1" value="0" aria-label="平均數"></div>
+      <div><div class="lbl">σ<span id="nsV"></span></div><input type="range" id="nsR" min="0.5" max="2" step="0.05" value="1" aria-label="標準差"></div>
+    </div>
+    <div class="row" style="margin-top:8px"><span class="hint">經驗法則：</span><div class="tabs" id="erTabs" style="margin:0"></div></div>
+    <svg id="nSvg" viewBox="0 0 640 220" style="margin-top:6px" role="img" aria-label="常態分佈"></svg>
+    <p class="hint" id="nNote" style="margin:4px 0 0"></p>
+  </div>
+  <ul class="prose">
+    <li>標準化：<code>Z = (X − μ) / σ</code>，轉換後得到標準常態 N(0, 1)。<b>Z 分數表示「偏離平均幾個標準差」</b>，正值在平均之上、負值在平均之下。</li>
+    <li>|Z| ≤ 1 約 68%、|Z| ≤ 2 約 95%、|Z| ≤ 3 約 99.7%。所以 |Z| ≥ 2 約落在雙尾 5%，罕見但<b>仍在常態分佈可解釋的範圍內</b>。</li>
+    <li>侷限：資料明顯偏態或厚尾時不該硬套常態。應<b>換轉換或換方法</b>（對數轉換、Box–Cox、對數常態、t 分佈、分位數迴歸），而不是把極端值裁掉。</li>
+  </ul>
+
+  <h3>指數分佈與無記憶性</h3>
+  <div class="panel">
+    <p class="hint">等公車（λ = 0.2 班／分鐘，平均等 5 分鐘，示意）。已經等了 s 分鐘，再等超過 t 分鐘的機率是多少？</p>
+    <div class="ctrl">
+      <div><div class="lbl">已經等了 s<span id="msV"></span></div><input type="range" id="msR" min="0" max="15" step="1" value="10" aria-label="已等待時間"></div>
+      <div><div class="lbl">再等 t<span id="mtV"></span></div><input type="range" id="mtR" min="1" max="10" step="1" value="5" aria-label="再等待時間"></div>
+    </div>
+    <svg id="mSvg" viewBox="0 0 640 200" style="margin-top:6px" role="img" aria-label="無記憶性"></svg>
+    <div class="kpis">
+      <div class="kpi"><b>P(X &gt; s+t | X &gt; s)</b><span id="mA">—</span></div>
+      <div class="kpi"><b>P(X &gt; t)（一開始就等 t）</b><span id="mB">—</span></div>
+    </div>
+    <p class="hint" id="mNote" style="margin:8px 0 0"></p>
+  </div>
+  <p class="prose"><b>連續型分佈中具備無記憶性的只有指數分佈</b>（離散型對應的是幾何分佈），這是可證明的定理，不是經驗法則。指數分佈是右偏的，且 <code>E(X) = SD(X) = 1/λ</code>（變異係數恆為 1），常被拿來與對稱的常態分佈對比。</p>
+
+  <h3>卡方分佈 χ²(k)：常態平方和、右偏</h3>
+  <div class="panel">
+    <div class="lbl">自由度 k<span id="kV"></span></div>
+    <input type="range" id="kR" min="1" max="30" step="1" value="2" aria-label="自由度">
+    <svg id="kSvg" viewBox="0 0 640 210" style="margin-top:6px" role="img" aria-label="卡方分佈"></svg>
+    <div class="kpis"><div class="kpi"><b>E(X) = k</b><span id="kE">—</span></div><div class="kpi"><b>Var(X) = 2k</b><span id="kVar">—</span></div></div>
+    <p class="hint" id="kNote" style="margin:8px 0 0"></p>
+  </div>
+  <ul class="prose">
+    <li>定義：k 個獨立標準常態隨機變數的<b>平方和</b>；取值只在 x ≥ 0。</li>
+    <li>自由度（df）＝計算統計量時可自由變動的資料點數量。算樣本標準差時用掉了樣本平均數這個已知量，自由度少 1（n − 1）。</li>
+    <li>用途：適配度檢定、列聯表獨立性檢定、齊一性檢定 —— 細節屬於 <a href="L22103_hypothesis_testing.html">L22103</a>，本節只需記住「卡方是常態平方和、右偏、E = k、Var = 2k」。</li>
+  </ul>
+</section>
+
+<!-- 29.5 -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-no">29.5</span><h2>中央極限定理與大數法則</h2></div>
+  <p class="lead">這兩條是<b>敘述陷阱最密集</b>的地方，官方誘答經常偷換主詞。</p>
+  <div class="compare">
+    <div><div class="big">大數法則 LLN</div>樣本平均數 X̄ <b>會收斂到哪個值</b>：n → ∞ 時 X̄ → μ<br><span class="hint">對原始分佈幾乎不限（需期望值存在）｜「樣本夠多，估計就會準」</span></div>
+    <div><div class="big">中央極限定理 CLT</div>樣本平均數 X̄ <b>以什麼形狀圍繞那個值波動</b>：n 夠大時 X̄ ~ 近似 N(μ, σ²/n)<br><span class="hint">需 i.i.d. 且<b>變異數有限</b>｜「可以用常態的尺做信賴區間與檢定」</span></div>
+  </div>
+
+  <h3>CLT 模擬器：趨近常態的是「一堆 x̄」，不是母體</h3>
+  <div class="panel">
+    <div class="row"><b style="min-width:3em">母體</b><div class="tabs" id="cltPop" style="margin:0"></div></div>
+    <div class="row" style="margin-top:8px"><b style="min-width:3em">n</b><div class="tabs" id="cltN" style="margin:0"></div></div>
+    <div class="row" style="margin-top:8px"><button class="btn primary" id="cltRun">抽 500 次，每次算一個 x̄</button></div>
+    <div class="stage" style="margin-top:10px">
+      <div><b class="mini">母體（原始資料）直方圖</b><svg id="cltPopSvg" viewBox="0 0 300 160" role="img" aria-label="母體分佈"></svg></div>
+      <div><b class="mini">x̄ 的抽樣分佈</b><svg id="cltSmpSvg" viewBox="0 0 300 160" role="img" aria-label="樣本平均數分佈"></svg></div>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><b>母體標準差 σ</b><span id="cltS">—</span></div>
+      <div class="kpi"><b>理論標準誤 σ/√n</b><span id="cltSE">—</span></div>
+      <div class="kpi"><b>x̄ 的實際標準差</b><span id="cltObs">—</span></div>
+    </div>
+    <p class="hint" id="cltNote" style="margin:8px 0 0"></p>
+  </div>
+  <ul class="prose">
+    <li><b>標準誤 SE = σ / √n</b>：n 變大 → x̄ 的分佈變窄，但<b>母體標準差 σ 完全沒變</b>。要把 SE 減半，n 要變成 <b>4 倍</b>（分母是 √n），不是 2 倍。</li>
+    <li>CLT 需要變異數有限。<b>柯西分佈的變異數不存在</b>，其樣本平均數再怎麼加大 n 也不會趨近常態（仍是柯西）—— 這就是「無論什麼分佈都適用」的反例。</li>
+  </ul>
+
+  <h3>大數法則 vs 賭徒謬誤</h3>
+  <div class="panel">
+    <p class="hint">公平硬幣（示意模擬）。前 10 次先「故意」連出 8 次正面，再繼續丟。看正面比例怎麼回到 0.5。</p>
+    <div class="row"><button class="btn primary" id="llnMore">再丟 200 次</button><button class="btn" id="llnReset">重來</button><span class="hint" id="llnInfo"></span></div>
+    <svg id="llnSvg" viewBox="0 0 640 200" style="margin-top:8px" role="img" aria-label="大數法則"></svg>
+    <p class="hint" id="llnNote" style="margin:4px 0 0"></p>
+  </div>
+
+  <h3>二項分佈的常態近似檢查器（114Q2-31）</h3>
+  <div class="panel">
+    <div class="toggles" id="apEx"></div>
+    <div class="row" style="flex-wrap:nowrap;gap:8px;margin-top:10px">
+      <label style="flex:1;min-width:0"><span class="hint">n</span><input type="number" id="apN" value="5000" min="1"></label>
+      <label style="flex:1;min-width:0"><span class="hint">p</span><input type="number" id="apP" value="0.4" step="0.001" min="0" max="1"></label>
+    </div>
+    <div style="margin-top:10px" id="apChk"></div>
+    <div class="verdict" id="apV" style="margin-top:6px"></div>
+    <svg id="apSvg" viewBox="0 0 640 190" style="margin-top:6px" role="img" aria-label="二項與常態近似"></svg>
+    <p class="hint" id="apNote" style="margin:4px 0 0"></p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>判準</th><th>內容</th></tr>
+      <tr><td>條件</td><td><code>np &gt; 5</code> <b>且</b> <code>n(1−p) &gt; 5</code>（部分教科書用 10，官方採 5）</td></tr>
+      <tr><td>近似後</td><td><code>B(n, p) ≈ N(np, np(1−p))</code></td></tr>
+      <tr><td>為什麼不能只看 n 大</td><td>p 極端時分佈嚴重偏斜。例：n = 1000、p = 0.001 → np = 1 &lt; 5，即使 n 很大也不該用常態近似（此時該用卜瓦松近似）</td></tr>
+      <tr><td>為什麼不限 p = 0.5</td><td>p 偏離 0.5 只是需要更大的 n 來補償，不是不能近似</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 29.6 -->
+<section id="s6">
+  <div class="sec-head"><span class="sec-no">29.6</span><h2>分佈擬合與資料建模</h2></div>
+  <p class="lead">分佈擬合（Distribution Fitting）是<b>替資料找一個合適的理論分佈</b>；資料建模則是<b>把擬合好的分佈拿去做預測、風險評估與決策</b>。兩者是前後段關係，不是同義詞。</p>
+  <h3>標準流程：跟著一份「每日故障次數」資料走一遍</h3>
+  <div class="panel">
+    <div class="pipe" id="fitPipe"></div>
+    <div class="pout" id="fitOut" aria-live="polite"></div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" id="fitNext">下一步</button><button class="btn" id="fitReset">從頭開始</button></div>
+  </div>
+
+  <h3>Step 3 挑候選分佈（配對）</h3>
+  <div class="panel">
+    <div class="match" id="candMatch"></div>
+    <div class="feedback" id="candFb" aria-live="polite"></div>
+  </div>
+
+  <h3>常見的假設破口</h3>
+  <div class="panel">
+    <div class="tabs" id="brTabs"></div>
+    <div id="brBody"></div>
+  </div>
+</section>
+
+<!-- 29.7 -->
+<section id="s7">
+  <div class="sec-head"><span class="sec-no">29.7</span><h2>官方考過什麼</h2></div>
+  <p class="lead"><b>計數基準：</b>逐題檢視 <code>data/study_guide_ref/L22_official_questions.md</code> 的 100 題（114-2 與 115-1 各 50 題），以<b>題幹或選項本身</b>出現具名機率分佈、PMF／PDF／CDF 者為準（不含解析文字，亦排除僅出現檢定名稱者 —— 例如 114-2 第 38 題的「卡方檢定」是檢定方法不是分佈，並排除 Normalization／Normalized Gini 這類非分佈用詞）。符合者共 <b>9 題</b>，其中<b>以本知識點為主要考點的有 5 題</b>，另 4 題只把「近似常態」當成前提。</p>
+  <h3>核心 5 題</h3>
+  <div id="exCore"></div>
+  <h3>外圍 4 題（常態只是前提）</h3>
+  <div id="exOut"></div>
+  <div class="callout exam"><b>命題傾向：</b>兩次考試都出現卜瓦松（114Q2 兩題、115Q1 一題），且都用「事件獨立＋發生率固定＋計數型」這組關鍵字來鋪陳。<b>分佈選型題是本節 CP 值最高的複習標的。</b></div>
+  <h3>用詞提醒（兩岸與官方混用）</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>你會看到</th><th>說明</th></tr>
+      <tr><td>泊松分佈 / 卜瓦松分佈</td><td>同一個 Poisson Distribution。「泊松」是中國大陸譯名（官方學習指引原文使用），台灣考卷寫「卜瓦松」</td></tr>
+      <tr><td>分佈 / 分布</td><td>官方 114-2 多寫「分佈」、115-1 多寫「分布」，意思相同</td></tr>
+      <tr><td>常態化（Normalization）/ 標準化（Standardization）</td><td>考題中 Normalization 多指 Min-Max 縮放到 [0, 1]，Standardization 才是平均 0、標準差 1。<b>兩者都和「讓資料服從常態分佈」無關</b></td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 29.8 -->
+<section id="s8">
+  <div class="sec-head"><span class="sec-no">29.8</span><h2>易錯與陷阱</h2></div>
+  <p class="lead">逐條確認自己真的懂了再打勾（打勾狀態會記在這台裝置上）。</p>
+  <div class="traps" id="traps"></div>
+  <p class="hint" id="trapCount" style="margin-top:10px"></p>
+
+  <h3>情境測驗</h3>
+  <div class="qcard" id="quiz"></div>
+
+  <h3>延伸練習</h3>
+  <p class="prose"><b>L22 主題庫（290 題）：</b>集中刷「機率分佈與資料分佈模型」相關題目。優先練三類 —— ① 給情境選分佈（看關鍵字是「次數」還是「等待時間」、有沒有固定的 n）；② 給分佈問期望值／變異數（把 29.2 的表當標準答案自測）；③ 中央極限定理與大數法則的敘述辨析（每個選項都先確認主詞是「原始資料」還是「樣本平均數」）。<br><b>L22 歷屆 100 題：</b>把 29.7 列出的 9 題先做一遍，特別留意 114Q2-42 那種「四個敘述選一個正確」的題型 —— 它一次測四個細節（λ 的意義、pmf 的語意、cdf 的方向、適用前提），是本節的濃縮題。<br><b>跨知識點對照：</b>本節與 <a href="L22101_descriptive_statistics.html">L22101（敘述性統計）</a>共用變異數、標準差、偏態、Z 分數的語彙，但 L22101 描述的是<b>手上的樣本</b>、本節描述的是<b>背後的理論分佈</b>；與 <a href="L22103_hypothesis_testing.html">L22103（假設檢定）</a>則共用常態、卡方、t 這幾個分佈，差別在本節只問「分佈長什麼樣」，L22103 才問「拿它做推論該怎麼判斷」。做題時先判斷題目在問哪一層，選項通常會同時擺上兩層的用語當誘答。</p>
+</section>
+</main>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce){const m=document.querySelector('#heroSvg .movers');if(m)m.remove();}
+const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+
+/* ---------- generic matcher ---------- */
+function matcher(root,fb,left,right,doneMsg,badMsg){
+  let sel=null,done=0;
+  const L=document.createElement('div');L.className='col';
+  const R=document.createElement('div');R.className='col';
+  left.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;
+    b.innerHTML=it.html;if(it.c)b.style.setProperty('--c',it.c);
+    b.onclick=()=>{if(b.classList.contains('done'))return;L.querySelectorAll('.mitem').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;fb.textContent='';fb.className='feedback';};
+    L.appendChild(b);
+  });
+  right.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;b.innerHTML=it.html;
+    b.onclick=()=>{
+      if(b.classList.contains('done'))return;
+      if(!sel){fb.textContent='請先點左邊一個項目。';fb.className='feedback';return;}
+      if(sel.dataset.k===b.dataset.k){
+        const c=sel.style.getPropertyValue('--c');
+        [sel,b].forEach(x=>{x.classList.remove('sel');x.classList.add('done');if(c)x.style.setProperty('--c',c);});
+        fb.textContent='✓ '+(it.ok||'答對了！');fb.className='feedback ok';sel=null;done++;
+        if(done===left.length){fb.textContent='✓ 全部配對完成！'+(doneMsg||'');}
+      }else{
+        b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');
+        fb.textContent='✗ '+(it.bad||badMsg||'不太對，再想想。');fb.className='feedback bad';
+      }
+    };
+    R.appendChild(b);
+  });
+  root.append(L,R);
+}
+
+/* ---------- step buttons ---------- */
+function stepper(btnRoot,items,render,labelFn){
+  const show=i=>{btnRoot.querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));render(i);};
+  items.forEach((e,i)=>{const b=document.createElement('button');b.className='btn';b.setAttribute('aria-pressed','false');b.textContent=labelFn?labelFn(e,i):e.t;b.onclick=()=>show(i);btnRoot.appendChild(b);});
+  show(0);return show;
+}
+
+/* ---------- flip cards ---------- */
+function flips(root,arr){
+  arr.forEach(([n,o,d])=>{
+    const b=document.createElement('button');b.className='flip';b.setAttribute('aria-pressed','false');
+    b.innerHTML=`<div class="in"><div class="f"><strong>${n}</strong><span>${o}</span><span style="margin-top:auto;font-size:12.5px">點我翻面</span></div><div class="b">${d}</div></div>`;
+    b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');
+    root.appendChild(b);
+  });
+}
+
+/* ---------- strategy picker ---------- */
+function strategies(root,vEl,mEl,whyEl,st,order){
+  (order||st.map((_,i)=>i)).forEach(i=>{const b=document.createElement('button');b.innerHTML=st[i][0];b.setAttribute('aria-pressed','false');b.onclick=()=>{root.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));const x=st[i];vEl.textContent=x[1];vEl.style.color=x[3];mEl.style.width=x[2]+'%';mEl.style.background=x[3];whyEl.innerHTML=x[4];};root.appendChild(b);});
+}
+
+/* ---------- exam list ---------- */
+function examList(root,arr){
+  arr.forEach(([n,k,q,a])=>{root.insertAdjacentHTML('beforeend',`<details><summary><span class="tag">${n}</span>${k}</summary><div class="body"><p style="margin:0 0 6px"><span class="hint">怎麼問：</span>${q}</p><p style="margin:0"><span class="hint">正解思路：</span>${a}</p></div></details>`);});
+}
+
+/* ---------- traps ---------- */
+function traps(key,T){
+  let saved=[];try{saved=JSON.parse(localStorage.getItem(key)||'[]')||[];}catch(e){saved=[];}
+  T.forEach(([a,b],i)=>{
+    const l=document.createElement('label');const c=saved.includes(i);if(c)l.classList.add('chk');
+    l.innerHTML=`<input type="checkbox" ${c?'checked':''}><div><em>${a}</em><br><span>${b}</span></div>`;
+    l.querySelector('input').onchange=e=>{const on=e.target.checked;l.classList.toggle('chk',on);saved=on?[...new Set([...saved,i])]:saved.filter(x=>x!==i);try{localStorage.setItem(key,JSON.stringify(saved));}catch(err){}count();};
+    $('#traps').appendChild(l);
+  });
+  function count(){$('#trapCount').textContent=`已確認 ${saved.length}／${T.length} 條`;}
+  count();
+}
+
+/* ---------- quiz ---------- */
+function quiz(Q,msgs){
+  let i=0,score=0;const box=$('#quiz');
+  function show(){
+    if(i>=Q.length){
+      const msg=score>=Q.length-1?msgs[0]:score>=Math.ceil(Q.length*.65)?msgs[1]:msgs[2];
+      box.innerHTML=`<div class="progress"><i style="width:100%"></i></div><div class="qtext" style="font-size:24px;font-family:var(--serif)">得分 ${score}／${Q.length}</div><p>${msg}</p><button class="btn primary" id="qr">重新測驗</button>`;
+      $('#qr').onclick=()=>{i=0;score=0;show();};return;
+    }
+    const [q,opts,ex]=Q[i];
+    const order=shuffle(opts.map((o,k)=>({o,k})));
+    box.innerHTML=`<div class="progress"><i style="width:${i/Q.length*100}%"></i></div><div class="qtop"><span>第 ${i+1}／${Q.length} 題</span><span>得分 ${score}</span></div><div class="qtext">${q}</div><div class="opts">${order.map(x=>`<button class="opt" data-k="${x.k}">${x.o}</button>`).join('')}</div><div class="expl" id="qe"></div><div class="row" style="margin-top:14px;justify-content:flex-end"><button class="btn primary" id="qn" style="display:none">${i===Q.length-1?'看結果':'下一題'}</button></div>`;
+    box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.k==='0';if(ok)score++;
+      box.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.k==='0')x.classList.add('right');});
+      if(!ok)b.classList.add('wrongpick');
+      const e=$('#qe');e.innerHTML=(ok?'<b style="color:var(--ok)">答對了。</b>':'<b style="color:var(--bad)">這題要小心。</b>')+ex;e.classList.add('show');
+      $('#qn').style.display='';$('#qn').focus({preventScroll:true});
+    });
+    $('#qn').onclick=()=>{i++;show();};
+  }
+  show();
+}
+
+/* ---------- nav highlight ---------- */
+function navHighlight(){
+  const links=[...document.querySelectorAll('nav.toc a')];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on&&window.innerWidth<=860)a.scrollIntoView({inline:'center',block:'nearest'});});}});},{rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('main section').forEach(s=>io.observe(s));
+}
+
+/* ---------- seeded rng ---------- */
+function rng(seed){let s=seed>>>0||1;return()=>{s^=s<<13;s>>>=0;s^=s>>17;s^=s<<5;s>>>=0;return s/4294967296;};}
+function gauss(r){let u=0,v=0;while(u===0)u=r();while(v===0)v=r();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+
+/* ================= L22102 page script (part 1) ================= */
+function erf(x){const s=Math.sign(x);x=Math.abs(x);const t=1/(1+.3275911*x);const y=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-.284496736)*t+.254829592)*t*Math.exp(-x*x);return s*y;}
+const Phi=x=>.5*(1+erf(x/Math.SQRT2));
+const npdf=(x,m=0,s=1)=>Math.exp(-(((x-m)/s)**2)/2)/(s*Math.sqrt(2*Math.PI));
+function lgamma(z){const g=7,c=[0.99999999999980993,676.5203681218851,-1259.1392167224028,771.32342877765313,-176.61502916214059,12.507343278686905,-0.13857109526572012,9.9843695780195716e-6,1.5056327351493116e-7];if(z<.5)return Math.log(Math.PI/Math.sin(Math.PI*z))-lgamma(1-z);z-=1;let x=c[0];for(let i=1;i<g+2;i++)x+=c[i]/(z+i);const t=z+g+.5;return .5*Math.log(2*Math.PI)+(z+.5)*Math.log(t)-t+Math.log(x);}
+const binom=(n,p,k)=>{if(k<0||k>n)return 0;if(p<=0)return k===0?1:0;if(p>=1)return k===n?1:0;return Math.exp(lgamma(n+1)-lgamma(k+1)-lgamma(n-k+1)+k*Math.log(p)+(n-k)*Math.log(1-p));};
+const pois=(l,k)=>k<0?0:Math.exp(k*Math.log(l)-l-lgamma(k+1));
+const chi2=(x,k)=>x<=0?0:Math.exp((k/2-1)*Math.log(x)-x/2-(k/2)*Math.log(2)-lgamma(k/2));
+const fx=(v,d=4)=>(+v).toFixed(d);
+
+/* ---------- hero: Galton board ---------- */
+(function(){
+  const svg=$('#heroSvg'),R=7,cx=300,dx=34,dy=24,top=34;
+  let h='';
+  for(let r=0;r<R;r++)for(let j=0;j<=r;j++){h+=`<circle cx="${cx+(j-r/2)*dx}" cy="${top+r*dy}" r="4" fill="var(--muted)" opacity=".55"/>`;}
+  const binY=top+R*dy+8;
+  for(let k=0;k<=R;k++){const x=cx+(k-R/2)*dx,b=binom(R,.5,k),hh=b/binom(R,.5,3.5|0)*70;h+=`<rect x="${x-14}" y="${290-hh}" width="28" height="${hh}" rx="4" fill="var(--txt)" opacity=".8"/>`;}
+  let d='';for(let i=0;i<=80;i++){const k=i/80*R,x=cx+(k-R/2)*dx,y=290-npdf(k,R/2,Math.sqrt(R)/2)/npdf(R/2,R/2,Math.sqrt(R)/2)*70*(binom(R,.5,4)/binom(R,.5,3)*1)/1;d+=(i?'L':'M')+x.toFixed(1)+' '+y.toFixed(1);}
+  h+=`<path d="${d}" fill="none" stroke="var(--img)" stroke-width="3"/>`;
+  h+=`<g font-family="Noto Sans TC, sans-serif" font-weight="700" font-size="14"><text x="520" y="70" fill="var(--txt)">二項 B(7, 0.5)</text><text x="520" y="92" fill="var(--muted)" font-size="12" font-weight="500">每顆球左右各半機率</text><text x="520" y="150" fill="var(--img)">→ 趨近常態鐘形</text><text x="520" y="172" fill="var(--muted)" font-size="12" font-weight="500">次數多了，形狀就出來了</text></g>`;
+  if(!reduce){
+    const r=rng(3);let g='<g class="movers">';
+    for(let b=0;b<9;b++){let x=cx,p=`M${cx} ${top-20}`;let pos=0;for(let row=0;row<R;row++){p+=` L${(cx+(pos-row/2)*dx).toFixed(1)} ${top+row*dy-6}`;if(r()<.5)pos++;}p+=` L${(cx+(pos-R/2)*dx).toFixed(1)} ${binY} L${(cx+(pos-R/2)*dx).toFixed(1)} 270`;g+=`<circle r="6" fill="var(--sen)"><animateMotion dur="2.6s" begin="-${(b*.29).toFixed(2)}s" repeatCount="indefinite" path="${p}"/></circle>`;}
+    h+=g+'</g>';
+  }
+  svg.innerHTML=h;
+})();
+
+/* ---------- PMF / PDF / CDF lab ---------- */
+(function(){
+  let mode=0;
+  const X0=50,W=560;
+  function draw(){
+    const v=+$('#fnX').value;let h='';
+    h+=`<text x="40" y="16" font-size="12" font-weight="700" fill="${mode?'var(--img)':'var(--txt)'}">${mode?'PDF f(x)：常態 N(0, 1)':'PMF P(X = k)：二項 B(10, 0.5)'}</text><text x="40" y="186" font-size="12" font-weight="700" fill="var(--aud)">CDF F(x) = P(X ≤ x)</text>`;
+    h+=`<line x1="${X0}" y1="150" x2="${X0+W}" y2="150" stroke="var(--line)"/><line x1="${X0}" y1="320" x2="${X0+W}" y2="320" stroke="var(--line)"/><text x="${X0-6}" y="324" font-size="10" text-anchor="end" fill="var(--muted)">0</text><text x="${X0-6}" y="204" font-size="10" text-anchor="end" fill="var(--muted)">1</text><line x1="${X0}" y1="200" x2="${X0+W}" y2="200" stroke="var(--line)" stroke-dasharray="3 4"/>`;
+    let F,note;
+    if(mode===0){
+      const k=Math.round(v/10),P=Array.from({length:11},(_,i)=>binom(10,.5,i)),Xk=i=>X0+20+i*52;
+      F=P.slice(0,k+1).reduce((a,b)=>a+b,0);
+      P.forEach((p,i)=>{const hh=p/.25*120;h+=`<rect x="${Xk(i)-14}" y="${150-hh}" width="28" height="${hh}" rx="3" fill="var(--txt)" opacity="${i<=k?.9:.25}"/><text x="${Xk(i)}" y="164" font-size="10.5" text-anchor="middle" fill="var(--muted)">${i}</text>`;});
+      let c=0,d='';P.forEach((p,i)=>{const y0=320-c*120;c+=p;const y1=320-c*120;d+=`M${Xk(i)-26} ${y0} L${Xk(i)} ${y0} L${Xk(i)} ${y1} L${Xk(i)+26} ${y1} `;});
+      h+=`<path d="${d}" fill="none" stroke="var(--aud)" stroke-width="2.5"/>`;
+      h+=`<line x1="${Xk(k)}" y1="20" x2="${Xk(k)}" y2="320" stroke="var(--ink)" stroke-dasharray="4 4"/><circle cx="${Xk(k)}" cy="${320-F*120}" r="6" fill="var(--aud)"/><text x="${Xk(k)+(k>7?-10:10)}" y="${316-F*120}" font-size="13" font-weight="700" text-anchor="${k>7?'end':'start'}" fill="var(--aud)">F(${k}) = ${F.toFixed(3)}</text>`;
+      $('#fnXv').textContent='k = '+k;
+      note=`離散型：F(${k}) 是 PMF 由小到大的「累加」＝ 把 0～${k} 的長條高度相加。P(X = ${k}) = ${P[k].toFixed(3)} 是一根長條的高度，本身就是機率。CDF 呈階梯狀。`;
+    }else{
+      const x=-3.5+v/100*7,Xc=t=>X0+(t+3.5)/7*W;F=Phi(x);
+      let d='',area=`M${Xc(-3.5)} 150`;for(let i=0;i<=140;i++){const t=-3.5+i*.05,y=150-npdf(t)/.4*120;d+=(i?'L':'M')+Xc(t).toFixed(1)+' '+y.toFixed(1);if(t<=x)area+=`L${Xc(t).toFixed(1)} ${y.toFixed(1)}`;}
+      area+=`L${Xc(x)} ${150-npdf(x)/.4*120} L${Xc(x)} 150Z`;
+      h+=`<path d="${area}" fill="var(--aud)" opacity=".3"/><path d="${d}" fill="none" stroke="var(--img)" stroke-width="2.5"/>`;
+      let c='';for(let i=0;i<=140;i++){const t=-3.5+i*.05;c+=(i?'L':'M')+Xc(t).toFixed(1)+' '+(320-Phi(t)*120).toFixed(1);}
+      h+=`<path d="${c}" fill="none" stroke="var(--aud)" stroke-width="2.5"/>`;
+      [-3,-2,-1,0,1,2,3].forEach(t=>{h+=`<text x="${Xc(t)}" y="164" font-size="10.5" text-anchor="middle" fill="var(--muted)">${t}</text>`;});
+      h+=`<line x1="${Xc(x)}" y1="20" x2="${Xc(x)}" y2="320" stroke="var(--ink)" stroke-dasharray="4 4"/><circle cx="${Xc(x)}" cy="${320-F*120}" r="6" fill="var(--aud)"/><text x="${Xc(x)+(x>1.5?-10:10)}" y="${316-F*120}" font-size="13" font-weight="700" text-anchor="${x>1.5?'end':'start'}" fill="var(--aud)">F(${x.toFixed(2)}) = ${F.toFixed(3)}</text>`;
+      $('#fnXv').textContent='x = '+x.toFixed(2);
+      note=`連續型：F(${x.toFixed(2)}) 是 PDF 從 −∞ 到 x 的「積分」＝ 左邊塗色的面積 ${F.toFixed(3)}。曲線高度 f(x) = ${npdf(x).toFixed(3)} 只是「密度」，不是機率。CDF 是平滑上升的 S 形。`;
+    }
+    $('#fnSvg').innerHTML=h;$('#fnNote').textContent=note;
+  }
+  stepper($('#fnTabs'),[{t:'離散型（PMF 累加）'},{t:'連續型（PDF 積分）'}],i=>{mode=i;draw();},x=>x.t);
+  $('#fnX').oninput=draw;
+})();
+
+/* ---------- uniform density > 1 ---------- */
+(function(){
+  const X=x=>40+x/2.2*560,Y=y=>170-y/5.2*150;
+  function draw(){
+    const b=+$('#ubR').value,f=1/b;
+    let h=`<line x1="40" y1="170" x2="610" y2="170" stroke="var(--line)"/><line x1="40" y1="${Y(1)}" x2="610" y2="${Y(1)}" stroke="var(--bad)" stroke-dasharray="5 4" opacity=".7"/><text x="606" y="${Y(1)-5}" font-size="11" text-anchor="end" fill="var(--bad)">f(x) = 1</text>`;
+    [0,.5,1,1.5,2].forEach(t=>{h+=`<text x="${X(t)}" y="185" font-size="10.5" text-anchor="middle" fill="var(--muted)">${t}</text>`;});
+    h+=`<rect x="${X(0)}" y="${Y(f)}" width="${X(b)-X(0)}" height="${170-Y(f)}" fill="var(--img)" opacity=".35" stroke="var(--img)" stroke-width="2.5" style="transition:all .3s"/>`;
+    h+=`<text x="${X(b)+8}" y="${Math.max(16,Y(f)+4)}" font-size="13" font-weight="700" fill="var(--img)">f(x) = 1/${b.toFixed(2)} = ${f.toFixed(2)}</text><text x="${(X(0)+X(b))/2}" y="${Math.min(160,(Y(f)+170)/2+5)}" font-size="13" font-weight="700" text-anchor="middle" fill="var(--ink)">面積 = 1</text>`;
+    $('#ubSvg').innerHTML=h;$('#ubV').textContent=b.toFixed(2);
+    $('#ubNote').innerHTML=f>1?`密度 ${f.toFixed(2)} <b>大於 1，完全合法</b>：高 ${f.toFixed(2)} × 寬 ${b.toFixed(2)} ＝ 面積 1。只有「密度 × 區間寬度」才是機率。${Math.abs(b-.5)<.01?'這正是講義的例子 U(0, 0.5)，f(x) = 2。':''}`:`密度 ${f.toFixed(2)} ≤ 1。把 b 拉小到 1 以下，看密度怎麼超過 1。`;
+  }
+  $('#ubR').oninput=draw;draw();
+})();
+
+/* ---------- single point probability ---------- */
+(function(){
+  const X=x=>40+(x-1.5)/7*560,Y=y=>150-y/.42*130;
+  function draw(){
+    const w=+$('#ptR').value/100,a=5.3-w,b=5.3+w,p=Phi(b-5)-Phi(a-5);
+    let d='',ar=`M${X(a)} 150`;for(let i=0;i<=140;i++){const t=1.5+i*.05;d+=(i?'L':'M')+X(t).toFixed(1)+' '+Y(npdf(t,5)).toFixed(1);}
+    for(let t=a;t<=b+1e-9;t+=Math.max(.005,(b-a)/60))ar+=`L${X(t).toFixed(1)} ${Y(npdf(t,5)).toFixed(1)}`;ar+=`L${X(b)} 150Z`;
+    let h=`<path d="${ar}" fill="var(--img)" opacity=".45"/><path d="${d}" fill="none" stroke="var(--img)" stroke-width="2.5"/><line x1="40" y1="150" x2="600" y2="150" stroke="var(--line)"/><line x1="${X(5.3)}" y1="20" x2="${X(5.3)}" y2="150" stroke="var(--ink)" stroke-dasharray="3 3"/><text x="${X(5.3)}" y="166" font-size="11" text-anchor="middle" fill="var(--ink)">5.3</text>`;
+    $('#ptSvg').innerHTML=h;$('#ptV').textContent=w.toFixed(2);
+    $('#ptP').textContent=w===0?'P(X = 5.3) = 0　← 寬度為 0，面積為 0':`P(${a.toFixed(2)} ≤ X ≤ ${b.toFixed(2)}) = ${p.toFixed(4)}`;
+    $('#ptP').style.color=w===0?'var(--bad)':'var(--img)';
+  }
+  $('#ptR').oninput=draw;draw();
+})();
+
+/* ---------- E/Var flip cards ---------- */
+flips($('#evCards'),[
+  ['伯努利','參數 p','E(X) = p<br>Var(X) = p(1−p)<br>p = 0.5 時變異數最大（0.25）'],
+  ['二項','參數 n, p','E(X) = np<br>Var(X) = np(1−p)<br>n = 1 就退回伯努利'],
+  ['卜瓦松','參數 λ','E(X) = λ<br>Var(X) = λ<br>平均等於變異數是它的指紋'],
+  ['常態','參數 μ, σ','E(X) = μ<br>Var(X) = σ²<br>參數本身就是答案'],
+  ['指數','參數 λ','E(X) = 1/λ<br>Var(X) = 1/λ²<br>平均等待時間 = 發生率的倒數'],
+  ['均勻 U(a,b)','參數 a, b','E(X) = (a+b)/2<br>Var(X) = (b−a)²/12<br>分母 12 是固定的'],
+  ['卡方','參數 k（自由度）','E(X) = k<br>Var(X) = 2k<br>自由度就是期望值，變異數加倍']
+]);
+
+/* ---------- dispersion ---------- */
+(function(){
+  const D=[
+    {t:'二項 B(20, 0.3)',e:6,v:4.2,lv:'欠離散：Var < E',c:'var(--txt)',n:'二項 Var = np(1−p) = 20 × 0.3 × 0.7 = 4.2，小於 E = np = 6。'},
+    {t:'卜瓦松 λ = 6',e:6,v:6,lv:'等離散：Var = E',c:'var(--img)',n:'卜瓦松 Var = λ = E。這是它的指紋。'},
+    {t:'實際來電資料（示意）',e:6,v:15,lv:'過度離散：Var > E → 改用負二項',c:'var(--bad)',n:'實際資料 Var 遠大於 E（Overdispersion），卜瓦松配不上，要換<b>負二項分佈</b>。改用 t 分佈或「多蒐集樣本」都不能修正離散結構（115Q1-3 誘答）。'}
+  ];
+  stepper($('#dispTabs'),D,i=>{
+    const d=D[i];
+    $('#dispBars').innerHTML=[['E(X)',d.e,'var(--muted)'],['Var(X)',d.v,d.c]].map(([n,v,c])=>`<div class="bar"><span>${n}</span><div class="track"><div class="fill" style="width:0;background:${c}" data-w="${v/16*100}"></div></div><span class="num">${v}</span></div>`).join('');
+    setTimeout(()=>$$('#dispBars .fill').forEach(f=>f.style.width=f.dataset.w+'%'),30);
+    $('#dispV').textContent=`Var ÷ E = ${(d.v/d.e).toFixed(2)}　${d.lv}`;$('#dispV').style.color=d.c;$('#dispNote').innerHTML=d.n;
+  },x=>x.t);
+})();
+
+/* ================= part 2 ================= */
+/* ---------- discrete simulator ---------- */
+(function(){
+  const S={n:20,p:.3,l:4,bp:.3};let mode=1;
+  const T=[{t:'伯努利'},{t:'二項'},{t:'卜瓦松'}];
+  const ctl=(id,lab,min,max,step,val)=>`<div><div class="lbl">${lab}<span id="${id}V"></span></div><input type="range" id="${id}" min="${min}" max="${max}" step="${step}" value="${val}" aria-label="${lab}"></div>`;
+  function build(){
+    $('#dsCtrl').innerHTML=mode===0?ctl('cP','成功機率 p',0.01,0.99,0.01,S.bp):mode===1?ctl('cN','試驗次數 n',1,100,1,S.n)+ctl('cP','成功機率 p',0.01,0.99,0.01,S.p):ctl('cL','平均發生率 λ',0.5,20,0.5,S.l);
+    $$('#dsCtrl input').forEach(e=>e.oninput=()=>{if(e.id==='cN')S.n=+e.value;if(e.id==='cP'){if(mode===0)S.bp=+e.value;else S.p=+e.value;}if(e.id==='cL')S.l=+e.value;draw();});
+    draw();
+  }
+  function draw(){
+    let P=[],E,V,lab;
+    if(mode===0){const p=S.bp;P=[1-p,p];E=p;V=p*(1-p);$('#cPV').textContent=p.toFixed(2);lab='k（0 = 失敗、1 = 成功）';}
+    else if(mode===1){const {n,p}=S;$('#cNV').textContent=n;$('#cPV').textContent=p.toFixed(2);E=n*p;V=n*p*(1-p);const hi=Math.min(n,Math.ceil(E+4*Math.sqrt(V)+3));for(let k=0;k<=hi;k++)P.push(binom(n,p,k));lab='成功次數 k';}
+    else{const l=S.l;$('#cLV').textContent=l;E=l;V=l;const hi=Math.ceil(l+4*Math.sqrt(l)+3);for(let k=0;k<=hi;k++)P.push(pois(l,k));lab='單位時間內發生次數 k';}
+    const m=P.length,bw=Math.min(60,540/m),mx=Math.max(...P),Xk=k=>50+(k+.5)*(540/m);
+    let h=`<line x1="50" y1="190" x2="600" y2="190" stroke="var(--line)"/><text x="600" y="224" font-size="11" text-anchor="end" fill="var(--muted)">${lab}</text>`;
+    P.forEach((p,k)=>{const hh=p/mx*165;h+=`<rect x="${Xk(k)-bw*.38}" y="${190-hh}" width="${bw*.76}" height="${hh}" rx="2" fill="var(--txt)" opacity=".85"/>`;if(m<=26||k%Math.ceil(m/20)===0)h+=`<text x="${Xk(k)}" y="204" font-size="10" text-anchor="middle" fill="var(--muted)">${k}</text>`;});
+    if(mode===1&&S.p<=.1){P.forEach((_,k)=>{const q=pois(S.n*S.p,k);h+=`<circle cx="${Xk(k)}" cy="${190-q/mx*165}" r="4" fill="none" stroke="var(--sen)" stroke-width="2"/>`;});h+=`<text x="595" y="16" font-size="11.5" text-anchor="end" fill="var(--sen)">○ 卜瓦松近似 λ = np = ${(S.n*S.p).toFixed(2)}</text>`;}
+    h+=`<line x1="${50+(E+.5)*(540/m)}" y1="20" x2="${50+(E+.5)*(540/m)}" y2="190" stroke="var(--aud)" stroke-width="2" stroke-dasharray="5 4"/><text x="${50+(E+.5)*(540/m)+5}" y="30" font-size="11.5" font-weight="700" fill="var(--aud)">E(X)</text>`;
+    $('#dsSvg').innerHTML=h;
+    $('#dsK').innerHTML=[['E(X)',E.toFixed(2)],['Var(X)',V.toFixed(2)],['Var ÷ E',(V/E).toFixed(2)]].map(([a,b])=>`<div class="kpi"><b>${a}</b><span>${b}</span></div>`).join('');
+    $('#dsNote').innerHTML=mode===0?`單次成敗：E = p、Var = p(1−p)。${Math.abs(S.bp-.5)<.005?'<b>p = 0.5 時變異數最大（0.25）</b>。':'把 p 拉到 0.5，看 Var 何時最大。'}`:mode===1?`二項：伯努利做 n 次，Var = np(1−p) &lt; np = E（欠離散）。${S.n===1?'<b>n = 1 就退回伯努利。</b>':''}${S.p<=.1?'p 很小時，紅圈的卜瓦松（λ = np）與長條幾乎重合 —— n 大、p 小、np 固定時二項趨近卜瓦松。':'把 p 拉到 0.10 以下，看卜瓦松近似出現。'}`:`卜瓦松：沒有 n，只有平均發生率 λ。<b>E = Var = λ</b>。λ 是「平均」，不是上限 —— 長條明明延伸到 λ 以上。`;
+  }
+  stepper($('#dsTabs'),T,i=>{mode=i;build();},x=>x.t);
+})();
+
+/* ---------- keyword game ---------- */
+(function(){
+  const O=['伯努利','二項','卜瓦松','指數'];
+  const S=[
+    ['固定 50 件產品中有幾件合格','二項','有明確的試驗總次數 n。'],
+    ['客服中心每分鐘接到幾通來電，事件獨立、機率與時間長短成正比','卜瓦松','114Q2-15：沒有 n，只有單位時間的平均發生率 λ。'],
+    ['兩次來電相隔多久','指數','問的是等待時間，不是次數。'],
+    ['使用者有沒有點這則廣告（1/0）','伯努利','只做一次。'],
+    ['投放 200 則廣告的點擊次數','二項','固定 n = 200 次試驗。'],
+    ['生產線每小時出現幾個瑕疵品','卜瓦松','單位時間內的計數。'],
+    ['零件撐到故障的時間（故障率固定）','指數','等待時間；若故障率隨使用時間上升則改 Weibull。'],
+    ['單一產品合格與否','伯努利','單次成敗。']
+  ];
+  let i=0,sc=0,done=false;
+  O.forEach(o=>{const b=document.createElement('button');b.className='btn';b.textContent=o;b.onclick=()=>{const s=S[i],ok=o===s[1];if(!done){done=true;if(ok)sc++;$('#kwScore').textContent=`答對 ${sc}`;}$$('#kwOpts .btn').forEach(x=>{x.style.borderColor=x.textContent===s[1]?'var(--ok)':'';x.setAttribute('aria-pressed','false');});b.setAttribute('aria-pressed',ok);if(!ok)b.style.borderColor='var(--bad)';$('#kwFb').textContent=(ok?'✓ ':'✗ 答案是「'+s[1]+'」。')+s[2];$('#kwFb').className='feedback '+(ok?'ok':'bad');};$('#kwOpts').appendChild(b);});
+  function show(){done=false;$('#kwPos').textContent=`第 ${i+1}／${S.length} 題`;$('#kwScore').textContent=`答對 ${sc}`;$('#kwSent').textContent='「'+S[i][0]+'」';$('#kwFb').textContent='';$('#kwFb').className='feedback';$$('#kwOpts .btn').forEach(x=>{x.style.borderColor='';x.setAttribute('aria-pressed','false');});$('#kwNext').textContent=i===S.length-1?'再玩一次':'下一題';}
+  $('#kwNext').onclick=()=>{if(i===S.length-1){i=0;sc=0;}else i++;show();};
+  show();
+})();
+
+/* ---------- Poisson vs exponential timeline ---------- */
+(function(){
+  const L=3,H=8;let ev=[],seed=21,view=0;
+  function sim(){const r=rng(seed);ev=[];let t=0;while(true){t+=-Math.log(1-r())/L;if(t>H)break;ev.push(t);}}
+  function draw(){
+    let h='';for(let k=1;k<H;k++)h+=`<b style="left:${k/H*100}%"></b>`;for(let k=0;k<H;k++)h+=`<em style="left:${(k+.5)/H*100}%">第${k+1}時</em>`;
+    ev.forEach(t=>{h+=`<i style="left:${t/H*100}%"></i>`;});$('#tl').innerHTML=h;
+    if(view===0){
+      const c=new Array(H).fill(0);ev.forEach(t=>c[Math.floor(t)]++);const mx=Math.max(...c,1);
+      $('#peBars').innerHTML=c.map((v,k)=>`<div class="bar"><span>第 ${k+1} 小時</span><div class="track"><div class="fill" style="width:${v/mx*100}%;background:var(--txt)"></div></div><span class="num">${v} 次</span></div>`).join('');
+      $('#peNote').innerHTML=`每小時「發生幾次」→ 離散的<b>卜瓦松(λ = 3)</b>。這次模擬平均 ${(ev.length/H).toFixed(2)} 次／小時（理論 E = λ = 3）。`;
+    }else{
+      const g=ev.map((t,k)=>(t-(k?ev[k-1]:0))*60),B=[0,10,20,30,40,60,90],cnt=new Array(B.length).fill(0);g.forEach(v=>{let j=B.length-1;for(let q=0;q<B.length-1;q++)if(v<B[q+1]){j=q;break;}cnt[j]++;});const mx=Math.max(...cnt,1);
+      $('#peBars').innerHTML=cnt.map((v,k)=>`<div class="bar"><span>${B[k]}${k<B.length-1?'–'+B[k+1]:'+'} 分鐘</span><div class="track"><div class="fill" style="width:${v/mx*100}%;background:var(--img)"></div></div><span class="num">${v} 段</span></div>`).join('');
+      const mg=g.reduce((a,b)=>a+b,0)/g.length;
+      $('#peNote').innerHTML=`相鄰兩次事件「隔多久」→ 連續的<b>指數(λ = 3)</b>，右偏：短間隔最多。這次模擬平均間隔 ${mg.toFixed(1)} 分鐘（理論 E = 1/λ = 1/3 小時 = 20 分鐘）。`;
+    }
+  }
+  stepper($('#peTabs'),[{t:'數幾次（卜瓦松）'},{t:'量多久（指數）'}],i=>{view=i;draw();},x=>x.t);
+  $('#peNew').onclick=()=>{seed+=7;sim();draw();};
+  sim();draw();
+})();
+
+matcher($('#preMatch'),$('#preFb'),[
+  {k:'a',c:'var(--txt)',html:'促銷活動中途改變了轉換率<small>二項的 p 不固定</small>'},
+  {k:'b',c:'var(--img)',html:'尖峰時段來電暴增<small>卜瓦松的 λ 隨時間變動</small>'},
+  {k:'c',c:'var(--aud)',html:'零件老化、故障率隨使用時間上升<small>指數的固定 λ 被破壞</small>'},
+  {k:'d',c:'var(--sen)',html:'每小時來電數的變異數遠大於平均數<small>卜瓦松的 Var = E 被破壞</small>'}
+],[
+  {k:'c',html:'改用 Weibull 分佈',ok:'故障率會變，就不再是無記憶的指數。'},
+  {k:'d',html:'改用負二項分佈',ok:'過度離散 → 負二項（115Q1-3）。'},
+  {k:'x',html:'改用 t 分佈',bad:'t 是小樣本推論，與離散度無關（115Q1-3 誘答）。'},
+  {k:'a',html:'改用可隨時間變動的動態模型',ok:'p 不固定，二項失效。'},
+  {k:'b',html:'改用非齊次模型',ok:'λ 隨時間變動，齊次卜瓦松不適用。'}
+],'四個破口都對上了。');
+
+/* ---------- scipy poisson ---------- */
+(function(){
+  const P=Array.from({length:16},(_,k)=>pois(5,k)),mx=Math.max(...P);
+  const C=[
+    ['poisson.pmf(5, lam)',k=>k===5,P[5],'P(X = 5)：<b>恰好</b> 5 個','✗ 誘答：「少於 5 個」'],
+    ['poisson.cdf(10, lam)',k=>k<=10,P.slice(0,11).reduce((a,b)=>a+b,0),'P(X ≤ 10)：<b>小於或等於</b> 10 個','✗ 誘答：「大於或等於 10 個」'],
+    ['1 - poisson.cdf(10, lam)',k=>k>=11,1-P.slice(0,11).reduce((a,b)=>a+b,0),'P(X ≥ 11)：要算右尾得<b>自己補這一步</b>','（圖只畫到 15，右尾其實延伸到無限）']
+  ];
+  function draw(i){
+    const c=C[i];let h=`<line x1="40" y1="180" x2="610" y2="180" stroke="var(--line)"/>`;
+    P.forEach((p,k)=>{const x=50+k*35,hh=p/mx*150,on=c[1](k);h+=`<rect x="${x}" y="${180-hh}" width="26" height="${hh}" rx="3" fill="${on?'var(--aud)':'var(--txt)'}" opacity="${on?.95:.25}"/><text x="${x+13}" y="196" font-size="10.5" text-anchor="middle" fill="var(--muted)">${k}</text>`;});
+    h+=`<line x1="${50+5*35+13}" y1="10" x2="${50+5*35+13}" y2="180" stroke="var(--ink)" stroke-dasharray="4 4"/><text x="${50+5*35+18}" y="20" font-size="11.5" fill="var(--ink)">λ = 5 是平均，不是上限</text>`;
+    $('#spSvg').innerHTML=h;
+    $('#spOut').innerHTML=`<span class="k">&gt;&gt;&gt; ${c[0]}</span>\n${c[2].toFixed(4)}\n\n# ${c[3]}\n# ${c[4]}`;
+    $$('#spBtns .btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));
+  }
+  C.forEach((c,i)=>{const b=document.createElement('button');b.className='btn';b.innerHTML=`<code>${c[0]}</code>`;b.onclick=()=>draw(i);$('#spBtns').appendChild(b);});
+  draw(0);
+})();
+
+/* ---------- normal ---------- */
+(function(){
+  let er=0;const X=x=>40+(x+6)/12*560;
+  function draw(){
+    const m=+$('#nmR').value,s=+$('#nsR').value;$('#nmV').textContent=m.toFixed(1);$('#nsV').textContent=s.toFixed(2);
+    const Y=y=>190-y/.8*170;
+    let h=`<line x1="40" y1="190" x2="600" y2="190" stroke="var(--line)"/>`;
+    [-6,-4,-2,0,2,4,6].forEach(t=>{h+=`<text x="${X(t)}" y="206" font-size="10.5" text-anchor="middle" fill="var(--muted)">${t}</text>`;});
+    let d0='';for(let i=0;i<=240;i++){const t=-6+i*.05;d0+=(i?'L':'M')+X(t).toFixed(1)+' '+Y(npdf(t)).toFixed(1);}
+    h+=`<path d="${d0}" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 4"/>`;
+    if(er){const a=m-er*s,b=m+er*s;let ar=`M${X(a)} 190`;for(let t=a;t<=b+1e-9;t+=.04)ar+=`L${X(t).toFixed(1)} ${Y(npdf(t,m,s)).toFixed(1)}`;ar+=`L${X(b)} 190Z`;h+=`<path d="${ar}" fill="var(--img)" opacity=".3"/><text x="${X(m)}" y="${Y(npdf(m,m,s))+24}" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">${['','約 68%','約 95%','約 99.7%'][er]}</text>`;}
+    let d='';for(let i=0;i<=240;i++){const t=-6+i*.05;d+=(i?'L':'M')+X(t).toFixed(1)+' '+Math.max(4,Y(npdf(t,m,s))).toFixed(1);}
+    h+=`<path d="${d}" fill="none" stroke="var(--img)" stroke-width="3"/><line x1="${X(m)}" y1="20" x2="${X(m)}" y2="190" stroke="var(--img)" stroke-dasharray="3 3"/><text x="${X(m)+5}" y="18" font-size="12" fill="var(--img)">μ</text>`;
+    $('#nSvg').innerHTML=h;
+    $('#nNote').innerHTML=`虛線是標準常態 N(0, 1) 對照。E(X) = μ = ${m.toFixed(1)}，Var(X) = σ² = ${(s*s).toFixed(2)}。${er?`μ ± ${er}σ 的範圍是 [${(m-er*s).toFixed(2)}, ${(m+er*s).toFixed(2)}]。`:''}`;
+  }
+  ['#nmR','#nsR'].forEach(s=>$(s).oninput=draw);
+  stepper($('#erTabs'),[{t:'不標示'},{t:'±1σ'},{t:'±2σ'},{t:'±3σ'}],i=>{er=i;draw();},x=>x.t);
+})();
+
+/* ---------- memoryless ---------- */
+(function(){
+  const l=.2,X=x=>40+x/30*560,Y=y=>170-y*150,S=x=>Math.exp(-l*x);
+  function draw(){
+    const s=+$('#msR').value,t=+$('#mtR').value;$('#msV').textContent=s+' 分';$('#mtV').textContent=t+' 分';
+    let d='';for(let i=0;i<=300;i++){const x=i*.1;d+=(i?'L':'M')+X(x).toFixed(1)+' '+Y(S(x)).toFixed(1);}
+    let h=`<line x1="40" y1="170" x2="600" y2="170" stroke="var(--line)"/>`;[0,5,10,15,20,25,30].forEach(q=>{h+=`<text x="${X(q)}" y="186" font-size="10.5" text-anchor="middle" fill="var(--muted)">${q}</text>`;});
+    h+=`<rect x="${X(0)}" y="20" width="${X(t)-X(0)}" height="150" fill="var(--txt)" opacity=".1"/><rect x="${X(s)}" y="20" width="${X(s+t)-X(s)}" height="150" fill="var(--aud)" opacity=".18"/>`;
+    h+=`<path d="${d}" fill="none" stroke="var(--img)" stroke-width="3"/><text x="${X(29)}" y="${Y(S(29))-8}" font-size="11.5" text-anchor="end" fill="var(--img)">P(X &gt; x) = e^(−λx)</text>`;
+    [[s,'var(--aud)','已等 s'],[s+t,'var(--aud)','s + t'],[t,'var(--txt)','t']].forEach(([x,c,lab],j)=>{h+=`<circle cx="${X(x)}" cy="${Y(S(x))}" r="5" fill="${c}"/><text x="${X(x)}" y="${j===2?Y(S(x))-10:Y(S(x))+(j?18:-10)}" font-size="11" text-anchor="middle" fill="${c}">${lab}</text>`;});
+    $('#mSvg').innerHTML=h;
+    const a=S(s+t)/S(s),b=S(t);$('#mA').textContent=a.toFixed(4);$('#mB').textContent=b.toFixed(4);
+    $('#mNote').innerHTML=`兩者都等於 e^(−λt) = e^(−0.2 × ${t}) ≈ ${b.toFixed(4)}。已經等了 ${s} 分鐘，「再等 ${t} 分鐘」的機率和一開始「等 ${t} 分鐘」完全相同 —— 不是「等越久越快來」。`;
+  }
+  ['#msR','#mtR'].forEach(q=>$(q).oninput=draw);draw();
+})();
+
+/* ---------- chi-square ---------- */
+(function(){
+  const X=x=>40+x/60*560;
+  function draw(){
+    const k=+$('#kR').value;$('#kV').textContent=k;$('#kE').textContent=k;$('#kVar').textContent=2*k;
+    const xs=[];for(let i=1;i<=600;i++)xs.push(i*.1);const ys=xs.map(x=>chi2(x,k));const cap=Math.min(Math.max(...ys),k<=2?.5:Math.max(...ys));
+    const Y=y=>180-Math.min(y,cap)/cap*160;
+    let d='';xs.forEach((x,i)=>{d+=(i?'L':'M')+X(x).toFixed(1)+' '+Y(ys[i]).toFixed(1);});
+    let nd='';xs.forEach((x,i)=>{nd+=(i?'L':'M')+X(x).toFixed(1)+' '+Y(npdf(x,k,Math.sqrt(2*k))).toFixed(1);});
+    let h=`<line x1="40" y1="180" x2="600" y2="180" stroke="var(--line)"/>`;[0,10,20,30,40,50,60].forEach(q=>{h+=`<text x="${X(q)}" y="196" font-size="10.5" text-anchor="middle" fill="var(--muted)">${q}</text>`;});
+    h+=`<path d="${nd}" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 4"/><path d="${d}" fill="none" stroke="var(--img)" stroke-width="3"/><line x1="${X(k)}" y1="20" x2="${X(k)}" y2="180" stroke="var(--aud)" stroke-dasharray="5 4"/><text x="${X(k)+5}" y="22" font-size="11.5" font-weight="700" fill="var(--aud)">E = k</text><text x="595" y="16" font-size="11" text-anchor="end" fill="var(--muted)">虛線：常態 N(k, 2k) 對照</text>`;
+    $('#kSvg').innerHTML=h;
+    $('#kNote').textContent=k<=3?'自由度小：明顯右偏，而且只取 x ≥ 0。':k>=20?'自由度大：逐漸趨近常態（和虛線越來越貼合），但仍略為右偏。':'自由度增大，偏態逐漸減弱。';
+  }
+  $('#kR').oninput=draw;draw();
+})();
+
+/* ================= part 3 ================= */
+/* ---------- CLT simulator ---------- */
+(function(){
+  const r=rng(99);
+  const POP=[
+    {t:'右偏（如收入，指數分佈示意）',draw:()=>-Math.log(1-r()),mu:1,sd:1,lo:0,hi:5},
+    {t:'均勻 U(0,1)',draw:()=>r(),mu:.5,sd:Math.sqrt(1/12),lo:0,hi:1},
+    {t:'柯西（變異數不存在）',draw:()=>Math.tan(Math.PI*(r()-.5)),mu:0,sd:NaN,lo:-10,hi:10}
+  ];
+  const NS=[1,2,5,30,100];let p=0,n=30,means=null;
+  const hist=(vals,lo,hi,bins)=>{const B=new Array(bins).fill(0);let out=0;vals.forEach(v=>{if(v<lo||v>hi){out++;return;}B[Math.min(bins-1,Math.floor((v-lo)/(hi-lo)*bins))]++;});return{B,out};};
+  function bars(svgId,vals,P,color,overlay){
+    const {B,out}=hist(vals,P.lo,P.hi,30),mx=Math.max(...B,1),bw=280/30;
+    let h=`<line x1="10" y1="140" x2="290" y2="140" stroke="var(--line)"/>`;
+    B.forEach((b,i)=>{const hh=b/mx*120;h+=`<rect x="${10+i*bw+.5}" y="${140-hh}" width="${bw-1}" height="${hh}" fill="${color}" opacity=".8"/>`;});
+    if(overlay){const tot=vals.length-out,w=(P.hi-P.lo)/30;let d='';let peak=0;const pts=[];for(let i=0;i<=120;i++){const x=P.lo+(P.hi-P.lo)*i/120,y=npdf(x,overlay[0],overlay[1])*tot*w;pts.push([x,y]);}
+      pts.forEach(([x,y],i)=>{d+=(i?'L':'M')+(10+(x-P.lo)/(P.hi-P.lo)*280).toFixed(1)+' '+Math.max(4,140-y/mx*120).toFixed(1);});h+=`<path d="${d}" fill="none" stroke="var(--ink)" stroke-width="2" stroke-dasharray="5 3"/>`;}
+    h+=`<text x="10" y="155" font-size="10" fill="var(--muted)">${P.lo}</text><text x="290" y="155" font-size="10" text-anchor="end" fill="var(--muted)">${P.hi}</text>`;
+    if(out)h+=`<text x="290" y="12" font-size="10" text-anchor="end" fill="var(--bad)">${out} 筆超出顯示範圍</text>`;
+    $(svgId).innerHTML=h;
+  }
+  function popDraw(){const P=POP[p];const v=Array.from({length:3000},P.draw);bars('#cltPopSvg',v,P,'var(--muted)');}
+  function run(){
+    const P=POP[p];means=[];for(let i=0;i<500;i++){let s=0;for(let j=0;j<n;j++)s+=P.draw();means.push(s/n);}
+    const sdN=isNaN(P.sd)?null:[P.mu,P.sd/Math.sqrt(n)];
+    bars('#cltSmpSvg',means,P,'var(--sen)',sdN);
+    const m=means.reduce((a,b)=>a+b,0)/500,obs=Math.sqrt(means.reduce((a,b)=>a+(b-m)**2,0)/499);
+    $('#cltS').textContent=isNaN(P.sd)?'不存在':P.sd.toFixed(3);
+    $('#cltSE').textContent=isNaN(P.sd)?'—':(P.sd/Math.sqrt(n)).toFixed(3);
+    $('#cltObs').textContent=isNaN(P.sd)?'不收斂':obs.toFixed(3);
+    $('#cltNote').innerHTML=p===2?`柯西分佈變異數不存在：x̄ 的分佈再怎麼加大 n 也<b>不會趨近常態</b>（仍是柯西，兩側一直有超出範圍的極端值）。「CLT 對任何分佈都成立」是錯的。`:
+      `母體（左圖）${p===0?'始終<b>右偏</b>':'始終是均勻的平頂'}，而 x̄（右圖）${n>=30?'已經很接近虛線常態 N(μ, σ²/n)':'還看得出母體的影子，加大 n 試試'}。母體 σ 一直是 ${P.sd.toFixed(3)} 沒變，變窄的是<b>標準誤 σ/√n</b>。要讓標準誤減半，n 得變成 4 倍。`;
+  }
+  POP.forEach((x,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=x.t;b.onclick=()=>{p=i;$$('#cltPop .btn').forEach((y,j)=>y.setAttribute('aria-pressed',i===j));popDraw();run();};$('#cltPop').appendChild(b);});
+  NS.forEach(v=>{const b=document.createElement('button');b.className='btn';b.textContent='n = '+v;b.onclick=()=>{n=v;$$('#cltN .btn').forEach(y=>y.setAttribute('aria-pressed',y===b));run();};$('#cltN').appendChild(b);});
+  $$('#cltPop .btn')[0].setAttribute('aria-pressed','true');$$('#cltN .btn')[3].setAttribute('aria-pressed','true');
+  $('#cltRun').onclick=run;
+  popDraw();run();
+})();
+
+/* ---------- LLN ---------- */
+(function(){
+  const first=[1,1,1,0,1,1,1,1,0,1];let flips=[],seed=5;
+  function reset(){seed+=3;flips=first.slice();add(190);}
+  function add(k){const r=rng(seed+flips.length);for(let i=0;i<k;i++)flips.push(r()<.5?1:0);draw();}
+  function draw(){
+    const N=flips.length,run=[];let c=0;flips.forEach((f,i)=>{c+=f;run.push(c/(i+1));});
+    const X=i=>40+i/(N-1)*560,Y=v=>180-v*160;
+    let d='';const step=Math.max(1,Math.floor(N/600));for(let i=0;i<N;i+=step)d+=(i?'L':'M')+X(i).toFixed(1)+' '+Y(run[i]).toFixed(1);
+    let h=`<line x1="40" y1="${Y(.5)}" x2="600" y2="${Y(.5)}" stroke="var(--ok)" stroke-dasharray="6 4"/><text x="600" y="${Y(.5)-6}" font-size="11" text-anchor="end" fill="var(--ok)">μ = 0.5</text><line x1="40" y1="180" x2="600" y2="180" stroke="var(--line)"/><text x="36" y="${Y(1)+4}" font-size="10" text-anchor="end" fill="var(--muted)">1</text><text x="36" y="${Y(0)+4}" font-size="10" text-anchor="end" fill="var(--muted)">0</text>`;
+    h+=`<path d="${d}" fill="none" stroke="var(--sen)" stroke-width="2.5"/>`;
+    $('#llnSvg').innerHTML=h;
+    const after=flips.slice(10),ah=after.reduce((a,b)=>a+b,0);
+    $('#llnInfo').textContent=`共 ${N} 次，正面比例 ${(c/N).toFixed(3)}`;
+    $('#llnNote').innerHTML=`第 11 次之後的正面比例是 <b>${(ah/after.length).toFixed(3)}</b> —— 並沒有因為前面「正面太多」而少出正面。整體比例回到 0.5，靠的是<b>大量新樣本把前期偏差稀釋掉</b>，不是反向補回（賭徒謬誤）。`;
+  }
+  $('#llnMore').onclick=()=>add(200);$('#llnReset').onclick=reset;
+  reset();
+})();
+
+/* ---------- normal approximation checker ---------- */
+(function(){
+  const EX=[['114Q2-31：n = 5000, p = 0.4',5000,.4],['n = 1000, p = 0.001',1000,.001],['n = 20, p = 0.5',20,.5],['n = 30, p = 0.1',30,.1]];
+  EX.forEach(([t,n,p])=>{const b=document.createElement('button');b.className='btn';b.textContent=t;b.onclick=()=>{$('#apN').value=n;$('#apP').value=p;draw();};$('#apEx').appendChild(b);});
+  function draw(){
+    const n=Math.max(1,Math.round(+$('#apN').value)),p=Math.min(1,Math.max(0,+$('#apP').value));
+    const a=n*p,b=n*(1-p),ok1=a>5,ok2=b>5,ok=ok1&&ok2;
+    $('#apChk').innerHTML=[[`np = ${+a.toFixed(3)}`,ok1],[`n(1−p) = ${+b.toFixed(3)}`,ok2]].map(([t,o])=>`<div class="chk-row"><i class="dot" style="--c:${o?'var(--ok)':'var(--bad)'}"></i>${t} ${o?'&gt; 5 ✓':'≤ 5 ✗'}</div>`).join('');
+    $('#apV').textContent=ok?'✓ 可以用常態近似 N(np, np(1−p))':'✗ 不該用常態近似';$('#apV').style.color=ok?'var(--ok)':'var(--bad)';
+    const mu=a,sd=Math.sqrt(a*(1-p));
+    let lo=Math.max(0,Math.floor(mu-4*sd)),hi=Math.min(n,Math.ceil(mu+4*sd));if(hi-lo<8){hi=Math.min(n,lo+8);}
+    const ks=[];const step=Math.max(1,Math.ceil((hi-lo+1)/60));for(let k=lo;k<=hi;k+=step)ks.push(k);
+    const P=ks.map(k=>binom(n,p,k)),mx=Math.max(...P,sd>0?npdf(mu,mu,sd):0);
+    const X=k=>50+(k-lo+.5)/(hi-lo+1)*540,bw=Math.max(2,540/(hi-lo+1)*step*.75);
+    let h=`<line x1="40" y1="160" x2="600" y2="160" stroke="var(--line)"/>`;
+    ks.forEach((k,i)=>{const hh=P[i]/mx*140;h+=`<rect x="${X(k)-bw/2}" y="${160-hh}" width="${bw}" height="${hh}" fill="var(--txt)" opacity=".8"/>`;});
+    if(sd>0){let d='';for(let i=0;i<=200;i++){const k=lo-1+(hi-lo+2)*i/200;d+=(i?'L':'M')+X(k).toFixed(1)+' '+Math.max(2,160-npdf(k,mu,sd)/mx*140).toFixed(1);}h+=`<path d="${d}" fill="none" stroke="var(--img)" stroke-width="2.5"/>`;}
+    h+=`<text x="${X(lo)}" y="176" font-size="10.5" text-anchor="middle" fill="var(--muted)">${lo}</text><text x="${X(hi)}" y="176" font-size="10.5" text-anchor="middle" fill="var(--muted)">${hi}</text><text x="595" y="14" font-size="11" text-anchor="end" fill="var(--img)">曲線：常態近似</text>`;
+    $('#apSvg').innerHTML=h;
+    $('#apNote').textContent=ok?(Math.abs(p-.5)>.05?'p 不是 0.5 也能近似 —— 只是需要更大的 n 來補償偏斜。':'兩個條件都滿足，長條與曲線幾乎重合。'):(a<=5&&n>=100?`n 很大但 np = ${+a.toFixed(3)} 太小，分佈嚴重偏斜（曲線甚至伸到負值）。此時該用卜瓦松近似，不是常態近似。`:'條件不滿足：分佈偏斜或樣本太少，常態曲線對不上長條。');
+  }
+  ['#apN','#apP'].forEach(s=>$(s).oninput=draw);draw();
+})();
+
+/* ---------- fitting pipeline ---------- */
+(function(){
+  const r=rng(42),data=[];for(let i=0;i<30;i++){let k=0,pr=Math.exp(-2.4),c=pr;const u=r();while(u>c){k++;pr*=2.4/k;c+=pr;}data.push(k);}
+  const m=data.reduce((a,b)=>a+b,0)/30,v=data.reduce((a,b)=>a+(b-m)**2,0)/29;
+  const cnt={};data.forEach(x=>cnt[x]=(cnt[x]||0)+1);const ks=Object.keys(cnt).map(Number).sort((a,b)=>a-b),mc=Math.max(...Object.values(cnt));
+  const mini=ks.map(k=>`<div class="bar" style="grid-template-columns:70px 1fr 40px"><span>${k} 次</span><div class="track" style="height:14px"><div class="fill" style="width:${cnt[k]/mc*100}%;background:var(--txt)"></div></div><span class="num">${cnt[k]} 天</span></div>`).join('');
+  const N=[['Step 1','確認型態'],['Step 2','視覺檢查'],['Step 3','挑候選'],['Step 4','估計參數'],['Step 5','驗證假設']];
+  const O=[
+    `<b>確認資料型態：</b>某產線 30 天的「每日故障次數」（示意資料）：<br><code>${data.join(', ')}</code><br>是<b>計數型</b> → 離散型候選。（若是「病患等待時間」這類測量型 → 連續型候選）`,
+    `<b>視覺檢查：</b>直方圖看形狀、盒鬚圖看離群值、Q–Q 圖看是否貼合常態。${mini}`,
+    `<b>挑候選分佈：</b>稀少、獨立事件的次數 → <b>卜瓦松</b>。<div class="hint">對稱鐘形 → 常態｜右偏恆正 → 對數常態｜厚尾 → t／重尾｜等待時間 → 指數（故障率會變則 Weibull）</div>`,
+    `<b>估計參數：</b>最大概似估計（MLE）。卜瓦松的 λ 用 MLE 估計即為樣本平均數：λ̂ ≈ <b>${m.toFixed(2)}</b> 次／天。`,
+    `<b>驗證假設：</b>樣本平均 ${m.toFixed(2)}、樣本變異數 ${v.toFixed(2)}，Var ÷ E ≈ ${(v/m).toFixed(2)}，${v/m<1.5?'大致符合卜瓦松的 Var = E':'明顯過度離散，應改用負二項'}。<br>另外還要檢查：獨立性 → 自相關分析；發生率是否固定 → 分時段比較；配適程度 → 卡方適配度檢定。<div class="hint">擬合到這裡結束；把 λ̂ 拿去預測備料、評估風險與決策，才是「資料建模」。</div>`
+  ];
+  let i=0;
+  $('#fitPipe').innerHTML=N.map(([a,b])=>`<div class="pnode"><b>${a}</b>${b}</div>`).join('');
+  function rr(){$$('#fitPipe .pnode').forEach((n,j)=>{n.classList.toggle('on',j===i);n.classList.toggle('past',j<i);});$('#fitOut').innerHTML=O[i];$('#fitNext').disabled=i===4;$('#fitNext').style.opacity=i===4?.4:1;}
+  $('#fitNext').onclick=()=>{if(i<4){i++;rr();}};$('#fitReset').onclick=()=>{i=0;rr();};rr();
+})();
+
+matcher($('#candMatch'),$('#candFb'),[
+  {k:'n',c:'var(--img)',html:'對稱鐘形'},
+  {k:'l',c:'var(--txt)',html:'右偏、恆正<small>收入、金額</small>'},
+  {k:'t',c:'var(--sen)',html:'厚尾、極端事件多'},
+  {k:'p',c:'var(--aud)',html:'稀少獨立事件的次數'},
+  {k:'e',c:'var(--ok)',html:'等待時間'}
+],[
+  {k:'p',html:'卜瓦松',ok:'計數型、事件獨立、發生率固定。'},
+  {k:'e',html:'指數<small>故障率會變則改 Weibull</small>',ok:'等待時間的經典模型。'},
+  {k:'n',html:'常態',ok:'對稱鐘形。'},
+  {k:'t',html:'t 分佈／重尾分佈',ok:'厚尾不硬套常態。'},
+  {k:'l',html:'對數常態',ok:'右偏且恆正的資料常用對數常態。'}
+],'');
+
+(function(){
+  const B=[
+    ['促銷改變購買成功率','二項的「p 固定」','改用可隨時間變動的動態模型'],
+    ['來電數 Var 遠大於平均','卜瓦松的 Var = E','改用負二項分佈'],
+    ['報酬率非對稱、極端損失頻繁','常態的對稱與薄尾','分位數迴歸聚焦尾部；<b>不要</b>裁掉 ±3σ 以外資料'],
+    ['Y 右偏且變異數隨 X 增大','線性迴歸的常態殘差與等變異','對 Y 做 Box–Cox 轉換'],
+    ['零件故障率隨使用時間上升','指數的固定 λ','改用 Weibull 分佈']
+  ];
+  stepper($('#brTabs'),B,i=>{const x=B[i];$('#brBody').innerHTML=`<p style="margin:0 0 6px"><span class="hint">情境：</span>${x[0]}</p><p style="margin:0 0 6px"><span class="hint">被破壞的假設：</span><b>${x[1]}</b></p><p style="margin:0"><span class="hint">該怎麼做：</span>${x[2]}</p>`;},x=>x[0].slice(0,8)+(x[0].length>8?'…':''));
+})();
+
+/* ---------- exam lists ---------- */
+examList($('#exCore'),[
+  ['114Q2-4','CDF 的定義','CDF 的數學定義為何','<b>PDF 的積分</b>。誘答：PDF 的平均值／標準差／離散總和（離散總和只適用離散型 PMF 累加，非通用定義）'],
+  ['114Q2-15','計數 → 卜瓦松','客服中心「每分鐘接到幾通來電」，事件獨立、機率與時間長短成正比','<b>卜瓦松</b>。均勻＝各值等機率不符；<b>指數是「間隔時間」不是「次數」</b>；常態是連續對稱，不配計數資料'],
+  ['114Q2-31','常態近似二項','p = 0.4、n = 5,000，能否以常態近似二項','<b>只有當 np 與 n(1−p) 皆大於 5 才可近似</b>。誘答：「樣本大就直接近似」（過於武斷）、「只適用 p = 0.5」、「永遠不能近似」（違反 CLT）'],
+  ['114Q2-42','scipy 卜瓦松','生產線瑕疵品服從卜瓦松，λ = 5，下列敘述何者正確','<b>適用條件是事件獨立且平均發生率固定</b>。誘答：λ 是上限（錯，是平均）、pmf(5) 是「小於 5」（錯，是恰好 5）、cdf(10) 是「大於等於 10」（錯，是小於等於 10）'],
+  ['115Q1-3','過度離散','每小時客服來電數該用什麼分佈？變異數明顯大於平均數怎麼辦','<b>卜瓦松 → 過度離散時改用負二項</b>。誘答：改用 t 分佈（t 是小樣本推論，與離散度無關）、「增加樣本數即可修正」（只讓估計更準，不改變離散結構）']
+]);
+examList($('#exOut'),[
+  ['114Q2-33','常態假設失效','報酬率「非對稱＋極端損失」使常態假設失效','分位數迴歸（Quantile Regression）；±3σ 裁切反而刪掉要評估的風險'],
+  ['115Q1-4','常態是前提','三組資料「近似常態、變異數相近」','單因子變異數分析（One-Way ANOVA），屬 <a href="L22103_hypothesis_testing.html">L22103</a>'],
+  ['115Q1-5','Z 分數方向','特徵「近似常態」，Z = −2','Z 分數方向判讀（低於平均 2 個標準差）與資料漂移（Data Drift）告警'],
+  ['115Q1-7','常態是前提','前後測資料「近似常態」','成對樣本 t 檢定（Paired t-test），屬 <a href="L22103_hypothesis_testing.html">L22103</a>']
+]);
+
+/* ---------- traps ---------- */
+traps('l22102-traps',[
+  ['CDF 是 PDF 的積分（離散型則是 PMF 的累加）','不是 PDF 的平均值、標準差，也不是通用意義下的「離散總和」。'],
+  ['PDF 的函數值是機率密度，不是機率','它可以大於 1（U(0, 0.5) 的 f(x) = 2），只有面積才是機率。'],
+  ['連續型分佈的單點機率是 0','不是「很小的正值」；所以連續型用區間提問。'],
+  ['卜瓦松算「幾次」，指數算「多久」','兩者共用同一個 λ。'],
+  ['λ 是平均發生率，不是上限','λ = 5 不代表每小時最多 5 個瑕疵品。'],
+  ['pmf(5, 5) 是「恰好 5 個」；cdf(10, 5) 是「小於或等於 10 個」','不是「少於 5 個」、也不是「大於或等於 10 個」。'],
+  ['卜瓦松 Var = E = λ（等離散）','二項才是 Var = np(1−p) < np = E（欠離散）。'],
+  ['Var > E 時換負二項分佈','多蒐集樣本只讓估計更準，不改變離散結構。'],
+  ['二項常態近似判準：np > 5 且 n(1−p) > 5','n = 1000、p = 0.001 時 np = 1，仍不該用常態近似。'],
+  ['常態近似不限於 p = 0.5','p 偏離 0.5 只需更大的 n；「永遠不能近似」違反 CLT。'],
+  ['CLT 說的是樣本平均數的抽樣分佈趨近常態','原始資料不會變常態；右偏收入抽 10,000 筆依然右偏。'],
+  ['增加 n 縮小的是標準誤 σ/√n，不是 σ','標準誤減半要 4 倍樣本數。'],
+  ['CLT 要求變異數有限','柯西分佈變異數不存在，樣本平均數不會趨近常態。'],
+  ['大數法則是 X̄ 收斂到 μ，不是賭徒謬誤','靠後續樣本稀釋前期偏差，不靠反向修正。'],
+  ['無記憶性：已等 10 分鐘再等 5 分鐘的機率＝一開始等 5 分鐘','不是「等越久越快發生」；連續型只有指數分佈具此性質。'],
+  ['卡方分佈右偏且只取非負值','E = k、Var = 2k，自由度夠大才趨近常態。'],
+  ['Z 分數是偏離平均幾個標準差，不是異常判定','|Z| = 2 算不算異常取決於門檻（常用 3）。'],
+  ['Z 分數標準化不會把偏態資料變成常態','改善偏態與異質變異要用對數或 Box–Cox 轉換。'],
+  ['厚尾要換分佈假設或換方法','不是把 ±3σ 以外的點裁掉 —— 那正好刪掉極端風險。'],
+  ['伯努利是 n = 1 的二項特例，不是別名','二項有固定 n，卜瓦松沒有 n、只有 λ。'],
+  ['分佈擬合 ≠ 資料建模','擬合是找分佈並估參數，建模是拿結果去預測與決策。']
+]);
+
+/* ---------- quiz ---------- */
+quiz([
+  ['累積分佈函數（CDF）的數學定義為何？',['機率密度函數（PDF）的積分','PDF 的平均值','PDF 的標準差','PDF 的離散總和'],'114Q2-4。連續型是 PDF 從 −∞ 到 x 的積分；離散型才是 PMF 的累加。'],
+  ['客服中心要建模「每分鐘接到幾通來電」，事件獨立、機率與時間長短成正比。最適合的分佈是？',['卜瓦松分佈','指數分佈','均勻分佈','常態分佈'],'114Q2-15。指數是「間隔時間」不是「次數」；均勻是各值等機率；常態是連續對稱，不配計數資料。'],
+  ['生產線瑕疵品服從卜瓦松分佈，λ = 5。下列敘述何者正確？',['適用條件是事件獨立且平均發生率固定','λ = 5 表示每小時瑕疵品上限為 5 個','poisson.pmf(5, 5) 是「少於 5 個」的機率','poisson.cdf(10, 5) 是「大於或等於 10 個」的機率'],'114Q2-42。λ 是平均；pmf(5) 是恰好 5 個；cdf(10) 是小於或等於 10 個。'],
+  ['每小時客服來電數原用卜瓦松建模，但實際資料的變異數明顯大於平均數。應如何處理？',['改用負二項分佈','改用 t 分佈','增加樣本數即可修正','改用均勻分佈'],'115Q1-3。過度離散 → 負二項。t 分佈與離散度無關；增加樣本不改變離散結構。'],
+  ['p = 0.4、n = 5,000 的二項分佈能否以常態近似？判準為何？',['可以；判準是 np 與 n(1−p) 皆大於 5','只要樣本大就一定可以直接近似','只有 p = 0.5 時才能近似','二項分佈永遠不能以常態近似'],'114Q2-31。np = 2000、n(1−p) = 3000，皆 > 5。'],
+  ['關於中央極限定理，何者正確？',['n 夠大時，樣本平均數的抽樣分佈趨近常態','n 夠大時，原始資料的分佈會變成常態','對任何分佈（包括柯西）都成立','n 越大，母體標準差越小'],'CLT 的主詞是樣本平均數；需變異數有限；縮小的是標準誤 σ/√n。'],
+  ['要讓樣本平均數的標準誤減半，樣本數要變成原來的幾倍？',['4 倍','2 倍','√2 倍','8 倍'],'SE = σ/√n，分母是 √n。'],
+  ['擲公平硬幣連續 8 次正面，下列關於大數法則的敘述何者正確？',['長期正面比例會趨近 0.5，靠的是後續大量樣本稀釋前期偏差','下一次出現反面的機率會大於 0.5','之後會出現較多反面來補回','大數法則保證接下來 8 次一定有較多反面'],'每次獨立試驗的機率不變；後三者都是賭徒謬誤。'],
+  ['已經等公車 10 分鐘，若等待時間服從指數分佈，「再等超過 5 分鐘」的機率與何者相同？',['一開始就等超過 5 分鐘的機率','等超過 15 分鐘的機率','0，因為公車應該快來了','等超過 10 分鐘的機率'],'無記憶性：P(X > s+t | X > s) = P(X > t)。'],
+  ['均勻分佈 U(0, 0.5) 的機率密度 f(x) = 2，下列解讀何者正確？',['合法；密度不是機率，曲線下面積仍為 1','不合法，因為機率不能大於 1','代表 X 取任一值的機率都是 2','代表單點機率 P(X = 0.3) = 2'],'只有「密度 × 區間寬度」才是機率；連續型單點機率為 0。'],
+  ['卜瓦松分佈 λ = 4 的期望值與變異數分別為？',['4 與 4','4 與 16','4 與 2','1/4 與 1/16'],'卜瓦松的指紋：E = Var = λ。1/λ 與 1/λ² 是指數分佈。'],
+  ['報酬率資料非對稱且極端損失頻繁，要評估尾部風險。較適當的做法是？',['分位數迴歸聚焦尾部分位','先裁掉 ±3σ 以外的資料再套常態','直接假設常態分佈','做 Z-score 標準化讓它變常態'],'114Q2-33。裁切會刪掉要評估的風險；標準化不改變形狀。']
+],['太強了，分佈選型與 CLT 都很穩。','不錯！回頭看看答錯題對應的段落。','建議重新操作 29.3 的分佈模擬器與 29.5 的 CLT 模擬器，再來一次。']);
+
+navHighlight();
+
+</script>
+</body>
+</html>

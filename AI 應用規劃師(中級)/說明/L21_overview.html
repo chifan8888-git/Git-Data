@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L21 人工智慧技術應用與規劃 科目總覽｜互動教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F5; --surface:#FFFFFF; --surface2:#F6F8FB; --ink:#18202E; --muted:#5A6475; --line:#D5DBE4;
+  --txt:#3B4CCA; --img:#0E8A7A; --aud:#B87812; --sen:#B8336A;
+  --ok:#1F8A4C; --bad:#C23B2E; --warn:#D9822B;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+    --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+  --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75}
+h1,h2,h3{font-family:var(--serif);line-height:1.3;margin:0}
+p{margin:0 0 1em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--txt);outline-offset:2px;border-radius:4px}
+svg{max-width:100%;height:auto;display:block}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1180px;margin:0 auto;gap:40px;padding:0 24px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;padding:32px 0;height:100vh;overflow:auto}
+nav.toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14.5px}
+nav.toc a span{font-variant-numeric:tabular-nums;font-size:13px;opacity:.8}
+nav.toc a.on{background:var(--surface);color:var(--ink);font-weight:700}
+.toc-title{font-family:var(--serif);font-weight:900;font-size:18px;padding:0 10px 14px}
+main{min-width:0;padding-bottom:80px}
+section{padding:56px 0 8px;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.sec-head{display:flex;gap:16px;align-items:baseline;margin-bottom:18px}
+.sec-no{font-family:var(--serif);font-weight:900;font-size:40px;color:var(--line);line-height:1}
+h2{font-size:28px;font-weight:900}
+h3{font-size:19px;margin:34px 0 10px}
+.lead{color:var(--muted);max-width:66ch}
+.prose{max-width:68ch}
+
+/* hero */
+.hero{padding:44px 0 24px}
+.hero .code{font-size:14px;color:var(--muted);margin-bottom:6px}
+.hero h1{font-size:clamp(34px,5.5vw,56px);font-weight:900;letter-spacing:.02em}
+.hero .one{font-size:18px;max-width:60ch;margin:16px 0 0;color:var(--muted)}
+.hero-fig{background:var(--surface);border-radius:20px;margin-top:28px;padding:14px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+.goal{border-left:4px solid var(--c);padding:6px 0 6px 14px;font-size:15px}
+
+/* panels */
+.panel{background:var(--surface);border-radius:16px;padding:22px;margin:16px 0}
+.panel.flat{background:var(--surface2)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font-size:15px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hint{font-size:14px;color:var(--muted)}
+.callout{border-left:4px solid var(--warn);background:var(--surface2);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;font-size:15px}
+.callout.exam{border-color:var(--txt)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:14px}
+
+/* modality chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+
+/* matcher */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.match .col{display:flex;flex-direction:column;gap:10px}
+.mitem{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15px;transition:border-color .2s,background .2s,transform .2s}
+.mitem small{display:block;color:var(--muted);font-size:13px}
+.mitem.sel{border-color:var(--ink);transform:translateX(4px)}
+.mitem.done{border-color:var(--c,var(--ok));background:var(--surface2);cursor:default}
+.mitem.wrong{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:1.8em;margin-top:12px;font-size:15px}
+.feedback.ok{color:var(--ok)} .feedback.bad{color:var(--bad)}
+
+/* timeline */
+.steps{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stage-viz{min-height:130px;display:flex;align-items:center;justify-content:center}
+.stage-viz .blk{display:inline-block;width:34px;height:34px;border-radius:6px;margin:2px;transition:all .5s}
+
+/* align toggle */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.compare>div{padding:18px}
+.compare>div+div{border-left:1px solid var(--line)}
+.compare .big{font-family:var(--serif);font-weight:900;font-size:22px;margin-bottom:6px}
+
+/* fusion */
+.meter{height:14px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:6px 0}
+.meter>i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .7s cubic-bezier(.3,.8,.3,1),background .4s}
+.flow{stroke-dasharray:6 7;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.jitter{animation:jit .25s steps(2) infinite}
+@keyframes jit{50%{transform:translate(1.5px,-1px)}}
+.fusion-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.pc{font-size:15px}
+.pc b{display:block;font-size:14px;color:var(--muted);font-weight:500}
+
+/* clip */
+.mat{display:grid;gap:4px;font-size:13px}
+.mat .cell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;transition:background .5s,color .5s}
+.mat .lab{display:flex;align-items:center;justify-content:center;font-size:22px}
+.mat .tlab{font-size:12px;text-align:center;color:var(--muted);display:flex;align-items:flex-end;justify-content:center;line-height:1.3}
+.zs-imgs{display:flex;gap:10px;flex-wrap:wrap}
+.zs-img{font-size:38px;width:72px;height:72px;border-radius:16px;border:2px solid var(--line);background:var(--surface2);display:flex;align-items:center;justify-content:center}
+.zs-img[aria-pressed="true"]{border-color:var(--img);box-shadow:0 0 0 3px color-mix(in srgb,var(--img) 25%,transparent)}
+.bar{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.bar .track{height:22px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;width:0;background:var(--txt);border-radius:6px;transition:width .8s cubic-bezier(.3,.8,.3,1)}
+.bar.win .fill{background:var(--img)}
+.bar.win{font-weight:700}
+.bar .num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.flip{perspective:900px;height:150px;border:0;background:none;padding:0;text-align:left}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flip[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:center}
+.flip .f{background:var(--surface);border:1.5px solid var(--line)}
+.flip .f strong{font-family:var(--serif);font-size:22px}
+.flip .f span{color:var(--muted);font-size:14px}
+.flip .b{background:var(--ink);color:var(--bg);transform:rotateY(180deg);font-size:15px}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.pnode{border:2px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;font-size:14px;background:var(--surface);transition:all .35s}
+.pnode b{display:block;font-size:16px}
+.pnode.on{border-color:var(--aud);background:color-mix(in srgb,var(--aud) 14%,var(--surface));transform:translateY(-3px)}
+.pnode.past{border-color:color-mix(in srgb,var(--aud) 45%,var(--line))}
+.pout{background:var(--surface2);border-radius:12px;padding:14px 16px;min-height:84px;font-size:15px}
+.wave{display:flex;gap:3px;align-items:center;height:30px}
+.wave i{width:4px;background:var(--aud);border-radius:2px;animation:wv 1s ease-in-out infinite}
+@keyframes wv{50%{transform:scaleY(.3)}}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+
+/* strategies */
+.strat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.strat button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;text-align:left;font-size:15px}
+.strat button[aria-pressed="true"]{border-color:var(--ink)}
+.verdict{font-family:var(--serif);font-weight:900;font-size:20px}
+
+details{border-bottom:1px solid var(--line)}
+details summary{cursor:pointer;padding:12px 4px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"+";font-weight:900;width:14px;color:var(--muted)}
+details[open] summary::before{content:"−"}
+details .body{padding:0 4px 14px 30px;font-size:15px}
+.tag{font-size:12.5px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums;min-width:80px}
+
+/* quiz */
+.qcard{background:var(--surface);border-radius:16px;padding:24px}
+.qtop{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
+.qtext{font-size:18px;font-weight:700;margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15.5px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+.opt.wrongpick{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.opt:disabled{cursor:default}
+.expl{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15px;display:none}
+.expl.show{display:block}
+.progress{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;margin-bottom:14px}
+.progress i{display:block;height:100%;background:var(--txt);transition:width .4s}
+
+.traps label{display:flex;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:15px}
+.traps input{width:18px;height:18px;margin-top:4px;flex:none;accent-color:var(--ok)}
+.traps label.chk>span{color:var(--muted)}
+.traps em{font-style:normal;font-weight:700}
+
+/* mobile */
+@media (max-width:860px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+  nav.toc{position:sticky;top:0;height:auto;z-index:10;background:var(--bg);display:flex;overflow-x:auto;padding:8px 0;padding-top:calc(8px + env(safe-area-inset-top,0px));gap:4px;border-bottom:1px solid var(--line)}
+  .toc-title{display:none}
+  nav.toc a{white-space:nowrap;flex:none}
+  .match,.stage,.fusion-meta,.compare{grid-template-columns:1fr}
+  .compare>div+div{border-left:0;border-top:1px solid var(--line)}
+  .pipe{grid-template-columns:repeat(5,minmax(90px,1fr));overflow-x:auto}
+  .bar{grid-template-columns:110px 1fr 56px}
+  h2{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* ---- shared extras (same tokens as template) ---- */
+input[type=range]{width:100%;accent-color:var(--ink)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:14px 0}
+.kpi{background:var(--surface2);border-radius:12px;padding:12px 14px;font-size:14px;color:var(--muted)}
+.kpi b{display:block;font-family:var(--serif);font-weight:900;font-size:26px;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1.3}
+.stack{display:flex;height:30px;border-radius:8px;overflow:hidden;background:var(--surface2);margin:8px 0}
+.stack i{display:flex;align-items:center;justify-content:center;font-style:normal;font-size:12px;color:#fff;white-space:nowrap;overflow:hidden;min-width:0;transition:flex-grow .7s cubic-bezier(.3,.8,.3,1)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13.5px;color:var(--muted)}
+.weeks{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}
+.wk{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 8px;text-align:left;font-size:13.5px;line-height:1.4;transition:all .25s}
+.wk b{display:block;font-size:15px}
+.wk[aria-pressed="true"]{border-color:var(--c,var(--ink));background:color-mix(in srgb,var(--c,var(--ink)) 12%,var(--surface));transform:translateY(-3px)}
+.wkout{background:var(--surface2);border-radius:12px;padding:14px 16px;margin-top:12px;font-size:15px;min-height:90px}
+.tree{font-size:15px}
+.tree .node{display:block;width:100%;text-align:left;border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 14px;margin:6px 0;transition:all .25s}
+.tree .node small{display:block;color:var(--muted);font-size:13px}
+.tree .kids{margin-left:22px;padding-left:14px;border-left:2px dashed var(--line)}
+.tree .node[aria-pressed="true"],.tree .node.hl{border-color:var(--c,var(--ink));background:color-mix(in srgb,var(--c,var(--ink)) 12%,var(--surface))}
+.tree .node.dim{opacity:.4}
+.mbar{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px;align-items:center;margin:10px 0;font-size:14.5px}
+.mbar .tracks{display:flex;flex-direction:column;gap:3px}
+.mbar .t{display:grid;grid-template-columns:minmax(0,1fr) 62px;gap:6px;align-items:center}
+.mbar .t span{font-size:12.5px;text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+.mbar .tr{height:12px;background:var(--surface2);border-radius:4px;overflow:hidden}
+.mbar .tr i{display:block;height:100%;width:0;border-radius:4px;transition:width .8s cubic-bezier(.3,.8,.3,1)}
+.waffle{display:grid;grid-template-columns:repeat(20,1fr);gap:2px;max-width:420px}
+.waffle i{aspect-ratio:1;border-radius:2px;background:var(--surface2);transition:background .4s}
+.grid-tbl{display:inline-grid;gap:3px;font-size:13px}
+.grid-tbl span{padding:6px 10px;border-radius:6px;background:var(--surface2);text-align:center;transition:background .35s,color .35s}
+.grid-tbl span.h{font-weight:700;color:var(--muted);background:none}
+.grid-tbl span.on{background:var(--c,var(--txt));color:#fff}
+.check{display:flex;gap:10px;align-items:flex-start;padding:8px 0;font-size:15px;cursor:pointer}
+.check input{width:18px;height:18px;margin-top:4px;flex:none;accent-color:var(--ink)}
+.res{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.res>div{background:var(--surface2);border-radius:12px;padding:12px 14px;font-size:14.5px}
+pre{max-width:100%}
+@media (max-width:860px){
+  .mbar{grid-template-columns:minmax(0,1fr);gap:4px}
+  .tree .kids{margin-left:8px;padding-left:10px}
+}
+
+.kp{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.kp a{display:block;text-decoration:none;color:inherit;background:var(--surface);border:2px solid var(--line);border-left:6px solid var(--c);border-radius:12px;padding:10px 14px;transition:transform .3s,opacity .3s}
+.kp a:hover{border-color:var(--c)}
+.kp a small{display:block;color:var(--muted);font-size:13px}
+.kp a .m{display:flex;gap:12px;font-size:13px;color:var(--muted);margin-top:4px;font-variant-numeric:tabular-nums}
+.kp a .m b{color:var(--ink)}
+.cloud{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.cloud button{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 14px;line-height:1.3}
+.cloud button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+#roiSvg circle{cursor:pointer;transition:r .2s}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="toc" aria-label="章節">
+  <div class="toc-title">L21 科目總覽</div>
+  <a href="#intro"><span>●</span>導覽與目標</a>
+  <a href="#s1"><span>17.1</span>知識點索引</a>
+  <a href="#s2"><span>17.2</span>三大主題結構</a>
+  <a href="#s3"><span>17.3</span>投報率分析</a>
+  <a href="#s4"><span>17.4</span>命題風格</a>
+  <a href="#s5"><span>17.5</span>全科易錯與測驗</a>
+  <a href="#s6"><span>17.6</span>練習資源</a>
+</nav>
+
+<main>
+<section id="intro" class="hero">
+  <div class="code">L21　中級 AI 應用規劃師　科目1（必考）　建議 30 分鐘</div>
+  <h1>人工智慧技術應用與規劃　科目總覽</h1>
+  <p class="one">中級<b>必考科目</b>，無任何抵免。本篇是科目層級的總覽與索引；<b>九個知識點各有獨立講義</b>。「官方篇幅」是《學習指引－科目1》該節的字數，「實測命中」來自 114-2 與 115-1 兩份官方公告試題共 100 題的關鍵詞掃描。</p>
+  <div class="hero-fig" aria-hidden="true">
+    <svg id="heroSvg" viewBox="0 0 720 300">
+      <defs>
+        <path id="hp0" d="M110 150 C 200 150, 200 55, 290 55"/>
+        <path id="hp1" d="M110 150 L 290 150"/>
+        <path id="hp2" d="M110 150 C 200 150, 200 245, 290 245"/>
+      </defs>
+      <g fill="none" stroke-width="2" opacity=".35">
+        <use href="#hp0" stroke="var(--txt)"/><use href="#hp1" stroke="var(--img)"/><use href="#hp2" stroke="var(--aud)"/>
+      </g>
+      <g id="heroLeaves" font-family="Noto Sans TC, sans-serif" font-weight="700"></g>
+      <g font-family="Noto Sans TC, sans-serif" font-weight="700">
+        <rect x="20" y="115" width="90" height="70" rx="14" fill="var(--ink)"/>
+        <text x="65" y="146" text-anchor="middle" fill="var(--bg)" font-size="18">L21</text>
+        <text x="65" y="168" text-anchor="middle" fill="var(--bg)" font-size="12">50 題</text>
+        <rect x="290" y="33" width="120" height="44" rx="22" fill="var(--txt)"/><text x="350" y="60" text-anchor="middle" fill="#fff" font-size="14">L211 技術應用</text>
+        <rect x="290" y="128" width="120" height="44" rx="22" fill="var(--img)"/><text x="350" y="155" text-anchor="middle" fill="#fff" font-size="14">L212 導入規劃</text>
+        <rect x="290" y="223" width="120" height="44" rx="22" fill="var(--aud)"/><text x="350" y="250" text-anchor="middle" fill="#fff" font-size="14">L213 系統部署</text>
+      </g>
+      <g class="movers">
+        <circle r="6" fill="var(--txt)"><animateMotion dur="2.2s" repeatCount="indefinite"><mpath href="#hp0"/></animateMotion></circle>
+        <circle r="6" fill="var(--img)"><animateMotion dur="2.2s" begin=".4s" repeatCount="indefinite"><mpath href="#hp1"/></animateMotion></circle>
+        <circle r="6" fill="var(--aud)"><animateMotion dur="2.2s" begin=".8s" repeatCount="indefinite"><mpath href="#hp2"/></animateMotion></circle>
+      </g>
+    </svg>
+  </div>
+  <h3>學完這一課，你應該能夠</h3>
+  <div class="goals">
+    <div class="goal" style="--c:var(--txt)">掌握 L21 的三大主題結構與九個知識點的相對份量</div>
+    <div class="goal" style="--c:var(--aud)">依「篇幅 × 命中率」決定時間配置，避免平均分配</div>
+    <div class="goal" style="--c:var(--img)">認識 L21 的命題風格與答題策略</div>
+  </div>
+  <p class="hint" style="margin-top:20px">本頁顏色固定代表：<span class="chip" style="--c:var(--txt)"><i class="dot"></i>L211 AI 相關技術應用</span>　<span class="chip" style="--c:var(--img)"><i class="dot"></i>L212 AI 導入評估規劃</span>　<span class="chip" style="--c:var(--aud)"><i class="dot"></i>L213 技術應用與系統部署</span>　<span class="chip" style="--c:var(--sen)"><i class="dot"></i>重點／高投報</span></p>
+</section>
+
+<section id="s1">
+  <div class="sec-head"><span class="sec-no">17.1</span><h2>知識點索引</h2></div>
+  <p class="lead">九個知識點，每張卡片可直接點進講義。用上方按鈕篩選主題或排序。</p>
+  <div class="panel">
+    <div class="tabs" id="grpTabs"></div>
+    <div class="tabs" id="sortTabs"></div>
+    <div class="kp" id="kpList"></div>
+    <p class="hint" style="margin:12px 0 0">* L21201 與 L21202 的關鍵詞重疊，合併計算。實測命中為關鍵詞掃描結果，一題可命中多個知識點，<b>加總會超過 100%</b>。</p>
+  </div>
+  <details>
+    <summary>展開原始索引表</summary>
+    <div class="body tbl-wrap"><table>
+      <tr><th>#</th><th>代碼</th><th>知識點</th><th>官方篇幅</th><th>實測命中</th><th>講義</th></tr>
+      <tr><td>1</td><td>L21101</td><td>自然語言處理技術與應用</td><td>28,912 字</td><td>16%</td><td><a href="L21101_nlp_technologies.html">18</a></td></tr>
+      <tr><td>2</td><td>L21102</td><td>電腦視覺技術與應用</td><td>14,293 字</td><td>13%</td><td><a href="L21102_computer_vision.html">19</a></td></tr>
+      <tr><td>3</td><td>L21103</td><td>生成式 AI 技術與應用</td><td>10,749 字</td><td>18%</td><td><a href="L21103_generative_ai.html">20</a></td></tr>
+      <tr><td>4</td><td>L21104</td><td>多模態人工智慧應用</td><td>9,024 字</td><td>8%</td><td><a href="L21104_multimodal_ai.html">21</a></td></tr>
+      <tr><td>5</td><td>L21201</td><td>AI 導入評估</td><td>8,102 字</td><td>32%*</td><td><a href="L21201_adoption_assessment.html">22</a></td></tr>
+      <tr><td>6</td><td>L21202</td><td>AI 導入規劃</td><td>10,005 字</td><td>32%*</td><td><a href="L21202_adoption_planning.html">23</a></td></tr>
+      <tr><td>7</td><td>L21203</td><td>AI 風險管理</td><td>12,517 字</td><td>21%</td><td><a href="L21203_risk_management.html">24</a></td></tr>
+      <tr><td>8</td><td>L21301</td><td>數據準備與模型選擇</td><td>9,026 字</td><td>11%</td><td><a href="L21301_dataprep_model_selection.html">25</a></td></tr>
+      <tr><td>9</td><td>L21302</td><td>AI 技術系統集成與部署</td><td>7,753 字</td><td><b>42%</b></td><td><a href="L21302_integration_deployment.html">26</a></td></tr>
+    </table></div>
+  </details>
+</section>
+
+<section id="s2">
+  <div class="sec-head"><span class="sec-no">17.2</span><h2>三大主題結構</h2></div>
+  <p class="lead">L21 共 50 題，分三大主題。點任一主題看它的定位。</p>
+  <div class="panel">
+    <div class="stage">
+      <div class="tree" id="subjTree"></div>
+      <div class="wkout" id="subjOut" aria-live="polite" style="margin-top:6px"></div>
+    </div>
+  </div>
+</section>
+
+<section id="s3">
+  <div class="sec-head"><span class="sec-no">17.3</span><h2>投報率分析：篇幅不等於份量</h2></div>
+  <p class="lead">把「官方篇幅」與「實測命中率」放在一起看，會得到與直覺不同的結論。點圖上的點看細節。</p>
+  <div class="panel">
+    <svg id="roiSvg" viewBox="0 0 640 340" role="img" aria-label="篇幅與命中率散佈圖"></svg>
+    <div class="pout" id="roiOut" aria-live="polite">點一個點。</div>
+    <p class="hint" style="margin:8px 0 0">L21201、L21202 的命中率為合併計算的 32%。左上角＝篇幅少、命中高，就是投報率最高的區域。</p>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>知識點</th><th>篇幅排名</th><th>命中排名</th><th>判讀</th></tr>
+      <tr><td><b>L21302 系統部署</b></td><td>8/9（少）</td><td><b>1/9（最高）</b></td><td><b>投報率最高，務必精讀</b></td></tr>
+      <tr><td>L21103 生成式 AI</td><td>5/9</td><td>2/9</td><td>篇幅中等但常考</td></tr>
+      <tr><td>L21101 NLP</td><td><b>1/9（最多）</b></td><td>3/9</td><td>篇幅大，要花時間但值得</td></tr>
+      <tr><td>L21104 多模態</td><td>7/9</td><td>9/9</td><td>篇幅少命中也少，最後再讀</td></tr>
+    </table>
+  </div>
+  <p class="hint">排名欄照原講義呈現。</p>
+  <div class="callout exam"><b>L21302 只有 7,753 字，卻是命中率 42% 的第一名</b>—— 這是整個科目投報率最高的知識點，千萬不要因為它篇幅短就輕忽。</div>
+
+  <h3>建議時間配置：別平均分配</h3>
+  <div class="panel">
+    <p class="hint">建議配置合計 55 小時。切換看看「平均分配」會把時間從哪裡偷走；也可以拖動總時數等比例縮放（示意）。</p>
+    <div class="tabs" id="allocTabs"></div>
+    <div class="row" style="justify-content:space-between"><b>總時數</b><span id="totV" style="font-variant-numeric:tabular-nums"></span></div>
+    <input type="range" id="totR" min="30" max="80" value="55" aria-label="總時數">
+    <div id="allocBars" style="margin-top:10px"></div>
+    <p class="hint" id="allocNote" style="margin:6px 0 0"></p>
+  </div>
+  <details>
+    <summary>展開建議時間配置原表</summary>
+    <div class="body tbl-wrap"><table>
+      <tr><th>區塊</th><th>建議時數</th><th>理由</th></tr>
+      <tr><td>L21302 系統部署</td><td>10 h</td><td>命中率最高</td></tr>
+      <tr><td>L21101 NLP</td><td>9 h</td><td>篇幅最大</td></tr>
+      <tr><td>L21103 生成式 AI</td><td>7 h</td><td>命中率第二</td></tr>
+      <tr><td>L21102 電腦視覺</td><td>6 h</td><td>分割題型穩定出題</td></tr>
+      <tr><td>L21203 風險管理</td><td>6 h</td><td>命中率第三</td></tr>
+      <tr><td>L21201 + L21202 導入</td><td>8 h</td><td>初級延伸，可加速</td></tr>
+      <tr><td>L21301 數據準備</td><td>5 h</td><td></td></tr>
+      <tr><td>L21104 多模態</td><td>4 h</td><td>份量最輕</td></tr>
+    </table></div>
+  </details>
+</section>
+
+<section id="s4">
+  <div class="sec-head"><span class="sec-no">17.4</span><h2>命題風格與答題策略</h2></div>
+  <div class="panel">
+    <div class="kpis">
+      <div class="kpi">L21 題幹平均字數<b id="wc21">0</b></div>
+      <div class="kpi">初級 L11／L12<b>105／110</b></div>
+    </div>
+    <div id="styleBars"></div>
+  </div>
+  <h3>三個實務影響（點卡片翻面）</h3>
+  <div class="cards" id="impCards"></div>
+
+  <h3>高頻術語（以題數計）</h3>
+  <div class="panel">
+    <p class="hint">字越大＝出現題數越多。點一個術語看題數。</p>
+    <div class="cloud" id="cloud"></div>
+    <div class="pout" id="cloudOut" style="margin-top:12px" aria-live="polite">點一個術語。</div>
+    <h3 style="margin-top:20px">中文關鍵詞掃描</h3>
+    <div id="zhBars"></div>
+  </div>
+</section>
+
+<section id="s5">
+  <div class="sec-head"><span class="sec-no">17.5</span><h2>全科易錯總表（考前 10 分鐘掃描）</h2></div>
+  <p class="lead">各知識點的完整陷阱清單在個別講義裡，這裡只列跨知識點最常錯的。逐條確認自己真的懂了再打勾（打勾狀態會記在這台裝置上）。</p>
+  <div class="traps" id="traps"></div>
+  <p class="hint" id="trapCount" style="margin-top:10px"></p>
+
+  <div class="panel">
+    <h3 style="margin-top:0">反射練習：情境關鍵字 → 答案</h3>
+    <p class="hint">先點左邊的題幹關鍵字，再點右邊的正解方向。</p>
+    <div class="match" id="kwMatch"></div>
+    <div class="feedback" id="kwFb" aria-live="polite"></div>
+  </div>
+
+  <h3>情境測驗</h3>
+  <div class="qcard" id="quiz"></div>
+</section>
+
+<section id="s6">
+  <div class="sec-head"><span class="sec-no">17.6</span><h2>練習資源</h2></div>
+  <div class="res">
+    <div style="border-left:4px solid var(--txt)"><b>L21 主題庫　311 題</b><br><span class="hint">依章節練，弱項可單章反覆做</span></div>
+    <div style="border-left:4px solid var(--sen)"><b>L21 歷屆（114-2、115-1）　100 題</b><br><span class="hint">整卷計時，模擬 41% 情境題的閱讀壓力</span></div>
+  </div>
+  <h3>練習節奏（按下一步）</h3>
+  <div class="panel">
+    <div class="pipe" id="pipe" style="grid-template-columns:repeat(4,1fr)"></div>
+    <div class="pout" id="pout" aria-live="polite"></div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" id="pipeNext">下一步</button><button class="btn" id="pipeReset">從頭開始</button></div>
+  </div>
+
+  <h3>下一步</h3>
+  <p class="prose"><b>初級到中級的落差分析與讀書計畫</b>（L21 是兩條路線的共同必考科，依你選的科目二擇一閱讀）：<br>考科目2 → <a href="L1toL2_bridge_data_analytics.html">13. 銜接指南：數據分析路線</a><br>考科目3 → <a href="L1toL2_bridge_machine_learning.html">14. 銜接指南：機器學習路線</a><br><b>科目3 的總覽</b> → <a href="L23_overview.html">41. L23 科目總覽</a><br>九個知識點的講義見 <a href="#s1">17.1 的索引表</a></p>
+</section>
+</main>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce){const m=document.querySelector('#heroSvg .movers');if(m)m.remove();}
+
+/* ---------- generic matcher ---------- */
+function matcher(root,fb,left,right,doneMsg){
+  let sel=null,done=0;
+  const L=document.createElement('div');L.className='col';
+  const R=document.createElement('div');R.className='col';
+  left.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;
+    b.innerHTML=it.html;if(it.c)b.style.setProperty('--c',it.c);
+    b.onclick=()=>{if(b.classList.contains('done'))return;L.querySelectorAll('.mitem').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;fb.textContent='';fb.className='feedback';};
+    L.appendChild(b);
+  });
+  right.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;b.innerHTML=it.html;
+    b.onclick=()=>{
+      if(b.classList.contains('done'))return;
+      if(!sel){fb.textContent='請先點左邊一個項目。';fb.className='feedback';return;}
+      if(sel.dataset.k===b.dataset.k){
+        const c=sel.style.getPropertyValue('--c');
+        [sel,b].forEach(x=>{x.classList.remove('sel');x.classList.add('done');if(c)x.style.setProperty('--c',c);});
+        fb.textContent='✓ '+(it.ok||'答對了！');fb.className='feedback ok';sel=null;done++;
+        if(done===left.length){fb.textContent='✓ 全部配對完成！'+doneMsg;}
+      }else{
+        b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');
+        fb.textContent='✗ '+(it.bad||'不太對，再想想。');fb.className='feedback bad';
+      }
+    };
+    R.appendChild(b);
+  });
+  root.append(L,R);
+}
+
+/* ---------- tabs helper ---------- */
+function tabs(root,labels,onPick,start=0){
+  labels.forEach((t,i)=>{const b=document.createElement('button');b.className='btn';b.innerHTML=t;b.onclick=()=>pick(i);root.appendChild(b);});
+  function pick(i){[...root.children].forEach((b,j)=>b.setAttribute('aria-pressed',i===j));onPick(i);}
+  pick(start);return pick;
+}
+
+/* ---------- flip cards ---------- */
+function flips(root,arr){
+  arr.forEach(([n,o,d])=>{
+    const b=document.createElement('button');b.className='flip';b.setAttribute('aria-pressed','false');
+    b.innerHTML=`<div class="in"><div class="f"><strong>${n}</strong><span>${o}</span><span style="margin-top:auto;font-size:12.5px">點我翻面</span></div><div class="b">${d}</div></div>`;
+    b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');
+    root.appendChild(b);
+  });
+}
+
+/* ---------- animated bars ---------- */
+function bars(root,rows,max,fmt=v=>v+'%'){
+  root.innerHTML=rows.map(r=>`<div class="bar${r.win?' win':''}"><span>${r.l}</span><div class="track"><div class="fill" style="${r.c?'background:'+r.c:''}"></div></div><span class="num">${fmt(r.v)}</span></div>`).join('');
+  const f=root.querySelectorAll('.fill');
+  setTimeout(()=>rows.forEach((r,i)=>{f[i].style.width=(r.v/max*100)+'%';}),30);
+}
+
+/* ---------- multi-series bars ---------- */
+function mbars(root,rows,series,max){
+  root.innerHTML=rows.map(r=>`<div class="mbar"><span>${r.l}</span><div class="tracks">${r.v.map((v,j)=>`<div class="t"><div class="tr"><i style="background:${series[j].c}" data-w="${v/max*100}"></i></div><span>${series[j].n} ${v}%</span></div>`).join('')}</div></div>`).join('');
+  setTimeout(()=>root.querySelectorAll('.tr i').forEach(i=>i.style.width=i.dataset.w+'%'),30);
+}
+
+/* ---------- exam / list details ---------- */
+function detailsList(root,rows){rows.forEach(([tag,k,body])=>root.insertAdjacentHTML('beforeend',`<details><summary><span class="tag">${tag}</span>${k}</summary><div class="body">${body}</div></details>`));}
+
+/* ---------- traps (localStorage) ---------- */
+function traps(root,countEl,key,T){
+  let saved=[];try{saved=JSON.parse(localStorage.getItem(key)||'[]')||[];}catch(e){saved=[];}
+  T.forEach(([a,b],i)=>{
+    const l=document.createElement('label');const c=saved.includes(i);if(c)l.classList.add('chk');
+    l.innerHTML=`<input type="checkbox" ${c?'checked':''}><div><em>${a}</em><br><span>${b}</span></div>`;
+    l.querySelector('input').onchange=e=>{const on=e.target.checked;l.classList.toggle('chk',on);saved=on?[...new Set([...saved,i])]:saved.filter(x=>x!==i);try{localStorage.setItem(key,JSON.stringify(saved));}catch(err){}count();};
+    root.appendChild(l);
+  });
+  function count(){countEl.textContent=`已確認 ${saved.length}／${T.length} 條`;}
+  count();
+}
+
+/* ---------- quiz ---------- */
+function quiz(box,Q,msgs){
+  let i=0,score=0;
+  const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+  function show(){
+    if(i>=Q.length){
+      const r=score/Q.length;
+      const msg=r>=.9?msgs[0]:r>=.65?msgs[1]:msgs[2];
+      box.innerHTML=`<div class="progress"><i style="width:100%"></i></div><div class="qtext" style="font-size:24px;font-family:var(--serif)">得分 ${score}／${Q.length}</div><p>${msg}</p><button class="btn primary" id="qr">重新測驗</button>`;
+      box.querySelector('#qr').onclick=()=>{i=0;score=0;show();};return;
+    }
+    const [q,opts,ex]=Q[i];
+    const order=shuffle(opts.map((o,k)=>({o,k})));
+    box.innerHTML=`<div class="progress"><i style="width:${i/Q.length*100}%"></i></div><div class="qtop"><span>第 ${i+1}／${Q.length} 題</span><span>得分 ${score}</span></div><div class="qtext">${q}</div><div class="opts">${order.map(x=>`<button class="opt" data-k="${x.k}">${x.o}</button>`).join('')}</div><div class="expl" id="qe"></div><div class="row" style="margin-top:14px;justify-content:flex-end"><button class="btn primary" id="qn" style="display:none">${i===Q.length-1?'看結果':'下一題'}</button></div>`;
+    box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.k==='0';if(ok)score++;
+      box.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.k==='0')x.classList.add('right');});
+      if(!ok)b.classList.add('wrongpick');
+      const e=box.querySelector('#qe');e.innerHTML=(ok?'<b style="color:var(--ok)">答對了。</b>':'<b style="color:var(--bad)">這題要小心。</b>')+ex;e.classList.add('show');
+      box.querySelector('#qn').style.display='';box.querySelector('#qn').focus({preventScroll:true});
+    });
+    box.querySelector('#qn').onclick=()=>{i++;show();};
+  }
+  show();
+}
+
+/* ---------- nav highlight ---------- */
+function navHighlight(){
+  const links=[...document.querySelectorAll('nav.toc a')];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on&&window.innerWidth<=860)a.scrollIntoView({inline:'center',block:'nearest'});});}});},{rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('main section').forEach(s=>io.observe(s));
+}
+
+
+const G={L211:'var(--txt)',L212:'var(--img)',L213:'var(--aud)'};
+const KP=[
+  {c:'L21101',n:'自然語言處理技術與應用',w:28912,h:16,g:'L211',f:'L21101_nlp_technologies.html',no:18},
+  {c:'L21102',n:'電腦視覺技術與應用',w:14293,h:13,g:'L211',f:'L21102_computer_vision.html',no:19},
+  {c:'L21103',n:'生成式 AI 技術與應用',w:10749,h:18,g:'L211',f:'L21103_generative_ai.html',no:20},
+  {c:'L21104',n:'多模態人工智慧應用',w:9024,h:8,g:'L211',f:'L21104_multimodal_ai.html',no:21},
+  {c:'L21201',n:'AI 導入評估',w:8102,h:32,star:1,g:'L212',f:'L21201_adoption_assessment.html',no:22},
+  {c:'L21202',n:'AI 導入規劃',w:10005,h:32,star:1,g:'L212',f:'L21202_adoption_planning.html',no:23},
+  {c:'L21203',n:'AI 風險管理',w:12517,h:21,g:'L212',f:'L21203_risk_management.html',no:24},
+  {c:'L21301',n:'數據準備與模型選擇',w:9026,h:11,g:'L213',f:'L21301_dataprep_model_selection.html',no:25},
+  {c:'L21302',n:'AI 技術系統集成與部署',w:7753,h:42,g:'L213',f:'L21302_integration_deployment.html',no:26}
+];
+
+/* ---------- hero leaves ---------- */
+(function(){
+  const ys={L211:[20,48,76,104],L212:[128,156,184],L213:[220,256]};const by={L211:55,L212:150,L213:245};
+  let h='',k={L211:0,L212:0,L213:0};
+  KP.forEach((p,i)=>{const y=ys[p.g][k[p.g]++];h+=`<path d="M410 ${by[p.g]} C 450 ${by[p.g]}, 450 ${y}, 490 ${y}" fill="none" stroke="${G[p.g]}" stroke-width="1.5" opacity=".5"/>`;
+    const w=Math.max(20,p.h*3.2);
+    h+=`<rect x="490" y="${y-10}" width="${w}" height="20" rx="6" fill="${G[p.g]}" opacity=".85"><animate attributeName="width" from="0" to="${w}" dur="1.2s" begin="${i*.12}s" fill="freeze"/></rect><text x="${496+w}" y="${y+5}" font-size="12" fill="var(--ink)">${p.c} ${p.h}%</text>`;});
+  $('#heroLeaves').innerHTML=h;
+})();
+
+/* ---------- index ---------- */
+(function(){
+  let grp='all',sort='no';
+  function r(){
+    let L=KP.filter(p=>grp==='all'||p.g===grp).slice();
+    if(sort==='w')L.sort((a,b)=>b.w-a.w);else if(sort==='h')L.sort((a,b)=>b.h-a.h);
+    $('#kpList').innerHTML=L.map(p=>`<a href="${p.f}" style="--c:${G[p.g]}"><small>${p.c}　講義 ${p.no}</small><b>${p.n}</b><span class="m"><span>篇幅 <b>${p.w.toLocaleString()}</b> 字</span><span>命中 <b style="${p.c==='L21302'?'color:var(--sen)':''}">${p.h}%${p.star?'*':''}</b></span></span></a>`).join('');
+  }
+  tabs($('#grpTabs'),['全部','L211 技術應用','L212 導入評估規劃','L213 系統部署'],i=>{grp=['all','L211','L212','L213'][i];r();});
+  tabs($('#sortTabs'),['依編號','依篇幅（多→少）','依命中（高→低）'],i=>{sort=['no','w','h'][i];r();});
+})();
+
+/* ---------- subject tree ---------- */
+(function(){
+  const S={L211:['L211 AI 相關技術應用','技術原理，<b>初級完全沒教</b>。','L21101 自然語言處理、L21102 電腦視覺、L21103 生成式 AI、L21104 多模態'],
+           L212:['L212 AI 導入評估規劃','<b>初級的延伸，讀起來最省力</b>。','L21201 導入評估、L21202 導入規劃、L21203 風險管理'],
+           L213:['L213 AI 技術應用與系統部署','<b>命中率最高的區塊</b>。','L21301 數據準備與模型選擇、L21302 系統集成與部署']};
+  $('#subjTree').innerHTML=`<div class="node" style="--c:var(--ink)"><b>L21 人工智慧技術應用與規劃</b><small>50 題</small></div><div class="kids">${Object.keys(S).map(k=>`<button class="node" data-k="${k}" style="--c:${G[k]}"><b>${S[k][0]}</b><small>${KP.filter(p=>p.g===k).length} 個知識點</small></button>`).join('')}</div>`;
+  $$('#subjTree button').forEach(b=>b.onclick=()=>{
+    $$('#subjTree button').forEach(x=>x.setAttribute('aria-pressed',x===b));const s=S[b.dataset.k],sum=KP.filter(p=>p.g===b.dataset.k);
+    $('#subjOut').innerHTML=`<b style="color:${G[b.dataset.k]}">${s[0]}</b><p style="margin:6px 0">${s[1]}</p>${sum.map(p=>`<a href="${p.f}" style="display:block">${p.c} ${p.n}</a>`).join('')}`;
+  });
+  $('#subjTree button').click();
+})();
+
+/* ---------- ROI scatter ---------- */
+(function(){
+  const X=w=>70+w/30000*540,Y=h=>290-h/45*260;
+  let h=`<rect x="70" y="30" width="200" height="130" rx="10" fill="color-mix(in srgb,var(--sen) 10%,transparent)"/><text x="78" y="152" font-size="16" font-weight="700" fill="var(--sen)">篇幅少、命中高</text>`;
+  h+=`<line x1="70" y1="290" x2="620" y2="290" stroke="var(--line)" stroke-width="2"/><line x1="70" y1="20" x2="70" y2="290" stroke="var(--line)" stroke-width="2"/>`;
+  for(let w=0;w<=30000;w+=10000)h+=`<text x="${X(w)}" y="310" text-anchor="middle" font-size="16" fill="var(--muted)">${w/1000}k</text>`;
+  for(let v=0;v<=40;v+=10)h+=`<text x="60" y="${Y(v)+4}" text-anchor="end" font-size="16" fill="var(--muted)">${v}%</text>`;
+  h+=`<text x="345" y="333" text-anchor="middle" font-size="16" fill="var(--muted)">官方篇幅（字）→</text><text x="18" y="160" font-size="16" fill="var(--muted)" text-anchor="middle" transform="rotate(-90 18 160)">實測命中 →</text>`;
+  KP.forEach((p,i)=>{h+=`<g data-i="${i}"><circle cx="${X(p.w)}" cy="${Y(p.h)}" r="${p.c==='L21302'?13:10}" fill="${G[p.g]}" stroke="var(--surface)" stroke-width="2"/><text x="${X(p.w)+(p.w>25000?-14:14)}" y="${Y(p.h)+(p.c==='L21202'?20:p.c==='L21201'?-12:p.c==='L21104'?18:p.c==='L21301'?-4:6)}" text-anchor="${p.w>25000?'end':'start'}" font-size="16" fill="var(--ink)">${p.c}</text></g>`;});
+  $('#roiSvg').innerHTML=h;
+  const tip={L21302:'投報率最高，務必精讀。只有 7,753 字，卻是命中率第一名。',L21103:'篇幅中等但常考。',L21101:'篇幅最大，要花時間但值得。',L21104:'篇幅少命中也少，最後再讀。',L21201:'與 L21202 的關鍵詞重疊，合併計算命中率。初級延伸，可加速。',L21202:'與 L21201 合併計算命中率。初級延伸，可加速。',L21203:'建議 6 h。',L21102:'分割題型穩定出題，建議 6 h。',L21301:'建議 5 h。'};
+  $$('#roiSvg g[data-i]').forEach(g=>{const show=()=>{const p=KP[g.dataset.i];$$('#roiSvg g[data-i] circle').forEach(c=>c.setAttribute('stroke','var(--surface)'));g.querySelector('circle').setAttribute('stroke','var(--ink)');$('#roiOut').innerHTML=`<b style="color:${G[p.g]}">${p.c} ${p.n}</b>　篇幅 ${p.w.toLocaleString()} 字｜命中 ${p.h}%${p.star?'*':''}<div class="hint">${tip[p.c]}　<a href="${p.f}">前往講義 ${p.no}</a></div>`;};g.onclick=show;g.onmouseenter=show;});
+  $$('#roiSvg g[data-i]')[8].onclick();
+})();
+
+/* ---------- allocation ---------- */
+(function(){
+  const A=[['L21302 系統部署',10,'var(--aud)','命中率最高'],['L21101 NLP',9,'var(--txt)','篇幅最大'],['L21103 生成式 AI',7,'var(--txt)','命中率第二'],['L21102 電腦視覺',6,'var(--txt)','分割題型穩定出題'],['L21203 風險管理',6,'var(--img)','命中率第三'],['L21201＋L21202 導入',8,'var(--img)','初級延伸，可加速'],['L21301 數據準備',5,'var(--aud)',''],['L21104 多模態',4,'var(--txt)','份量最輕']];
+  let even=false;
+  function r(){
+    const T=+$('#totR').value;$('#totV').textContent=T+' h';
+    const H=A.map(a=>even?T/A.length:a[1]*T/55);
+    bars($('#allocBars'),A.map((a,i)=>({l:a[0],v:+H[i].toFixed(1),c:a[2],win:!even&&i===0})),Math.max(...H)*1.1,v=>v+' h');
+    const d=even?(T/A.length-10*T/55):0;
+    $('#allocNote').innerHTML=even?`平均分配時，命中率最高的 L21302 只分到 ${(T/A.length).toFixed(1)} h（比建議少 ${Math.abs(d).toFixed(1)} h），份量最輕的多模態反而分到同樣多 —— <b>這正是要避免的</b>。`:'建議配置依「篇幅 × 命中率」排：L21302 命中率最高放最多，L21104 份量最輕放最少。';
+  }
+  tabs($('#allocTabs'),['建議配置','平均分配（反例）'],i=>{even=i===1;r();});
+  $('#totR').oninput=r;
+})();
+
+/* ---------- style ---------- */
+(function(){
+  let v=0;const el=$('#wc21');if(reduce)el.textContent=126;else{const t=setInterval(()=>{v=Math.min(126,v+5);el.textContent=v;if(v>=126)clearInterval(t);},25);}
+  mbars($('#styleBars'),[{l:'情境式命題',v:[41,29,36]},{l:'含程式碼',v:[4,0,10]},{l:'附圖題',v:[1,0,0]},{l:'題組題',v:[0,0,0]}],[{n:'L21',c:'var(--txt)'},{n:'L11',c:'var(--sen)'},{n:'L12',c:'color-mix(in srgb,var(--sen) 50%,var(--surface2))'}],45);
+})();
+flips($('#impCards'),[
+  ['題幹長','限制條件多','一題常帶 2～3 個條件（預算、時效、資料量、法規），要<b>全部滿足</b>才是正解。讀題時先把限制條件圈出來。'],
+  ['幾乎沒有附圖與題組','純文字閱讀題','與科目3 不同，時間壓力來自「<b>讀懂長情境</b>」而非「看圖」。'],
+  ['選項都很像對的','中級誘答','會用正確的專業術語描述錯誤的機制。檢討錯題時要能說出<b>其他三個選項各錯在哪</b>。']
+]);
+(function(){
+  const T=[['Accuracy',6],['Precision',5],['Recall',4],['Learning Rate',4],['Semantic Segmentation',3],['Instance Segmentation',3],['Object Detection',3],['CNN',3],['PCA',3],['Logistic Regression',3],['Data Drift',3]];
+  T.forEach(([t,n])=>{const b=document.createElement('button');b.textContent=t;b.style.fontSize=(12+n*2.2)+'px';b.style.fontWeight=n>=5?700:500;b.setAttribute('aria-pressed','false');b.onclick=()=>{$$('#cloud button').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#cloudOut').innerHTML=`<b>${t}</b>：出現在 <b>${n} 題</b>`+'<span style="display:inline-block;margin-left:10px">'+'■'.repeat(n)+'</span>';};$('#cloud').appendChild(b);});
+  bars($('#zhBars'),[{l:'延遲／吞吐量相關',v:18,c:'var(--aud)',win:true},{l:'資料漂移／概念漂移',v:7,c:'var(--aud)'}],20,v=>v+' 題');
+})();
+
+/* ---------- traps ---------- */
+traps($('#traps'),$('#trapCount'),'l21-traps',[
+  ['語意分割 vs 實例分割','同類是否分個體。'],
+  ['MLM 是雙向語境預測','不是由左到右生成。'],
+  ['自注意力解決長距離依賴','不是加速訓練。'],
+  ['LoRA＝凍結原權重＋低秩矩陣','不是蒸餾。'],
+  ['CLIP＝文字＋影像','對比式圖文模型。'],
+  ['模態缺失 → 讓模型具備缺失感知能力','不是補零。'],
+  ['導入評估第一步＝業務痛點與需求辨識','先問要解決什麼問題。'],
+  ['資料隱私＋本地控制 → 地端私有部署','兩個條件同時出現就走地端。'],
+  ['「輸出不穩定無法解釋」→ 決策透明性風險','看到「無法解釋」就想透明性。'],
+  ['資料分佈長期改變 → 概念漂移監控＋再訓練','不是一次性重新部署就好。'],
+  ['Z-score 標準化的目的是統一尺度','不是消除離群值。'],
+  ['客戶流失預測＝分類任務','流失／不流失是類別。'],
+  ['容器的優點＝環境一致性與跨平台','不是讓模型更準。'],
+  ['邊緣推論在終端裝置本地端','不是在雲端。'],
+  ['延遲 ≠ 吞吐量 ≠ 穩定度','三個不同指標。'],
+  ['離線指標好不等於導入成功','上線後還要看實際效益。']
+]);
+matcher($('#kwMatch'),$('#kwFb'),[
+  {k:'a',c:'var(--img)',html:'資料隱私＋本地控制'},
+  {k:'b',c:'var(--img)',html:'輸出不穩定、無法解釋'},
+  {k:'c',c:'var(--aud)',html:'資料分佈長期改變'},
+  {k:'d',c:'var(--aud)',html:'客戶流失預測'},
+  {k:'e',c:'var(--aud)',html:'推論在終端裝置執行'}
+],[
+  {k:'c',html:'概念漂移監控＋再訓練',ok:'分佈長期改變就是漂移，要監控並再訓練。'},
+  {k:'e',html:'邊緣推論',ok:'邊緣推論在終端裝置本地端。'},
+  {k:'a',html:'地端私有部署',ok:'兩個條件同時出現就走地端。'},
+  {k:'x',html:'模態缺失時補零',bad:'這是易錯總表裡的錯誤做法：應讓模型具備缺失感知能力。'},
+  {k:'b',html:'決策透明性風險',ok:'「無法解釋」對應透明性。'},
+  {k:'d',html:'分類任務',ok:'流失／不流失是類別標籤。'}
+],'這些是跨知識點最常錯的反射題。');
+
+/* ---------- quiz ---------- */
+quiz($('#quiz'),[
+  ['影像中有三隻狗，模型要把每一隻狗分別標成不同個體的遮罩，這是哪一種任務？',['實例分割','語意分割','影像分類','物件偵測只給類別'],'語意分割不分個體；同類要分個體才是實例分割。'],
+  ['關於 BERT 的 MLM（遮罩語言模型）訓練，下列何者正確？',['利用遮罩詞左右兩側的雙向語境來預測','由左到右逐字生成下一個詞','只看遮罩詞左邊的字','是一種知識蒸餾'],'MLM 是雙向語境預測，不是由左到右生成。'],
+  ['Transformer 的自注意力機制主要解決什麼問題？',['長距離依賴','訓練速度太慢','標註資料不足','模型參數太少'],'自注意力解決長距離依賴，不是加速訓練。'],
+  ['關於 LoRA 的敘述，何者正確？',['凍結原權重，只訓練插入的低秩矩陣','用大模型教小模型的蒸餾法','把模型權重全部重新訓練','只能用在影像模型'],'LoRA＝凍結原權重＋低秩矩陣，不是蒸餾。'],
+  ['多模態系統上線後，部分樣本缺少文字模態，最合理的處理是？',['讓模型具備模態缺失感知能力','把缺失的文字特徵補零','直接丟棄這些樣本','改用單一影像模型'],'補零把「沒有資訊」偽裝成「數值為 0 的資訊」。'],
+  ['企業要做 AI 導入評估，第一步應該是？',['業務痛點與需求辨識','直接挑選最新的模型','先採購 GPU','先做模型壓縮'],'先確認要解決什麼問題。'],
+  ['醫院要求「資料不可外流、要能本地控制」，部署方式應選？',['地端私有部署','公有雲 SaaS','把資料上傳到第三方 API','只用邊緣裝置不留伺服器'],'資料隱私＋本地控制 → 地端私有部署。'],
+  ['某 AI 系統「輸出不穩定、無法解釋為什麼這樣判斷」，屬於哪一類風險？',['決策透明性風險','硬體故障風險','網路頻寬風險','授權費用風險'],'看到「無法解釋」就想透明性。'],
+  ['模型上線一年後，使用者行為與資料分佈長期改變，應該怎麼做？',['建立概念漂移監控，並定期再訓練','完全不用處理','只要加大伺服器','把模型改成規則系統'],'資料分佈長期改變 → 概念漂移監控＋再訓練。'],
+  ['「預測客戶下個月是否會流失」屬於哪一類任務？',['分類任務','迴歸任務','分群任務','生成任務'],'流失／不流失是類別。'],
+  ['把模型包成容器部署，最主要的優點是？',['環境一致性與跨平台','讓模型準確率提高','自動解決資料漂移','免除所有資安風險'],'容器解決的是「在我電腦能跑」的環境問題。'],
+  ['依 17.3 的投報率分析，篇幅只有 7,753 字卻命中率 42%、最該精讀的是？',['L21302 系統集成與部署','L21101 自然語言處理','L21104 多模態','L21301 數據準備'],'L21302 是整個科目投報率最高的知識點。']
+],['太強了，跨知識點的易錯都能秒答。','不錯！回頭看看答錯題對應的易錯條目與講義。','建議先掃一次 17.5 易錯總表，再點進對應講義複習。']);
+
+/* ---------- practice pipe ---------- */
+(function(){
+  const nodes=[['讀完一個知識點','讀講義'],['做該章主題庫','311 題'],['答對率 < 70%','回頭重讀'],['全部讀完','整卷做歷屆']];
+  const out=['<b>讀完一個知識點</b>：從 17.1 的索引點進對應講義。','<b>做該章主題庫</b>：L21 主題庫 311 題，弱項可單章反覆做。','<b>答對率低於 70% 回頭重讀</b>，不要往下衝。','<b>全部讀完再整卷做歷屆</b>（114-2、115-1 共 100 題），計時，模擬 41% 情境題的閱讀壓力。'];
+  let i=0;$('#pipe').innerHTML=nodes.map(([a,b])=>`<div class="pnode"><b>${a}</b>${b}</div>`).join('');
+  function r(){$$('#pipe .pnode').forEach((n,j)=>{n.classList.toggle('on',j===i);n.classList.toggle('past',j<i);});$('#pout').innerHTML=out[i];$('#pipeNext').disabled=i===3;$('#pipeNext').style.opacity=i===3?.4:1;}
+  $('#pipeNext').onclick=()=>{if(i<3){i++;r();}};$('#pipeReset').onclick=()=>{i=0;r();};r();
+})();
+
+navHighlight();
+</script>
+</body>
+</html>

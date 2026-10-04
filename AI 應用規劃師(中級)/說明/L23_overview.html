@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L23 機器學習技術與應用 科目總覽｜互動教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F5; --surface:#FFFFFF; --surface2:#F6F8FB; --ink:#18202E; --muted:#5A6475; --line:#D5DBE4;
+  --txt:#3B4CCA; --img:#0E8A7A; --aud:#B87812; --sen:#B8336A;
+  --ok:#1F8A4C; --bad:#C23B2E; --warn:#D9822B;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+    --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+  --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75}
+h1,h2,h3{font-family:var(--serif);line-height:1.3;margin:0}
+p{margin:0 0 1em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--txt);outline-offset:2px;border-radius:4px}
+svg{max-width:100%;height:auto;display:block}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1180px;margin:0 auto;gap:40px;padding:0 24px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;padding:32px 0;height:100vh;overflow:auto}
+nav.toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14.5px}
+nav.toc a span{font-variant-numeric:tabular-nums;font-size:13px;opacity:.8}
+nav.toc a.on{background:var(--surface);color:var(--ink);font-weight:700}
+.toc-title{font-family:var(--serif);font-weight:900;font-size:18px;padding:0 10px 14px}
+main{min-width:0;padding-bottom:80px}
+section{padding:56px 0 8px;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.sec-head{display:flex;gap:16px;align-items:baseline;margin-bottom:18px}
+.sec-no{font-family:var(--serif);font-weight:900;font-size:40px;color:var(--line);line-height:1}
+h2{font-size:28px;font-weight:900}
+h3{font-size:19px;margin:34px 0 10px}
+.lead{color:var(--muted);max-width:66ch}
+.prose{max-width:68ch}
+
+/* hero */
+.hero{padding:44px 0 24px}
+.hero .code{font-size:14px;color:var(--muted);margin-bottom:6px}
+.hero h1{font-size:clamp(34px,5.5vw,56px);font-weight:900;letter-spacing:.02em}
+.hero .one{font-size:18px;max-width:60ch;margin:16px 0 0;color:var(--muted)}
+.hero-fig{background:var(--surface);border-radius:20px;margin-top:28px;padding:14px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+.goal{border-left:4px solid var(--c);padding:6px 0 6px 14px;font-size:15px}
+
+/* panels */
+.panel{background:var(--surface);border-radius:16px;padding:22px;margin:16px 0}
+.panel.flat{background:var(--surface2)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font-size:15px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hint{font-size:14px;color:var(--muted)}
+.callout{border-left:4px solid var(--warn);background:var(--surface2);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;font-size:15px}
+.callout.exam{border-color:var(--txt)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:14px}
+
+/* modality chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+
+/* matcher */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.match .col{display:flex;flex-direction:column;gap:10px}
+.mitem{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15px;transition:border-color .2s,background .2s,transform .2s}
+.mitem small{display:block;color:var(--muted);font-size:13px}
+.mitem.sel{border-color:var(--ink);transform:translateX(4px)}
+.mitem.done{border-color:var(--c,var(--ok));background:var(--surface2);cursor:default}
+.mitem.wrong{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:1.8em;margin-top:12px;font-size:15px}
+.feedback.ok{color:var(--ok)} .feedback.bad{color:var(--bad)}
+
+/* timeline */
+.steps{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stage-viz{min-height:130px;display:flex;align-items:center;justify-content:center}
+.stage-viz .blk{display:inline-block;width:34px;height:34px;border-radius:6px;margin:2px;transition:all .5s}
+
+/* align toggle */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.compare>div{padding:18px}
+.compare>div+div{border-left:1px solid var(--line)}
+.compare .big{font-family:var(--serif);font-weight:900;font-size:22px;margin-bottom:6px}
+
+/* fusion */
+.meter{height:14px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:6px 0}
+.meter>i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .7s cubic-bezier(.3,.8,.3,1),background .4s}
+.flow{stroke-dasharray:6 7;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.jitter{animation:jit .25s steps(2) infinite}
+@keyframes jit{50%{transform:translate(1.5px,-1px)}}
+.fusion-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.pc{font-size:15px}
+.pc b{display:block;font-size:14px;color:var(--muted);font-weight:500}
+
+/* clip */
+.mat{display:grid;gap:4px;font-size:13px}
+.mat .cell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;transition:background .5s,color .5s}
+.mat .lab{display:flex;align-items:center;justify-content:center;font-size:22px}
+.mat .tlab{font-size:12px;text-align:center;color:var(--muted);display:flex;align-items:flex-end;justify-content:center;line-height:1.3}
+.zs-imgs{display:flex;gap:10px;flex-wrap:wrap}
+.zs-img{font-size:38px;width:72px;height:72px;border-radius:16px;border:2px solid var(--line);background:var(--surface2);display:flex;align-items:center;justify-content:center}
+.zs-img[aria-pressed="true"]{border-color:var(--img);box-shadow:0 0 0 3px color-mix(in srgb,var(--img) 25%,transparent)}
+.bar{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.bar .track{height:22px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;width:0;background:var(--txt);border-radius:6px;transition:width .8s cubic-bezier(.3,.8,.3,1)}
+.bar.win .fill{background:var(--img)}
+.bar.win{font-weight:700}
+.bar .num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.flip{perspective:900px;height:150px;border:0;background:none;padding:0;text-align:left}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flip[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:center}
+.flip .f{background:var(--surface);border:1.5px solid var(--line)}
+.flip .f strong{font-family:var(--serif);font-size:22px}
+.flip .f span{color:var(--muted);font-size:14px}
+.flip .b{background:var(--ink);color:var(--bg);transform:rotateY(180deg);font-size:15px}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.pnode{border:2px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;font-size:14px;background:var(--surface);transition:all .35s}
+.pnode b{display:block;font-size:16px}
+.pnode.on{border-color:var(--aud);background:color-mix(in srgb,var(--aud) 14%,var(--surface));transform:translateY(-3px)}
+.pnode.past{border-color:color-mix(in srgb,var(--aud) 45%,var(--line))}
+.pout{background:var(--surface2);border-radius:12px;padding:14px 16px;min-height:84px;font-size:15px}
+.wave{display:flex;gap:3px;align-items:center;height:30px}
+.wave i{width:4px;background:var(--aud);border-radius:2px;animation:wv 1s ease-in-out infinite}
+@keyframes wv{50%{transform:scaleY(.3)}}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+
+/* strategies */
+.strat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.strat button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;text-align:left;font-size:15px}
+.strat button[aria-pressed="true"]{border-color:var(--ink)}
+.verdict{font-family:var(--serif);font-weight:900;font-size:20px}
+
+details{border-bottom:1px solid var(--line)}
+details summary{cursor:pointer;padding:12px 4px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"+";font-weight:900;width:14px;color:var(--muted)}
+details[open] summary::before{content:"−"}
+details .body{padding:0 4px 14px 30px;font-size:15px}
+.tag{font-size:12.5px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums;min-width:80px}
+
+/* quiz */
+.qcard{background:var(--surface);border-radius:16px;padding:24px}
+.qtop{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
+.qtext{font-size:18px;font-weight:700;margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15.5px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+.opt.wrongpick{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.opt:disabled{cursor:default}
+.expl{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15px;display:none}
+.expl.show{display:block}
+.progress{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;margin-bottom:14px}
+.progress i{display:block;height:100%;background:var(--txt);transition:width .4s}
+
+.traps label{display:flex;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:15px}
+.traps input{width:18px;height:18px;margin-top:4px;flex:none;accent-color:var(--ok)}
+.traps label.chk>span{color:var(--muted)}
+.traps em{font-style:normal;font-weight:700}
+
+/* mobile */
+@media (max-width:860px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+  nav.toc{position:sticky;top:0;height:auto;z-index:10;background:var(--bg);display:flex;overflow-x:auto;padding:8px 0;padding-top:calc(8px + env(safe-area-inset-top,0px));gap:4px;border-bottom:1px solid var(--line)}
+  .toc-title{display:none}
+  nav.toc a{white-space:nowrap;flex:none}
+  .match,.stage,.fusion-meta,.compare{grid-template-columns:1fr}
+  .compare>div+div{border-left:0;border-top:1px solid var(--line)}
+  .pipe{grid-template-columns:repeat(5,minmax(90px,1fr));overflow-x:auto}
+  .bar{grid-template-columns:110px 1fr 56px}
+  h2{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* ===== page-specific ===== */
+.kp{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.kpc{display:block;border:1.5px solid var(--line);border-left:5px solid var(--c);border-radius:12px;padding:10px 14px;background:var(--surface);color:var(--ink);text-decoration:none;font-size:14.5px;transition:opacity .3s,transform .3s}
+.kpc:hover{transform:translateY(-2px)}
+.kpc small{display:block;color:var(--muted);font-size:12.5px}
+.kpc.dim{opacity:.25}
+.tree{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.tnode{border:2px solid var(--line);border-top:6px solid var(--c);border-radius:12px;padding:12px;background:var(--surface);text-align:left;font-size:14px;transition:all .3s}
+.tnode b{display:block;font-family:var(--serif);font-size:17px}
+.tnode[aria-pressed="true"]{border-color:var(--c);background:color-mix(in srgb,var(--c) 10%,var(--surface));transform:translateY(-3px)}
+.sld{display:grid;grid-template-columns:150px 1fr 90px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.sld input{width:100%;accent-color:var(--ink)}
+.sld output{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.gantt{display:flex;flex-direction:column;gap:5px;margin-top:12px}
+.grow{display:grid;grid-template-columns:150px 1fr;gap:10px;align-items:center;font-size:13.5px}
+.gtrack{position:relative;height:22px;background:var(--surface2);border-radius:6px}
+.gbar{position:absolute;top:0;bottom:0;border-radius:6px;background:var(--c);transition:left .6s,width .6s;color:#fff;font-size:12px;display:flex;align-items:center;padding-left:6px;white-space:nowrap;overflow:hidden}
+.big-num{font-family:var(--serif);font-weight:900;font-size:40px;line-height:1}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+.stat{background:var(--surface2);border-radius:12px;padding:12px 14px}
+.stat span{display:block;color:var(--muted);font-size:13px}
+.pair{display:grid;grid-template-columns:110px 1fr;gap:10px;align-items:center;margin:12px 0;font-size:14.5px}
+.pair .tw{display:flex;flex-direction:column;gap:4px}
+.pair .t{height:18px;background:var(--surface2);border-radius:5px;overflow:hidden}
+.pair .t i{display:block;height:100%;width:0;border-radius:5px;transition:width .9s cubic-bezier(.3,.8,.3,1);color:#fff;font-size:11.5px;font-style:normal;line-height:18px;padding-left:6px;white-space:nowrap}
+.code{background:var(--surface2);border-radius:12px;padding:10px 0;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;overflow-x:auto}
+.cl{display:block;width:100%;border:0;background:none;text-align:left;padding:3px 14px;white-space:pre;font-family:inherit;font-size:inherit;border-left:4px solid transparent}
+.cl:hover{background:color-mix(in srgb,var(--ink) 6%,transparent)}
+.cl.c{color:var(--muted);cursor:default}
+.cl.ok{border-left-color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,transparent)}
+.cl.no{border-left-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,transparent)}
+.terms{display:flex;flex-wrap:wrap;gap:8px}
+.term{border-radius:999px;padding:6px 14px;background:var(--surface);border:1.5px solid var(--line);font-size:14px}
+.term b{font-variant-numeric:tabular-nums;margin-left:6px}
+@media (max-width:860px){
+  .tree{grid-template-columns:1fr 1fr}
+  .stats{grid-template-columns:1fr}
+  .sld{grid-template-columns:100px 1fr 70px}
+  .grow{grid-template-columns:96px 1fr}
+  .pair{grid-template-columns:80px 1fr}
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="toc" aria-label="章節">
+  <div class="toc-title">L23 科目總覽</div>
+  <a href="#intro"><span>●</span>導覽與目標</a>
+  <a href="#s1"><span>41.1</span>知識點索引</a>
+  <a href="#s2"><span>41.2</span>四大主題結構</a>
+  <a href="#s3"><span>41.3</span>考點密度與時間</a>
+  <a href="#s4"><span>41.4</span>附圖與題組</a>
+  <a href="#s5"><span>41.5</span>易錯與測驗</a>
+  <a href="#s6"><span>41.6</span>練習資源</a>
+</nav>
+
+<main>
+<!-- HERO -->
+<section id="intro" class="hero">
+  <div class="code">L23　中級 AI 應用規劃師（機器學習）　建議 30 分鐘</div>
+  <h1>機器學習技術與應用 科目總覽</h1>
+  <p class="one">中級<b>必選考科目之一</b>（與科目2 擇一）。通過 L21 + L23 可取得「AI 應用規劃師（機器學習）」中級證書。本篇是科目層級的總覽與索引；<b>十二個知識點各有獨立講義</b>，見下方索引。</p>
+  <div class="hero-fig" aria-hidden="true">
+    <svg id="heroSvg" viewBox="0 0 720 300">
+      <defs>
+        <path id="hp0" d="M100 250 L 100 60"/>
+        <path id="hp1" d="M270 250 L 270 60"/>
+        <path id="hp2" d="M440 250 L 440 60"/>
+        <path id="hp3" d="M610 250 L 610 60"/>
+      </defs>
+      <g font-family="Noto Sans TC, sans-serif" font-weight="700">
+        <rect x="20" y="20" width="680" height="34" rx="17" fill="var(--ink)"/>
+        <text x="360" y="43" text-anchor="middle" fill="var(--bg)" font-size="15">L23 機器學習技術與應用（50 題）</text>
+        <rect x="30" y="200" width="140" height="70" rx="14" fill="var(--txt)"/><text x="100" y="230" text-anchor="middle" fill="#fff" font-size="15">L231</text><text x="100" y="252" text-anchor="middle" fill="#fff" font-size="13">基礎數學</text>
+        <rect x="200" y="120" width="140" height="150" rx="14" fill="var(--img)"/><text x="270" y="190" text-anchor="middle" fill="#fff" font-size="15">L232</text><text x="270" y="212" text-anchor="middle" fill="#fff" font-size="13">ML 與 DL</text>
+        <rect x="370" y="150" width="140" height="120" rx="14" fill="var(--aud)"/><text x="440" y="205" text-anchor="middle" fill="#fff" font-size="15">L233</text><text x="440" y="227" text-anchor="middle" fill="#fff" font-size="13">建模與調校</text>
+        <rect x="540" y="215" width="140" height="55" rx="14" fill="var(--sen)"/><text x="610" y="240" text-anchor="middle" fill="#fff" font-size="15">L234</text><text x="610" y="259" text-anchor="middle" fill="#fff" font-size="12">治理</text>
+        <text x="360" y="292" text-anchor="middle" fill="var(--muted)" font-size="12" font-weight="500">方塊高度 ≈ 官方篇幅（示意比例）</text>
+      </g>
+      <g class="movers">
+        <circle r="5" fill="var(--txt)"><animateMotion dur="2.4s" repeatCount="indefinite"><mpath href="#hp0"/></animateMotion></circle>
+        <circle r="5" fill="var(--img)"><animateMotion dur="2.4s" begin=".4s" repeatCount="indefinite"><mpath href="#hp1"/></animateMotion></circle>
+        <circle r="5" fill="var(--aud)"><animateMotion dur="2.4s" begin=".8s" repeatCount="indefinite"><mpath href="#hp2"/></animateMotion></circle>
+        <circle r="5" fill="var(--sen)"><animateMotion dur="2.4s" begin="1.2s" repeatCount="indefinite"><mpath href="#hp3"/></animateMotion></circle>
+      </g>
+    </svg>
+  </div>
+  <h3>學完這一課，你應該能夠</h3>
+  <div class="goals">
+    <div class="goal" style="--c:var(--txt)">掌握 L23 的<b>四大主題結構</b>與十二個知識點的相對份量</div>
+    <div class="goal" style="--c:var(--aud)">依官方篇幅與實測考點<b>決定時間配置</b></div>
+    <div class="goal" style="--c:var(--sen)">認識 L23 特有的<b>附圖題與題組題</b>應對方式</div>
+  </div>
+  <p class="hint" style="margin-top:20px">本頁每個顏色固定代表一個主題：<span class="chip" style="--c:var(--txt)"><i class="dot"></i>L231 基礎數學</span>　<span class="chip" style="--c:var(--img)"><i class="dot"></i>L232 ML 與 DL</span>　<span class="chip" style="--c:var(--aud)"><i class="dot"></i>L233 建模調校</span>　<span class="chip" style="--c:var(--sen)"><i class="dot"></i>L234 治理</span></p>
+</section>
+
+<!-- 41.1 -->
+<section id="s1">
+  <div class="sec-head"><span class="sec-no">41.1</span><h2>知識點索引</h2></div>
+  <p class="lead">十二個知識點，點卡片直接開啟對應講義。上方可依主題篩選。</p>
+  <div class="row" id="kpFilter" style="margin-bottom:12px"></div>
+  <div class="kp" id="kp"></div>
+
+  <h3>官方篇幅長條圖</h3>
+  <div class="panel">
+    <div class="row" style="justify-content:space-between">
+      <span class="hint">L23202 與 L23203 兩個知識點就超過全科篇幅的四成（依下表字數計算）。</span>
+      <button class="btn" id="sortBtn" aria-pressed="false">依篇幅排序</button>
+    </div>
+    <div id="lenBars" style="margin-top:10px"></div>
+  </div>
+  <details>
+    <summary>展開原始索引表</summary>
+    <div class="body tbl-wrap"><table id="idxTbl"></table></div>
+  </details>
+</section>
+
+<!-- 41.2 -->
+<section id="s2">
+  <div class="sec-head"><span class="sec-no">41.2</span><h2>四大主題結構</h2></div>
+  <p class="lead">L23 機器學習技術與應用（50 題）分成四個主題。點一個主題，看它包含哪些知識點、有什麼特性。</p>
+  <div class="tree" id="tree"></div>
+  <div class="pout" id="treeOut" style="margin-top:12px"></div>
+</section>
+
+<!-- 41.3 -->
+<section id="s3">
+  <div class="sec-head"><span class="sec-no">41.3</span><h2>考點密度：哪些主題真的常考</h2></div>
+  <p class="lead">以中文關鍵詞掃描 100 題官方公告試題的結果。</p>
+  <div class="panel">
+    <div class="row" style="justify-content:space-between"><b>相關題數（共 100 題）</b><button class="btn" id="densBtn">重新播放</button></div>
+    <div id="densBars" style="margin-top:8px"></div>
+  </div>
+  <h3>高頻術語（以題數計）</h3>
+  <div class="terms" id="terms"></div>
+
+  <h3>兩個判讀</h3>
+  <div class="cards" id="readCards"></div>
+
+  <h3>時數計算器：我需要幾週？</h3>
+  <div class="panel">
+    <p class="hint">依下方「建議時間配置」合計時數，輸入你每週可用的讀書時數，算出需要幾週，並排出每個知識點落在哪幾週（排程順序依「數學先讀」加上四大主題順序，為示意安排）。</p>
+    <div class="sld"><span>每週可用時數</span><input type="range" id="hpw" min="3" max="30" value="10" aria-label="每週可用時數"><output id="hpwO"></output></div>
+    <div class="stats">
+      <div class="stat"><span>建議總時數</span><div class="big-num" id="totH"></div></div>
+      <div class="stat"><span>需要週數</span><div class="big-num" id="wk"></div></div>
+      <div class="stat"><span>治理章節完成於</span><div class="big-num" id="govWk" style="font-size:28px"></div></div>
+    </div>
+    <div class="gantt" id="gantt"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>知識點</th><th style="text-align:right">建議時數</th><th>理由</th></tr>
+      <tr><td>L23203 深度學習</td><td style="text-align:right">12 h</td><td>篇幅最大</td></tr>
+      <tr><td>L23202 常見演算法</td><td style="text-align:right">10 h</td><td>篇幅第二</td></tr>
+      <tr><td>L23201 機器學習原理</td><td style="text-align:right">8 h</td><td>過擬合主幹</td></tr>
+      <tr><td>L23304 模型調整與優化</td><td style="text-align:right">8 h</td><td>篇幅第三</td></tr>
+      <tr><td>L23103 數值優化</td><td style="text-align:right">6 h</td><td>學習率高頻</td></tr>
+      <tr><td>L23303 訓練評估驗證</td><td style="text-align:right">6 h</td><td>指標與交叉驗證</td></tr>
+      <tr><td>L23301 特徵工程</td><td style="text-align:right">5 h</td><td>資料洩漏考點</td></tr>
+      <tr><td>L23101 + L23102 數學</td><td style="text-align:right">6 h</td><td>地基，先讀</td></tr>
+      <tr><td>L23401 + L23402 治理</td><td style="text-align:right">5 h</td><td>CP 值最高</td></tr>
+      <tr><td>L23302 模型選擇</td><td style="text-align:right">3 h</td><td>篇幅最小</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 41.4 -->
+<section id="s4">
+  <div class="sec-head"><span class="sec-no">41.4</span><h2>L23 特有的題型：附圖與題組</h2></div>
+  <div class="panel">
+    <div class="row" style="justify-content:space-between"><b>L23 vs L21 題型比例</b><button class="btn" id="pairBtn">重新播放</button></div>
+    <div id="pairs"></div>
+  </div>
+
+  <h3>附圖題練習：先看題目，再回圖找那一行</h3>
+  <div class="panel">
+    <p class="hint">附圖題約佔四分之一，看不懂程式碼就是直接失分。<b>讀圖順序：</b>先看題目問什麼 → 再回圖找對應那幾行 → 不要整段逐行讀。點出答案所在的那一行。</p>
+    <div class="qtop"><span id="clNo"></span><span id="clSc"></span></div>
+    <div class="qtext" id="clQ" style="font-size:16.5px"></div>
+    <div class="code" id="code"></div>
+    <p id="clFb" style="margin:10px 0 0;min-height:1.6em" aria-live="polite"></p>
+    <div class="row" style="justify-content:flex-end"><button class="btn primary" id="clNext">下一題</button></div>
+  </div>
+
+  <h3>題組題（18%）：一次讀懂，一次答完</h3>
+  <div class="panel">
+    <div class="compare">
+      <div><div class="big" style="color:var(--ok)">✓ 先讀懂共用敘述</div>再一次答完該組所有題。好處是讀懂一次可以答多題。</div>
+      <div><div class="big" style="color:var(--bad)">✗ 讀一題跳一題</div>敘述誤解會<b>連錯數題</b>。</div>
+    </div>
+    <div class="row" style="margin-top:14px"><button class="btn" id="grpGood" aria-pressed="false">正確讀法</button><button class="btn" id="grpBad" aria-pressed="false">敘述誤解時</button></div>
+    <svg id="grpSvg" viewBox="0 0 640 150" style="margin-top:10px" role="img" aria-label="題組題示意"></svg>
+  </div>
+</section>
+
+<!-- 41.5 -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-no">41.5</span><h2>全科易錯總表</h2></div>
+  <p class="lead">考前 10 分鐘掃描。各知識點的完整陷阱清單在個別講義裡，這裡只列最常錯的。逐條確認再打勾（打勾狀態會記在這台裝置上）。</p>
+  <div class="traps" id="traps"></div>
+  <p class="hint" id="trapCount" style="margin-top:10px"></p>
+
+  <h3>快速自測</h3>
+  <div class="qcard" id="quiz"></div>
+</section>
+
+<!-- 41.6 -->
+<section id="s6">
+  <div class="sec-head"><span class="sec-no">41.6</span><h2>練習資源</h2></div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>資源</th><th style="text-align:right">題數</th><th>用途</th></tr>
+      <tr><td>L23 主題庫</td><td style="text-align:right">326</td><td>依章節練，L23301／L23303／L23304 務必刷完</td></tr>
+      <tr><td>L23 歷屆（114-2、115-1）</td><td style="text-align:right">100</td><td><b>整卷</b>做，只做單題會低估附圖與題組的時間壓力</td></tr>
+    </table>
+  </div>
+  <h3>下一步</h3>
+  <div class="kp">
+    <a class="kpc" style="--c:var(--img)" href="L1toL2_bridge_machine_learning.html"><small>初級到中級的落差分析與讀書計畫</small>14. 銜接指南：機器學習路線</a>
+    <a class="kpc" style="--c:var(--txt)" href="L21_overview.html"><small>科目1 的總覽</small>17. L21 科目總覽</a>
+    <a class="kpc" style="--c:var(--aud)" href="#s1"><small>十二個知識點的講義</small>回到 41.1 的索引</a>
+  </div>
+</section>
+</main>
+
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce){const m=document.querySelector('#heroSvg .movers');if(m)m.remove();}
+const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+
+/* ---------- generic matcher ---------- */
+function matcher(root,fb,left,right,doneMsg,badMsg){
+  let sel=null,done=0;
+  const L=document.createElement('div');L.className='col';
+  const R=document.createElement('div');R.className='col';
+  left.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;
+    b.innerHTML=it.html;if(it.c)b.style.setProperty('--c',it.c);
+    b.onclick=()=>{if(b.classList.contains('done'))return;L.querySelectorAll('.mitem').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;fb.textContent='';fb.className='feedback';};
+    L.appendChild(b);
+  });
+  right.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;b.innerHTML=it.html;
+    b.onclick=()=>{
+      if(b.classList.contains('done'))return;
+      if(!sel){fb.textContent='請先點左邊一個項目。';fb.className='feedback';return;}
+      if(sel.dataset.k===b.dataset.k){
+        const c=sel.style.getPropertyValue('--c');
+        [sel,b].forEach(x=>{x.classList.remove('sel');x.classList.add('done');if(c)x.style.setProperty('--c',c);});
+        fb.textContent='✓ '+(it.ok||'答對了！');fb.className='feedback ok';sel=null;done++;
+        if(done===left.length){fb.textContent='✓ 全部配對完成！'+doneMsg;}
+      }else{
+        b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');
+        fb.textContent='✗ '+(it.bad||badMsg||'不太對，再想想看。');fb.className='feedback bad';
+      }
+    };
+    R.appendChild(b);
+  });
+  root.append(L,R);
+}
+/* ---------- flip cards ---------- */
+function flips(root,list){
+  list.forEach(([n,o,d])=>{
+    const b=document.createElement('button');b.className='flip';b.setAttribute('aria-pressed','false');
+    b.innerHTML=`<div class="in"><div class="f"><strong>${n}</strong><span>${o}</span><span style="margin-top:auto;font-size:12.5px">點我翻面</span></div><div class="b">${d}</div></div>`;
+    b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');
+    root.appendChild(b);
+  });
+}
+/* ---------- tabs helper ---------- */
+function tabs(btnRoot,list,render){
+  list.forEach((x,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=x;b.onclick=()=>s(i);btnRoot.appendChild(b);});
+  function s(i){btnRoot.querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));render(i);}
+  s(0);
+}
+/* ---------- exam list ---------- */
+function examList(root,list){
+  list.forEach(([n,k,q,a])=>{root.insertAdjacentHTML('beforeend',`<details><summary><span class="tag">${n}</span>${k}</summary><div class="body"><p style="margin:0 0 6px"><span class="hint">怎麼問：</span>${q}</p><p style="margin:0"><span class="hint">正解思路：</span>${a}</p></div></details>`);});
+}
+/* ---------- traps ---------- */
+function traps(key,T){
+  let saved=[];try{saved=JSON.parse(localStorage.getItem(key)||'[]')||[];}catch(e){saved=[];}
+  T.forEach(([a,b],i)=>{
+    const l=document.createElement('label');const c=saved.includes(i);if(c)l.classList.add('chk');
+    l.innerHTML=`<input type="checkbox" ${c?'checked':''}><div><em>${a}</em><br><span>${b}</span></div>`;
+    l.querySelector('input').onchange=e=>{const on=e.target.checked;l.classList.toggle('chk',on);saved=on?[...new Set([...saved,i])]:saved.filter(x=>x!==i);try{localStorage.setItem(key,JSON.stringify(saved));}catch(err){}count();};
+    $('#traps').appendChild(l);
+  });
+  function count(){$('#trapCount').textContent=`已確認 ${saved.length}／${T.length} 條`;}
+  count();
+}
+/* ---------- quiz ---------- */
+function quiz(Q,msgs){
+  let i=0,score=0;const box=$('#quiz');
+  function show(){
+    if(i>=Q.length){
+      const msg=score>=Q.length-1?msgs[0]:score>=Math.ceil(Q.length*.65)?msgs[1]:msgs[2];
+      box.innerHTML=`<div class="progress"><i style="width:100%"></i></div><div class="qtext" style="font-size:24px;font-family:var(--serif)">得分 ${score}／${Q.length}</div><p>${msg}</p><button class="btn primary" id="qr">重新測驗</button>`;
+      $('#qr').onclick=()=>{i=0;score=0;show();};return;
+    }
+    const [q,opts,ex]=Q[i];
+    const order=shuffle(opts.map((o,k)=>({o,k})));
+    box.innerHTML=`<div class="progress"><i style="width:${i/Q.length*100}%"></i></div><div class="qtop"><span>第 ${i+1}／${Q.length} 題</span><span>得分 ${score}</span></div><div class="qtext">${q}</div><div class="opts">${order.map(x=>`<button class="opt" data-k="${x.k}">${x.o}</button>`).join('')}</div><div class="expl" id="qe"></div><div class="row" style="margin-top:14px;justify-content:flex-end"><button class="btn primary" id="qn" style="display:none">${i===Q.length-1?'看結果':'下一題'}</button></div>`;
+    box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.k==='0';if(ok)score++;
+      box.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.k==='0')x.classList.add('right');});
+      if(!ok)b.classList.add('wrongpick');
+      const e=$('#qe');e.innerHTML=(ok?'<b style="color:var(--ok)">答對了。</b>':'<b style="color:var(--bad)">這題要小心。</b>')+ex;e.classList.add('show');
+      $('#qn').style.display='';$('#qn').focus();
+    });
+    $('#qn').onclick=()=>{i++;show();};
+  }
+  show();
+}
+
+const TH={L231:['var(--txt)','機器學習基礎數學'],L232:['var(--img)','機器學習與深度學習'],L233:['var(--aud)','機器學習建模與參數調校'],L234:['var(--sen)','機器學習治理']};
+const KP=[
+  ['L23101','機率統計之機器學習基礎應用',5105,'42','L23101_probability_statistics.html'],
+  ['L23102','線性代數之機器學習基礎應用',5123,'43','L23102_linear_algebra.html'],
+  ['L23103','數值優化技術與方法',7583,'44','L23103_numerical_optimization.html'],
+  ['L23201','機器學習原理與技術',5730,'45','L23201_ml_principles.html'],
+  ['L23202','常見機器學習演算法',23516,'46','L23202_ml_algorithms.html'],
+  ['L23203','深度學習原理與框架',26568,'47','L23203_deep_learning_frameworks.html'],
+  ['L23301','數據準備與特徵工程',5531,'48','L23301_feature_engineering.html'],
+  ['L23302','模型選擇與架構設計',3396,'49','L23302_model_selection.html'],
+  ['L23303','模型訓練、評估與驗證',7406,'50','L23303_training_evaluation.html'],
+  ['L23304','模型調整與優化',13434,'51','L23304_tuning_optimization.html'],
+  ['L23401','數據隱私、安全與合規',6701,'52','L23401_privacy_compliance.html'],
+  ['L23402','演算法偏見與公平性',9008,'53','L23402_bias_fairness.html']
+];
+const th=c=>c.slice(0,4);
+const fmt=n=>n.toLocaleString('en-US');
+
+/* ---------- 41.1 index ---------- */
+(function(){
+  $('#kp').innerHTML=KP.map(k=>`<a class="kpc" data-t="${th(k[0])}" style="--c:${TH[th(k[0])][0]}" href="${k[4]}"><small>${k[0]}　講義 ${k[3]}　${fmt(k[2])} 字</small>${k[1]}</a>`).join('');
+  const f=[['all','全部']].concat(Object.keys(TH).map(k=>[k,k+' '+TH[k][1]]));
+  f.forEach(([k,n])=>{const b=document.createElement('button');b.className='btn';b.textContent=n;b.setAttribute('aria-pressed',k==='all');b.onclick=()=>{$$('#kpFilter .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));$$('#kp .kpc').forEach(a=>a.classList.toggle('dim',k!=='all'&&a.dataset.t!==k));};$('#kpFilter').appendChild(b);});
+  $('#idxTbl').innerHTML='<tr><th>#</th><th>代碼</th><th>知識點</th><th style="text-align:right">官方篇幅</th><th>講義</th></tr>'+KP.map((k,i)=>`<tr><td>${i+1}</td><td>${k[0]}</td><td>${k[1]}</td><td style="text-align:right">${[4,5].includes(i)?'<b>'+fmt(k[2])+' 字</b>':fmt(k[2])+' 字'}</td><td><a href="${k[4]}">${k[3]}</a></td></tr>`).join('');
+  const mx=Math.max(...KP.map(k=>k[2]));let sorted=false;
+  function r(){
+    const L=sorted?KP.slice().sort((a,b)=>b[2]-a[2]):KP;
+    $('#lenBars').innerHTML=L.map(k=>`<div class="bar"><span>${k[0]}</span><div class="track"><div class="fill" style="background:${TH[th(k[0])][0]}"></div></div><span class="num">${fmt(k[2])}</span></div>`).join('');
+    setTimeout(()=>$$('#lenBars .fill').forEach((f,i)=>f.style.width=(L[i][2]/mx*100)+'%'),30);
+  }
+  $('#sortBtn').onclick=()=>{sorted=!sorted;$('#sortBtn').setAttribute('aria-pressed',sorted);$('#sortBtn').textContent=sorted?'依代碼排序':'依篇幅排序';r();};
+  r();
+})();
+
+/* ---------- 41.2 tree ---------- */
+(function(){
+  const N={L231:'地基，不熟後面全垮',L232:'篇幅最重的區塊（合計 55,814 字）',L233:'題數最密集',L234:'內容少但題數穩，CP 值高'};
+  Object.keys(TH).forEach(k=>{const b=document.createElement('button');b.className='tnode';b.style.setProperty('--c',TH[k][0]);b.setAttribute('aria-pressed','false');b.innerHTML=`<b>${k}</b>${TH[k][1]}<br><span class="hint">${N[k]}</span>`;b.onclick=()=>s(k);$('#tree').appendChild(b);});
+  function s(k){
+    $$('#tree .tnode').forEach(b=>b.setAttribute('aria-pressed',b.querySelector('b').textContent===k));
+    const ks=KP.filter(x=>th(x[0])===k),sum=ks.reduce((a,b)=>a+b[2],0);
+    $('#treeOut').innerHTML=`<p style="margin:0 0 8px"><span class="chip" style="--c:${TH[k][0]}"><i class="dot"></i>${k} ${TH[k][1]}</span>　──　${N[k]}</p>`+ks.map(x=>`<div class="bar"><span><a href="${x[4]}">${x[0]}</a></span><div class="track"><div class="fill" style="background:${TH[k][0]};width:0" data-w="${x[2]/26568*100}"></div></div><span class="num">${fmt(x[2])}</span></div><div class="hint" style="margin:-6px 0 6px">${x[1]}</div>`).join('')+`<p class="hint" style="margin:6px 0 0">本主題合計 ${fmt(sum)} 字</p>`;
+    setTimeout(()=>$$('#treeOut .fill').forEach(f=>f.style.width=f.dataset.w+'%'),30);
+  }
+  s('L231');
+})();
+
+/* ---------- 41.3 density ---------- */
+(function(){
+  const D=[['過擬合',27,'L23201（全科最高頻，接近四分之一）'],['L1／L2 正則化',10,'L23201、L23304'],['學習率',9,'L23103'],['決策門檻',5,'L23303'],['Early Stopping',4,'L23304'],['同態加密',3,'L23401'],['差分隱私',3,'L23401'],['分層交叉驗證',3,'L23303']];
+  function r(){
+    $('#densBars').innerHTML=D.map((d,i)=>`<div class="bar ${i===0?'win':''}"><span>${d[0]}</span><div class="track"><div class="fill"></div></div><span class="num">${d[1]} 題</span></div><div class="hint" style="margin:-6px 0 6px;padding-left:4px">→ ${d[2]}</div>`).join('');
+    setTimeout(()=>$$('#densBars .fill').forEach((f,i)=>f.style.width=(D[i][1]/27*100)+'%'),30);
+  }
+  $('#densBtn').onclick=r;r();
+  $('#terms').innerHTML=[['Overfitting',7],['Learning Rate',5],['Activation Function',5],['Early Stopping',4],['MSE',3],['Gradient Vanishing',3],['Lasso',3],['Accuracy',3],['Recall',3],['Homomorphic Encryption',3]].map(([t,n])=>`<span class="term" style="border-color:color-mix(in srgb,var(--txt) ${n*12}%,var(--line))">${t}<b>${n} 題</b></span>`).join('');
+  flips($('#readCards'),[
+    ['判讀 1','過擬合主幹必須完全掌握','成因、判斷、五種對策、L1/L2 差別——它橫跨 <a href="L23201_ml_principles.html" style="color:inherit">L23201</a> 與 <a href="L23304_tuning_optimization.html" style="color:inherit">L23304</a> 兩個知識點。'],
+    ['判讀 2','治理章節投報率最高','L23401 + L23402 合計只有 15,709 字，但題目穩定出現，而且多是「哪種技術最適合這個需求」的比較題型。']
+  ]);
+})();
+
+/* ---------- hours calculator ---------- */
+(function(){
+  const P=[['L23101+L23102 數學',6,'L231'],['L23103 數值優化',6,'L231'],['L23201 ML 原理',8,'L232'],['L23202 常見演算法',10,'L232'],['L23203 深度學習',12,'L232'],['L23301 特徵工程',5,'L233'],['L23302 模型選擇',3,'L233'],['L23303 訓練評估',6,'L233'],['L23304 調整優化',8,'L233'],['L23401+L23402 治理',5,'L234']];
+  const tot=P.reduce((a,b)=>a+b[1],0);
+  $('#totH').textContent=tot+' h';
+  function r(){
+    const h=+$('#hpw').value,w=Math.ceil(tot/h);
+    $('#hpwO').textContent=h+' h／週';$('#wk').textContent=w+' 週';
+    let acc=0;
+    $('#gantt').innerHTML=P.map(p=>{const s=acc;acc+=p[1];const ws=Math.floor(s/h)+1,we=Math.ceil(acc/h);return `<div class="grow"><span>${p[0]}</span><div class="gtrack"><div class="gbar" style="--c:${TH[p[2]][0]};left:${s/tot*100}%;width:${p[1]/tot*100}%" title="第 ${ws}–${we} 週">${ws===we?'W'+ws:'W'+ws+'–'+we}</div></div></div>`;}).join('')+`<div class="grow"><span></span><div class="hint" style="display:flex;justify-content:space-between"><span>第 1 週</span><span>第 ${w} 週</span></div></div>`;
+    $('#govWk').textContent='第 '+w+' 週';
+  }
+  $('#hpw').addEventListener('input',r);r();
+})();
+
+/* ---------- 41.4 pairs ---------- */
+(function(){
+  const D=[['附圖題',23,1,'程式碼截圖、訓練曲線、混淆矩陣、模型摘要表'],['題組題',18,0,'一段情境帶 2～5 題'],['含程式碼／語法',10,4,'scikit-learn、PyTorch、Keras、NumPy'],['情境式命題',27,41,'比 L21 低，較多直接考觀念']];
+  function r(){
+    $('#pairs').innerHTML=D.map(d=>`<div class="pair"><b>${d[0]}</b><div class="tw"><div class="t"><i style="background:var(--aud)">L23 ${d[1]}%</i></div><div class="t"><i style="background:var(--muted)">L21 ${d[2]}%</i></div><span class="hint">${d[3]}</span></div></div>`).join('');
+    setTimeout(()=>$$('#pairs .pair').forEach((p,i)=>{const t=p.querySelectorAll('.t i');t[0].style.width=Math.max(D[i][1]*2,14)+'%';t[1].style.width=Math.max(D[i][2]*2,14)+'%';}),30);
+  }
+  $('#pairBtn').onclick=r;r();
+})();
+
+/* ---------- code line picker ---------- */
+(function(){
+  const C=[
+    ['# scikit-learn',0],
+    ['train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)','tts'],
+    ['cross_val_score(model, X, y, cv=5)','cv'],
+    ["Pipeline([('scaler', StandardScaler()), ('knn', KNeighborsClassifier())])",'pipe'],
+    ['LinearRegression().fit(X, y)             # 順序是 (X, y) 不是 (y, X)','fit'],
+    ['',0],
+    ['# NumPy',0],
+    ['np.dot(v1, v2)          # 內積（純量）','dot'],
+    ['np.linalg.inv(A)        # 反矩陣','inv'],
+    ['np.linalg.eig(A)        # 特徵值','eig'],
+    ['',0],
+    ['# Keras',0],
+    ["model.add(Dense(10, activation='softmax'))",'dense'],
+    ["model.compile(loss='categorical_crossentropy', optimizer='adam')",'comp']
+  ];
+  const Q=[
+    ['哪一行讓訓練／測試切分時保持類別比例？','tts','stratify=y 讓切分後各類別比例與原資料一致。'],
+    ['哪一行做 5 折交叉驗證？','cv','cross_val_score(..., cv=5)。'],
+    ['哪一行把前處理（縮放）放進 Pipeline？','pipe','前處理要進 Pipeline，否則資料洩漏；KNN 也要先特徵縮放。'],
+    ['哪一行計算兩個向量的內積（結果是純量）？','dot','np.dot 是內積；別和 inv／det／eig 搞混。'],
+    ['哪一行求反矩陣？','inv','np.linalg.inv。'],
+    ['哪一行求特徵值？','eig','np.linalg.eig。'],
+    ['哪一行設定多類別輸出層的激活函數？','dense',"Dense(10, activation='softmax')。"],
+    ['Softmax 輸出要配哪個損失函數？點出那一行。','comp','Softmax 配 categorical_crossentropy。'],
+    ['哪一行示範了正確的 fit 參數順序？','fit','順序是 (X, y)，不是 (y, X)。']
+  ];
+  let i=0,sc=0,ans=false;
+  function r(){
+    ans=false;$('#clNo').textContent=`第 ${i+1}／${Q.length} 題`;$('#clSc').textContent=`答對 ${sc}`;$('#clQ').textContent=Q[i][0];$('#clFb').textContent='';
+    $('#code').innerHTML='';
+    C.forEach(([t,k])=>{const b=document.createElement('button');b.className='cl'+(k?'':' c');b.textContent=t||' ';if(!k){b.tabIndex=-1;}
+      b.onclick=()=>{if(!k||ans)return;ans=true;const ok=k===Q[i][1];if(ok)sc++;b.classList.add(ok?'ok':'no');if(!ok)$$('#code .cl')[C.findIndex(c=>c[1]===Q[i][1])].classList.add('ok');$('#clFb').innerHTML=(ok?'<b style="color:var(--ok)">✓ 找到了。</b>':'<b style="color:var(--bad)">✗ 不是這行。</b>')+Q[i][2];$('#clSc').textContent=`答對 ${sc}`;};
+      $('#code').appendChild(b);});
+  }
+  $('#clNext').onclick=()=>{i=(i+1)%Q.length;if(i===0)sc=0;r();};
+  r();
+})();
+
+/* ---------- group question ---------- */
+(function(){
+  function d(m){
+    let h=`<rect x="10" y="45" width="170" height="60" rx="12" fill="${m==='bad'?'var(--bad)':'var(--ink)'}"/><text x="95" y="72" text-anchor="middle" font-size="14" font-weight="700" fill="${m==='bad'?'#fff':'var(--bg)'}">共用情境敘述</text><text x="95" y="92" text-anchor="middle" font-size="12" fill="${m==='bad'?'#fff':'var(--bg)'}">${m==='bad'?'讀錯了！':m==='good'?'讀懂一次':''}</text>`;
+    const ys=[20,60,100];
+    ys.forEach((y,k)=>{const ok=m!=='bad';h+=`<path d="M180 75 C 260 75, 260 ${y+15}, 330 ${y+15}" fill="none" stroke="${m?(ok?'var(--ok)':'var(--bad)'):'var(--line)'}" stroke-width="2.5" ${m?'class="flow"':''}/><rect x="330" y="${y}" width="140" height="30" rx="8" fill="var(--surface2)" stroke="${m?(ok?'var(--ok)':'var(--bad)'):'var(--line)'}" stroke-width="2"/><text x="400" y="${y+20}" text-anchor="middle" font-size="13" fill="var(--ink)">第 ${k+1} 題 ${m?(ok?'✓':'✗'):''}</text>`;});
+    if(m)h+=`<text x="500" y="80" font-size="14" font-weight="700" fill="${m==='bad'?'var(--bad)':'var(--ok)'}">${m==='bad'?'敘述誤解 → 連錯數題':'讀懂一次 → 答多題'}</text>`;
+    $('#grpSvg').innerHTML=h;
+  }
+  $('#grpGood').onclick=()=>{$('#grpGood').setAttribute('aria-pressed','true');$('#grpBad').setAttribute('aria-pressed','false');d('good');};
+  $('#grpBad').onclick=()=>{$('#grpBad').setAttribute('aria-pressed','true');$('#grpGood').setAttribute('aria-pressed','false');d('bad');};
+  d(null);
+})();
+
+/* ---------- traps ---------- */
+traps('l23-traps',[
+  ['條件機率分母是條件事件','P(A|B) 的分母是 B。'],
+  ['inv / det / eig / dot 別搞混','反矩陣、行列式、特徵值、內積。'],
+  ['微調用小學習率','保護既有特徵。'],
+  ['過擬合＝訓練好驗證差；欠擬合＝兩者都差','全科最高頻考點。'],
+  ['L1 稀疏可做特徵選擇、L2 不歸零','Lasso 是 L1。'],
+  ['邏輯迴歸是分類','名字有「迴歸」，但做的是分類。'],
+  ['Bagging 降變異、Boosting 降偏差','不要對調。'],
+  ['KNN 要先特徵縮放','以距離為基礎。'],
+  ['DBSCAN 孤立點＝雜訊點','不屬於任何群。'],
+  ['Softmax 配 categorical_crossentropy','多類別輸出。'],
+  ['全連接層參數量 >> 卷積層','卷積層共享權重。'],
+  ['Label Encoding 製造虛假順序','名目類別別用整數編碼硬排序。'],
+  ['有離群值用 Robust Scaling','不受極端值主導。'],
+  ['SMOTE 只對訓練集','先切分、後採樣。'],
+  ['前處理要進 Pipeline，否則資料洩漏','縮放器只能在訓練資料上 fit。'],
+  ['測試集只能用一次','反覆看測試集調參等於洩漏。'],
+  ['類別不平衡用 Stratified K-Fold','保持每折類別比例。'],
+  ['零容忍漏抓 → 調低門檻拉高 Recall','決策門檻是常考點。'],
+  ['Early Stopping 看驗證損失','不是訓練損失。'],
+  ['同態加密 ≠ 差分隱私；雜湊不是加密','密文運算 vs 輸出加噪；雜湊是單向摘要。'],
+  ['Demographic Parity ≠ Equalized Odds','兩種公平性定義不同。']
+]);
+
+/* ---------- quiz ---------- */
+quiz([
+  ['模型訓練集表現很好、驗證集表現很差，這是？',['過擬合','欠擬合','資料平衡','收斂完成'],'過擬合＝訓練好驗證差；欠擬合＝兩者都差。'],
+  ['想讓部分特徵權重直接歸零、順便做特徵選擇，應選？',['L1 正則化','L2 正則化','提高學習率','增加隱藏層'],'L1 稀疏可做特徵選擇，L2 不歸零。'],
+  ['關於整合學習，何者正確？',['Bagging 降變異、Boosting 降偏差','Bagging 降偏差、Boosting 降變異','兩者都只降偏差','兩者都只降變異'],'不要對調。'],
+  ['用預訓練模型做微調時，學習率應該？',['設小一點，保護既有特徵','設大一點，加快重新學習','與從頭訓練相同','設為 0'],'微調用小學習率。'],
+  ['多類別分類的輸出層用 Softmax，損失函數應搭配？',["categorical_crossentropy",'MSE','hinge','binary_crossentropy 搭配單一輸出'],'Softmax 配 categorical_crossentropy。'],
+  ['把標準化放在 train_test_split 之前、對全體資料 fit，會造成？',['資料洩漏','欠擬合','梯度消失','類別不平衡'],'前處理要進 Pipeline，否則資料洩漏。'],
+  ['類別極不平衡的資料做交叉驗證，較合適的是？',['Stratified K-Fold','一般 K-Fold 且不打亂','只用一次 train/test 切分','Leave-One-Out 一定最佳'],'分層保持每折類別比例。'],
+  ['詐欺偵測「零容忍漏抓」，應如何調整決策門檻？',['調低門檻，拉高 Recall','調高門檻，拉高 Precision','門檻固定 0.5 不能動','改看 Accuracy'],'零容忍漏抓 → 調低門檻拉高 Recall。'],
+  ['Early Stopping 判斷何時停止，應監看？',['驗證損失','訓練損失','學習率','參數量'],'Early Stopping 看驗證損失。'],
+  ['資料中有明顯離群值，縮放時較合適的是？',['Robust Scaling','Min-Max Scaling','不縮放直接跑 KNN','Label Encoding'],'有離群值用 Robust Scaling。'],
+  ['對「城市名稱」這種無順序的類別用 Label Encoding（轉成 0、1、2…），主要問題是？',['製造虛假順序','無法處理缺失值','一定造成過擬合','讓模型無法收斂'],'Label Encoding 製造虛假順序。']
+],['太強了，考前掃描已經沒有死角。','不錯！把答錯的那幾條陷阱打勾前再讀一次對應講義。','建議逐條對照易錯總表，再回各知識點講義補強。']);
+
+/* ---------- nav highlight ---------- */
+(function(){
+  const links=[...document.querySelectorAll('nav.toc a')];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on&&window.innerWidth<=860)a.scrollIntoView({inline:'center',block:'nearest'});});}});},{rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('main section').forEach(s=>io.observe(s));
+})();
+
+</script>
+</body>
+</html>

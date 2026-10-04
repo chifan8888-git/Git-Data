@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L21104 多模態人工智慧應用｜互動教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F5; --surface:#FFFFFF; --surface2:#F6F8FB; --ink:#18202E; --muted:#5A6475; --line:#D5DBE4;
+  --txt:#3B4CCA; --img:#0E8A7A; --aud:#B87812; --sen:#B8336A;
+  --ok:#1F8A4C; --bad:#C23B2E; --warn:#D9822B;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+    --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+  --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75}
+h1,h2,h3{font-family:var(--serif);line-height:1.3;margin:0}
+p{margin:0 0 1em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--txt);outline-offset:2px;border-radius:4px}
+svg{max-width:100%;height:auto;display:block}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1180px;margin:0 auto;gap:40px;padding:0 24px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;padding:32px 0;height:100vh;overflow:auto}
+nav.toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14.5px}
+nav.toc a span{font-variant-numeric:tabular-nums;font-size:13px;opacity:.8}
+nav.toc a.on{background:var(--surface);color:var(--ink);font-weight:700}
+.toc-title{font-family:var(--serif);font-weight:900;font-size:18px;padding:0 10px 14px}
+main{min-width:0;padding-bottom:80px}
+section{padding:56px 0 8px;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.sec-head{display:flex;gap:16px;align-items:baseline;margin-bottom:18px}
+.sec-no{font-family:var(--serif);font-weight:900;font-size:40px;color:var(--line);line-height:1}
+h2{font-size:28px;font-weight:900}
+h3{font-size:19px;margin:34px 0 10px}
+.lead{color:var(--muted);max-width:66ch}
+.prose{max-width:68ch}
+
+/* hero */
+.hero{padding:44px 0 24px}
+.hero .code{font-size:14px;color:var(--muted);margin-bottom:6px}
+.hero h1{font-size:clamp(34px,5.5vw,56px);font-weight:900;letter-spacing:.02em}
+.hero .one{font-size:18px;max-width:60ch;margin:16px 0 0;color:var(--muted)}
+.hero-fig{background:var(--surface);border-radius:20px;margin-top:28px;padding:14px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+.goal{border-left:4px solid var(--c);padding:6px 0 6px 14px;font-size:15px}
+
+/* panels */
+.panel{background:var(--surface);border-radius:16px;padding:22px;margin:16px 0}
+.panel.flat{background:var(--surface2)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font-size:15px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hint{font-size:14px;color:var(--muted)}
+.callout{border-left:4px solid var(--warn);background:var(--surface2);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;font-size:15px}
+.callout.exam{border-color:var(--txt)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:14px}
+
+/* modality chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+
+/* matcher */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.match .col{display:flex;flex-direction:column;gap:10px}
+.mitem{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15px;transition:border-color .2s,background .2s,transform .2s}
+.mitem small{display:block;color:var(--muted);font-size:13px}
+.mitem.sel{border-color:var(--ink);transform:translateX(4px)}
+.mitem.done{border-color:var(--c,var(--ok));background:var(--surface2);cursor:default}
+.mitem.wrong{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:1.8em;margin-top:12px;font-size:15px}
+.feedback.ok{color:var(--ok)} .feedback.bad{color:var(--bad)}
+
+/* timeline */
+.steps{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stage-viz{min-height:130px;display:flex;align-items:center;justify-content:center}
+.stage-viz .blk{display:inline-block;width:34px;height:34px;border-radius:6px;margin:2px;transition:all .5s}
+
+/* align toggle */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.compare>div{padding:18px}
+.compare>div+div{border-left:1px solid var(--line)}
+.compare .big{font-family:var(--serif);font-weight:900;font-size:22px;margin-bottom:6px}
+
+/* fusion */
+.meter{height:14px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:6px 0}
+.meter>i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .7s cubic-bezier(.3,.8,.3,1),background .4s}
+.flow{stroke-dasharray:6 7;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.jitter{animation:jit .25s steps(2) infinite}
+@keyframes jit{50%{transform:translate(1.5px,-1px)}}
+.fusion-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.pc{font-size:15px}
+.pc b{display:block;font-size:14px;color:var(--muted);font-weight:500}
+
+/* clip */
+.mat{display:grid;gap:4px;font-size:13px}
+.mat .cell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;transition:background .5s,color .5s}
+.mat .lab{display:flex;align-items:center;justify-content:center;font-size:22px}
+.mat .tlab{font-size:12px;text-align:center;color:var(--muted);display:flex;align-items:flex-end;justify-content:center;line-height:1.3}
+.zs-imgs{display:flex;gap:10px;flex-wrap:wrap}
+.zs-img{font-size:38px;width:72px;height:72px;border-radius:16px;border:2px solid var(--line);background:var(--surface2);display:flex;align-items:center;justify-content:center}
+.zs-img[aria-pressed="true"]{border-color:var(--img);box-shadow:0 0 0 3px color-mix(in srgb,var(--img) 25%,transparent)}
+.bar{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.bar .track{height:22px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;width:0;background:var(--txt);border-radius:6px;transition:width .8s cubic-bezier(.3,.8,.3,1)}
+.bar.win .fill{background:var(--img)}
+.bar.win{font-weight:700}
+.bar .num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.flip{perspective:900px;height:150px;border:0;background:none;padding:0;text-align:left}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flip[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:center}
+.flip .f{background:var(--surface);border:1.5px solid var(--line)}
+.flip .f strong{font-family:var(--serif);font-size:22px}
+.flip .f span{color:var(--muted);font-size:14px}
+.flip .b{background:var(--ink);color:var(--bg);transform:rotateY(180deg);font-size:15px}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.pnode{border:2px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;font-size:14px;background:var(--surface);transition:all .35s}
+.pnode b{display:block;font-size:16px}
+.pnode.on{border-color:var(--aud);background:color-mix(in srgb,var(--aud) 14%,var(--surface));transform:translateY(-3px)}
+.pnode.past{border-color:color-mix(in srgb,var(--aud) 45%,var(--line))}
+.pout{background:var(--surface2);border-radius:12px;padding:14px 16px;min-height:84px;font-size:15px}
+.wave{display:flex;gap:3px;align-items:center;height:30px}
+.wave i{width:4px;background:var(--aud);border-radius:2px;animation:wv 1s ease-in-out infinite}
+@keyframes wv{50%{transform:scaleY(.3)}}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+
+/* strategies */
+.strat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.strat button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;text-align:left;font-size:15px}
+.strat button[aria-pressed="true"]{border-color:var(--ink)}
+.verdict{font-family:var(--serif);font-weight:900;font-size:20px}
+
+details{border-bottom:1px solid var(--line)}
+details summary{cursor:pointer;padding:12px 4px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"+";font-weight:900;width:14px;color:var(--muted)}
+details[open] summary::before{content:"−"}
+details .body{padding:0 4px 14px 30px;font-size:15px}
+.tag{font-size:12.5px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums;min-width:80px}
+
+/* quiz */
+.qcard{background:var(--surface);border-radius:16px;padding:24px}
+.qtop{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
+.qtext{font-size:18px;font-weight:700;margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15.5px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+.opt.wrongpick{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.opt:disabled{cursor:default}
+.expl{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15px;display:none}
+.expl.show{display:block}
+.progress{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;margin-bottom:14px}
+.progress i{display:block;height:100%;background:var(--txt);transition:width .4s}
+
+.traps label{display:flex;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:15px}
+.traps input{width:18px;height:18px;margin-top:4px;flex:none;accent-color:var(--ok)}
+.traps label.chk>span{color:var(--muted)}
+.traps em{font-style:normal;font-weight:700}
+
+/* mobile */
+@media (max-width:860px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+  nav.toc{position:sticky;top:0;height:auto;z-index:10;background:var(--bg);display:flex;overflow-x:auto;padding:8px 0;padding-top:calc(8px + env(safe-area-inset-top,0px));gap:4px;border-bottom:1px solid var(--line)}
+  .toc-title{display:none}
+  nav.toc a{white-space:nowrap;flex:none}
+  .match,.stage,.fusion-meta,.compare{grid-template-columns:1fr}
+  .compare>div+div{border-left:0;border-top:1px solid var(--line)}
+  .pipe{grid-template-columns:repeat(5,minmax(90px,1fr));overflow-x:auto}
+  .bar{grid-template-columns:110px 1fr 56px}
+  h2{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="toc" aria-label="章節">
+  <div class="toc-title">多模態 AI</div>
+  <a href="#intro"><span>●</span>導覽與目標</a>
+  <a href="#s1"><span>21.1</span>模態與編碼器</a>
+  <a href="#s2"><span>21.2</span>對齊 vs 融合</a>
+  <a href="#s3"><span>21.3</span>CLIP 與模型</a>
+  <a href="#s4"><span>21.4</span>模態缺失</a>
+  <a href="#s5"><span>21.5</span>應用與指標</a>
+  <a href="#s6"><span>21.6</span>官方考題</a>
+  <a href="#s7"><span>21.7</span>易錯與測驗</a>
+</nav>
+
+<main>
+<!-- HERO -->
+<section id="intro" class="hero">
+  <div class="code">L21104　中級 AI 應用規劃師　建議 40 分鐘</div>
+  <h1>多模態人工智慧應用</h1>
+  <p class="one">初級只要認得「多模態＝同時處理文字、影像、語音」。中級要能在情境題裡判斷：該<b>對齊</b>還是該<b>融合</b>？要<b>早期</b>還是<b>晚期</b>融合？某個模態壞掉或不見了，怎麼辦？</p>
+  <div class="hero-fig" aria-hidden="true">
+    <svg id="heroSvg" viewBox="0 0 720 300">
+      <defs>
+        <path id="hp0" d="M120 45 C 260 45, 300 150, 400 150"/>
+        <path id="hp1" d="M120 115 C 260 115, 300 150, 400 150"/>
+        <path id="hp2" d="M120 185 C 260 185, 300 150, 400 150"/>
+        <path id="hp3" d="M120 255 C 260 255, 300 150, 400 150"/>
+        <path id="hp4" d="M460 150 L 600 150"/>
+      </defs>
+      <g fill="none" stroke-width="2" opacity=".35">
+        <use href="#hp0" stroke="var(--txt)"/><use href="#hp1" stroke="var(--img)"/>
+        <use href="#hp2" stroke="var(--aud)"/><use href="#hp3" stroke="var(--sen)"/>
+        <use href="#hp4" stroke="var(--ink)"/>
+      </g>
+      <g font-family="Noto Sans TC, sans-serif" font-size="15" font-weight="700">
+        <rect x="20" y="25" width="100" height="40" rx="20" fill="var(--txt)"/><text x="70" y="50" text-anchor="middle" fill="#fff">文字</text>
+        <rect x="20" y="95" width="100" height="40" rx="20" fill="var(--img)"/><text x="70" y="120" text-anchor="middle" fill="#fff">影像</text>
+        <rect x="20" y="165" width="100" height="40" rx="20" fill="var(--aud)"/><text x="70" y="190" text-anchor="middle" fill="#fff">語音</text>
+        <rect x="20" y="235" width="100" height="40" rx="20" fill="var(--sen)"/><text x="70" y="260" text-anchor="middle" fill="#fff">感測訊號</text>
+        <circle cx="430" cy="150" r="58" fill="var(--surface2)" stroke="var(--ink)" stroke-width="2"/>
+        <text x="430" y="145" text-anchor="middle" fill="var(--ink)" font-size="14">共同語意</text>
+        <text x="430" y="165" text-anchor="middle" fill="var(--ink)" font-size="14">空間</text>
+        <rect x="600" y="125" width="100" height="50" rx="12" fill="var(--ink)"/>
+        <text x="650" y="156" text-anchor="middle" fill="var(--bg)">決策</text>
+      </g>
+      <g class="movers">
+        <circle r="6" fill="var(--txt)"><animateMotion dur="2.4s" repeatCount="indefinite"><mpath href="#hp0"/></animateMotion></circle>
+        <circle r="6" fill="var(--img)"><animateMotion dur="2.4s" begin=".3s" repeatCount="indefinite"><mpath href="#hp1"/></animateMotion></circle>
+        <circle r="6" fill="var(--aud)"><animateMotion dur="2.4s" begin=".6s" repeatCount="indefinite"><mpath href="#hp2"/></animateMotion></circle>
+        <circle r="6" fill="var(--sen)"><animateMotion dur="2.4s" begin=".9s" repeatCount="indefinite"><mpath href="#hp3"/></animateMotion></circle>
+        <circle r="6" fill="var(--ink)"><animateMotion dur="1.2s" begin="1.2s" repeatCount="indefinite"><mpath href="#hp4"/></animateMotion></circle>
+      </g>
+    </svg>
+  </div>
+  <h3>學完這一課，你應該能夠</h3>
+  <div class="goals">
+    <div class="goal" style="--c:var(--txt)">分辨<b>跨模態對齊</b>與<b>多模態融合</b>各自解決的不同問題</div>
+    <div class="goal" style="--c:var(--img)">判讀早期、中期、晚期融合在強健性與表達力上的取捨</div>
+    <div class="goal" style="--c:var(--aud)">說明 CLIP 如何用對比學習建立共同嵌入空間，完成零樣本分類</div>
+    <div class="goal" style="--c:var(--sen)">在模態缺失、時間不同步、標註昂貴等情境中選出最合理的策略</div>
+  </div>
+  <p class="hint" style="margin-top:20px">本頁每個顏色固定代表一種模態：<span class="chip" style="--c:var(--txt)"><i class="dot"></i>文字</span>　<span class="chip" style="--c:var(--img)"><i class="dot"></i>影像</span>　<span class="chip" style="--c:var(--aud)"><i class="dot"></i>語音</span>　<span class="chip" style="--c:var(--sen)"><i class="dot"></i>感測</span></p>
+</section>
+
+<!-- 21.1 -->
+<section id="s1">
+  <div class="sec-head"><span class="sec-no">21.1</span><h2>模態、編碼器與演進脈絡</h2></div>
+  <p class="lead">每種模態的資料長得不一樣，所以要用不同的「編碼器」把它轉成向量。先來配對看看。</p>
+
+  <div class="panel">
+    <h3 style="margin-top:0">配對遊戲：哪個編碼器最適合哪種模態？</h3>
+    <p class="hint">先點左邊的模態，再點右邊的編碼器。</p>
+    <div class="match" id="encMatch"></div>
+    <div class="feedback" id="encFb" aria-live="polite"></div>
+  </div>
+
+  <details>
+    <summary>展開完整對照表（資料特性、編碼器、雜訊來源）</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>模態</th><th>資料結構特性</th><th>常見編碼器</th><th>典型雜訊來源</th></tr>
+        <tr><td><span class="chip" style="--c:var(--txt)"><i class="dot"></i>文字</span></td><td>離散、序列、語意密度高</td><td>Transformer（BERT、GPT 類）</td><td>縮寫、口語、描述殘缺</td></tr>
+        <tr><td><span class="chip" style="--c:var(--img)"><i class="dot"></i>影像</span></td><td>連續、空間局部性、平移不變</td><td>CNN（ResNet）、ViT</td><td>光照、遮擋、解析度</td></tr>
+        <tr><td><span class="chip" style="--c:var(--aud)"><i class="dot"></i>語音／音訊</span></td><td>時間序列、含語調與情緒線索</td><td>Whisper 類 ASR、聲學 Transformer</td><td>環境噪音、口音</td></tr>
+        <tr><td><span class="chip" style="--c:var(--sen)"><i class="dot"></i>感測器訊號</span></td><td>等間隔連續數值、多通道</td><td>LSTM、Temporal CNN</td><td>採樣頻率不一、漂移</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <div class="callout exam"><b>115Q1 第 17 題：</b>正解是「影像用 CNN、文字用 Transformer、時序用 LSTM 或 Temporal CNN」。最像對的誘答是「Transformer 有通用性，三種模態統一用 BERT 即可」，但原始像素與感測數值仍需各自的前處理與嵌入設計，所以是錯的。</div>
+
+  <h3>演進三階段</h3>
+  <div class="panel">
+    <div class="steps" id="evoBtns" role="tablist"></div>
+    <div class="stage">
+      <div class="stage-viz" id="evoViz"></div>
+      <div id="evoTxt"></div>
+    </div>
+  </div>
+  <p class="prose"><b>記憶點：</b>第一階段只有「拼接」，沒有「對齊」。對齊能力是深度學習之後、尤其是對比學習出現後才成熟的。</p>
+</section>
+
+<!-- 21.2 -->
+<section id="s2">
+  <div class="sec-head"><span class="sec-no">21.2</span><h2>對齊 vs 融合</h2></div>
+  <p class="lead">本知識點最高頻的考點。兩者回答的是完全不同的問題。</p>
+
+  <div class="compare">
+    <div><div class="big">對齊 Alignment</div>不同模態的表示「<b>能不能互相比較</b>」？<br><span class="hint">產物：共同嵌入空間</span></div>
+    <div><div class="big">融合 Fusion</div>不同模態的資訊「<b>怎麼合起來做決策</b>」？<br><span class="hint">產物：一個預測結果</span></div>
+  </div>
+
+  <h3>動手看：什麼叫「對齊」</h3>
+  <div class="panel">
+    <p class="hint">對齊前，影像向量和文字向量各在自己的空間，無法比較距離。按下按鈕，看描述同一件事的向量如何被拉近。</p>
+    <svg id="alignSvg" viewBox="0 0 640 280" role="img" aria-label="對齊示意圖"></svg>
+    <div class="row" style="margin-top:10px">
+      <button class="btn primary" id="alignBtn">執行對齊</button>
+      <span class="hint" id="alignState">狀態：未對齊，兩個空間互不相通</span>
+    </div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>維度</th><th>跨模態對齊</th><th>多模態融合</th></tr>
+      <tr><td>要解決的問題</td><td>異質向量空間不可比較</td><td>多來源資訊如何整合成決策</td></tr>
+      <tr><td>典型技術</td><td>對比學習（CLIP）、共享編碼器、DTW 時序對齊</td><td>早期／中期／晚期融合、注意力加權</td></tr>
+      <tr><td>成本影響</td><td>通常<b>增加</b>訓練開銷</td><td>依融合層級而異</td></tr>
+    </table>
+  </div>
+  <div class="callout"><b>陷阱：</b>115Q1 第 18 題誘答「降低多模態資料的儲存與計算成本」—— 對齊<b>不是</b>為了省成本，它反而更貴。「自動生成跨模態配對標註」屬於弱監督議題，也不是對齊的核心目的。</div>
+
+  <h3>融合模擬器：在哪一層合併？</h3>
+  <div class="panel">
+    <div class="row" style="justify-content:space-between">
+      <div class="tabs" id="fuTabs" style="margin:0">
+        <button class="btn" data-m="early" aria-pressed="true">早期融合</button>
+        <button class="btn" data-m="mid" aria-pressed="false">中期融合</button>
+        <button class="btn" data-m="late" aria-pressed="false">晚期融合</button>
+      </div>
+      <button class="btn" id="noiseBtn" aria-pressed="false">讓文字模態變差</button>
+    </div>
+    <svg id="fuSvg" viewBox="0 0 660 270" style="margin-top:12px" role="img" aria-label="融合流程圖"></svg>
+    <div class="fusion-meta">
+      <div>
+        <div class="row" style="justify-content:space-between"><b>整體效能（示意）</b><span id="fuNum" style="font-variant-numeric:tabular-nums">92%</span></div>
+        <div class="meter"><i id="fuMeter" style="width:92%"></i></div>
+        <div class="hint" id="fuNote">三個模態都正常。</div>
+      </div>
+      <div class="pc" id="fuPc"></div>
+    </div>
+  </div>
+
+  <div class="callout exam"><b>115Q1 第 50 題：</b>採晚期融合，問診文字品質差但效能只小幅下降，問「何者<b>最不可能</b>是原因」。正解是「晚期融合會在<b>輸入階段</b>整合多模態特徵」—— 這句話跟晚期融合的定義自相矛盾。<br><span class="hint">注意：官方《學習指引》內文把 Late Fusion 寫成「特徵層級整合」，但實際考題採決策層整合的標準定義，作答以後者為準。</span></div>
+</section>
+
+<!-- 21.3 -->
+<section id="s3">
+  <div class="sec-head"><span class="sec-no">21.3</span><h2>CLIP 與代表性模型</h2></div>
+  <p class="lead">CLIP 用約 4 億組網路圖文配對訓練，雙塔編碼器分別處理影像與文字，用對比學習讓配對的拉近、不配對的推遠。</p>
+
+  <h3>步驟一：對比學習訓練</h3>
+  <div class="panel">
+    <p class="hint">矩陣每一格是「圖 × 文」的相似度。對角線是正確配對。每按一次訓練，看對角線變亮、其他格變暗。</p>
+    <div style="max-width:420px;margin:0 auto" id="cmat"></div>
+    <div class="row" style="margin-top:14px;justify-content:center">
+      <button class="btn primary" id="trainBtn">訓練一步</button>
+      <button class="btn" id="trainReset">重設</button>
+      <span class="hint" id="trainInfo">第 0 步</span>
+    </div>
+  </div>
+
+  <h3>步驟二：零樣本分類</h3>
+  <div class="panel">
+    <p class="hint">不需要新的標註資料。選一張待測影像，CLIP 會把它跟每一句文字提示算餘弦相似度，最高者即為預測。</p>
+    <div class="zs-imgs" id="zsImgs"></div>
+    <div id="zsBars" style="margin-top:16px"></div>
+    <p class="hint" id="zsNote" style="margin:8px 0 0"></p>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>CLIP 面向</th><th>內容</th></tr>
+      <tr><td>核心機制</td><td>對比學習（Contrastive Learning）＋雙塔編碼器</td></tr>
+      <tr><td>關鍵產出</td><td>共同嵌入空間（Shared Embedding Space）</td></tr>
+      <tr><td>代表能力</td><td>零樣本分類、圖文匹配、圖文互搜</td></tr>
+      <tr><td>限制</td><td>細節理解有限（手部、文字、標誌顏色）；訓練資料偏見</td></tr>
+    </table>
+  </div>
+  <div class="callout exam"><b>114Q2 第 35 題</b>（正面考）：不新增標註、只用文字提示識別影像 → 對比學習映射至共同嵌入空間，以語意相似度做零樣本分類。影像增強、監督式 MLP 都仍需標註；「自迴歸生成文字標籤」是生成模型，不是 CLIP。<br><br><b>114Q2 第 50 題</b>（反面考）：文生圖主體正確，但標誌顏色錯、手部不自然 → 編碼器在語意嵌入空間<b>未充分對齊</b>。誘答「模型未採用對比學習損失」太絕對 —— CLIP 本來就有，問題在程度不足。</div>
+
+  <h3>代表性模型速記（點卡片翻面）</h3>
+  <div class="cards" id="cards"></div>
+
+  <h3>語音模態的整合鏈路</h3>
+  <div class="panel">
+    <p class="hint">語音不是「直接丟進模型」。按下一步，跟著一句話走完管線。</p>
+    <div class="pipe" id="pipe"></div>
+    <div class="pout" id="pout" aria-live="polite"></div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn primary" id="pipeNext">下一步</button>
+      <button class="btn" id="pipeReset">從頭開始</button>
+    </div>
+  </div>
+  <p class="prose"><b>感測融合（Sensor Fusion）</b>則是先做資料同步與特徵對齊，再整合到統一模型，例如自動駕駛整合攝影機、雷達與超音波。兩大固定挑戰：<b>採樣頻率與時間戳同步</b>，以及<b>融合後暴增的模型複雜度與運算負擔</b>。</p>
+  <div class="callout exam"><b>學習指引示範題：</b>最能展現多模態優勢的情境是<b>影片自動生成字幕</b>（聲音＋文字＋影像上下文）。SQL 查詢、純圖片壓縮、單一感測器故障排除都只涉及單一模態。</div>
+
+  <h3>生成模型的潛在空間對齊差異（114Q2 第 40 題）</h3>
+  <div class="panel">
+    <div class="tabs" id="genTabs"></div>
+    <div id="genBody"></div>
+  </div>
+  <p class="prose hint">誘答手法是「張冠李戴」：把 VAE 說成對抗式、說 VAE 與 GAN 用馬可夫鏈、或說三者共用同一潛在空間只差解碼器，全都錯。</p>
+</section>
+
+<!-- 21.4 -->
+<section id="s4">
+  <div class="sec-head"><span class="sec-no">21.4</span><h2>模態缺失與資料對齊的實務挑戰</h2></div>
+  <p class="lead">情境（114Q2 第 21 題）：多模態模型上線後，有些樣本<b>只有影像、沒有文本</b>。哪個策略最能維持效能？點選每個策略看結果。</p>
+  <div class="panel">
+    <div class="strat" id="strat"></div>
+    <div style="margin-top:18px" id="stratOut">
+      <div class="verdict" id="stratV">選一個策略試試</div>
+      <div class="meter" style="height:18px;margin:10px 0"><i id="stratM" style="width:0"></i></div>
+      <div id="stratWhy" class="hint"></div>
+    </div>
+  </div>
+  <div class="callout">關鍵字「<b>最有效維持模型效能</b>」。零向量填充最直覺、最容易被選，但它把「沒有資訊」偽裝成「值為 0 的資訊」，模型會把假訊號當真。</div>
+
+  <h3>其他實務瓶頸</h3>
+  <details><summary>時間對齊</summary><div class="body">表現：各感測器採樣頻率與時間戳不一致。<br>對策：<b>動態時間規整（DTW）</b>、時間戳重採樣。</div></details>
+  <details><summary>語意對齊</summary><div class="body">表現：影像特徵與文字描述不在同一空間。<br>對策：對比學習（CLIP 式）、共享編碼器。</div></details>
+  <details><summary>標註成本高</summary><div class="body">表現：圖片標物件同時還要寫文字描述。<br>對策：弱監督學習、生成模型產標註原型、自我監督預訓練。</div></details>
+  <details><summary>運算與部署</summary><div class="body">表現：參數量大、邊緣裝置跑不動。<br>對策：剪枝、量化、知識蒸餾、LoRA、雲邊混合部署。</div></details>
+  <details><summary>隱私與法規</summary><div class="body">表現：臉部影像、聲紋、生理訊號屬敏感個資。<br>對策：匿名化、端到端加密、遵循 GDPR／個資法、對抗訓練防 Deepfake。</div></details>
+</section>
+
+<!-- 21.5 -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-no">21.5</span><h2>應用情境與評估指標</h2></div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>領域</th><th>整合的模態</th><th>典型任務</th><th>常用指標</th></tr>
+      <tr><td>智慧醫療</td><td>CT／MRI／X 光＋電子病歷＋生理訊號</td><td>病灶判別後自動生成診斷摘要</td><td>準確率、假陽性率、ROUGE</td></tr>
+      <tr><td>零售與顧客分析</td><td>監視影像＋POS 交易＋評論與社群</td><td>動線分析搭配銷售資料優化店面</td><td>推薦 Precision、動線 IoU、情感 F1</td></tr>
+      <tr><td>虛實整合互動</td><td>語音＋文字＋表情＋姿勢＋3D</td><td>虛擬人偶依語音與手勢回應</td><td>回應延遲、WER、姿勢辨識準確率</td></tr>
+      <tr><td>自動駕駛／機器人</td><td>攝影機＋雷達＋超音波</td><td>障礙物偵測與定位</td><td>偵測 mAP、定位誤差</td></tr>
+    </table>
+  </div>
+  <div class="panel">
+    <h3 style="margin-top:0">送分題練習：任務配指標</h3>
+    <p class="hint">四組要能反射性對上。先點任務，再點指標。</p>
+    <div class="match" id="metMatch"></div>
+    <div class="feedback" id="metFb" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- 21.6 -->
+<section id="s6">
+  <div class="sec-head"><span class="sec-no">21.6</span><h2>官方考過什麼</h2></div>
+  <p class="lead">114-2 與 115-1 兩份公告試題（共 100 題）中，多模態相關共 <b>8 題</b>，約 8%。以<b>情境判斷題</b>為主，幾乎沒有純名詞定義題。</p>
+  <div id="examList"></div>
+  <div class="callout exam">準備方向：把「對齊 vs 融合」「早期 vs 晚期」「模態缺失四策略」三組對照練到能秒答。</div>
+</section>
+
+<!-- 21.7 -->
+<section id="s7">
+  <div class="sec-head"><span class="sec-no">21.7</span><h2>易錯與陷阱</h2></div>
+  <p class="lead">逐條確認自己真的懂了再打勾（打勾狀態會記在這台裝置上）。</p>
+  <div class="traps" id="traps"></div>
+  <p class="hint" id="trapCount" style="margin-top:10px"></p>
+
+  <h3>情境測驗</h3>
+  <div class="qcard" id="quiz"></div>
+
+  <h3>延伸練習</h3>
+  <p class="prose"><b>L21 主題庫 311 題：</b>篩選「多模態／跨模態／CLIP／融合」相關題目，重點練情境判斷。<br><b>L23 主題庫 326 題：</b>多模態系統的部署、監控與資料治理題，可與本節「運算與部署」「隱私與法規」互補。<br><b>各科歷屆 100 題：</b>對照 L21103（生成式 AI）與 L21102（電腦視覺）一起複習，多模態題常以跨知識點混合情境出現。</p>
+</section>
+</main>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce){const m=document.querySelector('#heroSvg .movers');if(m)m.remove();}
+
+/* ---------- generic matcher ---------- */
+function matcher(root,fb,left,right,doneMsg){
+  let sel=null,done=0;
+  const L=document.createElement('div');L.className='col';
+  const R=document.createElement('div');R.className='col';
+  left.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;
+    b.innerHTML=it.html;if(it.c)b.style.setProperty('--c',it.c);
+    b.onclick=()=>{if(b.classList.contains('done'))return;L.querySelectorAll('.mitem').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;fb.textContent='';fb.className='feedback';};
+    L.appendChild(b);
+  });
+  right.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;b.innerHTML=it.html;
+    b.onclick=()=>{
+      if(b.classList.contains('done'))return;
+      if(!sel){fb.textContent='請先點左邊一個項目。';fb.className='feedback';return;}
+      if(sel.dataset.k===b.dataset.k){
+        const c=sel.style.getPropertyValue('--c');
+        [sel,b].forEach(x=>{x.classList.remove('sel');x.classList.add('done');if(c)x.style.setProperty('--c',c);});
+        fb.textContent='✓ '+(it.ok||'答對了！');fb.className='feedback ok';sel=null;done++;
+        if(done===left.length){fb.textContent='✓ 全部配對完成！'+doneMsg;}
+      }else{
+        b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');
+        fb.textContent='✗ '+(it.bad||'不太對，再想想它的資料結構特性。');fb.className='feedback bad';
+      }
+    };
+    R.appendChild(b);
+  });
+  root.append(L,R);
+}
+matcher($('#encMatch'),$('#encFb'),[
+  {k:'t',c:'var(--txt)',html:'<span class="chip" style="--c:var(--txt)"><i class="dot"></i>文字</span><small>離散、序列、語意密度高</small>'},
+  {k:'i',c:'var(--img)',html:'<span class="chip" style="--c:var(--img)"><i class="dot"></i>影像</span><small>連續、空間局部性、平移不變</small>'},
+  {k:'a',c:'var(--aud)',html:'<span class="chip" style="--c:var(--aud)"><i class="dot"></i>語音／音訊</span><small>時間序列、含語調與情緒</small>'},
+  {k:'s',c:'var(--sen)',html:'<span class="chip" style="--c:var(--sen)"><i class="dot"></i>感測器訊號</span><small>等間隔連續數值、多通道</small>'}
+],[
+  {k:'i',html:'CNN（ResNet）、ViT',ok:'影像有空間局部性，CNN 的卷積核正好捕捉局部特徵。'},
+  {k:'s',html:'LSTM、Temporal CNN',ok:'感測器是等間隔的時間序列，適合時序模型。'},
+  {k:'x',html:'全部統一用 BERT 就好',bad:'這是 115Q1-17 的經典誘答！原始像素與感測數值仍需各自的前處理與嵌入設計。'},
+  {k:'t',html:'Transformer（BERT、GPT 類）',ok:'文字是離散序列，自注意力擅長捕捉長距離語意。'},
+  {k:'a',html:'Whisper 類 ASR、聲學 Transformer',ok:'語音先轉成文字或聲學特徵，才能進入後續管線。'}
+],'這正是 115Q1 第 17 題的答案。');
+
+/* ---------- evolution ---------- */
+const evo=[
+  {t:'早期：特徵串接',d:'各模態特徵向量直接 concat，丟給 SVM／決策樹。',lim:'無法處理語意對齊與模態交互，擴展性差。',viz:()=>`<div>${blk('txt',3)}${blk('img',3)}${blk('sen',3)}</div><div style="margin-left:10px">→ SVM</div>`},
+  {t:'深度學習期：專屬網路＋融合層',d:'CNN 讀影像、RNN 讀文字語音，再經 Fusion Layer 整合。',lim:'模組分離，跨模態互動仍淺。',viz:()=>`<div style="display:flex;flex-direction:column;gap:4px">${['img:CNN','txt:RNN','aud:RNN'].map(s=>{const[c,n]=s.split(':');return `<div style="display:flex;align-items:center;gap:6px">${blk(c,1)}<small>${n}</small></div>`}).join('')}</div><div style="margin-left:10px">→ Fusion Layer</div>`},
+  {t:'當前：Transformer 統一架構',d:'自注意力驅動跨模態注意（M3AE、Flamingo、BLIP-2）。',lim:'參數量大、運算成本高。',viz:()=>{let h='<div style="display:grid;grid-template-columns:repeat(4,38px);gap:2px">';const cs=['txt','img','aud','sen'];for(let i=0;i<12;i++)h+=`<span class="blk" style="background:var(--${cs[i%4]});opacity:${.45+.55*((i*7)%5)/4}"></span>`;return h+'</div><div style="margin-left:10px">交互注意</div>';}}
+];
+function blk(c,n){return Array.from({length:n},()=>`<span class="blk" style="background:var(--${c})"></span>`).join('');}
+function showEvo(i){
+  document.querySelectorAll('#evoBtns .btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));
+  $('#evoViz').innerHTML=`<div style="display:flex;align-items:center">${evo[i].viz()}</div>`;
+  $('#evoTxt').innerHTML=`<p><b>${evo[i].t}</b></p><p>${evo[i].d}</p><p class="hint">限制：${evo[i].lim}</p>`;
+}
+evo.forEach((e,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=`${i+1}. ${e.t.split('：')[0]}`;b.onclick=()=>showEvo(i);$('#evoBtns').appendChild(b);});
+showEvo(0);
+
+/* ---------- alignment ---------- */
+(function(){
+  const svg=$('#alignSvg');
+  const items=[
+    {n:'貓',ix:60,iy:70,tx:520,ty:200,cx:250,cy:80},
+    {n:'狗',ix:120,iy:190,tx:580,ty:70,cx:270,cy:200},
+    {n:'車',ix:40,iy:140,tx:470,ty:110,cx:400,cy:150}
+  ];
+  let h=`<rect x="5" y="20" width="200" height="240" rx="16" fill="none" stroke="var(--img)" stroke-dasharray="5 5" class="spA"/>
+  <text x="105" y="14" text-anchor="middle" font-size="13" fill="var(--img)" font-weight="700" class="spA">影像向量空間</text>
+  <rect x="435" y="20" width="200" height="240" rx="16" fill="none" stroke="var(--txt)" stroke-dasharray="5 5" class="spA"/>
+  <text x="535" y="14" text-anchor="middle" font-size="13" fill="var(--txt)" font-weight="700" class="spA">文字向量空間</text>
+  <rect x="190" y="30" width="260" height="220" rx="110" fill="var(--surface2)" stroke="var(--ink)" stroke-width="1.5" id="shared" style="opacity:0;transition:opacity .6s"/>
+  <text x="320" y="270" text-anchor="middle" font-size="13" fill="var(--ink)" font-weight="700" id="sharedT" style="opacity:0;transition:opacity .6s">共同嵌入空間</text>`;
+  items.forEach((it,k)=>{
+    h+=`<g class="ai" data-k="${k}" data-t="img" style="transition:transform 1.1s cubic-bezier(.5,0,.2,1)"><circle cx="${it.ix}" cy="${it.iy}" r="18" fill="var(--img)"/><text x="${it.ix}" y="${it.iy+5}" text-anchor="middle" fill="#fff" font-size="14">🖼${it.n}</text></g>`;
+    h+=`<g class="ai" data-k="${k}" data-t="txt" style="transition:transform 1.1s cubic-bezier(.5,0,.2,1) .15s"><rect x="${it.tx-26}" y="${it.ty-15}" width="52" height="30" rx="6" fill="var(--txt)"/><text x="${it.tx}" y="${it.ty+5}" text-anchor="middle" fill="#fff" font-size="13">「${it.n}」</text></g>`;
+  });
+  svg.innerHTML=h;
+  let on=false;
+  $('#alignBtn').onclick=()=>{
+    on=!on;
+    svg.querySelectorAll('.ai').forEach(g=>{
+      const it=items[g.dataset.k];
+      if(!on){g.style.transform='';return;}
+      if(g.dataset.t==='img')g.style.transform=`translate(${it.cx-28-it.ix}px,${it.cy-it.iy}px)`;
+      else g.style.transform=`translate(${it.cx+30-it.tx}px,${it.cy-it.ty}px)`;
+    });
+    $('#shared').style.opacity=on?1:0;$('#sharedT').style.opacity=on?1:0;
+    svg.querySelectorAll('.spA').forEach(e=>{e.style.transition='opacity .6s';e.style.opacity=on?.25:1;});
+    $('#alignBtn').textContent=on?'回到對齊前':'執行對齊';
+    $('#alignState').textContent=on?'狀態：已對齊。「貓」的圖和「貓」的字彼此靠近，可以直接算距離比較。':'狀態：未對齊，兩個空間互不相通';
+  };
+})();
+
+/* ---------- fusion simulator ---------- */
+(function(){
+  let mode='early',noisy=false;
+  const lanes=[{c:'var(--img)',y:55,in:'影像',enc:'CNN'},{c:'var(--txt)',y:135,in:'文字',enc:'Transformer'},{c:'var(--sen)',y:215,in:'時序',enc:'LSTM'}];
+  const box=(x,y,w,h,label,fill,cls='',tc='#fff')=>`<g class="${cls}"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="${fill}"/>${label.split('|').map((l,i,a)=>`<text x="${x+w/2}" y="${y+h/2+5+(i-(a.length-1)/2)*18}" text-anchor="middle" font-size="14" fill="${tc}" font-weight="700">${l}</text>`).join('')}</g>`;
+  const path=(d,warn)=>`<path d="${d}" fill="none" stroke="${warn?'var(--bad)':'var(--muted)'}" stroke-width="${warn?3:2}" class="flow"/>`;
+  const perf={early:[92,58],mid:[92,74],late:[92,87]};
+  const pc={
+    early:['能學到最細緻的跨模態交互','對缺失與雜訊最敏感，一個模態壞掉會在特徵空間被放大','原始資料直接合併成單一輸入，雜訊從第一步就混進所有特徵。'],
+    mid:['各模態先各自最佳化再整合，實務最常用','合併後雜訊仍會影響共同表示層','各自編碼能先過濾部分雜訊，但融合層之後仍受影響。對應 115Q1-35：基因先做特徵選擇、文本先做語意表示，再融合。'],
+    late:['強健性最佳，單一模態品質差只小幅影響整體','學不到細粒度的跨模態交互','壞掉的只有文字那條路，決策層降低它的權重，其他模態照常投票。']
+  };
+  function draw(){
+    const N=noisy;let h='';
+    const inBox=(l,x,w)=>box(x,l.y-22,w,44,l.in,l.c,(N&&l.in==='文字')?'jitter':'');
+    if(mode==='early'){
+      lanes.forEach(l=>{h+=path(`M110 ${l.y} C 160 ${l.y}, 160 135, 200 135`,N&&l.in==='文字');h+=inBox(l,10,100);});
+      h+=box(200,35,90,200,'合併|輸入','var(--ink)','', 'var(--bg)');
+      h+=path('M290 135 L340 135',N);h+=box(340,105,110,60,'單一模型','var(--ink)','','var(--bg)');
+      h+=path('M450 135 L510 135',N);h+=box(510,105,110,60,'預測',N?'var(--bad)':'var(--ok)');
+    }else if(mode==='mid'){
+      lanes.forEach(l=>{const w=N&&l.in==='文字';h+=path(`M100 ${l.y} L130 ${l.y}`,w);h+=path(`M230 ${l.y} C 260 ${l.y}, 260 135, 290 135`,w);h+=inBox(l,10,90);h+=box(130,l.y-22,100,44,l.enc,'var(--surface2)','','var(--ink)');});
+      h+=box(290,35,110,200,'特徵融合|／注意力','var(--ink)','','var(--bg)');
+      h+=path('M400 135 L430 135',N);h+=box(430,105,90,60,'共同|表示層','var(--ink)','','var(--bg)');
+      h+=path('M520 135 L550 135',N);h+=box(550,105,90,60,'預測',N?'var(--warn)':'var(--ok)');
+    }else{
+      lanes.forEach((l,i)=>{const w=N&&l.in==='文字';h+=path(`M90 ${l.y} L115 ${l.y}`,w);h+=path(`M215 ${l.y} L245 ${l.y}`,w);h+=path(`M325 ${l.y} C 350 ${l.y}, 350 135, 380 135`,w);h+=inBox(l,10,80);h+=box(115,l.y-22,100,44,'模型'+'ABC'[i],'var(--surface2)','','var(--ink)');h+=box(245,l.y-22,80,44,(w?'分數↓':'分數'+'ABC'[i]),w?'var(--bad)':'var(--surface2)','',w?'#fff':'var(--ink)');});
+      h+=box(380,35,100,200,'加權|／投票','var(--ink)','','var(--bg)');
+      h+=path('M480 135 L530 135',false);h+=box(530,105,100,60,'預測','var(--ok)');
+    }
+    $('#fuSvg').innerHTML=h;
+    const v=perf[mode][N?1:0];
+    $('#fuNum').textContent=v+'%';$('#fuMeter').style.width=v+'%';
+    $('#fuMeter').style.background=v>85?'var(--ok)':v>70?'var(--warn)':'var(--bad)';
+    $('#fuNote').textContent=N?pc[mode][2]:'三個模態都正常。試試右上角「讓文字模態變差」。';
+    $('#fuPc').innerHTML=`<p style="margin:0 0 8px"><b>優點</b>${pc[mode][0]}</p><p style="margin:0"><b>缺點</b>${pc[mode][1]}</p>`;
+  }
+  document.querySelectorAll('#fuTabs .btn').forEach(b=>b.onclick=()=>{mode=b.dataset.m;document.querySelectorAll('#fuTabs .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));draw();});
+  $('#noiseBtn').onclick=()=>{noisy=!noisy;$('#noiseBtn').setAttribute('aria-pressed',noisy);$('#noiseBtn').textContent=noisy?'恢復文字模態':'讓文字模態變差';draw();};
+  draw();
+})();
+
+/* ---------- CLIP matrix ---------- */
+(function(){
+  const imgs=['🐱','🐶','🚗','🍜'],txts=['一隻貓','一隻狗','一台車','一碗麵'];
+  const init=()=>[[.52,.47,.41,.38],[.49,.5,.44,.42],[.40,.45,.48,.43],[.44,.39,.46,.47]].map(r=>r.slice());
+  let M=init(),step=0;
+  function render(){
+    let h=`<div class="mat" style="grid-template-columns:44px repeat(4,1fr)"><div></div>${txts.map(t=>`<div class="tlab">「${t}」</div>`).join('')}`;
+    M.forEach((r,i)=>{h+=`<div class="lab">${imgs[i]}</div>`;r.forEach((v,j)=>{const diag=i===j;const col=diag?'var(--img)':'var(--sen)';h+=`<div class="cell" style="background:color-mix(in srgb,${col} ${Math.round(v*100)}%,var(--surface2));color:${v>.55?'#fff':'var(--ink)'}">${v.toFixed(2)}</div>`;});});
+    $('#cmat').innerHTML=h+'</div>';
+    const d=M.reduce((s,r,i)=>s+r[i],0)/4,o=(M.flat().reduce((a,b)=>a+b,0)-d*4)/12;
+    $('#trainInfo').textContent=`第 ${step} 步　配對平均 ${d.toFixed(2)}　非配對平均 ${o.toFixed(2)}`;
+  }
+  $('#trainBtn').onclick=()=>{step++;M=M.map((r,i)=>r.map((v,j)=>i===j?v+(.95-v)*.35:v*.72+.02));render();};
+  $('#trainReset').onclick=()=>{M=init();step=0;render();};
+  render();
+})();
+
+/* ---------- zero-shot ---------- */
+(function(){
+  const prompts=['一張貓的照片','一張狗的照片','一張汽車的照片','一張拉麵的照片'];
+  const set=[
+    {e:'🐱',n:'貓',s:[.31,.25,.14,.15]},
+    {e:'🐶',n:'狗',s:[.24,.30,.15,.14]},
+    {e:'🚗',n:'汽車',s:[.13,.14,.32,.16]},
+    {e:'🍜',n:'拉麵',s:[.15,.13,.15,.29]},
+    {e:'🦊',n:'狐狸（沒有對應提示）',s:[.22,.26,.13,.12]}
+  ];
+  set.forEach((it,i)=>{const b=document.createElement('button');b.className='zs-img';b.textContent=it.e;b.setAttribute('aria-label',it.n);b.setAttribute('aria-pressed','false');b.onclick=()=>pick(i);$('#zsImgs').appendChild(b);});
+  $('#zsBars').innerHTML=prompts.map(p=>`<div class="bar"><span>「${p}」</span><div class="track"><div class="fill"></div></div><span class="num">—</span></div>`).join('');
+  function pick(i){
+    document.querySelectorAll('.zs-img').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));
+    const s=set[i].s,mx=Math.max(...s),ex=s.map(v=>Math.exp((v-mx)*100)),sum=ex.reduce((a,b)=>a+b,0);
+    const p=ex.map(v=>v/sum),best=s.indexOf(mx);
+    document.querySelectorAll('#zsBars .bar').forEach((row,j)=>{
+      row.classList.toggle('win',j===best);
+      row.querySelector('.fill').style.width='0';
+      setTimeout(()=>{row.querySelector('.fill').style.width=(p[j]*100).toFixed(1)+'%';},30);
+      row.querySelector('.num').textContent=s[j].toFixed(2);
+    });
+    $('#zsNote').textContent=i===4?'沒有「狐狸」這個提示，CLIP 只能選最接近的「狗」。零樣本只能在你給的提示中選，想認狐狸就加一句「一張狐狸的照片」—— 仍然不需要標註資料。':`右邊數字是餘弦相似度，長條是 softmax 後的機率。預測：${prompts[best]}。整個過程沒有用到任何「${set[i].n}」的標註樣本。`;
+  }
+  pick(0);
+})();
+
+/* ---------- model cards ---------- */
+[
+  ['CLIP','OpenAI','圖文對比學習，零樣本分類的基礎；DALL·E 的基石'],
+  ['BLIP / BLIP-2','Salesforce','強化圖文問答（VQA）與圖像描述生成，圖文雙向理解'],
+  ['Flamingo','DeepMind','少樣本學習（Few-shot），能快速適應新的圖文任務'],
+  ['M3AE','學術界','遮罩預訓練的多模態自編碼器，統一編碼器學共享語意結構'],
+  ['ImageBind','Meta','把影像、聲音、深度、紅外線等映射到單一向量空間'],
+  ['Whisper','OpenAI','語音轉文字（ASR），語音模態進入多模態管線的入口']
+].forEach(([n,o,d])=>{
+  const b=document.createElement('button');b.className='flip';b.setAttribute('aria-pressed','false');
+  b.innerHTML=`<div class="in"><div class="f"><strong>${n}</strong><span>${o}</span><span style="margin-top:auto;font-size:12.5px">點我翻面</span></div><div class="b">${d}</div></div>`;
+  b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');
+  $('#cards').appendChild(b);
+});
+
+/* ---------- speech pipeline ---------- */
+(function(){
+  const nodes=[['語音輸入','聲學訊號'],['ASR','如 Whisper'],['NLU','如 BERT／GPT'],['任務執行','查資料'],['TTS／NMT','語音／多語回應']];
+  const out=[
+    '<div class="wave">'+Array.from({length:28},(_,i)=>`<i style="height:${8+Math.abs(Math.sin(i*1.3))*22}px;animation-delay:${i*.04}s"></i>`).join('')+'</div><div class="hint">使用者對語音助理說了一句話。</div>',
+    '<b>ASR 輸出文字：</b>「明天台北會下雨嗎？」<div class="hint">ASR 只負責把聲音轉成文字，<b>不負責理解意圖</b>。</div>',
+    '<b>NLU 解析：</b>意圖＝查詢天氣｜地點＝台北｜時間＝明天<div class="hint">NLU 擷取意圖與語意槽位，<b>不負責辨識聲音</b>。</div>',
+    '<b>任務執行：</b>呼叫氣象 API → 降雨機率 70%',
+    '<b>TTS：</b>🔊「明天台北降雨機率 70%，記得帶傘。」<br><b>NMT（需要時）：</b>“70% chance of rain in Taipei tomorrow.”<div class="hint">TTS 屬輸出端，與 ASR 方向相反。NMT 要和 ASR／TTS 串接才構成跨語言語音助理。</div>'
+  ];
+  let i=0;
+  $('#pipe').innerHTML=nodes.map(([a,b])=>`<div class="pnode"><b>${a}</b>${b}</div>`).join('');
+  function r(){document.querySelectorAll('.pnode').forEach((n,j)=>{n.classList.toggle('on',j===i);n.classList.toggle('past',j<i);});$('#pout').innerHTML=out[i];$('#pipeNext').disabled=i===4;$('#pipeNext').style.opacity=i===4?.4:1;}
+  $('#pipeNext').onclick=()=>{if(i<4){i++;r();}};
+  $('#pipeReset').onclick=()=>{i=0;r();};
+  r();
+})();
+
+/* ---------- generative tabs ---------- */
+(function(){
+  const g=[
+    ['VAE','顯式潛在變數建模','擅長捕捉整體語意結構，但生成解析度有限。','✗ 誘答：「VAE 是隱式／對抗式」'],
+    ['GAN','對抗損失學習分佈映射','生成品質高，但訓練穩定性差。','✗ 誘答：「VAE 與 GAN 都用馬可夫鏈」'],
+    ['Diffusion','條件化噪聲反推（Conditional Denoising）','高保真、穩定且多樣性佳。','✗ 誘答：「三者共用同一潛在空間，只差解碼器」']
+  ];
+  g.forEach((x,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=x[0];b.onclick=()=>s(i);$('#genTabs').appendChild(b);});
+  function s(i){document.querySelectorAll('#genTabs .btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));const x=g[i];$('#genBody').innerHTML=`<p style="margin:0 0 6px"><b>對齊方式：</b>${x[1]}</p><p style="margin:0 0 6px"><b>特性：</b>${x[2]}</p><p class="hint" style="margin:0">${x[3]}</p>`;}
+  s(0);
+})();
+
+/* ---------- missing modality ---------- */
+(function(){
+  const st=[
+    ['以零向量或固定向量填充','✗ 最差',35,'var(--bad)','引入無意義訊號干擾學習。模型把「沒有資訊」誤當成「數值為 0 的資訊」。'],
+    ['直接捨棄缺少模態的樣本','✗ 不建議',50,'var(--bad)','浪費訓練資料，而且<b>無法解決推論時</b>才發生的缺失 —— 上線後總不能拒絕回答。'],
+    ['用生成模型（GAN、自迴歸）補全','△ 次之',70,'var(--warn)','可行，但補全品質不穩，且增加運算與誤差傳遞風險。'],
+    ['訓練具模態缺失感知能力的模型','✓ 最佳',90,'var(--ok)','學習階段就明確處理缺失情境，動態調整融合權重，推論時少一個模態仍穩健。']
+  ];
+  [2,0,3,1].forEach(i=>{const b=document.createElement('button');b.textContent=st[i][0];b.setAttribute('aria-pressed','false');b.onclick=()=>{document.querySelectorAll('#strat button').forEach(x=>x.setAttribute('aria-pressed',x===b));const x=st[i];$('#stratV').textContent=x[1];$('#stratV').style.color=x[3];$('#stratM').style.width=x[2]+'%';$('#stratM').style.background=x[3];$('#stratWhy').innerHTML='效能維持（示意）：'+x[2]+'%　'+x[4];};$('#strat').appendChild(b);});
+})();
+
+/* ---------- metric matcher ---------- */
+matcher($('#metMatch'),$('#metFb'),[
+  {k:'r',c:'var(--txt)',html:'生成式報告<small>例：自動生成診斷摘要</small>'},
+  {k:'i',c:'var(--img)',html:'空間框選<small>例：動線、物件框</small>'},
+  {k:'w',c:'var(--aud)',html:'語音辨識<small>例：虛擬人偶聽指令</small>'},
+  {k:'f',c:'var(--sen)',html:'情感分類<small>例：評論情緒判斷</small>'}
+],[
+  {k:'w',html:'WER<small>詞錯誤率</small>',ok:'WER 計算辨識出的字詞錯了多少。'},
+  {k:'f',html:'F1<small>精確率與召回率的調和平均</small>',ok:'分類任務常用 F1。'},
+  {k:'r',html:'ROUGE<small>與參考文本的重疊程度</small>',ok:'ROUGE 衡量生成文字與參考摘要的重疊。'},
+  {k:'i',html:'IoU<small>交集除以聯集</small>',ok:'IoU 衡量預測框與真實框的重疊。'}
+],'這組是可能的送分題。');
+
+/* ---------- exam list ---------- */
+[
+  ['114Q2-21','模態缺失處理','只有影像沒有文本，如何維持效能','<b>訓練具模態缺失感知能力的模型</b>；零向量填充是最差解'],
+  ['114Q2-35','CLIP 零樣本','不加標註、只給文字提示就要辨識影像','對比學習映射至<b>共同嵌入空間</b>，用語意相似度做零樣本分類'],
+  ['114Q2-40','生成模型潛在空間對齊','VAE／GAN／Diffusion 的根本差異','VAE 顯式潛在變數、GAN 對抗損失不穩、Diffusion 條件化去噪高保真'],
+  ['114Q2-50','對齊不足的症狀','文生圖主體正確但標誌顏色、手部有誤','文字與影像編碼器<b>語意嵌入空間未充分對齊</b>'],
+  ['115Q1-17','各模態編碼器選型','影像＋病歷文字＋生理時序該配哪些架構','CNN／Transformer／LSTM 或 Temporal CNN'],
+  ['115Q1-18','跨模態對齊的目的','CT＋病歷＋基因的癌症預測為何要對齊','對齊到<b>共同語意空間</b>以建立跨模態語意關聯（非省成本、非產標註）'],
+  ['115Q1-35','異質特徵融合策略','高維基因特徵＋語意文本如何處理','<b>分層策略</b>：各自最佳化後再融合，不可直接合併做 PCA'],
+  ['115Q1-50','晚期融合強健性','文字品質差卻只小幅掉效能，何者最不可能','「晚期融合在輸入階段整合特徵」自相矛盾，為正解']
+].forEach(([n,k,q,a])=>{$('#examList').insertAdjacentHTML('beforeend',`<details><summary><span class="tag">${n}</span>${k}</summary><div class="body"><p style="margin:0 0 6px"><span class="hint">怎麼問：</span>${q}</p><p style="margin:0"><span class="hint">正解思路：</span>${a}</p></div></details>`);});
+
+/* ---------- traps ---------- */
+(function(){
+  const T=[
+    ['對齊是讓不同模態「可比較」，不是「更省資源」','對齊通常增加訓練開銷，看到「降低儲存與計算成本」就排除。'],
+    ['早期融合在輸入層合併，晚期融合在決策層合併','晚期融合的強健性正來自「輸入不合併」。'],
+    ['模態缺失要用「缺失感知模型」，不是零向量填充','零向量把無資訊偽裝成數值 0，是干擾而非中性。'],
+    ['CLIP 是對比式對齊模型，不是自迴歸生成模型','它算相似度，不逐字生成描述；生成描述是 BLIP 的強項。'],
+    ['CLIP 的問題是「對齊程度不足」，不是「沒用對比學習」','選項講得太絕對通常就是誘答。'],
+    ['Transformer 有通用性，不等於三種模態都能直接套 BERT','原始像素與感測數值仍需各自的前處理與嵌入。'],
+    ['異質特徵不可直接 concat 後做 PCA','高維模態的變異會主導主成分，稀釋另一模態的語意。'],
+    ['多模態融合不必然提升效能','模態未對齊或某模態雜訊過大時，融合反而拉低表現。'],
+    ['感測融合的第一關是時間同步（DTW），不是語意對齊','題幹提到「採樣頻率／時間戳」就走時序對齊。'],
+    ['多模態不等於多任務','多模態指輸入型態多；多任務指同時學多個目標。']
+  ];
+  let saved=[];try{saved=JSON.parse(localStorage.getItem('l21104-traps')||'[]')||[];}catch(e){saved=[];}
+  T.forEach(([a,b],i)=>{
+    const l=document.createElement('label');const c=saved.includes(i);if(c)l.classList.add('chk');
+    l.innerHTML=`<input type="checkbox" ${c?'checked':''}><div><em>${a}</em><br><span>${b}</span></div>`;
+    l.querySelector('input').onchange=e=>{const on=e.target.checked;l.classList.toggle('chk',on);saved=on?[...new Set([...saved,i])]:saved.filter(x=>x!==i);try{localStorage.setItem('l21104-traps',JSON.stringify(saved));}catch(err){}count();};
+    $('#traps').appendChild(l);
+  });
+  function count(){$('#trapCount').textContent=`已確認 ${saved.length}／${T.length} 條`;}
+  count();
+})();
+
+/* ---------- quiz ---------- */
+(function(){
+  const Q=[
+    ['醫院要整合 CT 影像、病歷文字與生理時序訊號，哪組編碼器配置最符合各模態特性？',['影像 CNN／ViT、文字 Transformer、時序 LSTM 或 Temporal CNN','Transformer 具通用性，三種模態統一用 BERT','影像用 LSTM、文字用 CNN、時序用 Transformer','三種特徵先串接再交給 SVM'],'各模態資料結構不同。統一用 BERT 是最像對的誘答，但像素與感測數值仍需各自的前處理與嵌入。'],
+    ['癌症預測整合 CT、病歷、基因序列，「跨模態對齊」的主要目的是？',['把不同模態的表示對齊到共同語意空間，建立跨模態語意關聯','降低多模態資料的儲存與計算成本','自動生成跨模態配對標註','減少需要處理的模態數量'],'對齊通常反而增加訓練開銷；自動產標註屬弱監督議題。'],
+    ['系統採晚期融合，問診文字品質很差，整體效能卻只小幅下降。下列何者「最不可能」是原因？',['晚期融合會在輸入階段整合多模態特徵','各模態先由獨立模型各自預測','決策層可降低品質差模態的權重','其他模態仍提供可靠的預測分數'],'在輸入階段整合是早期融合的定義，與晚期融合自相矛盾。'],
+    ['媒體公司希望「不新增標註資料、只用文字提示」就能辨識影像內容，應採用哪個原理？',['圖文對比學習映射到共同嵌入空間，以語意相似度做零樣本分類','先做影像增強，再訓練分類器','訓練監督式 MLP 分類器','用自迴歸模型逐字生成文字標籤'],'這是 CLIP 的零樣本能力。影像增強與 MLP 仍需標註；自迴歸是生成模型的原理。'],
+    ['文生圖的主體與場景正確，但品牌標誌顏色有誤、手部姿勢不自然，最可能的原因是？',['文字與影像編碼器在語意嵌入空間未充分對齊','模型完全沒有採用對比學習損失函數','輸入的影像解析度太高','訓練資料中完全沒有手部影像'],'問題在「對齊程度不足」。說「沒有用對比學習」太絕對。'],
+    ['多模態模型上線後，有些樣本只有影像、沒有文本。哪個策略最能維持模型效能？',['訓練具模態缺失感知能力的模型','以零向量填充缺失的文本特徵','直接捨棄缺少文本的樣本','全部改用單一影像模型'],'缺失感知模型能動態調整融合權重。零向量填充是最差解。'],
+    ['要融合「高維基因特徵」與「語意文本」，較合理的做法是？',['分層處理：基因先做特徵選擇、文本先做語意表示，再融合','直接 concat 後做 PCA 降維','只保留維度較高的基因特徵','只保留語意較豐富的文本'],'直接 PCA 會讓高維模態的變異主導主成分，稀釋文本語意。'],
+    ['自動駕駛整合多個感測器，發現各感測器採樣頻率與時間戳不一致，應先處理哪個問題？',['時間對齊（DTW、時間戳重採樣）','用 CLIP 做語意對齊','用知識蒸餾縮小模型','用零向量補齊缺漏的時間點'],'題幹提到採樣頻率／時間戳，就走時序對齊，不是語意對齊。'],
+    ['下列哪個情境最能展現多模態 AI 的優勢？',['影片自動生成字幕','SQL 資料庫查詢','純圖片壓縮','單一感測器故障排除'],'字幕同時涉及聲音、文字與影像上下文，其他選項都只有單一模態。'],
+    ['虛擬人偶要聽懂使用者的語音指令，評估「語音辨識」品質最常用的指標是？',['WER','ROUGE','IoU','mAP'],'ROUGE 配生成報告、IoU 配空間框選、mAP 配物件偵測。'],
+    ['關於 VAE、GAN、Diffusion 在潛在空間對齊上的敘述，何者正確？',['Diffusion 透過條件化去噪實現高保真且穩定的生成','VAE 以對抗損失進行隱式建模','VAE 與 GAN 都依賴馬可夫鏈','三者共用同一潛在空間，只差在解碼器'],'VAE 是顯式潛在變數、GAN 是對抗損失；其餘選項都是張冠李戴。']
+  ];
+  let i=0,score=0;const box=$('#quiz');
+  const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+  function show(){
+    if(i>=Q.length){
+      const msg=score>=10?'太強了，三組對照已經能秒答。':score>=7?'不錯！回頭看看答錯的那幾題對應的段落。':'建議重新操作 21.2 的融合模擬器與 21.4 的策略比較，再來一次。';
+      box.innerHTML=`<div class="progress"><i style="width:100%"></i></div><div class="qtext" style="font-size:24px;font-family:var(--serif)">得分 ${score}／${Q.length}</div><p>${msg}</p><button class="btn primary" id="qr">重新測驗</button>`;
+      $('#qr').onclick=()=>{i=0;score=0;show();};return;
+    }
+    const [q,opts,ex]=Q[i];
+    const order=shuffle(opts.map((o,k)=>({o,k})));
+    box.innerHTML=`<div class="progress"><i style="width:${i/Q.length*100}%"></i></div><div class="qtop"><span>第 ${i+1}／${Q.length} 題</span><span>得分 ${score}</span></div><div class="qtext">${q}</div><div class="opts">${order.map(x=>`<button class="opt" data-k="${x.k}">${x.o}</button>`).join('')}</div><div class="expl" id="qe"></div><div class="row" style="margin-top:14px;justify-content:flex-end"><button class="btn primary" id="qn" style="display:none">${i===Q.length-1?'看結果':'下一題'}</button></div>`;
+    box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.k==='0';if(ok)score++;
+      box.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.k==='0')x.classList.add('right');});
+      if(!ok)b.classList.add('wrongpick');
+      const e=$('#qe');e.innerHTML=(ok?'<b style="color:var(--ok)">答對了。</b>':'<b style="color:var(--bad)">這題要小心。</b>')+ex;e.classList.add('show');
+      $('#qn').style.display='';$('#qn').focus();
+    });
+    $('#qn').onclick=()=>{i++;show();};
+  }
+  show();
+})();
+
+/* ---------- nav highlight ---------- */
+(function(){
+  const links=[...document.querySelectorAll('nav.toc a')];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on&&window.innerWidth<=860)a.scrollIntoView({inline:'center',block:'nearest'});});}});},{rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('main section').forEach(s=>io.observe(s));
+})();
+</script>
+</body>
+</html>

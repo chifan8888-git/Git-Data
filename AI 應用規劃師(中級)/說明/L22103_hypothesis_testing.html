@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L22103 假設檢定與統計推論｜互動教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F5; --surface:#FFFFFF; --surface2:#F6F8FB; --ink:#18202E; --muted:#5A6475; --line:#D5DBE4;
+  --txt:#3B4CCA; --img:#0E8A7A; --aud:#B87812; --sen:#B8336A;
+  --ok:#1F8A4C; --bad:#C23B2E; --warn:#D9822B;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+    --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+  --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75}
+h1,h2,h3{font-family:var(--serif);line-height:1.3;margin:0}
+p{margin:0 0 1em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--txt);outline-offset:2px;border-radius:4px}
+svg{max-width:100%;height:auto;display:block}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1180px;margin:0 auto;gap:40px;padding:0 24px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;padding:32px 0;height:100vh;overflow:auto}
+nav.toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14.5px}
+nav.toc a span{font-variant-numeric:tabular-nums;font-size:13px;opacity:.8}
+nav.toc a.on{background:var(--surface);color:var(--ink);font-weight:700}
+.toc-title{font-family:var(--serif);font-weight:900;font-size:18px;padding:0 10px 14px}
+main{min-width:0;padding-bottom:80px}
+section{padding:56px 0 8px;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.sec-head{display:flex;gap:16px;align-items:baseline;margin-bottom:18px}
+.sec-no{font-family:var(--serif);font-weight:900;font-size:40px;color:var(--line);line-height:1}
+h2{font-size:28px;font-weight:900}
+h3{font-size:19px;margin:34px 0 10px}
+.lead{color:var(--muted);max-width:66ch}
+.prose{max-width:68ch}
+
+/* hero */
+.hero{padding:44px 0 24px}
+.hero .code{font-size:14px;color:var(--muted);margin-bottom:6px}
+.hero h1{font-size:clamp(34px,5.5vw,56px);font-weight:900;letter-spacing:.02em}
+.hero .one{font-size:18px;max-width:60ch;margin:16px 0 0;color:var(--muted)}
+.hero-fig{background:var(--surface);border-radius:20px;margin-top:28px;padding:14px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+.goal{border-left:4px solid var(--c);padding:6px 0 6px 14px;font-size:15px}
+
+/* panels */
+.panel{background:var(--surface);border-radius:16px;padding:22px;margin:16px 0}
+.panel.flat{background:var(--surface2)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font-size:15px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hint{font-size:14px;color:var(--muted)}
+.callout{border-left:4px solid var(--warn);background:var(--surface2);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;font-size:15px}
+.callout.exam{border-color:var(--txt)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:14px}
+
+/* modality chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+
+/* matcher */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.match .col{display:flex;flex-direction:column;gap:10px}
+.mitem{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15px;transition:border-color .2s,background .2s,transform .2s}
+.mitem small{display:block;color:var(--muted);font-size:13px}
+.mitem.sel{border-color:var(--ink);transform:translateX(4px)}
+.mitem.done{border-color:var(--c,var(--ok));background:var(--surface2);cursor:default}
+.mitem.wrong{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:1.8em;margin-top:12px;font-size:15px}
+.feedback.ok{color:var(--ok)} .feedback.bad{color:var(--bad)}
+
+/* timeline */
+.steps{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stage-viz{min-height:130px;display:flex;align-items:center;justify-content:center}
+.stage-viz .blk{display:inline-block;width:34px;height:34px;border-radius:6px;margin:2px;transition:all .5s}
+
+/* align toggle */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.compare>div{padding:18px}
+.compare>div+div{border-left:1px solid var(--line)}
+.compare .big{font-family:var(--serif);font-weight:900;font-size:22px;margin-bottom:6px}
+
+/* fusion */
+.meter{height:14px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:6px 0}
+.meter>i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .7s cubic-bezier(.3,.8,.3,1),background .4s}
+.flow{stroke-dasharray:6 7;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.jitter{animation:jit .25s steps(2) infinite}
+@keyframes jit{50%{transform:translate(1.5px,-1px)}}
+.fusion-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.pc{font-size:15px}
+.pc b{display:block;font-size:14px;color:var(--muted);font-weight:500}
+
+/* clip */
+.mat{display:grid;gap:4px;font-size:13px}
+.mat .cell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;transition:background .5s,color .5s}
+.mat .lab{display:flex;align-items:center;justify-content:center;font-size:22px}
+.mat .tlab{font-size:12px;text-align:center;color:var(--muted);display:flex;align-items:flex-end;justify-content:center;line-height:1.3}
+.zs-imgs{display:flex;gap:10px;flex-wrap:wrap}
+.zs-img{font-size:38px;width:72px;height:72px;border-radius:16px;border:2px solid var(--line);background:var(--surface2);display:flex;align-items:center;justify-content:center}
+.zs-img[aria-pressed="true"]{border-color:var(--img);box-shadow:0 0 0 3px color-mix(in srgb,var(--img) 25%,transparent)}
+.bar{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.bar .track{height:22px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;width:0;background:var(--txt);border-radius:6px;transition:width .8s cubic-bezier(.3,.8,.3,1)}
+.bar.win .fill{background:var(--img)}
+.bar.win{font-weight:700}
+.bar .num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.flip{perspective:900px;height:150px;border:0;background:none;padding:0;text-align:left}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flip[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:center}
+.flip .f{background:var(--surface);border:1.5px solid var(--line)}
+.flip .f strong{font-family:var(--serif);font-size:22px}
+.flip .f span{color:var(--muted);font-size:14px}
+.flip .b{background:var(--ink);color:var(--bg);transform:rotateY(180deg);font-size:15px}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.pnode{border:2px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;font-size:14px;background:var(--surface);transition:all .35s}
+.pnode b{display:block;font-size:16px}
+.pnode.on{border-color:var(--aud);background:color-mix(in srgb,var(--aud) 14%,var(--surface));transform:translateY(-3px)}
+.pnode.past{border-color:color-mix(in srgb,var(--aud) 45%,var(--line))}
+.pout{background:var(--surface2);border-radius:12px;padding:14px 16px;min-height:84px;font-size:15px}
+.wave{display:flex;gap:3px;align-items:center;height:30px}
+.wave i{width:4px;background:var(--aud);border-radius:2px;animation:wv 1s ease-in-out infinite}
+@keyframes wv{50%{transform:scaleY(.3)}}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+
+/* strategies */
+.strat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.strat button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;text-align:left;font-size:15px}
+.strat button[aria-pressed="true"]{border-color:var(--ink)}
+.verdict{font-family:var(--serif);font-weight:900;font-size:20px}
+
+details{border-bottom:1px solid var(--line)}
+details summary{cursor:pointer;padding:12px 4px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"+";font-weight:900;width:14px;color:var(--muted)}
+details[open] summary::before{content:"−"}
+details .body{padding:0 4px 14px 30px;font-size:15px}
+.tag{font-size:12.5px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums;min-width:80px}
+
+/* quiz */
+.qcard{background:var(--surface);border-radius:16px;padding:24px}
+.qtop{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
+.qtext{font-size:18px;font-weight:700;margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15.5px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+.opt.wrongpick{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.opt:disabled{cursor:default}
+.expl{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15px;display:none}
+.expl.show{display:block}
+.progress{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;margin-bottom:14px}
+.progress i{display:block;height:100%;background:var(--txt);transition:width .4s}
+
+.traps label{display:flex;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:15px}
+.traps input{width:18px;height:18px;margin-top:4px;flex:none;accent-color:var(--ok)}
+.traps label.chk>span{color:var(--muted)}
+.traps em{font-style:normal;font-weight:700}
+
+/* mobile */
+@media (max-width:860px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+  nav.toc{position:sticky;top:0;height:auto;z-index:10;background:var(--bg);display:flex;overflow-x:auto;padding:8px 0;padding-top:calc(8px + env(safe-area-inset-top,0px));gap:4px;border-bottom:1px solid var(--line)}
+  .toc-title{display:none}
+  nav.toc a{white-space:nowrap;flex:none}
+  .match,.stage,.fusion-meta,.compare{grid-template-columns:1fr}
+  .compare>div+div{border-left:0;border-top:1px solid var(--line)}
+  .pipe{grid-template-columns:repeat(5,minmax(90px,1fr));overflow-x:auto}
+  .bar{grid-template-columns:110px 1fr 56px}
+  h2{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* ---- 本頁擴充元件 ---- */
+.ctl{display:grid;grid-template-columns:120px minmax(0,1fr) 70px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.ctl input[type=range]{width:100%;accent-color:var(--txt)}
+.ctl .num{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.ctl-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:6px 0}
+.ctl-row>b{font-size:14px;color:var(--muted);font-weight:500;min-width:84px}
+.btn.sm{padding:4px 12px;font-size:14px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:12px}
+.stat{background:var(--surface2);border-radius:12px;padding:10px 12px;border-top:4px solid var(--c,var(--line))}
+.stat b{display:block;font-size:13px;color:var(--muted);font-weight:500}
+.stat span{font-size:22px;font-weight:900;font-family:var(--serif);font-variant-numeric:tabular-nums}
+.wiz-q{font-weight:700;margin:0 0 10px}
+.wiz-path{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;font-size:13.5px}
+.wiz-path span{background:var(--surface2);border-radius:99px;padding:2px 10px;color:var(--muted)}
+.wiz-res{border-left:4px solid var(--img);background:var(--surface2);padding:14px 16px;border-radius:0 12px 12px 0}
+.wiz-res .verdict{color:var(--img)}
+.sort-card{background:var(--surface2);border-radius:14px;padding:18px;min-height:96px;font-size:16px}
+.sort-card small{display:block;color:var(--muted);font-size:13px;margin-bottom:4px}
+.code-box{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14px;background:var(--surface2);border-radius:10px;padding:12px 14px;white-space:pre-wrap;word-break:break-word;line-height:1.6}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13.5px;color:var(--muted);margin-top:6px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;background:var(--c);margin-right:5px;vertical-align:-1px}
+@media (max-width:860px){
+  .ctl{grid-template-columns:88px minmax(0,1fr) 58px}
+  .stat span{font-size:19px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="toc" aria-label="章節">
+  <div class="toc-title">假設檢定</div>
+  <a href="#intro"><span>●</span>導覽與目標</a>
+  <a href="#s1"><span>30.1</span>推論的兩條分支</a>
+  <a href="#s2"><span>30.2</span>檢定五步驟</a>
+  <a href="#s3"><span>30.3</span>型一型二與檢定力</a>
+  <a href="#s4"><span>30.4</span>檢定方法選擇</a>
+  <a href="#s5"><span>30.5</span>前提與誤用</a>
+  <a href="#s6"><span>30.6</span>官方考題</a>
+  <a href="#s7"><span>30.7</span>易錯與測驗</a>
+</nav>
+
+<main>
+<!-- HERO -->
+<section id="intro" class="hero">
+  <div class="code">L22103　中級 AI 應用規劃師（科目 2）　建議 55 分鐘</div>
+  <h1>假設檢定與統計推論</h1>
+  <p class="one">初級只要記得「p 值小於 0.05 就顯著」。中級要能在商業或醫療情境裡認出<b>資料型態、組數與配對關係</b>，從 t／Z／F／卡方／無母數中選對檢定，並說清楚 α、p 值、型一錯誤、型二錯誤、信賴區間各自在回答什麼問題。這是科目 2 官方指引篇幅最大、與其他知識點連動最深的一節。</p>
+  <div class="hero-fig" aria-hidden="true">
+    <svg id="heroSvg" viewBox="0 0 720 300">
+      <path id="heroCurve" fill="var(--surface2)" stroke="var(--txt)" stroke-width="2.5"/>
+      <path id="heroTailL" fill="var(--sen)" opacity=".55"/>
+      <path id="heroTailR" fill="var(--sen)" opacity=".55"/>
+      <line x1="40" y1="250" x2="680" y2="250" stroke="var(--muted)" stroke-width="1.5"/>
+      <g font-family="Noto Sans TC, sans-serif" font-size="14" font-weight="700">
+        <text x="360" y="60" text-anchor="middle" fill="var(--txt)">若 H₀ 為真，檢定統計量的分佈</text>
+        <text x="360" y="230" text-anchor="middle" fill="var(--ink)">不拒絕 H₀</text>
+        <text x="95" y="278" text-anchor="middle" fill="var(--sen)">拒絕域 α/2</text>
+        <text x="625" y="278" text-anchor="middle" fill="var(--sen)">拒絕域 α/2</text>
+        <text x="203" y="278" text-anchor="middle" fill="var(--muted)" font-weight="500">−1.96</text>
+        <text x="517" y="278" text-anchor="middle" fill="var(--muted)" font-weight="500">+1.96</text>
+      </g>
+      <g class="movers">
+        <circle r="8" cx="330" fill="var(--aud)"><animate attributeName="cy" values="20;246;246" keyTimes="0;.4;1" dur="3s" repeatCount="indefinite"/></circle>
+        <circle r="8" cx="410" fill="var(--aud)"><animate attributeName="cy" values="20;246;246" keyTimes="0;.4;1" dur="3s" begin=".8s" repeatCount="indefinite"/></circle>
+        <circle r="8" cx="600" fill="var(--sen)"><animate attributeName="cy" values="20;246;246" keyTimes="0;.4;1" dur="3s" begin="1.6s" repeatCount="indefinite"/></circle>
+        <circle r="8" cx="270" fill="var(--aud)"><animate attributeName="cy" values="20;246;246" keyTimes="0;.4;1" dur="3s" begin="2.3s" repeatCount="indefinite"/></circle>
+      </g>
+    </svg>
+  </div>
+  <h3>學完這一課，你應該能夠</h3>
+  <div class="goals">
+    <div class="goal" style="--c:var(--aud)">區分<b>參數估計</b>與<b>假設檢定</b>的目的與輸出，並用頻率學派的正確語句解讀 95% 信賴區間</div>
+    <div class="goal" style="--c:var(--txt)">依五步驟寫出 H₀／H₁，說明 α 與 p 值的差異，正確描述「<b>無法拒絕 H₀</b>」的意義</div>
+    <div class="goal" style="--c:var(--img)">依資料型態、組數、是否配對、是否常態與變異數齊一，<b>選出對應的檢定方法</b></div>
+    <div class="goal" style="--c:var(--sen)">辨識型一、型二錯誤、檢定力與樣本數的連動，判斷<b>多重比較</b>的風險與校正做法</div>
+  </div>
+  <p class="hint" style="margin-top:20px">本頁顏色固定代表：<span class="chip" style="--c:var(--txt)"><i class="dot"></i>H₀ 分佈</span>　<span class="chip" style="--c:var(--img)"><i class="dot"></i>H₁ 分佈／檢定力</span>　<span class="chip" style="--c:var(--aud)"><i class="dot"></i>樣本、區間、β</span>　<span class="chip" style="--c:var(--sen)"><i class="dot"></i>拒絕域、α（型一）</span></p>
+</section>
+
+<!-- 30.1 -->
+<section id="s1">
+  <div class="sec-head"><span class="sec-no">30.1</span><h2>統計推論的兩條分支</h2></div>
+  <p class="lead">統計推論是「根據部分，推論整體」—— 用樣本推估母體特徵。底下分成兩條分支，考題最愛把兩條分支的<b>產出物互換</b>當誘答。</p>
+
+  <div class="compare">
+    <div><div class="big">參數估計</div>這個參數「<b>大約是多少</b>」？<br><span class="hint">輸出：點估計值＋信賴區間<br>例：平均體重 68 公斤，95% CI 為 [66, 70]</span></div>
+    <div><div class="big">假設檢定</div>有沒有足夠證據「<b>拒絕某個假設</b>」？<br><span class="hint">輸出：檢定統計量＋p 值＋拒絕／不拒絕<br>例：p = 0.03 &lt; 0.05，拒絕 H₀</span></div>
+  </div>
+
+  <details>
+    <summary>展開完整對照表（目的、問題、輸出、事前準備）</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>維度</th><th>參數估計</th><th>假設檢定</th></tr>
+        <tr><td>目的</td><td>推測母體參數的「值」或「區間」</td><td>驗證關於母體參數的「主張」是否成立</td></tr>
+        <tr><td>回答的問題</td><td>這個參數大約是多少？</td><td>我們有沒有足夠證據拒絕某個假設？</td></tr>
+        <tr><td>輸出</td><td>點估計值＋信賴區間（如 95% CI）</td><td>檢定統計量＋p 值＋拒絕／不拒絕的決策</td></tr>
+        <tr><td>事前要準備</td><td>抽樣方法、估計量</td><td>H₀／H₁、顯著水準 α、檢定方法</td></tr>
+        <tr><td>典型句子</td><td>「平均體重 68 公斤，95% CI 為 [66, 70]」</td><td>「p = 0.03 &lt; 0.05，拒絕 H₀」</td></tr>
+      </table>
+    </div>
+  </details>
+  <p class="prose" style="margin-top:14px">兩者依賴同一套機率模型，只是把不確定性包裝成不同形式：<b>估計包成區間，檢定包成機率門檻</b>。</p>
+
+  <h3>點估計 vs 區間估計</h3>
+  <div class="cards" id="estCards"></div>
+
+  <h3>動手看：95% 信賴區間到底在說什麼</h3>
+  <div class="panel">
+    <p class="hint">母體真值固定在 μ = 50（虛線，<b>不會動</b>）。每按一次就從母體重抽樣本、各畫一條區間：<span style="color:var(--ok)">綠色</span>＝涵蓋真值，<span style="color:var(--bad)">紅色</span>＝沒涵蓋。抽得越多，綠色比例越接近信賴水準。（示意：σ = 10 已知的 Z 區間）</p>
+    <div class="ctl-row"><b>信賴水準</b><span class="tabs" id="ciLv" style="margin:0"></span></div>
+    <div class="ctl-row"><b>每次樣本數 n</b><span class="tabs" id="ciN" style="margin:0"></span></div>
+    <svg id="ciSvg" viewBox="0 0 640 300" role="img" aria-label="重複抽樣的信賴區間"></svg>
+    <div class="row" style="margin-top:10px">
+      <button class="btn primary" id="ciDraw">抽 20 次</button>
+      <button class="btn" id="ciDraw100">一口氣抽 100 次</button>
+      <button class="btn" id="ciReset">清空</button>
+    </div>
+    <div class="stats">
+      <div class="stat" style="--c:var(--aud)"><b>已畫區間數</b><span id="ciTot">0</span></div>
+      <div class="stat" style="--c:var(--ok)"><b>涵蓋真值的比例</b><span id="ciCov">—</span></div>
+      <div class="stat" style="--c:var(--txt)"><b>區間半寬</b><span id="ciHw">—</span></div>
+    </div>
+  </div>
+  <div class="callout exam"><b>正確語句：</b>若以相同方式重複大量抽樣、對每個樣本各建一個區間，這些區間中約有 95% 會涵蓋母體真值。<br><b>錯誤語句：</b>「母體參數有 95% 的機率落在這個特定區間內」。頻率學派下母體參數是<b>固定的未知常數</b>，會隨抽樣變動的是<b>區間</b>。95% 描述的是造區間程序的長期表現 —— 就像上面的模擬，會動的永遠是橫線，不是虛線。</div>
+
+  <h3>信賴區間與假設檢定的對偶關係</h3>
+  <div class="panel">
+    <p class="hint">以 114Q2-23 為例：單樣本 t 檢定，95% CI = [95, 108] 萬元。點選不同的假設值 μ₀，看兩種方法的結論如何同步。</p>
+    <div class="tabs" id="dualTabs"></div>
+    <svg id="dualSvg" viewBox="0 0 640 120" role="img" aria-label="假設值與信賴區間位置"></svg>
+    <div id="dualOut" class="pout" style="margin-top:8px"></div>
+  </div>
+  <p class="prose">前提要寫清楚：要對得上，<b>信賴水準必須等於 1 − α</b>（95% CI 對應 α = 0.05），且是<b>雙尾</b>檢定。單尾檢定要對應的是單邊信賴界限，不能直接拿雙尾 CI 去比。</p>
+
+  <h3>什麼會讓信賴區間變寬？</h3>
+  <div class="panel">
+    <p class="hint">區間半寬 ≈ 臨界值 × 標準誤，而標準誤 = s／√n。三個旋鈕一起轉轉看（示意：以點估計 68 為中心）。</p>
+    <div class="ctl-row"><b>信賴水準</b><span class="tabs" id="wLv" style="margin:0"></span></div>
+    <div class="ctl-row"><b>樣本數 n</b><span class="tabs" id="wN" style="margin:0"></span></div>
+    <div class="ctl-row"><b>樣本標準差 s</b><span class="tabs" id="wS" style="margin:0"></span></div>
+    <svg id="wSvg" viewBox="0 0 640 110" role="img" aria-label="信賴區間寬度"></svg>
+    <div class="code-box" id="wFormula"></div>
+    <p class="hint" id="wNote" style="margin:8px 0 0"></p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>因素</th><th>變動方向</th><th>對區間寬度</th></tr>
+      <tr><td>信賴水準（90% → 99%）</td><td>提高</td><td><b>變寬</b>（要更有把握，就得畫更大的網）</td></tr>
+      <tr><td>樣本數 n</td><td>增加</td><td><b>變窄</b>（但只以 √n 的速度收斂，n 要變 4 倍才窄一半）</td></tr>
+      <tr><td>樣本標準差 s（資料變異）</td><td>增加</td><td><b>變寬</b></td></tr>
+    </table>
+  </div>
+  <div class="callout"><b>陷阱：</b>「信賴區間寬度僅與顯著水準有關」—— 錯，樣本數與資料變異同樣是決定因素。</div>
+</section>
+
+<!-- 30.2 -->
+<section id="s2">
+  <div class="sec-head"><span class="sec-no">30.2</span><h2>假設檢定的五個步驟</h2></div>
+  <p class="lead">用一個 A/B 測試情境跟著走一遍（數值為示意）。點上方步驟切換。</p>
+  <div class="panel">
+    <div class="steps" id="fiveBtns"></div>
+    <div class="stage">
+      <div class="stage-viz" id="fiveViz"></div>
+      <div id="fiveTxt"></div>
+    </div>
+  </div>
+
+  <h3>步驟 ①：H₀ 與 H₁ 的分工</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th></th><th>虛無假設 H₀</th><th>對立假設 H₁</th></tr>
+      <tr><td>內容</td><td>現狀、無差異、無效果</td><td>有差異、有效果、有改變</td></tr>
+      <tr><td>角色</td><td>檢定的基準起點，被檢驗的對象</td><td>與 H₀ 互斥，H₀ 被拒絕時才間接被支持</td></tr>
+      <tr><td>結論邏輯</td><td>無法拒絕 <b>≠</b> 接受，只代表證據不足</td><td>拒絕 H₀ 才代表支持 H₁</td></tr>
+      <tr><td>藥效範例</td><td>新藥與安慰劑效果相同</td><td>新藥效果不同於安慰劑</td></tr>
+      <tr><td>A/B 測試範例</td><td>新舊版本轉換率無顯著差異</td><td>新版本轉換率顯著不同於舊版本</td></tr>
+    </table>
+  </div>
+  <p class="prose" style="margin-top:12px">假設檢定的邏輯是<b>反證</b>，不是證明：資料只能用來「推翻」H₀，不能用來「確立」H₀。</p>
+
+  <h3>單尾與雙尾：拒絕域長在哪裡？</h3>
+  <div class="panel">
+    <div class="row" style="justify-content:space-between">
+      <div class="tabs" id="tailTabs" style="margin:0">
+        <button class="btn" data-t="two" aria-pressed="true">雙尾 μ ≠ μ₀</button>
+        <button class="btn" data-t="left" aria-pressed="false">左尾 μ &lt; μ₀</button>
+        <button class="btn" data-t="right" aria-pressed="false">右尾 μ &gt; μ₀</button>
+      </div>
+      <button class="btn" id="hackBtn" aria-pressed="false">看完資料再改單尾？</button>
+    </div>
+    <svg id="tailSvg" viewBox="0 0 640 220" style="margin-top:10px" role="img" aria-label="拒絕域示意"></svg>
+    <div class="pout" id="tailOut"></div>
+  </div>
+
+  <h3>步驟 ③：顯著水準 α 選多少？</h3>
+  <div class="panel">
+    <p class="hint">α 是<b>事前設定</b>的決策門檻：在 H₀ 為真的前提下，仍錯誤拒絕 H₀ 的機率上限（型一錯誤率上限）。點一個情境，看該用哪個 α。</p>
+    <div class="match" id="alphaMatch"></div>
+    <div class="feedback" id="alphaFb" aria-live="polite"></div>
+  </div>
+  <details>
+    <summary>展開 α 對照表</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>α</th><th>嚴格度</th><th>典型情境</th></tr>
+        <tr><td>0.01</td><td>最嚴格</td><td>藥物療效、安全風險、高金額決策 —— 誤判成本極高</td></tr>
+        <tr><td>0.05</td><td>通用標準</td><td>多數商業與學術分析</td></tr>
+        <tr><td>0.10</td><td>較寬鬆</td><td>探索性研究、假說生成階段</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <h3>步驟 ④：p 值的正確定義</h3>
+  <div class="callout exam"><b>p 值 = 在 H₀ 為真的前提下，觀察到「與目前結果相同或更極端」的資料出現的機率。</b><br>三個必要成分，少一個就不對：① 前提是 H₀ 為真、② 對象是資料（檢定統計量）、③ 範圍包含「更極端」的情形。</div>
+  <div class="panel">
+    <p class="hint">拖動觀察到的檢定統計量 z，看 p 值（粉紅面積）如何計算，以及它和 α 的關係。這裡以雙尾、α = 0.05 示意。</p>
+    <div class="ctl"><span>觀察到的 z</span><input type="range" id="pZ" min="0" max="3.5" step="0.05" value="1.2"><span class="num" id="pZv">1.20</span></div>
+    <svg id="pSvg" viewBox="0 0 640 210" role="img" aria-label="p 值面積"></svg>
+    <div class="stats">
+      <div class="stat" style="--c:var(--sen)"><b>p 值（事後量到）</b><span id="pVal">—</span></div>
+      <div class="stat" style="--c:var(--txt)"><b>α（事前畫的線）</b><span>0.05</span></div>
+      <div class="stat" style="--c:var(--ok)"><b>結論</b><span id="pDec" style="font-size:18px">—</span></div>
+    </div>
+  </div>
+  <h3>四種常見錯誤說法（點卡片看為什麼錯）</h3>
+  <div class="cards" id="pCards"></div>
+  <p class="prose" style="margin-top:14px"><b>α 與 p 值的分工：</b>α 是事前畫的線，p 值是事後量到的位置，結論由「p 值有沒有越線」決定。</p>
+
+  <h3>步驟 ⑤：「無法拒絕」不是「接受」</h3>
+  <div class="compare">
+    <div><div class="big">可能一：真的沒差異</div>H₀ 本來就是對的，沒測到差異很正常。</div>
+    <div><div class="big">可能二：有差異但沒測出來</div>檢定力不足 → 犯了<b>型二錯誤</b>。</div>
+  </div>
+  <p class="prose" style="margin-top:12px">p &gt; α 時，正確措辭是「<b>無法拒絕 H₀</b>」或「證據不足以支持 H₁」，不能寫成「接受 H₀」「證明兩者相同」。上面這兩種情形，<b>資料本身分不出來</b>。</p>
+</section>
+
+<!-- 30.3 -->
+<section id="s3">
+  <div class="sec-head"><span class="sec-no">30.3</span><h2>型一錯誤、型二錯誤與檢定力</h2></div>
+  <p class="lead">決策只有兩種（拒絕／不拒絕），真相也只有兩種（H₀ 真／假），所以一共四格。點每一格看它叫什麼。</p>
+  <div class="panel">
+    <div class="tbl-wrap">
+      <table id="dmTable" style="min-width:460px">
+        <tr><th></th><th>H₀ 實際為真</th><th>H₀ 實際為假</th></tr>
+        <tr><th>不拒絕 H₀</th><td><button class="btn sm" data-dm="0">？</button></td><td><button class="btn sm" data-dm="1">？</button></td></tr>
+        <tr><th>拒絕 H₀</th><td><button class="btn sm" data-dm="2">？</button></td><td><button class="btn sm" data-dm="3">？</button></td></tr>
+      </table>
+    </div>
+    <div class="pout" id="dmOut" style="margin-top:10px">點表格中的「？」。</div>
+  </div>
+  <ul class="prose">
+    <li><b>型一錯誤（Type I）</b>：本來沒差異，卻判成有差異（誤判／偽陽性）。機率由 α 控制。</li>
+    <li><b>型二錯誤（Type II）</b>：本來有差異，卻沒判出來（漏判／偽陰性）。機率為 β。</li>
+    <li><b>檢定力（Power）= 1 − β</b>：當 H₁ 為真時，正確拒絕 H₀ 的能力。</li>
+  </ul>
+
+  <h3>分類練習：這是型一還是型二？</h3>
+  <div class="panel">
+    <p class="hint">先想清楚每個情境的 H₀ 是什麼，再判斷。</p>
+    <div class="sort-card" id="sortCard"></div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn" id="sortT1" style="border-color:var(--sen)">型一錯誤（偽陽性）</button>
+      <button class="btn" id="sortT2" style="border-color:var(--aud)">型二錯誤（偽陰性）</button>
+      <span class="hint" id="sortScore"></span>
+    </div>
+    <div class="feedback" id="sortFb" aria-live="polite"></div>
+  </div>
+  <details>
+    <summary>展開情境對照表</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>情境</th><th>H₀</th><th>型一錯誤的樣子</th><th>型二錯誤的樣子</th></tr>
+        <tr><td>地震預警</td><td>沒有即將發生的強震</td><td>發出錯誤警報，實際沒地震</td><td>未發警報，實際發生強震</td></tr>
+        <tr><td>銀行防詐</td><td>該筆交易為正常行為</td><td>合法交易被擋</td><td>詐騙交易被放行</td></tr>
+        <tr><td>製造品管</td><td>出廠產品為合格品</td><td>良品被判不合格，浪費</td><td>瑕疵品流入市場</td></tr>
+        <tr><td>電商評論過濾</td><td>評論為正常留言</td><td>正常評論被誤刪</td><td>違規內容持續顯示</td></tr>
+        <tr><td>新藥審查</td><td>新藥與安慰劑無差異</td><td>無效藥被認定有效、獲准上市</td><td>有效藥被錯過</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <h3>核心模擬器：α、β、檢定力與樣本數的蹺蹺板</h3>
+  <div class="panel">
+    <p class="hint">藍線是 H₀ 為真時樣本平均數的分佈，綠線是 H₁ 為真時的分佈（右尾檢定，示意：σ = 1）。紅線右邊是拒絕域。<b>粉紅＝α（型一）</b>、<b>琥珀＝β（型二）</b>。試試：先調小 α，再把 n 拉大。</p>
+    <div class="ctl-row"><b>顯著水準 α</b><span class="tabs" id="pwA" style="margin:0"></span></div>
+    <div class="ctl"><span>樣本數 n</span><input type="range" id="pwN" min="4" max="100" step="1" value="16"><span class="num" id="pwNv">16</span></div>
+    <div class="ctl"><span>效應量 d</span><input type="range" id="pwD" min="0.1" max="1" step="0.05" value="0.5"><span class="num" id="pwDv">0.50</span></div>
+    <svg id="pwSvg" viewBox="0 0 640 250" role="img" aria-label="檢定力模擬"></svg>
+    <div class="legend"><span><i style="--c:var(--txt)"></i>H₀ 分佈</span><span><i style="--c:var(--img)"></i>H₁ 分佈</span><span><i style="--c:var(--sen)"></i>α 型一錯誤</span><span><i style="--c:var(--aud)"></i>β 型二錯誤</span></div>
+    <div class="stats">
+      <div class="stat" style="--c:var(--sen)"><b>α 型一錯誤</b><span id="pwAv">—</span></div>
+      <div class="stat" style="--c:var(--aud)"><b>β 型二錯誤</b><span id="pwBv">—</span></div>
+      <div class="stat" style="--c:var(--img)"><b>檢定力 1−β</b><span id="pwPv">—</span></div>
+    </div>
+    <div class="meter" style="height:16px;margin-top:12px"><i id="pwMeter" style="width:0"></i></div>
+    <p class="hint" id="pwNote" style="margin:6px 0 0"></p>
+  </div>
+  <div class="code-box">α 0.05 → 0.01
+  ├─ 型一錯誤（偽陽性）↓   ← 這是「直接效果」
+  ├─ 型二錯誤 β ↑
+  └─ 檢定力 1−β ↓
+
+想同時壓低兩種錯誤，最直接而不必犧牲另一邊的手段是「增加樣本數」
+（或降低測量變異、改用更有效率的檢定設計）</div>
+  <div class="callout">注意限定條件：<b>只有在 n 與效應量不變時</b>，α 與 β 才是單純的此消彼長。若同時把樣本數加大，兩者可以一起降低 —— 在模擬器裡把 α 調成 0.01 後拉大 n，就能看到。</div>
+
+  <h3>提高檢定力的途徑</h3>
+  <div class="panel">
+    <p class="hint">點選一個做法，看它的機制與代價（提升幅度為示意）。</p>
+    <div class="strat" id="pwStrat"></div>
+    <div style="margin-top:18px">
+      <div class="verdict" id="pwStratV">選一個做法</div>
+      <div class="meter" style="height:18px;margin:10px 0"><i id="pwStratM" style="width:0"></i></div>
+      <div id="pwStratWhy" class="hint"></div>
+    </div>
+  </div>
+  <p class="prose"><b>檢定力分析（Power Analysis）</b>是在研究開始<b>前</b>，依 α、目標檢定力（常設 0.80）與預期效應量反推所需樣本數，屬於事前規劃工具。</p>
+
+  <h3>多重比較：整體型一錯誤率會膨脹</h3>
+  <div class="panel">
+    <p class="hint">每做一次檢定就有 α 的偽陽性風險。獨立做 m 次，整體至少犯一次型一錯誤的機率約為 1 − (1 − α)<sup>m</sup>。拖動 m，再打開 Bonferroni 校正比較。</p>
+    <div class="ctl"><span>檢定次數 m</span><input type="range" id="mcM" min="1" max="30" step="1" value="3"><span class="num" id="mcMv">3</span></div>
+    <div class="row"><button class="btn" id="mcBon" aria-pressed="false">套用 Bonferroni 校正（α/m）</button></div>
+    <div id="mcBars" style="margin-top:12px"></div>
+    <p class="hint" id="mcNote" style="margin:6px 0 0"></p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>檢定次數 m</th><th>α = 0.05 時的整體偽陽性機率</th></tr>
+      <tr><td>1</td><td>5%</td></tr><tr><td>3</td><td>約 14%</td></tr><tr><td>10</td><td>約 40%</td></tr><tr><td>20</td><td>約 64%</td></tr>
+    </table>
+  </div>
+  <p class="prose" style="margin-top:12px">兩種應對方式：<br>① <b>改用一個整體檢定</b> —— 三組以上比較平均數時，用單因子 ANOVA 的單一 F 檢定取代三次兩兩 t 檢定，把整體型一錯誤率鎖回 α。<br>② <b>調整門檻</b> —— 如 Bonferroni 校正，把每次檢定的門檻壓成 α/m（做 10 次就用 0.005）。代價是檢定力下降。</p>
+</section>
+
+<!-- 30.4 -->
+<section id="s4">
+  <div class="sec-head"><span class="sec-no">30.4</span><h2>檢定方法選擇：本節最大的考點</h2></div>
+  <p class="lead">不用背推導。把「連續 vs 類別」「兩組 vs 三組以上」「配對 vs 獨立」「常態 vs 非常態」四道分界練到看關鍵字就反射。</p>
+
+  <h3>檢定選擇導航器</h3>
+  <div class="panel">
+    <p class="hint">依官方決策流程一步步回答，最後得到對應檢定與關鍵前提。</p>
+    <div class="wiz-path" id="wizPath"></div>
+    <div id="wizBody"></div>
+    <div class="row" style="margin-top:12px"><button class="btn" id="wizBack">上一步</button><button class="btn" id="wizReset">從頭開始</button></div>
+  </div>
+  <div class="callout exam"><b>Step 3 是官方最愛設的陷阱：</b>題幹只要出現「同一批人」「導入前後各測一次」「治療前後」，就是配對資料。用獨立樣本 t 檢定會白白丟掉個體間變異的控制、拉低檢定力（115Q1-7）。</div>
+
+  <details>
+    <summary>展開一張總表（13 種情境 × 檢定 × 關鍵前提）</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>想回答的問題</th><th>資料型態</th><th>對應檢定</th><th>關鍵前提</th></tr>
+        <tr><td>一組數值是否與某理論值不同</td><td>連續，σ 未知</td><td><b>單樣本 t 檢定</b></td><td>近似常態（n ≥ 30 可依 CLT 放寬）</td></tr>
+        <tr><td>一組數值是否與某理論值不同</td><td>連續，σ 已知</td><td><b>單樣本 Z 檢定</b></td><td>母體標準差已知</td></tr>
+        <tr><td>兩組不同個體的平均是否不同</td><td>連續，兩獨立組</td><td><b>獨立樣本 t 檢定</b></td><td>常態＋變異數齊一（不齊改 Welch）</td></tr>
+        <tr><td>同一批人前後是否變化</td><td>連續，配對</td><td><b>成對樣本 t 檢定</b></td><td>差值近似常態</td></tr>
+        <tr><td>三組以上平均是否有差異</td><td>連續，≥ 3 獨立組</td><td><b>單因子 ANOVA（F 檢定）</b></td><td>常態＋變異數齊一＋獨立</td></tr>
+        <tr><td>一組比例是否與預期不同</td><td>二元類別</td><td><b>單樣本比例 Z 檢定</b></td><td>np₀ 與 n(1−p₀) 皆 ≥ 5</td></tr>
+        <tr><td>兩組比例是否不同</td><td>二元類別，兩獨立組</td><td><b>雙比例 Z 檢定</b></td><td>同上；不足改 Fisher 精確檢定</td></tr>
+        <tr><td>兩個類別變數是否相關</td><td>列聯表</td><td><b>卡方獨立性檢定</b></td><td>各格期望次數 ≥ 5；用原始次數</td></tr>
+        <tr><td>觀察分佈是否符合理論分佈</td><td>類別次數</td><td><b>卡方適合度檢定</b></td><td>同上</td></tr>
+        <tr><td>兩連續變數是否線性相關</td><td>連續 × 連續</td><td><b>皮爾森相關檢定</b></td><td>線性、近似常態、無重大離群值</td></tr>
+        <tr><td>兩變數是否單調相關</td><td>順序或偏態連續</td><td><b>斯皮爾曼／肯德爾等級相關</b></td><td>可排名、單調關係</td></tr>
+        <tr><td>兩獨立組的分佈位置是否不同（非常態）</td><td>順序或非常態連續</td><td><b>Mann-Whitney U 檢定</b></td><td>兩組分佈形狀相似才可解讀為中位數差</td></tr>
+        <tr><td>三組以上分佈位置是否不同（非常態）</td><td>順序或非常態連續</td><td><b>Kruskal-Wallis 檢定</b></td><td>獨立樣本；事後用 Dunn's test</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <h3>t 檢定三兄弟</h3>
+  <div class="panel">
+    <div class="tabs" id="tTabs"></div>
+    <div id="tBody"></div>
+  </div>
+
+  <h3>Z 檢定 vs t 檢定：t 分佈的尾巴比較厚</h3>
+  <div class="panel">
+    <p class="hint">σ 已知用 Z（標準常態），σ 未知、改用樣本標準差 s 時用 t（自由度 n−1）。切換自由度，看 t 分佈如何隨 n 增大而貼近常態。</p>
+    <div class="ctl-row"><b>自由度 df</b><span class="tabs" id="tdf" style="margin:0"></span></div>
+    <svg id="tSvg" viewBox="0 0 640 220" role="img" aria-label="t 分佈與常態分佈"></svg>
+    <div class="legend"><span><i style="--c:var(--txt)"></i>標準常態（Z）</span><span><i style="--c:var(--aud)"></i>t 分佈</span></div>
+    <p class="hint" id="tNote" style="margin:6px 0 0"></p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th></th><th>Z 檢定</th><th>t 檢定</th></tr>
+      <tr><td>母體標準差 σ</td><td><b>已知</b></td><td><b>未知</b>，用樣本標準差 s 取代</td></tr>
+      <tr><td>參照分佈</td><td>標準常態分佈</td><td>自由度 n−1 的 t 分佈（尾部較厚）</td></tr>
+      <tr><td>小樣本</td><td>不適用（除非 σ 真的已知）</td><td>適用（n &lt; 30 時尤其該用 t）</td></tr>
+      <tr><td>大樣本</td><td>—</td><td>n 增大時 t 分佈趨近標準常態，兩者結果接近</td></tr>
+    </table>
+  </div>
+
+  <h3>計算示範：115Q1-8 外送時間 Z 檢定</h3>
+  <div class="panel">
+    <p class="hint">已知 σ = 16、n = 9、x̄ = 40、宣稱值 μ₀ = 36，右尾檢定 α = 0.05（臨界值 1.645）。按「下一步」逐步計算。</p>
+    <div class="pipe" id="zPipe"></div>
+    <div class="pout" id="zOut" aria-live="polite"></div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn primary" id="zNext">下一步</button>
+      <button class="btn" id="zReset">從頭開始</button>
+    </div>
+    <h3 style="margin-top:20px">常見算錯點：分母寫錯會怎樣？</h3>
+    <div class="tabs" id="zErrTabs"></div>
+    <div id="zErrOut" class="code-box"></div>
+  </div>
+
+  <h3>三組以上：ANOVA 與事後檢定</h3>
+  <div class="panel">
+    <p class="hint">F 值的概念是「<b>組間變異 ÷ 組內變異</b>」。調整三組平均的距離與組內的分散程度，看 F 值怎麼變（資料為示意，F 為依點實際計算）。</p>
+    <div class="ctl-row"><b>組間差距</b><span class="tabs" id="avB" style="margin:0"></span></div>
+    <div class="ctl-row"><b>組內變異</b><span class="tabs" id="avW" style="margin:0"></span></div>
+    <svg id="avSvg" viewBox="0 0 640 240" role="img" aria-label="ANOVA 三組資料"></svg>
+    <div class="stats">
+      <div class="stat" style="--c:var(--img)"><b>組間均方 MSB</b><span id="avMsb">—</span></div>
+      <div class="stat" style="--c:var(--aud)"><b>組內均方 MSW</b><span id="avMsw">—</span></div>
+      <div class="stat" style="--c:var(--txt)"><b>F = MSB ÷ MSW</b><span id="avF">—</span></div>
+    </div>
+  </div>
+  <ul class="prose">
+    <li><b>H₀</b>：μ₁ = μ₂ = … = μₖ（所有組平均相同）；<b>H₁</b>：<b>至少有一組</b>與其他組不同（不是「全部都不同」）</li>
+    <li><b>顯著之後</b>：ANOVA 只告訴你「存在差異」，不指出是哪一組，須再做<b>事後檢定</b>（如 Tukey HSD）</li>
+    <li><b>前提</b>：各組獨立、應變數連續、各組常態、變異數齊一（Levene's test 檢查）</li>
+    <li><b>型態</b>：應變數必須是<b>連續</b>，自變數是<b>類別</b>（分組）</li>
+  </ul>
+  <div class="callout">只有兩組時，官方指引明列「應使用 t 檢定而非 ANOVA」。（數學上兩組的單因子 ANOVA 與雙尾獨立樣本 t 檢定等價，F = t²，結論一致，但作答時依指引選 t 檢定。）</div>
+
+  <h3>比例與類別：雙比例 Z 檢定 vs 卡方檢定</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th></th><th>雙比例 Z 檢定</th><th>卡方檢定</th></tr>
+      <tr><td>適用</td><td>兩組二元比例的差</td><td>類別變數的關聯／分佈吻合度</td></tr>
+      <tr><td>組數</td><td>恰好兩組</td><td>兩個以上類別、R×C 列聯表皆可</td></tr>
+      <tr><td>方向性</td><td><b>可做單尾</b>（誰高於誰）</td><td>本質上是雙尾的「有無關聯」</td></tr>
+      <tr><td>輸入資料</td><td>各組的成功數與樣本數</td><td><b>原始次數</b>（不可直接餵百分比）</td></tr>
+      <tr><td>小樣本替代</td><td>Fisher 精確檢定</td><td>合併類別或 Fisher 精確檢定</td></tr>
+    </table>
+  </div>
+  <div class="panel">
+    <h3 style="margin-top:0">為什麼卡方不能餵百分比？</h3>
+    <p class="hint">以 114Q2-38 的良率 95% vs 97% 為例。<b>百分比完全相同</b>，只改每條產線抽的件數，看檢定統計量怎麼變（依公式實際計算，示意）。</p>
+    <div class="ctl-row"><b>每條產線抽</b><span class="tabs" id="chiN" style="margin:0"></span></div>
+    <div class="tbl-wrap"><table id="chiTbl" style="min-width:420px"></table></div>
+    <div class="stats">
+      <div class="stat" style="--c:var(--img)"><b>雙比例 Z</b><span id="chiZ">—</span></div>
+      <div class="stat" style="--c:var(--txt)"><b>卡方 χ²（= Z²）</b><span id="chiX">—</span></div>
+      <div class="stat" style="--c:var(--sen)"><b>雙尾 p 值</b><span id="chiP">—</span></div>
+    </div>
+    <p class="hint" id="chiNote" style="margin:8px 0 0"></p>
+  </div>
+  <p class="prose">2×2 列聯表上，卡方檢定與雙尾（合併比例）雙比例 Z 檢定在數學上等價（χ² = Z²）。所以題目若強調「新生產線良率是否<b>提升</b>」這種方向性比較，雙比例 Z 檢定是更直接的選擇。</p>
+
+  <h3>卡方的兩種用途</h3>
+  <div class="compare">
+    <div><div class="big">獨立性檢定</div>兩個類別變數的<b>交叉表</b><br>H₀：兩變數彼此獨立、無關聯<br>H₁：兩變數有關聯<br><span class="hint">例：性別 × 投票傾向是否有關</span></div>
+    <div><div class="big">適合度檢定</div>單一類別變數的<b>次數分佈</b><br>H₀：觀察分佈與理論分佈相同<br>H₁：觀察分佈與預期分佈不同<br><span class="hint">例：骰子是否公平、各月銷量是否均勻</span></div>
+  </div>
+  <p class="prose" style="margin-top:12px">共同注意事項：各格<b>期望次數應 ≥ 5</b>（低於 5 建議合併類別或改 Fisher 精確檢定）；顯著只代表「有關聯」，關聯<b>強度</b>要另外用 Cramér's V 或 Phi 係數衡量；樣本極大時微小差異也會顯著。</p>
+
+  <h3>相關性分析：三個係數的分界</h3>
+  <div class="panel">
+    <p class="hint">同一組 12 個點（示意），即時計算三種係數。先加入一個離群值，再換成拋物線資料，看誰最穩、誰會失靈。</p>
+    <div class="tabs" id="corTabs">
+      <button class="btn" data-c="lin" aria-pressed="true">線性資料</button>
+      <button class="btn" data-c="out" aria-pressed="false">加入 1 個離群值</button>
+      <button class="btn" data-c="par" aria-pressed="false">拋物線資料</button>
+    </div>
+    <svg id="corSvg" viewBox="0 0 640 260" role="img" aria-label="散佈圖"></svg>
+    <div id="corBars"></div>
+    <p class="hint" id="corNote" style="margin:6px 0 0"></p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th></th><th>皮爾森 Pearson (r)</th><th>斯皮爾曼 Spearman (rs)</th><th>肯德爾 Kendall (τ)</th></tr>
+      <tr><td>衡量什麼</td><td><b>線性</b>關係</td><td><b>單調</b>關係</td><td><b>單調</b>關係</td></tr>
+      <tr><td>計算基礎</td><td>原始數值</td><td>數值換成<b>排名</b>後代入 Pearson 公式</td><td>一致對與不一致對的<b>數量差</b></td></tr>
+      <tr><td>資料要求</td><td>兩連續變數、近似常態</td><td>順序或可排名的連續資料</td><td>同左</td></tr>
+      <tr><td>對離群值</td><td><b>最敏感</b>（被平方放大）</td><td>較穩健</td><td><b>最穩健</b></td></tr>
+      <tr><td>值域</td><td>[−1, 1]</td><td>[−1, 1]</td><td>[−1, 1]</td></tr>
+    </table>
+  </div>
+  <div class="callout exam"><b>115Q1-24：</b>穩健度排序是 <b>Kendall &gt; Spearman &gt; Pearson</b>，官方直接拿「Spearman 比 Kendall 更穩健」當錯誤敘述。三者值域<b>都</b>是 [−1, 1]。不論用哪一個，顯著的相關都<b>只代表關聯，不代表因果</b>；Pearson 的 r ≈ 0 也只否定了線性關係。</div>
+
+  <h3>無母數檢定配對</h3>
+  <div class="panel">
+    <p class="hint">左邊是需要常態的參數檢定，右邊是無母數替代。這四＋一組配對是無母數題唯一要背的東西。</p>
+    <div class="match" id="npMatch"></div>
+    <div class="feedback" id="npFb" aria-live="polite"></div>
+  </div>
+  <p class="prose">兩個共通注意事項：① 無母數檢定比較的是<b>分佈位置／中位數與排名</b>，不能解讀成「平均數有差異」。② 要解讀成「中位數不同」，還需要<b>各組分佈形狀大致相似</b>；形狀差很多時，顯著只代表「分佈不同」。</p>
+</section>
+
+<!-- 30.5 -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-no">30.5</span><h2>前提假設與常見誤用</h2></div>
+  <h3>前提檢查清單</h3>
+  <div class="panel">
+    <p class="hint">點一個前提，看它適用於哪些檢定、怎麼檢查、不成立時怎麼辦。</p>
+    <div class="tabs" id="preTabs"></div>
+    <div id="preBody"></div>
+  </div>
+  <div class="callout"><b>中央極限定理講的是「樣本平均數的抽樣分佈」會趨近常態，不是原始資料會變成常態。</b>這也是為什麼 n ≥ 30 時可以放寬 t 檢定的常態性要求，卻不能宣稱「資料量夠大，任何資料都服從常態分佈」。</div>
+
+  <h3>統計顯著 ≠ 實質重要</h3>
+  <div class="panel">
+    <p class="hint">轉換率從 5.00% 變 5.02%，差異毫無商業意義。拖動每組樣本數（對數刻度），看 p 值如何被樣本數一路推小（依雙比例 Z 公式計算，示意）。</p>
+    <div class="ctl"><span>每組樣本數</span><input type="range" id="sgN" min="3" max="8" step="0.1" value="4"><span class="num" id="sgNv">1萬</span></div>
+    <div class="stats">
+      <div class="stat" style="--c:var(--aud)"><b>差異（效果）</b><span>0.02 個百分點</span></div>
+      <div class="stat" style="--c:var(--txt)"><b>Z 值</b><span id="sgZ">—</span></div>
+      <div class="stat" style="--c:var(--sen)"><b>雙尾 p 值</b><span id="sgP">—</span></div>
+    </div>
+    <div class="meter" style="height:16px;margin-top:12px"><i id="sgM" style="width:0"></i></div>
+    <p class="hint" id="sgNote" style="margin:6px 0 0"></p>
+  </div>
+  <p class="prose">完整的報告應該三樣一起給：</p>
+  <div class="pipe" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+    <div class="pnode on"><b>① 檢定結果</b>p 值、是否顯著</div>
+    <div class="pnode on"><b>② 效果量</b>平均數差 → Cohen's d<br>列聯表 → Cramér's V／Phi<br>無母數 → rank-biserial</div>
+    <div class="pnode on"><b>③ 信賴區間</b>差異的可能範圍，直接對應實務決策門檻</div>
+  </div>
+  <p class="prose">反過來也成立：<b>不顯著不等於沒有效果</b>，可能只是樣本數不足、變異過大導致檢定力不夠。</p>
+
+  <h3>其他高頻誤用</h3>
+  <details><summary>把比例或百分比直接餵進卡方檢定</summary><div class="body">卡方統計量依賴原始計數（frequency），用百分比等於把樣本數資訊抹掉。（回到 30.4 的卡方模擬器就能看到。）</div></details>
+  <details><summary>未定義清楚「成功事件」就做比例檢定</summary><div class="body">兩組的事件定義必須一致，否則結論無法解釋。</div></details>
+  <details><summary>H₀ 裡的 p₀ 隨手亂設</summary><div class="body">應有依據（歷史數據、業界標準、法規），不能事後配合資料挑一個。</div></details>
+  <details><summary>看完 p 值再改 α 或改成單尾</summary><div class="body">決策門檻與檢定方向都必須事前設定。</div></details>
+  <details><summary>把 ANOVA 顯著解讀成「所有組都不同」</summary><div class="body">只代表至少一組不同，要靠事後檢定指認。</div></details>
+</section>
+
+<!-- 30.6 -->
+<section id="s6">
+  <div class="sec-head"><span class="sec-no">30.6</span><h2>官方考過什麼</h2></div>
+  <p class="lead">題號來自官方公告試題（114-2 與 115-1 各 50 題，合計 100 題）。核心題 <b>8 題</b>、邊界題 <b>2 題</b>，合計 <b>10 題／100 題</b>。</p>
+  <h3>核心題</h3>
+  <div id="examList"></div>
+  <h3>邊界題</h3>
+  <div id="examList2"></div>
+  <h3>題型分佈</h3>
+  <div class="panel">
+    <div class="bar"><span>情境 → 選檢定</span><div class="track"><div class="fill" data-w="37.5"></div></div><span class="num">3 題</span></div>
+    <div class="bar"><span>概念辨析</span><div class="track"><div class="fill" data-w="37.5"></div></div><span class="num">3 題</span></div>
+    <div class="bar"><span>純計算</span><div class="track"><div class="fill" data-w="12.5"></div></div><span class="num">1 題</span></div>
+    <p class="hint" style="margin:8px 0 0">長條為佔核心 8 題的比例。「情境 → 選檢定」佔最大宗：114Q2-38、115Q1-4、115Q1-7；其次是概念辨析：114Q2-38、115Q1-4、115Q1-7；概念辨析：115Q1-6、115Q1-9、115Q1-24；純計算：115Q1-8（已附公式圖，難點在「標準誤要除 √n」與「結論方向不要寫反」）。</p>
+  </div>
+  <div class="callout exam">分卷來看：114-2 核心 <b>2 題</b>（第 23、38 題），115-1 核心 <b>6 題</b>（第 4、6、7、8、9、24 題）。115-1 的第 3～9 題形成明顯的機率統計叢集，其中五題（4、6、7、8、9）直接落在本知識點上。<br>準備方向：把四道分界練到看關鍵字就反射，再把 α／p 值／型一型二／信賴區間四個名詞的定義句默寫得出來，本節 8 成分數就到手了。</div>
+</section>
+
+<!-- 30.7 -->
+<section id="s7">
+  <div class="sec-head"><span class="sec-no">30.7</span><h2>易錯與陷阱</h2></div>
+  <p class="lead">逐條確認自己真的懂了再打勾（打勾狀態會記在這台裝置上）。</p>
+  <div class="traps" id="traps"></div>
+  <p class="hint" id="trapCount" style="margin-top:10px"></p>
+
+  <h3>情境測驗</h3>
+  <div class="qcard" id="quiz"></div>
+
+  <h3>延伸練習</h3>
+  <p class="prose"><b>L22 主題庫 290 題：</b>篩選「假設檢定／p 值／型一型二／信賴區間／t 檢定／卡方／ANOVA／相關係數」相關題目。練習重點放在<b>兩個相似方法選哪個</b>的分界題（獨立 vs 成對、比例 Z vs 卡方、Pearson vs Spearman、ANOVA vs 多次 t 檢定），而不是公式推導。<br>
+  <b>L22 歷屆 100 題整卷做：</b>本知識點在 115-1 出現得比 114-2 密集（核心 6 題 vs 2 題），而且集中在卷面前段；整卷計時練習可以感受這個叢集帶來的時間壓力，並熟悉「選出<b>不正確</b>者」這種反向題型 —— 本節的 115Q1-6 與 115Q1-24 都是這種問法。<br>
+  <b>回頭複習本系列：</b><a href="L23101_probability_statistics.html">L23101 機率統計之機器學習基礎應用</a>補常態分佈、卜瓦松、中央極限定理與殘差診斷；科目 3 會用另一個面貌再考你一次 p 值與 F 檢定。<br>
+  <b>往前銜接：</b>本節的 A/B 測試情境會在資料分析與模型評估章節再次出現，屆時要一起判斷的還有取樣偏差與資料洩漏 —— 統計顯著的前提是抽樣本身沒有被汙染。</p>
+</section>
+</main>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce){document.querySelectorAll('#heroSvg .movers').forEach(m=>m.remove());}
+
+/* ---------- generic matcher ---------- */
+function matcher(root,fb,left,right,doneMsg){
+  let sel=null,done=0;
+  const L=document.createElement('div');L.className='col';
+  const R=document.createElement('div');R.className='col';
+  left.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;
+    b.innerHTML=it.html;if(it.c)b.style.setProperty('--c',it.c);
+    b.onclick=()=>{if(b.classList.contains('done'))return;L.querySelectorAll('.mitem').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;fb.textContent='';fb.className='feedback';};
+    L.appendChild(b);
+  });
+  right.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;b.innerHTML=it.html;
+    b.onclick=()=>{
+      if(b.classList.contains('done'))return;
+      if(!sel){fb.textContent='請先點左邊一個項目。';fb.className='feedback';return;}
+      if(sel.dataset.k===b.dataset.k){
+        const c=sel.style.getPropertyValue('--c');
+        [sel,b].forEach(x=>{x.classList.remove('sel');x.classList.add('done');if(c)x.style.setProperty('--c',c);});
+        fb.textContent='✓ '+(it.ok||'答對了！');fb.className='feedback ok';sel=null;done++;
+        if(done===left.length){fb.textContent='✓ 全部配對完成！'+doneMsg;}
+      }else{
+        b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');
+        fb.textContent='✗ '+(it.bad||'不太對，再想想它的關鍵特性。');fb.className='feedback bad';
+      }
+    };
+    R.appendChild(b);
+  });
+  root.append(L,R);
+}
+
+/* ---------- steps / stage ---------- */
+function stepper(btnRoot,vizEl,txtEl,data){
+  function show(i){
+    btnRoot.querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));
+    vizEl.innerHTML=data[i].viz;txtEl.innerHTML=data[i].txt;
+  }
+  data.forEach((d,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=d.label;b.onclick=()=>show(i);btnRoot.appendChild(b);});
+  show(0);
+}
+
+/* ---------- tabs ---------- */
+function tabs(btnRoot,body,data){
+  function s(i){btnRoot.querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));body.innerHTML=data[i][1];if(data[i][2])data[i][2]();}
+  data.forEach((x,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=x[0];b.onclick=()=>s(i);btnRoot.appendChild(b);});
+  s(0);
+}
+
+/* ---------- flip cards ---------- */
+function flipCards(root,arr){
+  arr.forEach(([n,o,d])=>{
+    const b=document.createElement('button');b.className='flip';b.setAttribute('aria-pressed','false');
+    b.innerHTML=`<div class="in"><div class="f"><strong>${n}</strong><span>${o}</span><span style="margin-top:auto;font-size:12.5px">點我翻面</span></div><div class="b">${d}</div></div>`;
+    b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');
+    root.appendChild(b);
+  });
+}
+
+/* ---------- pipeline ---------- */
+function pipeline(pipeEl,outEl,nextBtn,resetBtn,nodes,outs){
+  let i=0;const last=nodes.length-1;
+  pipeEl.style.gridTemplateColumns=`repeat(${nodes.length},minmax(${nodes.length>5?80:90}px,1fr))`;
+  pipeEl.innerHTML=nodes.map(([a,b])=>`<div class="pnode"><b>${a}</b>${b}</div>`).join('');
+  function r(){pipeEl.querySelectorAll('.pnode').forEach((n,j)=>{n.classList.toggle('on',j===i);n.classList.toggle('past',j<i);});outEl.innerHTML=outs[i];nextBtn.disabled=i===last;nextBtn.style.opacity=i===last?.4:1;}
+  nextBtn.onclick=()=>{if(i<last){i++;r();}};
+  resetBtn.onclick=()=>{i=0;r();};
+  r();
+}
+
+/* ---------- strategy chooser ---------- */
+function strategy(root,vEl,mEl,whyEl,st,order,label){
+  (order||st.map((_,i)=>i)).forEach(i=>{const b=document.createElement('button');b.innerHTML=st[i][0];b.setAttribute('aria-pressed','false');b.onclick=()=>{root.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));const x=st[i];vEl.textContent=x[1];vEl.style.color=x[3];mEl.style.width=x[2]+'%';mEl.style.background=x[3];whyEl.innerHTML=(label||'合適度（示意）')+'：'+x[2]+'%　'+x[4];};root.appendChild(b);});
+}
+
+/* ---------- exam list ---------- */
+function examList(root,arr){
+  arr.forEach(([n,k,q,a])=>{root.insertAdjacentHTML('beforeend',`<details><summary><span class="tag">${n}</span>${k}</summary><div class="body"><p style="margin:0 0 6px"><span class="hint">怎麼問：</span>${q}</p><p style="margin:0"><span class="hint">正解思路：</span>${a}</p></div></details>`);});
+}
+
+/* ---------- traps ---------- */
+function traps(root,countEl,T,key){
+  let saved=[];try{saved=JSON.parse(localStorage.getItem(key)||'[]')||[];}catch(e){saved=[];}
+  T.forEach(([a,b],i)=>{
+    const l=document.createElement('label');const c=saved.includes(i);if(c)l.classList.add('chk');
+    l.innerHTML=`<input type="checkbox" ${c?'checked':''}><div><em>${a}</em><br><span>${b}</span></div>`;
+    l.querySelector('input').onchange=e=>{const on=e.target.checked;l.classList.toggle('chk',on);saved=on?[...new Set([...saved,i])]:saved.filter(x=>x!==i);try{localStorage.setItem(key,JSON.stringify(saved));}catch(err){}count();};
+    root.appendChild(l);
+  });
+  function count(){countEl.textContent=`已確認 ${saved.length}／${T.length} 條`;}
+  count();
+}
+
+/* ---------- quiz ---------- */
+function quiz(box,Q,msgFn){
+  let i=0,score=0;
+  const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+  function show(){
+    if(i>=Q.length){
+      box.innerHTML=`<div class="progress"><i style="width:100%"></i></div><div class="qtext" style="font-size:24px;font-family:var(--serif)">得分 ${score}／${Q.length}</div><p>${msgFn(score,Q.length)}</p><button class="btn primary" data-qr="1">重新測驗</button>`;
+      box.querySelector('[data-qr]').onclick=()=>{i=0;score=0;show();};return;
+    }
+    const [q,opts,ex]=Q[i];
+    const order=shuffle(opts.map((o,k)=>({o,k})));
+    box.innerHTML=`<div class="progress"><i style="width:${i/Q.length*100}%"></i></div><div class="qtop"><span>第 ${i+1}／${Q.length} 題</span><span>得分 ${score}</span></div><div class="qtext">${q}</div><div class="opts">${order.map(x=>`<button class="opt" data-k="${x.k}">${x.o}</button>`).join('')}</div><div class="expl"></div><div class="row" style="margin-top:14px;justify-content:flex-end"><button class="btn primary" data-qn="1" style="display:none">${i===Q.length-1?'看結果':'下一題'}</button></div>`;
+    const nx=box.querySelector('[data-qn]');
+    box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.k==='0';if(ok)score++;
+      box.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.k==='0')x.classList.add('right');});
+      if(!ok)b.classList.add('wrongpick');
+      const e=box.querySelector('.expl');e.innerHTML=(ok?'<b style="color:var(--ok)">答對了。</b>':'<b style="color:var(--bad)">這題要小心。</b>')+ex;e.classList.add('show');
+      nx.style.display='';nx.focus({preventScroll:true});
+    });
+    nx.onclick=()=>{i++;show();};
+  }
+  show();
+}
+
+/* ---------- nav highlight ---------- */
+function navHighlight(){
+  const links=[...document.querySelectorAll('nav.toc a')];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on&&window.innerWidth<=860)a.scrollIntoView({inline:'center',block:'nearest'});});}});},{rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('main section').forEach(s=>io.observe(s));
+}
+
+/* ---------- math helpers ---------- */
+function erf(x){const s=x<0?-1:1;x=Math.abs(x);const t=1/(1+0.3275911*x);const y=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t*Math.exp(-x*x);return s*y;}
+const Phi=z=>0.5*(1+erf(z/Math.SQRT2));
+const phi=z=>Math.exp(-z*z/2)/Math.sqrt(2*Math.PI);
+function invPhi(p){let lo=-10,hi=10;for(let k=0;k<80;k++){const m=(lo+hi)/2;if(Phi(m)<p)lo=m;else hi=m;}return (lo+hi)/2;}
+function lgamma(z){const g=7,c=[0.99999999999980993,676.5203681218851,-1259.1392167224028,771.32342877765313,-176.61502916214059,12.507343278686905,-0.13857109526572012,9.9843695780195716e-6,1.5056327351493116e-7];if(z<0.5)return Math.log(Math.PI/Math.sin(Math.PI*z))-lgamma(1-z);z-=1;let x=c[0];for(let i=1;i<g+2;i++)x+=c[i]/(z+i);const t=z+g+0.5;return 0.5*Math.log(2*Math.PI)+(z+0.5)*Math.log(t)-t+Math.log(x);}
+function tpdf(x,v){return Math.exp(lgamma((v+1)/2)-lgamma(v/2))/Math.sqrt(v*Math.PI)*Math.pow(1+x*x/v,-(v+1)/2);}
+function randn(){let u=0,v=0;while(u===0)u=Math.random();while(v===0)v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+function linePath(f,a,b,X,Y,N=140){let d='';for(let i=0;i<=N;i++){const x=a+(b-a)*i/N;d+=(i?'L':'M')+X(x).toFixed(1)+' '+Y(f(x)).toFixed(1);}return d;}
+function areaPath(f,a,b,X,Y,N=80){if(b<=a)return '';let d=`M${X(a).toFixed(1)} ${Y(0).toFixed(1)}`;for(let i=0;i<=N;i++){const x=a+(b-a)*i/N;d+='L'+X(x).toFixed(1)+' '+Y(f(x)).toFixed(1);}return d+`L${X(b).toFixed(1)} ${Y(0).toFixed(1)}Z`;}
+const fmtP=p=>p<0.0001?'< 0.0001':p.toFixed(4);
+function btnGroup(root,labels,init,cb){labels.forEach((l,i)=>{const b=document.createElement('button');b.className='btn sm';b.textContent=l;b.setAttribute('aria-pressed',i===init);b.onclick=()=>{root.querySelectorAll('.btn').forEach(x=>x.setAttribute('aria-pressed',x===b));cb(i);};root.appendChild(b);});}
+
+/* ---------- hero curve ---------- */
+(function(){
+  const X=z=>360+z*80,Y=d=>250-d/phi(0)*170;
+  $('#heroCurve').setAttribute('d',areaPath(phi,-4,4,X,Y));
+  $('#heroTailL').setAttribute('d',areaPath(phi,-4,-1.96,X,Y));
+  $('#heroTailR').setAttribute('d',areaPath(phi,1.96,4,X,Y));
+})();
+
+/* ---------- 30.1 point vs interval ---------- */
+flipCards($('#estCards'),[
+  ['點估計','用一個數字：x̄ → μ','<div>優點：簡潔。<br>缺點：完全沒有反映「這個數字有多不確定」。</div>'],
+  ['區間估計','一段範圍＋信心水準','<div>例：[66, 70]，95%。<br>同時交代估計值與不確定性。實務上與點估計通常一起報告。</div>']
+]);
+
+/* ---------- CI coverage simulator ---------- */
+(function(){
+  const LV=[[.90,1.645],[.95,1.96],[.99,2.576]],NS=[10,30,100];
+  let lv=1,n=1,list=[],tot=0,cov=0;
+  const X=v=>320+(v-50)*15;
+  function hw(){return LV[lv][1]*10/Math.sqrt(NS[n]);}
+  function draw(){
+    let h=`<line x1="${X(50)}" y1="4" x2="${X(50)}" y2="290" stroke="var(--ink)" stroke-dasharray="5 5" stroke-width="1.5"/><text x="${X(50)+6}" y="296" font-size="12" fill="var(--ink)">μ = 50（固定）</text>`;
+    list.slice(-40).forEach((it,i)=>{const y=10+i*6.8;const c=it.ok?'var(--ok)':'var(--bad)';h+=`<line x1="${Math.max(4,X(it.m-it.h)).toFixed(1)}" x2="${Math.min(636,X(it.m+it.h)).toFixed(1)}" y1="${y}" y2="${y}" stroke="${c}" stroke-width="${it.ok?2.5:3.5}" stroke-linecap="round"/><circle cx="${X(it.m).toFixed(1)}" cy="${y}" r="2.4" fill="${c}"/>`;});
+    if(!list.length)h+=`<text x="320" y="150" text-anchor="middle" font-size="15" fill="var(--muted)">按「抽 20 次」開始</text>`;
+    $('#ciSvg').innerHTML=h;
+    $('#ciTot').textContent=tot;$('#ciCov').textContent=tot?(cov/tot*100).toFixed(1)+'%':'—';$('#ciHw').textContent='±'+hw().toFixed(2);
+  }
+  function drawN(k){const h=hw();for(let i=0;i<k;i++){const m=50+10/Math.sqrt(NS[n])*randn();const ok=Math.abs(m-50)<=h;list.push({m,h,ok});tot++;if(ok)cov++;}if(list.length>200)list=list.slice(-200);draw();}
+  function reset(){list=[];tot=0;cov=0;draw();}
+  btnGroup($('#ciLv'),['90%','95%','99%'],1,i=>{lv=i;reset();});
+  btnGroup($('#ciN'),['10','30','100'],1,i=>{n=i;reset();});
+  $('#ciDraw').onclick=()=>drawN(20);$('#ciDraw100').onclick=()=>drawN(100);$('#ciReset').onclick=reset;
+  draw();
+})();
+
+/* ---------- duality ---------- */
+(function(){
+  const X=v=>40+(v-80)*14;
+  const cases=[
+    ['μ₀ = 100（本題）',100,true,'假設值 100 萬<b>落在</b> [95, 108] 內 ⇄ p = 0.08 &gt; α = 0.05，兩者結論一致 → <b>無法拒絕 H₀</b>。<div class="hint">誘答一：「改 α = 0.10 仍不顯著」—— 0.08 &lt; 0.10，改了反而會顯著。<br>誘答二：「CI 寬度僅與顯著水準有關」—— 還受 s 與 n 影響。</div>'],
+    ['μ₀ = 90（示意）',90,false,'假設值落在區間<b>外</b> → 區間不涵蓋 μ₀ ⇄ p ≤ α → <b>拒絕 H₀</b>。'],
+    ['μ₀ = 112（示意）',112,false,'假設值落在區間<b>外</b>（另一側）→ 同樣 p ≤ α → <b>拒絕 H₀</b>。雙尾檢定兩側都算。']
+  ];
+  tabs($('#dualTabs'),$('#dualOut'),cases.map(c=>[c[0],`<p style="margin:0">${c[3]}</p>`,()=>{
+    let h=`<line x1="30" y1="80" x2="610" y2="80" stroke="var(--line)" stroke-width="2"/>`;
+    for(let v=80;v<=120;v+=5)h+=`<line x1="${X(v)}" y1="76" x2="${X(v)}" y2="84" stroke="var(--muted)"/><text x="${X(v)}" y="102" font-size="12" text-anchor="middle" fill="var(--muted)">${v}</text>`;
+    h+=`<rect x="${X(95)}" y="66" width="${X(108)-X(95)}" height="28" rx="8" fill="var(--aud)" opacity=".35"/><text x="${(X(95)+X(108))/2}" y="58" text-anchor="middle" font-size="13" font-weight="700" fill="var(--aud)">95% CI [95, 108]</text>`;
+    const c=cases.find(x=>x[0]===$('#dualTabs .btn[aria-pressed="true"]').textContent)||cases[0];
+    const col=c[2]?'var(--ok)':'var(--bad)';
+    h+=`<g style="transition:transform .5s"><line x1="${X(c[1])}" y1="20" x2="${X(c[1])}" y2="96" stroke="${col}" stroke-width="3"/><circle cx="${X(c[1])}" cy="20" r="7" fill="${col}"/><text x="${X(c[1])}" y="14" text-anchor="middle" font-size="12" font-weight="700" fill="${col}">μ₀</text></g>`;
+    $('#dualSvg').innerHTML=h;
+  }]));
+})();
+
+/* ---------- CI width lab ---------- */
+(function(){
+  const LV=[['90%',1.645],['95%',1.96],['99%',2.576]],NS=[25,100,400],SS=[5,10,20];
+  let a=1,b=1,c=1;const base=1.96*10/10;
+  const X=v=>320+(v-68)*26;
+  function draw(){
+    const z=LV[a][1],n=NS[b],s=SS[c],h=z*s/Math.sqrt(n);
+    let svg=`<line x1="20" y1="70" x2="620" y2="70" stroke="var(--line)" stroke-width="2"/>`;
+    for(let v=58;v<=78;v+=2)svg+=`<text x="${X(v)}" y="100" text-anchor="middle" font-size="12" fill="var(--muted)">${v}</text><line x1="${X(v)}" x2="${X(v)}" y1="66" y2="74" stroke="var(--muted)"/>`;
+    const l=Math.max(22,X(68-h)),r=Math.min(618,X(68+h));
+    svg+=`<rect x="${l}" y="50" width="${r-l}" height="40" rx="10" fill="var(--aud)" opacity=".3" style="transition:all .5s"/><line x1="${l}" x2="${l}" y1="44" y2="96" stroke="var(--aud)" stroke-width="3"/><line x1="${r}" x2="${r}" y1="44" y2="96" stroke="var(--aud)" stroke-width="3"/><circle cx="${X(68)}" cy="70" r="6" fill="var(--ink)"/><text x="${X(68)}" y="36" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">[${(68-h).toFixed(1)}, ${(68+h).toFixed(1)}]</text>`;
+    $('#wSvg').innerHTML=svg;
+    $('#wFormula').textContent=`半寬 = 臨界值 × s／√n = ${z} × ${s}／√${n} = ${z} × ${(s/Math.sqrt(n)).toFixed(2)} ≈ ${h.toFixed(2)}`;
+    $('#wNote').textContent=`與基準（95%、n = 100、s = 10，半寬 ${base.toFixed(2)}）相比，寬度是 ${(h/base).toFixed(2)} 倍。`+(b===2&&a===1&&c===1?'n 變 4 倍，寬度只窄一半 —— 這就是 √n 的收斂速度。':'');
+  }
+  btnGroup($('#wLv'),LV.map(x=>x[0]),1,i=>{a=i;draw();});
+  btnGroup($('#wN'),NS.map(String),1,i=>{b=i;draw();});
+  btnGroup($('#wS'),SS.map(String),1,i=>{c=i;draw();});
+  draw();
+})();
+
+/* ---------- 30.2 five steps ---------- */
+(function(){
+  const box=(t,c)=>`<div style="border:2px solid ${c};border-radius:14px;padding:14px 18px;text-align:center;font-weight:700;background:var(--surface)">${t}</div>`;
+  stepper($('#fiveBtns'),$('#fiveViz'),$('#fiveTxt'),[
+    {label:'① 設定假設',viz:`<div style="display:grid;gap:10px;width:100%">${box('H₀：新舊版本轉換率無差異','var(--txt)')}${box('H₁：新版本轉換率不同於舊版本','var(--img)')}</div>`,txt:'<p><b>① 設定 H₀ 與 H₁</b></p><p>H₀＝現狀／無差異／無效果（要被檢驗的對象）；H₁＝研究者想證實的新主張。同時決定<b>單尾或雙尾</b>：這裡不預設方向 → 雙尾。</p>'},
+    {label:'② 選檢定',viz:`<div style="display:grid;gap:10px;width:100%">${box('資料：轉換／未轉換（二元比例）','var(--line)')}${box('兩組、互相獨立 → 雙比例 Z 檢定','var(--img)')}</div>`,txt:'<p><b>② 選擇檢定方法與檢定統計量</b></p><p>看資料型態、組數、是否配對、前提假設是否成立 → t 值／Z 值／F 值／卡方值／U 值。詳見 30.4 的導航器。</p>'},
+    {label:'③ 定 α',viz:`<div class="verdict" style="font-size:48px;color:var(--sen)">α = 0.05</div>`,txt:'<p><b>③ 決定顯著水準 α</b></p><p><b>事前</b>設定，常見 0.01／0.05／0.10。一旦看過資料就不能再改。</p>'},
+    {label:'④ 算 p 值',viz:`<div style="text-align:center"><div class="hint">檢定統計量 → 對照理論分佈</div><div class="verdict" style="font-size:48px;color:var(--aud)">p = 0.03</div><div class="hint">（示意數值）</div></div>`,txt:'<p><b>④ 計算檢定統計量，對照理論分佈求出 p 值</b></p><p>p 值是「事後量到的位置」。</p>'},
+    {label:'⑤ 下結論',viz:`<div style="text-align:center"><div class="verdict" style="font-size:30px">0.03 ≤ 0.05</div><div class="verdict" style="color:var(--ok);margin-top:6px">→ 拒絕 H₀</div></div>`,txt:'<p><b>⑤ 比較 p 值與 α，作出結論</b></p><p>p ≤ α → 拒絕 H₀（結果達統計顯著）<br>p &gt; α → <b>無法拒絕</b> H₀（證據不足，<b>非證明 H₀ 為真</b>）</p>'}
+  ]);
+})();
+
+/* ---------- tails ---------- */
+(function(){
+  let t='two',hack=false;
+  const X=z=>320+z*70,Y=d=>185-d/phi(0)*150;
+  function draw(){
+    let h=`<path d="${areaPath(phi,-4.3,4.3,X,Y)}" fill="var(--surface2)" stroke="var(--txt)" stroke-width="2"/>`;
+    const reg=(a,b)=>`<path d="${areaPath(phi,a,b,X,Y)}" fill="var(--sen)" opacity=".6"/>`;
+    const lab=(z,s)=>`<line x1="${X(z)}" x2="${X(z)}" y1="30" y2="190" stroke="var(--sen)" stroke-dasharray="4 4"/><text x="${X(z)}" y="208" text-anchor="middle" font-size="13" font-weight="700" fill="var(--sen)">${s}</text>`;
+    let txt='';
+    if(t==='two'){h+=reg(-4.3,-1.96)+reg(1.96,4.3)+lab(-1.96,'−1.96')+lab(1.96,'+1.96');txt='<b>雙尾 H₁：μ ≠ μ₀</b> —— 只想知道有沒有差異，不預設方向。α = 0.05 平分到兩側，每側 2.5%。';}
+    else if(t==='left'){h+=reg(-4.3,-1.645)+lab(-1.645,'−1.645');txt='<b>左尾 H₁：μ &lt; μ₀</b> —— 只關心是否「變小／變差」（如檢驗降血壓效果）。5% 全放在左側。';}
+    else{h+=reg(1.645,4.3)+lab(1.645,'+1.645');txt='<b>右尾 H₁：μ &gt; μ₀</b> —— 只關心是否「變大／改善」（如檢驗良率是否超標）。5% 全放在右側。';}
+    if(hack){h+=`<path d="${areaPath(phi,1.645,1.96,X,Y)}" fill="var(--warn)" opacity=".9"/><text x="${X(2.4)}" y="60" font-size="13" font-weight="700" fill="var(--warn)">偷偷多出來的 2.5%</text>`;txt='<b style="color:var(--bad)">p-hacking：</b>原本雙尾右側門檻是 1.96（2.5%），看到資料往右偏再改成右尾，門檻降到 1.645（5%）—— 等於偷偷把顯著門檻放寬一倍。<b>方向必須事前決定。</b>';}
+    $('#tailSvg').innerHTML=h;$('#tailOut').innerHTML=txt;
+  }
+  document.querySelectorAll('#tailTabs .btn').forEach(b=>b.onclick=()=>{t=b.dataset.t;hack=false;$('#hackBtn').setAttribute('aria-pressed','false');document.querySelectorAll('#tailTabs .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));draw();});
+  $('#hackBtn').onclick=()=>{hack=!hack;$('#hackBtn').setAttribute('aria-pressed',hack);draw();};
+  draw();
+})();
+
+/* ---------- alpha matcher ---------- */
+matcher($('#alphaMatch'),$('#alphaFb'),[
+  {k:'1',c:'var(--sen)',html:'藥物療效、安全風險、高金額決策<small>誤判成本極高</small>'},
+  {k:'5',c:'var(--txt)',html:'多數商業與學術分析<small>通用情境</small>'},
+  {k:'10',c:'var(--img)',html:'探索性研究、假說生成階段<small>先找線索</small>'}
+],[
+  {k:'5',html:'α = 0.05<small>通用標準</small>',ok:'0.05 是多數分析的通用標準。'},
+  {k:'x',html:'先看 p 值再決定 α<small>彈性調整</small>',bad:'α 必須事前設定，看完 p 值再調是統計上的作弊。'},
+  {k:'1',html:'α = 0.01<small>最嚴格</small>',ok:'誤判成本極高時，要把型一錯誤壓到最低。'},
+  {k:'10',html:'α = 0.10<small>較寬鬆</small>',ok:'探索階段寧可多抓線索，之後再嚴格驗證。'}
+],'α 永遠是事前畫的線。');
+
+/* ---------- p-value slider ---------- */
+(function(){
+  const X=z=>320+z*72,Y=d=>180-d/phi(0)*150;
+  function draw(){
+    const z=+$('#pZ').value;$('#pZv').textContent=z.toFixed(2);
+    const p=2*(1-Phi(z));
+    let h=`<path d="${areaPath(phi,-4.3,4.3,X,Y)}" fill="var(--surface2)" stroke="var(--txt)" stroke-width="2"/>`;
+    h+=`<path d="${areaPath(phi,-4.3,-z,X,Y)}" fill="var(--sen)" opacity=".6"/><path d="${areaPath(phi,z,4.3,X,Y)}" fill="var(--sen)" opacity=".6"/>`;
+    [-1.96,1.96].forEach(c=>h+=`<line x1="${X(c)}" x2="${X(c)}" y1="20" y2="185" stroke="var(--txt)" stroke-dasharray="4 4"/>`);
+    h+=`<text x="${X(1.96)+4}" y="30" font-size="12" fill="var(--txt)">α 的線 ±1.96</text>`;
+    h+=`<line x1="${X(z)}" x2="${X(z)}" y1="40" y2="185" stroke="var(--aud)" stroke-width="3"/><circle cx="${X(z)}" cy="185" r="6" fill="var(--aud)"/><text x="${X(z)}" y="203" text-anchor="middle" font-size="13" font-weight="700" fill="var(--aud)">z = ${z.toFixed(2)}</text>`;
+    h+=`<line x1="${X(-z)}" x2="${X(-z)}" y1="60" y2="185" stroke="var(--aud)" stroke-width="1.5" stroke-dasharray="3 3"/><text x="${X(-z)}" y="203" text-anchor="middle" font-size="12" fill="var(--aud)">−${z.toFixed(2)}</text>`;
+    $('#pSvg').innerHTML=h;
+    $('#pVal').textContent=p.toFixed(4);
+    const rej=p<=0.05;$('#pDec').textContent=rej?'拒絕 H₀':'無法拒絕 H₀';$('#pDec').style.color=rej?'var(--ok)':'var(--muted)';
+  }
+  $('#pZ').oninput=draw;draw();
+})();
+flipCards($('#pCards'),[
+  ['✗「p 值是 H₀ 為真的機率」','方向顛倒','p 值是 P(資料 | H₀)，不是 P(H₀ | 資料)。'],
+  ['✗「p 值是犯型一錯誤的機率」','把 α 和 p 搞混','型一錯誤率的上限是事前設定的 α；p 值是事後算出的觀察值。'],
+  ['✗「p = 0.001 代表效果很大」','忽略樣本數','p 值同時受效應量與樣本數影響，大樣本會讓微小差異也有極小 p 值。'],
+  ['✗「1 − p 是 H₁ 為真的機率」','條件反過來念','同樣是把條件機率反過來念。']
+]);
+
+/* ---------- 30.3 decision matrix ---------- */
+(function(){
+  const D=[
+    ['正確判斷','var(--ok)','H₀ 為真、也沒有拒絕它 → 正確。機率 = <b>1 − α</b>。'],
+    ['型二錯誤 β','var(--aud)','H₀ 其實是假的（真的有差異），卻沒拒絕 → <b>型二錯誤（漏判／偽陰性）</b>，機率 = β。'],
+    ['型一錯誤 α','var(--sen)','H₀ 其實為真（沒差異），卻拒絕了 → <b>型一錯誤（誤判／偽陽性）</b>，機率 = α。'],
+    ['檢定力 1−β','var(--img)','H₀ 為假、也正確拒絕它 → 正確判斷＝<b>檢定力（Power）</b>，機率 = 1 − β。']
+  ];
+  document.querySelectorAll('[data-dm]').forEach(b=>b.onclick=()=>{const d=D[+b.dataset.dm];b.textContent=d[0];b.style.borderColor=d[1];b.style.color=d[1];b.style.fontWeight='700';$('#dmOut').innerHTML=d[2];});
+})();
+
+/* ---------- type I/II sorting ---------- */
+(function(){
+  const S=[
+    ['地震預警','沒有即將發生的強震','發出錯誤警報，實際沒地震',1],['地震預警','沒有即將發生的強震','未發警報，實際發生強震',2],
+    ['銀行防詐','該筆交易為正常行為','合法交易被擋',1],['銀行防詐','該筆交易為正常行為','詐騙交易被放行',2],
+    ['製造品管','出廠產品為合格品','良品被判不合格，浪費',1],['製造品管','出廠產品為合格品','瑕疵品流入市場',2],
+    ['電商評論過濾','評論為正常留言','正常評論被誤刪',1],['電商評論過濾','評論為正常留言','違規內容持續顯示',2],
+    ['新藥審查','新藥與安慰劑無差異','無效藥被認定有效、獲准上市',1],['新藥審查','新藥與安慰劑無差異','有效藥被錯過',2]
+  ];
+  let order=[],i=0,sc=0;
+  function start(){order=S.map((_,k)=>k).sort(()=>Math.random()-.5);i=0;sc=0;show();}
+  function show(){
+    if(i>=order.length){$('#sortCard').innerHTML=`<div class="verdict">完成！答對 ${sc}／${S.length}</div><div class="hint">口訣：H₀ 真卻拒絕＝型一（假警報）；H₀ 假卻放過＝型二（漏網之魚）。按任一按鈕再玩一次。</div>`;$('#sortScore').textContent='';return;}
+    const s=S[order[i]];$('#sortCard').innerHTML=`<small>情境：${s[0]}｜H₀：${s[1]}</small>${s[2]}`;$('#sortScore').textContent=`第 ${i+1}／${S.length} 題　答對 ${sc}`;
+  }
+  function ans(t){
+    if(i>=order.length){$('#sortFb').textContent='';start();return;}
+    const s=S[order[i]];
+    if(s[3]===t){sc++;$('#sortFb').textContent='✓ 正確：'+(t===1?'H₀ 其實為真，卻被拒絕 → 型一（偽陽性）。':'H₀ 其實為假，卻沒被拒絕 → 型二（偽陰性）。');$('#sortFb').className='feedback ok';}
+    else{$('#sortFb').textContent='✗ 再想想：'+(s[3]===1?'H₀「'+s[1]+'」其實為真，卻被推翻 → 型一。':'H₀「'+s[1]+'」其實為假，卻沒被推翻 → 型二。');$('#sortFb').className='feedback bad';}
+    i++;show();
+  }
+  $('#sortT1').onclick=()=>ans(1);$('#sortT2').onclick=()=>ans(2);
+  start();
+})();
+
+/* ---------- power simulator ---------- */
+(function(){
+  const AL=[0.01,0.05,0.10];let a=1;
+  const X=v=>20+(v+1.2)*(600/3.4);
+  function draw(){
+    const n=+$('#pwN').value,d=+$('#pwD').value;$('#pwNv').textContent=n;$('#pwDv').textContent=d.toFixed(2);
+    const se=1/Math.sqrt(n),al=AL[a],zc=invPhi(1-al),c=zc*se;
+    const f0=x=>phi(x/se)/se,f1=x=>phi((x-d)/se)/se,pk=phi(0)/se;
+    const Y=v=>215-v/pk*165;
+    const beta=Phi(zc-d*Math.sqrt(n)),pw=1-beta;
+    let h=`<line x1="10" x2="630" y1="215" y2="215" stroke="var(--muted)"/>`;
+    h+=`<path d="${areaPath(f1,-1.2,Math.min(c,2.2),X,Y)}" fill="var(--aud)" opacity=".45"/>`;
+    h+=`<path d="${areaPath(f0,Math.min(c,2.2),2.2,X,Y)}" fill="var(--sen)" opacity=".65"/>`;
+    h+=`<path d="${linePath(f0,-1.2,2.2,X,Y)}" fill="none" stroke="var(--txt)" stroke-width="2.5"/>`;
+    h+=`<path d="${linePath(f1,-1.2,2.2,X,Y)}" fill="none" stroke="var(--img)" stroke-width="2.5"/>`;
+    h+=`<line x1="${X(c)}" x2="${X(c)}" y1="22" y2="222" stroke="var(--bad)" stroke-width="2"/><text x="${X(c)+5}" y="34" font-size="12" fill="var(--bad)" font-weight="700">臨界值 → 拒絕域</text>`;
+    h+=`<text x="${X(0)}" y="240" text-anchor="middle" font-size="12" fill="var(--txt)" font-weight="700">μ₀ = 0</text><text x="${X(d)}" y="240" text-anchor="middle" font-size="12" fill="var(--img)" font-weight="700">μ₁ = ${d.toFixed(2)}</text>`;
+    $('#pwSvg').innerHTML=h;
+    $('#pwAv').textContent=(al*100).toFixed(0)+'%';$('#pwBv').textContent=(beta*100).toFixed(1)+'%';$('#pwPv').textContent=(pw*100).toFixed(1)+'%';
+    $('#pwMeter').style.width=(pw*100).toFixed(1)+'%';$('#pwMeter').style.background=pw>=.8?'var(--ok)':pw>=.5?'var(--warn)':'var(--bad)';
+    $('#pwNote').textContent=pw>=.8?`檢定力已達常設目標 0.80。n 越大，兩條曲線越瘦，重疊越少 —— α 與 β 可以同時很小。`:`檢定力未達常設目標 0.80：就算 H₁ 為真，也有 ${(beta*100).toFixed(0)}% 的機會「沒測出來」。此時「無法拒絕 H₀」不能解讀成「沒有差異」。`;
+  }
+  btnGroup($('#pwA'),AL.map(String),1,i=>{a=i;draw();});
+  $('#pwN').oninput=draw;$('#pwD').oninput=draw;draw();
+})();
+
+/* ---------- power strategies ---------- */
+strategy($('#pwStrat'),$('#pwStratV'),$('#pwStratM'),$('#pwStratWhy'),[
+  ['增加樣本數 n','✓ 最直接',90,'var(--ok)','<b>機制：</b>標準誤變小，同樣的差異更容易達顯著。<b>代價：</b>成本、時間。'],
+  ['降低測量變異','✓ 有效',75,'var(--ok)','<b>機制：</b>標準誤變小。<b>代價：</b>需改善實驗控制或量測方法。'],
+  ['效應量本身較大','— 無法控制',60,'var(--warn)','<b>機制：</b>訊號變強。<b>代價：</b>不是研究者能決定的。'],
+  ['採用配對／區組設計','✓ 有效',75,'var(--ok)','<b>機制：</b>排除個體間變異。<b>代價：</b>需要能合理配對的資料。'],
+  ['前提成立時用參數檢定','✓ 有條件',65,'var(--ok)','<b>機制：</b>參數檢定比無母數更有效率。<b>代價：</b>前提不成立時反而失真。'],
+  ['提高 α','△ 有副作用',40,'var(--bad)','<b>機制：</b>拒絕區變大。<b>代價：</b>型一錯誤同步上升。']
+],null,'提升效果（示意）');
+
+/* ---------- multiple comparisons ---------- */
+(function(){
+  let bon=false;
+  function draw(){
+    const m=+$('#mcM').value;$('#mcMv').textContent=m;
+    const raw=1-Math.pow(0.95,m),adj=1-Math.pow(1-0.05/m,m);
+    const row=(l,v,c)=>`<div class="bar"><span>${l}</span><div class="track"><div class="fill" style="width:${(v*100).toFixed(1)}%;background:${c}"></div></div><span class="num">${(v*100).toFixed(1)}%</span></div>`;
+    let h=row('未校正 整體偽陽性',raw,raw>.3?'var(--bad)':raw>.1?'var(--warn)':'var(--txt)');
+    if(bon)h+=row('Bonferroni 後',adj,'var(--ok)')+`<div class="hint">每次檢定的門檻：α/m = 0.05/${m} = ${(0.05/m).toFixed(4)}</div>`;
+    $('#mcBars').innerHTML=h;
+    $('#mcNote').innerHTML=`做 ${m} 次 α = 0.05 的檢定，至少一次假警報的機率 ≈ 1 − 0.95<sup>${m}</sup> = <b>${(raw*100).toFixed(1)}%</b>。`+(bon?' Bonferroni 把整體錯誤率壓回 5% 以內，代價是每次檢定的檢定力下降。':'');
+  }
+  $('#mcM').oninput=draw;
+  $('#mcBon').onclick=()=>{bon=!bon;$('#mcBon').setAttribute('aria-pressed',bon);draw();};
+  draw();
+})();
+
+/* ---------- 30.4 wizard ---------- */
+(function(){
+  const R=(name,prem,note)=>({r:1,name,prem,note:note||''});
+  const T={q:'Step 1：應變數（要比較／分析的東西）是什麼型態？',o:[
+    ['二元／類別（成敗、良率、投票傾向）',{q:'你想回答什麼？',o:[
+      ['一組比例是否與預期值不同',R('單樣本比例 Z 檢定','np₀ 與 n(1−p₀) 皆 ≥ 5；不足改二項精確檢定。','p₀ 要有依據（歷史數據、業界標準、法規），不能事後挑。')],
+      ['兩組比例是否不同（可問誰比較高）',R('雙比例 Z 檢定','np 與 n(1−p) 皆 ≥ 5；不足改 Fisher 精確檢定。','114Q2-38：兩條產線良率 95% vs 97% → 雙比例 Z。可做單尾方向性比較。')],
+      ['兩個類別變數有沒有關聯（列聯表）',R('卡方獨立性檢定','各格期望次數 ≥ 5；一定要用<b>原始次數</b>。','顯著只代表有關聯，強度另看 Cramér\'s V／Phi。')],
+      ['觀察次數分佈是否符合理論分佈',R('卡方適合度檢定','各格期望次數 ≥ 5；用原始次數。','例：骰子是否公平、各月銷量是否均勻。')]
+    ]}],
+    ['順序資料，或明顯非常態的連續資料',{q:'要比幾組？有沒有配對？',o:[
+      ['兩組、獨立',R('Mann-Whitney U 檢定','對應獨立樣本 t。兩組分佈形狀相似才可解讀為中位數差。')],
+      ['兩組、配對',R('Wilcoxon 符號等級檢定','對應成對樣本 t。')],
+      ['三組以上、獨立',R('Kruskal-Wallis 檢定','對應單因子 ANOVA。事後用 Dunn\'s test。')],
+      ['三組以上、配對／重複量數',R('Friedman 檢定','對應重複量數 ANOVA。')]
+    ]}],
+    ['連續且近似常態',{q:'Step 2：要比幾組？',o:[
+      ['1 組 vs 理論值',{q:'母體標準差 σ 已知嗎？',o:[
+        ['已知',R('單樣本 Z 檢定','母體標準差已知。','115Q1-8 外送時間就是這型：SE = σ/√n。')],
+        ['未知（用樣本標準差 s）',R('單樣本 t 檢定','近似常態（n ≥ 30 可依 CLT 放寬）。')]
+      ]}],
+      ['2 組',{q:'Step 3：兩組之間有配對關係嗎？',o:[
+        ['有：同一批對象前後測、雙胞胎、一對一配對',R('成對樣本 t 檢定','<b>差值</b>近似常態；配對規則須事先定義清楚。','115Q1-7：同一批 40 名患者導入前後各測一次血壓 → 成對 t。H₀：μ_d = 0。')],
+        ['沒有：不同個體、互不相關',{q:'兩組變異數齊一嗎？（用 Levene\'s test 檢查）',o:[
+          ['齊一（Levene 不顯著）',R('獨立樣本 t 檢定','各組原始資料近似常態＋變異數齊一。')],
+          ['不齊（Levene 顯著）',R('Welch\'s t 檢定','變異數不齊時換 Welch，不是直接放棄 t 檢定改無母數。')]
+        ]}]
+      ]}],
+      ['3 組以上',R('單因子 ANOVA（F 檢定）','常態＋變異數齊一＋獨立；應變數連續、自變數類別。','115Q1-4：三種學習率比較 → 用單一 F 檢定控制整體型一錯誤率。顯著後做事後檢定（如 Tukey HSD）。')]
+    ]}],
+    ['我不是要比組別，而是看兩變數的關聯',{q:'兩變數的關係長什麼樣？',o:[
+      ['兩連續變數、線性、近似常態、無重大離群值',R('皮爾森相關檢定（Pearson r）','線性、近似常態、無重大離群值。','114Q2-30：散佈圖呈線性、無離群值 → Pearson。')],
+      ['順序資料，或單調但非線性、有離群值',R('斯皮爾曼／肯德爾等級相關','可排名、單調關係。對離群值穩健度：Kendall &gt; Spearman &gt; Pearson。')]
+    ]}]
+  ]};
+  let stack=[{node:T,label:null}];
+  function render(){
+    const cur=stack[stack.length-1].node;
+    $('#wizPath').innerHTML=stack.slice(1).map(s=>`<span>${s.label}</span>`).join('');
+    if(cur.r){$('#wizBody').innerHTML=`<div class="wiz-res"><div class="hint">建議使用</div><div class="verdict">${cur.name}</div><p style="margin:8px 0 0"><b>關鍵前提：</b>${cur.prem}</p>${cur.note?`<p class="hint" style="margin:6px 0 0">${cur.note}</p>`:''}</div>`;return;}
+    $('#wizBody').innerHTML=`<p class="wiz-q">${cur.q}</p><div class="strat"></div>`;
+    cur.o.forEach(([l,nx])=>{const b=document.createElement('button');b.textContent=l;b.setAttribute('aria-pressed','false');b.onclick=()=>{stack.push({node:nx,label:l});render();};$('#wizBody .strat').appendChild(b);});
+  }
+  $('#wizBack').onclick=()=>{if(stack.length>1){stack.pop();render();}};
+  $('#wizReset').onclick=()=>{stack=[stack[0]];render();};
+  render();
+})();
+
+/* ---------- t brothers ---------- */
+tabs($('#tTabs'),$('#tBody'),[
+  ['單樣本 t','<div class="tbl-wrap"><table style="min-width:0"><tr><td>比較對象</td><td>樣本平均 vs 已知常數 μ₀</td></tr><tr><td>H₀</td><td>μ = μ₀</td></tr><tr><td>資料來源</td><td>一組</td></tr><tr><td>常態性要求對象</td><td>原始資料</td></tr><tr><td>額外前提</td><td>—</td></tr><tr><td>典型題幹</td><td>「是否與法規標準／宣稱值不同」</td></tr></table></div>'],
+  ['獨立樣本 t','<div class="tbl-wrap"><table style="min-width:0"><tr><td>比較對象</td><td>兩組獨立樣本的平均</td></tr><tr><td>H₀</td><td>μ₁ = μ₂</td></tr><tr><td>資料來源</td><td>兩組不同個體</td></tr><tr><td>常態性要求對象</td><td>各組原始資料</td></tr><tr><td>額外前提</td><td>變異數齊一（否則 Welch）</td></tr><tr><td>典型題幹</td><td>「男性 vs 女性」「A 產品 vs B 產品」</td></tr></table></div>'],
+  ['成對樣本 t','<div class="tbl-wrap"><table style="min-width:0"><tr><td>比較對象</td><td>同一對象兩次測量的<b>差值</b></td></tr><tr><td>H₀</td><td>μ_d = 0</td></tr><tr><td>資料來源</td><td>一組個體、兩個時點（或配對組）</td></tr><tr><td>常態性要求對象</td><td><b>差值</b></td></tr><tr><td>額外前提</td><td>配對規則須事先定義清楚</td></tr><tr><td>典型題幹</td><td>「導入系統前後」「治療前後」</td></tr></table></div>']
+]);
+
+/* ---------- t vs normal ---------- */
+(function(){
+  const DF=[1,2,5,10,30];
+  const X=z=>320+z*72,Y=d=>190-d/phi(0)*160;
+  function tailP(v){const N=400,b=1.96;let s=0;for(let i=0;i<=N;i++){const x=b*i/N;const w=(i===0||i===N)?1:(i%2?4:2);s+=w*tpdf(x,v);}return 1-2*s*b/N/3;}
+  function draw(v){
+    let h=`<line x1="10" x2="630" y1="190" y2="190" stroke="var(--muted)"/>`;
+    h+=`<path d="${linePath(phi,-4.3,4.3,X,Y)}" fill="none" stroke="var(--txt)" stroke-width="2.5"/>`;
+    h+=`<path d="${areaPath(x=>tpdf(x,v),-4.3,-1.96,X,Y)}" fill="var(--aud)" opacity=".35"/><path d="${areaPath(x=>tpdf(x,v),1.96,4.3,X,Y)}" fill="var(--aud)" opacity=".35"/>`;
+    h+=`<path d="${linePath(x=>tpdf(x,v),-4.3,4.3,X,Y)}" fill="none" stroke="var(--aud)" stroke-width="2.5" stroke-dasharray="7 4"/>`;
+    [-1.96,1.96].forEach(c=>h+=`<line x1="${X(c)}" x2="${X(c)}" y1="40" y2="195" stroke="var(--muted)" stroke-dasharray="3 3"/><text x="${X(c)}" y="210" font-size="12" text-anchor="middle" fill="var(--muted)">${c>0?'+':'−'}1.96</text>`);
+    $('#tSvg').innerHTML=h;
+    const p=tailP(v);
+    $('#tNote').innerHTML=`df = ${v}：t 分佈落在 ±1.96 之外的機率約 <b>${(p*100).toFixed(1)}%</b>（常態只有 5%）。尾巴越厚，同樣的門檻越容易「誤判顯著」，所以 σ 未知、小樣本時必須用 t 分佈的臨界值。`+(v>=30?' df = 30 時已經很接近常態。':'');
+  }
+  btnGroup($('#tdf'),DF.map(String),1,i=>draw(DF[i]));
+  draw(2);
+})();
+
+/* ---------- Z calc pipeline ---------- */
+pipeline($('#zPipe'),$('#zOut'),$('#zNext'),$('#zReset'),
+  [['已知','σ=16, n=9'],['標準誤','SE = σ/√n'],['Z 值','(x̄−μ₀)/SE'],['比較','臨界 1.645'],['結論','右尾']],
+  ['<b>已知：</b>σ = 16（已知 → 用 Z）、n = 9、x̄ = 40、μ₀ = 36，右尾 α = 0.05。<div class="hint">H₀：μ = 36；H₁：μ &gt; 36（平均外送時間超過 36 分鐘）。</div>',
+   '<b>標準誤 SE</b> = σ / √n = 16 / √9 = 16 / 3 ≈ <b>5.333</b><div class="hint">分母一定是 σ/√n，不是 σ，也不是 σ/n。</div>',
+   '<b>Z</b> = (x̄ − μ₀) / SE = (40 − 36) / 5.333 ≈ <b>0.75</b>',
+   '<b>0.75 &lt; 1.645</b> → 落在<b>不拒絕區</b>。',
+   '<b>結論：不拒絕 H₀。</b>沒有足夠證據認定平均外送時間超過 36 分鐘。<div class="hint">誘答同時在「算錯標準誤」與「Z 算對但結論寫反」兩處設關卡。</div>']);
+tabs($('#zErrTabs'),$('#zErrOut'),[
+  ['✓ 正確：σ/√n','SE = 16/√9 ≈ 5.333\nZ = 4/5.333 ≈ 0.75 < 1.645 → 不拒絕 H₀  ✓'],
+  ['✗ 忘了 √n','SE 誤用 σ = 16\nZ = 4/16 = 0.25\n算式就錯了 —— 就算結論碰巧相同，選項中的 Z 值也對不上'],
+  ['✗ 多除一次 n','SE 誤用 σ/n = 16/9 ≈ 1.778\nZ = 4/1.778 ≈ 2.25 > 1.645 → 錯誤地「拒絕 H₀」  ✗'],
+  ['✗ 結論寫反','Z ≈ 0.75 算對了\n卻寫成「0.75 → 拒絕 H₀」  ✗\n0.75 < 1.645，落在不拒絕區']
+]);
+
+/* ---------- ANOVA ---------- */
+(function(){
+  const BS=[0.5,1.5,3],WS=[0.5,1,2];let b=1,w=1;
+  const Z=[[-1.5,-1,-.6,-.2,.2,.6,1,1.5],[.6,-1.5,1,-.2,1.5,-.6,.2,-1],[-.2,1.5,-1,.6,-1.5,.2,1,-.6]];
+  const Y=v=>220-v*10;
+  function draw(){
+    const mu=[10-BS[b],10,10+BS[b]],data=mu.map((m,g)=>Z[g].map(z=>m+WS[w]*z));
+    const means=data.map(a=>a.reduce((s,x)=>s+x,0)/a.length),all=data.flat(),gm=all.reduce((s,x)=>s+x,0)/all.length;
+    const msb=data.reduce((s,a,g)=>s+a.length*(means[g]-gm)**2,0)/2;
+    const msw=data.reduce((s,a,g)=>s+a.reduce((t,x)=>t+(x-means[g])**2,0),0)/(all.length-3);
+    const cols=['var(--txt)','var(--img)','var(--sen)'];
+    let h=`<line x1="40" x2="630" y1="${Y(gm)}" y2="${Y(gm)}" stroke="var(--muted)" stroke-dasharray="6 5"/><text x="44" y="${Y(gm)-6}" font-size="12" fill="var(--muted)">總平均</text>`;
+    data.forEach((a,g)=>{const cx=150+g*180;a.forEach((v,i)=>{h+=`<circle cx="${cx-42+i*12}" cy="${Y(v).toFixed(1)}" r="6" fill="${cols[g]}" opacity=".8" style="transition:cy .5s"/>`;});h+=`<line x1="${cx-56}" x2="${cx+56}" y1="${Y(means[g])}" y2="${Y(means[g])}" stroke="${cols[g]}" stroke-width="3"/><text x="${cx}" y="236" text-anchor="middle" font-size="13" font-weight="700" fill="${cols[g]}">第 ${g+1} 組</text>`;});
+    $('#avSvg').innerHTML=h;
+    $('#avMsb').textContent=msb.toFixed(2);$('#avMsw').textContent=msw.toFixed(2);$('#avF').textContent=(msb/msw).toFixed(1);
+  }
+  btnGroup($('#avB'),['小','中','大'],1,i=>{b=i;draw();});
+  btnGroup($('#avW'),['小','中','大'],1,i=>{w=i;draw();});
+  draw();
+})();
+
+/* ---------- chi-square vs percentages ---------- */
+(function(){
+  const NS=[100,1000,10000];
+  function draw(i){
+    const n=NS[i],a=Math.round(n*.95),b=Math.round(n*.97);
+    $('#chiTbl').innerHTML=`<tr><th></th><th>合格</th><th>不合格</th><th>良率</th></tr><tr><td>產線 A</td><td>${a.toLocaleString()}</td><td>${(n-a).toLocaleString()}</td><td>95%</td></tr><tr><td>產線 B</td><td>${b.toLocaleString()}</td><td>${(n-b).toLocaleString()}</td><td>97%</td></tr>`;
+    const p=(a+b)/(2*n),z=(b/n-a/n)/Math.sqrt(p*(1-p)*2/n),pv=2*(1-Phi(Math.abs(z)));
+    $('#chiZ').textContent=z.toFixed(2);$('#chiX').textContent=(z*z).toFixed(2);$('#chiP').textContent=fmtP(pv);
+    $('#chiNote').innerHTML=`良率百分比一字未改，只因件數不同，p 值就從 ${i===0?'很大':'變小'}${pv<=0.05?'，<b>跨過 0.05</b>':''}。若只餵「95、5、97、3」這種百分比，樣本數資訊就被抹掉了 —— 所以卡方必須用<b>原始次數</b>。`;
+  }
+  btnGroup($('#chiN'),NS.map(n=>n.toLocaleString()+' 件'),0,draw);
+  draw(0);
+})();
+
+/* ---------- correlation lab ---------- */
+(function(){
+  const noise=[.6,-.9,.4,1.1,-.5,.8,-1.2,.3,-.4,.9,-.7,.5];
+  const sets={
+    lin:Array.from({length:12},(_,i)=>[i+1,i+1+noise[i]*1.5]),
+    out:Array.from({length:12},(_,i)=>i===11?[12,-10]:[i+1,i+1+noise[i]*1.5]),
+    par:Array.from({length:12},(_,i)=>{const x=i-5.5;return [x+6.5,x*x/2.2+noise[i]*.3];})
+  };
+  const pear=(a,b)=>{const n=a.length,ma=a.reduce((s,x)=>s+x,0)/n,mb=b.reduce((s,x)=>s+x,0)/n;let sab=0,sa=0,sb=0;for(let i=0;i<n;i++){sab+=(a[i]-ma)*(b[i]-mb);sa+=(a[i]-ma)**2;sb+=(b[i]-mb)**2;}return sab/Math.sqrt(sa*sb);};
+  const rank=a=>{const idx=a.map((v,i)=>[v,i]).sort((x,y)=>x[0]-y[0]);const r=Array(a.length);let i=0;while(i<idx.length){let j=i;while(j+1<idx.length&&idx[j+1][0]===idx[i][0])j++;for(let k=i;k<=j;k++)r[idx[k][1]]=(i+j)/2+1;i=j+1;}return r;};
+  const kend=(a,b)=>{let c=0,d=0;for(let i=0;i<a.length;i++)for(let j=i+1;j<a.length;j++){const s=Math.sign(a[i]-a[j])*Math.sign(b[i]-b[j]);if(s>0)c++;else if(s<0)d++;}return (c-d)/(a.length*(a.length-1)/2);};
+  function draw(k){
+    const P=sets[k],xs=P.map(p=>p[0]),ys=P.map(p=>p[1]);
+    const ymin=Math.min(...ys,0)-1,ymax=Math.max(...ys)+1;
+    const X=x=>50+(x-0)*42,Y=y=>230-(y-ymin)/(ymax-ymin)*210;
+    let h=`<line x1="40" y1="232" x2="630" y2="232" stroke="var(--muted)"/><line x1="40" y1="10" x2="40" y2="232" stroke="var(--muted)"/>`;
+    P.forEach(([x,y],i)=>{const o=k==='out'&&i===11;h+=`<circle cx="${X(x).toFixed(1)}" cy="${Y(y).toFixed(1)}" r="${o?9:7}" fill="${o?'var(--bad)':'var(--aud)'}" opacity=".85"/>`;if(o)h+=`<text x="${X(x)-14}" y="${Y(y)+4}" text-anchor="end" font-size="13" font-weight="700" fill="var(--bad)">離群值</text>`;});
+    $('#corSvg').innerHTML=h;
+    const r=pear(xs,ys),rs=pear(rank(xs),rank(ys)),t=kend(xs,ys);
+    const row=(l,v,c)=>`<div class="bar"><span>${l}</span><div class="track"><div class="fill" style="width:${(Math.abs(v)*100).toFixed(1)}%;background:${v<0?'var(--bad)':c}"></div></div><span class="num">${v.toFixed(2)}</span></div>`;
+    $('#corBars').innerHTML=row('Pearson r',r,'var(--txt)')+row('Spearman rs',rs,'var(--img)')+row('Kendall τ',t,'var(--sen)');
+    const L=sets.lin,lx=L.map(p=>p[0]),ly=L.map(p=>p[1]),c0=[pear(lx,ly),pear(rank(lx),rank(ly)),kend(lx,ly)],dr=[r,rs,t].map((v,j)=>((c0[j]-v)/c0[j]*100).toFixed(0)+'%');
+    $('#corNote').innerHTML=k==='lin'?'乾淨的線性資料：三個係數都很高。':k==='out'?`只動了 1 個點，和乾淨資料相比各自下降：Pearson <b>${dr[0]}</b>、Spearman <b>${dr[1]}</b>、Kendall <b>${dr[2]}</b>。Pearson 崩得最兇（偏差被平方放大），Kendall 最穩 —— Kendall &gt; Spearman &gt; Pearson。`:'y 完全由 x 決定，但關係不是單調的：Pearson 接近 0 只否定了<b>線性</b>關係；Spearman／Kendall 衡量<b>單調</b>關係，同樣抓不到。r ≈ 0 ≠ 兩變數無關。';
+  }
+  document.querySelectorAll('#corTabs .btn').forEach(b=>b.onclick=()=>{document.querySelectorAll('#corTabs .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));draw(b.dataset.c);});
+  draw('lin');
+})();
+
+/* ---------- nonparametric matcher ---------- */
+matcher($('#npMatch'),$('#npFb'),[
+  {k:'mw',c:'var(--txt)',html:'獨立樣本 t 檢定<small>兩獨立組</small>'},
+  {k:'wx',c:'var(--img)',html:'成對樣本 t 檢定<small>配對兩組</small>'},
+  {k:'kw',c:'var(--aud)',html:'單因子 ANOVA<small>三組以上獨立</small>'},
+  {k:'fr',c:'var(--sen)',html:'重複量數 ANOVA<small>三組以上配對</small>'},
+  {k:'sp',c:'var(--ok)',html:'皮爾森相關<small>線性關係</small>'}
+],[
+  {k:'kw',html:'Kruskal-Wallis 檢定',ok:'三組以上獨立、非常態 → Kruskal-Wallis。'},
+  {k:'sp',html:'Spearman／Kendall 等級相關',ok:'非線性單調、順序資料。'},
+  {k:'mw',html:'Mann-Whitney U 檢定',ok:'兩獨立組、非常態或順序資料。'},
+  {k:'fr',html:'Friedman 檢定',ok:'三組以上配對／重複量數。'},
+  {k:'wx',html:'Wilcoxon 符號等級檢定',ok:'配對兩組、非常態。'}
+],'無母數比較的是分佈位置／中位數與排名，不是平均數。');
+
+/* ---------- 30.5 premises ---------- */
+(function(){
+  const P=[
+    ['常態性','t 檢定、ANOVA、Pearson','Q-Q 圖、Shapiro-Wilk','改無母數；或 n 夠大時依中央極限定理放寬'],
+    ['變異數齊一性','獨立樣本 t、ANOVA','<b>Levene\'s test</b>','獨立樣本 t → <b>Welch\'s t 檢定</b>；ANOVA → Welch ANOVA 或無母數'],
+    ['觀測獨立性','幾乎所有檢定','看研究設計（有無重複測量、時間序列）','改用配對／重複量數對應的方法'],
+    ['期望次數 ≥ 5','卡方檢定','算列聯表期望值','合併類別、Fisher 精確檢定'],
+    ['np ≥ 5 且 n(1−p) ≥ 5','比例 Z 檢定','直接算（部分教材寫「&gt; 5」）','二項精確檢定、Fisher 精確檢定'],
+    ['線性＋無重大離群值','Pearson 相關','先畫散佈圖','改 Spearman／Kendall，或處理離群值']
+  ];
+  tabs($('#preTabs'),$('#preBody'),P.map(p=>[p[0].replace(/&gt;/g,'>'),`<div class="pipe" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="pnode past"><b>適用於</b>${p[1]}</div><div class="pnode past"><b>怎麼檢查</b>${p[2]}</div><div class="pnode on"><b>不成立時</b>${p[3]}</div></div>`]));
+})();
+
+/* ---------- significance vs importance ---------- */
+(function(){
+  function fmtN(n){return n>=1e8?(n/1e8).toFixed(1)+'億':n>=1e4?Math.round(n/1e4).toLocaleString()+'萬':Math.round(n).toLocaleString();}
+  function draw(){
+    const n=Math.pow(10,+$('#sgN').value);$('#sgNv').textContent=fmtN(n);
+    const p1=.05,p2=.0502,pp=(p1+p2)/2,z=(p2-p1)/Math.sqrt(pp*(1-pp)*2/n),pv=2*(1-Phi(z));
+    $('#sgZ').textContent=z.toFixed(2);$('#sgP').textContent=fmtP(pv);
+    const s=Math.min(100,-Math.log10(Math.max(pv,1e-12))/4*100);
+    $('#sgM').style.width=s.toFixed(1)+'%';$('#sgM').style.background=pv<=.05?'var(--bad)':'var(--muted)';
+    const h=Math.abs(2*Math.asin(Math.sqrt(p2))-2*Math.asin(Math.sqrt(p1)));
+    $('#sgNote').innerHTML=(pv<0.001?'<b>p &lt; 0.001！</b>但':pv<=0.05?'已達顯著，但':'還不顯著。')+`效果量（Cohen's h）只有 ${h.toFixed(4)}，幾乎為 0。上方長條是「證據強度」（−log₁₀ p，示意）—— 它被樣本數推高，效果本身一點都沒變。`;
+  }
+  $('#sgN').oninput=draw;draw();
+})();
+
+/* ---------- 30.6 exam list ---------- */
+examList($('#examList'),[
+  ['114Q2-23','p 值、α 與信賴區間的一致性','單樣本 t 檢定 p = 0.08、α = 0.05、95% CI = [95, 108] 萬元，問何者正確','假設值 100 萬落在 CI 內 ⇄ p &gt; α，結論一致 → <b>無法拒絕 H₀</b>。誘答：「改 α = 0.10 仍不顯著」（0.08 &lt; 0.10 反而會顯著）、「CI 寬度僅與顯著水準有關」（還受 s 與 n 影響）'],
+  ['114Q2-38','兩組比例差異的檢定選擇','兩條生產線各抽 100 件，良率 95% vs 97%，問用哪種檢定','良率是二元成敗的<b>比例</b>資料 → <b>雙比例 Z 檢定</b>。t 檢定管連續變數平均數、ANOVA 要三組以上、卡方雖可但無法做方向性比較'],
+  ['115Q1-4','多組比較與型一錯誤膨脹','三種學習率各重複 10 次、資料近似常態且變異數相近，要避免多次兩兩比較抬高第一類型錯誤率','<b>單因子 ANOVA</b>，以單一 F 檢定把整體 α 控住。三次 t 檢定正是題目要避免的做法；Wilcoxon 是成對兩組的無母數法'],
+  ['115Q1-6','型一／型二錯誤與「接受 H₀」謬誤','女士品茶實驗，選出<b>不正確</b>的敘述','「未完全答對＝接受 H₀＝確認女士無能力」錯。不拒絕只代表證據不足，也可能是檢定力不夠而犯型二錯誤。順帶考 C(8,4) = 70，全對機率 1/70 ≈ 0.014 &lt; 0.05'],
+  ['115Q1-7','配對 vs 獨立設計','同一批 40 名患者導入 AI 推薦前後各測一次收縮壓，資料近似常態','同一批人前後測＝相依的<b>成對資料</b> → <b>成對樣本 t 檢定</b>。獨立樣本 t 忽略配對關係、白白降低檢定力；Wilcoxon 是非常態時才換'],
+  ['115Q1-8','Z 檢定計算與決策方向','σ = 16 已知、n = 9、x̄ = 40、μ₀ = 36，右尾 α = 0.05（臨界值 1.645）','SE = 16/√9 ≈ 5.333，Z = 4/5.333 ≈ <b>0.75 &lt; 1.645 → 不拒絕</b>。誘答同時在「算錯標準誤（0.08）」與「Z 算對但結論寫反」兩處設關卡'],
+  ['115Q1-9','調降 α 的直接後果','α 由 0.05 降至 0.01，對檢定的直接影響','<b>降低型一錯誤（偽陽性）</b>。誘答：說成降低型二錯誤（方向相反）、說成自動增加樣本數與統計功效（α 只是判準，功效反而下降）、說成提高 p 值的數值精度（無關）'],
+  ['115Q1-24','三種相關係數的特性','Pearson／Spearman／Kendall 比較，選出<b>不正確</b>者','「Spearman 比 Kendall 對離群值更穩健」<b>說反了</b>（Kendall 最穩健）。其餘正確：Spearman 是把數值換成排名後代入 Pearson 公式；三者值域都是 [−1, 1]']
+]);
+[
+  ['114Q2-30','散佈圖呈線性、無離群值，要衡量關聯強度與方向 → <b>Pearson 相關係數</b>','相關性分析的工具選擇；共變異數受單位影響，RMSE／MAE 是預測誤差指標而非關聯指標'],
+  ['114Q2-31','二項分佈以常態近似的判準 → <b>np 與 n(1−p) 皆 &gt; 5</b>','這正是比例 Z 檢定能成立的同一條前提；不能只憑「樣本數很大」就宣稱可近似']
+].forEach(([n,k,a])=>$('#examList2').insertAdjacentHTML('beforeend',`<details><summary><span class="tag">${n}</span>${k.replace(/<[^>]+>/g,'')}</summary><div class="body"><p style="margin:0 0 6px"><span class="hint">考點：</span>${k}</p><p style="margin:0"><span class="hint">與本節的接點：</span>${a}</p></div></details>`));
+setTimeout(()=>document.querySelectorAll('#s6 .fill[data-w]').forEach(f=>f.style.width=f.dataset.w+'%'),200);
+
+/* ---------- traps ---------- */
+traps($('#traps'),$('#trapCount'),[
+  ['p 值是「H₀ 為真的前提下看到目前或更極端結果的機率」，不是「H₀ 為真的機率」','它是 P(資料 | H₀)，不是 P(H₀ | 資料)；把條件反過來念是本節第一號誘答。'],
+  ['α 是事前設定的決策門檻，p 值是事後算出的觀察值','結論由「p 是否越過 α」決定；看完 p 值再回頭調 α 或改成單尾，是統計上的作弊。'],
+  ['p > α 的正確措辭是「無法拒絕 H₀」，不是「接受 H₀」','證據不足有兩種可能：真的沒差異，或有差異但檢定力不夠（型二錯誤），資料分不出來。'],
+  ['型一錯誤是「沒差異卻判成有差異」（偽陽性，機率 α），型二錯誤是「有差異卻沒判出來」（偽陰性，機率 β）','檢定力是 1 − β，不是 1 − α。'],
+  ['在 n 與效應量不變的條件下，調降 α 會讓型二錯誤上升、檢定力下降，不是兩種錯誤一起下降','要同時壓低兩者，得增加樣本數或降低測量變異。'],
+  ['95% 信賴區間是「重複抽樣時約 95% 的區間會涵蓋真值」，不是「真值有 95% 機率落在這條區間內」','頻率學派下會變動的是區間，不是母體參數。'],
+  ['信賴區間寬度同時受信賴水準、樣本數與樣本標準差影響，不是只受顯著水準影響','半寬 ≈ 臨界值 × s/√n。'],
+  ['信賴區間與檢定的對偶只在「同一資料、雙尾、信賴水準 = 1 − α」時成立','單尾檢定要對應單邊信賴界限。'],
+  ['同一批人前後測是成對樣本 t 檢定，不是獨立樣本 t 檢定','題幹出現「導入前後」「治療前後」「同一組受試者」就是配對；成對 t 檢定的檢定對象是差值的平均是否為 0。'],
+  ['獨立樣本 t 檢定的常態性要求對象是各組原始資料，成對 t 檢定要求的是「差值」近似常態','兩者檢查的東西不同。'],
+  ['變異數不齊時該換 Welch\'s t 檢定，不是直接放棄 t 檢定改無母數','齊一性用 Levene\'s test 檢查。'],
+  ['ANOVA 顯著只代表「至少有一組不同」，不是「所有組都彼此不同」','要指認是哪一組，必須再做事後檢定（如 Tukey HSD）。'],
+  ['ANOVA 的應變數必須是連續、自變數是類別，不是反過來','兩個類別變數的關聯要用卡方檢定。'],
+  ['用 ANOVA 取代多次兩兩 t 檢定，是為了控制「整體」型一錯誤率，不是為了提高檢定力','做 10 次 α = 0.05 的檢定，整體偽陽性機率約 40%。'],
+  ['Bonferroni 校正是把每次的門檻壓成 α/m，不是把 α 放大','代價是檢定力下降。'],
+  ['σ 已知用 Z 檢定，σ 未知用樣本標準差時用 t 檢定','不是「小樣本就用 t、大樣本就用 Z」這麼單純；n 大時 t 分佈趨近常態，兩者才接近。'],
+  ['Z 檢定統計量的分母是 σ/√n（標準誤），不是 σ 也不是 σ/n','忘了開根號是官方計算題最主要的誘答來源。'],
+  ['兩組良率／轉換率的比較用雙比例 Z 檢定，不是雙樣本平均數 t 檢定','比例是二元成敗資料，t 檢定處理的是連續變數的平均數。'],
+  ['卡方檢定要餵原始次數，不是百分比或比例','卡方統計量依賴計數規模，用百分比等於抹掉樣本數。'],
+  ['卡方獨立性檢定問「兩個類別變數有沒有關聯」，適合度檢定問「觀察分佈符不符合理論分佈」','兩者的 H₀ 寫法不同，別互換。'],
+  ['卡方顯著只代表「有關聯」，不代表「關聯強」','強度要另外看 Cramér\'s V 或 Phi 係數；大樣本會讓微小關聯也顯著。'],
+  ['Pearson 衡量線性關係，Spearman 與 Kendall 衡量單調關係','資料呈拋物線時 r 可能接近 0，卻不代表兩變數無關。'],
+  ['對離群值的穩健度是 Kendall > Spearman > Pearson，不是 Spearman 比 Kendall 穩健','這是官方直接拿來當錯誤敘述的方向題。'],
+  ['三種相關係數的值域都是 [−1, 1]，沒有哪一個比較寬','值域不是它們的差別所在。'],
+  ['相關顯著只代表關聯，不代表因果','即使 r 很大、p 很小，也不能宣稱其中一個變數造成另一個變數改變。'],
+  ['Mann-Whitney U 與 Kruskal-Wallis 比較的是分佈位置／中位數與排名，不是平均數','而且要解讀成「中位數不同」，還需各組分佈形狀大致相似。'],
+  ['Mann-Whitney U ↔ 獨立 t、Wilcoxon 符號等級 ↔ 成對 t、Kruskal-Wallis ↔ 單因子 ANOVA、Friedman ↔ 重複量數 ANOVA','這四組配對關係是無母數題唯一要背的東西。'],
+  ['比例檢定的常態近似前提是 np 與 n(1−p) 皆 ≥ 5，不是「樣本數大就一定可以近似」','不足時改用二項精確檢定或 Fisher 精確檢定。'],
+  ['中央極限定理說的是「樣本平均數」的抽樣分佈趨近常態，不是原始資料會變成常態','「資料量夠大，任何資料都會呈常態分佈」是標準錯誤敘述。'],
+  ['統計顯著不等於實質重要，不顯著也不等於沒有效果','前者常是樣本數過大所致，後者常是檢定力不足所致；報告時應同時附上效果量與信賴區間。'],
+  ['檢定方向（單尾／雙尾）與 α 都必須事前設定，不能看完結果再選','事後選方向等於偷偷把門檻放寬一倍。']
+],'l22103-traps');
+
+/* ---------- quiz ---------- */
+quiz($('#quiz'),[
+  ['單樣本 t 檢定 H₀：μ = 100 萬元，得 p = 0.08、α = 0.05、95% CI = [95, 108] 萬元。下列何者正確？',['100 萬落在 CI 內，與 p > α 一致，無法拒絕 H₀','若把 α 改成 0.10，結果仍然不顯著','信賴區間的寬度只與顯著水準有關','結果證明母體平均就是 100 萬元'],'0.08 &lt; 0.10，改 α 反而會顯著；CI 寬度還受 s 與 n 影響；不拒絕也不等於證明 H₀。'],
+  ['兩條生產線各抽 100 件，良率分別為 95% 與 97%，要比較良率是否不同，最適合哪種檢定？',['雙比例 Z 檢定','獨立樣本 t 檢定','單因子 ANOVA','成對樣本 t 檢定'],'良率是二元成敗的比例資料。t 檢定管連續變數平均數、ANOVA 要三組以上。（114Q2-38）'],
+  ['比較三種學習率的模型表現，各重複 10 次、資料近似常態且變異數相近，想避免多次兩兩比較抬高型一錯誤率，應採用？',['單因子 ANOVA','三次兩兩獨立樣本 t 檢定','Wilcoxon 符號等級檢定','卡方獨立性檢定'],'用單一 F 檢定把整體 α 控住；三次 t 檢定正是要避免的做法。（115Q1-4）'],
+  ['女士品茶實驗（8 杯中挑出 4 杯先加奶的），下列敘述何者「不正確」？',['女士未完全答對，即可接受 H₀，確認她沒有辨別能力','8 杯選 4 杯的組合數為 C(8,4) = 70','隨機猜測而全對的機率為 1/70 ≈ 0.014，小於 0.05','未能拒絕 H₀ 也可能是檢定力不足而犯了型二錯誤'],'不拒絕只代表證據不足，不能說「接受 H₀、確認無能力」。（115Q1-6）'],
+  ['同一批 40 名患者在導入 AI 推薦前後各測一次收縮壓，資料近似常態，應使用？',['成對樣本 t 檢定','獨立樣本 t 檢定','Wilcoxon 符號等級檢定','卡方獨立性檢定'],'同一批人前後測是配對資料；Wilcoxon 是非常態時才換。（115Q1-7）'],
+  ['σ = 16 已知、n = 9、x̄ = 40、μ₀ = 36，右尾 α = 0.05（臨界值 1.645）。正確的計算與結論是？',['Z ≈ 0.75 < 1.645，不拒絕 H₀','Z ≈ 0.75，拒絕 H₀','Z ≈ 2.25 > 1.645，拒絕 H₀','Z = 0.25，因為 SE = σ = 16'],'SE = 16/√9 ≈ 5.333，Z = 4/5.333 ≈ 0.75。分母是 σ/√n。（115Q1-8）'],
+  ['在樣本數與效應量不變下，把顯著水準 α 由 0.05 降到 0.01，直接影響是？',['降低型一錯誤（偽陽性）的機率','降低型二錯誤的機率','自動增加樣本數並提高統計功效','提高 p 值的數值精度'],'α 是型一錯誤率上限；調降後 β 上升、檢定力下降。（115Q1-9）'],
+  ['關於 Pearson、Spearman、Kendall 三種相關係數，下列何者「不正確」？',['Spearman 比 Kendall 對離群值更穩健','Spearman 是將數值換成排名後代入 Pearson 公式','三者的值域都是 [−1, 1]','Pearson 衡量的是線性關係'],'穩健度是 Kendall &gt; Spearman &gt; Pearson。（115Q1-24）'],
+  ['下列哪一個是 p 值的正確定義？',['在 H₀ 為真的前提下，觀察到與目前結果相同或更極端資料的機率','H₀ 為真的機率','犯型一錯誤的機率','1 − p 即為 H₁ 為真的機率'],'p 值是 P(資料 | H₀)。其餘三者都是把條件反過來念或把 p 與 α 混淆。'],
+  ['某研究報告「平均體重 95% 信賴區間為 [66, 70] 公斤」，正確解讀是？',['若重複大量抽樣並各建區間，約 95% 的區間會涵蓋母體真值','母體平均有 95% 的機率落在 [66, 70] 之間','95% 的個體體重落在 [66, 70] 之間','此區間有 95% 機會是錯的'],'頻率學派下母體參數固定，會變動的是區間；95% 描述的是程序的長期表現。'],
+  ['在同一份資料上獨立做 10 次 α = 0.05 的檢定，整體至少犯一次型一錯誤的機率約為？',['約 40%','5%','0.5%','約 64%'],'1 − 0.95¹⁰ ≈ 40%；64% 是做 20 次的結果。'],
+  ['單因子 ANOVA 結果顯著（p < 0.05），代表什麼？',['至少有一組平均與其他組不同，需再做事後檢定指認','所有組的平均都彼此不同','已經可以直接指出哪一組最高','應變數與自變數都是類別變數'],'ANOVA 只說「存在差異」；要指認哪一組需 Tukey HSD 等事後檢定。應變數必須是連續。']
+],(s,n)=>s>=n-1?'太強了，四道分界與四個定義句都已經能秒答。':s>=n*0.6?'不錯！回頭看看答錯題對應的段落，再操作一次模擬器。':'建議重新操作 30.3 的檢定力模擬器與 30.4 的導航器，再來一次。');
+
+navHighlight();
+</script>
+</body>
+</html>

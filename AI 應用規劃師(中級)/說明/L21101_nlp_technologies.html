@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L21101 自然語言處理技術與應用｜互動教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F5; --surface:#FFFFFF; --surface2:#F6F8FB; --ink:#18202E; --muted:#5A6475; --line:#D5DBE4;
+  --txt:#3B4CCA; --img:#0E8A7A; --aud:#B87812; --sen:#B8336A;
+  --ok:#1F8A4C; --bad:#C23B2E; --warn:#D9822B;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+    --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+  --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75}
+h1,h2,h3{font-family:var(--serif);line-height:1.3;margin:0}
+p{margin:0 0 1em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--txt);outline-offset:2px;border-radius:4px}
+svg{max-width:100%;height:auto;display:block}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1180px;margin:0 auto;gap:40px;padding:0 24px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;padding:32px 0;height:100vh;overflow:auto}
+nav.toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14.5px}
+nav.toc a span{font-variant-numeric:tabular-nums;font-size:13px;opacity:.8}
+nav.toc a.on{background:var(--surface);color:var(--ink);font-weight:700}
+.toc-title{font-family:var(--serif);font-weight:900;font-size:18px;padding:0 10px 14px}
+main{min-width:0;padding-bottom:80px}
+section{padding:56px 0 8px;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.sec-head{display:flex;gap:16px;align-items:baseline;margin-bottom:18px}
+.sec-no{font-family:var(--serif);font-weight:900;font-size:40px;color:var(--line);line-height:1}
+h2{font-size:28px;font-weight:900}
+h3{font-size:19px;margin:34px 0 10px}
+.lead{color:var(--muted);max-width:66ch}
+.prose{max-width:68ch}
+
+/* hero */
+.hero{padding:44px 0 24px}
+.hero .code{font-size:14px;color:var(--muted);margin-bottom:6px}
+.hero h1{font-size:clamp(34px,5.5vw,56px);font-weight:900;letter-spacing:.02em}
+.hero .one{font-size:18px;max-width:60ch;margin:16px 0 0;color:var(--muted)}
+.hero-fig{background:var(--surface);border-radius:20px;margin-top:28px;padding:14px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+.goal{border-left:4px solid var(--c);padding:6px 0 6px 14px;font-size:15px}
+
+/* panels */
+.panel{background:var(--surface);border-radius:16px;padding:22px;margin:16px 0}
+.panel.flat{background:var(--surface2)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font-size:15px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hint{font-size:14px;color:var(--muted)}
+.callout{border-left:4px solid var(--warn);background:var(--surface2);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;font-size:15px}
+.callout.exam{border-color:var(--txt)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:14px}
+
+/* modality chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+
+/* matcher */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.match .col{display:flex;flex-direction:column;gap:10px}
+.mitem{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15px;transition:border-color .2s,background .2s,transform .2s}
+.mitem small{display:block;color:var(--muted);font-size:13px}
+.mitem.sel{border-color:var(--ink);transform:translateX(4px)}
+.mitem.done{border-color:var(--c,var(--ok));background:var(--surface2);cursor:default}
+.mitem.wrong{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:1.8em;margin-top:12px;font-size:15px}
+.feedback.ok{color:var(--ok)} .feedback.bad{color:var(--bad)}
+
+/* timeline */
+.steps{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stage-viz{min-height:130px;display:flex;align-items:center;justify-content:center}
+.stage-viz .blk{display:inline-block;width:34px;height:34px;border-radius:6px;margin:2px;transition:all .5s}
+
+/* align toggle */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.compare>div{padding:18px}
+.compare>div+div{border-left:1px solid var(--line)}
+.compare .big{font-family:var(--serif);font-weight:900;font-size:22px;margin-bottom:6px}
+
+/* fusion */
+.meter{height:14px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:6px 0}
+.meter>i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .7s cubic-bezier(.3,.8,.3,1),background .4s}
+.flow{stroke-dasharray:6 7;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.jitter{animation:jit .25s steps(2) infinite}
+@keyframes jit{50%{transform:translate(1.5px,-1px)}}
+.fusion-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.pc{font-size:15px}
+.pc b{display:block;font-size:14px;color:var(--muted);font-weight:500}
+
+/* clip */
+.mat{display:grid;gap:4px;font-size:13px}
+.mat .cell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;transition:background .5s,color .5s}
+.mat .lab{display:flex;align-items:center;justify-content:center;font-size:22px}
+.mat .tlab{font-size:12px;text-align:center;color:var(--muted);display:flex;align-items:flex-end;justify-content:center;line-height:1.3}
+.zs-imgs{display:flex;gap:10px;flex-wrap:wrap}
+.zs-img{font-size:38px;width:72px;height:72px;border-radius:16px;border:2px solid var(--line);background:var(--surface2);display:flex;align-items:center;justify-content:center}
+.zs-img[aria-pressed="true"]{border-color:var(--img);box-shadow:0 0 0 3px color-mix(in srgb,var(--img) 25%,transparent)}
+.bar{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.bar .track{height:22px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;width:0;background:var(--txt);border-radius:6px;transition:width .8s cubic-bezier(.3,.8,.3,1)}
+.bar.win .fill{background:var(--img)}
+.bar.win{font-weight:700}
+.bar .num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.flip{perspective:900px;height:150px;border:0;background:none;padding:0;text-align:left}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flip[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:center}
+.flip .f{background:var(--surface);border:1.5px solid var(--line)}
+.flip .f strong{font-family:var(--serif);font-size:22px}
+.flip .f span{color:var(--muted);font-size:14px}
+.flip .b{background:var(--ink);color:var(--bg);transform:rotateY(180deg);font-size:15px}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.pnode{border:2px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;font-size:14px;background:var(--surface);transition:all .35s}
+.pnode b{display:block;font-size:16px}
+.pnode.on{border-color:var(--aud);background:color-mix(in srgb,var(--aud) 14%,var(--surface));transform:translateY(-3px)}
+.pnode.past{border-color:color-mix(in srgb,var(--aud) 45%,var(--line))}
+.pout{background:var(--surface2);border-radius:12px;padding:14px 16px;min-height:84px;font-size:15px}
+.wave{display:flex;gap:3px;align-items:center;height:30px}
+.wave i{width:4px;background:var(--aud);border-radius:2px;animation:wv 1s ease-in-out infinite}
+@keyframes wv{50%{transform:scaleY(.3)}}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+
+/* strategies */
+.strat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.strat button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;text-align:left;font-size:15px}
+.strat button[aria-pressed="true"]{border-color:var(--ink)}
+.verdict{font-family:var(--serif);font-weight:900;font-size:20px}
+
+details{border-bottom:1px solid var(--line)}
+details summary{cursor:pointer;padding:12px 4px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"+";font-weight:900;width:14px;color:var(--muted)}
+details[open] summary::before{content:"−"}
+details .body{padding:0 4px 14px 30px;font-size:15px}
+.tag{font-size:12.5px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums;min-width:80px}
+
+/* quiz */
+.qcard{background:var(--surface);border-radius:16px;padding:24px}
+.qtop{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
+.qtext{font-size:18px;font-weight:700;margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15.5px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+.opt.wrongpick{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.opt:disabled{cursor:default}
+.expl{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15px;display:none}
+.expl.show{display:block}
+.progress{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;margin-bottom:14px}
+.progress i{display:block;height:100%;background:var(--txt);transition:width .4s}
+
+.traps label{display:flex;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:15px}
+.traps input{width:18px;height:18px;margin-top:4px;flex:none;accent-color:var(--ok)}
+.traps label.chk>span{color:var(--muted)}
+.traps em{font-style:normal;font-weight:700}
+
+/* mobile */
+@media (max-width:860px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+  nav.toc{position:sticky;top:0;height:auto;z-index:10;background:var(--bg);display:flex;overflow-x:auto;padding:8px 0;padding-top:calc(8px + env(safe-area-inset-top,0px));gap:4px;border-bottom:1px solid var(--line)}
+  .toc-title{display:none}
+  nav.toc a{white-space:nowrap;flex:none}
+  .match,.stage,.fusion-meta,.compare{grid-template-columns:1fr}
+  .compare>div+div{border-left:0;border-top:1px solid var(--line)}
+  .pipe{grid-template-columns:repeat(5,minmax(90px,1fr));overflow-x:auto}
+  .bar{grid-template-columns:110px 1fr 56px}
+  h2{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* ---- extra components (same visual language as template) ---- */
+.stage>*,.compare>div,.fusion-meta>*{min-width:0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em;background:var(--surface2);padding:1px 5px;border-radius:5px}
+.tok{display:inline-flex;flex-direction:column;align-items:center;border:1.5px solid var(--line);border-radius:8px;padding:4px 9px;margin:3px;font-size:15px;background:var(--surface);transition:all .35s;line-height:1.4;color:var(--ink)}
+.tok small{font-size:12px;color:var(--muted)}
+.tok.gone{opacity:.28;text-decoration:line-through}
+.tok.hl{border-color:var(--c,var(--txt));background:color-mix(in srgb,var(--c,var(--txt)) 16%,var(--surface))}
+button.tok{cursor:pointer}
+.slider{display:grid;grid-template-columns:170px 1fr 74px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.slider input{width:100%;min-width:0;accent-color:var(--txt)}
+.slider output{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.formula{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--surface2);border-radius:10px;padding:12px 14px;font-size:14px;white-space:pre-wrap;word-break:break-word;line-height:1.7;margin:12px 0}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:12px}
+.kpi{background:var(--surface2);border-radius:12px;padding:10px 14px}
+.kpi b{display:block;font-family:var(--serif);font-size:24px;font-variant-numeric:tabular-nums}
+.kpi span{font-size:13px;color:var(--muted)}
+.bins{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-top:12px}
+.bin{border:2px dashed var(--line);border-radius:12px;padding:10px 12px;min-height:80px;font-size:14px}
+.bin b{display:block;margin-bottom:4px}
+.bin div{animation:pop .35s}
+@keyframes pop{from{transform:scale(.8);opacity:0}}
+.heat{display:flex;flex-wrap:wrap;gap:4px}
+.heat .tok{min-width:44px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid2>*{min-width:0}
+input[type=text],input:not([type]){font:inherit;padding:6px 10px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface2);color:var(--ink);min-width:0}
+.pulse{animation:pls 1.6s ease-in-out infinite}
+@keyframes pls{50%{opacity:.35}}
+.cell.cur{outline:3px solid var(--ink);outline-offset:-3px}
+@media (max-width:860px){
+  .slider{grid-template-columns:1fr 64px}
+  .slider label{grid-column:1/-1;margin-bottom:-6px}
+  .grid2{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="toc" aria-label="章節">
+  <div class="toc-title">NLP 技術與應用</div>
+  <a href="#intro"><span>●</span>導覽與目標</a>
+  <a href="#s1"><span>18.1</span>基礎與演進</a>
+  <a href="#s2"><span>18.2</span>NLP 前處理</a>
+  <a href="#s3"><span>18.3</span>文字表示與詞向量</a>
+  <a href="#s4"><span>18.4</span>Transformer</a>
+  <a href="#s5"><span>18.5</span>預訓練與微調</a>
+  <a href="#s6"><span>18.6</span>應用情境</a>
+  <a href="#s7"><span>18.7</span>三層風險</a>
+  <a href="#s8"><span>18.8</span>官方考題</a>
+  <a href="#s9"><span>18.9</span>易錯與測驗</a>
+</nav>
+
+<main>
+<!-- HERO -->
+<section id="intro" class="hero">
+  <div class="code">L21101　中級 AI 應用規劃師　建議 60 分鐘</div>
+  <h1>自然語言處理技術與應用</h1>
+  <p class="one">初級只要知道「NLP 會斷詞、會做情感分析、BERT 和 GPT 不一樣」。中級要能在情境題裡判斷：這個症狀是<b>哪一層技術的限制</b>造成的？是前處理沒做好、詞向量選錯、架構本身的天花板，還是資料治理出了問題。這是科目 1 官方指引篇幅最大、實測命中率最高的技術型知識點。</p>
+  <div class="hero-fig" aria-hidden="true">
+    <svg id="heroSvg" viewBox="0 0 720 260">
+      <defs>
+        <path id="hp0" d="M110 130 L 610 130"/>
+      </defs>
+      <line x1="110" y1="130" x2="610" y2="130" stroke="var(--ink)" stroke-width="2" opacity=".25"/>
+      <g font-family="Noto Sans TC, sans-serif" font-size="15" font-weight="700">
+        <rect x="10" y="100" width="100" height="60" rx="14" fill="var(--surface2)" stroke="var(--ink)" stroke-width="1.5"/>
+        <text x="60" y="126" text-anchor="middle" fill="var(--ink)" font-size="13">「這服務</text>
+        <text x="60" y="146" text-anchor="middle" fill="var(--ink)" font-size="13">真的好讚」</text>
+        <rect x="135" y="40" width="100" height="44" rx="22" fill="var(--txt)"/><text x="185" y="67" text-anchor="middle" fill="#fff">前處理</text>
+        <rect x="250" y="176" width="100" height="44" rx="22" fill="var(--img)"/><text x="300" y="203" text-anchor="middle" fill="#fff">詞向量</text>
+        <rect x="365" y="40" width="100" height="44" rx="22" fill="var(--aud)"/><text x="415" y="67" text-anchor="middle" fill="#fff">模型架構</text>
+        <rect x="480" y="176" width="100" height="44" rx="22" fill="var(--sen)"/><text x="530" y="203" text-anchor="middle" fill="#fff">資料治理</text>
+        <line x1="185" y1="84" x2="185" y2="130" stroke="var(--txt)" stroke-width="2" stroke-dasharray="4 4"/>
+        <line x1="300" y1="176" x2="300" y2="130" stroke="var(--img)" stroke-width="2" stroke-dasharray="4 4"/>
+        <line x1="415" y1="84" x2="415" y2="130" stroke="var(--aud)" stroke-width="2" stroke-dasharray="4 4"/>
+        <line x1="530" y1="176" x2="530" y2="130" stroke="var(--sen)" stroke-width="2" stroke-dasharray="4 4"/>
+        <rect x="610" y="105" width="100" height="50" rx="12" fill="var(--ink)"/>
+        <text x="660" y="136" text-anchor="middle" fill="var(--bg)">情感：？</text>
+      </g>
+      <g class="movers">
+        <circle r="7" fill="var(--txt)"><animateMotion dur="3s" repeatCount="indefinite"><mpath href="#hp0"/></animateMotion></circle>
+        <circle r="7" fill="var(--img)"><animateMotion dur="3s" begin=".75s" repeatCount="indefinite"><mpath href="#hp0"/></animateMotion></circle>
+        <circle r="7" fill="var(--aud)"><animateMotion dur="3s" begin="1.5s" repeatCount="indefinite"><mpath href="#hp0"/></animateMotion></circle>
+        <circle r="7" fill="var(--sen)"><animateMotion dur="3s" begin="2.25s" repeatCount="indefinite"><mpath href="#hp0"/></animateMotion></circle>
+      </g>
+    </svg>
+  </div>
+  <h3>學完這一課，你應該能夠</h3>
+  <div class="goals">
+    <div class="goal" style="--c:var(--aud)">依「規則式→統計→深度學習→預訓練」四階段，說出每一代解決了前一代的什麼痛點、又留下什麼限制</div>
+    <div class="goal" style="--c:var(--txt)">分辨前處理五步驟（分詞、詞性標注、詞形還原、詞幹提取、停用詞移除）的目的與適用／不適用情境</div>
+    <div class="goal" style="--c:var(--img)">用「分布式 vs 非分布式」「語境型 vs 非語境型」兩軸，定位 One-hot 到 GPT 的能力邊界</div>
+    <div class="goal" style="--c:var(--sen)">把導入風險拆成資料層、模型層、應用層，並針對幻覺、偏見、隱私、版權指出對應機制</div>
+  </div>
+  <p class="hint" style="margin-top:20px">本頁每個顏色固定代表一個「症狀出在哪一層」：<span class="chip" style="--c:var(--txt)"><i class="dot"></i>前處理</span>　<span class="chip" style="--c:var(--img)"><i class="dot"></i>文字表示／詞向量</span>　<span class="chip" style="--c:var(--aud)"><i class="dot"></i>模型架構</span>　<span class="chip" style="--c:var(--sen)"><i class="dot"></i>資料治理與風險</span></p>
+</section>
+
+<!-- 18.1 -->
+<section id="s1">
+  <div class="sec-head"><span class="sec-no">18.1</span><h2>基礎概念與發展脈絡</h2></div>
+  <p class="lead">NLP、NLU、NLG 是<b>包含關係</b>，不是並列關係。考題常把 NLU 的任務塞給 NLG，或反過來。</p>
+
+  <div class="compare">
+    <div><div class="big">NLU 理解</div>NLP 的「理解」階段：解析輸入語言的語意與結構，判讀使用者意圖。<br><span class="hint">意圖辨識、命名實體辨識（NER）、情感分析</span></div>
+    <div><div class="big">NLG 產出</div>NLP 的「產出」階段：把資料或語意轉換為自然語言文字。<br><span class="hint">自動摘要、回應生成、報告撰寫</span></div>
+  </div>
+  <p class="prose" style="margin-top:14px"><b>NLP</b>（Natural Language Processing）是總稱，整合所有讓機器理解、處理、產生語言的技術，例如對話系統、機器翻譯、語音助理。<b>一句話記法：</b>客服機器人收到一句話，先用 NLU 聽懂，再用 NLG 回話，整個過程叫 NLP。</p>
+
+  <h3>跟著一句話走：理解 → 處理 → 生成</h3>
+  <div class="panel">
+    <p class="hint">NLP 的核心目標可拆成三個任務層次。按「下一步」看客服機器人怎麼處理一句話（內容為示意）。</p>
+    <div class="pipe" id="csPipe"></div>
+    <div class="pout" id="csOut" aria-live="polite"></div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn primary" id="csNext">下一步</button>
+      <button class="btn" id="csReset">從頭開始</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3 style="margin-top:0">分類練習：這個任務屬於誰？</h3>
+    <p class="hint">每張卡片是一個任務，點下方按鈕把它放進正確的籃子。</p>
+    <div id="nluSort"></div>
+  </div>
+
+  <h3>四階段技術演進（背這張表就夠）</h3>
+  <div class="panel">
+    <div class="steps" id="eraBtns"></div>
+    <div class="stage">
+      <div class="stage-viz" id="eraViz"></div>
+      <div id="eraTxt"></div>
+    </div>
+  </div>
+  <details>
+    <summary>展開完整對照表（時期、核心特徵、代表模型、致命限制）</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>時期</th><th>技術階段</th><th>核心特徵</th><th>代表技術／模型</th><th>致命限制</th></tr>
+        <tr><td>1980s–1990s</td><td><b>規則式</b>（Rule-based）</td><td>手工編寫語法規則與詞彙辭典</td><td>ELIZA、專家系統</td><td>完全依賴專家知識，擴展性差、維護成本高</td></tr>
+        <tr><td>1990s–2010</td><td><b>統計語言模型</b>（Statistical LM）</td><td>用大量語料訓練機率模型</td><td>N-gram、HMM、CRF</td><td>缺乏深層語意；<b>無法捕捉長距離依賴</b></td></tr>
+        <tr><td>2010–2018</td><td><b>深度學習</b>（Deep Learning）</td><td>神經網路處理語言序列</td><td>RNN、LSTM、GRU</td><td>需大量算力、<b>難以平行化</b>、訓練慢</td></tr>
+        <tr><td>2018–至今</td><td><b>預訓練語言模型</b>（Pre-trained LM）</td><td>大規模預訓練 ＋ 下游微調</td><td>BERT、GPT、RoBERTa、T5</td><td>算力與記憶體需求極高，推理效率仍是挑戰</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <div class="panel">
+    <h3 style="margin-top:0">症狀判讀：這是哪一代的天花板？</h3>
+    <p class="hint">題幹描述症狀，你要認出是哪一代技術留下的限制。</p>
+    <div id="eraSort"></div>
+  </div>
+  <div class="callout exam"><b>考試判讀訣竅：</b>題幹只要出現「片段合理但整體語意不連貫」「長篇文件翻譯品質差」「長距離依賴」，答案幾乎都往<b>自注意力／Transformer</b> 方向走；出現「規則維護困難」「無法處理新語境」就是規則式的限制。</div>
+</section>
+
+<!-- 18.2 -->
+<section id="s2">
+  <div class="sec-head"><span class="sec-no">18.2</span><h2>NLP 前處理</h2></div>
+  <p class="lead">自然語言與其他資料最大的不同是<b>非結構化、語意模糊、語境多變</b>。一個錯誤的斷詞或未處理的雜訊，會一路汙染到模型輸出。</p>
+
+  <h3>五個標準步驟：一句英文走一遍</h3>
+  <div class="panel">
+    <p class="hint">點上方任一步驟，看句子被怎麼處理，以及「什麼時候<b>不要</b>做」（例句與輸出為示意）。</p>
+    <div class="pipe" id="ppPipe"></div>
+    <div class="pout" id="ppOut" aria-live="polite"></div>
+  </div>
+  <details>
+    <summary>展開五步驟完整對照表</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>處理步驟</th><th>做什麼</th><th>常見工具與技巧</th><th>什麼時候<b>不要</b>做</th></tr>
+        <tr><td><b>分詞</b>（Tokenization）</td><td>把文字拆成單字、詞組或子詞</td><td>空白切分、斷詞字典、子詞分解（BPE）</td><td>幾乎必做，但中文須慎選斷詞器</td></tr>
+        <tr><td><b>詞性標注</b>（POS Tagging）</td><td>為每個詞標記語法類別（名詞、動詞、形容詞）</td><td>語法分析、NER 的前置特徵</td><td>純詞袋統計任務可略過</td></tr>
+        <tr><td><b>詞形還原</b>（Lemmatization）</td><td>還原為字典形（running → run）</td><td>依語法規則與字典</td><td>需保留語氣時態時</td></tr>
+        <tr><td><b>詞幹提取</b>（Stemming）</td><td>裁剪詞尾（connections → connect）</td><td>規則裁剪，快但可能非有效字</td><td>需要語意精準時（happiness → happi）</td></tr>
+        <tr><td><b>停用詞移除</b>（Stopword Removal）</td><td>去除 is / the / at 等低語意貢獻高頻詞</td><td>降維、提升關鍵詞比重</td><td><b>對話生成、語法分析要保留</b></td></tr>
+      </table>
+    </div>
+  </details>
+
+  <h3>對比 ①：分詞是「切」，詞性標注是「標」</h3>
+  <div class="compare">
+    <div><div class="big">分詞 Tokenization</div>切成基本詞彙單位。<br><span class="hint">順序：在前</span></div>
+    <div><div class="big">詞性標注 POS Tagging</div>為每個詞標語法類別。是 NER、關係抽取、資訊擷取的前置特徵。<br><span class="hint">順序：在後</span></div>
+  </div>
+  <div class="callout exam"><b>115Q1 第 1 題：</b>問「資訊擷取前做 POS Tagging 的目的」，正解是「為每個詞彙標記其語法類別」。誘答「將文本切分為基本詞彙單位」—— 那是斷詞，是 POS 的前一步，不是 POS 本身。</div>
+
+  <h3>對比 ②：詞形還原 vs 詞幹提取</h3>
+  <div class="panel">
+    <p class="hint">選一個英文單字，同時看兩種方法的輸出。</p>
+    <div class="tabs" id="lsTabs"></div>
+    <div class="grid2" id="lsOut"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>維度</th><th>詞形還原 Lemmatization</th><th>詞幹提取 Stemming</th></tr>
+      <tr><td>方法</td><td>語法規則 ＋ 字典</td><td>字首字尾裁剪規則</td></tr>
+      <tr><td>輸出</td><td>一定是有效單字</td><td>不保證是有效單字</td></tr>
+      <tr><td>速度</td><td>較慢</td><td>快</td></tr>
+      <tr><td>準確性</td><td>高，語意保留佳</td><td>較低</td></tr>
+      <tr><td>適用</td><td>語意分析、問答系統</td><td>大規模語料快速處理</td></tr>
+    </table>
+  </div>
+
+  <h3>對比 ③：中文分詞的特殊性</h3>
+  <div class="panel">
+    <p class="hint">中文、日文沒有空白邊界，必須靠斷詞字典或模型輔助。切換看看一次切錯，下游會發生什麼事。</p>
+    <div class="tabs" id="zhTabs"></div>
+    <div id="zhOut"></div>
+    <div class="row" style="justify-content:space-between;margin-top:10px"><b>下游錯誤累積（示意）</b><span id="zhNum">0%</span></div>
+    <div class="meter"><i id="zhMeter" style="width:0"></i></div>
+  </div>
+  <p class="prose"><b>這是「錯誤會向下游累積」最典型的例子。</b>「我愛自然語言處理」若誤切成「自然／語言／處理」，後續語法與語意分析全部歪掉。</p>
+</section>
+
+<!-- 18.3 -->
+<section id="s3">
+  <div class="sec-head"><span class="sec-no">18.3</span><h2>文字表示與詞向量</h2></div>
+  <p class="lead">模型只能算數字，不能算文字。從前處理完的語料到模型輸入，中間必須經過<b>詞彙向量化</b>（Word Vectorization）／<b>表示學習</b>（Representation Learning）。向量的品質直接決定模型上限。</p>
+
+  <h3>兩軸地圖：本知識點最高密度考點</h3>
+  <div class="panel">
+    <p class="hint">橫軸問「向量有沒有承載詞與詞的關聯」（分布式）；縱軸問「同一個詞的向量會不會隨句子改變」（語境型）。點下方技術，看它落在哪裡。</p>
+    <div class="tabs" id="mapTabs"></div>
+    <svg id="mapSvg" viewBox="0 0 640 320" role="img" aria-label="詞向量技術兩軸定位圖"></svg>
+    <div class="pout" id="mapOut" style="margin-top:10px"></div>
+  </div>
+  <details>
+    <summary>展開表示技術全景對照表</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>表示類型</th><th>技術代表</th><th>分布特性</th><th>語境特性</th><th>優點</th><th>限制</th></tr>
+        <tr><td><b>純離散</b></td><td>One-hot、Bag of Words</td><td>非分布式</td><td>非語境型</td><td>結構簡單、易實作</td><td>向量稀疏、無語意、維度高</td></tr>
+        <tr><td><b>統計型</b></td><td>TF-IDF</td><td>非分布式</td><td>非語境型</td><td>能反映詞彙重要性、效果穩定</td><td>忽略語序與上下文、無法處理多義詞</td></tr>
+        <tr><td><b>統計共現型</b></td><td>N-grams</td><td>有限分布性</td><td>短範圍語境敏感</td><td>可表示語序與詞組共現</td><td>長句效果差、資料稀疏、無法捕捉長距依賴</td></tr>
+        <tr><td><b>靜態詞嵌入</b></td><td>Word2Vec、GloVe、FastText</td><td>分布式</td><td>非語境型</td><td>可表示語意結構、向量可運算、訓練成本低</td><td><b>一詞一向量</b>，無法處理同詞異義</td></tr>
+        <tr><td><b>語境型詞嵌入</b></td><td>ELMo、BERT、GPT</td><td>分布式</td><td>動態語境型</td><td>語意精準、支援上下文、多義詞處理佳</td><td>模型大、需高算力與記憶體</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <h3>動手看：語境型 vs 非語境型（bank 實驗）</h3>
+  <div class="panel">
+    <p class="hint">兩個句子都有 bank。切換模型，看兩個 bank 的向量是否相同（向量方向為示意）。</p>
+    <div class="tabs" id="bankTabs"></div>
+    <svg id="bankSvg" viewBox="0 0 640 250" role="img" aria-label="bank 向量示意"></svg>
+    <p class="hint" id="bankNote" style="margin:6px 0 0"></p>
+  </div>
+  <div class="callout"><b>關鍵交叉點：</b>Word2Vec 是「<b>分布式但非語境型</b>」。這個組合最常被考 —— 它解決了 One-hot 的維度爆炸與語意缺失，但<b>沒有</b>解決多義詞。看到選項說「Word2Vec 能捕捉長距離上下文」立刻排除，那是 RNN／Transformer 的工作。</div>
+
+  <h3>One-hot 與 Bag of Words</h3>
+  <div class="panel">
+    <p class="prose"><b>One-hot：</b>語料庫 1000 詞 → 每個詞是 1000 維、只有一位為 1 的向量。兩大死穴：高維稀疏、任兩詞正交無語意關聯。<br><b>BoW：</b>只數次數，不管順序。在下面輸入由 dog／cat／fish 組成的文件，看向量即時變化。</p>
+    <div class="row"><label for="bowIn" class="hint">文件內容：</label><input id="bowIn" value="dog dog cat" style="flex:1;min-width:0;font:inherit;padding:6px 10px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface2);color:var(--ink)"></div>
+    <div class="row" style="margin-top:8px">
+      <button class="btn" data-bow="dog dog cat">文件 1：dog dog cat</button>
+      <button class="btn" data-bow="cat fish fish">文件 2：cat fish fish</button>
+      <button class="btn" data-bow="cat dog dog">順序打亂：cat dog dog</button>
+    </div>
+    <div class="formula" id="bowOut"></div>
+  </div>
+
+  <h3>TF-IDF 計算器</h3>
+  <div class="panel">
+    <p class="hint">拉動滑桿，觀察 TF、IDF、tf-idf 如何變化。特別注意：改變「文件總詞數」時，IDF 會不會動？</p>
+    <div class="slider"><label for="tfN">語料文件數 |D|</label><input type="range" id="tfN" min="100" max="10000" step="100" value="1000"><output id="tfNo">1000</output></div>
+    <div class="slider"><label for="tfDf">含該詞的文件數</label><input type="range" id="tfDf" min="1" max="1000" step="1" value="10"><output id="tfDfo">10</output></div>
+    <div class="slider"><label for="tfC">詞在本文件出現次數</label><input type="range" id="tfC" min="0" max="40" step="1" value="3"><output id="tfCo">3</output></div>
+    <div class="slider"><label for="tfL">本文件總詞數</label><input type="range" id="tfL" min="20" max="2000" step="10" value="100"><output id="tfLo">100</output></div>
+    <div class="kpis">
+      <div class="kpi"><span>TF</span><b id="kTf">0.030</b></div>
+      <div class="kpi"><span>IDF（log₁₀）</span><b id="kIdf">2.00</b></div>
+      <div class="kpi"><span>tf-idf</span><b id="kTfidf">0.060</b></div>
+    </div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" id="tfEx">套用講義範例</button><span class="hint" id="tfNote"></span></div>
+  </div>
+  <div class="formula">TF(t,d)  = 詞 t 在文件 d 出現次數 ÷ 文件 d 總詞數
+IDF(t,D) = log( |D| ÷ 含有詞 t 的文件數 )
+tf-idf   = TF × IDF
+範例：語料 1000 篇，"AI" 只出現在 10 篇；某文件 100 詞、"AI" 出現 3 次
+TF = 3/100 = 0.03　IDF = log(1000/10) = log(100) ≈ 2　tf-idf = 0.03 × 2 = 0.06</div>
+  <div class="callout exam"><b>114Q2 第 5 題的考點就藏在 TF 的分子：</b>長文本中詞彙出現次數增多，TF 偏高，<b>常見詞的權重被過度放大</b>，稀釋了關鍵詞的重要性。誘答會說「長文本改變 IDF 計算」—— 錯，IDF 只看該詞在多少份<b>文件</b>出現，與單篇長度無關。</div>
+
+  <h3>N-grams：固定視窗看不到遠處</h3>
+  <div class="panel">
+    <p class="hint">選 N，上方列出 S = [I, love, machine, learning] 的 N-gram；下方看模型要預測「ran」時，視窗裡到底看得到誰。</p>
+    <div class="tabs" id="ngTabs"></div>
+    <div class="formula" id="ngList"></div>
+    <div class="heat" id="ngSent"></div>
+    <p class="hint" id="ngNote" style="margin:8px 0 0"></p>
+  </div>
+  <p class="prose">限制：N 一大維度爆炸、資料稀疏；且<b>只看固定長度的前序詞</b>，視窗外的詞完全進不來 —— 這正是「句子片段合理、整體語意不連貫」的根因。</p>
+
+  <h3>Word2Vec：CBOW vs Skip-gram（115Q1 第 3 題）</h3>
+  <div class="panel">
+    <div class="row" style="justify-content:space-between">
+      <div class="tabs" id="w2vTabs" style="margin:0"></div>
+      <span class="hint">視窗大小 <button class="btn" id="winBtn">±2</button></span>
+    </div>
+    <svg id="w2vSvg" viewBox="0 0 640 200" style="margin-top:10px" role="img" aria-label="CBOW 與 Skip-gram 示意"></svg>
+    <div class="kpis">
+      <div class="kpi"><span>某長尾詞在語料出現 3 次</span><b id="w2vS">3 組</b></div>
+      <div class="kpi"><span>訓練速度</span><b id="w2vSp">快</b></div>
+      <div class="kpi"><span>低頻／長尾詞品質</span><b id="w2vQ">較差</b></div>
+    </div>
+    <p class="hint" id="w2vNote" style="margin:10px 0 0"></p>
+  </div>
+  <p class="prose">語意運算能力：<code>king - man + woman ≈ queen</code>。</p>
+
+  <div class="compare">
+    <div><div class="big">Word2Vec（Google, 2013）</div>基於<b>預測</b>（predict-based），靠<b>局部上下文視窗</b>。</div>
+    <div><div class="big">GloVe（Stanford, 2014）</div>基於<b>共現統計</b>（count-based），靠<b>全域共現矩陣</b>做矩陣分解。</div>
+  </div>
+  <div class="callout exam"><b>114Q2 第 4 題：</b>兩者主要差異就是上面這張對照。誘答手法：把兩者的特性對調。</div>
+
+  <h3>FastText：子詞 n-gram 解決 OOV</h3>
+  <div class="panel">
+    <p class="hint">FastText（Facebook, 2016）把詞拆成子詞 n-gram（常用 3–6 字母）再加總。輸入任何英文單字，看它被拆成哪些子詞（此處只列 3-gram 示意）。</p>
+    <div class="row"><input id="ftIn" value="nationalization" aria-label="英文單字" style="flex:1;min-width:0;font:inherit;padding:6px 10px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface2);color:var(--ink)">
+      <button class="btn" data-ft="unhappiness">unhappiness</button><button class="btn" data-ft="nationalization">nationalization</button></div>
+    <div class="heat" id="ftOut" style="margin-top:10px"></div>
+    <p class="hint" style="margin:8px 0 0">即使沒見過 <b>nationalization</b>，也能靠 <b>nation</b>、<b>-al</b>、<b>-ization</b> 這些片段組出向量 —— <b>解決 OOV（Out-of-Vocabulary）問題</b>，這是 FastText 的專屬標籤。</p>
+  </div>
+
+  <h3>語境型詞嵌入三代表（點卡片翻面）</h3>
+  <div class="cards" id="ctxCards"></div>
+  <div class="tbl-wrap" style="margin-top:14px">
+    <table>
+      <tr><th>模型</th><th>技術基礎</th><th>方向性</th><th>預訓練任務</th><th>擅長</th></tr>
+      <tr><td><b>ELMo</b></td><td>BiLSTM 語言模型</td><td>雙向（兩個單向拼接）</td><td>語言模型</td><td>可外掛進既有模型增強語意表示</td></tr>
+      <tr><td><b>BERT</b></td><td>雙向 Transformer <b>Encoder</b></td><td>真正雙向</td><td>MLM ＋ NSP</td><td>理解類任務：分類、問答、NER</td></tr>
+      <tr><td><b>GPT</b></td><td>單向 Transformer <b>Decoder</b></td><td>單向（自迴歸）</td><td>自迴歸預測下一個 token</td><td>生成類任務：對話、摘要、創作</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 18.4 -->
+<section id="s4">
+  <div class="sec-head"><span class="sec-no">18.4</span><h2>深度學習模型與 Transformer</h2></div>
+  <p class="lead">傳統序列模型三兄弟 RNN、LSTM、GRU 有個共同天花板：<b>逐 token 遞迴，無法平行化</b>。</p>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>模型</th><th>特點</th><th>優點</th><th>限制</th></tr>
+      <tr><td><b>RNN</b></td><td>每步輸出依賴前一步狀態</td><td>能處理時序與語序</td><td>訓練不穩、<b>梯度消失嚴重</b></td></tr>
+      <tr><td><b>LSTM</b></td><td>引入記憶單元與門控機制</td><td>能捕捉長距離依賴、較穩定</td><td>結構複雜、訓練耗時</td></tr>
+      <tr><td><b>GRU</b></td><td>LSTM 精簡版，整合部分門控</td><td>運算較快、效果接近 LSTM</td><td>對超長序列仍有限制</td></tr>
+    </table>
+  </div>
+
+  <h3>平行化賽跑：RNN vs Transformer</h3>
+  <div class="panel">
+    <p class="hint">同一句 10 個 token。RNN 必須一格一格等上一步；Transformer 一次處理整個序列（時間步數為示意）。</p>
+    <div class="pc"><b>RNN／LSTM（逐 token 遞迴）</b></div><div class="heat" id="raceR"></div>
+    <div class="pc" style="margin-top:10px"><b>Transformer（全平行）</b></div><div class="heat" id="raceT"></div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" id="raceBtn">開始比賽</button><span class="hint" id="raceInfo">時間步：0</span></div>
+  </div>
+
+  <h3>Transformer 的三大創新</h3>
+  <div class="panel">
+    <div class="tabs" id="trTabs"></div>
+    <div id="trBody"></div>
+  </div>
+
+  <h3>自注意力模擬器</h3>
+  <div class="panel">
+    <p class="hint">點任一個 token 當作 Query，看它分配給其他 token 的注意力權重（顏色越深越高，數值為示意）。試試點「ran」：中間隔了一整個子句，仍能找到 cat。</p>
+    <div class="heat" id="attSent"></div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn" id="attMode" aria-pressed="false">改用 RNN 視角</button>
+      <span class="hint" id="attNote"></span>
+    </div>
+    <div class="formula">每個 token 以自身 Query 與所有 token 的 Key 算相似度 → Softmax 正規化為權重 → 對 Value 加權求和
+★ 任意兩個位置不論多遠，只隔「一次運算」</div>
+  </div>
+
+  <div class="panel">
+    <h3 style="margin-top:0">Self-Attention 的四個誘答長相（115Q1 第 11 題）</h3>
+    <p class="hint">先點左邊的選項描述，再點右邊「其實是誰」。</p>
+    <div class="match" id="attMatch"></div>
+    <div class="feedback" id="attFb" aria-live="polite"></div>
+  </div>
+
+  <h3>注意力分布過於平均（Attention Collapse）</h3>
+  <div class="panel">
+    <p class="hint">注意力權重缺乏區辨性、模型無法聚焦關鍵資訊。下面 6 個 token 的權重幾乎一樣平均。選一種改善手段，看分布怎麼變（數值為示意）。</p>
+    <div class="strat" id="acStrat"></div>
+    <div id="acBars" style="margin-top:14px"></div>
+    <div class="kpis">
+      <div class="kpi"><span>最大權重（聚焦度）</span><b id="acMax">—</b></div>
+      <div class="kpi"><span>權重總和</span><b id="acSum">—</b></div>
+    </div>
+    <p class="hint" id="acWhy" style="margin:10px 0 0"></p>
+  </div>
+  <div class="callout exam"><b>114Q2 第 18 題：</b>正解是<b>對注意力權重施加稀疏化約束</b>（Sparsity Constraint），強制模型集中關注少數關鍵位置。提高 Query-Key 點積的縮放常數會讓分布更平滑，是反效果。</div>
+
+  <div class="panel">
+    <h3 style="margin-top:0">Seq2Seq 適用情境判別（114Q2 第 16 題）</h3>
+    <p class="hint">Encoder 把輸入序列轉成抽象語意向量，Decoder 再逐步產生目標序列。先點情境，再點對應的任務類型。</p>
+    <div class="match" id="s2sMatch"></div>
+    <div class="feedback" id="s2sFb" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- 18.5 -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-no">18.5</span><h2>預訓練、微調與模型強化</h2></div>
+  <p class="lead"><b>Pre-train and Fine-tune 範式：</b>大規模語料預訓練學到通用語言能力 → 針對特定任務微調。好處是<b>下游只需少量標注資料</b>就有好表現。</p>
+
+  <h3>BERT 的 MLM vs GPT 的自迴歸</h3>
+  <div class="panel">
+    <p class="hint">BERT 隨機遮蔽約 15% 的 token，要求模型同時用被遮蔽位置<b>左右兩側</b>的上下文還原。GPT 則自左而右逐 token 預測下一個（例句為示意）。</p>
+    <div class="tabs" id="mlmTabs"></div>
+    <div class="heat" id="mlmSent" style="margin:10px 0"></div>
+    <div class="row"><button class="btn primary" id="mlmBtn">重新隨機遮蔽</button><span class="hint" id="mlmNote"></span></div>
+  </div>
+  <div class="panel flat">
+    <h3 style="margin-top:0">114Q2 第 3 題＋115Q1 第 4 題：MLM 的訓練策略，哪一句對？</h3>
+    <p class="hint">兩題正解完全一致。點每一句看判定。</p>
+    <div class="strat" id="mlmJudge"></div>
+    <p id="mlmJudgeOut" class="hint" style="margin:12px 0 0">選一句看看</p>
+  </div>
+
+  <h3>三種「客製化 LLM」的方法</h3>
+  <div class="panel">
+    <p class="hint">切換方法，看模型裡哪些部分被訓練（彩色）、哪些被凍結（灰色鎖頭）。參數比例為示意。</p>
+    <div class="tabs" id="ftTabs"></div>
+    <svg id="ftSvg" viewBox="0 0 640 230" role="img" aria-label="微調方法示意"></svg>
+    <div class="kpis" id="ftKpi"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>方法</th><th>動到什麼</th><th>原模型權重</th><th>主要解決</th></tr>
+      <tr><td><b>傳統微調</b>（Fine-Tuning）</td><td>更新模型本身權重，產生新的參數檔</td><td><b>會改變</b></td><td>任務適配，但成本高、易災難性遺忘</td></tr>
+      <tr><td><b>LoRA</b>（Low-Rank Adaptation）</td><td>凍結原權重，在各層旁路注入<b>低秩可訓練矩陣</b></td><td><b>凍結</b></td><td>GPU 記憶體不足、可訓練參數量降到千分之一以下</td></tr>
+      <tr><td><b>Prompt Tuning</b></td><td>凍結權重，只學輸入端的<b>軟提示</b>（Soft Prompt）連續向量</td><td><b>凍結</b></td><td>省下訓練與模型儲存成本，靠改變輸入表示引導行為</td></tr>
+    </table>
+  </div>
+
+  <h3>災難性遺忘：哪個做法保得住通用知識？（115Q1 第 14 題）</h3>
+  <div class="panel">
+    <div class="strat" id="cfStrat"></div>
+    <div style="margin-top:18px">
+      <div class="verdict" id="cfV">選一個做法試試</div>
+      <div class="meter" style="height:18px;margin:10px 0"><i id="cfM" style="width:0"></i></div>
+      <div id="cfWhy" class="hint"></div>
+    </div>
+  </div>
+
+  <h3>Prompt-based Learning 與小樣本</h3>
+  <div class="panel">
+    <div class="tabs" id="shotTabs"></div>
+    <div id="shotBody"></div>
+  </div>
+
+  <h3>RAG：檢索增強生成</h3>
+  <div class="panel">
+    <p class="hint">把「外部知識檢索」接到「語言生成」前面，緩解知識過時與幻覺。按下一步走完流程，再試試「檢索出錯」會怎樣（內容為示意）。</p>
+    <div class="pipe" id="ragPipe"></div>
+    <div class="pout" id="ragOut" aria-live="polite"></div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn primary" id="ragNext">下一步</button>
+      <button class="btn" id="ragReset">從頭開始</button>
+      <button class="btn" id="ragBad" aria-pressed="false">讓檢索取回「相似但不相關」的文件</button>
+    </div>
+  </div>
+  <div class="callout exam"><b>114Q2 第 17 題：</b>檢索階段最關鍵的挑戰是避免取回的結果<b>只是語意相似、卻與查詢意圖無實質關聯</b>。誘答常放「選 Faiss 或 ScaNN」（工程選型）、「降低嵌入模型計算成本」（效能優化）、「確保文件完整塞進上下文視窗」（生成階段的長度限制），都不是檢索相關性的核心問題。</div>
+
+  <h3>成本優化：錢花在輸入端還是輸出端？（115Q1 第 21 題）</h3>
+  <div class="panel">
+    <p class="hint">題幹說明成本集中在<b>輸入 tokens</b>。點不同手段，看哪一條長條真的變短（比例為示意）。</p>
+    <div class="strat" id="costStrat"></div>
+    <div id="costBars" style="margin-top:14px"></div>
+    <p class="hint" id="costWhy" style="margin:8px 0 0"></p>
+  </div>
+</section>
+
+<!-- 18.6 -->
+<section id="s6">
+  <div class="sec-head"><span class="sec-no">18.6</span><h2>應用情境與實務案例</h2></div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>應用</th><th>任務本質</th><th>典型場景</th><th>關鍵挑戰</th></tr>
+      <tr><td><b>文字分類</b></td><td>文本 → 預定義類別</td><td>垃圾郵件偵測、評論分類、客服請求自動分派</td><td>語言多樣性、類別界線模糊</td></tr>
+      <tr><td><b>情感分析</b></td><td>文本 → 情緒極性（正／負／中立）</td><td>社群輿情監控、顧客滿意度調查</td><td>反諷、方言俚語、跨文化書寫風格</td></tr>
+      <tr><td><b>對話系統</b></td><td>多輪互動</td><td>任務導向（訂票、訂位、查天氣）／開放式（ChatGPT）</td><td>長對話一致性、語境維持、需人工輔助監控</td></tr>
+      <tr><td><b>文字生成與摘要</b></td><td>文本 → 濃縮或新生文本</td><td>新聞摘要、廣告標題、自動報表</td><td>語意一致性、邏輯性、<b>事實性</b></td></tr>
+      <tr><td><b>機器翻譯</b></td><td>語言 A → 語言 B</td><td>商業文件、多語客服、學術交流</td><td>語法差異、專業術語（法律／醫療要求極高）</td></tr>
+      <tr><td><b>NER／關係抽取</b></td><td>非結構化 → 結構化</td><td>法律文書標註案件／法院／當事人、醫療文本抽取藥品與療效</td><td>標註一致性、領域詞彙、知識圖譜建構</td></tr>
+    </table>
+  </div>
+  <div class="panel">
+    <h3 style="margin-top:0">配對練習：場景配應用</h3>
+    <p class="hint">先點左邊場景，再點右邊應用類型。</p>
+    <div class="match" id="appMatch"></div>
+    <div class="feedback" id="appFb" aria-live="polite"></div>
+  </div>
+
+  <h3>兩類對話系統的差別</h3>
+  <div class="compare">
+    <div><div class="big">任務導向 Task-oriented</div>目標明確、指令有限、可用槽位填充。<br>訂機票、餐廳訂位、查天氣；<b>可控性高，錯誤易界定</b>。</div>
+    <div><div class="big">開放式 Open-domain</div>無特定目標、話題不受限。<br>ChatGPT 類；彈性與人性化高，但<b>語境理解與長期一致性</b>是主要瓶頸。企業導入時仍需搭配監控與人工輔助。</div>
+  </div>
+
+  <h3>低資源語言過擬合（114Q2 第 19 題）</h3>
+  <div class="panel">
+    <p class="hint">語料極少（如 1 萬筆）又出現過擬合，且<b>不能新增真實語料</b>。選一個做法，看泛化能力（示意）。</p>
+    <div class="strat" id="lrStrat"></div>
+    <div style="margin-top:18px">
+      <div class="verdict" id="lrV">選一個做法試試</div>
+      <div class="meter" style="height:18px;margin:10px 0"><i id="lrM" style="width:0"></i></div>
+      <div id="lrWhy" class="hint"></div>
+    </div>
+  </div>
+
+  <h3>多任務共用表徵的副作用（114Q2 第 47 題）</h3>
+  <div class="panel">
+    <p class="hint">單一 Transformer 同時做文檔分類 ＋ NER。拖動損失權重，看兩個任務的準確率此消彼長（數值為示意）。</p>
+    <div class="slider"><label for="mtW">NER 損失權重 λ</label><input type="range" id="mtW" min="0" max="100" value="85"><output id="mtWo">0.85</output></div>
+    <div id="mtBars"></div>
+    <p class="hint" id="mtNote" style="margin:8px 0 0"></p>
+  </div>
+  <p class="prose">在架構正確、資料品質良好的前提下，「NER 準確率上升、分類準確率反而下降」最可能是<b>損失函數未做權重平衡，導致任務間競爭梯度</b>。Transformer 與 BERT 本身完全支援分類與序列標註並存，架構不是主因。</p>
+</section>
+
+<!-- 18.7 -->
+<section id="s7">
+  <div class="sec-head"><span class="sec-no">18.7</span><h2>技術挑戰與風險（三層風險模型）</h2></div>
+  <p class="lead">官方把 NLP 風險依<b>發生位置</b>分為三層。情境題常先描述症狀，再問「這屬於哪一層／該用什麼機制」。點每一層展開。</p>
+  <div class="panel">
+    <div class="tabs" id="riskTabs"></div>
+    <div id="riskBody"></div>
+  </div>
+
+  <div class="panel">
+    <h3 style="margin-top:0">症狀分類：這是哪一層的風險？</h3>
+    <div id="riskSort"></div>
+  </div>
+
+  <h3>去識別化 vs 匿名化（極易混淆）</h3>
+  <div class="panel">
+    <p class="hint">同一筆客服紀錄，套用兩種處理，看輸出與「能不能還原」。</p>
+    <div class="tabs" id="deTabs"></div>
+    <div class="grid2" id="deOut"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>維度</th><th>去識別化（De-identification）</th><th>匿名化（Anonymization）</th></tr>
+      <tr><td>可逆性</td><td><b>保有重新識別的潛在可能</b>（可透過對應代碼還原）</td><td><b>徹底移除</b>，無法再與特定個體連結</td></tr>
+      <tr><td>常見方法</td><td>代碼替換（Pseudonymization）、資料抽象化、資料遮罩</td><td>徹底刪除辨識欄位、資料隨機化、聚合處理</td></tr>
+      <tr><td>範例</td><td>「0912-345-678」→「phone_XXYYZZ」；「王曉明」→「王X明」</td><td>「25 歲」→ 隨機年齡值；「某區域共 500 人為 30-40 歲」</td></tr>
+      <tr><td>適用</td><td>需部分保留可識別性（研究、系統測試）</td><td>開放資料、法規要求無可辨識性</td></tr>
+    </table>
+  </div>
+
+  <h3>版權題：事前預防還是事後追溯？（114Q2 第 25 題）</h3>
+  <div class="panel">
+    <div class="strat" id="cpStrat"></div>
+    <div style="margin-top:18px">
+      <div class="verdict" id="cpV">選一個機制試試</div>
+      <div class="meter" style="height:18px;margin:10px 0"><i id="cpM" style="width:0"></i></div>
+      <div id="cpWhy" class="hint"></div>
+    </div>
+  </div>
+
+  <h3>兩個進階考法</h3>
+  <details><summary>幻覺的 Agent 版考法（115Q1 第 16 題）</summary><div class="body">若 System Prompt 只寫「當你知道答案時，直接輸出最終答案」，未要求先用工具查證，Agent 會憑過時記憶編造事實。改善方式是<b>明確規定涉及即時性、可查證的事實必須先執行搜尋並引用來源</b>。</div></details>
+  <details><summary>偏見題的反向考法（114Q2 第 49 題，選「不正確」）</summary><div class="body">情感分析在不同語言／族群書寫風格上表現不一致，成因是<b>訓練語料文化偏向、資料來源不平衡</b>，以及 Transformer 雖能捕捉上下文但資料偏差仍會被學走。「未啟用詞嵌入正規化（Embedding Normalization）造成語意距離不穩定」只影響數值穩定，<b>不是</b>跨族群誤判的根本原因 —— 它就是那個「不正確」的選項。</div></details>
+  <details><summary>模型偏見與 WEAT</summary><div class="body">訓練資料帶有文化、性別、種族偏見 → 模型學習並延續。例：履歷分類把男性簡歷判為「管理職潛力高」。處理：用 <b>WEAT（Word Embedding Association Test）</b>分析詞向量中的隱含偏見；平衡訓練資料、移除性別或族群標註欄位。<br><b>公平性評估不足：</b>偏見存在卻沒有量化評估與修正機制，會讓偏見持續擴大。應在專案設計初期就納入公平性指標，並建立人工覆核機制。</div></details>
+</section>
+
+<!-- 18.8 -->
+<section id="s8">
+  <div class="sec-head"><span class="sec-no">18.8</span><h2>官方考過什麼</h2></div>
+  <p class="lead">114-2 與 115-1 兩份官方公告試題（共 100 題）中，可直接歸為本知識點的核心 NLP 題共 <b>16 題</b>（16%），是科目 1 技術面命中率最高的知識點。另有 8 題邊界題與 L21102／L21103／L23 重疊。</p>
+  <div class="panel">
+    <h3 style="margin-top:0">核心 16 題的命中分布</h3>
+    <div id="hitBars"></div>
+    <p class="hint" style="margin:8px 0 0">其餘為情感分析、Seq2Seq、低資源、多任務、偏誤等應用與根因判讀題。</p>
+  </div>
+  <div class="tabs" id="exTabs"></div>
+  <div id="examList"></div>
+  <div class="callout exam"><b>命中率觀察：</b>題型集中在「兩個相似技術的本質差異」與「某症狀的根因判讀」，純名詞定義題極少。準備方向：把 18.3 的全景對照表、CBOW／Skip-gram 取捨、BERT／GPT 分工三組練到能秒答。</div>
+</section>
+
+<!-- 18.9 -->
+<section id="s9">
+  <div class="sec-head"><span class="sec-no">18.9</span><h2>易錯與陷阱</h2></div>
+  <p class="lead">逐條確認自己真的懂了再打勾（打勾狀態會記在這台裝置上）。</p>
+  <div class="traps" id="traps"></div>
+  <p class="hint" id="trapCount" style="margin-top:10px"></p>
+
+  <h3>情境測驗</h3>
+  <div class="qcard" id="quiz"></div>
+
+  <h3>延伸練習</h3>
+  <p class="prose"><b>L21 主題庫 311 題：</b>篩選「詞向量／Embedding／Transformer／BERT／前處理／情感分析」相關題目，本知識點題量最大，建議優先刷完再進其他知識點。<br><b>L23 主題庫 326 題：</b>NLP 系統的部署、監控、資料治理與版權合規題，可與 18.7 的三層風險模型互相補強。<br><b>各科歷屆 100 題：</b>對照初級 L114（NLP 與文本技術）複習基礎名詞，再回頭練中級的情境判斷題；本知識點常與 <a href="L21103_generative_ai.html">L21103（生成式 AI）</a>、<a href="L21104_multimodal_ai.html">L21104（多模態）</a>混合出題。</p>
+</section>
+</main>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce){const m=document.querySelector('#heroSvg .movers');if(m)m.remove();}
+const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+
+/* ---------- generic matcher ---------- */
+function matcher(root,fb,left,right,doneMsg){
+  let sel=null,done=0;
+  const L=document.createElement('div');L.className='col';
+  const R=document.createElement('div');R.className='col';
+  left.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;
+    b.innerHTML=it.html;if(it.c)b.style.setProperty('--c',it.c);
+    b.onclick=()=>{if(b.classList.contains('done'))return;L.querySelectorAll('.mitem').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;fb.textContent='';fb.className='feedback';};
+    L.appendChild(b);
+  });
+  right.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;b.innerHTML=it.html;
+    b.onclick=()=>{
+      if(b.classList.contains('done'))return;
+      if(!sel){fb.textContent='請先點左邊一個項目。';fb.className='feedback';return;}
+      if(sel.dataset.k===b.dataset.k){
+        const c=sel.style.getPropertyValue('--c');
+        [sel,b].forEach(x=>{x.classList.remove('sel');x.classList.add('done');if(c)x.style.setProperty('--c',c);});
+        fb.textContent='✓ '+(it.ok||'答對了！');fb.className='feedback ok';sel=null;done++;
+        if(done===left.length){fb.textContent='✓ 全部配對完成！'+doneMsg;}
+      }else{
+        b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');
+        fb.textContent='✗ '+(it.bad||'不太對，再想想兩者的本質差異。');fb.className='feedback bad';
+      }
+    };
+    R.appendChild(b);
+  });
+  root.append(L,R);
+}
+
+/* ---------- tab set ---------- */
+function tabset(root,labels,fn,start){
+  const r=typeof root==='string'?$(root):root;
+  labels.forEach((l,i)=>{const b=document.createElement('button');b.className='btn';b.innerHTML=l;b.setAttribute('aria-pressed','false');
+    b.onclick=()=>{[...r.children].forEach((x,j)=>x.setAttribute('aria-pressed',i===j));fn(i);};r.appendChild(b);});
+  r.children[start||0].click();
+}
+
+/* ---------- sorter: classify one card at a time into bins ---------- */
+function sorter(root,bins,items,doneMsg){
+  const r=typeof root==='string'?$(root):root;let i=0,ord=shuffle(items.map((_,k)=>k));
+  const card=document.createElement('div');card.className='pout';card.setAttribute('aria-live','polite');
+  const btns=document.createElement('div');btns.className='row';btns.style.marginTop='12px';
+  const fb=document.createElement('div');fb.className='feedback';fb.setAttribute('aria-live','polite');
+  const bw=document.createElement('div');bw.className='bins';
+  const lists=bins.map(b=>{const d=document.createElement('div');d.className='bin';d.style.borderColor=b.c||'var(--line)';bw.appendChild(d);return d;});
+  const head=()=>lists.forEach((d,k)=>d.innerHTML=`<b style="color:${bins[k].c||'var(--ink)'}">${bins[k].n}</b>`);
+  bins.forEach((b,k)=>{const x=document.createElement('button');x.className='btn';x.innerHTML=b.n;x.onclick=()=>pick(k);btns.appendChild(x);});
+  const rs=document.createElement('button');rs.className='btn';rs.textContent='重來';rs.style.marginLeft='auto';
+  rs.onclick=()=>{i=0;ord=shuffle(items.map((_,k)=>k));head();fb.textContent='';show();};btns.appendChild(rs);
+  function show(){card.innerHTML=i>=ord.length?`<b>✓ 全部分類完成！</b>${doneMsg||''}`:`<span class="hint">第 ${i+1}／${ord.length} 張</span><br><b>${items[ord[i]].t}</b>`;}
+  function pick(k){
+    if(i>=ord.length)return;const it=items[ord[i]];
+    if(it.b===k){lists[k].insertAdjacentHTML('beforeend',`<div>• ${it.s||it.t}</div>`);fb.textContent='✓ '+(it.why||'正確！');fb.className='feedback ok';i++;show();}
+    else{fb.textContent='✗ '+(it.hint||'不是這一類，再想想。');fb.className='feedback bad';}
+  }
+  r.append(card,btns,fb,bw);head();show();
+}
+
+/* ---------- flip cards ---------- */
+function flips(root,rows){
+  rows.forEach(([n,o,d])=>{
+    const b=document.createElement('button');b.className='flip';b.setAttribute('aria-pressed','false');
+    b.innerHTML=`<div class="in"><div class="f"><strong>${n}</strong><span>${o}</span><span style="margin-top:auto;font-size:12.5px">點我翻面</span></div><div class="b">${d}</div></div>`;
+    b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');
+    $(root).appendChild(b);
+  });
+}
+
+/* ---------- exam list ---------- */
+function examList(root,rows){
+  rows.forEach(([n,k,q,a])=>{$(root).insertAdjacentHTML('beforeend',`<details><summary><span class="tag">${n}</span>${k}</summary><div class="body">${q?`<p style="margin:0 0 6px"><span class="hint">怎麼問：</span>${q}</p>`:''}<p style="margin:0"><span class="hint">正解思路：</span>${a}</p></div></details>`);});
+}
+
+/* ---------- traps ---------- */
+function traps(key,T){
+  let saved=[];try{saved=JSON.parse(localStorage.getItem(key)||'[]')||[];}catch(e){saved=[];}
+  T.forEach(([a,b],i)=>{
+    const l=document.createElement('label');const c=saved.includes(i);if(c)l.classList.add('chk');
+    l.innerHTML=`<input type="checkbox" ${c?'checked':''}><div><em>${a}</em><br><span>${b}</span></div>`;
+    l.querySelector('input').onchange=e=>{const on=e.target.checked;l.classList.toggle('chk',on);saved=on?[...new Set([...saved,i])]:saved.filter(x=>x!==i);try{localStorage.setItem(key,JSON.stringify(saved));}catch(err){}count();};
+    $('#traps').appendChild(l);
+  });
+  function count(){$('#trapCount').textContent=`已確認 ${saved.length}／${T.length} 條`;}
+  count();
+}
+
+/* ---------- quiz ---------- */
+function quiz(Q,lowMsg){
+  let i=0,score=0;const box=$('#quiz');
+  function show(){
+    if(i>=Q.length){
+      const r=score/Q.length;
+      const msg=r>=.9?'太強了，核心對照已經能秒答。':r>=.65?'不錯！回頭看看答錯的那幾題對應的段落。':lowMsg;
+      box.innerHTML=`<div class="progress"><i style="width:100%"></i></div><div class="qtext" style="font-size:24px;font-family:var(--serif)">得分 ${score}／${Q.length}</div><p>${msg}</p><button class="btn primary" id="qr">重新測驗</button>`;
+      $('#qr').onclick=()=>{i=0;score=0;show();};return;
+    }
+    const [q,opts,ex]=Q[i];
+    const order=shuffle(opts.map((o,k)=>({o,k})));
+    box.innerHTML=`<div class="progress"><i style="width:${i/Q.length*100}%"></i></div><div class="qtop"><span>第 ${i+1}／${Q.length} 題</span><span>得分 ${score}</span></div><div class="qtext">${q}</div><div class="opts">${order.map(x=>`<button class="opt" data-k="${x.k}">${x.o}</button>`).join('')}</div><div class="expl" id="qe"></div><div class="row" style="margin-top:14px;justify-content:flex-end"><button class="btn primary" id="qn" style="display:none">${i===Q.length-1?'看結果':'下一題'}</button></div>`;
+    box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.k==='0';if(ok)score++;
+      box.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.k==='0')x.classList.add('right');});
+      if(!ok)b.classList.add('wrongpick');
+      const e=$('#qe');e.innerHTML=(ok?'<b style="color:var(--ok)">答對了。</b>':'<b style="color:var(--bad)">這題要小心。</b>')+ex;e.classList.add('show');
+      $('#qn').style.display='';$('#qn').focus();
+    });
+    $('#qn').onclick=()=>{i++;show();};
+  }
+  show();
+}
+
+/* ---------- nav highlight ---------- */
+(function(){
+  const links=[...document.querySelectorAll('nav.toc a')];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on&&window.innerWidth<=860)a.scrollIntoView({inline:'center',block:'nearest'});});}});},{rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('main section').forEach(s=>io.observe(s));
+})();
+
+/* ---------- pipeline (scoped) ---------- */
+function pipeline(p,nodes,out){
+  // p = id prefix: #pPipe #pOut #pNext #pReset ; out(i) returns html
+  let i=0;const pipe=$('#'+p+'Pipe');
+  pipe.innerHTML=nodes.map(([a,b])=>`<div class="pnode"><b>${a}</b>${b}</div>`).join('');
+  const nx=$('#'+p+'Next'),rs=$('#'+p+'Reset');
+  function r(){pipe.querySelectorAll('.pnode').forEach((n,j)=>{n.classList.toggle('on',j===i);n.classList.toggle('past',j<i);});$('#'+p+'Out').innerHTML=out(i);if(nx){nx.disabled=i===nodes.length-1;nx.style.opacity=i===nodes.length-1?.4:1;}}
+  if(nx)nx.onclick=()=>{if(i<nodes.length-1){i++;r();}};
+  if(rs)rs.onclick=()=>{i=0;r();};
+  r();
+  return {go:k=>{i=k;r();},redraw:()=>r()};
+}
+
+/* ---------- strategy + meter ---------- */
+function stratMeter(p,st,order,unit){
+  // st rows: [label, verdict, pct, color, why]
+  (order||st.map((_,k)=>k)).forEach(i=>{const b=document.createElement('button');b.innerHTML=st[i][0];b.setAttribute('aria-pressed','false');
+    b.onclick=()=>{$$('#'+p+'Strat button').forEach(x=>x.setAttribute('aria-pressed',x===b));const x=st[i];$('#'+p+'V').textContent=x[1];$('#'+p+'V').style.color=x[3];$('#'+p+'M').style.width=x[2]+'%';$('#'+p+'M').style.background=x[3];$('#'+p+'Why').innerHTML=(unit||'效果（示意）')+'：'+x[2]+'%　'+x[4];};
+    $('#'+p+'Strat').appendChild(b);});
+}
+
+/* ---------- animated bars ---------- */
+function bars(root,rows,max,fmt){
+  // rows: [label, value, win?]
+  const r=$(root);r.innerHTML=rows.map(([l,v,w])=>`<div class="bar${w?' win':''}"><span>${l}</span><div class="track"><div class="fill"></div></div><span class="num">${fmt?fmt(v):v}</span></div>`).join('');
+  setTimeout(()=>r.querySelectorAll('.fill').forEach((f,j)=>f.style.width=Math.min(100,rows[j][1]/max*100)+'%'),40);
+}
+
+/* ---------- challenge cards: pick the right option per scenario ---------- */
+function challenges(root,C,label){
+  C.forEach(([q,opts],k)=>{
+    const d=document.createElement('div');d.className='panel flat';
+    d.innerHTML=`<div class="tag" style="margin-bottom:4px">${label||'情境'} ${k+1}</div><b>${q}</b><div class="strat" style="margin-top:10px"></div><p class="hint" style="margin:10px 0 0">選一個答案</p>`;
+    const st=d.querySelector('.strat'),out=d.querySelector('p');
+    shuffle(opts).forEach(o=>{const b=document.createElement('button');b.innerHTML=o[0];b.setAttribute('aria-pressed','false');b.onclick=()=>{st.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));out.innerHTML=(o[1]?'<b>✓ </b>':'<b>✗ 誘答：</b>')+o[2];out.style.color=o[1]?'var(--ok)':'var(--bad)';};st.appendChild(b);});
+    $(root).appendChild(d);
+  });
+}
+
+/* ---------- statement judge ---------- */
+function judge(root,out,J){
+  shuffle(J).forEach(x=>{const b=document.createElement('button');b.innerHTML=x[0];b.setAttribute('aria-pressed','false');
+    b.onclick=()=>{$$(root+' button').forEach(y=>y.setAttribute('aria-pressed',y===b));const o=$(out);o.innerHTML=x[2];o.style.color=x[1]?'var(--ok)':'var(--bad)';};$(root).appendChild(b);});
+}
+
+/* ---------- yes/no wizard ---------- */
+function wizard(root,resetBtn,Q){
+  // Q[k] = {q, a:[[label, nextIndex | {r,m}], ...]}
+  let path=[];
+  function show(k){
+    let h=path.map(p=>`<span class="tok hl" style="--c:var(--img)">${p}</span>`).join(' → ');
+    if(typeof k==='number'){
+      const s=Q[k];h+=`<p class="verdict" style="margin:10px 0">Q${k+1}. ${s.q}</p><div class="row">${s.a.map((a,j)=>`<button class="btn" data-j="${j}">${a[0]}</button>`).join('')}</div>`;
+      $(root).innerHTML=h;
+      $$(root+' .btn').forEach(b=>b.onclick=()=>{const a=s.a[+b.dataset.j];path.push(`Q${k+1} ${a[0]}`);show(a[1]);});
+    }else{$(root).innerHTML=h+`<p class="verdict" style="margin:12px 0 4px;color:var(--ok)">→ ${k.r}</p><p class="hint" style="margin:0">${k.m}</p>`;}
+  }
+  $(resetBtn).onclick=()=>{path=[];show(0);};
+  show(0);
+}
+
+/* ================= 18.1 ================= */
+pipeline('cs',[['輸入','使用者原句'],['NLU','理解'],['處理','轉成結構'],['NLG','生成'],['輸出','回覆']],i=>[
+  '<b>使用者：</b>「我上週買的耳機壞了，可以退貨嗎？」<div class="hint">自然語言：非結構化、語意模糊、語境多變。</div>',
+  '<b>理解（Understand）：</b>意圖＝申請退貨｜商品＝耳機｜情緒＝負面<div class="hint">NLU 解析語法結構與語意，辨識意圖、情緒與知識。意圖辨識、NER、情感分析都屬於這裡。</div>',
+  '<b>處理（Process）：</b><code>{intent:"return", item:"耳機", sentiment:-0.7}</code><div class="hint">轉換為電腦可運算的結構 —— 特徵向量、語法樹、標注格式。</div>',
+  '<b>生成（Generate）：</b>依情境與目標組出一段自然、流暢且具邏輯的回覆。<div class="hint">NLG 把資料或語意轉成自然語言。自動摘要、回應生成、報告撰寫屬於這裡。</div>',
+  '<b>機器人：</b>「很抱歉造成不便！耳機在 7 天內可申請退貨，我幫您建立退貨單。」<div class="hint">整個過程（理解＋處理＋生成）合起來就叫 NLP。</div>'
+][i]);
+
+sorter('#nluSort',[
+  {n:'NLU 理解',c:'var(--txt)'},{n:'NLG 產出',c:'var(--img)'},{n:'NLP 總稱（整合系統）',c:'var(--aud)'}
+],[
+  {t:'意圖辨識',b:0,why:'判讀使用者想做什麼，是「理解」。'},
+  {t:'命名實體辨識（NER）',b:0,why:'從文字中找出人名、地名、組織，是「理解」。'},
+  {t:'情感分析',b:0,why:'判斷文本的情緒極性，是「理解」。'},
+  {t:'自動摘要',b:1,why:'把內容濃縮成新文字，是「產出」。'},
+  {t:'回應生成',b:1,why:'產生回覆文字，是「產出」。'},
+  {t:'報告撰寫',b:1,why:'把資料轉成自然語言報告，是「產出」。'},
+  {t:'對話系統、機器翻譯、語音助理',b:2,why:'同時需要理解與生成，屬於 NLP 整體應用。'}
+],'考題常把 NLU 的任務塞給 NLG，現在你不會被騙了。');
+
+(function(){
+  const E=[
+    {t:'規則式',y:'1980s–1990s',c:'var(--txt)',d:'手工編寫語法規則與詞彙辭典。代表：ELIZA、專家系統。',s:'語言處理無法自動化',l:'語境一變就失效，規則維護爆炸',
+     v:()=>`<div style="display:flex;flex-direction:column;gap:6px;font-size:14px">${['IF 包含「退貨」 THEN 退貨流程','IF 包含「壞了」 THEN 維修流程','IF …… THEN ……'].map(x=>`<code>${x}</code>`).join('')}</div>`},
+    {t:'統計語言模型',y:'1990s–2010',c:'var(--img)',d:'用大量語料訓練機率模型。代表：N-gram、HMM、CRF。',s:'能自動從語料學結構，不必手寫規則',l:'只看固定視窗，長距離依賴抓不到；依賴標注資料',
+     v:()=>`<div class="heat">${['the','cat','…','the','dog','ran'].map((w,i)=>`<span class="tok ${i>=3&&i<5?'hl':''}" style="--c:var(--img)">${w}</span>`).join('')}</div>`},
+    {t:'深度學習',y:'2010–2018',c:'var(--aud)',d:'神經網路處理語言序列。代表：RNN、LSTM、GRU。',s:'能記住較長範圍的上下文，不必人工設計特徵',l:'逐 token 遞迴，無法平行；長序列仍會衰減',
+     v:()=>`<div class="heat" style="align-items:center">${['h₁','h₂','h₃','h₄'].map((w,i)=>`<span class="tok hl" style="--c:var(--aud);opacity:${1-i*.2}">${w}</span>${i<3?'→':''}`).join('')}</div>`},
+    {t:'預訓練語言模型',y:'2018–至今',c:'var(--sen)',d:'大規模預訓練 ＋ 下游微調。代表：BERT、GPT、RoBERTa、T5（Transformer 架構）。',s:'自注意力一次看全序列 ＋ 全平行運算',l:'算力、記憶體、推理成本',
+     v:()=>{let h='<svg viewBox="0 0 220 120" style="width:220px">';const P=[[30,30],[190,30],[30,95],[190,95],[110,62]];P.forEach((a,i)=>P.forEach((b,j)=>{if(j>i)h+=`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="var(--sen)" stroke-width="1.5" opacity=".6"/>`;}));P.forEach(p=>h+=`<circle cx="${p[0]}" cy="${p[1]}" r="11" fill="var(--sen)"/>`);return h+'</svg>';}}
+  ];
+  E.forEach((e,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=`${i+1}. ${e.t}`;b.onclick=()=>show(i);$('#eraBtns').appendChild(b);});
+  function show(i){
+    $$('#eraBtns .btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));
+    const e=E[i];$('#eraViz').innerHTML=e.v();
+    $('#eraTxt').innerHTML=`<p><span class="chip" style="--c:${e.c}"><i class="dot"></i>${e.t}</span>　<span class="hint">${e.y}</span></p><p>${e.d}</p><p style="margin:0 0 6px"><b style="color:var(--ok)">解決：</b>${e.s}</p><p class="hint" style="margin:0"><b style="color:var(--bad)">留下：</b>${e.l}</p>`;
+  }
+  show(0);
+})();
+
+sorter('#eraSort',[
+  {n:'規則式的限制',c:'var(--txt)'},{n:'統計 LM 的限制',c:'var(--img)'},{n:'RNN／LSTM 的限制',c:'var(--aud)'}
+],[
+  {t:'語境一變就失效',b:0,why:'規則寫死了，新語境沒有對應規則。'},
+  {t:'規則維護成本爆炸、擴展性差',b:0,why:'完全依賴專家手寫規則。'},
+  {t:'句子片段合理，但整體語意不連貫',b:1,why:'N-gram 只看固定視窗，抓不到長距離依賴。'},
+  {t:'缺乏深層語意，依賴標注資料',b:1,why:'統計模型只學到表面共現。'},
+  {t:'逐 token 遞迴，訓練無法平行化',b:2,why:'RNN 每步都要等上一步。'},
+  {t:'長序列仍會衰減',b:2,why:'即使 LSTM 有門控，太長的序列仍會遺失前文。'}
+],'後兩類的共同解方，都是自注意力／Transformer。');
+
+/* ================= 18.2 ================= */
+(function(){
+  const W=['The','kids','are','running','for','happiness'];
+  const POS=['限定詞','名詞','動詞','動詞','介系詞','名詞'];
+  const LEM=['the','kid','be','run','for','happiness'];
+  const STM=['the','kid','are','run','for','happi'];
+  const STOP=[1,0,1,0,1,0];
+  const chips=(arr,sub,cls)=>`<div class="heat">${arr.map((w,i)=>`<span class="tok ${cls?cls(i):''}" style="--c:var(--txt)">${w}${sub?`<small>${sub[i]}</small>`:''}</span>`).join('')}</div>`;
+  const S=[
+    ['分詞','Tokenization',()=>`<div class="hint">原句：The kids are running for happiness</div>${chips(W,null,()=>'hl')}<p style="margin:8px 0 0">把文字拆成單字、詞組或子詞。工具：空白切分、斷詞字典、子詞分解（BPE）。</p><p class="hint" style="margin:0"><b>不要做？</b>幾乎必做，但中文須慎選斷詞器。</p>`],
+    ['詞性標注','POS Tagging',()=>`${chips(W,POS,()=>'hl')}<p style="margin:8px 0 0">為每個詞標記語法類別，是語法分析、NER 的前置特徵。<b>先分詞，再詞性標注。</b></p><p class="hint" style="margin:0"><b>不要做？</b>純詞袋統計任務可略過。</p>`],
+    ['詞形還原','Lemmatization',()=>`${chips(LEM,W,i=>LEM[i]!==W[i].toLowerCase()?'hl':'')}<p style="margin:8px 0 0">依語法規則與字典還原為字典形（running → run），輸出<b>一定是有效單字</b>。</p><p class="hint" style="margin:0"><b>不要做？</b>需保留語氣時態時。</p>`],
+    ['詞幹提取','Stemming',()=>`${chips(STM,W,i=>STM[i]!==W[i].toLowerCase()?'hl':'')}<p style="margin:8px 0 0">規則裁剪詞尾，快但可能非有效字：happiness → <b>happi</b>。</p><p class="hint" style="margin:0"><b>不要做？</b>需要語意精準時。</p>`],
+    ['停用詞移除','Stopword',()=>`${chips(W,null,i=>STOP[i]?'gone':'hl')}<p style="margin:8px 0 0">去除 is／the／at 這類低語意貢獻的高頻詞，可降維、提升關鍵詞比重。</p><p class="hint" style="margin:0"><b>不要做？</b>對話生成、語法分析要保留，否則語句失去自然度。</p>`]
+  ];
+  const pipe=$('#ppPipe');
+  S.forEach((s,i)=>{const b=document.createElement('button');b.className='pnode';b.innerHTML=`<b>${s[0]}</b>${s[1]}`;b.onclick=()=>go(i);pipe.appendChild(b);});
+  function go(i){pipe.querySelectorAll('.pnode').forEach((n,j)=>{n.classList.toggle('on',j===i);n.classList.toggle('past',j<i);});$('#ppOut').innerHTML=S[i][2]();}
+  go(0);
+})();
+
+(function(){
+  const D=[['running','run','run'],['connections','connection','connect'],['happiness','happiness','happi'],['studies','study','studi']];
+  tabset('#lsTabs',D.map(d=>d[0]),i=>{
+    const [w,l,s]=D[i];const ok=s!==l&&/i$/.test(s);
+    $('#lsOut').innerHTML=`<div class="panel flat" style="margin:0"><div class="hint">詞形還原 Lemmatization</div><div class="verdict">${w} → ${l}</div><div style="color:var(--ok)">✓ 有效單字（查字典）</div></div><div class="panel flat" style="margin:0"><div class="hint">詞幹提取 Stemming</div><div class="verdict">${w} → ${s}</div><div style="color:${ok?'var(--bad)':'var(--ok)'}">${ok?'✗ 不是有效單字（只裁詞尾）':'✓ 剛好是有效字（但不保證）'}</div></div>`;
+  });
+})();
+
+(function(){
+  const C=[
+    {n:'正確切分',seg:['我','愛','自然語言處理'],pos:['代名詞','動詞','名詞（專有領域）'],m:'語意：表達對「自然語言處理」這門技術的喜愛。',e:0},
+    {n:'誤切分',seg:['我','愛','自然','語言','處理'],pos:['代名詞','動詞','形容詞？名詞？','名詞','動詞？'],m:'語意：變成「愛自然」＋「語言」＋「處理」三件事，主題歪掉。',e:72}
+  ];
+  tabset('#zhTabs',C.map(c=>c.n),i=>{
+    const c=C[i];
+    $('#zhOut').innerHTML=`<div class="heat">${c.seg.map((w,j)=>`<span class="tok hl" style="--c:${i?'var(--bad)':'var(--ok)'}">${w}<small>${c.pos[j]}</small></span>`).join('')}</div><p style="margin:10px 0 0">${c.m}</p>`;
+    $('#zhNum').textContent=c.e+'%';$('#zhMeter').style.width=c.e+'%';$('#zhMeter').style.background=c.e?'var(--bad)':'var(--ok)';
+  });
+})();
+
+/* ================= 18.3 ================= */
+(function(){
+  const G=[
+    {n:'One-hot／BoW',x:110,y:255,t:'純離散',d:'非分布式',c:'非語境型',p:'結構簡單、易實作',l:'向量稀疏、無語意、維度高'},
+    {n:'TF-IDF',x:215,y:225,t:'統計型',d:'非分布式',c:'非語境型',p:'能反映詞彙重要性、效果穩定',l:'忽略語序與上下文、無法處理多義詞'},
+    {n:'N-grams',x:330,y:180,t:'統計共現型',d:'有限分布性',c:'短範圍語境敏感',p:'可表示語序與詞組共現',l:'長句效果差、資料稀疏、無法捕捉長距依賴'},
+    {n:'Word2Vec／GloVe／FastText',x:510,y:255,t:'靜態詞嵌入',d:'分布式',c:'非語境型',p:'可表示語意結構、向量可運算、訓練成本低',l:'<b>一詞一向量</b>，無法處理同詞異義'},
+    {n:'ELMo／BERT／GPT',x:510,y:70,t:'語境型詞嵌入',d:'分布式',c:'動態語境型',p:'語意精準、支援上下文、多義詞處理佳',l:'模型大、需高算力與記憶體'}
+  ];
+  function draw(k){
+    let h=`<line x1="60" y1="290" x2="625" y2="290" stroke="var(--ink)" stroke-width="1.5"/><line x1="60" y1="290" x2="60" y2="20" stroke="var(--ink)" stroke-width="1.5"/>
+    <line x1="380" y1="20" x2="380" y2="290" stroke="var(--line)" stroke-dasharray="5 5"/><line x1="60" y1="150" x2="625" y2="150" stroke="var(--line)" stroke-dasharray="5 5"/>
+    <text x="70" y="310" font-size="13" fill="var(--muted)">非分布式</text><text x="620" y="310" font-size="13" fill="var(--muted)" text-anchor="end">分布式 →</text>
+    <text x="52" y="36" font-size="13" fill="var(--muted)" text-anchor="end" transform="rotate(-90 52 36)">語境型 →</text>
+    <text x="52" y="285" font-size="13" fill="var(--muted)" text-anchor="start" transform="rotate(-90 52 285)">非語境型</text>`;
+    G.forEach((g,i)=>{const on=i===k;const col=['var(--txt)','var(--txt)','var(--img)','var(--aud)','var(--sen)'][i];
+      h+=`<g style="opacity:${k<0||on?1:.3};transition:opacity .4s"><circle cx="${g.x}" cy="${g.y}" r="${on?16:10}" fill="${col}" style="transition:r .3s"/><text x="${g.x}" y="${g.y-(on?24:17)}" text-anchor="middle" font-size="${on?15:13}" font-weight="700" fill="var(--ink)">${g.n}</text></g>`;});
+    $('#mapSvg').innerHTML=h;
+    if(k>=0){const g=G[k];$('#mapOut').innerHTML=`<b>${g.t}</b>：${g.d}・${g.c}<br><span style="color:var(--ok)">優點：</span>${g.p}<br><span style="color:var(--bad)">限制：</span>${g.l}`;}
+  }
+  tabset('#mapTabs',G.map(g=>g.n),draw);
+})();
+
+(function(){
+  const O=[110,215];
+  const arrow=(x,y,c,l,dy)=>`<line x1="${O[0]}" y1="${O[1]}" x2="${x}" y2="${y}" stroke="${c}" stroke-width="3" marker-end="url(#ah)"/><text x="${x+8}" y="${y+(dy||4)}" font-size="13" font-weight="700" fill="${c}">${l}</text>`;
+  function draw(m){
+    let h=`<defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--ink)"/></marker></defs>
+    <circle cx="${O[0]}" cy="${O[1]}" r="4" fill="var(--ink)"/>
+    <text x="545" y="40" font-size="13" fill="var(--muted)">money・deposit</text><circle cx="530" cy="36" r="5" fill="var(--muted)"/>
+    <text x="545" y="230" font-size="13" fill="var(--muted)">river・water</text><circle cx="530" cy="226" r="5" fill="var(--muted)"/>`;
+    if(m===0){h+=arrow(470,130,'var(--aud)','bank（兩句同一個向量）');}
+    else{h+=arrow(470,60,'var(--txt)','bank（句 1：存錢）',-6)+arrow(470,205,'var(--img)','bank（句 2：河岸）',14);}
+    $('#bankSvg').innerHTML=h;
+    $('#bankNote').innerHTML=m===0?'句 1「I went to the bank to deposit money.」與句 2「The bank of the river was high.」中的 bank 得到<b>完全相同</b>的向量 —— 一詞一向量，處理不了同詞異義。':'語境型模型依上下文給出<b>不同</b>向量：句 1 的 bank 靠近 money，句 2 的 bank 靠近 river。';
+  }
+  tabset('#bankTabs',['Word2Vec／GloVe（非語境型）','ELMo／BERT（語境型）'],draw);
+})();
+
+(function(){
+  const V=['dog','cat','fish'];
+  function upd(){
+    const ws=($('#bowIn').value||'').toLowerCase().split(/\s+/).filter(Boolean);
+    const v=V.map(t=>ws.filter(w=>w===t).length);const oov=ws.filter(w=>!V.includes(w));
+    $('#bowOut').textContent=`詞彙表 ["dog","cat","fish"]\n向量 = [${v.join(',')}]`+(oov.length?`\n（${[...new Set(oov)].join('、')} 不在詞彙表，被忽略）`:'')+'\nOne-hot：dog=[1,0,0]　cat=[0,1,0]　fish=[0,0,1]（任兩詞正交，無語意關聯）';
+  }
+  $('#bowIn').addEventListener('input',upd);
+  $$('[data-bow]').forEach(b=>b.onclick=()=>{$('#bowIn').value=b.dataset.bow;upd();});
+  upd();
+})();
+
+(function(){
+  const ids=['tfN','tfDf','tfC','tfL'];let last='',prevIdf=null;
+  function upd(){
+    const N=+$('#tfN').value,df=Math.min(+$('#tfDf').value,N),c=+$('#tfC').value,L=+$('#tfL').value;
+    ids.forEach(id=>$('#'+id+'o').textContent=$('#'+id).value);
+    const tf=Math.min(c,L)/L,idf=Math.log10(N/df),v=tf*idf;
+    $('#kTf').textContent=tf.toFixed(3);$('#kIdf').textContent=idf.toFixed(2);$('#kTfidf').textContent=v.toFixed(3);
+    if(last==='tfL'||last==='tfC')$('#tfNote').innerHTML=`IDF 仍是 <b>${idf.toFixed(2)}</b>：單篇長度與次數只動到 TF。`;
+    else if(last)$('#tfNote').textContent='IDF 只看「該詞出現在幾份文件」。';
+    prevIdf=idf;
+  }
+  ids.forEach(id=>$('#'+id).addEventListener('input',()=>{last=id;upd();}));
+  $('#tfEx').onclick=()=>{$('#tfN').value=1000;$('#tfDf').value=10;$('#tfC').value=3;$('#tfL').value=100;last='';upd();$('#tfNote').textContent='TF = 0.03、IDF = 2、tf-idf = 0.06，與講義一致。';};
+  upd();
+})();
+
+(function(){
+  const S=['I','love','machine','learning'];
+  const T=['The','cat','that','was','chased','by','the','dog','ran','away'];const tgt=8;
+  tabset('#ngTabs',['Unigram (N=1)','Bi-gram (N=2)','Tri-gram (N=3)'],k=>{
+    const N=k+1,g=[];for(let i=0;i+N<=S.length;i++)g.push('('+S.slice(i,i+N).join(',')+')');
+    $('#ngList').textContent=`S = [${S.join(', ')}]\n${['Unigrams','Bi-grams','Tri-grams'][k]} = {${g.join(', ')}}`;
+    $('#ngSent').innerHTML=T.map((w,i)=>{let cls='',sub='';if(i===tgt){cls='hl';sub='預測？';}else if(i<tgt&&i>=tgt-(N-1)){cls='hl';sub='看得到';}else if(i===1){sub='看不到';cls='gone';}else if(i<tgt){cls='gone';}
+      return `<span class="tok ${cls}" style="--c:${i===tgt?'var(--aud)':'var(--img)'}">${i===tgt?'ran':w}<small>${sub||'&nbsp;'}</small></span>`;}).join('');
+    $('#ngNote').innerHTML=N===1?'Unigram 完全不看前文 —— 「假設詞間互相獨立」描述的是它，<b>不是</b> N-gram 的限制。':`視窗只有前 ${N-1} 個詞（${T.slice(tgt-(N-1),tgt).join(' ')}）。真正決定「誰 ran」的 <b>cat</b> 在視窗外，模型完全看不到 —— 片段合理、整體不連貫。`;
+  });
+})();
+
+(function(){
+  const W=['a','cute','cat','sat','on','the','mat'],c=3;let mode=0,w=2;
+  function draw(){
+    const xs=W.map((_,i)=>50+i*90);let h='';
+    W.forEach((t,i)=>{const ctx=Math.abs(i-c)<=w&&i!==c,ce=i===c;
+      h+=`<rect x="${xs[i]-36}" y="20" width="72" height="34" rx="8" fill="${ce?'var(--aud)':ctx?'color-mix(in srgb,var(--img) 25%,var(--surface))':'var(--surface2)'}" stroke="${ctx?'var(--img)':'var(--line)'}"/><text x="${xs[i]}" y="42" text-anchor="middle" font-size="14" fill="${ce?'#fff':'var(--ink)'}">${t}</text>`;
+      if(ctx){h+=mode===0?`<line x1="${xs[i]}" y1="56" x2="${xs[c]}" y2="140" stroke="var(--img)" stroke-width="2" class="flow"/>`:`<line x1="${xs[c]}" y1="140" x2="${xs[i]}" y2="56" stroke="var(--aud)" stroke-width="2" class="flow"/>`;}
+    });
+    h+=`<rect x="${xs[c]-90}" y="140" width="180" height="44" rx="10" fill="var(--ink)"/><text x="${xs[c]}" y="167" text-anchor="middle" font-size="14" fill="var(--bg)" font-weight="700">${mode===0?'上下文 → 預測「sat」':'「sat」→ 預測每個周圍詞'}</text>`;
+    $('#w2vSvg').innerHTML=h;
+    const per=mode===0?1:2*w;
+    $('#w2vS').textContent=(3*per)+' 組';$('#w2vSp').textContent=mode===0?'快':'慢';$('#w2vQ').textContent=mode===0?'較差':'較佳';
+    $('#w2vQ').style.color=mode===0?'var(--bad)':'var(--ok)';
+    $('#w2vNote').innerHTML=mode===0?'CBOW 用上下文預測中心詞：一次出現只產生<b>一組</b>樣本，所以快；但上下文取平均後訊號被模糊化，低頻詞較差。':`Skip-gram 用中心詞預測周圍詞：每次出現產生 <b>${per}</b> 組樣本（視窗 ±${w}，示意），長尾詞累積更多梯度更新，品質較佳，但訓練慢。`;
+  }
+  tabset('#w2vTabs',['CBOW','Skip-gram'],k=>{mode=k;draw();});
+  $('#winBtn').onclick=()=>{w=w%3+1;$('#winBtn').textContent='±'+w;draw();};
+})();
+
+(function(){
+  function upd(){
+    const w=($('#ftIn').value||'').toLowerCase().replace(/[^a-z]/g,'').slice(0,24);
+    if(!w){$('#ftOut').innerHTML='<span class="hint">請輸入英文單字</span>';return;}
+    const s='<'+w+'>',g=[];for(let i=0;i+3<=s.length;i++)g.push(s.slice(i,i+3));
+    $('#ftOut').innerHTML=g.map((x,i)=>`<span class="tok hl" style="--c:var(--img);animation:pop .3s ${i*.04}s both">${x.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</span>`).join('')+`<span class="tok" style="border-style:dashed">${s.replace(/</g,'&lt;').replace(/>/g,'&gt;')}<small>整詞</small></span>`;
+  }
+  $('#ftIn').addEventListener('input',upd);
+  $$('[data-ft]').forEach(b=>b.onclick=()=>{$('#ftIn').value=b.dataset.ft;upd();});
+  upd();
+})();
+
+flips('#ctxCards',[
+  ['ELMo','BiLSTM 語言模型','雙向（兩個單向拼接）。底層是 BiLSTM，不是 Transformer；可外掛進既有模型增強語意表示。'],
+  ['BERT','Transformer Encoder','真正雙向，預訓練任務 MLM ＋ NSP。擅長理解類任務：分類、問答、NER。'],
+  ['GPT','Transformer Decoder','單向（自迴歸）預測下一個 token。擅長生成類任務：對話、摘要、創作。']
+]);
+
+/* ================= 18.4 ================= */
+(function(){
+  const n=10,mk=id=>{$(id).innerHTML=Array.from({length:n},(_,i)=>`<span class="tok" style="--c:var(--aud)">t${i+1}</span>`).join('');};
+  mk('#raceR');mk('#raceT');let tm=null;
+  $('#raceBtn').onclick=()=>{
+    clearInterval(tm);let s=0;const R=$$('#raceR .tok'),T=$$('#raceT .tok');R.concat(T).forEach(x=>x.classList.remove('hl'));
+    const tick=()=>{s++;R.forEach((x,i)=>x.classList.toggle('hl',i<s));T.forEach(x=>x.classList.add('hl'));$('#raceInfo').textContent=`時間步：${s}　RNN 完成 ${Math.min(s,n)}／${n}　Transformer 完成 ${n}／${n}`;if(s>=n)clearInterval(tm);};
+    if(reduce){s=n-1;tick();}else{tick();tm=setInterval(tick,320);}
+  };
+})();
+
+(function(){
+  const X=[
+    ['① Self-Attention','每個 token 以自身 Query 與所有 token 的 Key 算相似度 → Softmax 正規化為權重 → 對 Value 加權求和。<br>★ 任意兩個位置不論多遠，只隔「一次運算」。<br><span class="hint">範例："The cat that was chased by the dog ran away." 中間隔了一整個子句，仍能正確建立 cat ↔ ran 的關聯。</span>'],
+    ['② Encoder-Decoder','Encoder：輸入序列 → 抽象語意向量（contextual representation）。<br>Decoder：語意向量 → 逐步產生目標序列。<br>★ 適用「輸入一段語言、輸出另一段語言」：機器翻譯、摘要、文字改寫。'],
+    ['③ 全平行架構','不必像 RNN 逐時間步推進，一次處理整個序列。<br>★ 訓練速度大增、適合 GPU/TPU、可擴展至 GPT-3、PaLM 等超大規模。']
+  ];
+  tabset('#trTabs',X.map(x=>x[0]),i=>{$('#trBody').innerHTML=`<p style="margin:0">${X[i][1]}</p>`;});
+})();
+
+(function(){
+  const T=['The','cat','that','was','chased','by','the','dog','ran','away'];
+  const link={'1-8':2.6,'8-1':2.6,'4-7':2.2,'7-4':2.2,'2-1':1.8,'1-2':1.2,'4-1':1.6,'9-8':1.6,'8-9':1.0};
+  let q=8,rnn=false;
+  function weights(i){
+    if(rnn){const s=T.map((_,j)=>j<=i?Math.pow(.55,i-j):0);const z=s.reduce((a,b)=>a+b,0);return s.map(v=>v/z);}
+    const s=T.map((_,j)=>Math.exp((j===i?1:0)+(link[i+'-'+j]||0)+.3/(1+Math.abs(i-j))));const z=s.reduce((a,b)=>a+b,0);return s.map(v=>v/z);
+  }
+  function draw(){
+    const w=weights(q),mx=Math.max(...w);
+    $('#attSent').innerHTML=T.map((t,j)=>`<button class="tok" data-j="${j}" style="background:color-mix(in srgb,var(--aud) ${Math.round(w[j]/mx*85)}%,var(--surface));border-color:${j===q?'var(--ink)':'var(--line)'};color:${w[j]/mx>.6?'#fff':'var(--ink)'}">${t}<small style="color:inherit">${w[j].toFixed(2)}</small></button>`).join('');
+    $$('#attSent .tok').forEach(b=>b.onclick=()=>{q=+b.dataset.j;draw();});
+    $('#attNote').innerHTML=(rnn?'RNN 只能看左邊、且越遠越淡。':'自注意力一次看全句。')+(q===8?`「ran」給 cat 的權重：<b>${w[1].toFixed(2)}</b>`:`目前 Query：<b>${T[q]}</b>`);
+  }
+  $('#attMode').onclick=()=>{rnn=!rnn;$('#attMode').setAttribute('aria-pressed',rnn);$('#attMode').textContent=rnn?'回到自注意力':'改用 RNN 視角';draw();};
+  draw();
+})();
+
+matcher($('#attMatch'),$('#attFb'),[
+  {k:'r',c:'var(--txt)',html:'透過隱藏狀態遞迴傳遞，逐步累積上下文'},
+  {k:'c',c:'var(--img)',html:'對輸入做局部運算，捕捉相鄰詞關係'},
+  {k:'s',c:'var(--sen)',html:'將整個序列壓縮為固定長度表示'},
+  {k:'a',c:'var(--aud)',html:'每個 token 與其他所有 token 建立關聯並依重要性分配權重'}
+],[
+  {k:'s',html:'傳統 Seq2Seq 的資訊瓶頸',ok:'這正是注意力要突破的東西。'},
+  {k:'a',html:'✅ Self-Attention',ok:'這才是 115Q1 第 11 題的正解。'},
+  {k:'r',html:'RNN／LSTM',ok:'遞迴傳遞隱藏狀態是 RNN 家族的特徵。'},
+  {k:'c',html:'CNN<small>感受野需堆疊多層才擴大</small>',ok:'局部運算是卷積的特徵。'}
+],'四個長相都認得了。');
+
+(function(){
+  const T=['我','要','退貨','因為','商品','瑕疵'],L=[.2,.3,2.0,.4,.5,1.6];
+  const sm=(a,s)=>{const e=a.map(v=>Math.exp(v/s)),z=e.reduce((x,y)=>x+y,0);return e.map(v=>v/z);};
+  const sparsemax=z=>{const s=[...z].sort((a,b)=>b-a);let k=0,cs=0,tc=0;for(let i=0;i<s.length;i++){cs+=s[i];if(1+(i+1)*s[i]>cs){k=i+1;tc=cs;}}const tau=(tc-1)/k;return z.map(v=>Math.max(0,v-tau));};
+  const gauss=()=>{let u=0,v=0;while(!u)u=Math.random();while(!v)v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);};
+  const st=[
+    ['目前狀態（崩塌）',()=>sm(L,6),'var(--warn)','權重幾乎平均，模型抓不到「退貨」「瑕疵」這兩個關鍵詞。'],
+    ['✅ 施加稀疏化約束',()=>sparsemax(L),'var(--ok)','強制模型集中關注少數關鍵位置：權重集中到「退貨」「瑕疵」，其他歸零。'],
+    ['✗ 提高 Q-K 點積的縮放常數',()=>sm(L,12),'var(--bad)','縮放常數變大 → 點積被除得更小 → 分布<b>更平滑</b>，方向相反。'],
+    ['✗ Softmax 前加高斯雜訊',()=>sm(L.map(v=>v+gauss()*.8),6),'var(--bad)','雜訊與聚焦無關，只是讓分布亂跳（每按一次都不同）。'],
+    ['✗ 用 ReLU 取代 Softmax',()=>L.map(v=>Math.max(0,v)),'var(--bad)','權重總和不再等於 1，<b>破壞了正規化特性</b>。']
+  ];
+  st.forEach((x,i)=>{const b=document.createElement('button');b.innerHTML=x[0];b.setAttribute('aria-pressed','false');b.onclick=()=>go(i,b);$('#acStrat').appendChild(b);});
+  function go(i,b){
+    $$('#acStrat button').forEach((y,j)=>y.setAttribute('aria-pressed',j===i));
+    const w=st[i][1](),sum=w.reduce((a,b)=>a+b,0),mx=Math.max(...w);
+    $('#acBars').innerHTML=T.map((t,j)=>`<div class="bar${w[j]===mx?' win':''}"><span>${t}</span><div class="track"><div class="fill" style="background:${st[i][2]}"></div></div><span class="num">${w[j].toFixed(2)}</span></div>`).join('');
+    setTimeout(()=>$$('#acBars .fill').forEach((f,j)=>f.style.width=Math.min(100,w[j]*100)+'%'),30);
+    $('#acMax').textContent=mx.toFixed(2);$('#acSum').textContent=sum.toFixed(2);$('#acSum').style.color=Math.abs(sum-1)>.01?'var(--bad)':'var(--ink)';
+    $('#acWhy').innerHTML=st[i][3];
+  }
+  go(0);
+})();
+
+matcher($('#s2sMatch'),$('#s2sFb'),[
+  {k:'s',c:'var(--aud)',html:'輸入文字 → 輸出語意等價的另一段文字<small>翻譯、摘要</small>'},
+  {k:'t',c:'var(--img)',html:'輸入序列 → 輸出未來數值序列<small>銷售預測</small>'},
+  {k:'n',c:'var(--txt)',html:'輸入文字 → 逐詞標籤<small>人名／地名／組織</small>'},
+  {k:'m',c:'var(--sen)',html:'輸入文字 → 關鍵字頻率統計與視覺化'}
+],[
+  {k:'n',html:'序列標註（NER）'},
+  {k:'m',html:'文字探勘分析'},
+  {k:'s',html:'✅ Seq2Seq',ok:'輸入一段語言、輸出另一段語言，正是 Seq2Seq。'},
+  {k:'t',html:'時間序列迴歸'}
+],'114Q2 第 16 題的正解是第一組。');
+
+/* ================= 18.5 ================= */
+(function(){
+  const T=['央行','宣布','調升','基準','利率','以','抑制','通膨'];let mode=0,m=4;
+  function draw(){
+    $('#mlmSent').innerHTML=T.map((t,j)=>{
+      if(mode===0){const c=j===m?'var(--aud)':j<m?'var(--txt)':'var(--img)';return `<span class="tok hl" style="--c:${c}">${j===m?'[MASK]':t}<small>${j===m?'還原？':j<m?'左側上下文':'右側上下文'}</small></span>`;}
+      const c=j===m?'var(--aud)':'var(--txt)';return j>m?`<span class="tok gone">${t}<small>還看不到</small></span>`:`<span class="tok hl" style="--c:${c}">${j===m?'？':t}<small>${j===m?'預測下一個':'已生成'}</small></span>`;
+    }).join('');
+    $('#mlmNote').innerHTML=mode===0?`BERT 同時用左邊「${T.slice(0,m).join(' ')||'—'}」與右邊「${T.slice(m+1).join(' ')||'—'}」還原「${T[m]}」→ 雙向語境表示。`:`GPT 只能用左邊「${T.slice(0,m).join(' ')||'—'}」預測下一個 token → 自迴歸、單向。`;
+  }
+  tabset('#mlmTabs',['BERT：MLM（雙向）','GPT：自迴歸（單向）'],k=>{mode=k;draw();});
+  $('#mlmBtn').onclick=()=>{let n;do{n=1+Math.floor(Math.random()*(T.length-2));}while(n===m);m=n;draw();};
+})();
+
+(function(){
+  const J=[
+    ['隨機遮蔽約 15% 的 token，同時利用左右兩側上下文還原原始內容',1,'✓ 正解。這是 BERT 取得雙向語境表示的關鍵。'],
+    ['自左而右逐 token 生成',0,'✗ 這是自迴歸語言模型（GPT）。'],
+    ['以對抗訓練縮小真實句與生成句的差距',0,'✗ 這是 GAN 類方法。'],
+    ['用 Decoder 重建整句',0,'✗ 這是 Encoder-Decoder 架構；BERT 只用 Encoder。'],
+    ['遮蔽低頻詞以縮小詞彙表、節省記憶體',0,'✗ 與節省記憶體無關，遮蔽是為了建構自監督任務。']
+  ];
+  shuffle(J).forEach(x=>{const b=document.createElement('button');b.textContent=x[0];b.setAttribute('aria-pressed','false');
+    b.onclick=()=>{$$('#mlmJudge button').forEach(y=>y.setAttribute('aria-pressed',y===b));const o=$('#mlmJudgeOut');o.innerHTML=x[2];o.style.color=x[1]?'var(--ok)':'var(--bad)';};$('#mlmJudge').appendChild(b);});
+})();
+
+(function(){
+  const M=[
+    {n:'傳統微調',k:[['原模型權重','會改變'],['可訓練參數（示意）','100%'],['主要解決','任務適配；成本高、易災難性遺忘']]},
+    {n:'LoRA',k:[['原模型權重','凍結'],['可訓練參數','千分之一以下'],['主要解決','GPU 記憶體不足']]},
+    {n:'Prompt Tuning',k:[['原模型權重','凍結'],['可訓練參數（示意）','只有軟提示向量'],['主要解決','省訓練與模型儲存成本']]}
+  ];
+  function draw(m){
+    let h='';const ys=[30,75,120,165];
+
+    if(m===2){for(let i=0;i<4;i++)h+=`<rect x="${20+i*22}" y="${100}" width="18" height="18" rx="4" fill="var(--img)"><animate attributeName="opacity" values="1;.5;1" dur="1.4s" begin="${i*.2}s" repeatCount="indefinite"/></rect>`;h+=`<text x="64" y="140" text-anchor="middle" font-size="12" fill="var(--img)" font-weight="700">軟提示</text>`;}
+    h+=`<rect x="20" y="${m===2?150:100}" width="${m===2?84:84}" height="18" rx="4" fill="var(--surface2)" stroke="var(--line)"/><text x="62" y="${m===2?190:140}" text-anchor="middle" font-size="12" fill="var(--muted)">文字輸入</text>`;
+    h+=`<line x1="110" y1="110" x2="180" y2="110" stroke="var(--muted)" stroke-width="2" class="flow"/>`;
+    ys.forEach((y,i)=>{const upd=m===0;h+=`<rect x="180" y="${y}" width="230" height="34" rx="8" fill="${upd?'var(--aud)':'var(--surface2)'}" stroke="${upd?'var(--aud)':'var(--line)'}"/><text x="295" y="${y+22}" text-anchor="middle" font-size="13" font-weight="700" fill="${upd?'#fff':'var(--muted)'}">Transformer 第 ${i+1} 層 ${upd?'（更新）':'🔒 凍結'}</text>`;
+      if(m===1)h+=`<line x1="410" y1="${y+17}" x2="440" y2="${y+17}" stroke="var(--img)" stroke-width="2"/><rect x="440" y="${y+4}" width="70" height="26" rx="6" fill="var(--img)"><animate attributeName="opacity" values="1;.55;1" dur="1.4s" begin="${i*.2}s" repeatCount="indefinite"/></rect><text x="475" y="${y+22}" text-anchor="middle" font-size="12" fill="#fff" font-weight="700">低秩 A·B</text>`;});
+    h+=`<line x1="410" y1="110" x2="${m===1?530:560}" y2="110" stroke="var(--muted)" stroke-width="2" class="flow" opacity="${m===1?0:1}"/><rect x="560" y="92" width="70" height="36" rx="8" fill="var(--ink)"/><text x="595" y="115" text-anchor="middle" font-size="13" fill="var(--bg)">輸出</text>`;
+    $('#ftSvg').innerHTML=h;
+    $('#ftKpi').innerHTML=M[m].k.map(([a,b])=>`<div class="kpi"><span>${a}</span><b style="font-size:18px">${b}</b></div>`).join('');
+  }
+  tabset('#ftTabs',M.map(x=>x.n),draw);
+})();
+
+stratMeter('cf',[
+  ['凍結大部分參數，只訓練 LoRA 等少量新增模組','✓ 正解',90,'var(--ok)','遺忘源自微調大幅改動了承載通用知識的預訓練權重；把更新限制在低秩子空間就保得住。'],
+  ['提高學習率、縮短訓練步數','✗ 反而更糟',20,'var(--bad)','學習率越高，權重偏移越劇烈，遺忘加重。'],
+  ['只用新領域語料進行多輪訓練','✗ 正是病因',25,'var(--bad)','這就是造成災難性遺忘的典型作法。'],
+  ['加大 Batch Size','✗ 無實質作用',45,'var(--warn)','只讓梯度更平穩，對保留舊知識沒有實質作用。']
+],[1,2,0,3],'通用知識保留');
+
+(function(){
+  const S=[
+    ['Zero-shot','0 個示例。完全靠既有語言理解推理。','請判斷這封信屬於下列哪一類別：A. 帳務 B. 技術 C. 其他\n信件：「我的發票金額有誤……」'],
+    ['Few-shot','少量（如 5 條）。在 prompt 中附上已標註範例，模型據此類推。','「退貨好麻煩」→ 負面\n「出貨超快」→ 正面\n……（共 5 條已標註範例）\n「包裝破損」→ ?'],
+    ['Prompt-based Learning','把任務改寫成填空或問答格式。','這條評論是 [情感]。\n評論：「客服回覆很迅速」']
+  ];
+  tabset('#shotTabs',S.map(s=>s[0]),i=>{$('#shotBody').innerHTML=`<p style="margin:0 0 6px">${S[i][1]}</p><div class="formula" style="margin:0">${S[i][2]}</div><p class="hint" style="margin:6px 0 0">（提示內容為示意）</p>`;});
+})();
+
+(function(){
+  let bad=false;
+  const G=[
+    '<b>查詢：</b>「本公司 2024 年的請假規定改了什麼？」',
+    '<b>向量檢索：</b>把查詢轉成向量，到向量庫找最接近的文件區塊。<div class="hint">這是<b>檢索階段</b>：最關鍵的挑戰在這裡。</div>',
+    null,
+    null,
+    null
+  ];
+  const ok=['<b>取回：</b>📄《2024 請假辦法修訂公告》第 3 條<div class="hint">與查詢意圖真正相關。</div>','<b>併入 Prompt：</b>「根據以下文件回答……」＋修訂公告內容','<b>生成：</b>「2024 年起特休可分半日請休……（引用：修訂公告第 3 條）」<div class="hint">外部知識讓答案不過時、也較不會幻覺。</div>'];
+  const ng=['<b>取回：</b>📄《2019 請假辦法》、📄《請假系統操作手冊》<div class="hint" style="color:var(--bad)">語意很相似（都在講請假），但與「2024 改了什麼」<b>無實質關聯</b>。</div>','<b>併入 Prompt：</b>過時與無關的內容被塞進上下文……','<b>生成：</b><span style="color:var(--bad)">「特休須提前 30 天申請……」</span><div class="hint">不相關文件直接汙染生成品質，引發幻覺。</div>'];
+  const p=pipeline('rag',[['查詢','使用者問題'],['向量檢索','檢索階段'],['取回文件','相關區塊'],['併入 Prompt','組合上下文'],['生成答案','生成階段']],i=>i<2?G[i]:(bad?ng:ok)[i-2]);
+  $('#ragBad').onclick=()=>{bad=!bad;$('#ragBad').setAttribute('aria-pressed',bad);$('#ragBad').textContent=bad?'恢復正常檢索':'讓檢索取回「相似但不相關」的文件';p.redraw();};
+})();
+
+(function(){
+  const S=[
+    ['原始狀態',80,20,'成本集中在輸入 tokens（System Prompt 與對話歷史每輪都重送）。'],
+    ['✅ Prompt Caching ＋ 對話歷史摘要壓縮',35,20,'System Prompt 改用 Prompt Caching／靜態前綴重用，對話歷史摘要壓縮 → <b>輸入端</b>大幅下降。'],
+    ['✗ 壓縮 max_tokens',80,12,'只作用在輸出端，撼動不了輸入成本。'],
+    ['✗ 要求模型「回答簡短」',80,10,'同樣只縮短輸出，輸入端的大頭沒動。']
+  ];
+  S.forEach((s,i)=>{const b=document.createElement('button');b.innerHTML=s[0];b.setAttribute('aria-pressed','false');b.onclick=()=>go(i);$('#costStrat').appendChild(b);});
+  function go(i){
+    $$('#costStrat button').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));
+    const [,a,o,w]=S[i];bars('#costBars',[['輸入 tokens',a],['輸出 tokens',o],['總成本',a+o,1]],100);$('#costWhy').innerHTML=w;
+  }
+  go(0);
+})();
+
+/* ================= 18.6 ================= */
+matcher($('#appMatch'),$('#appFb'),[
+  {k:'c',c:'var(--txt)',html:'垃圾郵件偵測、客服請求自動分派'},
+  {k:'s',c:'var(--img)',html:'社群輿情監控、顧客滿意度調查'},
+  {k:'d',c:'var(--aud)',html:'訂票、訂位、查天氣'},
+  {k:'g',c:'var(--sen)',html:'新聞摘要、廣告標題、自動報表'},
+  {k:'t',c:'var(--txt)',html:'商業文件、多語客服、學術交流'},
+  {k:'n',c:'var(--img)',html:'法律文書標註案件／法院／當事人'}
+],[
+  {k:'n',html:'NER／關係抽取<small>非結構化 → 結構化</small>',ok:'挑戰：標註一致性、領域詞彙、知識圖譜建構。'},
+  {k:'g',html:'文字生成與摘要<small>文本 → 濃縮或新生文本</small>',ok:'挑戰：語意一致性、邏輯性、事實性。'},
+  {k:'c',html:'文字分類<small>文本 → 預定義類別</small>',ok:'挑戰：語言多樣性、類別界線模糊。'},
+  {k:'t',html:'機器翻譯<small>語言 A → 語言 B</small>',ok:'挑戰：語法差異、專業術語。'},
+  {k:'d',html:'對話系統<small>多輪互動</small>',ok:'這是任務導向對話。'},
+  {k:'s',html:'情感分析<small>文本 → 情緒極性</small>',ok:'挑戰：反諷、方言俚語、跨文化書寫風格。'}
+],'六大應用都對上了。');
+
+stratMeter('lr',[
+  ['反向翻譯（Back-Translation）生成偽平行語料','✓ 正解',85,'var(--ok)','以反向模型將目標語句回譯，自動產生偽平行語料（Pseudo-Parallel Corpus），不需新增真實語料。'],
+  ['擴增 Transformer 隱藏層維度至 1024','✗ 更易過擬合',25,'var(--bad)','參數更多，小語料更容易過擬合。'],
+  ['凍結 mBERT 所有 Transformer 層','✗ 喪失適應力',40,'var(--bad)','全部凍結就喪失了微調能力。']
+],[1,0,2],'泛化能力');
+
+(function(){
+  function upd(){
+    const l=+$('#mtW').value/100;$('#mtWo').textContent=l.toFixed(2);
+    const ner=60+30*Math.sqrt(l),cls=90-35*l*l;
+    bars('#mtBars',[['NER 準確率',ner],['分類準確率',cls]],100,v=>v.toFixed(0)+'%');
+    $('#mtNote').innerHTML=l>.7?'NER 的梯度主導共用表徵 → <b>NER 上升、分類下降</b>：任務間競爭梯度。':l<.3?'反過來，分類主導，NER 被犧牲。':'權重較平衡，兩個任務都維持不錯的表現。';
+  }
+  $('#mtW').addEventListener('input',upd);upd();
+})();
+
+/* ================= 18.7 ================= */
+(function(){
+  const R=[
+    ['資料層','var(--sen)','隱私、標註品質與偏見、授權與版權',[['資料隱私','客服對話紀錄含真實姓名、住址、帳號被直接丟進訓練集','去識別化／匿名化；遵循個資法與 GDPR'],['標註與品質','NER 中人名與地名標註不一致；語料只來自特定語言族群','標註審查與一致性驗證、多重標註、資料增強'],['授權與版權','爬蟲抓取未授權資料；生成摘要無意中引用受著作權保護段落','<b>從源頭建立資料篩選與授權驗證機制</b>；生成內容加版權檢查與聲明']]],
+    ['模型層','var(--aud)','模型偏見、公平性評估不足',[['模型偏見','履歷分類把男性簡歷判為「管理職潛力高」','<b>WEAT</b> 分析詞向量隱含偏見；平衡訓練資料、移除性別或族群標註欄位'],['公平性評估不足','偏見存在卻沒有量化評估與修正機制','專案設計初期納入公平性指標，建立人工覆核機制']]],
+    ['應用層','var(--txt)','語意理解限制、部署維運、生成內容',[['語意理解限制','反諷「這服務真的好讚^_^」被判為正面；「很雷」被誤解為「很快」','改用語境型詞向量（BERT、GPT）；加入常識推理模組'],['部署與維運','FAQ Chatbot 上線後未再訓練、回答過時；推論太慢撐不住高並發','回饋機制＋定期監控與再訓練；容錯與資源優化；版本控制'],['生成內容','<b>模型幻覺</b>：語句通順但資訊錯誤（「法國的首都在柏林」）','事實檢查；高風險領域強制人工審核；使用前風險預告聲明']]]
+  ];
+  tabset('#riskTabs',R.map(r=>r[0]),i=>{
+    const [n,c,s,rows]=R[i];
+    $('#riskBody').innerHTML=`<div class="callout" style="border-color:${c}"><b>${n}風險：</b>${s}</div><div class="tbl-wrap"><table><tr><th>風險</th><th>情境示例／症狀</th><th>處理機制</th></tr>${rows.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('')}</table></div>`;
+  });
+})();
+
+sorter('#riskSort',[
+  {n:'資料層',c:'var(--sen)'},{n:'模型層',c:'var(--aud)'},{n:'應用層',c:'var(--txt)'}
+],[
+  {t:'客服對話紀錄含真實姓名、住址、帳號，被直接丟進訓練集',b:0,why:'資料隱私 → 去識別化／匿名化。'},
+  {t:'NER 中人名與地名標註不一致',b:0,why:'標註品質 → 標註審查與一致性驗證。'},
+  {t:'生成摘要無意中引用受著作權保護段落',b:0,why:'授權與版權屬資料層 → 從源頭建立篩選與授權驗證。'},
+  {t:'履歷分類把男性簡歷判為「管理職潛力高」',b:1,why:'模型偏見 → WEAT、平衡訓練資料。'},
+  {t:'偏見存在，卻沒有量化評估與修正機制',b:1,why:'公平性評估不足 → 初期納入公平性指標＋人工覆核。'},
+  {t:'「這服務真的好讚^_^」被判為正面',b:2,why:'語意理解限制（反諷）→ 改用語境型詞向量。'},
+  {t:'FAQ Chatbot 上線後未再訓練，回答過時',b:2,why:'部署維運 → 回饋機制與定期再訓練。'},
+  {t:'語句通順但寫出「法國的首都在柏林」',b:2,why:'生成內容（幻覺）→ 事實檢查、人工審核。'}
+],'三層風險模型可以用來拆解任何情境題。');
+
+(function(){
+  const O=[['姓名','王曉明'],['電話','0912-345-678'],['年齡','25 歲']];
+  const V=[
+    {n:'原始資料',r:O.map(x=>x[1]),rev:'—',use:'含可直接識別個人的資料，不可直接進訓練集。',c:'var(--warn)'},
+    {n:'去識別化',r:['王X明','phone_XXYYZZ','25 歲'],rev:'<b style="color:var(--warn)">可能可逆</b>：持有對應代碼表就能還原。',use:'需部分保留可識別性（研究、系統測試）。方法：代碼替換、抽象化、遮罩。',c:'var(--warn)'},
+    {n:'匿名化',r:['（已刪除）','（已刪除）','隨機年齡值'],rev:'<b style="color:var(--ok)">不可逆</b>：徹底移除，無法再與特定個體連結。',use:'開放資料、法規要求無可辨識性。方法：刪除欄位、隨機化、聚合（「某區域共 500 人為 30-40 歲」）。',c:'var(--ok)'}
+  ];
+  tabset('#deTabs',V.map(v=>v.n),i=>{
+    const v=V[i];
+    $('#deOut').innerHTML=`<div class="panel flat" style="margin:0">${O.map((o,j)=>`<div class="row" style="justify-content:space-between;border-bottom:1px solid var(--line);padding:6px 0"><span class="hint">${o[0]}</span><b style="color:${i?v.c:'var(--ink)'}">${v.r[j]}</b></div>`).join('')}</div><div><p style="margin:0 0 8px">${v.rev}</p><p class="hint" style="margin:0">${v.use}</p></div>`;
+  });
+})();
+
+stratMeter('cp',[
+  ['建立訓練資料篩選與授權驗證機制，排除未授權或高風險來源','✓ 事前預防',90,'var(--ok)','侵權風險的源頭在訓練資料，從源頭堵住才阻止得了侵權發生。'],
+  ['生成後做語意相似度比對','△ 事後偵測',40,'var(--warn)','只能在侵權發生後偵測，阻止不了。'],
+  ['在輸出端加上浮水印','△ 事後追溯',35,'var(--warn)','可以追溯來源，但無法預防侵權。'],
+  ['訓練時採用差分隱私','✗ 效果有限',25,'var(--bad)','主要防記憶特定樣本與隱私外洩，對著作權預防效果有限。']
+],[2,0,3,1],'侵權預防力');
+
+/* ================= 18.8 ================= */
+bars('#hitBars',[['詞向量與文字表示',5,1],['Transformer 與注意力',3],['BERT 預訓練',2],['前處理',1]],5,v=>v+' 題');
+
+(function(){
+  const core=[
+    ['114Q2-1','情感分析目的','電商分析社群與評論以掌握滿意度','<b>判斷文本所表達的情感傾向</b>（極性）；誘答放語體分析、翻譯、摘要'],
+    ['114Q2-2','Transformer 的優勢來源','多語客服為何能改善長篇金融文件翻譯','<b>自注意力捕捉長距離語境依賴</b>；卷積、強化學習、資料增強都不是主因'],
+    ['114Q2-3','BERT 預訓練','MLM 的主要訓練策略','<b>隨機遮蔽 ＋ 依雙向上下文預測被遮詞</b>'],
+    ['114Q2-4','GloVe vs Word2Vec','兩者主要差異','<b>Word2Vec 基於預測、GloVe 基於共現統計</b>；誘答把兩者對調'],
+    ['114Q2-5','TF-IDF 限制','長文本為何反映不出關鍵詞重要性','<b>長文詞頻偏高，常見詞權重被過度放大</b>；IDF 不受單篇長度影響'],
+    ['114Q2-6','N-gram 限制','片段合理但整體語意不連貫','<b>僅依固定長度前序詞估機率，難捕捉長距離依賴</b>'],
+    ['114Q2-16','Seq2Seq 適用情境','哪種情境最適合 Seq2Seq','<b>輸入文字 → 語意等價的另一段文字</b>（翻譯、摘要）'],
+    ['114Q2-18','注意力分布過於平均','Attention Collapse 怎麼改善','<b>對注意力權重施加稀疏化約束</b>；提高縮放常數是反效果'],
+    ['114Q2-19','低資源語言過擬合','不新增真實語料如何提升泛化','<b>反向翻譯生成偽平行語料</b>'],
+    ['114Q2-43','生成式 vs 鑑別式路徑','VAE＋分類器 對比 BERT Classifier 怎麼公平比較','<b>低資源情境下逐步降低標註比例，比較 F1-score</b>'],
+    ['114Q2-47','多任務共用表徵','NER 上升、分類下降的原因','<b>損失函數未做權重平衡，任務間競爭梯度</b>'],
+    ['114Q2-49','情感分析偏誤（選不正確）','跨語言／族群判斷不一致','<b>「未啟用詞嵌入正規化」為不正確選項</b>；真因是語料文化偏向與來源不平衡'],
+    ['115Q1-1','POS Tagging 目的','法律文件資訊擷取前為何做 POS','<b>為每個詞標記語法類別</b>；誘答是「切分為基本詞彙單位」（那是斷詞）'],
+    ['115Q1-3','CBOW vs Skip-gram','數十億 token ＋ 長尾詞怎麼選','<b>CBOW 快但低頻詞差；Skip-gram 慢但長尾詞向量品質佳</b>'],
+    ['115Q1-4','MLM 核心目標','金融語境 BERT 預訓練','同 114Q2-3：<b>隨機遮蔽 ＋ 雙向上下文還原</b>'],
+    ['115Q1-5','One-hot → Word2Vec','Word2Vec 根本解決了什麼','<b>低維稠密向量保留語意結構</b>，同時解決維度爆炸與語意缺失'],
+    ['115Q1-11','Self-Attention 核心功能','為何能建模長距離依賴','<b>每個 token 與所有 token 建立關聯並依重要性分配權重</b>']
+  ];
+  const edge=[
+    ['114Q2-17','RAG 檢索階段挑戰','','<b>避免語意相似但與查詢意圖無實質關聯的檢索結果</b>'],
+    ['114Q2-25','生成內容著作權','','<b>建立訓練資料篩選與授權驗證機制</b>（源頭預防 > 事後追溯）'],
+    ['115Q1-2','LoRA 的優勢','','<b>凍結原權重，各層注入低秩可訓練矩陣</b>，大幅降低記憶體需求'],
+    ['115Q1-13','Prompt Tuning vs Fine-Tuning','','<b>微調更新模型參數；提示微調調整輸入表示</b>'],
+    ['115Q1-14','災難性遺忘','','<b>凍結大部分參數，僅訓練 LoRA 等少量新增模組</b>'],
+    ['115Q1-16','Agent 幻覺','','<b>System Prompt 須規定即時性問題先查證再回答</b>'],
+    ['115Q1-21','RAG token 成本','','<b>Prompt Caching ＋ 對話歷史摘要壓縮</b>（成本在輸入端）'],
+    ['115Q1-27','高風險應用治理','','<b>Human-in-the-Loop</b>，最終決策責任歸人類']
+  ];
+  tabset('#exTabs',['全部','核心 NLP 題','邊界題（與 L21102／L21103／L23 重疊）'],k=>{$('#examList').innerHTML='';examList('#examList',k===0?core.concat(edge):k===1?core:edge);});
+})();
+
+/* ================= 18.9 ================= */
+traps('l21101-traps',[
+  ['NLU 是理解、NLG 是生成，NLP 是兩者的總稱','意圖辨識、NER、情感分析屬 NLU；自動摘要、回應生成屬 NLG。'],
+  ['分詞是「切」，詞性標注是「標」','分詞在前、POS 在後。看到「切分為基本詞彙單位」就不是 POS 的目的。'],
+  ['停用詞移除不是永遠該做','檢索與主題建模要做，對話生成與語法分析要保留，否則語句失去自然度。'],
+  ['詞形還原輸出一定是有效單字，詞幹提取不一定','happiness → happi。'],
+  ['Word2Vec 是分布式但「非語境型」','它解決了維度爆炸與語意缺失，沒有解決同詞異義；bank 在兩個句子裡向量完全相同。'],
+  ['捕捉長距離上下文是 RNN／Transformer 的工作，不是 Word2Vec 的','這是 115Q1-5 最像對的誘答。'],
+  ['Word2Vec 基於預測、GloVe 基於全域共現統計','誘答最愛把兩者對調。'],
+  ['FastText 的招牌是子詞 n-gram 解決 OOV','不是速度，也不是語境感知。'],
+  ['CBOW 快但低頻詞差、Skip-gram 慢但長尾詞好','兩個維度各有一組，別只記一半。'],
+  ['TF-IDF 的長文本問題出在 TF 不在 IDF','IDF 只看該詞出現在幾份文件，與單篇長度無關。'],
+  ['N-gram 的限制是「固定視窗看不到遠處」，不是「假設詞間互相獨立」','後者描述的是單元語法（unigram），不是 N-gram 的條件機率設定。'],
+  ['BERT 只有 Encoder，GPT 只有 Decoder','任何說 BERT「用 Decoder 重建整句」的敘述都是錯的。'],
+  ['MLM 是雙向、自迴歸是單向','「自左而右逐 token 生成」是 GPT 不是 BERT。'],
+  ['ELMo 的底層是 BiLSTM，不是 Transformer','它是語境型詞嵌入的前 Transformer 代表。'],
+  ['Attention Collapse 要用稀疏化約束，不是提高縮放常數','提高縮放會讓分布更平滑，方向相反。'],
+  ['LoRA 凍結原權重、Fine-Tuning 更新原權重、Prompt Tuning 只改輸入表示','三者不可互換。'],
+  ['災難性遺忘不能靠「提高學習率縮短步數」解決','學習率越高權重偏移越劇烈，反而更嚴重。'],
+  ['RAG 檢索階段的核心風險是「相似但不相關」','不是向量庫選型，也不是嵌入成本。'],
+  ['去識別化可能可逆、匿名化不可逆','代碼替換屬去識別化；徹底刪除與聚合處理屬匿名化。'],
+  ['版權風險要從訓練資料源頭堵','浮水印與相似度比對只是事後追溯。'],
+  ['幻覺是「語句通順但內容不實」，不是語法錯誤','判斷關鍵在事實性而非流暢度。'],
+  ['多任務效能此消彼長的主因是損失權重失衡，不是架構不支援','Transformer／BERT 本來就能同時做分類與序列標註。']
+]);
+
+quiz([
+  ['法律事務所在做資訊擷取前先執行 POS Tagging，主要目的是？',['為每個詞彙標記其語法類別','將文本切分為基本詞彙單位','去除低語意貢獻的高頻詞','把詞彙還原為字典形'],'「切分為基本詞彙單位」是斷詞，是 POS 的前一步，不是 POS 本身。'],
+  ['在長文本上，TF-IDF 常反映不出關鍵詞的重要性，主因是？',['長文詞頻偏高，常見詞的權重被過度放大','長文本會改變 IDF 的計算結果','IDF 會隨單篇文件長度增加而下降','TF-IDF 會額外考慮語序而失真'],'問題出在 TF 的分子；IDF 只看該詞出現在幾份文件，與單篇長度無關。'],
+  ['關於 Word2Vec 與 GloVe 的主要差異，何者正確？',['Word2Vec 基於預測（局部視窗），GloVe 基於全域共現統計','Word2Vec 基於共現統計，GloVe 基於預測','兩者都是語境型詞嵌入','GloVe 以子詞 n-gram 解決 OOV'],'誘答最愛把兩者對調；子詞 n-gram 是 FastText 的招牌。'],
+  ['語料有數十億 token，關於 CBOW 與 Skip-gram 的取捨，何者正確？',['CBOW 訓練快但低頻詞較差；Skip-gram 較慢但長尾詞向量品質較佳','CBOW 較慢但低頻詞品質最佳','兩者在低頻詞的表現完全相同','Skip-gram 是用上下文預測中心詞'],'Skip-gram 每次出現產生多組樣本，長尾詞累積更多梯度更新；CBOW 一次出現只產生一組。'],
+  ['金融機構要預訓練 BERT，MLM 的核心目標是？',['隨機遮蔽部分 token，依左右兩側上下文還原原始內容','自左而右逐 token 生成','以 Decoder 重建整句','遮蔽低頻詞以縮小詞彙表、節省記憶體'],'BERT 只有 Encoder；逐 token 生成是 GPT；遮蔽是為了建構自監督任務。'],
+  ['語言模型生成的句子「片段都合理，但整體語意不連貫」，最可能的根因是？',['N-gram 僅依固定長度的前序詞估機率，難捕捉長距離依賴','模型假設所有詞彼此獨立','沒有做停用詞移除','詞彙表太大造成維度爆炸'],'「假設詞間互相獨立」描述的是 unigram，不是 N-gram 的限制。'],
+  ['Transformer 的注意力分布過於平均、無法聚焦，最合適的改善方式是？',['對注意力權重施加稀疏化約束','提高 Query-Key 點積的縮放常數','在 Softmax 前加入高斯雜訊','用 ReLU 取代 Softmax'],'提高縮放常數讓分布更平滑（反效果）；ReLU 會破壞權重總和為一的正規化特性。'],
+  ['單一 Transformer 同時做文檔分類與 NER，NER 準確率上升、分類卻下降（架構與資料皆無問題），最可能原因是？',['損失函數未做權重平衡，任務間競爭梯度','Transformer 不支援分類與序列標註並存','BERT 只能做分類任務','NER 標註資料品質不良'],'Transformer／BERT 本來就能同時做分類與序列標註，架構不是主因。'],
+  ['RAG 系統在「檢索階段」最關鍵的挑戰是？',['避免取回語意相似、但與查詢意圖無實質關聯的結果','選擇 Faiss 或 ScaNN 作為向量庫','降低嵌入模型的計算成本','確保文件能完整塞進上下文視窗'],'向量庫選型是工程問題、嵌入成本是效能問題、上下文長度是生成階段的問題。'],
+  ['企業微調 LLM 後出現災難性遺忘，最合適的做法是？',['凍結大部分參數，只訓練 LoRA 等少量新增模組','提高學習率並縮短訓練步數','只用新領域語料進行多輪訓練','加大 Batch Size'],'遺忘源自大幅改動預訓練權重；提高學習率反而偏移更劇烈。'],
+  ['為降低生成內容侵犯著作權的風險，最根本的做法是？',['建立訓練資料篩選與授權驗證機制，排除未授權來源','生成後做語意相似度比對','在輸出端加浮水印','訓練時採用差分隱私'],'相似度比對與浮水印都是事後偵測或追溯；差分隱私主要防隱私外洩。'],
+  ['某客服 LLM 的成本集中在輸入 tokens，最有效的優化方式是？',['System Prompt 改用 Prompt Caching，並對對話歷史做摘要壓縮','壓縮 max_tokens','要求模型回答簡短'],'壓縮 max_tokens 或要求簡短都只作用在輸出端，撼動不了輸入成本。']
+],'建議重新操作 18.3 的兩軸地圖與 TF-IDF 計算器、18.4 的注意力模擬器，再來一次。');
+</script>
+</body>
+</html>

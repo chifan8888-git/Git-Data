@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L21201 AI導入評估｜互動教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F5; --surface:#FFFFFF; --surface2:#F6F8FB; --ink:#18202E; --muted:#5A6475; --line:#D5DBE4;
+  --txt:#3B4CCA; --img:#0E8A7A; --aud:#B87812; --sen:#B8336A;
+  --ok:#1F8A4C; --bad:#C23B2E; --warn:#D9822B;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+    --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+  --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75}
+h1,h2,h3{font-family:var(--serif);line-height:1.3;margin:0}
+p{margin:0 0 1em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--txt);outline-offset:2px;border-radius:4px}
+svg{max-width:100%;height:auto;display:block}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1180px;margin:0 auto;gap:40px;padding:0 24px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;padding:32px 0;height:100vh;overflow:auto}
+nav.toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14.5px}
+nav.toc a span{font-variant-numeric:tabular-nums;font-size:13px;opacity:.8}
+nav.toc a.on{background:var(--surface);color:var(--ink);font-weight:700}
+.toc-title{font-family:var(--serif);font-weight:900;font-size:18px;padding:0 10px 14px}
+main{min-width:0;padding-bottom:80px}
+section{padding:56px 0 8px;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.sec-head{display:flex;gap:16px;align-items:baseline;margin-bottom:18px}
+.sec-no{font-family:var(--serif);font-weight:900;font-size:40px;color:var(--line);line-height:1}
+h2{font-size:28px;font-weight:900}
+h3{font-size:19px;margin:34px 0 10px}
+.lead{color:var(--muted);max-width:66ch}
+.prose{max-width:68ch}
+
+/* hero */
+.hero{padding:44px 0 24px}
+.hero .code{font-size:14px;color:var(--muted);margin-bottom:6px}
+.hero h1{font-size:clamp(34px,5.5vw,56px);font-weight:900;letter-spacing:.02em}
+.hero .one{font-size:18px;max-width:60ch;margin:16px 0 0;color:var(--muted)}
+.hero-fig{background:var(--surface);border-radius:20px;margin-top:28px;padding:14px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+.goal{border-left:4px solid var(--c);padding:6px 0 6px 14px;font-size:15px}
+
+/* panels */
+.panel{background:var(--surface);border-radius:16px;padding:22px;margin:16px 0}
+.panel.flat{background:var(--surface2)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font-size:15px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hint{font-size:14px;color:var(--muted)}
+.callout{border-left:4px solid var(--warn);background:var(--surface2);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;font-size:15px}
+.callout.exam{border-color:var(--txt)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:14px}
+
+/* modality chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+
+/* matcher */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.match .col{display:flex;flex-direction:column;gap:10px}
+.mitem{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15px;transition:border-color .2s,background .2s,transform .2s}
+.mitem small{display:block;color:var(--muted);font-size:13px}
+.mitem.sel{border-color:var(--ink);transform:translateX(4px)}
+.mitem.done{border-color:var(--c,var(--ok));background:var(--surface2);cursor:default}
+.mitem.wrong{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:1.8em;margin-top:12px;font-size:15px}
+.feedback.ok{color:var(--ok)} .feedback.bad{color:var(--bad)}
+
+/* timeline */
+.steps{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stage-viz{min-height:130px;display:flex;align-items:center;justify-content:center}
+.stage-viz .blk{display:inline-block;width:34px;height:34px;border-radius:6px;margin:2px;transition:all .5s}
+
+/* align toggle */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.compare>div{padding:18px}
+.compare>div+div{border-left:1px solid var(--line)}
+.compare .big{font-family:var(--serif);font-weight:900;font-size:22px;margin-bottom:6px}
+
+/* fusion */
+.meter{height:14px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:6px 0}
+.meter>i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .7s cubic-bezier(.3,.8,.3,1),background .4s}
+.flow{stroke-dasharray:6 7;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.jitter{animation:jit .25s steps(2) infinite}
+@keyframes jit{50%{transform:translate(1.5px,-1px)}}
+.fusion-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.pc{font-size:15px}
+.pc b{display:block;font-size:14px;color:var(--muted);font-weight:500}
+
+/* clip */
+.mat{display:grid;gap:4px;font-size:13px}
+.mat .cell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;transition:background .5s,color .5s}
+.mat .lab{display:flex;align-items:center;justify-content:center;font-size:22px}
+.mat .tlab{font-size:12px;text-align:center;color:var(--muted);display:flex;align-items:flex-end;justify-content:center;line-height:1.3}
+.zs-imgs{display:flex;gap:10px;flex-wrap:wrap}
+.zs-img{font-size:38px;width:72px;height:72px;border-radius:16px;border:2px solid var(--line);background:var(--surface2);display:flex;align-items:center;justify-content:center}
+.zs-img[aria-pressed="true"]{border-color:var(--img);box-shadow:0 0 0 3px color-mix(in srgb,var(--img) 25%,transparent)}
+.bar{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.bar .track{height:22px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;width:0;background:var(--txt);border-radius:6px;transition:width .8s cubic-bezier(.3,.8,.3,1)}
+.bar.win .fill{background:var(--img)}
+.bar.win{font-weight:700}
+.bar .num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.flip{perspective:900px;height:150px;border:0;background:none;padding:0;text-align:left}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flip[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:center}
+.flip .f{background:var(--surface);border:1.5px solid var(--line)}
+.flip .f strong{font-family:var(--serif);font-size:22px}
+.flip .f span{color:var(--muted);font-size:14px}
+.flip .b{background:var(--ink);color:var(--bg);transform:rotateY(180deg);font-size:15px}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.pnode{border:2px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;font-size:14px;background:var(--surface);transition:all .35s}
+.pnode b{display:block;font-size:16px}
+.pnode.on{border-color:var(--aud);background:color-mix(in srgb,var(--aud) 14%,var(--surface));transform:translateY(-3px)}
+.pnode.past{border-color:color-mix(in srgb,var(--aud) 45%,var(--line))}
+.pout{background:var(--surface2);border-radius:12px;padding:14px 16px;min-height:84px;font-size:15px}
+.wave{display:flex;gap:3px;align-items:center;height:30px}
+.wave i{width:4px;background:var(--aud);border-radius:2px;animation:wv 1s ease-in-out infinite}
+@keyframes wv{50%{transform:scaleY(.3)}}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+
+/* strategies */
+.strat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.strat button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;text-align:left;font-size:15px}
+.strat button[aria-pressed="true"]{border-color:var(--ink)}
+.verdict{font-family:var(--serif);font-weight:900;font-size:20px}
+
+details{border-bottom:1px solid var(--line)}
+details summary{cursor:pointer;padding:12px 4px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"+";font-weight:900;width:14px;color:var(--muted)}
+details[open] summary::before{content:"−"}
+details .body{padding:0 4px 14px 30px;font-size:15px}
+.tag{font-size:12.5px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums;min-width:80px}
+
+/* quiz */
+.qcard{background:var(--surface);border-radius:16px;padding:24px}
+.qtop{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
+.qtext{font-size:18px;font-weight:700;margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15.5px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+.opt.wrongpick{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.opt:disabled{cursor:default}
+.expl{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15px;display:none}
+.expl.show{display:block}
+.progress{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;margin-bottom:14px}
+.progress i{display:block;height:100%;background:var(--txt);transition:width .4s}
+
+.traps label{display:flex;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:15px}
+.traps input{width:18px;height:18px;margin-top:4px;flex:none;accent-color:var(--ok)}
+.traps label.chk>span{color:var(--muted)}
+.traps em{font-style:normal;font-weight:700}
+
+/* mobile */
+@media (max-width:860px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+  nav.toc{position:sticky;top:0;height:auto;z-index:10;background:var(--bg);display:flex;overflow-x:auto;padding:8px 0;padding-top:calc(8px + env(safe-area-inset-top,0px));gap:4px;border-bottom:1px solid var(--line)}
+  .toc-title{display:none}
+  nav.toc a{white-space:nowrap;flex:none}
+  .match,.stage,.fusion-meta,.compare{grid-template-columns:1fr}
+  .compare>div+div{border-left:0;border-top:1px solid var(--line)}
+  .pipe{grid-template-columns:repeat(5,minmax(90px,1fr));overflow-x:auto}
+  .bar{grid-template-columns:110px 1fr 56px}
+  h2{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+/* extras: sliders, ordering game, kpis */
+.pipe{overflow-x:auto}
+.ctrl{display:grid;grid-template-columns:150px 1fr 74px;gap:10px;align-items:center;margin:6px 0;font-size:15px}
+.ctrl input[type=range]{width:100%;accent-color:var(--txt)}
+.ctrl output{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:14px}
+.kpi{background:var(--surface2);border-radius:12px;padding:12px 14px;border-top:4px solid var(--c,var(--line))}
+.kpi b{display:block;font-size:13px;color:var(--muted);font-weight:500}
+.kpi .v{font-family:var(--serif);font-weight:900;font-size:26px;font-variant-numeric:tabular-nums;line-height:1.3}
+.kpi small{color:var(--muted);font-size:13px}
+.og-slots{list-style:none;padding:0;margin:0 0 14px;display:flex;flex-direction:column;gap:6px}
+.og-slots li{display:flex;gap:12px;align-items:center;border:2px dashed var(--line);border-radius:12px;padding:8px 12px;min-height:46px;transition:border-color .3s,background .3s}
+.og-slots li.fill{border-style:solid;border-color:var(--ok);background:var(--surface2)}
+.og-n{font-family:var(--serif);font-weight:900;font-size:20px;color:var(--muted);width:22px;flex:none}
+.og-t small{display:block;color:var(--muted);font-size:13px}
+.og-pool{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+.chk-list label{display:flex;gap:10px;padding:7px 2px;font-size:15px;cursor:pointer;align-items:flex-start}
+.chk-list input{width:18px;height:18px;margin-top:5px;flex:none;accent-color:var(--ok)}
+.sortq{font-size:17px;font-weight:700;margin:6px 0 12px;min-height:2.4em}
+@media (max-width:860px){
+  .ctrl{grid-template-columns:96px 1fr 62px;font-size:14px}
+  .kpi .v{font-size:22px}
+}
+main a{color:var(--txt);text-underline-offset:3px}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="toc" aria-label="章節">
+  <div class="toc-title">AI 導入評估</div>
+  <a href="#intro"><span>●</span>導覽與目標</a>
+  <a href="#s1"><span>22.1</span>初級 vs 中級</a>
+  <a href="#s2"><span>22.2</span>評估判斷順序</a>
+  <a href="#s3"><span>22.3</span>三個評估面向</a>
+  <a href="#s4"><span>22.4</span>財務指標</a>
+  <a href="#s5"><span>22.5</span>組織成熟度</a>
+  <a href="#s6"><span>22.6</span>風險與合規</a>
+  <a href="#s7"><span>22.7</span>概念驗證 PoC</a>
+  <a href="#s8"><span>22.8</span>官方考題</a>
+  <a href="#s9"><span>22.9</span>易錯與測驗</a>
+</nav>
+
+<main>
+<!-- HERO -->
+<section id="intro" class="hero">
+  <div class="code">L21201　中級 AI 應用規劃師　建議 40 分鐘</div>
+  <h1>AI 導入評估</h1>
+  <p class="one">這是初級「生成式AI 導入評估」的中級版：範圍從生成式 AI 擴大為<b>通用 AI</b>，問法也從「該不該導入」升級為「<b>在多個限制條件下，先看哪一項</b>」。</p>
+  <div class="hero-fig" aria-hidden="true">
+    <svg id="heroSvg" viewBox="0 0 720 260">
+      <defs><path id="hp0" d="M30 130 L 690 130"/></defs>
+      <line x1="30" y1="130" x2="690" y2="130" stroke="var(--line)" stroke-width="4"/>
+      <g font-family="Noto Sans TC, sans-serif" font-size="13" font-weight="700" text-anchor="middle">
+        <circle cx="80" cy="130" r="30" fill="var(--txt)"/><text x="80" y="135" fill="#fff">①需求</text><text x="80" y="190" fill="var(--ink)">業務痛點</text>
+        <circle cx="185" cy="130" r="30" fill="var(--img)"/><text x="185" y="135" fill="#fff">②技術</text><text x="185" y="80" fill="var(--ink)">可行性初探</text>
+        <circle cx="290" cy="130" r="30" fill="var(--txt)"/><text x="290" y="135" fill="#fff">③成本</text><text x="290" y="190" fill="var(--ink)">ROI／NPV</text>
+        <circle cx="395" cy="130" r="30" fill="var(--aud)"/><text x="395" y="135" fill="#fff">④組織</text><text x="395" y="80" fill="var(--ink)">成熟度盤點</text>
+        <circle cx="500" cy="130" r="30" fill="var(--sen)"/><text x="500" y="135" fill="#fff">⑤風險</text><text x="500" y="190" fill="var(--ink)">合規初探</text>
+        <circle cx="605" cy="130" r="30" fill="var(--ink)"/><text x="605" y="135" fill="var(--bg)">⑥PoC</text><text x="605" y="80" fill="var(--ink)">小規模驗證</text>
+      </g>
+      <g class="movers">
+        <circle r="7" fill="var(--warn)"><animateMotion dur="4s" repeatCount="indefinite"><mpath href="#hp0"/></animateMotion></circle>
+        <circle r="7" fill="var(--warn)"><animateMotion dur="4s" begin="1.3s" repeatCount="indefinite"><mpath href="#hp0"/></animateMotion></circle>
+        <circle r="7" fill="var(--warn)"><animateMotion dur="4s" begin="2.6s" repeatCount="indefinite"><mpath href="#hp0"/></animateMotion></circle>
+      </g>
+    </svg>
+  </div>
+  <h3>學完這一課，你應該能夠</h3>
+  <div class="goals">
+    <div class="goal" style="--c:var(--txt)">記住官方的評估順序，能在情境題中判斷「<b>第一步該做什麼</b>」</div>
+    <div class="goal" style="--c:var(--img)">分辨<b>商業價值／技術可行／組織就緒</b>三個評估面向，不互相混用</div>
+    <div class="goal" style="--c:var(--aud)">計算並解讀 <b>ROI、NPV、回收期</b>，知道三者各自的盲點</div>
+    <div class="goal" style="--c:var(--sen)">掌握 <b>PoC</b> 的設計條件與判斷依據，能識別「PoC 選錯場景」的陷阱</div>
+  </div>
+  <p class="hint" style="margin-top:20px">本頁顏色代表評估面向：<span class="chip" style="--c:var(--txt)"><i class="dot"></i>商業價值</span>　<span class="chip" style="--c:var(--img)"><i class="dot"></i>技術可行</span>　<span class="chip" style="--c:var(--aud)"><i class="dot"></i>組織就緒</span>　<span class="chip" style="--c:var(--sen)"><i class="dot"></i>風險合規</span></p>
+  <p class="hint">本節與 <a href="L21202_adoption_planning.html">L21202 導入規劃</a>、<a href="L21203_risk_management.html">L21203 風險管理</a> 合稱 L212，是初級考生最能快速上手的區塊。</p>
+</section>
+
+<!-- 22.1 -->
+<section id="s1">
+  <div class="sec-head"><span class="sec-no">22.1</span><h2>初級學過什麼、中級要求到哪</h2></div>
+  <p class="lead">同一個主題，中級把每個面向都往「判斷與計算」推進一級。點下面的面向，左右對照看差在哪。</p>
+  <div class="panel">
+    <div class="tabs" id="lvTabs"></div>
+    <div class="compare" id="lvBody"></div>
+  </div>
+  <details>
+    <summary>展開完整對照表</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>面向</th><th>初級（生成式AI導入評估）</th><th>中級（L21201）</th></tr>
+        <tr><td>對象</td><td>生成式 AI 工具</td><td><b>所有 AI 技術路線</b>（監督式／非監督式／強化式／生成式）</td></tr>
+        <tr><td>問法</td><td>「這個情境適不適合用生成式 AI」</td><td>「多個限制條件下，哪一項評估要先做」</td></tr>
+        <tr><td>財務</td><td>知道要看成本效益</td><td><b>要能區分 ROI／NPV／回收期的適用與盲點</b></td></tr>
+        <tr><td>組織</td><td>知道要跨部門</td><td><b>要盤點數位成熟度、資料治理、協作機制、責任單位</b></td></tr>
+        <tr><td>風險</td><td>知道有風險</td><td><b>要在評估階段就做風險與合規初探</b></td></tr>
+        <tr><td>PoC</td><td>知道要先小規模試</td><td><b>要能設計 PoC 的四個條件、看懂 PoC 結果怎麼判讀</b></td></tr>
+      </table>
+    </div>
+  </details>
+</section>
+
+<!-- 22.2 -->
+<section id="s2">
+  <div class="sec-head"><span class="sec-no">22.2</span><h2>評估的判斷順序</h2></div>
+  <p class="lead">官方明示的考點。先自己排排看：下面六個評估步驟，正確順序是什麼？</p>
+  <div class="panel">
+    <h3 style="margin-top:0">排序遊戲：依序點出六個步驟</h3>
+    <p class="hint">從第 ① 步開始，依序點選。點錯會晃動並提示。</p>
+    <div id="ordGame"></div>
+    <div class="feedback" id="ordFb" aria-live="polite"></div>
+  </div>
+
+  <h3>每一步在做什麼</h3>
+  <div class="panel">
+    <div class="steps" id="evBtns"></div>
+    <div class="stage">
+      <div class="stage-viz" id="evViz"></div>
+      <div id="evTxt"></div>
+    </div>
+  </div>
+
+  <div class="callout exam"><b>這是最容易答錯的一題：</b>「AI 導入評估通常第一步應聚焦於？」正解是<b>業務痛點與需求辨識</b>，不是技術評估、不是資料盤點、不是成本試算。直覺上很多人會先想技術或資料，官方的立場是<b>先確認問題值不值得解</b>。</div>
+
+  <h3>什麼業務流程適合導入 AI？</h3>
+  <p class="prose">官方列出三類：<b>重複性高的工作</b>（人力投入大但規則穩定）、<b>決策規則清晰的流程</b>（可被學習、可被驗證）、<b>數據驅動的決策</b>（已有足量歷史資料）。反過來說，<b>規則簡單到寫程式就能解的流程不該用 AI</b> —— 這是常見誘答方向。</p>
+  <div class="panel">
+    <p class="hint" style="margin:0">判斷題（情境為示意）：這個流程該不該用 AI？</p>
+    <div class="sortq" id="fitQ"></div>
+    <div class="row"><button class="btn" id="fitY">適合導入 AI</button><button class="btn" id="fitN">不該用 AI</button><span class="hint" id="fitScore"></span></div>
+    <div class="feedback" id="fitFb" aria-live="polite"></div>
+    <button class="btn primary" id="fitNext" style="display:none">下一個情境</button>
+  </div>
+</section>
+
+<!-- 22.3 -->
+<section id="s3">
+  <div class="sec-head"><span class="sec-no">22.3</span><h2>三個評估面向不能混用</h2></div>
+  <p class="lead">官方考題會給一個敘述，問它屬於哪一個面向。三者的<b>官方用語</b>要能秒對上。</p>
+  <div class="panel">
+    <h3 style="margin-top:0">配對遊戲：面向 ↔ 官方用語</h3>
+    <p class="hint">先點左邊的面向，再點右邊的考題原文。小心誘答。</p>
+    <div class="match" id="facetMatch"></div>
+    <div class="feedback" id="facetFb" aria-live="polite"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>面向</th><th>考量重點</th><th>官方用語（考題原文）</th></tr>
+      <tr><td><span class="chip" style="--c:var(--txt)"><i class="dot"></i>商業價值評估</span></td><td>導入後能帶來多少回報</td><td>「<b>預期效益與回報</b>」</td></tr>
+      <tr><td><span class="chip" style="--c:var(--img)"><i class="dot"></i>技術可行性</span></td><td>有沒有能力做得出來</td><td>「<b>技術成熟度與部署資源</b>」</td></tr>
+      <tr><td><span class="chip" style="--c:var(--aud)"><i class="dot"></i>組織就緒度</span></td><td>組織撐不撐得住</td><td>「<b>AI 專案所需的跨部門協作角色</b>」</td></tr>
+    </table>
+  </div>
+
+  <h3>技術可行性的三個子項</h3>
+  <div class="panel">
+    <div class="tabs" id="techTabs"></div>
+    <div id="techBody"></div>
+  </div>
+  <div class="callout"><b>技術條件不足不等於不能做。</b>官方的建議是：先強化資料治理與 IT 基礎、挑簡單場景小規模試點累積經驗，再逐步擴大 —— 而不是直接放棄專案。</div>
+</section>
+
+<!-- 22.4 -->
+<section id="s4">
+  <div class="sec-head"><span class="sec-no">22.4</span><h2>財務指標：三個都要會，也要知道盲點</h2></div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>指標</th><th>公式</th><th>回答什麼問題</th><th>盲點</th></tr>
+      <tr><td><b>ROI</b>（投資報酬率）</td><td>（投資回報 − 投資成本）÷ 投資成本 × 100%</td><td>每投入一元回報多少</td><td>沒有時間概念</td></tr>
+      <tr><td><b>NPV</b>（淨現值）</td><td>Σ（每期現金流 ÷ (1+折現率)<sup>期數</sup>）− 初期投資</td><td>折現後是否還有價值</td><td>對折現率敏感</td></tr>
+      <tr><td><b>回收期</b>（Payback）</td><td>初期投資成本 ÷ 每年淨現金流</td><td>多久回本</td><td><b>未考慮金錢的時間價值</b></td></tr>
+    </table>
+  </div>
+  <p class="prose" style="margin-top:14px"><b>判讀規則：</b>NPV &gt; 0 → 專案能帶來超過初期投入的價值，值得做；回收期越短 → 投資風險越低，但<b>必須搭配 NPV 一起看</b>（官方明示）；ROI 高不代表值得 —— 可能回本要十年。</p>
+
+  <h3>財務模擬器：三個指標為什麼會「打架」</h3>
+  <div class="panel">
+    <p class="hint">預設值就是講義算例：AI 客服初期投資 500 萬、每年淨現金流 200 萬、折現率 10%、評估三年。拖動滑桿，看灰色（名目）與彩色（折現後）的差距。</p>
+    <div class="ctrl"><label for="fI">初期投資（萬）</label><input type="range" id="fI" min="100" max="1000" step="50" value="500"><output id="oI">500</output></div>
+    <div class="ctrl"><label for="fC">每年淨現金流（萬）</label><input type="range" id="fC" min="50" max="400" step="10" value="200"><output id="oC">200</output></div>
+    <div class="ctrl"><label for="fR">折現率</label><input type="range" id="fR" min="0" max="20" step="1" value="10"><output id="oR">10%</output></div>
+    <div class="ctrl"><label for="fN">評估年數</label><input type="range" id="fN" min="1" max="8" step="1" value="3"><output id="oN">3 年</output></div>
+    <div class="row" style="margin:8px 0 4px"><button class="btn" id="fReset">回到講義算例</button><button class="btn" id="fHiR">折現率調到 15%（示意）</button><button class="btn" id="fZero">折現率 0%（示意）</button></div>
+    <svg id="finSvg" viewBox="0 0 640 270" role="img" aria-label="累計現金流示意圖" style="margin-top:8px"></svg>
+    <div class="kpis">
+      <div class="kpi" style="--c:var(--txt)"><b>ROI</b><div class="v" id="kROI">20%</div><small>沒有時間概念</small></div>
+      <div class="kpi" style="--c:var(--sen)"><b>NPV</b><div class="v" id="kNPV">−2.6</div><small>最嚴格：有折現</small></div>
+      <div class="kpi" style="--c:var(--aud)"><b>回收期</b><div class="v" id="kPB">2.5 年</div><small>同樣沒折現</small></div>
+    </div>
+    <div class="callout" id="finVerdict" style="margin-bottom:0"></div>
+    <details><summary>看逐年折現計算</summary><div class="body" id="finDetail"></div></details>
+  </div>
+  <div class="callout exam"><b>判讀原則：</b>NPV 是最嚴格的指標。ROI 與回收期都沒有折現，專案期間越長、折現率越高，兩者的樂觀偏差就越大。考題若同時給三個數字，通常是要你抓出「<b>ROI 漂亮但 NPV 為負</b>」這個矛盾。</div>
+
+  <h3>成本組成（別漏算）</h3>
+  <div class="panel flat">
+    <p class="hint" style="margin-top:0">勾選你的預算有算到哪些項目：</p>
+    <div class="chk-list" id="costList"></div>
+    <div class="meter" style="height:16px"><i id="costM" style="width:0"></i></div>
+    <div class="hint" id="costNote"></div>
+  </div>
+  <p class="prose">考題常給「只算了模型開發費用」的選項當誘答。<b>AI 專案的隱形成本在資料與維運</b>。</p>
+
+  <h3>資源有限時，哪個專案先推？</h3>
+  <p class="prose">官方判準三條：<b>技術成熟度高 → 效益可快速驗證 → 可跨部門擴展</b>。三條同時滿足才是首選。只滿足「效益大」但技術不成熟的項目，在評估階段就該往後排。</p>
+  <div class="panel">
+    <p class="hint">四個候選專案（示意），點選看它該排在哪。</p>
+    <div class="strat" id="prio"></div>
+    <div style="margin-top:18px">
+      <div class="verdict" id="prioV">選一個專案試試</div>
+      <div class="meter" style="height:18px;margin:10px 0"><i id="prioM" style="width:0"></i></div>
+      <div id="prioWhy" class="hint"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 22.5 -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-no">22.5</span><h2>組織成熟度盤點</h2></div>
+  <p class="lead">技術做得出來，組織接不接得住？用下面的自評表盤點一家企業（勾選代表「已具備」）。</p>
+  <div class="panel">
+    <div class="tabs" id="orgTabs"></div>
+    <div class="chk-list" id="orgList"></div>
+    <div class="row" style="justify-content:space-between;margin-top:10px"><b>就緒度（示意）</b><span id="orgNum" style="font-variant-numeric:tabular-nums">0%</span></div>
+    <div class="meter" style="height:16px"><i id="orgM" style="width:0"></i></div>
+    <div class="row" style="margin-top:10px"><button class="btn" id="paperBtn" aria-pressed="false">情境：組織仍停留在紙本／手動作業</button></div>
+    <div class="hint" id="orgNote" style="margin-top:8px"></div>
+  </div>
+  <details><summary>（一）數位與資料成熟度</summary><div class="body tbl-wrap"><table>
+    <tr><th>指標</th><th>檢查什麼</th></tr>
+    <tr><td>數位成熟度</td><td>ERP、CRM、資料倉儲等系統是否建置完善</td></tr>
+    <tr><td>資料治理</td><td>正確性、可追溯性、權限控管；有無資料標準與負責單位</td></tr>
+    <tr><td>資料取得流程</td><td>系統間能否整合；有無 API、ETL 或自動化資料流</td></tr>
+  </table></div></details>
+  <details><summary>（二）團隊能力與跨部門協作</summary><div class="body tbl-wrap"><table>
+    <tr><th>面向</th><th>盤點問題</th></tr>
+    <tr><td>組織能力</td><td>有無 AI／資料分析／系統整合人才？無的話有無培訓或外部合作規劃</td></tr>
+    <tr><td>跨部門協作</td><td>過去有無成功合作經驗？有無統一窗口與專案負責人</td></tr>
+    <tr><td>推動責任單位</td><td>有無 AI 專案辦公室、數位轉型小組或指定負責單位</td></tr>
+  </table></div></details>
+  <details><summary>（三）資源與預算</summary><div class="body">資源盤點（資金、人力、時間可否靈活調度）、預算來源規劃（年度編列？補助？內部提案）、導入條件（能否提供<b>試辦環境、測試資料、專責團隊</b>）。</div></details>
+  <div class="callout"><b>若組織還停留在紙本或手動作業，導入 AI 門檻極高</b> —— 這是評估階段就該擋下的訊號。</div>
+</section>
+
+<!-- 22.6 -->
+<section id="s6">
+  <div class="sec-head"><span class="sec-no">22.6</span><h2>風險與合規初探</h2></div>
+  <p class="lead">評估階段就要做，不是等到上線才想。點每一類風險看具體項目。</p>
+  <div class="panel">
+    <div class="tabs" id="riskTabs"></div>
+    <div id="riskBody" class="pout"></div>
+  </div>
+  <div class="callout exam"><b>官方考法：</b>「為管理法律與合規風險，企業應採取何種措施？」→ <b>檢視個資使用的合法性</b>。生成式 AI 的侵權風險要從<b>訓練資料授權</b>處理。</div>
+
+  <h3>可解釋 AI（XAI）的四個必要場景（點卡片翻面）</h3>
+  <p class="hint">官方點名這四個領域<b>必須</b>要有可解釋性。先想想為什麼，再翻面對答案。</p>
+  <div class="cards" id="xaiCards"></div>
+</section>
+
+<!-- 22.7 -->
+<section id="s7">
+  <div class="sec-head"><span class="sec-no">22.7</span><h2>概念驗證（PoC）</h2></div>
+  <h3 style="margin-top:0">四個設計條件</h3>
+  <div class="panel">
+    <p class="hint">按下一步，逐一檢查條件（也可直接點方塊）。</p>
+    <div class="pipe" id="pocPipe"></div>
+    <div class="pout" id="pocOut" aria-live="polite"></div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" id="pocNext">下一步</button><button class="btn" id="pocReset">從頭開始</button></div>
+  </div>
+
+  <h3>情境：PoC 要選哪個單位？</h3>
+  <div class="panel">
+    <p class="hint">某企業要做 AI 客服的 PoC，有五個候選（示意）。點選看它能不能「推論全面導入會成功」。</p>
+    <div class="strat" id="pocStrat"></div>
+    <div style="margin-top:18px">
+      <div class="verdict" id="pocV">選一個候選場景</div>
+      <div class="meter" style="height:18px;margin:10px 0"><i id="pocM" style="width:0"></i></div>
+      <div id="pocWhy" class="hint"></div>
+    </div>
+  </div>
+  <div class="callout"><b>最常見的 PoC 陷阱：</b>挑一個「最容易成功但不具代表性」的場景。這種 PoC 過了也無法推論全面導入會成功，等於白做。</div>
+
+  <h3>評估方式：量化 + 質性</h3>
+  <div class="compare">
+    <div><div class="big">量化（效能指標）</div>準確率、處理速度、錯誤率、成本節省；<b>與既有 KPI 比較</b></div>
+    <div><div class="big">質性（使用者回饋）</div>問卷、訪談、使用日誌；特別關注<b>使用障礙、文化抗拒、流程磨合</b></div>
+  </div>
+
+  <h3>判讀 PoC 結果的四個角度</h3>
+  <div class="panel">
+    <div class="tabs" id="judgeTabs"></div>
+    <div id="judgeBody"></div>
+  </div>
+  <div class="callout exam"><b>PoC 的價值不只在「成功」。</b>一個揭露出「資料根本不夠」的 PoC，替企業省下後續數倍投入，同樣是成功的 PoC。考題若問「PoC 結果不如預期，下一步該？」，正解方向通常是<b>回頭補強條件或調整範圍</b>，而不是直接放棄或硬著頭皮全面導入。</div>
+
+  <h3>評估階段常見的決策錯誤</h3>
+  <details><summary>先選技術再找問題</summary><div class="body">技術驅動而非需求驅動，導致導入後無人使用。</div></details>
+  <details><summary>只算模型開發成本</summary><div class="body">漏掉資料清洗、系統整合、維運與人力。</div></details>
+  <details><summary>PoC 挑最容易的場景</summary><div class="body">過了也無法推論全面導入會成功。</div></details>
+  <details><summary>只看模型指標不看業務指標</summary><div class="body">準確率提升不等於業務有感。</div></details>
+  <details><summary>忽略組織成熟度</summary><div class="body">技術可行但組織接不住，專案照樣失敗。</div></details>
+</section>
+
+<!-- 22.8 -->
+<section id="s8">
+  <div class="sec-head"><span class="sec-no">22.8</span><h2>官方考過什麼</h2></div>
+  <p class="lead">六個考點，各自對應前面的一段。點開看「怎麼問」與「正解思路」。</p>
+  <div id="examList"></div>
+  <div class="callout exam">準備方向：把「評估第一步」「三面向官方用語」「ROI／NPV／回收期盲點」三組練到能秒答。</div>
+</section>
+
+<!-- 22.9 -->
+<section id="s9">
+  <div class="sec-head"><span class="sec-no">22.9</span><h2>易錯與陷阱</h2></div>
+  <p class="lead">逐條確認自己真的懂了再打勾（打勾狀態會記在這台裝置上）。</p>
+  <div class="traps" id="traps"></div>
+  <p class="hint" id="trapCount" style="margin-top:10px"></p>
+
+  <h3>情境測驗</h3>
+  <div class="qcard" id="quiz"></div>
+
+  <h3>延伸練習</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>資源</th><th>用法</th></tr>
+      <tr><td>L21 主題庫（311 題）→ Ch05 AI導入評估</td><td>依章節練，答對率低於 70% 回頭重讀 22.2～22.4</td></tr>
+      <tr><td>L21 歷屆 100 題</td><td>這一塊是初級延伸，可以先做，建立信心</td></tr>
+    </table>
+  </div>
+  <p class="prose" style="margin-top:14px">下一節：<a href="L21202_adoption_planning.html">23. L21202 AI導入規劃</a> —— 評估決定「做不做」，規劃決定「怎麼做」。</p>
+</section>
+</main>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce){const m=document.querySelector('#heroSvg .movers');if(m)m.remove();}
+const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+
+/* ---------- generic matcher ---------- */
+function matcher(root,fb,left,right,doneMsg){
+  let sel=null,done=0;
+  const L=document.createElement('div');L.className='col';
+  const R=document.createElement('div');R.className='col';
+  left.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;
+    b.innerHTML=it.html;if(it.c)b.style.setProperty('--c',it.c);
+    b.onclick=()=>{if(b.classList.contains('done'))return;L.querySelectorAll('.mitem').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;fb.textContent='';fb.className='feedback';};
+    L.appendChild(b);
+  });
+  right.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;b.innerHTML=it.html;
+    b.onclick=()=>{
+      if(b.classList.contains('done'))return;
+      if(!sel){fb.textContent='請先點左邊一個項目。';fb.className='feedback';return;}
+      if(sel.dataset.k===b.dataset.k){
+        const c=sel.style.getPropertyValue('--c');
+        [sel,b].forEach(x=>{x.classList.remove('sel');x.classList.add('done');if(c)x.style.setProperty('--c',c);});
+        fb.textContent='✓ '+(it.ok||'答對了！');fb.className='feedback ok';sel=null;done++;
+        if(done===left.length){fb.textContent='✓ 全部配對完成！'+doneMsg;}
+      }else{
+        b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');
+        fb.textContent='✗ '+(it.bad||'不太對，再想想看。');fb.className='feedback bad';
+      }
+    };
+    R.appendChild(b);
+  });
+  root.append(L,R);
+}
+
+/* ---------- flip cards ---------- */
+function flipCards(root,arr){
+  arr.forEach(([n,o,d])=>{
+    const b=document.createElement('button');b.className='flip';b.setAttribute('aria-pressed','false');
+    b.innerHTML=`<div class="in"><div class="f"><strong>${n}</strong><span>${o}</span><span style="margin-top:auto;font-size:12.5px">點我翻面</span></div><div class="b">${d}</div></div>`;
+    b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');
+    root.appendChild(b);
+  });
+}
+
+/* ---------- tabs ---------- */
+function tabs(btnRoot,body,items,render){
+  items.forEach((x,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=x.t||x[0];b.onclick=()=>s(i);btnRoot.appendChild(b);});
+  function s(i){btnRoot.querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));body.innerHTML=render(items[i],i);}
+  s(0);return s;
+}
+
+/* ---------- strategy picker ---------- */
+function strat(root,list,order,V,M,W,prefix){
+  (order||list.map((_,i)=>i)).forEach(i=>{const b=document.createElement('button');b.innerHTML=list[i][0];b.setAttribute('aria-pressed','false');b.onclick=()=>{root.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));const x=list[i];V.textContent=x[1];V.style.color=x[3];M.style.width=x[2]+'%';M.style.background=x[3];W.innerHTML=(prefix||'')+x[2]+'%　'+x[4];};root.appendChild(b);});
+}
+
+/* ---------- exam list ---------- */
+function examList(root,arr){
+  arr.forEach(([n,k,q,a])=>{root.insertAdjacentHTML('beforeend',`<details><summary><span class="tag">${n}</span>${k}</summary><div class="body"><p style="margin:0 0 6px"><span class="hint">怎麼問：</span>${q}</p><p style="margin:0"><span class="hint">正解思路：</span>${a}</p></div></details>`);});
+}
+
+/* ---------- traps ---------- */
+function traps(root,countEl,key,T){
+  let saved=[];try{saved=JSON.parse(localStorage.getItem(key)||'[]')||[];}catch(e){saved=[];}
+  T.forEach(([a,b],i)=>{
+    const l=document.createElement('label');const c=saved.includes(i);if(c)l.classList.add('chk');
+    l.innerHTML=`<input type="checkbox" ${c?'checked':''}><div><em>${a}</em><br><span>${b}</span></div>`;
+    l.querySelector('input').onchange=e=>{const on=e.target.checked;l.classList.toggle('chk',on);saved=on?[...new Set([...saved,i])]:saved.filter(x=>x!==i);try{localStorage.setItem(key,JSON.stringify(saved));}catch(err){}count();};
+    root.appendChild(l);
+  });
+  function count(){countEl.textContent=`已確認 ${saved.length}／${T.length} 條`;}
+  count();
+}
+
+/* ---------- quiz ---------- */
+function quiz(box,Q,msgs){
+  let i=0,score=0;
+  function show(){
+    if(i>=Q.length){
+      const r=score/Q.length;
+      const msg=r>=.9?msgs[0]:r>=.65?msgs[1]:msgs[2];
+      box.innerHTML=`<div class="progress"><i style="width:100%"></i></div><div class="qtext" style="font-size:24px;font-family:var(--serif)">得分 ${score}／${Q.length}</div><p>${msg}</p><button class="btn primary" data-qr>重新測驗</button>`;
+      box.querySelector('[data-qr]').onclick=()=>{i=0;score=0;show();};return;
+    }
+    const [q,opts,ex]=Q[i];
+    const order=shuffle(opts.map((o,k)=>({o,k})));
+    box.innerHTML=`<div class="progress"><i style="width:${i/Q.length*100}%"></i></div><div class="qtop"><span>第 ${i+1}／${Q.length} 題</span><span>得分 ${score}</span></div><div class="qtext">${q}</div><div class="opts">${order.map(x=>`<button class="opt" data-k="${x.k}">${x.o}</button>`).join('')}</div><div class="expl" data-qe></div><div class="row" style="margin-top:14px;justify-content:flex-end"><button class="btn primary" data-qn style="display:none">${i===Q.length-1?'看結果':'下一題'}</button></div>`;
+    const qn=box.querySelector('[data-qn]');
+    box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.k==='0';if(ok)score++;
+      box.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.k==='0')x.classList.add('right');});
+      if(!ok)b.classList.add('wrongpick');
+      const e=box.querySelector('[data-qe]');e.innerHTML=(ok?'<b style="color:var(--ok)">答對了。</b>':'<b style="color:var(--bad)">這題要小心。</b>')+ex;e.classList.add('show');
+      qn.style.display='';qn.focus({preventScroll:true});
+    });
+    qn.onclick=()=>{i++;show();};
+  }
+  show();
+}
+
+/* ---------- step-through pipeline ---------- */
+function pipeline(pipeEl,outEl,nextBtn,resetBtn,nodes,out){
+  let i=0;const n=nodes.length;
+  pipeEl.style.gridTemplateColumns=`repeat(${n},minmax(90px,1fr))`;
+  pipeEl.innerHTML=nodes.map(([a,b])=>`<div class="pnode"><b>${a}</b>${b}</div>`).join('');
+  function r(){pipeEl.querySelectorAll('.pnode').forEach((x,j)=>{x.classList.toggle('on',j===i);x.classList.toggle('past',j<i);});outEl.innerHTML=out[i];nextBtn.disabled=i===n-1;nextBtn.style.opacity=i===n-1?.4:1;}
+  nextBtn.onclick=()=>{if(i<n-1){i++;r();}};
+  resetBtn.onclick=()=>{i=0;r();};
+  pipeEl.querySelectorAll('.pnode').forEach((x,j)=>{x.style.cursor='pointer';x.onclick=()=>{i=j;r();};});
+  r();
+}
+
+/* ---------- ordering game ---------- */
+function orderGame(root,fb,items,doneMsg){
+  // items: correct order array of {t,d}
+  let next=0;
+  const pool=document.createElement('div');pool.className='og-pool';
+  const slots=document.createElement('ol');slots.className='og-slots';
+  items.forEach((_,i)=>{const li=document.createElement('li');li.innerHTML=`<span class="og-n">${i+1}</span><span class="og-t hint">？</span>`;slots.appendChild(li);});
+  function build(){
+    pool.innerHTML='';next=0;
+    slots.querySelectorAll('li').forEach(li=>{li.classList.remove('fill');li.querySelector('.og-t').innerHTML='？';li.querySelector('.og-t').className='og-t hint';});
+    shuffle(items.map((x,i)=>({x,i}))).forEach(({x,i})=>{
+      const b=document.createElement('button');b.className='mitem';b.innerHTML=x.t;
+      b.onclick=()=>{
+        if(b.classList.contains('done'))return;
+        if(i===next){
+          b.classList.add('done');b.style.setProperty('--c','var(--ok)');
+          const li=slots.children[next];li.classList.add('fill');const t=li.querySelector('.og-t');t.className='og-t';t.innerHTML=`<b>${x.t}</b><small>${x.d||''}</small>`;
+          next++;fb.className='feedback ok';fb.textContent=next===items.length?'✓ 順序全對！'+doneMsg:'✓ 對，下一步呢？';
+        }else{b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');fb.className='feedback bad';fb.textContent='✗ '+(x.bad||'還不是這一步，想想前面還缺什麼。');}
+      };
+      pool.appendChild(b);
+    });
+    fb.textContent='';fb.className='feedback';
+  }
+  const rs=document.createElement('button');rs.className='btn';rs.textContent='重新排序';rs.onclick=build;
+  root.append(slots,pool);root.parentNode.insertBefore(rs,fb.nextSibling);
+  build();
+}
+
+/* ---------- nav highlight ---------- */
+function navHighlight(){
+  const links=[...document.querySelectorAll('nav.toc a')];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on&&window.innerWidth<=860)a.scrollIntoView({inline:'center',block:'nearest'});});}});},{rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('main section').forEach(s=>io.observe(s));
+}
+
+
+/* ---------- 22.1 level compare ---------- */
+(function(){
+  const L=[['對象','生成式 AI 工具','<b>所有 AI 技術路線</b>（監督式／非監督式／強化式／生成式）'],['問法','「這個情境適不適合用生成式 AI」','「多個限制條件下，哪一項評估要先做」'],['財務','知道要看成本效益','<b>要能區分 ROI／NPV／回收期的適用與盲點</b>'],['組織','知道要跨部門','<b>要盤點數位成熟度、資料治理、協作機制、責任單位</b>'],['風險','知道有風險','<b>要在評估階段就做風險與合規初探</b>'],['PoC','知道要先小規模試','<b>要能設計 PoC 的四個條件、看懂 PoC 結果怎麼判讀</b>']];
+  tabs($('#lvTabs'),$('#lvBody'),L,x=>`<div><div class="big">初級</div>${x[1]}</div><div style="background:var(--surface2)"><div class="big">中級 L21201</div>${x[2]}</div>`);
+})();
+
+/* ---------- 22.2 order game ---------- */
+const STEPS=[
+  {t:'① 業務需求與痛點分析',d:'跨部門／利害關係人訪談、流程觀察、資料分析',c:'txt',body:'釐清 As-Is 與 To-Be 的落差。<b>官方：導入評估「第一步」</b> —— 先確認問題值不值得解。',bad:'第一步不是技術、資料或成本，而是先確認問題值不值得解。'},
+  {t:'② 技術可行性初探',d:'資料品質、IT 能力與系統整合性、AI 適配性',c:'img',body:'有沒有能力做得出來？看資料品質、IT 能力與系統整合性、AI 適配性。'},
+  {t:'③ 成本與效益初步評估',d:'成本組成、ROI／NPV／回收期、資源限制與優先順序',c:'txt',body:'成本組成、效益量化（ROI／NPV／回收期）、資源限制與優先順序。'},
+  {t:'④ 組織成熟度與導入條件盤點',d:'數位與資料成熟度、團隊能力、資源與預算',c:'aud',body:'數位與資料成熟度、團隊能力與跨部門協作、資源與預算。'},
+  {t:'⑤ 風險與合規初探',d:'法規、隱私、技術風險、模型穩定性、黑箱',c:'sen',body:'法規遵循、資料隱私、技術風險、模型穩定性、黑箱風險。'},
+  {t:'⑥ 概念驗證（PoC）設計與評估',d:'小範圍、具代表性、條件就緒、有人支持',c:'ink',body:'前五步都初步過關，才進入小規模驗證。'}
+];
+orderGame($('#ordGame'),$('#ordFb'),STEPS.map(s=>({t:s.t.split(' ')[1],d:s.d,bad:s.bad})),'記住：需求 → 技術 → 成本 → 組織 → 風險 → PoC。');
+(function(){
+  STEPS.forEach((s,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=s.t.split(' ')[0]+' '+['需求痛點','技術可行','成本效益','組織成熟','風險合規','PoC'][i];b.onclick=()=>show(i);$('#evBtns').appendChild(b);});
+  function show(i){
+    $$('#evBtns .btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));
+    let h='<div style="display:flex;flex-direction:column;gap:4px;width:100%;max-width:260px">';
+    STEPS.forEach((s,j)=>{h+=`<div style="display:flex;align-items:center;gap:8px;opacity:${j<=i?1:.3};transition:opacity .4s"><span class="blk" style="width:${j===i?34:22}px;height:22px;background:var(--${s.c})"></span><small>${s.t.split(' ')[1]}</small></div>`;});
+    $('#evViz').innerHTML=h+'</div>';
+    $('#evTxt').innerHTML=`<p><b>${STEPS[i].t}</b></p><p>${STEPS[i].body}</p><p class="hint">細項：${STEPS[i].d}</p>`;
+  }
+  show(0);
+})();
+
+/* ---------- 22.2 fit sorter ---------- */
+(function(){
+  const S=[
+    ['客服中心每天回覆大量重複問題，答案規則穩定',true,'屬「重複性高的工作」：人力投入大但規則穩定。'],
+    ['依固定稅率計算每張發票的稅額',false,'規則簡單到寫程式就能解，不該用 AI —— 這是常見誘答方向。'],
+    ['銀行放款審核，已累積多年的歷史申貸與還款資料',true,'屬「數據驅動的決策」：已有足量歷史資料。'],
+    ['產線品檢的合格判定標準明確，可被驗證',true,'屬「決策規則清晰的流程」：可被學習、可被驗證。'],
+    ['把報表上兩個欄位相加得到總計',false,'一行程式就能解，用 AI 只會增加成本與不確定性。']
+  ];
+  let i=0,sc=0,answered=false;
+  function r(){$('#fitQ').textContent=`情境 ${i+1}／${S.length}：${S[i][0]}`;$('#fitFb').textContent='';$('#fitFb').className='feedback';$('#fitNext').style.display='none';answered=false;$('#fitScore').textContent=`答對 ${sc}`;}
+  function ans(v){if(answered)return;answered=true;const ok=v===S[i][1];if(ok)sc++;$('#fitFb').className='feedback '+(ok?'ok':'bad');$('#fitFb').textContent=(ok?'✓ ':'✗ ')+S[i][2];$('#fitScore').textContent=`答對 ${sc}`;$('#fitNext').style.display='';$('#fitNext').textContent=i===S.length-1?'再玩一次':'下一個情境';}
+  $('#fitY').onclick=()=>ans(true);$('#fitN').onclick=()=>ans(false);
+  $('#fitNext').onclick=()=>{if(i===S.length-1){i=0;sc=0;}else i++;r();};
+  r();
+})();
+
+/* ---------- 22.3 facet matcher ---------- */
+matcher($('#facetMatch'),$('#facetFb'),[
+  {k:'b',c:'var(--txt)',html:'<span class="chip" style="--c:var(--txt)"><i class="dot"></i>商業價值評估</span><small>導入後能帶來多少回報</small>'},
+  {k:'t',c:'var(--img)',html:'<span class="chip" style="--c:var(--img)"><i class="dot"></i>技術可行性</span><small>有沒有能力做得出來</small>'},
+  {k:'o',c:'var(--aud)',html:'<span class="chip" style="--c:var(--aud)"><i class="dot"></i>組織就緒度</span><small>組織撐不撐得住</small>'}
+],[
+  {k:'t',html:'「技術成熟度與部署資源」',ok:'為確保企業體系具備執行能力 → 技術可行性。',bad:'這句是技術可行性，不是組織就緒。'},
+  {k:'x',html:'「預計招募的 AI 人員人數」',bad:'誘答！人員規劃的重點是跨部門協作角色與分工，不是招募人數。'},
+  {k:'o',html:'「AI 專案所需的跨部門協作角色」',ok:'初期規劃階段的人員規劃重點 → 組織就緒度。'},
+  {k:'b',html:'「預期效益與回報」',ok:'商業價值評估的考量，不是技術面向。',bad:'「預期效益與回報」是商業價值面向。'}
+],'這三句是考題原文，看到就直接對應。');
+
+tabs($('#techTabs'),$('#techBody'),[
+  ['資料品質（Data Quality）','完整性、一致性、代表性；是否已完成標註'],
+  ['IT 能力與系統整合性','伺服器規格、網路頻寬、雲端架構、資料倉儲'],
+  ['AI 適配性','這個情境該用監督式／非監督式／強化式／生成式？']
+],x=>`<p style="margin:0"><b>${x[0]}</b><br>評估什麼：${x[1]}</p>`);
+
+/* ---------- 22.4 finance simulator ---------- */
+(function(){
+  const I=$('#fI'),C=$('#fC'),R=$('#fR'),N=$('#fN');
+  function calc(){
+    const inv=+I.value,cf=+C.value,r=+R.value/100,n=+N.value;
+    $('#oI').textContent=inv;$('#oC').textContent=cf;$('#oR').textContent=R.value+'%';$('#oN').textContent=n+' 年';
+    let nom=[],dis=[],cn=0,cd=0,rows='';
+    for(let t=1;t<=n;t++){const d=cf/Math.pow(1+r,t);cn+=cf;cd+=d;nom.push(cn);dis.push(cd);rows+=`<div>第${t}年　${cf} ÷ ${(1+r).toFixed(2)}${t>1?'<sup>'+t+'</sup>':''} ≈ <b>${d.toFixed(1)}</b>　累計 ${cd.toFixed(1)}</div>`;}
+    const roi=(cf*n-inv)/inv*100,npv=cd-inv,pb=inv/cf;
+    $('#kROI').textContent=roi.toFixed(1).replace(/\.0$/,'')+'%';$('#kROI').style.color=roi>=0?'var(--ok)':'var(--bad)';
+    $('#kNPV').textContent=(npv<0?'−':'+')+Math.abs(npv).toFixed(1)+' 萬';$('#kNPV').style.color=npv>=0?'var(--ok)':'var(--bad)';
+    $('#kPB').textContent=pb.toFixed(1)+' 年';$('#kPB').style.color=pb<=n?'var(--ok)':'var(--bad)';
+    $('#finDetail').innerHTML=rows+`<div style="margin-top:6px">現金流折現合計 ≈ ${cd.toFixed(1)}，NPV = ${cd.toFixed(1)} − ${inv} = <b>${npv.toFixed(1)}</b> 萬</div><div>ROI = (${cf}×${n} − ${inv}) ÷ ${inv} × 100% = <b>${roi.toFixed(1)}%</b>　回收期 = ${inv} ÷ ${cf} = <b>${pb.toFixed(1)}</b> 年</div>`;
+    let v;
+    if(roi>0&&npv<0)v='<b>矛盾出現了：ROI 漂亮但 NPV 為負。</b>ROI 與回收期都沒有折現，看起來賺；折現後其實不划算。這正是考題愛設計的情境。';
+    else if(npv>=0)v='<b>NPV ≥ 0：</b>折現後仍能回收初期投入，三個指標方向一致，專案值得做。';
+    else v='<b>三個指標都不理想：</b>連名目回報都不足以回本，評估階段就該往後排。';
+    $('#finVerdict').innerHTML=v;
+    draw(inv,nom,dis,n);
+  }
+  function draw(inv,nom,dis,n){
+    const W=640,H=270,l=56,rr=20,t=34,b=40,mx=Math.max(inv,nom[n-1])*1.1,pw=(W-l-rr)/n;
+    const y=v=>t+(H-t-b)*(1-v/mx);
+    let h=`<line x1="${l}" y1="${y(0)}" x2="${W-rr}" y2="${y(0)}" stroke="var(--line)"/>`;
+    for(let k=0;k<=4;k++){const v=mx*k/4;h+=`<text x="${l-6}" y="${y(v)+4}" text-anchor="end" font-size="14" fill="var(--muted)">${Math.round(v)}</text>`;}
+    nom.forEach((v,i)=>{const x=l+i*pw+pw*.18,w=pw*.3;h+=`<rect x="${x}" y="${y(v)}" width="${w}" height="${y(0)-y(v)}" fill="var(--line)" rx="3"><title>名目累計 ${v.toFixed(1)}</title></rect><rect x="${x+w+3}" y="${y(dis[i])}" width="${w}" height="${y(0)-y(dis[i])}" fill="${dis[i]>=inv?'var(--ok)':'var(--txt)'}" rx="3" style="transition:all .5s"><title>折現累計 ${dis[i].toFixed(1)}</title></rect><text x="${l+i*pw+pw/2}" y="${H-b+18}" text-anchor="middle" font-size="15" fill="var(--muted)">第${i+1}年</text>`;});
+    h+=`<line x1="${l}" y1="${y(inv)}" x2="${W-rr}" y2="${y(inv)}" stroke="var(--bad)" stroke-width="2" stroke-dasharray="6 5"/><text x="${W-rr}" y="${y(inv)-6}" text-anchor="end" font-size="15" font-weight="700" fill="var(--bad)">初期投資 ${inv}</text>`;
+    h+=`<g font-size="15"><rect x="${l+4}" y="2" width="14" height="14" fill="var(--line)"/><text x="${l+22}" y="15" fill="var(--ink)">名目累計（ROI／回收期）</text><rect x="${l+270}" y="2" width="14" height="14" fill="var(--txt)"/><text x="${l+288}" y="15" fill="var(--ink)">折現累計（NPV）</text></g>`;
+    $('#finSvg').innerHTML=h;
+  }
+  [I,C,R,N].forEach(e=>e.oninput=calc);
+  const set=(a,b,c,d)=>{I.value=a;C.value=b;R.value=c;N.value=d;calc();};
+  $('#fReset').onclick=()=>set(500,200,10,3);
+  $('#fHiR').onclick=()=>{R.value=15;calc();};
+  $('#fZero').onclick=()=>{R.value=0;calc();};
+  calc();
+})();
+
+/* ---------- cost checklist ---------- */
+(function(){
+  const items=['模型開發','內部人力','技術訓練','資料清洗','系統整合','第三方顧問或平台授權'];
+  $('#costList').innerHTML=items.map((t,i)=>`<label><input type="checkbox" data-i="${i}" ${i===0?'checked':''}><span>${t}</span></label>`).join('');
+  function u(){const c=$$('#costList input:checked').map(x=>+x.dataset.i);const p=c.length/items.length*100;$('#costM').style.width=p+'%';$('#costM').style.background=p===100?'var(--ok)':p>50?'var(--warn)':'var(--bad)';
+    const miss=items.filter((_,i)=>!c.includes(i));
+    $('#costNote').innerHTML=miss.length?`還漏了：${miss.join('、')}。${c.length===1&&c[0]===0?'<b>只算模型開發費用</b>正是考題愛用的誘答。':''}`:'✓ 六項都算到了：內部人力、技術訓練、資料清洗、模型開發、系統整合、第三方顧問或平台授權。';}
+  $$('#costList input').forEach(x=>x.onchange=u);u();
+})();
+
+/* ---------- priority ---------- */
+strat($('#prio'),[
+  ['A：技術成熟、效益可快速驗證、可跨部門擴展','✓ 首選',92,'var(--ok)','三條判準同時滿足：技術成熟度高 → 效益可快速驗證 → 可跨部門擴展。'],
+  ['B：預期效益最大，但技術尚未成熟','✗ 往後排',30,'var(--bad)','只滿足「效益大」但技術不成熟，在評估階段就該往後排。'],
+  ['C：技術成熟、可快速驗證，但只適用單一部門','△ 次之',62,'var(--warn)','前兩條滿足，缺「可跨部門擴展」，不是三條全滿的首選。'],
+  ['D：規則簡單、寫程式就能解的流程','✗ 不該用 AI',12,'var(--bad)','規則簡單到寫程式就能解的流程，根本不該用 AI。']
+],[1,3,0,2],$('#prioV'),$('#prioM'),$('#prioWhy'),'優先度（示意）：');
+
+/* ---------- 22.5 org readiness ---------- */
+(function(){
+  const G=[
+    ['數位與資料成熟度',['ERP、CRM、資料倉儲等系統建置完善','資料治理：有資料標準與負責單位','資料取得：有 API、ETL 或自動化資料流']],
+    ['團隊與協作',['有 AI／資料分析／系統整合人才（或培訓、外部合作規劃）','有成功跨部門合作經驗、統一窗口與專案負責人','有 AI 專案辦公室、數位轉型小組或指定負責單位']],
+    ['資源與預算',['資金、人力、時間可靈活調度','預算來源已規劃（年度編列／補助／內部提案）','能提供試辦環境、測試資料、專責團隊']]
+  ];
+  const st=G.map(g=>g[1].map(()=>false));let cur=0,paper=false;
+  function list(){$('#orgList').innerHTML=G[cur][1].map((t,i)=>`<label><input type="checkbox" data-i="${i}" ${st[cur][i]?'checked':''} ${paper?'disabled':''}><span>${t}</span></label>`).join('');$$('#orgList input').forEach(x=>x.onchange=()=>{st[cur][+x.dataset.i]=x.checked;u();});}
+  function u(){
+    const all=st.flat(),n=all.filter(Boolean).length,p=paper?8:Math.round(n/all.length*100);
+    $('#orgNum').textContent=p+'%';$('#orgM').style.width=p+'%';$('#orgM').style.background=p>=78?'var(--ok)':p>=45?'var(--warn)':'var(--bad)';
+    $('#orgNote').innerHTML=paper?'<b style="color:var(--bad)">紅燈：</b>組織還停留在紙本或手動作業，導入 AI 門檻極高 —— 評估階段就該擋下，先補數位化基礎。':`三類合計已具備 ${n}／${all.length} 項。${p<45?'缺口多：技術可行但組織接不住，專案照樣失敗。':p<78?'部分就緒：先補齊缺口再擴大。':'組織大致接得住。'}`;
+  }
+  tabs($('#orgTabs'),{set innerHTML(v){}},G,(x,i)=>{cur=i;list();return '';});
+  $('#paperBtn').onclick=()=>{paper=!paper;$('#paperBtn').setAttribute('aria-pressed',paper);list();u();};
+  u();
+})();
+
+/* ---------- 22.6 risk tabs ---------- */
+tabs($('#riskTabs'),$('#riskBody'),[
+  ['法規遵循','個資法（台灣）、GDPR（歐盟）；資料來源與處理依據是否合法'],
+  ['資料隱私','匿名化、資料使用授權、存取權限控管'],
+  ['跨境與外包','資料存海外雲端或交第三方處理的跨境傳輸規範與契約保障'],
+  ['侵權與版權','生成式 AI 產出可能侵犯第三方著作權；<b>訓練資料要有合法授權</b>'],
+  ['資料缺口','資料不完整、格式混亂、量不足以訓練'],
+  ['模型穩定性','對輸入敏感、業務情境變動時準確性下降'],
+  ['黑箱風險','深度學習缺乏可解釋性，影響管理層與利害關係人信任 → 導入 XAI']
+],x=>`<b>${x[0]}</b><div style="margin-top:4px">${x[1]}</div>`);
+flipCards($('#xaiCards'),[
+  ['醫療診斷','為什麼非要不可？','醫師需理解判斷依據才敢採用'],
+  ['金融風控','為什麼非要不可？','必須向主管機關說明風險評分的組成邏輯'],
+  ['人才招聘／教育','為什麼非要不可？','避免模型因歷史偏見做出歧視性決策'],
+  ['公部門／法務','為什麼非要不可？','判斷結果需具法律上的可審查性與問責']
+]);
+
+/* ---------- 22.7 PoC ---------- */
+pipeline($('#pocPipe'),$('#pocOut'),$('#pocNext'),$('#pocReset'),
+  [['①範圍','清晰、風險可控'],['②代表性','業務流程'],['③就緒','資料與技術'],['④支持','利益關係人']],
+  ['<b>① 範圍清晰、風險可控</b><br>小範圍單位／部門／資料集，不影響整體營運。<div class="hint">反例：全公司同時上線 —— 失敗會拖垮營運。</div>',
+   '<b>② 具代表性業務流程</b><br>能代表未來擴展邏輯，有實用與延展價值。<div class="hint">反例：挑最容易成功但不具代表性的場景 —— 過了也無法推論全面導入。</div>',
+   '<b>③ 資料與技術初步就緒</b><br>資料格式、存取權限、基礎 IT 支援已備妥。',
+   '<b>④ 利益關係人支持度高</b><br>選有共識、有合作意願的單位。<div class="hint">四個條件都滿足，PoC 的結果才有推論價值。</div>']);
+strat($('#pocStrat'),[
+  ['資料最乾淨、問題最單純、但流程與其他部門差很多的小組','✗ 陷阱',25,'var(--bad)','「最容易成功但不具代表性」—— 這種 PoC 過了也無法推論全面導入會成功，等於白做。'],
+  ['流程具代表性、資料已備妥、主管與同仁都支持的一個分區','✓ 最佳',90,'var(--ok)','四個條件全滿足：範圍可控、具代表性、資料與技術就緒、利益關係人支持。'],
+  ['全公司所有客服據點同時上線','✗ 範圍失控',20,'var(--bad)','違反條件①：範圍不清晰、風險不可控，會影響整體營運。'],
+  ['流程具代表性，但資料格式與存取權限都還沒處理好','△ 先補條件',45,'var(--warn)','違反條件③：資料與技術尚未初步就緒，先補強再試。'],
+  ['流程具代表性，但部門主管明確反對','△ 換單位或先溝通',40,'var(--warn)','違反條件④：利益關係人支持度低，PoC 容易被消極配合拖垮。']
+],[0,2,1,3,4],$('#pocV'),$('#pocM'),$('#pocWhy'),'可推論全面導入的程度（示意）：');
+tabs($('#judgeTabs'),$('#judgeBody'),[
+  ['技術適配性','模型能否與現有系統整合？資料架構是否相容？','要大改既有系統才能接上'],
+  ['預期效益驗證','有無顯示明確價值（效能／效率／體驗）？','指標改善幅度在誤差範圍內'],
+  ['組織接受度','部門與使用者是否正向接受、願意學？','使用率低、繞道回舊流程'],
+  ['問題與瓶頸辨識','有無暴露重大風險、資源限制或流程障礙？','出現無解的資料或法規障礙']
+],x=>`<div class="compare"><div><div class="big">問什麼</div>${x[1]}</div><div><div class="big" style="color:var(--bad)">沒過的訊號</div>${x[2]}</div></div>`);
+
+/* ---------- 22.8 exam list ---------- */
+examList($('#examList'),[
+  ['評估第一步','導入評估的起點','「AI 導入評估通常第一步應聚焦於？」','<b>業務痛點與需求辨識</b>（不是技術、不是資料、不是成本）'],
+  ['商業價值','面向歸類','「下列哪一項屬於商業價值評估的考量？」','<b>預期效益與回報</b>'],
+  ['技術可行性','面向歸類','「為確保企業體系具備執行能力，應考量？」','<b>技術成熟度與部署資源</b>'],
+  ['組織就緒','人員規劃','「初期規劃階段，人員規劃的重點是？」','<b>AI 專案所需的跨部門協作角色</b>'],
+  ['法規風險','合規措施','「為管理法律與合規風險，企業應採取何種措施？」','<b>檢視個資使用的合法性</b>'],
+  ['可解釋性','黑箱風險','模型輸出無法解釋、影響信任','導入 XAI；金融風控須能向主管機關說明']
+]);
+
+/* ---------- 22.9 traps ---------- */
+traps($('#traps'),$('#trapCount'),'l21201-traps',[
+  ['評估第一步是業務痛點與需求辨識，不是技術可行性','官方立場：先確認問題值不值得解。'],
+  ['「預期效益與回報」是商業價值面向，不是技術面向','三面向的官方用語要能秒對上。'],
+  ['「技術成熟度與部署資源」是技術可行性，不是組織就緒','「確保企業體系具備執行能力」→ 技術可行性。'],
+  ['人員規劃的重點是跨部門協作角色與分工，不是招募人數','對應組織就緒度的官方用語。'],
+  ['回收期未考慮金錢的時間價值，要與 NPV 搭配使用','回收期越短風險越低，但必須搭配 NPV 一起看。'],
+  ['NPV > 0 才代表專案帶來超過初期投入的價值','講義算例 NPV −2.6 萬，ROI 卻有 20%。'],
+  ['成本要算資料清洗、系統整合、維運，不是只有模型開發','AI 專案的隱形成本在資料與維運。'],
+  ['技術條件不足是先補基礎再導入，不是直接否決專案','先強化資料治理與 IT 基礎、小規模試點、再逐步擴大。'],
+  ['規則簡單就能解的流程不該用 AI','適合 AI：重複性高、決策規則清晰、數據驅動。'],
+  ['PoC 要選具代表性的場景，不是最容易成功的場景','不具代表性的 PoC 過了也無法推論全面導入。'],
+  ['PoC 要同時收量化指標與質性回饋，只看準確率不夠','質性特別關注使用障礙、文化抗拒、流程磨合。'],
+  ['風險與合規是評估階段就要初探，不是上線後才處理','評估六步驟的第 ⑤ 步。'],
+  ['生成式 AI 的侵權風險要從訓練資料授權處理','訓練資料要有合法授權。']
+]);
+
+/* ---------- quiz ---------- */
+quiz($('#quiz'),[
+  ['AI 導入評估通常第一步應聚焦於？',['業務痛點與需求辨識','技術可行性評估','資料盤點','成本試算'],'官方立場是先確認問題值不值得解。技術、資料、成本都是之後的步驟。'],
+  ['下列哪一項屬於「商業價值評估」的考量？',['預期效益與回報','技術成熟度與部署資源','AI 專案所需的跨部門協作角色','伺服器規格與網路頻寬'],'「預期效益與回報」是商業價值；技術成熟度屬技術可行性；協作角色屬組織就緒。'],
+  ['為確保企業體系具備執行 AI 專案的能力，評估時應考量？',['技術成熟度與部署資源','預期效益與回報','預計招募的人員數量','行銷宣傳預算'],'「技術成熟度與部署資源」是技術可行性面向的官方用語。'],
+  ['初期規劃階段，人員規劃的重點是？',['AI 專案所需的跨部門協作角色','盡可能招募更多 AI 工程師','全部外包給第三方顧問','由 IT 部門獨力負責'],'人員規劃的重點是跨部門協作角色與分工，不是招募人數。'],
+  ['某 AI 客服專案：初期投資 500 萬、每年淨現金流 200 萬、折現率 10%、評估三年。下列判讀何者正確？',['ROI 為 20%，但 NPV 約 −2.6 萬，折現後並不划算','ROI 為 20%，所以專案一定值得做','回收期 2.5 年，短於三年，所以 NPV 必定為正','三個指標結論一致，都顯示值得投資'],'ROI 與回收期都沒有折現；NPV 是最嚴格的指標，這題就是「ROI 漂亮但 NPV 為負」的矛盾。'],
+  ['關於「回收期」的敘述，何者正確？',['未考慮金錢的時間價值，必須搭配 NPV 一起看','已考慮折現，是最嚴格的指標','回收期越長代表投資風險越低','可以完全取代 NPV'],'回收期越短風險越低，但它沒有折現，官方明示要搭配 NPV。'],
+  ['企業資源有限，下列哪個 AI 專案應優先推動？',['技術成熟度高、效益可快速驗證、可跨部門擴展','預期效益最大但技術尚未成熟','技術成熟但只能用於單一部門','規則簡單、寫程式就能解決'],'官方判準三條同時滿足才是首選；只有效益大但技術不成熟應往後排。'],
+  ['評估發現企業的資料治理與 IT 基礎不足，最合理的做法是？',['先強化資料治理與 IT 基礎，挑簡單場景小規模試點再逐步擴大','直接否決整個 AI 專案','跳過技術評估直接全面導入','改用規則程式取代所有流程'],'技術條件不足不等於不能做，官方建議先補基礎、小規模試點。'],
+  ['企業設計 PoC 時，下列哪個選擇最可能讓 PoC「白做」？',['挑一個最容易成功但不具代表性的場景','選有共識、有合作意願的單位','確認資料格式與存取權限已備妥','限定在小範圍部門以控制風險'],'最容易成功但不具代表性的 PoC，過了也無法推論全面導入會成功。'],
+  ['PoC 結果不如預期，下一步最合理的方向是？',['回頭補強條件或調整範圍','直接放棄 AI 導入','不管結果，直接全面導入','只把準確率門檻調低讓它通過'],'PoC 的價值不只在成功；揭露問題也替企業省下後續投入。'],
+  ['金融業的信用風險評分模型被要求導入可解釋 AI（XAI），最主要的原因是？',['必須向主管機關說明風險評分的組成邏輯','可以大幅提升模型準確率','可以降低運算成本','可以省去資料清洗'],'金融風控是官方點名的 XAI 必要場景之一。'],
+  ['為管理法律與合規風險，企業在評估階段應採取何種措施？',['檢視個資使用的合法性','等系統上線後再處理法規問題','只計算模型開發成本','只看模型準確率'],'風險與合規在評估階段就要初探，個資使用合法性是官方考法。']
+],['太強了，評估順序與財務判讀都很穩。','不錯！回頭看看答錯的題目對應的段落。','建議重新操作 22.2 的排序遊戲與 22.4 的財務模擬器，再來一次。']);
+
+navHighlight();
+</script>
+</body>
+</html>

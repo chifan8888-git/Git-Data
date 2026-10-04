@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L21103 生成式 AI 技術與應用｜互動教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F5; --surface:#FFFFFF; --surface2:#F6F8FB; --ink:#18202E; --muted:#5A6475; --line:#D5DBE4;
+  --txt:#3B4CCA; --img:#0E8A7A; --aud:#B87812; --sen:#B8336A;
+  --ok:#1F8A4C; --bad:#C23B2E; --warn:#D9822B;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+    --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+  --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75}
+h1,h2,h3{font-family:var(--serif);line-height:1.3;margin:0}
+p{margin:0 0 1em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--txt);outline-offset:2px;border-radius:4px}
+svg{max-width:100%;height:auto;display:block}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1180px;margin:0 auto;gap:40px;padding:0 24px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;padding:32px 0;height:100vh;overflow:auto}
+nav.toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14.5px}
+nav.toc a span{font-variant-numeric:tabular-nums;font-size:13px;opacity:.8}
+nav.toc a.on{background:var(--surface);color:var(--ink);font-weight:700}
+.toc-title{font-family:var(--serif);font-weight:900;font-size:18px;padding:0 10px 14px}
+main{min-width:0;padding-bottom:80px}
+section{padding:56px 0 8px;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.sec-head{display:flex;gap:16px;align-items:baseline;margin-bottom:18px}
+.sec-no{font-family:var(--serif);font-weight:900;font-size:40px;color:var(--line);line-height:1}
+h2{font-size:28px;font-weight:900}
+h3{font-size:19px;margin:34px 0 10px}
+.lead{color:var(--muted);max-width:66ch}
+.prose{max-width:68ch}
+
+/* hero */
+.hero{padding:44px 0 24px}
+.hero .code{font-size:14px;color:var(--muted);margin-bottom:6px}
+.hero h1{font-size:clamp(34px,5.5vw,56px);font-weight:900;letter-spacing:.02em}
+.hero .one{font-size:18px;max-width:60ch;margin:16px 0 0;color:var(--muted)}
+.hero-fig{background:var(--surface);border-radius:20px;margin-top:28px;padding:14px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+.goal{border-left:4px solid var(--c);padding:6px 0 6px 14px;font-size:15px}
+
+/* panels */
+.panel{background:var(--surface);border-radius:16px;padding:22px;margin:16px 0}
+.panel.flat{background:var(--surface2)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font-size:15px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hint{font-size:14px;color:var(--muted)}
+.callout{border-left:4px solid var(--warn);background:var(--surface2);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;font-size:15px}
+.callout.exam{border-color:var(--txt)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:14px}
+
+/* modality chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+
+/* matcher */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.match .col{display:flex;flex-direction:column;gap:10px}
+.mitem{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15px;transition:border-color .2s,background .2s,transform .2s}
+.mitem small{display:block;color:var(--muted);font-size:13px}
+.mitem.sel{border-color:var(--ink);transform:translateX(4px)}
+.mitem.done{border-color:var(--c,var(--ok));background:var(--surface2);cursor:default}
+.mitem.wrong{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:1.8em;margin-top:12px;font-size:15px}
+.feedback.ok{color:var(--ok)} .feedback.bad{color:var(--bad)}
+
+/* timeline */
+.steps{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stage-viz{min-height:130px;display:flex;align-items:center;justify-content:center}
+.stage-viz .blk{display:inline-block;width:34px;height:34px;border-radius:6px;margin:2px;transition:all .5s}
+
+/* align toggle */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.compare>div{padding:18px}
+.compare>div+div{border-left:1px solid var(--line)}
+.compare .big{font-family:var(--serif);font-weight:900;font-size:22px;margin-bottom:6px}
+
+/* fusion */
+.meter{height:14px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:6px 0}
+.meter>i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .7s cubic-bezier(.3,.8,.3,1),background .4s}
+.flow{stroke-dasharray:6 7;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.jitter{animation:jit .25s steps(2) infinite}
+@keyframes jit{50%{transform:translate(1.5px,-1px)}}
+.fusion-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.pc{font-size:15px}
+.pc b{display:block;font-size:14px;color:var(--muted);font-weight:500}
+
+/* clip */
+.mat{display:grid;gap:4px;font-size:13px}
+.mat .cell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;transition:background .5s,color .5s}
+.mat .lab{display:flex;align-items:center;justify-content:center;font-size:22px}
+.mat .tlab{font-size:12px;text-align:center;color:var(--muted);display:flex;align-items:flex-end;justify-content:center;line-height:1.3}
+.zs-imgs{display:flex;gap:10px;flex-wrap:wrap}
+.zs-img{font-size:38px;width:72px;height:72px;border-radius:16px;border:2px solid var(--line);background:var(--surface2);display:flex;align-items:center;justify-content:center}
+.zs-img[aria-pressed="true"]{border-color:var(--img);box-shadow:0 0 0 3px color-mix(in srgb,var(--img) 25%,transparent)}
+.bar{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.bar .track{height:22px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;width:0;background:var(--txt);border-radius:6px;transition:width .8s cubic-bezier(.3,.8,.3,1)}
+.bar.win .fill{background:var(--img)}
+.bar.win{font-weight:700}
+.bar .num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.flip{perspective:900px;height:150px;border:0;background:none;padding:0;text-align:left}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flip[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:center}
+.flip .f{background:var(--surface);border:1.5px solid var(--line)}
+.flip .f strong{font-family:var(--serif);font-size:22px}
+.flip .f span{color:var(--muted);font-size:14px}
+.flip .b{background:var(--ink);color:var(--bg);transform:rotateY(180deg);font-size:15px}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.pnode{border:2px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;font-size:14px;background:var(--surface);transition:all .35s}
+.pnode b{display:block;font-size:16px}
+.pnode.on{border-color:var(--aud);background:color-mix(in srgb,var(--aud) 14%,var(--surface));transform:translateY(-3px)}
+.pnode.past{border-color:color-mix(in srgb,var(--aud) 45%,var(--line))}
+.pout{background:var(--surface2);border-radius:12px;padding:14px 16px;min-height:84px;font-size:15px}
+.wave{display:flex;gap:3px;align-items:center;height:30px}
+.wave i{width:4px;background:var(--aud);border-radius:2px;animation:wv 1s ease-in-out infinite}
+@keyframes wv{50%{transform:scaleY(.3)}}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+
+/* strategies */
+.strat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.strat button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;text-align:left;font-size:15px}
+.strat button[aria-pressed="true"]{border-color:var(--ink)}
+.verdict{font-family:var(--serif);font-weight:900;font-size:20px}
+
+details{border-bottom:1px solid var(--line)}
+details summary{cursor:pointer;padding:12px 4px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"+";font-weight:900;width:14px;color:var(--muted)}
+details[open] summary::before{content:"−"}
+details .body{padding:0 4px 14px 30px;font-size:15px}
+.tag{font-size:12.5px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums;min-width:80px}
+
+/* quiz */
+.qcard{background:var(--surface);border-radius:16px;padding:24px}
+.qtop{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
+.qtext{font-size:18px;font-weight:700;margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15.5px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+.opt.wrongpick{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.opt:disabled{cursor:default}
+.expl{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15px;display:none}
+.expl.show{display:block}
+.progress{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;margin-bottom:14px}
+.progress i{display:block;height:100%;background:var(--txt);transition:width .4s}
+
+.traps label{display:flex;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:15px}
+.traps input{width:18px;height:18px;margin-top:4px;flex:none;accent-color:var(--ok)}
+.traps label.chk>span{color:var(--muted)}
+.traps em{font-style:normal;font-weight:700}
+
+/* mobile */
+@media (max-width:860px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+  nav.toc{position:sticky;top:0;height:auto;z-index:10;background:var(--bg);display:flex;overflow-x:auto;padding:8px 0;padding-top:calc(8px + env(safe-area-inset-top,0px));gap:4px;border-bottom:1px solid var(--line)}
+  .toc-title{display:none}
+  nav.toc a{white-space:nowrap;flex:none}
+  .match,.stage,.fusion-meta,.compare{grid-template-columns:1fr}
+  .compare>div+div{border-left:0;border-top:1px solid var(--line)}
+  .pipe{grid-template-columns:repeat(5,minmax(90px,1fr));overflow-x:auto}
+  .bar{grid-template-columns:110px 1fr 56px}
+  h2{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* ---- extra components (same visual language as template) ---- */
+.stage>*,.compare>div,.fusion-meta>*{min-width:0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em;background:var(--surface2);padding:1px 5px;border-radius:5px}
+.tok{display:inline-flex;flex-direction:column;align-items:center;border:1.5px solid var(--line);border-radius:8px;padding:4px 9px;margin:3px;font-size:15px;background:var(--surface);transition:all .35s;line-height:1.4;color:var(--ink)}
+.tok small{font-size:12px;color:var(--muted)}
+.tok.gone{opacity:.28;text-decoration:line-through}
+.tok.hl{border-color:var(--c,var(--txt));background:color-mix(in srgb,var(--c,var(--txt)) 16%,var(--surface))}
+button.tok{cursor:pointer}
+.slider{display:grid;grid-template-columns:170px 1fr 74px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.slider input{width:100%;min-width:0;accent-color:var(--txt)}
+.slider output{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.formula{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--surface2);border-radius:10px;padding:12px 14px;font-size:14px;white-space:pre-wrap;word-break:break-word;line-height:1.7;margin:12px 0}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:12px}
+.kpi{background:var(--surface2);border-radius:12px;padding:10px 14px}
+.kpi b{display:block;font-family:var(--serif);font-size:24px;font-variant-numeric:tabular-nums}
+.kpi span{font-size:13px;color:var(--muted)}
+.bins{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-top:12px}
+.bin{border:2px dashed var(--line);border-radius:12px;padding:10px 12px;min-height:80px;font-size:14px}
+.bin b{display:block;margin-bottom:4px}
+.bin div{animation:pop .35s}
+@keyframes pop{from{transform:scale(.8);opacity:0}}
+.heat{display:flex;flex-wrap:wrap;gap:4px}
+.heat .tok{min-width:44px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid2>*{min-width:0}
+input[type=text],input:not([type]){font:inherit;padding:6px 10px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface2);color:var(--ink);min-width:0}
+.pulse{animation:pls 1.6s ease-in-out infinite}
+@keyframes pls{50%{opacity:.35}}
+.cell.cur{outline:3px solid var(--ink);outline-offset:-3px}
+@media (max-width:860px){
+  .slider{grid-template-columns:1fr 64px}
+  .slider label{grid-column:1/-1;margin-bottom:-6px}
+  .grid2{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="toc" aria-label="章節">
+  <div class="toc-title">生成式 AI</div>
+  <a href="#intro"><span>●</span>導覽與目標</a>
+  <a href="#s1"><span>20.1</span>生成式 vs 鑑別式</a>
+  <a href="#s2"><span>20.2</span>四大模型家族</a>
+  <a href="#s3"><span>20.3</span>從現象推機制</a>
+  <a href="#s4"><span>20.4</span>客製化與壓縮</a>
+  <a href="#s5"><span>20.5</span>應用與指標</a>
+  <a href="#s6"><span>20.6</span>風險與趨勢</a>
+  <a href="#s7"><span>20.7</span>官方考題</a>
+  <a href="#s8"><span>20.8</span>易錯與測驗</a>
+</nav>
+
+<main>
+<!-- HERO -->
+<section id="intro" class="hero">
+  <div class="code">L21103　中級 AI 應用規劃師　建議 50 分鐘</div>
+  <h1>生成式 AI 技術與應用</h1>
+  <p class="one">這是 L21 科目一裡「與初級落差最大」的知識點。初級考「知道有哪些工具、會下提示詞」；中級考的是<b>看到一個生成失敗的現象，能回推是哪一層技術機制出問題</b>，以及在一堆看起來都合理的技術名詞中，<b>挑出真正對症的那一個</b>。</p>
+  <div class="hero-fig" aria-hidden="true">
+    <svg id="heroSvg" viewBox="0 0 720 300">
+      <defs>
+        <path id="hp0" d="M140 150 C 260 150, 260 45, 380 45"/>
+        <path id="hp1" d="M140 150 C 260 150, 260 115, 380 115"/>
+        <path id="hp2" d="M140 150 C 260 150, 260 185, 380 185"/>
+        <path id="hp3" d="M140 150 C 260 150, 260 255, 380 255"/>
+        <path id="hq0" d="M480 45 C 560 45, 560 150, 600 150"/>
+        <path id="hq1" d="M480 115 C 560 115, 560 150, 600 150"/>
+        <path id="hq2" d="M480 185 C 560 185, 560 150, 600 150"/>
+        <path id="hq3" d="M480 255 C 560 255, 560 150, 600 150"/>
+      </defs>
+      <g fill="none" stroke-width="2" opacity=".35">
+        <use href="#hp0" stroke="var(--txt)"/><use href="#hp1" stroke="var(--img)"/><use href="#hp2" stroke="var(--aud)"/><use href="#hp3" stroke="var(--sen)"/>
+        <use href="#hq0" stroke="var(--txt)"/><use href="#hq1" stroke="var(--img)"/><use href="#hq2" stroke="var(--aud)"/><use href="#hq3" stroke="var(--sen)"/>
+      </g>
+      <g font-family="Noto Sans TC, sans-serif" font-size="15" font-weight="700">
+        <circle cx="80" cy="150" r="62" fill="var(--surface2)" stroke="var(--ink)" stroke-width="2"/>
+        <text x="80" y="145" text-anchor="middle" fill="var(--ink)" font-size="14">學資料分佈</text>
+        <text x="80" y="166" text-anchor="middle" fill="var(--ink)" font-size="14">P(x)</text>
+        <rect x="380" y="25" width="100" height="40" rx="20" fill="var(--txt)"/><text x="430" y="50" text-anchor="middle" fill="#fff">VAE</text>
+        <rect x="380" y="95" width="100" height="40" rx="20" fill="var(--img)"/><text x="430" y="120" text-anchor="middle" fill="#fff">GAN</text>
+        <rect x="380" y="165" width="100" height="40" rx="20" fill="var(--aud)"/><text x="430" y="190" text-anchor="middle" fill="#fff">擴散</text>
+        <rect x="380" y="235" width="100" height="40" rx="20" fill="var(--sen)"/><text x="430" y="260" text-anchor="middle" fill="#fff">自迴歸</text>
+        <rect x="600" y="120" width="110" height="60" rx="12" fill="var(--ink)"/>
+        <text x="655" y="146" text-anchor="middle" fill="var(--bg)">產生</text><text x="655" y="166" text-anchor="middle" fill="var(--bg)">新樣本</text>
+      </g>
+      <g class="movers">
+        <circle r="6" fill="var(--txt)"><animateMotion dur="2.4s" repeatCount="indefinite"><mpath href="#hp0"/></animateMotion></circle>
+        <circle r="6" fill="var(--img)"><animateMotion dur="2.4s" begin=".3s" repeatCount="indefinite"><mpath href="#hp1"/></animateMotion></circle>
+        <circle r="6" fill="var(--aud)"><animateMotion dur="2.4s" begin=".6s" repeatCount="indefinite"><mpath href="#hp2"/></animateMotion></circle>
+        <circle r="6" fill="var(--sen)"><animateMotion dur="2.4s" begin=".9s" repeatCount="indefinite"><mpath href="#hp3"/></animateMotion></circle>
+        <circle r="6" fill="var(--txt)"><animateMotion dur="1.6s" begin="1.2s" repeatCount="indefinite"><mpath href="#hq0"/></animateMotion></circle>
+        <circle r="6" fill="var(--img)"><animateMotion dur="1.6s" begin="1.5s" repeatCount="indefinite"><mpath href="#hq1"/></animateMotion></circle>
+        <circle r="6" fill="var(--aud)"><animateMotion dur="1.6s" begin="1.8s" repeatCount="indefinite"><mpath href="#hq2"/></animateMotion></circle>
+        <circle r="6" fill="var(--sen)"><animateMotion dur="1.6s" begin="2.1s" repeatCount="indefinite"><mpath href="#hq3"/></animateMotion></circle>
+      </g>
+    </svg>
+  </div>
+  <h3>學完這一課，你應該能夠</h3>
+  <div class="goals">
+    <div class="goal" style="--c:var(--txt)">區辨生成式與鑑別式 AI 的目標、訓練方式與適用情境，判斷題目要的是哪一條路徑</div>
+    <div class="goal" style="--c:var(--img)">說明 VAE、GAN、擴散模型、自迴歸模型四大家族的核心機制、典型故障與辨識關鍵字</div>
+    <div class="goal" style="--c:var(--aud)">由生成結果的異常（顏色錯誤、顆粒化、樣本重複、能力退化）回推技術成因與修正手段</div>
+    <div class="goal" style="--c:var(--sen)">精準區辨 LoRA、Prompt Tuning、全參數微調、知識蒸餾、剪枝、量化六種客製化／壓縮策略</div>
+  </div>
+  <p class="hint" style="margin-top:20px">本頁每個顏色固定代表一個模型家族：<span class="chip" style="--c:var(--txt)"><i class="dot"></i>VAE</span>　<span class="chip" style="--c:var(--img)"><i class="dot"></i>GAN</span>　<span class="chip" style="--c:var(--aud)"><i class="dot"></i>擴散模型</span>　<span class="chip" style="--c:var(--sen)"><i class="dot"></i>自迴歸（GPT 類）</span></p>
+</section>
+
+<!-- 20.1 -->
+<section id="s1">
+  <div class="sec-head"><span class="sec-no">20.1</span><h2>生成式 vs 鑑別式：先切對這一刀</h2></div>
+  <div class="compare">
+    <div><div class="big">生成式 AI</div>學資料的<b>分佈</b> P(x) 或 P(x|y)，目標是<b>產生新的資料樣本</b>。<br><span class="hint">GPT、VAE、GAN、Diffusion</span></div>
+    <div><div class="big">鑑別式 AI</div>學<b>決策邊界</b> P(y|x)，目標是分類、辨識、預測。<br><span class="hint">SVM、決策樹、隨機森林、邏輯迴歸、BERT Classifier</span></div>
+  </div>
+
+  <h3>動手看：學邊界 vs 學分佈</h3>
+  <div class="panel">
+    <p class="hint">同一批兩類資料點（示意）。鑑別式只畫出一條分界線；生成式學會每一類「長什麼樣」，所以能<b>產生新樣本</b>。</p>
+    <div class="tabs" id="gdTabs"></div>
+    <svg id="gdSvg" viewBox="0 0 600 260" role="img" aria-label="生成式與鑑別式示意"></svg>
+    <div class="row" style="margin-top:10px"><button class="btn primary" id="gdGen">產生 5 個新樣本</button><span class="hint" id="gdNote"></span></div>
+  </div>
+  <details>
+    <summary>展開完整對照表</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>維度</th><th>生成式 AI</th><th>鑑別式 AI</th></tr>
+        <tr><td><b>學什麼</b></td><td>學資料的<b>分佈</b> P(x) 或 P(x|y)</td><td>學決策邊界 P(y|x)</td></tr>
+        <tr><td><b>目標</b></td><td>產生<b>新的資料樣本</b></td><td>分類、辨識、預測</td></tr>
+        <tr><td><b>輸出</b></td><td>文字、圖像、音訊、影片、程式碼</td><td>類別標籤或數值</td></tr>
+        <tr><td><b>代表模型</b></td><td>GPT、VAE、GAN、Diffusion</td><td>SVM、決策樹、隨機森林、邏輯迴歸、BERT Classifier</td></tr>
+        <tr><td><b>代表應用</b></td><td>ChatGPT 對話、DALL·E 生圖</td><td>ResNet 影像分類、HMM 語音辨識</td></tr>
+        <tr><td><b>資料效率</b></td><td>可用無標註語料大規模預訓練，低資源時退化較慢</td><td>依賴標註資料，標註少時效能掉得快</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <div class="panel">
+    <h3 style="margin-top:0">判讀練習：要生成，還是判斷就夠？</h3>
+    <p class="hint">判讀口訣：題幹只要出現「產生新樣本／模擬情境／擴充資料／合成」等字眼，鑑別式模型一律出局，不管準確率被寫得多好聽。</p>
+    <div id="gdSort"></div>
+  </div>
+
+  <h3>低資源實驗：怎麼凸顯兩條路徑的本質差異？（114-2 第 43 題）</h3>
+  <div class="panel">
+    <p class="hint">在低資源情境下<b>逐步減少標註比例（100%／50%／10%）比較 F1</b>，看資料利用效率。選標註比例，看兩條路徑的 F1（數值為示意）。</p>
+    <div class="tabs" id="lrTabs"></div>
+    <div id="lrBars"></div>
+    <p class="hint" id="lrNote" style="margin:6px 0 0"></p>
+  </div>
+
+  <h3>生成式 AI 在 AI 演進四階段中的位置</h3>
+  <div class="panel">
+    <p class="hint">官方指引引用 NVIDIA 執行長黃仁勳於 2025 年 CES 提出的四階段分法。點每個階段。</p>
+    <div class="pipe" id="stagePipe" style="grid-template-columns:repeat(4,1fr)"></div>
+    <div class="pout" id="stageOut" aria-live="polite"></div>
+  </div>
+  <div class="callout">考點在於<b>順序與分界</b>：生成式是第二階段（會創造），代理式是第三階段（會規劃並調用工具）。不要把「能呼叫 API、能自主分解任務」的敘述當成生成式 AI 的定義。</div>
+</section>
+
+<!-- 20.2 -->
+<section id="s2">
+  <div class="sec-head"><span class="sec-no">20.2</span><h2>四大生成模型家族</h2></div>
+  <div class="panel">
+    <div class="tabs" id="famTabs"></div>
+    <div class="grid2">
+      <svg id="famSvg" viewBox="0 0 320 200" role="img" aria-label="模型機制示意"></svg>
+      <div id="famInfo"></div>
+    </div>
+  </div>
+  <details>
+    <summary>展開機制與故障模式對照表</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>模型</th><th>核心機制</th><th>辨識關鍵字</th><th>優勢</th><th>典型故障</th></tr>
+        <tr><td><b>VAE</b></td><td>編碼器把資料壓到<b>顯式潛在分佈</b>，解碼器從潛在向量重建</td><td>「潛在空間」「變分推斷」「機率建模」</td><td>潛在空間連續可控、易做跨模態語意對齊</td><td>生成<b>模糊</b>、解析度有限</td></tr>
+        <tr><td><b>GAN</b></td><td>生成器與判別器<b>對抗訓練</b>，動態逼近真實分佈</td><td>「兩個網路互相對抗」「判別器」</td><td>寫實度高、細節銳利</td><td><b>模式崩潰</b>、訓練不穩、對超參數敏感</td></tr>
+        <tr><td><b>擴散模型</b></td><td>前向加噪 → 反向<b>逐步去噪</b>還原</td><td>「逐步去噪」「取樣步數」「噪聲」</td><td>高保真、穩定、多樣性佳</td><td>取樣步數不足 → 細節不全；推論慢</td></tr>
+        <tr><td><b>自迴歸模型（GPT 類）</b></td><td>逐 token 依條件機率生成</td><td>「由左至右」「逐字生成」「next token」</td><td>長文連貫、可指令驅動</td><td><b>幻覺</b>、長文邏輯漂移</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <div class="panel">
+    <h3 style="margin-top:0">官方最愛考的一句話（114-2 第 40 題）</h3>
+    <p class="hint">先點左邊模型，再點右邊正確的描述。小心張冠李戴的誘答。</p>
+    <div class="match" id="famMatch"></div>
+    <div class="feedback" id="famFb" aria-live="polite"></div>
+  </div>
+
+  <h3>擴散模型的生成流程</h3>
+  <div class="panel">
+    <p class="hint">按「下一步」跟著一句提示走完流程。文字只是透過交叉注意力注入的<b>條件</b>，影像是從噪聲逐步去噪出來的。</p>
+    <div class="pipe" id="dfPipe"></div>
+    <div class="pout" id="dfOut" aria-live="polite"></div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" id="dfNext">下一步</button><button class="btn" id="dfReset">從頭開始</button></div>
+  </div>
+
+  <h3>取樣參數模擬器（114-2 第 38 題）</h3>
+  <div class="panel">
+    <p class="hint">提示：「一顆紅色愛心」。調整取樣步數、取樣器與 CFG，看生成結果與三個指標（影像與數值為示意）。</p>
+    <div class="grid2">
+      <div style="display:flex;justify-content:center"><svg id="dsSvg" viewBox="0 0 160 160" style="width:100%;max-width:260px;border-radius:12px" role="img" aria-label="生成結果示意"></svg></div>
+      <div>
+        <div class="slider"><label for="dsSteps">取樣步數 Steps</label><input type="range" id="dsSteps" min="5" max="60" value="10"><output id="dsStepsO">10</output></div>
+        <div class="slider"><label for="dsCfg">CFG 遵循強度</label><input type="range" id="dsCfg" min="1" max="20" value="7"><output id="dsCfgO">7</output></div>
+        <div class="row"><span class="hint">取樣器：</span><div class="tabs" id="dsSampler" style="margin:0"></div></div>
+        <div id="dsBars" style="margin-top:8px"></div>
+      </div>
+    </div>
+    <p class="hint" id="dsNote" style="margin:8px 0 0"></p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>參數</th><th>控制什麼</th><th>調太低</th><th>調太高</th></tr>
+      <tr><td><b>取樣步數（Steps）</b></td><td>去噪過程是否充分</td><td>顆粒化、邊緣模糊、細節不全</td><td>邊際效益遞減、生成變慢</td></tr>
+      <tr><td><b>取樣器（Sampler）</b></td><td>每一步的數值解法品質</td><td>低品質取樣器導致同樣步數下細節較差</td><td>—</td></tr>
+      <tr><td><b>CFG</b>（Classifier-Free Guidance）</td><td>對提示的<b>遵循強度</b></td><td>生成偏離提示</td><td><b>過飽和、假影</b>、多樣性下降</td></tr>
+    </table>
+  </div>
+  <div class="callout exam"><b>高頻陷阱：</b>4K 圖「邊緣顆粒化、細節模糊」的正解是<b>增加取樣步數並改用高品質取樣器</b>，不是「提高 CFG」。CFG 管的是「聽不聽提示的話」，不是「畫得清不清楚」。</div>
+
+  <h3>GAN 的模式崩潰（114-2 第 20 題）</h3>
+  <div class="panel">
+    <p class="hint">症狀：生成器只吐出少數幾種重複樣本。成因：生成器找到能騙過判別器的「捷徑」，原始 GAN 損失梯度飽和。四個選項全是真實可用的技術，哪一個是<b>根本解</b>？</p>
+    <div class="strat" id="mcStrat"></div>
+    <div class="heat" id="mcFaces" style="font-size:30px;margin:14px 0 4px"></div>
+    <div>
+      <div class="verdict" id="mcV">選一個手段試試</div>
+      <div class="meter" style="height:18px;margin:10px 0"><i id="mcM" style="width:0"></i></div>
+      <div id="mcWhy" class="hint"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 20.3 -->
+<section id="s3">
+  <div class="sec-head"><span class="sec-no">20.3</span><h2>從現象推機制</h2></div>
+  <p class="lead">本知識點的最大落差。中級題型幾乎都長這樣：給你一個生成結果的異常描述，問「從技術機制分析，最可能的原因是什麼」。下面每張卡是一個症狀，選出<b>真正的技術成因</b>。</p>
+  <div id="diag"></div>
+  <details>
+    <summary>展開症狀 → 成因 → 對策 完整對照表</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>症狀描述</th><th>真正的技術成因</th><th>正確對策</th><th>常見誘答</th></tr>
+        <tr><td>主題與場景正確，但<b>品牌標誌顏色錯、手部姿勢不自然</b></td><td><b>CLIP 的文字編碼器與影像編碼器在語意嵌入空間未充分對齊</b></td><td>加強圖文對齊訓練／改用可控生成（ControlNet）／後製修正</td><td>「去噪過程隨機梯度漂移」「提示語超出位置編碼上下文限制」</td></tr>
+        <tr><td>高解析度圖<b>邊緣顆粒化、細節模糊</b></td><td>去噪過程不充分（取樣步數不足／取樣器品質差）</td><td>增加取樣步數 + 高品質取樣器</td><td>提高 CFG、降低輸入解析度</td></tr>
+        <tr><td>人臉生成<b>只有少數幾種樣式</b></td><td>GAN 模式崩潰</td><td>改用 WGAN（Wasserstein 距離）損失</td><td>只加梯度懲罰／只加多尺度判別器</td></tr>
+        <tr><td>微調後<b>醫療問答變強，但通用能力退化</b></td><td>災難性遺忘：微調大幅改寫了承載通用知識的預訓練權重</td><td>凍結大部分參數，僅訓練 LoRA 等少量新增模組</td><td>提高學習率縮短步數、只用領域語料多輪訓練、加大 Batch Size</td></tr>
+        <tr><td>生成內容<b>通順但與事實不符</b></td><td>幻覺：自迴歸模型本質是機率式的下一 token 預測，不是知識查詢</td><td>RAG 檢索增強、要求引用來源、人工覆核</td><td>「只要把模型參數再放大就會好」</td></tr>
+        <tr><td>導入資料增強後<b>效能反而下降</b></td><td>增強後樣本的<b>特徵分佈偏離原始資料</b></td><td>檢查並調整增強策略，維持語意一致性</td><td>提高增強比例、改用半監督重新校正標註</td></tr>
+        <tr><td>多模態推論時<b>某一模態缺失</b></td><td>融合層無法取得完整輸入</td><td>訓練<b>具模態缺失感知能力</b>的模型，動態調整融合權重</td><td>零向量填充、用生成模型補全、直接丟棄樣本</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <h3>為什麼「CLIP 對齊不足」是旗艦題的正解（114-2 第 50 題）</h3>
+  <div class="panel">
+    <p class="hint">提示文字：「品牌標誌」「海邊夕陽」「模特兒手持飲料」。切換語意層級，看文字嵌入與影像嵌入對得準不準（示意）。</p>
+    <div class="tabs" id="clipTabs"></div>
+    <svg id="clipSvg" viewBox="0 0 640 230" role="img" aria-label="粗細粒度語意對齊示意"></svg>
+    <p class="hint" id="clipNote" style="margin:6px 0 0"></p>
+  </div>
+  <p class="prose"><b>判讀邏輯：</b>現象是「<b>語意層級的偏差</b>」（該藍的變綠、手指多一根），不是「像素層級的隨機雜訊」，也不是「整張圖亂掉」。語意對不上 → 責任在跨模態對齊，也就是 CLIP 那一層。</p>
+  <div class="panel flat">
+    <h3 style="margin-top:0">反過來檢查誘答：點一句看錯在哪</h3>
+    <div class="strat" id="lureJudge"></div>
+    <p id="lureOut" class="hint" style="margin:12px 0 0">選一句看看</p>
+  </div>
+  <div class="callout exam"><b>這是中級最典型的誘答設計：</b>用一個「敘述本身沒錯、但與題幹現象對不上」的選項，以及一個「說得太死、把程度問題寫成有無問題」的選項來分高下。</div>
+</section>
+
+<!-- 20.4 -->
+<section id="s4">
+  <div class="sec-head"><span class="sec-no">20.4</span><h2>客製化與壓縮：六種策略的精準區辨</h2></div>
+  <p class="lead">這是 L21103 除了「現象推機制」之外第二高頻的考區，115-1 就連續考了三題。第一刀：先分清楚「省訓練成本」還是「省推論成本」。</p>
+  <div class="panel">
+    <h3 style="margin-top:0">分類練習：這個策略省的是什麼？</h3>
+    <div id="cmpSort"></div>
+  </div>
+
+  <h3>策略透視：模型被動了哪裡？</h3>
+  <div class="panel">
+    <p class="hint">切換策略，看原始權重是凍結（灰鎖）、被更新（橘）、被移除（虛線）、被降精度，還是另外訓練了一個小模型。</p>
+    <div class="tabs" id="stTabs"></div>
+    <svg id="stSvg" viewBox="0 0 640 220" role="img" aria-label="策略示意"></svg>
+    <div class="kpis" id="stKpi"></div>
+  </div>
+  <details>
+    <summary>展開六種策略完整對照表</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>策略</th><th>動原始權重嗎</th><th>新增什麼</th><th>主要解決</th><th>典型題幹關鍵字</th></tr>
+        <tr><td><b>LoRA</b></td><td><b>不動（凍結）</b></td><td>各層旁路的<b>低秩分解可訓練矩陣</b></td><td>可訓練參數量與 GPU 記憶體</td><td>「GPU 記憶體有限」「凍結原模型」「僅訓練少量額外參數」</td></tr>
+        <tr><td><b>QLoRA</b></td><td>不動（並額外做 4-bit 量化）</td><td>低秩矩陣</td><td>單卡也能微調超大模型</td><td>「單張顯卡微調 70B」</td></tr>
+        <tr><td><b>Prompt／Prefix Tuning</b></td><td><b>不動（凍結）</b></td><td>輸入端<b>可學習的連續向量（Soft Prompt）</b></td><td>靠改變<b>輸入表示</b>引導既有模型行為</td><td>「在輸入端加入軟提示」</td></tr>
+        <tr><td><b>全參數微調（SFT）</b></td><td><b>會更新全部權重</b></td><td>產生一份新的模型參數</td><td>深度改變模型行為</td><td>「以標註問答資料調整模型」</td></tr>
+        <tr><td><b>RLHF</b></td><td>會更新</td><td>獎勵模型 + 策略更新</td><td>與人類偏好／價值對齊</td><td>「安全性」「拒答」「對齊」</td></tr>
+        <tr><td><b>知識蒸餾</b></td><td>不動老師，<b>另訓練一個小的學生模型</b></td><td>一個全新的小模型</td><td>降低<b>推論</b>成本與模型體積</td><td>「壓縮成較小模型」</td></tr>
+        <tr><td><b>剪枝（Pruning）</b></td><td><b>會移除參數</b></td><td>—</td><td>減少參數量、加速推論</td><td>「移除低重要性參數」</td></tr>
+        <tr><td><b>量化（Quantization）</b></td><td><b>會降低數值精度</b></td><td>—</td><td>降記憶體與延遲，利於邊緣部署</td><td>「INT8」「地端／邊緣裝置」</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <div class="panel">
+    <h3 style="margin-top:0">配對：題幹關鍵字 → 策略</h3>
+    <p class="hint">先點左邊的題幹關鍵字，再點右邊的策略。</p>
+    <div class="match" id="kwMatch"></div>
+    <div class="feedback" id="kwFb" aria-live="polite"></div>
+  </div>
+
+  <h3>三組最容易被混為一談的對比</h3>
+  <div class="panel">
+    <div class="tabs" id="pairTabs"></div>
+    <div id="pairBody"></div>
+  </div>
+
+  <h3>災難性遺忘的標準解法（115-1 第 14 題）</h3>
+  <div class="panel">
+    <p class="hint">SFT 後醫療問答變強、通用能力卻退化。成因：SFT 大幅改寫承載通用知識的預訓練權重。選一個做法。</p>
+    <div class="strat" id="cfStrat"></div>
+    <div style="margin-top:18px">
+      <div class="verdict" id="cfV">選一個做法試試</div>
+      <div class="meter" style="height:18px;margin:10px 0"><i id="cfM" style="width:0"></i></div>
+      <div id="cfWhy" class="hint"></div>
+    </div>
+  </div>
+
+  <h3>客製化路徑的選型順序</h3>
+  <div class="panel">
+    <div id="pathQ"></div>
+    <div class="row" style="margin-top:12px"><button class="btn" id="pathReset">重新開始</button></div>
+  </div>
+</section>
+
+<!-- 20.5 -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-no">20.5</span><h2>三大應用領域與評估指標</h2></div>
+  <h3>文本、圖像、語音的工具地圖</h3>
+  <div class="panel">
+    <div class="tabs" id="toolTabs"></div>
+    <div id="toolBody"></div>
+  </div>
+  <h3>容易被考的工具特性（點卡片翻面）</h3>
+  <div class="cards" id="toolCards"></div>
+
+  <h3>BLEU vs ROUGE：精確率 vs 召回率</h3>
+  <div class="panel">
+    <p class="hint">參考文本固定，切換不同的生成結果，看「生成裡有多少字出現在參考中」（精確率，BLEU 的精神）與「參考裡有多少字被生成涵蓋」（召回率，ROUGE 的精神）。此處以單字重疊示意；實際 BLEU 還看 n-gram 並含簡短懲罰（Brevity Penalty）。</p>
+    <div class="formula" id="brRef"></div>
+    <div class="tabs" id="brTabs"></div>
+    <div class="heat" id="brCand" style="margin:8px 0"></div>
+    <div class="kpis">
+      <div class="kpi"><span>精確率（BLEU 傾向）</span><b id="brP">—</b></div>
+      <div class="kpi"><span>召回率（ROUGE 傾向）</span><b id="brR">—</b></div>
+    </div>
+    <p class="hint" id="brNote" style="margin:10px 0 0"></p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>指標</th><th>衡量什麼</th><th>優勢</th><th>局限</th><th>適用情境</th></tr>
+      <tr><td><b>BLEU</b></td><td>生成與參考文本的 <b>n-gram 重疊</b>（含簡短懲罰 Brevity Penalty）</td><td>自動化、計算快</td><td>忽略語意與流暢性</td><td>機器翻譯、文本生成</td></tr>
+      <tr><td><b>ROUGE</b></td><td>生成對參考文本的<b>召回率</b>（ROUGE-N／ROUGE-L 最長公共子序列／ROUGE-S）</td><td>關注關鍵內容覆蓋</td><td>無法衡量創新性</td><td>自動摘要、問答</td></tr>
+      <tr><td><b>人工評估</b></td><td>流暢性（Fluency）與準確性（Accuracy），常用 1–5 分制或排序法</td><td>捕捉語意與語用</td><td>主觀性強、成本高</td><td>對話、創意寫作</td></tr>
+      <tr><td><b>MOS</b></td><td>語音自然度的人工平均分數（1–5 分）</td><td>直接反映聽感</td><td>需受測者、成本高</td><td>語音合成</td></tr>
+      <tr><td><b>WER</b></td><td>語音內容的<b>字詞錯誤率</b></td><td>客觀量化</td><td>只看正確性不看自然度</td><td>語音辨識／合成內容正確性</td></tr>
+      <tr><td><b>生成延遲</b></td><td>從輸入到輸出的時間</td><td>直接對應使用體驗</td><td>—</td><td>即時語音、互動應用</td></tr>
+    </table>
+  </div>
+  <div class="panel">
+    <h3 style="margin-top:0">配對：情境 → 指標</h3>
+    <div class="match" id="metMatch"></div>
+    <div class="feedback" id="metFb" aria-live="polite"></div>
+  </div>
+  <p class="prose"><b>記憶點：</b>BLEU 偏<b>精確率</b>、看<b>翻譯</b>；ROUGE 偏<b>召回率</b>、看<b>摘要</b>。兩者都只比字面重疊，都測不出「語意正確」與「有沒有幻覺」—— 這就是為什麼高風險場景還是要人工評估。</p>
+  <p class="prose"><b>語音合成的三大挑戰：</b>情感表達自然度（避免機械感）、多語言與方言的品質一致性、<b>語音複製（Voice Clone）的隱私與偽造倫理風險</b>。</p>
+</section>
+
+<!-- 20.6 -->
+<section id="s6">
+  <div class="sec-head"><span class="sec-no">20.6</span><h2>風險、治理與趨勢</h2></div>
+  <h3>五大風險：緩解手段落在哪個時點？</h3>
+  <div class="panel">
+    <p class="hint">點選風險，看它的緩解手段落在「事前、事中、事後」哪一段。</p>
+    <div class="tabs" id="riskTabs"></div>
+    <svg id="riskSvg" viewBox="0 0 640 150" role="img" aria-label="風險緩解時點示意"></svg>
+    <div class="pout" id="riskOut"></div>
+  </div>
+
+  <h3>著作權題的固定考法（114-2 第 25 題）</h3>
+  <div class="panel">
+    <p class="hint">四個選項都是真的做法，但題目問的是「<b>最能有效預防</b>侵權問題產生」。</p>
+    <div class="strat" id="cpStrat"></div>
+    <div style="margin-top:18px">
+      <div class="verdict" id="cpV">選一個機制試試</div>
+      <div class="meter" style="height:18px;margin:10px 0"><i id="cpM" style="width:0"></i></div>
+      <div id="cpWhy" class="hint"></div>
+    </div>
+  </div>
+  <div class="callout exam">記住這個判準：<b>問「預防」找源頭，問「追溯」才找浮水印。</b></div>
+
+  <h3>五大技術趨勢（點卡片翻面）</h3>
+  <div class="cards" id="trendCards"></div>
+
+  <h3>合成資料的正確定位（115-1 第 33 題）</h3>
+  <div class="panel flat">
+    <p class="hint">點每一句，判斷它對不對。</p>
+    <div class="strat" id="synJudge"></div>
+    <p id="synOut" class="hint" style="margin:12px 0 0">選一句看看</p>
+  </div>
+</section>
+
+<!-- 20.7 -->
+<section id="s7">
+  <div class="sec-head"><span class="sec-no">20.7</span><h2>官方考過什麼</h2></div>
+  <p class="lead">從 114-2 與 115-1 共 100 題官方公告試題中，與本知識點直接或高度相關者共 <b>16 題</b>（114-2 佔 11 題、115-1 佔 5 題），密度相當高。</p>
+  <div class="panel">
+    <h3 style="margin-top:0">題型統計（用下方分頁篩選題目）</h3>
+    <div id="catBars"></div>
+    <p class="hint" style="margin:6px 0 0">依講義的題型統計：114-2 第 50 題與 115-1 第 14 題同時屬於兩類；114-2 第 37 題未列入任何一類。</p>
+  </div>
+  <div class="tabs" id="exTabs"></div>
+  <div id="examList"></div>
+  <div class="callout exam"><b>結論：</b>把「現象推機制」與「LoRA 家族區辨」兩塊練熟，就吃掉這個知識點過半的分數。</div>
+</section>
+
+<!-- 20.8 -->
+<section id="s8">
+  <div class="sec-head"><span class="sec-no">20.8</span><h2>易錯與陷阱</h2></div>
+  <p class="lead">逐條確認自己真的懂了再打勾（打勾狀態會記在這台裝置上）。</p>
+  <div class="traps" id="traps"></div>
+  <p class="hint" id="trapCount" style="margin-top:10px"></p>
+
+  <h3>情境測驗</h3>
+  <div class="qcard" id="quiz"></div>
+
+  <h3>延伸練習</h3>
+  <p class="prose"><b>L21 主題庫（311 題）：</b>優先刷「生成式 AI 模型比較」「微調策略」「多模態對齊」三個標籤，重點看自己是否會被「敘述正確但與題幹現象無關」的選項帶走。<br><b>L21 歷屆 100 題：</b>把本講義 20.7 表中的 16 題重做一次，做到能<b>直接說出每個誘答錯在哪一層</b>，而不只是選對答案。<br><b>L23 主題庫（326 題）：</b>搭配「模型壓縮與部署」相關題目，鞏固量化／蒸餾／剪枝在<b>推論端</b>的定位，與本知識點的 LoRA（訓練端）形成完整對照。<br><b>交叉複習：</b>本講義與 <code>17_L21_ExamFocus.md</code> 的 17.3、17.4 節、以及初級 <code>05_L115_GenerativeAI_Principles.md</code>、<code>09_L122_GenerativeAI_Applications.md</code> 對讀，親自感受「知道工具」與「解釋機制」之間的落差在哪裡。多模態對齊與模態缺失可搭配 <a href="L21104_multimodal_ai.html">L21104 多模態 AI</a>，LoRA／Prompt Tuning 也可對照 <a href="L21101_nlp_technologies.html">L21101 自然語言處理</a>。</p>
+</section>
+</main>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce){const m=document.querySelector('#heroSvg .movers');if(m)m.remove();}
+const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+
+/* ---------- generic matcher ---------- */
+function matcher(root,fb,left,right,doneMsg){
+  let sel=null,done=0;
+  const L=document.createElement('div');L.className='col';
+  const R=document.createElement('div');R.className='col';
+  left.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;
+    b.innerHTML=it.html;if(it.c)b.style.setProperty('--c',it.c);
+    b.onclick=()=>{if(b.classList.contains('done'))return;L.querySelectorAll('.mitem').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;fb.textContent='';fb.className='feedback';};
+    L.appendChild(b);
+  });
+  right.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;b.innerHTML=it.html;
+    b.onclick=()=>{
+      if(b.classList.contains('done'))return;
+      if(!sel){fb.textContent='請先點左邊一個項目。';fb.className='feedback';return;}
+      if(sel.dataset.k===b.dataset.k){
+        const c=sel.style.getPropertyValue('--c');
+        [sel,b].forEach(x=>{x.classList.remove('sel');x.classList.add('done');if(c)x.style.setProperty('--c',c);});
+        fb.textContent='✓ '+(it.ok||'答對了！');fb.className='feedback ok';sel=null;done++;
+        if(done===left.length){fb.textContent='✓ 全部配對完成！'+doneMsg;}
+      }else{
+        b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');
+        fb.textContent='✗ '+(it.bad||'不太對，再想想兩者的本質差異。');fb.className='feedback bad';
+      }
+    };
+    R.appendChild(b);
+  });
+  root.append(L,R);
+}
+
+/* ---------- tab set ---------- */
+function tabset(root,labels,fn,start){
+  const r=typeof root==='string'?$(root):root;
+  labels.forEach((l,i)=>{const b=document.createElement('button');b.className='btn';b.innerHTML=l;b.setAttribute('aria-pressed','false');
+    b.onclick=()=>{[...r.children].forEach((x,j)=>x.setAttribute('aria-pressed',i===j));fn(i);};r.appendChild(b);});
+  r.children[start||0].click();
+}
+
+/* ---------- sorter: classify one card at a time into bins ---------- */
+function sorter(root,bins,items,doneMsg){
+  const r=typeof root==='string'?$(root):root;let i=0,ord=shuffle(items.map((_,k)=>k));
+  const card=document.createElement('div');card.className='pout';card.setAttribute('aria-live','polite');
+  const btns=document.createElement('div');btns.className='row';btns.style.marginTop='12px';
+  const fb=document.createElement('div');fb.className='feedback';fb.setAttribute('aria-live','polite');
+  const bw=document.createElement('div');bw.className='bins';
+  const lists=bins.map(b=>{const d=document.createElement('div');d.className='bin';d.style.borderColor=b.c||'var(--line)';bw.appendChild(d);return d;});
+  const head=()=>lists.forEach((d,k)=>d.innerHTML=`<b style="color:${bins[k].c||'var(--ink)'}">${bins[k].n}</b>`);
+  bins.forEach((b,k)=>{const x=document.createElement('button');x.className='btn';x.innerHTML=b.n;x.onclick=()=>pick(k);btns.appendChild(x);});
+  const rs=document.createElement('button');rs.className='btn';rs.textContent='重來';rs.style.marginLeft='auto';
+  rs.onclick=()=>{i=0;ord=shuffle(items.map((_,k)=>k));head();fb.textContent='';show();};btns.appendChild(rs);
+  function show(){card.innerHTML=i>=ord.length?`<b>✓ 全部分類完成！</b>${doneMsg||''}`:`<span class="hint">第 ${i+1}／${ord.length} 張</span><br><b>${items[ord[i]].t}</b>`;}
+  function pick(k){
+    if(i>=ord.length)return;const it=items[ord[i]];
+    if(it.b===k){lists[k].insertAdjacentHTML('beforeend',`<div>• ${it.s||it.t}</div>`);fb.textContent='✓ '+(it.why||'正確！');fb.className='feedback ok';i++;show();}
+    else{fb.textContent='✗ '+(it.hint||'不是這一類，再想想。');fb.className='feedback bad';}
+  }
+  r.append(card,btns,fb,bw);head();show();
+}
+
+/* ---------- flip cards ---------- */
+function flips(root,rows){
+  rows.forEach(([n,o,d])=>{
+    const b=document.createElement('button');b.className='flip';b.setAttribute('aria-pressed','false');
+    b.innerHTML=`<div class="in"><div class="f"><strong>${n}</strong><span>${o}</span><span style="margin-top:auto;font-size:12.5px">點我翻面</span></div><div class="b">${d}</div></div>`;
+    b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');
+    $(root).appendChild(b);
+  });
+}
+
+/* ---------- exam list ---------- */
+function examList(root,rows){
+  rows.forEach(([n,k,q,a])=>{$(root).insertAdjacentHTML('beforeend',`<details><summary><span class="tag">${n}</span>${k}</summary><div class="body">${q?`<p style="margin:0 0 6px"><span class="hint">怎麼問：</span>${q}</p>`:''}<p style="margin:0"><span class="hint">正解思路：</span>${a}</p></div></details>`);});
+}
+
+/* ---------- traps ---------- */
+function traps(key,T){
+  let saved=[];try{saved=JSON.parse(localStorage.getItem(key)||'[]')||[];}catch(e){saved=[];}
+  T.forEach(([a,b],i)=>{
+    const l=document.createElement('label');const c=saved.includes(i);if(c)l.classList.add('chk');
+    l.innerHTML=`<input type="checkbox" ${c?'checked':''}><div><em>${a}</em><br><span>${b}</span></div>`;
+    l.querySelector('input').onchange=e=>{const on=e.target.checked;l.classList.toggle('chk',on);saved=on?[...new Set([...saved,i])]:saved.filter(x=>x!==i);try{localStorage.setItem(key,JSON.stringify(saved));}catch(err){}count();};
+    $('#traps').appendChild(l);
+  });
+  function count(){$('#trapCount').textContent=`已確認 ${saved.length}／${T.length} 條`;}
+  count();
+}
+
+/* ---------- quiz ---------- */
+function quiz(Q,lowMsg){
+  let i=0,score=0;const box=$('#quiz');
+  function show(){
+    if(i>=Q.length){
+      const r=score/Q.length;
+      const msg=r>=.9?'太強了，核心對照已經能秒答。':r>=.65?'不錯！回頭看看答錯的那幾題對應的段落。':lowMsg;
+      box.innerHTML=`<div class="progress"><i style="width:100%"></i></div><div class="qtext" style="font-size:24px;font-family:var(--serif)">得分 ${score}／${Q.length}</div><p>${msg}</p><button class="btn primary" id="qr">重新測驗</button>`;
+      $('#qr').onclick=()=>{i=0;score=0;show();};return;
+    }
+    const [q,opts,ex]=Q[i];
+    const order=shuffle(opts.map((o,k)=>({o,k})));
+    box.innerHTML=`<div class="progress"><i style="width:${i/Q.length*100}%"></i></div><div class="qtop"><span>第 ${i+1}／${Q.length} 題</span><span>得分 ${score}</span></div><div class="qtext">${q}</div><div class="opts">${order.map(x=>`<button class="opt" data-k="${x.k}">${x.o}</button>`).join('')}</div><div class="expl" id="qe"></div><div class="row" style="margin-top:14px;justify-content:flex-end"><button class="btn primary" id="qn" style="display:none">${i===Q.length-1?'看結果':'下一題'}</button></div>`;
+    box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.k==='0';if(ok)score++;
+      box.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.k==='0')x.classList.add('right');});
+      if(!ok)b.classList.add('wrongpick');
+      const e=$('#qe');e.innerHTML=(ok?'<b style="color:var(--ok)">答對了。</b>':'<b style="color:var(--bad)">這題要小心。</b>')+ex;e.classList.add('show');
+      $('#qn').style.display='';$('#qn').focus();
+    });
+    $('#qn').onclick=()=>{i++;show();};
+  }
+  show();
+}
+
+/* ---------- nav highlight ---------- */
+(function(){
+  const links=[...document.querySelectorAll('nav.toc a')];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on&&window.innerWidth<=860)a.scrollIntoView({inline:'center',block:'nearest'});});}});},{rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('main section').forEach(s=>io.observe(s));
+})();
+
+/* ---------- pipeline (scoped) ---------- */
+function pipeline(p,nodes,out){
+  // p = id prefix: #pPipe #pOut #pNext #pReset ; out(i) returns html
+  let i=0;const pipe=$('#'+p+'Pipe');
+  pipe.innerHTML=nodes.map(([a,b])=>`<div class="pnode"><b>${a}</b>${b}</div>`).join('');
+  const nx=$('#'+p+'Next'),rs=$('#'+p+'Reset');
+  function r(){pipe.querySelectorAll('.pnode').forEach((n,j)=>{n.classList.toggle('on',j===i);n.classList.toggle('past',j<i);});$('#'+p+'Out').innerHTML=out(i);if(nx){nx.disabled=i===nodes.length-1;nx.style.opacity=i===nodes.length-1?.4:1;}}
+  if(nx)nx.onclick=()=>{if(i<nodes.length-1){i++;r();}};
+  if(rs)rs.onclick=()=>{i=0;r();};
+  r();
+  return {go:k=>{i=k;r();},redraw:()=>r()};
+}
+
+/* ---------- strategy + meter ---------- */
+function stratMeter(p,st,order,unit){
+  // st rows: [label, verdict, pct, color, why]
+  (order||st.map((_,k)=>k)).forEach(i=>{const b=document.createElement('button');b.innerHTML=st[i][0];b.setAttribute('aria-pressed','false');
+    b.onclick=()=>{$$('#'+p+'Strat button').forEach(x=>x.setAttribute('aria-pressed',x===b));const x=st[i];$('#'+p+'V').textContent=x[1];$('#'+p+'V').style.color=x[3];$('#'+p+'M').style.width=x[2]+'%';$('#'+p+'M').style.background=x[3];$('#'+p+'Why').innerHTML=(unit||'效果（示意）')+'：'+x[2]+'%　'+x[4];};
+    $('#'+p+'Strat').appendChild(b);});
+}
+
+/* ---------- animated bars ---------- */
+function bars(root,rows,max,fmt){
+  // rows: [label, value, win?]
+  const r=$(root);r.innerHTML=rows.map(([l,v,w])=>`<div class="bar${w?' win':''}"><span>${l}</span><div class="track"><div class="fill"></div></div><span class="num">${fmt?fmt(v):v}</span></div>`).join('');
+  setTimeout(()=>r.querySelectorAll('.fill').forEach((f,j)=>f.style.width=Math.min(100,rows[j][1]/max*100)+'%'),40);
+}
+
+/* ---------- challenge cards: pick the right option per scenario ---------- */
+function challenges(root,C,label){
+  C.forEach(([q,opts],k)=>{
+    const d=document.createElement('div');d.className='panel flat';
+    d.innerHTML=`<div class="tag" style="margin-bottom:4px">${label||'情境'} ${k+1}</div><b>${q}</b><div class="strat" style="margin-top:10px"></div><p class="hint" style="margin:10px 0 0">選一個答案</p>`;
+    const st=d.querySelector('.strat'),out=d.querySelector('p');
+    shuffle(opts).forEach(o=>{const b=document.createElement('button');b.innerHTML=o[0];b.setAttribute('aria-pressed','false');b.onclick=()=>{st.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));out.innerHTML=(o[1]?'<b>✓ </b>':'<b>✗ 誘答：</b>')+o[2];out.style.color=o[1]?'var(--ok)':'var(--bad)';};st.appendChild(b);});
+    $(root).appendChild(d);
+  });
+}
+
+/* ---------- statement judge ---------- */
+function judge(root,out,J){
+  shuffle(J).forEach(x=>{const b=document.createElement('button');b.innerHTML=x[0];b.setAttribute('aria-pressed','false');
+    b.onclick=()=>{$$(root+' button').forEach(y=>y.setAttribute('aria-pressed',y===b));const o=$(out);o.innerHTML=x[2];o.style.color=x[1]?'var(--ok)':'var(--bad)';};$(root).appendChild(b);});
+}
+
+/* ---------- yes/no wizard ---------- */
+function wizard(root,resetBtn,Q){
+  // Q[k] = {q, a:[[label, nextIndex | {r,m}], ...]}
+  let path=[];
+  function show(k){
+    let h=path.map(p=>`<span class="tok hl" style="--c:var(--img)">${p}</span>`).join(' → ');
+    if(typeof k==='number'){
+      const s=Q[k];h+=`<p class="verdict" style="margin:10px 0">Q${k+1}. ${s.q}</p><div class="row">${s.a.map((a,j)=>`<button class="btn" data-j="${j}">${a[0]}</button>`).join('')}</div>`;
+      $(root).innerHTML=h;
+      $$(root+' .btn').forEach(b=>b.onclick=()=>{const a=s.a[+b.dataset.j];path.push(`Q${k+1} ${a[0]}`);show(a[1]);});
+    }else{$(root).innerHTML=h+`<p class="verdict" style="margin:12px 0 4px;color:var(--ok)">→ ${k.r}</p><p class="hint" style="margin:0">${k.m}</p>`;}
+  }
+  $(resetBtn).onclick=()=>{path=[];show(0);};
+  show(0);
+}
+
+function rng(seed){let s=seed;return()=>{s=(s*16807)%2147483647;return (s-1)/2147483646;};}
+function gauss(r){let u=0,v=0;while(!u)u=r();while(!v)v=r();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+
+/* ================= 20.1 ================= */
+(function(){
+  const r=rng(11),A=[],B=[];
+  for(let i=0;i<18;i++){A.push([170+gauss(r)*45,110+gauss(r)*30]);B.push([420+gauss(r)*45,150+gauss(r)*30]);}
+  let mode=0,gen=[];
+  function draw(){
+    let h='';
+    if(mode===0){h+=`<line x1="330" y1="10" x2="260" y2="250" stroke="var(--ink)" stroke-width="3" stroke-dasharray="8 6"/><text x="340" y="28" font-size="13" fill="var(--ink)" font-weight="700">決策邊界 P(y|x)</text>`;}
+    else{h+=`<ellipse cx="170" cy="110" rx="100" ry="66" fill="color-mix(in srgb,var(--txt) 14%,transparent)" stroke="var(--txt)" stroke-dasharray="5 5"/><ellipse cx="420" cy="150" rx="100" ry="66" fill="color-mix(in srgb,var(--img) 14%,transparent)" stroke="var(--img)" stroke-dasharray="5 5"/><text x="80" y="36" font-size="13" fill="var(--txt)" font-weight="700">類別 A 的分佈 P(x|A)</text><text x="400" y="240" font-size="13" fill="var(--img)" font-weight="700">類別 B 的分佈 P(x|B)</text>`;}
+    A.forEach(([x,y])=>h+=`<circle cx="${x}" cy="${y}" r="6" fill="var(--txt)"/>`);
+    B.forEach(([x,y])=>h+=`<rect x="${x-5}" y="${y-5}" width="10" height="10" fill="var(--img)"/>`);
+    gen.forEach(([x,y,c])=>h+=`<g><circle cx="${x}" cy="${y}" r="9" fill="none" stroke="var(--sen)" stroke-width="2.5"><animate attributeName="r" from="0" to="9" dur=".4s"/></circle><text x="${x}" y="${y+4}" text-anchor="middle" font-size="11" fill="var(--sen)" font-weight="700">新</text></g>`);
+    $('#gdSvg').innerHTML=h;
+  }
+  tabset('#gdTabs',['鑑別式：學邊界','生成式：學分佈'],k=>{mode=k;gen=[];draw();$('#gdNote').textContent=k?'生成式學到每類「長什麼樣」，可以從分佈中抽出新樣本。':'鑑別式只回答「這點屬於哪一類」。';});
+  $('#gdGen').onclick=()=>{
+    if(mode===0){$('#gdNote').innerHTML='<b style="color:var(--bad)">鑑別式只有一條邊界，無法產生新樣本。</b>切到「生成式」再試一次。';return;}
+    const g=rng(Date.now()%100000+1);for(let i=0;i<5;i++){const c=g()<.5;gen.push(c?[170+gauss(g)*45,110+gauss(g)*30]:[420+gauss(g)*45,150+gauss(g)*30]);}
+    draw();$('#gdNote').textContent=`已從學到的分佈抽出 ${gen.length} 個新樣本（紫圈）。`;
+  };
+})();
+
+sorter('#gdSort',[{n:'需要生成式',c:'var(--sen)'},{n:'鑑別式就夠',c:'var(--txt)'}],[
+  {t:'客服郵件分類成投訴／詢問／表揚',b:1,why:'只要判斷 → BERT Classifier 就夠。'},
+  {t:'預測顧客流失，並模擬不同促銷策略下的行為，產生多樣化虛擬樣本做 A/B 測試',b:0,why:'要產生虛擬樣本 → VAE 或 GAN；隨機森林、邏輯迴歸只能判別。'},
+  {t:'ResNet 影像分類',b:1,why:'輸出類別標籤，是鑑別式的代表應用。'},
+  {t:'HMM 語音辨識',b:1,why:'講義列為鑑別式的代表應用。'},
+  {t:'在可控條件下合成大雨、濃霧場景來擴充訓練資料',b:0,why:'「合成」「擴充資料」→ 生成式。'},
+  {t:'ChatGPT 對話、DALL·E 生圖',b:0,why:'產生新的文字與影像。'}
+],'口訣：看到「產生新樣本／模擬情境／擴充資料／合成」，鑑別式一律出局。');
+
+(function(){
+  const D=[['100%',86,90],['50%',83,82],['10%',76,62]];
+  tabset('#lrTabs',D.map(d=>'標註 '+d[0]),i=>{
+    bars('#lrBars',[['VAE 路徑（生成式）',D[i][1],D[i][1]>=D[i][2]],['BERT Classifier（鑑別式）',D[i][2],D[i][2]>D[i][1]]],100,v=>(v/100).toFixed(2));
+    $('#lrNote').textContent=i===0?'標註充足時，鑑別式不一定吃虧。':i===1?'標註減半，兩者開始接近。':'標註只剩 10%：依賴標註的鑑別式掉得快，可用無標註語料預訓練的生成式退化較慢 —— 這就是要凸顯的「資料利用效率」。';
+  });
+})();
+
+(function(){
+  const S=[
+    ['感知 AI','Perception AI','<b>能力：</b>理解影像、語音、文字<br><b>代表：</b>影像辨識、語音轉文字'],
+    ['生成式 AI','Generative AI','<b>能力：主動產生多模態內容</b><br><b>代表：</b>ChatGPT、Stable Diffusion<div class="hint">本知識點的主角：第二階段，會「創造」。</div>'],
+    ['代理式 AI','Agentic AI','<b>能力：</b>具推理與計畫能力，自動完成複雜任務<br><b>代表：</b>AI Agent、工具調用<div class="hint" style="color:var(--bad)">「能呼叫 API、能自主分解任務」屬於這一階段，不是生成式 AI 的定義。</div>'],
+    ['物理 AI','Physical AI','<b>能力：</b>在真實世界移動、操控與互動<br><b>代表：</b>AI 機器人、自駕車']
+  ];
+  const p=$('#stagePipe');
+  S.forEach((s,i)=>{const b=document.createElement('button');b.className='pnode';b.innerHTML=`<b>${i+1}. ${s[0]}</b>${s[1]}`;b.onclick=()=>go(i);p.appendChild(b);});
+  function go(i){p.querySelectorAll('.pnode').forEach((n,j)=>{n.classList.toggle('on',j===i);n.classList.toggle('past',j<i);});$('#stageOut').innerHTML=S[i][2];}
+  go(1);
+})();
+
+/* ================= 20.2 ================= */
+(function(){
+  const F=[
+    {n:'VAE',c:'var(--txt)',m:'編碼器把資料壓到<b>顯式潛在分佈</b>，解碼器從潛在向量重建',k:'「潛在空間」「變分推斷」「機率建模」',p:'潛在空間連續可控、易做跨模態語意對齊',f:'生成<b>模糊</b>、解析度有限',
+     s:()=>`<rect x="10" y="70" width="50" height="50" rx="8" fill="var(--txt)"/><text x="35" y="100" text-anchor="middle" fill="#fff" font-size="13">x</text><polygon points="70,60 120,80 120,110 70,130" fill="var(--surface2)" stroke="var(--txt)"/><text x="95" y="150" text-anchor="middle" font-size="12" fill="var(--muted)">編碼器</text><circle cx="160" cy="95" r="26" fill="color-mix(in srgb,var(--txt) 20%,var(--surface))" stroke="var(--txt)" stroke-dasharray="4 3"><animate attributeName="r" values="22;28;22" dur="2s" repeatCount="indefinite"/></circle><text x="160" y="100" text-anchor="middle" font-size="12" fill="var(--ink)">μ, σ</text><text x="160" y="140" text-anchor="middle" font-size="12" fill="var(--muted)">顯式潛在分佈</text><polygon points="200,80 250,60 250,130 200,110" fill="var(--surface2)" stroke="var(--txt)"/><text x="225" y="150" text-anchor="middle" font-size="12" fill="var(--muted)">解碼器</text><rect x="262" y="70" width="50" height="50" rx="8" fill="var(--txt)" opacity=".55" style="filter:blur(2px)"/><text x="287" y="140" text-anchor="middle" font-size="12" fill="var(--bad)">偏模糊</text>`},
+    {n:'GAN',c:'var(--img)',m:'生成器與判別器<b>對抗訓練</b>，動態逼近真實分佈',k:'「兩個網路互相對抗」「判別器」',p:'寫實度高、細節銳利',f:'<b>模式崩潰</b>、訓練不穩、對超參數敏感',
+     s:()=>`<rect x="15" y="40" width="90" height="44" rx="10" fill="var(--img)"/><text x="60" y="67" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">生成器 G</text><rect x="215" y="76" width="90" height="44" rx="10" fill="var(--ink)"/><text x="260" y="103" text-anchor="middle" fill="var(--bg)" font-size="14" font-weight="700">判別器 D</text><path d="M105 62 C 160 62, 170 98, 215 98" fill="none" stroke="var(--img)" stroke-width="2" class="flow"/><text x="150" y="58" font-size="12" fill="var(--img)">假樣本</text><rect x="15" y="130" width="90" height="36" rx="10" fill="var(--surface2)" stroke="var(--line)"/><text x="60" y="153" text-anchor="middle" font-size="13" fill="var(--ink)">真實資料</text><path d="M105 148 C 160 148, 170 108, 215 108" fill="none" stroke="var(--muted)" stroke-width="2" class="flow"/><path d="M260 76 C 260 20, 60 10, 60 40" fill="none" stroke="var(--bad)" stroke-width="2" stroke-dasharray="5 4"/><text x="160" y="22" text-anchor="middle" font-size="12" fill="var(--bad)">「這是假的！」→ G 改進</text>`},
+    {n:'擴散模型',c:'var(--aud)',m:'前向加噪 → 反向<b>逐步去噪</b>還原',k:'「逐步去噪」「取樣步數」「噪聲」',p:'高保真、穩定、多樣性佳',f:'取樣步數不足 → 細節不全；推論慢',
+     s:()=>{let h='';for(let i=0;i<5;i++){const x=10+i*62,nz=1-i/4;h+=`<rect x="${x}" y="60" width="50" height="50" rx="6" fill="var(--surface2)" stroke="var(--line)"/>`;const rr=rng(i+3);for(let k=0;k<16;k++){const px=x+5+(k%4)*11,py=65+Math.floor(k/4)*11;const inside=[5,6,9,10,1,2,13,14].includes(k);const op=inside?(1-nz)*.9+rr()*nz*.6:rr()*nz*.7;h+=`<rect x="${px}" y="${py}" width="10" height="10" fill="${inside&&nz<.6?'var(--aud)':'var(--muted)'}" opacity="${op.toFixed(2)}"/>`;}
+       if(i<4)h+=`<text x="${x+56}" y="90" font-size="14" fill="var(--aud)">←</text>`;}
+       return h+`<text x="35" y="130" text-anchor="middle" font-size="12" fill="var(--muted)">z_0</text><text x="282" y="130" text-anchor="middle" font-size="12" fill="var(--muted)">z_T 噪聲</text><text x="160" y="160" text-anchor="middle" font-size="13" fill="var(--aud)" font-weight="700">反向：逐步去噪（重複 T 次）</text><text x="160" y="40" text-anchor="middle" font-size="12" fill="var(--muted)">前向：逐步加噪 →</text>`;}},
+    {n:'自迴歸',c:'var(--sen)',m:'逐 token 依條件機率生成',k:'「由左至右」「逐字生成」「next token」',p:'長文連貫、可指令驅動',f:'<b>幻覺</b>、長文邏輯漂移',
+     s:()=>{const T=['今天','天氣','很','晴朗','？'];return T.map((t,i)=>`<g opacity="0"><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.15;.9;1" dur="4s" begin="${i*.5}s" repeatCount="indefinite"/><rect x="${10+i*62}" y="70" width="56" height="40" rx="8" fill="${i===4?'var(--surface2)':'var(--sen)'}" stroke="var(--sen)"/><text x="${38+i*62}" y="95" text-anchor="middle" font-size="14" fill="${i===4?'var(--sen)':'#fff'}" font-weight="700">${t}</text></g>`).join('')+`<text x="160" y="140" text-anchor="middle" font-size="13" fill="var(--sen)" font-weight="700">P(下一個 token | 前面所有 token)</text><text x="160" y="165" text-anchor="middle" font-size="12" fill="var(--muted)">機率式預測，不是知識查詢 → 可能幻覺</text>`;}}
+  ];
+  tabset('#famTabs',F.map(f=>f.n),i=>{const f=F[i];$('#famSvg').innerHTML=f.s();
+    $('#famInfo').innerHTML=`<p style="margin:0 0 6px"><span class="chip" style="--c:${f.c}"><i class="dot"></i>${f.n}</span></p><p style="margin:0 0 6px"><b>核心機制：</b>${f.m}</p><p style="margin:0 0 6px"><b>辨識關鍵字：</b>${f.k}</p><p style="margin:0 0 6px"><b style="color:var(--ok)">優勢：</b>${f.p}</p><p style="margin:0"><b style="color:var(--bad)">典型故障：</b>${f.f}</p>`;});
+})();
+
+matcher($('#famMatch'),$('#famFb'),[
+  {k:'v',c:'var(--txt)',html:'VAE'},{k:'g',c:'var(--img)',html:'GAN'},{k:'d',c:'var(--aud)',html:'擴散模型'}
+],[
+  {k:'x',html:'三者共用同一潛在空間，只差在解碼器',bad:'張冠李戴的誘答，看到先刪。'},
+  {k:'d',html:'以條件化去噪（Conditional Denoising）逐步反推，兼具高保真、穩定性與多樣性'},
+  {k:'v',html:'顯式潛在變數建模，利於捕捉整體語意結構，但生成解析度有限'},
+  {k:'x',html:'VAE 與 GAN 都依賴馬可夫鏈',bad:'誘答：把不屬於它們的機制套上去。'},
+  {k:'g',html:'以對抗損失學習分佈映射，生成品質高但訓練穩定性差'}
+],'這三句就是 114-2 第 40 題的正解。');
+
+pipeline('df',[['文字提示','Prompt'],['文字編碼器','CLIP text encoder'],['注入條件','cross-attention'],['去噪網路','U-Net × T 步'],['解碼器','z_0 → 影像']],i=>[
+  '<b>提示：</b>「海邊夕陽下，模特兒手持飲料」',
+  '<b>文字編碼器</b>把提示轉成<b>文字嵌入向量</b>。<div class="hint">這一層負責「聽懂」提示的語意。</div>',
+  '<b>交叉注意力（cross-attention）</b>把文字嵌入當作<b>條件</b>注入去噪網路。<div class="hint">文字只是條件，不是照著文字直接畫。</div>',
+  '<b>從隨機噪聲 z_T 出發</b>，U-Net 每一步去掉一點噪聲，重複 T 次（取樣步數 Sampling Steps）。<div class="hint">步數不足 → 顆粒化、細節不全。</div>',
+  '<b>潛在表徵 z_0 → 解碼器 → 最終影像。</b>'
+][i]);
+
+(function(){
+  const N=16,mask=[],noise=[],art=[];const r=rng(5);
+  for(let y=0;y<N;y++)for(let x=0;x<N;x++){const X=(x-7.5)/6.2,Y=-(y-8)/6.2;mask.push(Math.pow(X*X+Y*Y-1,3)-X*X*Y*Y*Y<=0);noise.push(r()*2-1);art.push(r());}
+  let hq=false;
+  function upd(){
+    const st=+$('#dsSteps').value,cfg=+$('#dsCfg').value;$('#dsStepsO').textContent=st;$('#dsCfgO').textContent=cfg;
+    const q=1-Math.exp(-st/(hq?9:20)),adh=cfg<5?.25+.75*(cfg-1)/4:1,sat=cfg>12?(cfg-12)/8:0;
+    let h='';
+    for(let i=0;i<N*N;i++){
+      const x=i%N,y=Math.floor(i/N);
+      let tgt=mask[i]?[200*adh+70*(1-adh),45*adh+130*(1-adh),55*adh+190*(1-adh)]:[238,238,232];
+      if(mask[i]&&sat){tgt=[Math.min(255,tgt[0]+55*sat),tgt[1]*(1-sat),tgt[2]*(1-sat*.7)];}
+      const n=128+noise[i]*127;let c=tgt.map(v=>v*q+n*(1-q));
+      if(sat&&art[i]<sat*.22)c=art[i]<sat*.11?[255,0,200]:[255,230,0];
+      h+=`<rect x="${x*10}" y="${y*10}" width="10" height="10" fill="rgb(${c.map(v=>Math.round(v)).join(',')})"/>`;
+    }
+    $('#dsSvg').innerHTML=h;
+    bars('#dsBars',[['細節清晰度',q*100,q>.85],['提示遵循',adh*100],['過飽和／假影',Math.max(4,sat*100)]],100,v=>v.toFixed(0)+'%');
+    $('#dsNote').innerHTML=cfg>12?'<b style="color:var(--bad)">CFG 拉太高</b>：過飽和、出現假影，多樣性下降。':cfg<5?'<b style="color:var(--warn)">CFG 太低</b>：生成偏離提示（愛心不夠紅）。':q<.7?'<b style="color:var(--warn)">去噪不充分</b>：顆粒化、邊緣模糊 → 增加取樣步數'+(hq?'。':'，並改用高品質取樣器。'):'去噪充分、CFG 適中：細節清楚又遵循提示。';
+  }
+  ['dsSteps','dsCfg'].forEach(id=>$('#'+id).addEventListener('input',upd));
+  tabset('#dsSampler',['低品質','高品質'],k=>{hq=k===1;upd();});
+})();
+
+(function(){
+  const S=[
+    ['改用 Wasserstein 距離（WGAN 損失）','✓ 主流根本解',90,'var(--ok)','提供更平滑、不易飽和的梯度訊號，直接針對模式崩潰。',8],
+    ['只加梯度懲罰（WGAN-GP）','△ 輔助手段',55,'var(--warn)','有幫助，但它是搭配 WGAN 用來穩定訓練的輔助，不是獨立主解。',4],
+    ['只加多尺度判別器','△ 輔助手段',50,'var(--warn)','有幫助，但不是「最主流、最直接」的解。',4],
+    ['在潛在向量加擾動','△ 輔助手段',45,'var(--warn)','有幫助，但不是「最主流、最直接」的解。',3]
+  ];
+  const faces=['🙂','😀','🧑','👩','👨‍🦱','🧔','👵','👦'];
+  const show=k=>{$('#mcFaces').innerHTML=Array.from({length:8},(_,i)=>`<span>${faces[i%k]}</span>`).join('');};
+  show(2);
+  [1,0,3,2].forEach(i=>{const b=document.createElement('button');b.textContent=S[i][0];b.setAttribute('aria-pressed','false');b.onclick=()=>{$$('#mcStrat button').forEach(x=>x.setAttribute('aria-pressed',x===b));const x=S[i];$('#mcV').textContent=x[1];$('#mcV').style.color=x[3];$('#mcM').style.width=x[2]+'%';$('#mcM').style.background=x[3];$('#mcWhy').innerHTML='樣本多樣性（示意）：'+x[2]+'%　'+x[4];show(x[5]);};$('#mcStrat').appendChild(b);});
+})();
+
+/* ================= 20.3 ================= */
+challenges('#diag',[
+  ['主題與場景正確，但<b>品牌標誌顏色錯、手部姿勢不自然</b>',[['CLIP 的文字編碼器與影像編碼器在語意嵌入空間未充分對齊',1,'語意層級的偏差 → 跨模態對齊那一層。對策：加強圖文對齊訓練／ControlNet／後製修正。'],['去噪過程隨機梯度漂移',0,'擴散的隨機性不會系統性地把特定語意屬性弄錯。'],['提示語超出位置編碼的上下文限制',0,'提示只有二十幾個字，前提就不成立。']]],
+  ['高解析度圖<b>邊緣顆粒化、細節模糊</b>',[['去噪過程不充分（取樣步數不足／取樣器品質差）',1,'對策：增加取樣步數 + 高品質取樣器。'],['CFG 不夠高',0,'提高 CFG 會過飽和、產生假影；CFG 管的是遵循提示。'],['輸入解析度太高，應降低',0,'降低解析度不是正解。']]],
+  ['人臉生成<b>只有少數幾種樣式、缺乏多樣性</b>',[['GAN 模式崩潰 → 改用 WGAN 損失',1,'Wasserstein 距離提供更平滑的梯度。'],['只要加梯度懲罰就能解決',0,'梯度懲罰只是輔助。'],['只要加多尺度判別器就能解決',0,'多尺度判別器只是輔助。']]],
+  ['微調後<b>醫療問答變強，但通用能力退化</b>',[['災難性遺忘 → 凍結大部分參數，僅訓練 LoRA 等少量新增模組',1,'把更新限制在低秩子空間，原始權重不被覆寫。'],['提高學習率、縮短步數',0,'權重偏移更劇烈，遺忘更嚴重。'],['加大 Batch Size',0,'只讓梯度更平穩，對保留舊知識沒有實質作用。']]],
+  ['生成內容<b>通順但與事實不符</b>',[['幻覺：自迴歸模型是機率式的下一 token 預測，不是知識查詢 → RAG、引用來源、人工覆核',1,'正解。'],['只要把模型參數再放大就會好',0,'成因是生成機制，不是單純規模。']]],
+  ['導入資料增強後<b>效能反而下降</b>',[['增強後特徵分佈偏離原始資料 → 調整增強策略、維持語意一致性',1,'114-2 第 9 題正解。'],['提高增強比例',0,'只會加劇分佈偏移。'],['改用半監督重新校正標註',0,'沒有處理分佈偏移這個根因。']]],
+  ['多模態推論時<b>某一模態缺失</b>（有影像沒文字）',[['訓練具模態缺失感知能力的模型，動態調整融合權重',1,'114-2 第 21 題正解。'],['零向量填充',0,'把「沒有資訊」偽裝成數值 0。'],['用生成模型補全',0,'不是根本解。'],['直接丟棄樣本',0,'推論時不能拒答。']]]
+],'症狀');
+
+(function(){
+  const C=[
+    {n:'粗粒度語意',it:[['有沒有人','模特兒 ✓'],['有沒有夕陽','海邊夕陽 ✓'],['有沒有飲料','手持飲料 ✓']],ok:true,t:'粗粒度語意（有沒有人、有沒有夕陽）對齊得好 → <b>主題正確</b>。'},
+    {n:'細粒度語意',it:[['標誌色碼：藍','標誌：綠 ✗'],['手指結構：5 指','手指：6 指 ✗'],['飲料瓶標文字','文字亂碼 ✗']],ok:false,t:'細粒度語意（特定色碼、手部關節結構）對齊不足 → <b>細節出錯</b>。'}
+  ];
+  tabset('#clipTabs',C.map(c=>c.n),i=>{
+    const c=C[i];let h=`<text x="110" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--txt)">文字嵌入</text><text x="530" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="var(--img)">影像嵌入（生成結果）</text><text x="320" y="22" text-anchor="middle" font-size="13" fill="var(--muted)">對得準嗎？</text>`;
+    c.it.forEach(([a,b],k)=>{const y=60+k*60;const y2=c.ok?y:60+((k+1)%3)*60;
+      h+=`<rect x="20" y="${y-18}" width="180" height="36" rx="8" fill="var(--txt)"/><text x="110" y="${y+5}" text-anchor="middle" font-size="13" fill="#fff">${a}</text>`;
+      h+=`<rect x="440" y="${y-18}" width="180" height="36" rx="8" fill="${c.ok?'var(--img)':'var(--bad)'}"/><text x="530" y="${y+5}" text-anchor="middle" font-size="13" fill="#fff">${b}</text>`;
+      h+=`<path d="M200 ${y} C 320 ${y}, 320 ${y2}, 440 ${y2}" fill="none" stroke="${c.ok?'var(--ok)':'var(--bad)'}" stroke-width="2.5" ${c.ok?'':'stroke-dasharray="6 5"'} class="flow"/>`;});
+    $('#clipSvg').innerHTML=h;$('#clipNote').innerHTML=c.t;
+  });
+})();
+
+judge('#lureJudge','#lureOut',[
+  ['「去噪過程隨機梯度漂移」',0,'✗ 擴散的隨機性會影響構圖細節，但不會系統性地把<b>特定語意屬性</b>弄錯。'],
+  ['「提示語過長，超出上下文限制」',0,'✗ 這句提示只有二十幾個字，前提就不成立。'],
+  ['「模型未採用對比學習損失」',0,'✗ 太絕對。CLIP 本來就是用對比學習訓練的，問題在對齊<b>程度</b>不足，不是完全沒有對齊機制。'],
+  ['「文字編碼器與影像編碼器在語意嵌入空間未充分對齊」',1,'✓ 正解：語意對不上 → 責任在跨模態對齊。']
+]);
+
+/* ================= 20.4 ================= */
+sorter('#cmpSort',[{n:'省訓練成本（PEFT）',c:'var(--ok)'},{n:'改變模型本身',c:'var(--aud)'},{n:'省推論成本（壓縮）',c:'var(--txt)'}],[
+  {t:'LoRA／QLoRA',b:0,why:'凍結原權重，旁路加低秩矩陣。'},
+  {t:'Prompt／Prefix Tuning',b:0,why:'凍結原權重，只學輸入端軟提示。'},
+  {t:'全參數微調（SFT）',b:1,why:'更新全部權重。'},
+  {t:'RLHF／偏好對齊',b:1,why:'依人類回饋調整輸出傾向。'},
+  {t:'知識蒸餾',b:2,why:'大模型當老師，另外訓練小的學生模型。'},
+  {t:'剪枝',b:2,why:'移除低重要性參數或結構。'},
+  {t:'量化',b:2,why:'降低數值精度（FP16 → INT8／INT4）。'}
+],'題幹說「GPU 記憶體不足、無法反向傳播」是訓練問題；說「邊緣裝置跑不動」才是推論問題。');
+
+(function(){
+  const S=[
+    {n:'LoRA',k:[['原始權重','不動（凍結）'],['新增','各層旁路低秩矩陣'],['省的是','訓練成本／GPU 記憶體']]},
+    {n:'Prompt Tuning',k:[['原始權重','不動（凍結）'],['新增','輸入端軟提示向量'],['省的是','訓練與模型儲存成本']]},
+    {n:'全參數微調',k:[['原始權重','全部更新'],['新增','一份新的模型參數'],['目的','深度改變模型行為']]},
+    {n:'知識蒸餾',k:[['原始權重','老師不動'],['新增','一個全新的小學生模型'],['省的是','推論成本與模型體積']]},
+    {n:'剪枝',k:[['原始權重','移除低重要性參數'],['新增','—'],['省的是','參數量、加速推論']]},
+    {n:'量化',k:[['原始權重','降低數值精度'],['新增','—'],['省的是','記憶體與延遲（利於邊緣）']]}
+  ];
+  const pr=rng(9),pruned=Array.from({length:24},()=>pr()<.35);
+  function grid(x0,y0,cols,rows,fn){let h='';for(let r=0;r<rows;r++)for(let c=0;c<cols;c++)h+=fn(x0+c*44,y0+r*40,r*cols+c);return h;}
+  function draw(m){
+    let h='';
+    const cell=(x,y,fill,stroke,txt,tc,dash)=>`<rect x="${x}" y="${y}" width="38" height="32" rx="6" fill="${fill}" stroke="${stroke}" ${dash?'stroke-dasharray="4 3"':''}/>${txt?`<text x="${x+19}" y="${y+21}" text-anchor="middle" font-size="11" fill="${tc||'var(--muted)'}">${txt}</text>`:''}`;
+    const frozen=(x,y)=>cell(x,y,'var(--surface2)','var(--line)','🔒');
+    if(m===0){h+=grid(170,20,6,4,frozen);for(let r=0;r<4;r++)h+=`<line x1="430" y1="${36+r*40}" x2="450" y2="${36+r*40}" stroke="var(--img)" stroke-width="2"/><rect x="450" y="${22+r*40}" width="60" height="28" rx="6" fill="var(--img)"><animate attributeName="opacity" values="1;.55;1" dur="1.4s" begin="${r*.2}s" repeatCount="indefinite"/></rect><text x="480" y="${41+r*40}" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">低秩 A·B</text>`;}
+    if(m===1){h+=grid(170,20,6,4,frozen);for(let i=0;i<4;i++)h+=`<rect x="${40+i*30}" y="76" width="24" height="24" rx="5" fill="var(--img)"><animate attributeName="opacity" values="1;.5;1" dur="1.4s" begin="${i*.2}s" repeatCount="indefinite"/></rect>`;h+=`<text x="85" y="122" text-anchor="middle" font-size="12" fill="var(--img)" font-weight="700">軟提示</text><line x1="160" y1="88" x2="168" y2="88" stroke="var(--muted)" stroke-width="2"/>`;}
+    if(m===2)h+=grid(170,20,6,4,(x,y)=>cell(x,y,'var(--aud)','var(--aud)','更新','#fff'));
+    if(m===3){h+=grid(40,20,6,4,frozen)+`<text x="160" y="200" text-anchor="middle" font-size="12" fill="var(--muted)">老師（大模型，完整前向推論）</text><path d="M310 90 L 400 90" stroke="var(--muted)" stroke-width="2" class="flow"/><text x="355" y="80" text-anchor="middle" font-size="11" fill="var(--muted)">輸出當教材</text>`+grid(420,50,3,2,(x,y)=>cell(x,y,'var(--txt)','var(--txt)','新','#fff'))+`<text x="485" y="160" text-anchor="middle" font-size="12" fill="var(--txt)" font-weight="700">學生（全新小模型）</text>`;}
+    if(m===4)h+=grid(170,20,6,4,(x,y,i)=>pruned[i]?cell(x,y,'none','var(--bad)','✂','var(--bad)',1):cell(x,y,'var(--surface2)','var(--line)',''));
+    if(m===5)h+=grid(170,20,6,4,(x,y,i)=>cell(x,y,'color-mix(in srgb,var(--txt) 22%,var(--surface))','var(--txt)',i%2?'INT8':'FP16→','var(--txt)'));
+    $('#stSvg').innerHTML=h;
+    $('#stKpi').innerHTML=S[m].k.map(([a,b])=>`<div class="kpi"><span>${a}</span><b style="font-size:17px">${b}</b></div>`).join('');
+  }
+  tabset('#stTabs',S.map(s=>s.n),draw);
+})();
+
+matcher($('#kwMatch'),$('#kwFb'),[
+  {k:'l',c:'var(--ok)',html:'「GPU 記憶體有限」「凍結原模型」「僅訓練少量額外參數」'},
+  {k:'q',c:'var(--ok)',html:'「單張顯卡微調 70B」'},
+  {k:'p',c:'var(--ok)',html:'「在輸入端加入軟提示」'},
+  {k:'s',c:'var(--aud)',html:'「以標註問答資料調整模型」'},
+  {k:'r',c:'var(--aud)',html:'「安全性」「拒答」「對齊」'},
+  {k:'d',c:'var(--txt)',html:'「壓縮成較小模型」'},
+  {k:'u',c:'var(--txt)',html:'「移除低重要性參數」'},
+  {k:'z',c:'var(--txt)',html:'「INT8」「地端／邊緣裝置」'}
+],[
+  {k:'z',html:'量化'},{k:'r',html:'RLHF'},{k:'l',html:'LoRA'},{k:'d',html:'知識蒸餾'},
+  {k:'p',html:'Prompt／Prefix Tuning'},{k:'u',html:'剪枝'},{k:'s',html:'全參數微調（SFT）'},{k:'q',html:'QLoRA'}
+],'八組關鍵字都能秒對了。');
+
+(function(){
+  const P=[
+    ['LoRA vs 知識蒸餾','LoRA 是在<b>原模型上掛小模組</b>，模型還是那個 70B；知識蒸餾是<b>另外做一個小模型</b>，而且蒸餾過程仍需大模型完整前向推論，資源需求並不低。<div class="callout" style="margin:10px 0 0">題幹說「凍結原模型、只訓練少量額外參數」→ 一定是 LoRA，不可能是蒸餾。</div>'],
+    ['LoRA vs 剪枝','剪枝<b>會改動原模型的參數</b>，與「凍結原權重」的前提直接衝突。<div class="callout" style="margin:10px 0 0">只要題幹寫了「凍結」，剪枝就自動出局。</div>'],
+    ['Prompt Tuning vs Fine-Tuning','本質差異只有一句：<b>微調更新的是模型權重，提示微調改的是輸入表示</b>。<div class="callout" style="margin:10px 0 0">誘答「提示微調是為了降低推論延遲」—— 錯，它省的是<b>訓練與模型儲存成本</b>，額外前綴反而會略微增加輸入長度。另一個誘答「兩者本質相同，只差學習率」是純粹的湊數選項。</div>']
+  ];
+  tabset('#pairTabs',P.map(p=>p[0]),i=>{$('#pairBody').innerHTML=`<p style="margin:0">${P[i][1]}</p>`;});
+})();
+
+stratMeter('cf',[
+  ['凍結大部分預訓練參數，僅微調少量新增模組（如 LoRA 層）','✓ 正確做法',90,'var(--ok)','把更新限制在低秩子空間，原始權重不被覆寫。'],
+  ['資源允許時再混入通用語料（replay）','✓ 可搭配',72,'var(--ok)','講義列為資源允許時的補充做法。'],
+  ['提高學習率、縮短步數','✗ 更嚴重',20,'var(--bad)','權重偏移更劇烈，遺忘更嚴重。'],
+  ['只用領域語料反覆訓練','✗ 正是病因',25,'var(--bad)','這正是造成遺忘的典型作法。'],
+  ['加大 Batch Size','✗ 無實質作用',45,'var(--warn)','只讓梯度更平穩，對保留舊知識沒有實質作用。']
+],[2,0,3,4,1],'通用能力保留');
+
+wizard('#pathQ','#pathReset',[
+  {q:'需求是「補最新／私有知識」嗎？',a:[['是',{r:'RAG（檢索增強生成）',m:'不動模型，知識可即時更新。'}],['否',1]]},
+  {q:'需求是「改變輸出格式、語氣、任務行為」嗎？',a:[['是',{r:'先試提示工程 → 不夠再上 LoRA／Prompt Tuning',m:'由輕到重，先別動權重。'}],['否',2]]},
+  {q:'需求是「深度改變模型能力」，且資料與算力都充足？',a:[['是',{r:'SFT（必要時再 RLHF 對齊）',m:'全參數微調會更新全部權重。'}],['否',3]]},
+  {q:'需求是「降低上線後的推論成本／要塞進邊緣裝置」？',a:[['是',{r:'量化 → 蒸餾 → 剪枝',m:'三者都是省推論成本的壓縮手段。'}],['否',{r:'回到第一題重新釐清需求',m:'講義的選型順序只涵蓋以上四類需求。'}]]}
+]);
+
+/* ================= 20.5 ================= */
+(function(){
+  const T=[
+    ['文本生成','GPT 系列、Claude、Gemini、LLaMA、Mistral、Command-R','ChatGPT、GitHub Copilot','自動化客服、郵件撰寫、法律／醫療文書草擬、程式碼補全、教學內容生成'],
+    ['圖像生成','Diffusion（Stable Diffusion、DALL·E 2、Imagen）、GAN（StyleGAN、BigGAN）、ControlNet／InstructPix2Pix','Midjourney、Stable Diffusion WebUI、Adobe Firefly、Canva AI','品牌視覺設計、社群圖文素材、遊戲角色與場景、影片預視化、風格模仿'],
+    ['語音合成（TTS）','Tacotron 2、FastSpeech 2、VITS；Whisper（語音辨識，常與 TTS 搭配成雙向流程）','ElevenLabs、Azure TTS、Google Cloud TTS、Amazon Polly','語音教材、有聲書、遊戲配音、虛擬偶像、語音客服、智慧家居']
+  ];
+  tabset('#toolTabs',T.map(t=>t[0]),i=>{const t=T[i];$('#toolBody').innerHTML=`<div class="kpis" style="margin:0"><div class="kpi"><span>代表模型／技術</span><div>${t[1]}</div></div><div class="kpi"><span>代表工具平台</span><div>${t[2]}</div></div><div class="kpi"><span>官方點名的應用情境</span><div>${t[3]}</div></div></div>`;});
+})();
+
+flips('#toolCards',[
+  ['Stable Diffusion WebUI','開源・可本地部署','支援 LoRA 微調與 ControlNet 邊緣／姿態控制 —— 關鍵字是「可控、可客製」。'],
+  ['Midjourney','雲端服務','以高美學風格著稱，透過 Discord 或官網下指令。'],
+  ['Adobe Firefly','專業工作流','整合進 Photoshop／Illustrator，強調與專業工作流的相容。'],
+  ['Canva AI','非專業設計者','強調易用與快速產出。'],
+  ['ControlNet／InstructPix2Pix','可控生成','控制姿態、邊緣、遮罩或局部修改 —— 看到「要精準控制構圖」就是它們。'],
+  ['FastSpeech 2','非自迴歸 TTS','比 Tacotron 2 生成更快、穩定性更佳。'],
+  ['VITS','端到端 TTS','結合 VAE 與 GAN，端到端從文字直出波形。']
+]);
+
+(function(){
+  const ref=['今天','台北','天氣','晴朗','適合','出遊'];
+  const C=[
+    ['過短的生成',['台北','晴朗']],
+    ['與參考一致',['今天','台北','天氣','晴朗','適合','出遊']],
+    ['冗長的生成',['今天','台北','的','天氣','非常','晴朗','很','適合','全家','一起','出遊']]
+  ];
+  $('#brRef').textContent='參考文本：'+ref.join(' ');
+  tabset('#brTabs',C.map(c=>c[0]),i=>{
+    const c=C[i][1],hit=c.filter(w=>ref.includes(w)).length,P=hit/c.length,R=ref.filter(w=>c.includes(w)).length/ref.length;
+    $('#brCand').innerHTML=c.map(w=>`<span class="tok ${ref.includes(w)?'hl':''}" style="--c:var(--ok)">${w}</span>`).join('');
+    $('#brP').textContent=P.toFixed(2);$('#brR').textContent=R.toFixed(2);
+    $('#brNote').innerHTML=i===0?'字都對（精確率高），但漏了大半內容（召回率低）—— BLEU 的<b>簡短懲罰</b>就是為了防這種「講很少所以很準」。':i===1?'兩者皆滿分。但注意：兩個指標都只比字面重疊，測不出語意正確與幻覺。':'參考內容全被涵蓋（召回率高、ROUGE 有利），但多了很多參考裡沒有的字（精確率下降）。';
+  });
+})();
+
+matcher($('#metMatch'),$('#metFb'),[
+  {k:'b',c:'var(--txt)',html:'機器翻譯'},{k:'r',c:'var(--img)',html:'自動摘要'},{k:'m',c:'var(--aud)',html:'語音合成的自然度'},
+  {k:'w',c:'var(--sen)',html:'語音內容的正確性'},{k:'h',c:'var(--txt)',html:'對話、創意寫作'},{k:'l',c:'var(--img)',html:'即時語音、互動應用'}
+],[
+  {k:'m',html:'MOS<small>1–5 分人工平均</small>'},{k:'l',html:'生成延遲'},{k:'b',html:'BLEU<small>n-gram 重疊、偏精確率</small>'},
+  {k:'h',html:'人工評估<small>流暢性與準確性</small>'},{k:'w',html:'WER<small>字詞錯誤率</small>'},{k:'r',html:'ROUGE<small>偏召回率</small>'}
+],'四個常考指標 BLEU／ROUGE／MOS／WER 不要互換。');
+
+/* ================= 20.6 ================= */
+(function(){
+  const R=[
+    ['內容真偽與可信度','幻覺、偽造新聞、合成語音詐騙','RAG、引用來源、人工覆核、事實查核',[1,1,0]],
+    ['智慧財產權爭議','訓練資料含受著作權保護內容','<b>建立訓練資料篩選與授權驗證機制，從源頭排除未授權來源</b>（最有效）',[1,0,0]],
+    ['偏見放大','訓練資料的性別／種族／文化偏見被延續甚至強化','資料去偏、公平性指標、分群評估',[1,0,1]],
+    ['深偽（Deepfake）濫用','詐騙、假訊息','偵測技術、浮水印／數位指紋、法律規範',[0,0,1]],
+    ['可控性與輸出不確定性','提示引導不足導致輸出不相關或不適當','提示工程、輸出格式約束、護欄與人工審核',[0,1,0]]
+  ];
+  const seg=['事前','事中','事後'],col=['var(--ok)','var(--warn)','var(--txt)'];
+  tabset('#riskTabs',R.map(r=>r[0]),i=>{
+    const r=R[i];let h='';
+    seg.forEach((s,k)=>{const on=r[3][k];h+=`<rect x="${20+k*205}" y="40" width="190" height="60" rx="12" fill="${on?col[k]:'var(--surface2)'}" stroke="${on?col[k]:'var(--line)'}" style="transition:fill .4s"/><text x="${115+k*205}" y="77" text-anchor="middle" font-size="17" font-weight="700" fill="${on?'#fff':'var(--muted)'}">${s}</text>`;});
+    h+=`<path d="M20 125 L 620 125" stroke="var(--muted)" stroke-width="2" marker-end="url(#ra)"/><defs><marker id="ra" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs><text x="320" y="145" text-anchor="middle" font-size="12" fill="var(--muted)">時間軸：生成內容產生之前 → 產生當下 → 產生之後</text>`;
+    $('#riskSvg').innerHTML=h;
+    $('#riskOut').innerHTML=`<b>具體樣態：</b>${r[1]}<br><b>緩解手段：</b>${r[2]}`;
+  });
+})();
+
+stratMeter('cp',[
+  ['建立訓練資料篩選與授權驗證機制','✓ 事前預防',90,'var(--ok)','從源頭排除未授權來源，才擋得住侵權發生。'],
+  ['語意相似度比對','△ 事後偵測',35,'var(--warn)','侵權已經發生才偵測得到。'],
+  ['浮水印／數位指紋','△ 事後追溯',30,'var(--warn)','只能追溯，擋不住侵權發生。'],
+  ['差分隱私','✗ 防錯對象',25,'var(--bad)','主要防的是記憶特定樣本與隱私外洩，不是著作權。']
+],[2,0,3,1],'侵權預防力');
+
+flips('#trendCards',[
+  ['多模態生成崛起','趨勢 1','從單一模態走向文字＋圖像＋影片＋語音＋3D 的整合創作系統。'],
+  ['可控生成與提示工程深化','趨勢 2','能對語氣、風格、長度、格式做多層次調整；提示工程成為關鍵技能。'],
+  ['小型化與邊緣部署','趨勢 3','因應算力成本與<b>資料隱私</b>，模型朝可在地端執行發展（手機、PC、IoT）。'],
+  ['模型對齊與安全防護進化','趨勢 4','RLHF、紅隊測試（Red Teaming）強化輸出安全與合規。'],
+  ['法規與全球治理成形','趨勢 5','歐盟 AI 法案（EU AI Act）、美國 AI 政策框架、國際技術標準。']
+]);
+
+judge('#synJudge','#synOut',[
+  ['在可控條件下大量產生難蒐集的長尾場景（大雨、濃霧），生成當下即帶精確標註，擴充訓練資料、提升泛化',1,'✓ 正確定位（115-1 第 33 題正解）。'],
+  ['合成資料可以完全取代真實資料',0,'✗ 存在領域差距（Domain Gap），實務上必須與真實資料混合並搭配領域自適應。'],
+  ['合成資料可用來降低推論成本',0,'✗ 與推論成本無關；要降低推論成本請用量化或蒸餾。'],
+  ['合成資料只適用於文字任務',0,'✗ 影像領域（自駕模擬平台、渲染引擎）應用極為成熟。']
+]);
+
+/* ================= 20.7 ================= */
+(function(){
+  const R=[
+    ['a','114-2 第 9 題','資料增強失效','訓練生成式 AI 時做資料增強，效能反而下降','增強後<b>特徵分佈偏離原始資料</b>，應調整增強策略維持<b>語意一致性</b>'],
+    ['a','114-2 第 20 題','GAN 模式崩潰','人臉生成出現 Mode Collapse 的最常用解法','改用 <b>Wasserstein 距離（WGAN 損失）</b>；梯度懲罰／多尺度判別器只是輔助'],
+    ['d','114-2 第 21 題','模態缺失','多模態推論時缺少某一模態','訓練<b>具模態缺失感知能力</b>的模型；補零／生成補全／丟棄樣本都不是根本解'],
+    ['e','114-2 第 25 題','著作權風險','生成內容疑似侵權，最能<b>預防</b>的策略','<b>訓練資料篩選與授權驗證</b>（事前）；浮水印與相似度比對只是事後追溯'],
+    ['d','114-2 第 35 題','CLIP 零樣本','只靠文字提示就能辨識影像內容的關鍵特性','<b>圖文對比式學習映射到共同嵌入空間</b>，以語意相似度做零樣本分類'],
+    ['','114-2 第 37 題','訓練資源限制','語音合成模型多 GPU 訓練記憶體不足，架構與硬體都不能換','<b>縮小批次大小 + 資料分片</b>；減資料、調學習率、拿測試集訓練都是錯'],
+    ['a','114-2 第 38 題','擴散取樣參數','Stable Diffusion 4K 圖顆粒化模糊，只能在生成階段調整','<b>增加取樣步數 + 高品質取樣器</b>；提高 CFG 反而造成過飽和與假影'],
+    ['c','114-2 第 40 題','三大模型根本差異','VAE／GAN／Diffusion 在潛在對齊與生成策略上的差異','VAE 顯式潛在變數但解析度有限、GAN 對抗損失品質高但不穩、擴散條件化去噪兼具保真與穩定'],
+    ['c','114-2 第 43 題','生成式 vs 鑑別式','如何設計實驗凸顯 VAE 路徑與 BERT Classifier 的本質差異','<b>低資源情境下逐步減少標註比例（100%/50%/10%）比較 F1</b>，看資料利用效率'],
+    ['c','114-2 第 44 題','選型：要生成','既要預測流失又要產生虛擬樣本做 A/B 測試','<b>VAE 或 GAN</b>；隨機森林與邏輯迴歸只能判別，RL 是序貫決策'],
+    ['ad','114-2 第 50 題','現象推機制（旗艦題）','主題正確但品牌標誌顏色錯、手部姿勢不自然','<b>CLIP 文字編碼器與影像編碼器在語意嵌入空間未充分對齊</b>'],
+    ['b','115-1 第 2 題','LoRA 機制','GPU 記憶體有限，要凍結 Llama3 70B 只訓練少量參數','<b>凍結原權重，各層加入低秩分解可訓練矩陣</b>；蒸餾要另訓小模型、剪枝會動原權重'],
+    ['b','115-1 第 13 題','Prompt Tuning vs Fine-Tuning','兩方案最本質的技術差異','<b>微調更新模型參數，提示微調改變輸入表示</b>；不是為了降低推論延遲'],
+    ['ab','115-1 第 14 題','災難性遺忘','SFT 後通用能力退化，資源有限如何緩解','<b>凍結大部分參數、只訓練 LoRA 等新增模組</b>；提高學習率／只用領域語料／加大 batch 都錯'],
+    ['e','115-1 第 21 題','生成式 AI 成本優化','RAG 系統要把 token 成本降到 60%，成本集中在輸入端','<b>System Prompt 走 Prompt Caching + 對話歷史摘要壓縮</b>；壓 max_tokens 與提示「講簡短」都只動到輸出端'],
+    ['e','115-1 第 33 題','合成資料定位','自駕惡劣天氣資料不足，改用合成資料','<b>可控條件下產生多樣化場景、擴充訓練資料並提升泛化</b>；不能完全取代真實資料']
+  ];
+  const cats=[['現象 → 成因（推機制型）','a',5],['微調／壓縮策略區辨','b',3],['模型家族與路徑選型','c',3],['跨模態對齊與缺失','d',3],['風險治理與成本','e',3]];
+  bars('#catBars',cats.map((c,i)=>[c[0],c[2],i===0]),5,v=>v+' 題');
+  tabset('#exTabs',['全部 16 題'].concat(cats.map(c=>c[0])),k=>{$('#examList').innerHTML='';examList('#examList',R.filter(r=>k===0||r[0].includes(cats[k-1][1])).map(r=>r.slice(1)));});
+})();
+
+/* ================= 20.8 ================= */
+traps('l21103-traps',[
+  ['LoRA 是「凍結原權重、旁路加低秩矩陣」','不是把大模型壓成小模型（那是知識蒸餾），也不是移除參數（那是剪枝）。'],
+  ['LoRA／Prompt Tuning 省的是訓練成本；蒸餾／剪枝／量化省的是推論成本','「GPU 記憶體不足、無法反向傳播」是訓練問題，「邊緣裝置跑不動」才是推論問題。'],
+  ['Prompt Tuning 的目的是省訓練與儲存成本，不是「降低推論延遲」','軟提示反而讓輸入變長。'],
+  ['擴散模型是「從噪聲逐步去噪」，不是「照著文字直接畫」','文字只是透過交叉注意力注入的條件。'],
+  ['CFG 管遵循提示的強度，取樣步數管細節清晰度','圖糊了要加步數，不是加 CFG；CFG 拉太高會過飽和與產生假影。'],
+  ['GAN 模式崩潰的主流解是 WGAN 損失','梯度懲罰（WGAN-GP）是搭配它使用的穩定化手段，不是獨立主解。'],
+  ['生成細節出錯若屬語意層級（顏色錯、結構怪），成因指向跨模態對齊不足','若整張圖隨機雜訊才輪到去噪過程。'],
+  ['「未採用對比學習」這種把程度問題寫成有無問題的選項，通常是誘答','CLIP 本來就用對比學習。'],
+  ['著作權要從源頭（訓練資料授權驗證）預防','浮水印與數位指紋只是事後追溯；差分隱私防的是記憶特定樣本與隱私外洩。'],
+  ['幻覺的成因是自迴歸的機率式生成機制，不是「資料量不夠」','解法是 RAG 與人工覆核，不是單純把模型放大。'],
+  ['災難性遺忘不能靠「提高學習率縮短訓練」解決','學習率越高權重偏移越大，遺忘只會更嚴重。'],
+  ['合成資料不能完全取代真實資料（存在 Domain Gap）','也與推論成本無關。'],
+  ['題幹只要要求「產生新樣本／模擬情境」，隨機森林、邏輯迴歸、SVM 一律出局','鑑別式只能判別。'],
+  ['BLEU 看 n-gram 精確率（翻譯）、ROUGE 看召回率（摘要）、MOS 看語音自然度（1–5 分）、WER 看字詞錯誤率','四個不要互換。'],
+  ['生成式 AI 是四階段中的第二階段','「會規劃任務、會調用工具」屬於代理式 AI，不要當成生成式 AI 的定義。']
+]);
+
+quiz([
+  ['企業要預測顧客流失，並模擬不同促銷策略下的行為、產生多樣化虛擬樣本做 A/B 測試，應選哪一類模型？',['VAE 或 GAN','隨機森林','邏輯迴歸','強化學習'],'隨機森林與邏輯迴歸只能判別；RL 是序貫決策。要產生新樣本必須走生成式。'],
+  ['關於 VAE、GAN、擴散模型在潛在空間與生成策略上的根本差異，何者正確？',['擴散模型以條件化去噪逐步反推，兼具高保真、穩定性與多樣性','VAE 以對抗損失做隱式建模','VAE 與 GAN 都依賴馬可夫鏈','三者共用同一潛在空間，只差在解碼器'],'VAE 是顯式潛在變數、GAN 是對抗損失；其餘選項都是張冠李戴。'],
+  ['Stable Diffusion 生成的 4K 產品圖邊緣顆粒化、細節模糊，且只能在生成階段調整，最合適的做法是？',['增加取樣步數並改用高品質取樣器','提高 CFG 強度','降低輸入解析度'],'CFG 管遵循提示，拉太高會過飽和與假影；細節不足是去噪不充分。'],
+  ['人臉生成模型出現模式崩潰（只產出少數重複樣本），最主流、最直接的解法是？',['改用 Wasserstein 距離（WGAN 損失）','只加入梯度懲罰','只加入多尺度判別器','在潛在向量加擾動'],'四個都是真實技術，但只有 WGAN 損失是針對模式崩潰的根本解，其餘是輔助。'],
+  ['文生圖的主題與場景正確，但品牌標誌顏色錯、手部姿勢不自然，最可能的技術成因是？',['CLIP 的文字與影像編碼器在語意嵌入空間未充分對齊','去噪過程的隨機梯度漂移','提示語過長，超出位置編碼的上下文限制','模型完全沒有採用對比學習損失'],'語意層級的偏差 → 跨模態對齊。「沒有對比學習」太絕對。'],
+  ['GPU 記憶體有限，要凍結 Llama3 70B、只訓練少量額外參數，應採用？',['LoRA：凍結原權重，各層加入低秩分解可訓練矩陣','知識蒸餾','剪枝','全參數微調'],'蒸餾要另訓小模型、剪枝會動原權重、全參數微調更新全部權重。'],
+  ['Prompt Tuning 與 Fine-Tuning 最本質的技術差異是？',['微調更新模型參數，提示微調改變輸入表示','提示微調是為了降低推論延遲','兩者本質相同，只差學習率','提示微調會移除低重要性參數'],'提示微調省的是訓練與儲存成本；軟提示反而讓輸入略變長。'],
+  ['模型經 SFT 後醫療問答變強、通用能力卻退化，資源有限下如何緩解？',['凍結大部分參數，只訓練 LoRA 等少量新增模組','提高學習率並縮短訓練步數','只用醫療領域語料多輪訓練','加大 Batch Size'],'學習率越高權重偏移越大；只用領域語料正是病因；加大 batch 沒有實質作用。'],
+  ['訓練生成式模型時做了資料增強，效能反而下降，最可能的原因與對策是？',['增強後特徵分佈偏離原始資料，應調整增強策略以維持語意一致性','增強比例不夠，應再提高','標註錯誤，應改用半監督重新校正標註'],'提高增強比例只會加劇分佈偏移。'],
+  ['語音合成模型多 GPU 訓練時記憶體不足，且架構與硬體都不能換，應怎麼做？',['縮小批次大小並做資料分片','減少訓練資料量','調整學習率','把測試集也拿來訓練'],'114-2 第 37 題：減資料、調學習率、拿測試集訓練都是錯的。'],
+  ['生成內容疑似侵犯著作權，下列何者「最能有效預防」侵權發生？',['建立訓練資料篩選與授權驗證機制','生成後做語意相似度比對','在輸出加上浮水印','訓練時採用差分隱私'],'問「預防」找源頭；相似度比對與浮水印是事後；差分隱私防的是隱私外洩。'],
+  ['關於生成式 AI 的評估指標，何者正確？',['BLEU 偏精確率、常用於翻譯；ROUGE 偏召回率、常用於摘要','BLEU 偏召回率、常用於摘要','MOS 是字詞錯誤率','WER 衡量語音的自然度'],'MOS 是語音自然度的人工平均分數；WER 是字詞錯誤率。']
+],'建議重新操作 20.2 的取樣參數模擬器、20.3 的症狀診斷卡、20.4 的策略透視，再來一次。');
+</script>
+</body>
+</html>

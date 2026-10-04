@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L22202 數據儲存與管理｜互動教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F5; --surface:#FFFFFF; --surface2:#F6F8FB; --ink:#18202E; --muted:#5A6475; --line:#D5DBE4;
+  --txt:#3B4CCA; --img:#0E8A7A; --aud:#B87812; --sen:#B8336A;
+  --ok:#1F8A4C; --bad:#C23B2E; --warn:#D9822B;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+    --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+  --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75}
+h1,h2,h3{font-family:var(--serif);line-height:1.3;margin:0}
+p{margin:0 0 1em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--txt);outline-offset:2px;border-radius:4px}
+svg{max-width:100%;height:auto;display:block}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1180px;margin:0 auto;gap:40px;padding:0 24px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;padding:32px 0;height:100vh;overflow:auto}
+nav.toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14.5px}
+nav.toc a span{font-variant-numeric:tabular-nums;font-size:13px;opacity:.8}
+nav.toc a.on{background:var(--surface);color:var(--ink);font-weight:700}
+.toc-title{font-family:var(--serif);font-weight:900;font-size:18px;padding:0 10px 14px}
+main{min-width:0;padding-bottom:80px}
+section{padding:56px 0 8px;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.sec-head{display:flex;gap:16px;align-items:baseline;margin-bottom:18px}
+.sec-no{font-family:var(--serif);font-weight:900;font-size:40px;color:var(--line);line-height:1}
+h2{font-size:28px;font-weight:900}
+h3{font-size:19px;margin:34px 0 10px}
+.lead{color:var(--muted);max-width:66ch}
+.prose{max-width:68ch}
+
+/* hero */
+.hero{padding:44px 0 24px}
+.hero .code{font-size:14px;color:var(--muted);margin-bottom:6px}
+.hero h1{font-size:clamp(34px,5.5vw,56px);font-weight:900;letter-spacing:.02em}
+.hero .one{font-size:18px;max-width:60ch;margin:16px 0 0;color:var(--muted)}
+.hero-fig{background:var(--surface);border-radius:20px;margin-top:28px;padding:14px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+.goal{border-left:4px solid var(--c);padding:6px 0 6px 14px;font-size:15px}
+
+/* panels */
+.panel{background:var(--surface);border-radius:16px;padding:22px;margin:16px 0}
+.panel.flat{background:var(--surface2)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font-size:15px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hint{font-size:14px;color:var(--muted)}
+.callout{border-left:4px solid var(--warn);background:var(--surface2);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;font-size:15px}
+.callout.exam{border-color:var(--txt)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:14px}
+
+/* modality chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+
+/* matcher */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.match .col{display:flex;flex-direction:column;gap:10px}
+.mitem{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15px;transition:border-color .2s,background .2s,transform .2s}
+.mitem small{display:block;color:var(--muted);font-size:13px}
+.mitem.sel{border-color:var(--ink);transform:translateX(4px)}
+.mitem.done{border-color:var(--c,var(--ok));background:var(--surface2);cursor:default}
+.mitem.wrong{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:1.8em;margin-top:12px;font-size:15px}
+.feedback.ok{color:var(--ok)} .feedback.bad{color:var(--bad)}
+
+/* timeline */
+.steps{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stage-viz{min-height:130px;display:flex;align-items:center;justify-content:center}
+.stage-viz .blk{display:inline-block;width:34px;height:34px;border-radius:6px;margin:2px;transition:all .5s}
+
+/* align toggle */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.compare>div{padding:18px}
+.compare>div+div{border-left:1px solid var(--line)}
+.compare .big{font-family:var(--serif);font-weight:900;font-size:22px;margin-bottom:6px}
+
+/* fusion */
+.meter{height:14px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:6px 0}
+.meter>i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .7s cubic-bezier(.3,.8,.3,1),background .4s}
+.flow{stroke-dasharray:6 7;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.jitter{animation:jit .25s steps(2) infinite}
+@keyframes jit{50%{transform:translate(1.5px,-1px)}}
+.fusion-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.pc{font-size:15px}
+.pc b{display:block;font-size:14px;color:var(--muted);font-weight:500}
+
+/* clip */
+.mat{display:grid;gap:4px;font-size:13px}
+.mat .cell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;transition:background .5s,color .5s}
+.mat .lab{display:flex;align-items:center;justify-content:center;font-size:22px}
+.mat .tlab{font-size:12px;text-align:center;color:var(--muted);display:flex;align-items:flex-end;justify-content:center;line-height:1.3}
+.zs-imgs{display:flex;gap:10px;flex-wrap:wrap}
+.zs-img{font-size:38px;width:72px;height:72px;border-radius:16px;border:2px solid var(--line);background:var(--surface2);display:flex;align-items:center;justify-content:center}
+.zs-img[aria-pressed="true"]{border-color:var(--img);box-shadow:0 0 0 3px color-mix(in srgb,var(--img) 25%,transparent)}
+.bar{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.bar .track{height:22px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;width:0;background:var(--txt);border-radius:6px;transition:width .8s cubic-bezier(.3,.8,.3,1)}
+.bar.win .fill{background:var(--img)}
+.bar.win{font-weight:700}
+.bar .num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.flip{perspective:900px;height:150px;border:0;background:none;padding:0;text-align:left}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flip[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:center}
+.flip .f{background:var(--surface);border:1.5px solid var(--line)}
+.flip .f strong{font-family:var(--serif);font-size:22px}
+.flip .f span{color:var(--muted);font-size:14px}
+.flip .b{background:var(--ink);color:var(--bg);transform:rotateY(180deg);font-size:15px}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.pnode{border:2px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;font-size:14px;background:var(--surface);transition:all .35s}
+.pnode b{display:block;font-size:16px}
+.pnode.on{border-color:var(--aud);background:color-mix(in srgb,var(--aud) 14%,var(--surface));transform:translateY(-3px)}
+.pnode.past{border-color:color-mix(in srgb,var(--aud) 45%,var(--line))}
+.pout{background:var(--surface2);border-radius:12px;padding:14px 16px;min-height:84px;font-size:15px}
+.wave{display:flex;gap:3px;align-items:center;height:30px}
+.wave i{width:4px;background:var(--aud);border-radius:2px;animation:wv 1s ease-in-out infinite}
+@keyframes wv{50%{transform:scaleY(.3)}}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+
+/* strategies */
+.strat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.strat button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;text-align:left;font-size:15px}
+.strat button[aria-pressed="true"]{border-color:var(--ink)}
+.verdict{font-family:var(--serif);font-weight:900;font-size:20px}
+
+details{border-bottom:1px solid var(--line)}
+details summary{cursor:pointer;padding:12px 4px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"+";font-weight:900;width:14px;color:var(--muted)}
+details[open] summary::before{content:"−"}
+details .body{padding:0 4px 14px 30px;font-size:15px}
+.tag{font-size:12.5px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums;min-width:80px}
+
+/* quiz */
+.qcard{background:var(--surface);border-radius:16px;padding:24px}
+.qtop{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
+.qtext{font-size:18px;font-weight:700;margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15.5px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+.opt.wrongpick{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.opt:disabled{cursor:default}
+.expl{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15px;display:none}
+.expl.show{display:block}
+.progress{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;margin-bottom:14px}
+.progress i{display:block;height:100%;background:var(--txt);transition:width .4s}
+
+.traps label{display:flex;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:15px}
+.traps input{width:18px;height:18px;margin-top:4px;flex:none;accent-color:var(--ok)}
+.traps label.chk>span{color:var(--muted)}
+.traps em{font-style:normal;font-weight:700}
+
+/* mobile */
+@media (max-width:860px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+  nav.toc{position:sticky;top:0;height:auto;z-index:10;background:var(--bg);display:flex;overflow-x:auto;padding:8px 0;padding-top:calc(8px + env(safe-area-inset-top,0px));gap:4px;border-bottom:1px solid var(--line)}
+  .toc-title{display:none}
+  nav.toc a{white-space:nowrap;flex:none}
+  .match,.stage,.fusion-meta,.compare{grid-template-columns:1fr}
+  .compare>div+div{border-left:0;border-top:1px solid var(--line)}
+  .pipe{grid-template-columns:repeat(5,minmax(90px,1fr));overflow-x:auto}
+  .bar{grid-template-columns:110px 1fr 56px}
+  h2{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* ---- 本頁擴充元件 ---- */
+.ctl{display:grid;grid-template-columns:120px minmax(0,1fr) 70px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.ctl input[type=range]{width:100%;accent-color:var(--txt)}
+.ctl .num{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.ctl-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:6px 0}
+.ctl-row>b{font-size:14px;color:var(--muted);font-weight:500;min-width:84px}
+.btn.sm{padding:4px 12px;font-size:14px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:12px}
+.stat{background:var(--surface2);border-radius:12px;padding:10px 12px;border-top:4px solid var(--c,var(--line))}
+.stat b{display:block;font-size:13px;color:var(--muted);font-weight:500}
+.stat span{font-size:22px;font-weight:900;font-family:var(--serif);font-variant-numeric:tabular-nums}
+.wiz-q{font-weight:700;margin:0 0 10px}
+.wiz-path{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;font-size:13.5px}
+.wiz-path span{background:var(--surface2);border-radius:99px;padding:2px 10px;color:var(--muted)}
+.wiz-res{border-left:4px solid var(--img);background:var(--surface2);padding:14px 16px;border-radius:0 12px 12px 0}
+.wiz-res .verdict{color:var(--img)}
+.sort-card{background:var(--surface2);border-radius:14px;padding:18px;min-height:96px;font-size:16px}
+.sort-card small{display:block;color:var(--muted);font-size:13px;margin-bottom:4px}
+.code-box{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14px;background:var(--surface2);border-radius:10px;padding:12px 14px;white-space:pre-wrap;word-break:break-word;line-height:1.6}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13.5px;color:var(--muted);margin-top:6px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;background:var(--c);margin-right:5px;vertical-align:-1px}
+@media (max-width:860px){
+  .ctl{grid-template-columns:88px minmax(0,1fr) 58px}
+  .stat span{font-size:19px}
+}
+code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9em;background:var(--surface2);padding:1px 5px;border-radius:5px;word-break:break-word}
+.code-box code{background:none;padding:0}
+#qmTbl td,#qmTbl th{padding:6px 8px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="toc" aria-label="章節">
+  <div class="toc-title">數據儲存與管理</div>
+  <a href="#intro"><span>●</span>導覽與目標</a>
+  <a href="#s1"><span>32.1</span>資料型態與選型</a>
+  <a href="#s2"><span>32.2</span>關聯式與 SQL</a>
+  <a href="#s3"><span>32.3</span>NoSQL 四大型態</a>
+  <a href="#s4"><span>32.4</span>倉儲、湖、湖倉</a>
+  <a href="#s5"><span>32.5</span>分片、副本、CAP</a>
+  <a href="#s6"><span>32.6</span>效能與查詢加速</a>
+  <a href="#s7"><span>32.7</span>治理與存取控管</a>
+  <a href="#s8"><span>32.8</span>官方考題</a>
+  <a href="#s9"><span>32.9</span>易錯與測驗</a>
+</nav>
+
+<main>
+<!-- HERO -->
+<section id="intro" class="hero">
+  <div class="code">L22202　中級 AI 應用規劃師（科目 2）　建議 45 分鐘</div>
+  <h1>數據儲存與管理</h1>
+  <p class="one">這一節是第四章「大數據處理技術」的骨幹，把資料從「存得下」推進到「<b>存得對、找得快、管得住</b>」。初級只要知道「資料要放在資料庫裡」；中級要面對一個情境，<b>選出正確的儲存架構、說明取捨代價、並指出治理機制擺在哪一層</b>。</p>
+  <div class="hero-fig" aria-hidden="true">
+    <svg id="heroSvg" viewBox="0 0 720 300">
+      <defs>
+        <path id="hp0" d="M130 60 C 300 60, 360 60, 520 60"/>
+        <path id="hp1" d="M130 150 C 300 150, 360 150, 520 150"/>
+        <path id="hp2" d="M130 240 C 300 240, 360 240, 520 240"/>
+        <path id="hp3" d="M130 60 C 300 60, 360 150, 520 150"/>
+      </defs>
+      <g fill="none" stroke-width="2" opacity=".3">
+        <use href="#hp0" stroke="var(--txt)"/><use href="#hp1" stroke="var(--img)"/><use href="#hp2" stroke="var(--aud)"/>
+      </g>
+      <g font-family="Noto Sans TC, sans-serif" font-size="14" font-weight="700">
+        <rect x="10" y="38" width="120" height="44" rx="22" fill="var(--txt)"/><text x="70" y="65" text-anchor="middle" fill="#fff">結構化</text>
+        <rect x="10" y="128" width="120" height="44" rx="22" fill="var(--img)"/><text x="70" y="155" text-anchor="middle" fill="#fff">半結構化</text>
+        <rect x="10" y="218" width="120" height="44" rx="22" fill="var(--aud)"/><text x="70" y="245" text-anchor="middle" fill="#fff">非結構化</text>
+        <g fill="var(--surface2)" stroke-width="2.5">
+          <path d="M520 38 v44 a70 12 0 0 0 140 0 v-44" stroke="var(--txt)"/><ellipse cx="590" cy="38" rx="70" ry="12" stroke="var(--txt)"/>
+          <path d="M520 128 v44 a70 12 0 0 0 140 0 v-44" stroke="var(--img)"/><ellipse cx="590" cy="128" rx="70" ry="12" stroke="var(--img)"/>
+          <path d="M520 218 v44 a70 12 0 0 0 140 0 v-44" stroke="var(--aud)"/><ellipse cx="590" cy="218" rx="70" ry="12" stroke="var(--aud)"/>
+        </g>
+        <text x="590" y="72" text-anchor="middle" fill="var(--txt)">RDBMS／倉儲</text>
+        <text x="590" y="162" text-anchor="middle" fill="var(--img)">NoSQL／搜尋</text>
+        <text x="590" y="252" text-anchor="middle" fill="var(--aud)">物件儲存／湖</text>
+        <text x="325" y="290" text-anchor="middle" fill="var(--muted)" font-weight="500" font-size="13">多元持久化：依資料型態與需求分開選用</text>
+      </g>
+      <g class="movers">
+        <rect width="14" height="14" rx="3" fill="var(--txt)" x="-7" y="-7"><animateMotion dur="2.4s" repeatCount="indefinite"><mpath href="#hp0"/></animateMotion></rect>
+        <rect width="14" height="14" rx="3" fill="var(--img)" x="-7" y="-7"><animateMotion dur="2.4s" begin=".5s" repeatCount="indefinite"><mpath href="#hp1"/></animateMotion></rect>
+        <rect width="14" height="14" rx="3" fill="var(--aud)" x="-7" y="-7"><animateMotion dur="2.4s" begin="1s" repeatCount="indefinite"><mpath href="#hp2"/></animateMotion></rect>
+        <rect width="14" height="14" rx="3" fill="var(--txt)" x="-7" y="-7"><animateMotion dur="2.4s" begin="1.5s" repeatCount="indefinite"><mpath href="#hp0"/></animateMotion></rect>
+        <rect width="14" height="14" rx="3" fill="var(--aud)" x="-7" y="-7"><animateMotion dur="2.4s" begin="1.9s" repeatCount="indefinite"><mpath href="#hp2"/></animateMotion></rect>
+      </g>
+    </svg>
+  </div>
+  <h3>學完這一課，你應該能夠</h3>
+  <div class="goals">
+    <div class="goal" style="--c:var(--txt)">依「結構化／半結構化／非結構化」判斷資料型態，並選出<b>對應的儲存技術</b></div>
+    <div class="goal" style="--c:var(--img)">分辨<b>關聯式資料庫與四種 NoSQL</b> 的資料模型、查詢方式與適用情境</div>
+    <div class="goal" style="--c:var(--aud)">精準區辨<b>資料倉儲、資料湖、資料湖倉</b>，以及 ETL／ELT、Schema-on-Write／Schema-on-Read</div>
+    <div class="goal" style="--c:var(--sen)">說明<b>分片與副本</b>的差異，並用 <b>CAP</b> 與一致性模型解釋系統取捨</div>
+  </div>
+  <p class="hint" style="margin-top:20px">本頁顏色固定代表：<span class="chip" style="--c:var(--txt)"><i class="dot"></i>結構化／關聯式</span>　<span class="chip" style="--c:var(--img)"><i class="dot"></i>半結構化／NoSQL</span>　<span class="chip" style="--c:var(--aud)"><i class="dot"></i>非結構化／資料湖</span>　<span class="chip" style="--c:var(--sen)"><i class="dot"></i>治理／風險</span></p>
+</section>
+
+<!-- 32.1 -->
+<section id="s1">
+  <div class="sec-head"><span class="sec-no">32.1</span><h2>資料型態決定儲存選型</h2></div>
+  <p class="lead">題目幾乎都從情境敘述倒推儲存技術，所以第一步永遠是：<b>資料長什麼樣子？</b></p>
+  <div class="panel">
+    <h3 style="margin-top:0">分類練習：這份電商資料是哪一型？該存哪裡？</h3>
+    <div class="sort-card" id="typeCard"></div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn" id="tyS" style="border-color:var(--txt)">結構化</button>
+      <button class="btn" id="tyM" style="border-color:var(--img)">半結構化</button>
+      <button class="btn" id="tyU" style="border-color:var(--aud)">非結構化</button>
+      <span class="hint" id="tyScore"></span>
+    </div>
+    <div class="feedback" id="tyFb" aria-live="polite"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>維度</th><th><span class="chip" style="--c:var(--txt)"><i class="dot"></i>結構化</span></th><th><span class="chip" style="--c:var(--img)"><i class="dot"></i>半結構化</span></th><th><span class="chip" style="--c:var(--aud)"><i class="dot"></i>非結構化</span></th></tr>
+      <tr><td>特徵</td><td>固定欄位、固定型別</td><td>有層次與標記，但欄位可變</td><td>無預定格式</td></tr>
+      <tr><td>典型格式</td><td>資料表、CSV</td><td>JSON、XML、YAML</td><td>文字、圖片、音訊、影片、PDF</td></tr>
+      <tr><td>典型來源</td><td>ERP、CRM、POS</td><td>API 回傳、IoT 封包、網頁擷取</td><td>社群貼文、客服錄音、監視影像</td></tr>
+      <tr><td>儲存方式</td><td>關聯式資料庫（RDBMS）</td><td>文件型 NoSQL、全文搜尋引擎、資料湖</td><td>物件儲存（S3、MinIO）、分散式檔案系統（HDFS）</td></tr>
+      <tr><td>查詢方式</td><td>SQL</td><td>路徑／巢狀欄位查詢、倒排索引</td><td>靠 metadata、標籤與內容索引間接查</td></tr>
+      <tr><td>優勢</td><td>SQL 查詢、完整性約束、ACID</td><td>格式彈性、易整合異質來源</td><td>可容納任何內容、單位成本低</td></tr>
+      <tr><td>限制</td><td>結構變更不靈活</td><td>缺少結構約束，驗證邏輯要自己寫</td><td>難以直接搜尋比對，需外部標註</td></tr>
+    </table>
+  </div>
+  <div class="callout exam"><b>實務上是混合的。</b>一個電商平台同時擁有三種型態：訂單紀錄（結構化）、商品描述與規格（半結構化）、商品圖片與顧客留言（非結構化）。考題喜歡給一個混合情境，然後把「全部用同一種資料庫」放進選項。正解通常是依需求分開選用 —— <b>多元持久化（Polyglot Persistence）</b>。</div>
+</section>
+
+<!-- 32.2 -->
+<section id="s2">
+  <div class="sec-head"><span class="sec-no">32.2</span><h2>關聯式資料庫與 SQL 基本功</h2></div>
+
+  <h3>正規化 vs 反正規化：改一支電話要動幾處？</h3>
+  <div class="panel">
+    <p class="hint">同一份訂單資料（示意）的兩種存法。按「王小明換電話」，看要更新幾列；按「查訂單明細」，看要 JOIN 幾張表。</p>
+    <div class="tabs" id="nfTabs">
+      <button class="btn" data-n="de" aria-pressed="true">反正規化（一張大表）</button>
+      <button class="btn" data-n="no" aria-pressed="false">正規化（拆表＋外鍵）</button>
+    </div>
+    <div id="nfTables"></div>
+    <div class="row" style="margin-top:10px"><button class="btn primary" id="nfUpd">王小明換電話</button><button class="btn" id="nfRead">查訂單明細</button></div>
+    <div class="pout" id="nfOut" style="margin-top:10px"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>維度</th><th>正規化</th><th>反正規化</th></tr>
+      <tr><td>做法</td><td>拆表、用外鍵關聯，消除重複欄位</td><td>刻意保留冗餘欄位或預先併表</td></tr>
+      <tr><td>主要目的</td><td>減少資料冗餘、避免新增／更新／刪除異常</td><td>減少 JOIN 次數、加快讀取</td></tr>
+      <tr><td>寫入成本</td><td>低（一處修改即可）</td><td>高（同一事實要同步多處）</td></tr>
+      <tr><td>讀取成本</td><td>高（需要多表 JOIN）</td><td>低</td></tr>
+      <tr><td>典型場景</td><td>OLTP 交易系統、庫存扣減</td><td>OLAP 分析、報表、資料倉儲的星狀結構</td></tr>
+    </table>
+  </div>
+  <p class="prose" style="margin-top:12px">正規化層級只需記到判斷層次：<b>1NF</b> 欄位不可再分割；<b>2NF</b> 在 1NF 之上消除「非鍵欄位只相依於複合主鍵一部分」的部分相依；<b>3NF</b> 在 2NF 之上消除「非鍵欄位透過另一個非鍵欄位間接相依於主鍵」的遞移相依。</p>
+
+  <h3>SQL 的執行順序：WHERE 與 HAVING 差在哪？</h3>
+  <div class="panel">
+    <p class="hint">用 8 筆訂單（示意）跑一遍考試範例的查詢。按下一步，看每個子句之後還剩什麼。注意寫的順序 ≠ 執行的順序。</p>
+    <div class="code-box" id="sqlCode"></div>
+    <div class="steps" id="sqlBtns" style="margin-top:12px"></div>
+    <div id="sqlOut"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>關鍵字</th><th>作用時機</th><th>過濾對象</th></tr>
+      <tr><td><code>WHERE</code></td><td><code>GROUP BY</code> <b>之前</b></td><td>單筆資料列</td></tr>
+      <tr><td><code>HAVING</code></td><td><code>GROUP BY</code> <b>之後</b></td><td>聚合後的群組</td></tr>
+    </table>
+  </div>
+
+  <h3>JOIN 與集合運算</h3>
+  <div class="panel">
+    <p class="hint">左表是顧客、右表是訂單（示意）。切換 JOIN 型態，看哪些列留下、哪些格補 NULL。</p>
+    <div class="tabs" id="joinTabs"></div>
+    <div class="stage">
+      <div class="stage-viz"><svg id="joinVenn" viewBox="0 0 260 150" style="max-width:260px" role="img" aria-label="JOIN 集合示意"></svg></div>
+      <div id="joinOut"></div>
+    </div>
+  </div>
+  <div class="callout">這組語意在 pandas 題裡也會考：<code>pd.merge(..., how='inner')</code> 就是交集、<code>how='outer'</code> 就是聯集。115-1 第 47 題考的正是這個。</div>
+
+  <h3>ACID 四特性（高頻單點題）</h3>
+  <div class="panel">
+    <h3 style="margin-top:0">轉帳模擬：交易做到一半當機了</h3>
+    <p class="hint">A 帳戶轉 300 元給 B（示意）。按「執行」並在中途觸發當機，看原子性如何讓資料「全做完或全不做」。</p>
+    <div class="stats">
+      <div class="stat" style="--c:var(--txt)"><b>A 帳戶</b><span id="txA">1000</span></div>
+      <div class="stat" style="--c:var(--img)"><b>B 帳戶</b><span id="txB">500</span></div>
+      <div class="stat" style="--c:var(--aud)"><b>總額</b><span id="txT">1500</span></div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn primary" id="txOk">執行轉帳（正常）</button>
+      <button class="btn" id="txCrash">執行轉帳（扣款後當機）</button>
+      <button class="btn" id="txNoAtom" aria-pressed="false">假如沒有原子性…</button>
+      <button class="btn" id="txReset">重設</button>
+    </div>
+    <div class="pout" id="txLog" style="margin-top:10px"></div>
+  </div>
+  <div class="panel">
+    <h3 style="margin-top:0">配對：字母 ↔ 正確定義（小心誘答）</h3>
+    <p class="hint">右邊混了四個常見誘答。先點左邊字母，再點右邊定義。</p>
+    <div class="match" id="acidMatch"></div>
+    <div class="feedback" id="acidFb" aria-live="polite"></div>
+  </div>
+  <div class="callout exam"><b>注意 C 的雙重身分：</b>ACID 的 C 是「符合資料庫完整性規則」，CAP 的 C 是「所有節點讀到同一份最新資料」。兩個 C 不是同一件事，考題會拿這點設誘答。</div>
+</section>
+
+<!-- 32.3 -->
+<section id="s3">
+  <div class="sec-head"><span class="sec-no">32.3</span><h2>NoSQL 四大型態</h2></div>
+  <p class="lead">NoSQL 的原意是 <b>Not Only SQL</b>，不是「不能用 SQL」—— Cassandra 有 CQL、許多文件型資料庫也提供類 SQL 介面。它真正放棄的是「固定 schema 與跨表強交易」，換回擴展性與彈性。</p>
+
+  <h3>同一份資料，四種存法</h3>
+  <div class="panel">
+    <p class="hint">「使用者小明對貼文 #1234 按讚」這件事（示意），在四種 NoSQL 裡長什麼樣子？</p>
+    <div class="tabs" id="nsTabs"></div>
+    <div class="stage">
+      <div class="stage-viz" id="nsViz" style="justify-content:flex-start"></div>
+      <div id="nsTxt"></div>
+    </div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>型態</th><th>資料模型</th><th>查詢特性</th><th>代表產品</th><th>最適情境</th></tr>
+      <tr><td><b>鍵值</b></td><td>key → value（value 對資料庫不透明）</td><td>依 key 直接取值；無法直接用 value 內容查</td><td>Redis、Memcached、DynamoDB</td><td>快取、Session、計數器、排行榜</td></tr>
+      <tr><td><b>文件</b></td><td>key → JSON／BSON 文件，可巢狀</td><td>可查巢狀欄位、可建二級索引</td><td>MongoDB、CouchDB</td><td>欄位因品項而異的商品目錄、內容管理</td></tr>
+      <tr><td><b>欄族</b></td><td>Row Key ＋（欄族 → 大量稀疏欄）</td><td>依 Row Key 範圍掃描，寫入吞吐極高</td><td>HBase、Cassandra</td><td>時間序列、感測器紀錄、超寬稀疏表</td></tr>
+      <tr><td><b>圖</b></td><td>節點／邊／屬性</td><td>多跳關聯遍歷、最短路徑</td><td>Neo4j、JanusGraph</td><td>社群關係、詐欺網路、知識圖譜</td></tr>
+    </table>
+  </div>
+  <div class="panel">
+    <h3 style="margin-top:0">配對：情境 → 資料庫型態</h3>
+    <p class="hint">先點左邊情境，再點右邊型態。</p>
+    <div class="match" id="nsMatch"></div>
+    <div class="feedback" id="nsFb" aria-live="polite"></div>
+  </div>
+  <h3>常在情境題中並列的另外兩類</h3>
+  <div class="cards" id="extraCards"></div>
+
+  <h3>圖資料庫建模（114-2 第 34 題）</h3>
+  <div class="panel">
+    <p class="hint">「按讚」帶有時間戳記與裝置類型，該怎麼建模？點選三種做法比較。</p>
+    <div class="strat" id="gStrat"></div>
+    <svg id="gSvg" viewBox="0 0 640 200" style="margin-top:12px" role="img" aria-label="圖建模示意"></svg>
+    <div style="margin-top:6px">
+      <div class="verdict" id="gV">選一種建模方式</div>
+      <div class="meter" style="height:18px;margin:10px 0"><i id="gM" style="width:0"></i></div>
+      <div id="gWhy" class="hint"></div>
+    </div>
+  </div>
+  <div class="compare">
+    <div><div class="big">屬性圖（Property Graph）</div>節點／邊都能掛屬性，偏向<b>高效遍歷</b>。<br><span class="hint">社群關係、詐欺網路：Neo4j</span></div>
+    <div><div class="big">RDF 三元組（S–P–O）</div>W3C 標準語意模型，可搭配<b>本體（Ontology）與推理引擎</b>。<br><span class="hint">知識圖譜＋語意推理 → 114-2 第 35 題正解</span></div>
+  </div>
+  <p class="prose" style="margin-top:12px">若目標是<b>知識圖譜＋語意推理</b>，標準答案會轉向 RDF 三元組；屬性圖偏向高效遍歷，語意推理與跨系統互通能力不如 RDF。</p>
+</section>
+
+<!-- 32.4 -->
+<section id="s4">
+  <div class="sec-head"><span class="sec-no">32.4</span><h2>資料倉儲、資料湖、資料湖倉</h2></div>
+  <p class="lead">本知識點表格題密度最高的地方。點選維度，三方並排比較。</p>
+  <div class="panel">
+    <div class="tabs" id="dwTabs"></div>
+    <div class="pipe" id="dwBody" style="grid-template-columns:repeat(3,minmax(0,1fr))"></div>
+  </div>
+  <details>
+    <summary>展開完整三方對照表（9 個維度）</summary>
+    <div class="body tbl-wrap" id="dwFull"></div>
+  </details>
+
+  <h3>Schema-on-Write vs Schema-on-Read：資料進場模擬</h3>
+  <div class="panel">
+    <p class="hint">四筆資料（示意）要進場，其中有欄位缺漏或格式不符的。切換兩種策略，看哪些被拒收、問題在何時爆發。</p>
+    <div class="tabs" id="sowTabs">
+      <button class="btn" data-s="w" aria-pressed="true">Schema-on-Write（資料倉儲）</button>
+      <button class="btn" data-s="r" aria-pressed="false">Schema-on-Read（資料湖）</button>
+    </div>
+    <svg id="sowSvg" viewBox="0 0 640 230" role="img" aria-label="Schema 驗證時機"></svg>
+    <div class="pout" id="sowTxt"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th></th><th>Schema-on-Write</th><th>Schema-on-Read</th></tr>
+      <tr><td>檢查時機</td><td>寫入時驗證，不合格就拒收</td><td>寫入照單全收，讀取時才解讀</td></tr>
+      <tr><td>好處</td><td>資料品質有保證、查詢可預先最佳化</td><td>彈性高、新增來源成本低、不丟資訊</td></tr>
+      <tr><td>代價</td><td>結構變更要做 schema migration</td><td>品質問題延後爆發，讀取端要自行處理髒資料</td></tr>
+      <tr><td>對應架構</td><td>資料倉儲、RDBMS</td><td>資料湖、物件儲存</td></tr>
+    </table>
+  </div>
+
+  <h3>ETL vs ELT：轉換放在載入之前還是之後？</h3>
+  <div class="panel">
+    <div class="tabs" id="etlTabs">
+      <button class="btn" data-e="etl" aria-pressed="true">ETL（傳統倉儲）</button>
+      <button class="btn" data-e="elt" aria-pressed="false">ELT（雲端／資料湖）</button>
+    </div>
+    <div class="pipe" id="etlPipe"></div>
+    <div class="pout" id="etlOut" aria-live="polite"></div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" id="etlNext">下一步</button><button class="btn" id="etlReset">從頭開始</button></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>維度</th><th>ETL</th><th>ELT</th></tr>
+      <tr><td>轉換發生位置</td><td>載入<b>之前</b>，在獨立的轉換引擎</td><td>載入<b>之後</b>，在目標儲存平台內部</td></tr>
+      <tr><td>原始資料</td><td>通常不保留</td><td>完整保留，可重新加工</td></tr>
+      <tr><td>對目標算力需求</td><td>低</td><td>高（因此仰賴雲端彈性算力）</td></tr>
+      <tr><td>適合資料型態</td><td>結構化為主</td><td>三種型態皆可</td></tr>
+      <tr><td>搭配架構</td><td>Schema-on-Write 的資料倉儲</td><td>Schema-on-Read 的資料湖／湖倉</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 32.5 -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-no">32.5</span><h2>分散式儲存：分片、副本、CAP</h2></div>
+
+  <h3>HDFS 模擬器：寫入、讀取與節點故障</h3>
+  <div class="panel">
+    <p class="hint">上傳一個 300 MB 的檔案（示意），HDFS 以 128 MB 切塊、每塊 3 份副本。接著試試讀取，或讓一台 DataNode 故障。</p>
+    <svg id="hdSvg" viewBox="0 0 640 300" role="img" aria-label="HDFS 架構"></svg>
+    <div class="row" style="margin-top:10px">
+      <button class="btn primary" id="hdWrite">① 寫入檔案</button>
+      <button class="btn" id="hdRead">② 讀取檔案</button>
+      <button class="btn" id="hdFail" aria-pressed="false">③ DataNode 2 故障</button>
+      <button class="btn" id="hdReset">重設</button>
+    </div>
+    <div class="pout" id="hdTxt" style="margin-top:10px"></div>
+  </div>
+  <details>
+    <summary>展開 HDFS 重點表（區塊、副本、寫入模型、Secondary NameNode）</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>項目</th><th>內容</th></tr>
+        <tr><td>NameNode</td><td>只存元資料（命名空間、檔案→區塊、區塊→節點位置），不存實際檔案內容</td></tr>
+        <tr><td>DataNode</td><td>存放實際資料區塊，定期送心跳與區塊報告給 NameNode</td></tr>
+        <tr><td>預設區塊大小</td><td>128 MB（Hadoop 2.x 起；1.x 為 64 MB）</td></tr>
+        <tr><td>預設副本因子</td><td>3 份，機架感知配置：1 份放寫入端所在機架、另 2 份放到別的機架</td></tr>
+        <tr><td>寫入模型</td><td>一次寫入多次讀取（write-once-read-many），可 append，不支援任意位置覆寫</td></tr>
+        <tr><td>不擅長</td><td>大量小檔案（元資料塞爆 NameNode 記憶體）、低延遲隨機讀取</td></tr>
+        <tr><td>Secondary NameNode</td><td>負責 fsimage 與 editlog 合併的檢查點工作，<b>不是</b>熱備援；高可用要用 Active／Standby NameNode 搭配 JournalNode</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <h3>分片 vs 副本：加節點到底加到什麼？</h3>
+  <div class="panel">
+    <p class="hint">一份 12 塊資料（A–L）。選擇擴展方式並增減節點，看容量、寫入吞吐、讀取能力、耐故障度怎麼變（數值為示意）。</p>
+    <div class="row" style="justify-content:space-between">
+      <div class="tabs" id="srMode" style="margin:0">
+        <button class="btn" data-m="shard" aria-pressed="true">分片 Sharding</button>
+        <button class="btn" data-m="rep" aria-pressed="false">副本 Replication</button>
+      </div>
+      <div class="row"><button class="btn sm" id="srMinus">− 節點</button><b id="srN">3 個節點</b><button class="btn sm" id="srPlus">＋ 節點</button></div>
+    </div>
+    <svg id="srSvg" viewBox="0 0 640 170" style="margin-top:10px" role="img" aria-label="分片與副本"></svg>
+    <div id="srBars"></div>
+    <p class="hint" id="srNote" style="margin:6px 0 0"></p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>維度</th><th>分片</th><th>副本</th></tr>
+      <tr><td>切的是什麼</td><td><b>不同</b>的資料放到不同節點（水平切分）</td><td><b>同一份</b>資料複製到多個節點</td></tr>
+      <tr><td>主要目的</td><td>突破單節點容量與吞吐上限、負載均衡</td><td>容錯、高可用、分攤讀取流量</td></tr>
+      <tr><td>增加節點的效果</td><td>總容量與寫入吞吐近線性成長</td><td>容量不變，讀取能力與耐故障度上升</td></tr>
+      <tr><td>主要風險</td><td>分片鍵選不好造成熱點、跨分片 JOIN 昂貴</td><td>副本間同步延遲造成讀到舊值</td></tr>
+    </table>
+  </div>
+
+  <h3>分片策略：熱點從哪裡來？</h3>
+  <div class="panel">
+    <p class="hint">新訂單以時間戳記為分片鍵持續寫入（示意）。按「寫入 20 筆新訂單」，看各分片的寫入量。</p>
+    <div class="tabs" id="skTabs"></div>
+    <div id="skBars"></div>
+    <div class="row" style="margin-top:8px"><button class="btn primary" id="skWrite">寫入 20 筆新訂單</button><button class="btn" id="skReset">清空</button></div>
+    <p class="hint" id="skNote" style="margin:6px 0 0"></p>
+  </div>
+
+  <h3>CAP 模擬器：網路斷了，你要正確還是要回應？</h3>
+  <div class="panel">
+    <p class="hint">兩個節點各存一份 x。先在節點 A 寫入 x = 2，再從節點 B 讀取。試試切斷網路、切換 CP／AP。</p>
+    <div class="row" style="justify-content:space-between">
+      <div class="tabs" id="capMode" style="margin:0">
+        <button class="btn" data-m="cp" aria-pressed="true">CP 系統</button>
+        <button class="btn" data-m="ap" aria-pressed="false">AP 系統</button>
+      </div>
+      <button class="btn" id="capPart" aria-pressed="false">切斷網路（分區 P）</button>
+    </div>
+    <svg id="capSvg" viewBox="0 0 640 180" style="margin-top:10px" role="img" aria-label="CAP 示意"></svg>
+    <div class="row"><button class="btn primary" id="capW">在 A 寫入 x = 2</button><button class="btn primary" id="capR">從 B 讀取 x</button><button class="btn" id="capHeal">恢復網路並同步</button><button class="btn" id="capReset">重設</button></div>
+    <div class="pout" id="capTxt" style="margin-top:10px"></div>
+  </div>
+  <div class="callout exam"><b>精確說法：只有在網路分區（P）實際發生時，系統才被迫在 C 與 A 之間二選一。</b>網路正常時，系統可以同時提供強一致與高可用。由於分散式系統無法假設網路永不斷線，P 事實上是必選項，所以真正的選擇是 CP（HBase、ZooKeeper）或 AP（Cassandra、DynamoDB）。CA 只在單機或「保證不分區」時成立，分散式環境不現實。</div>
+
+  <h3>一致性模型與 ACID／BASE</h3>
+  <div class="compare">
+    <div><div class="big">強一致性</div>寫入成功後，任何讀取都看得到最新值。<br><span class="hint">代價：跨節點協調（Paxos／Raft），延遲高、分區時可能不可用。<br>適用：金融交易、帳務、庫存扣減</span></div>
+    <div><div class="big">最終一致性</div>允許短暫不同步，但<b>最終會收斂到一致</b>。<br><span class="hint">代價：中間可能讀到舊值。<br>適用：物件儲存、資料湖、社群動態、瀏覽計數</span></div>
+  </div>
+  <div class="tbl-wrap" style="margin-top:14px">
+    <table>
+      <tr><th></th><th>ACID</th><th>BASE</th></tr>
+      <tr><td>全稱</td><td>Atomicity／Consistency／Isolation／Durability</td><td>Basically Available、Soft state、Eventually consistent</td></tr>
+      <tr><td>立場</td><td>寧可拒絕服務也要正確</td><td>寧可回舊值也要有回應</td></tr>
+      <tr><td>典型系統</td><td>RDBMS、Delta Lake／Iceberg 的交易層</td><td>Cassandra、DynamoDB、Amazon S3</td></tr>
+    </table>
+  </div>
+  <p class="prose" style="margin-top:12px">寫入衝突的補強機制（官方指引明列）：<b>單一寫入者原則、分區層級鎖定、版本號或時間戳記排序</b>。</p>
+</section>
+
+<!-- 32.6 -->
+<section id="s6">
+  <div class="sec-head"><span class="sec-no">32.6</span><h2>儲存效能優化與查詢加速</h2></div>
+  <div class="callout"><b>用語提醒：</b>Columnar Storage 在台灣慣稱「欄式儲存」（欄＝column），但官方《學習指引》原文寫作「列式儲存」（大陸用語）。本節一律附英文 Columnar／Row-oriented，兩種中文寫法都要對得上。</div>
+
+  <h3>掃描量計算器：一張 12 個月 × 20 欄的銷售表</h3>
+  <div class="panel">
+    <p class="hint">查詢：<code>SELECT AVG(amount) FROM sales WHERE month = 3</code>。原始資料共 1,200 GB（示意：每月 100 GB、20 欄等寬）。逐一打開加速技術，看要掃描的資料量。</p>
+    <div class="row">
+      <button class="btn" id="pfPart" aria-pressed="false">分區（依月份）</button>
+      <button class="btn" id="pfCol" aria-pressed="false">欄式儲存＋欄位裁剪</button>
+      <button class="btn" id="pfZip" aria-pressed="false">壓縮（示意壓成 1/4）</button>
+    </div>
+    <svg id="pfSvg" viewBox="0 0 640 200" style="margin-top:10px" role="img" aria-label="掃描範圍"></svg>
+    <div class="bar"><span>需掃描量</span><div class="track"><div class="fill" id="pfFill" style="width:100%"></div></div><span class="num" id="pfNum">1200 GB</span></div>
+    <p class="hint" id="pfNote" style="margin:6px 0 0"></p>
+  </div>
+
+  <h3>九種加速技術（點選看機制與反效果）</h3>
+  <div class="panel">
+    <div class="tabs" id="techTabs"></div>
+    <div id="techBody"></div>
+  </div>
+
+  <h3>檢視 vs 物化檢視：資料新鮮度</h3>
+  <div class="panel">
+    <p class="hint">「每日銷售排行榜」（示意）。底層表新增一筆大訂單後，比較兩種檢視讀到的結果。</p>
+    <div class="row"><button class="btn primary" id="mvIns">底層新增訂單 +500</button><button class="btn" id="mvRef">刷新物化檢視</button><button class="btn" id="mvReset">重設</button></div>
+    <div class="compare" style="margin-top:12px">
+      <div><div class="big">View</div><div id="mvV"></div><span class="hint">只是查詢的命名別名，每次查詢都重新計算、不佔額外儲存。</span></div>
+      <div><div class="big">Materialized View</div><div id="mvM"></div><span class="hint">實際把結果存下來，讀得快但需要刷新機制。</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 32.7 -->
+<section id="s7">
+  <div class="sec-head"><span class="sec-no">32.7</span><h2>資料治理、版本控制與存取控管</h2></div>
+  <h3>元資料與資料血緣：模型出錯，往回追</h3>
+  <div class="panel">
+    <p class="hint">元資料（Metadata）是「描述資料的資料」。集中管理成<b>資料目錄（Data Catalog）</b>後，就能做<b>資料血緣（Data Lineage）</b>追蹤。按「模型預測異常」，看血緣如何一路回溯（流程為示意）。</p>
+    <div class="pipe" id="linPipe"></div>
+    <div class="pout" id="linOut"></div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" id="linNext">往上游回溯一步</button><button class="btn" id="linReset">重來</button></div>
+  </div>
+  <ul class="prose"><li>資料血緣：追蹤資料從來源到使用的完整流向，出錯時能往回溯源</li><li>自動化的資料探索與分析前處理</li><li>跨部門共享時的欄位定義對齊</li></ul>
+
+  <h3>資料版本控制：Time Travel</h3>
+  <div class="panel">
+    <p class="hint">一張客戶表歷經幾次寫入（示意）。拖動版本，看同一份儲存上的歷史樣貌。模型是用 v2 訓練的 —— 沒有版本控制，就說不出這件事。</p>
+    <div class="ctl"><span>版本</span><input type="range" id="ttV" min="0" max="3" step="1" value="3"><span class="num" id="ttVv">v3</span></div>
+    <div class="tbl-wrap"><table id="ttTbl" style="min-width:420px"></table></div>
+    <p class="hint" id="ttNote" style="margin:8px 0 0"></p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>機制</th><th>內容</th><th>代表技術</th></tr>
+      <tr><td>版本標記與變更紀錄</td><td>每次匯入或修改賦予版本標籤，建立可追溯的歷史</td><td>Delta Lake <b>Time Travel</b>、Apache Hudi <b>Incremental Query</b></td></tr>
+      <tr><td>資料快照與版本回溯</td><td>定期建立快照，支援誤寫復原、資料還原與模型再訓練</td><td>Apache Iceberg Snapshot</td></tr>
+    </table>
+  </div>
+  <p class="prose" style="margin-top:12px">對 AI 專案來說，這一項的意義是<b>可重現性（Reproducibility）</b>：沒有資料版本，就無法說明「這個模型是用哪一份資料訓練出來的」，實驗結果也無從複製。</p>
+
+  <h3>存取控管模擬器：RBAC vs ABAC</h3>
+  <div class="panel">
+    <p class="hint">分析師想讀取「客戶個資表」（示意規則）。RBAC 只看角色；ABAC 還看時間、地點、裝置。調整情境，比較兩者的判決。</p>
+    <div class="ctl-row"><b>角色</b><span class="tabs" id="acRole" style="margin:0"></span></div>
+    <div class="ctl-row"><b>時間</b><span class="tabs" id="acTime" style="margin:0"></span></div>
+    <div class="ctl-row"><b>裝置／網路</b><span class="tabs" id="acDev" style="margin:0"></span></div>
+    <div class="compare" style="margin-top:12px">
+      <div><div class="big">RBAC</div><div id="acR"></div></div>
+      <div><div class="big">ABAC</div><div id="acA"></div></div>
+    </div>
+  </div>
+  <div class="panel">
+    <h3 style="margin-top:0">配對：情境 → 存取控管模型</h3>
+    <div class="match" id="acMatch"></div>
+    <div class="feedback" id="acFb" aria-live="polite"></div>
+  </div>
+  <details>
+    <summary>展開四種存取控管模型對照表</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>模型</th><th>全稱</th><th>控管依據</th><th>優點</th><th>適用情境</th></tr>
+        <tr><td><b>RBAC</b></td><td>Role-Based Access Control</td><td>使用者所屬<b>角色</b></td><td>邏輯清楚、實作簡單</td><td>中小企業、部門制組織</td></tr>
+        <tr><td><b>ABAC</b></td><td>Attribute-Based Access Control</td><td>使用者屬性＋資料屬性＋<b>環境條件</b></td><td>彈性高、支援細緻動態授權</td><td>大型企業、高安全性情境</td></tr>
+        <tr><td><b>PBAC</b></td><td>Policy-Based Access Control</td><td>預先定義的<b>複合策略規則</b></td><td>可統一控管多系統，支援複雜條件語法（OPA／Rego）</td><td>雲端平台、跨部門跨系統整合</td></tr>
+        <tr><td><b>DAC</b></td><td>Discretionary Access Control</td><td><b>資料擁有者</b>自行決定誰能存取</td><td>彈性高、上手快</td><td>研發團隊、開發環境、小型專案</td></tr>
+      </table>
+    </div>
+  </details>
+  <p class="prose" style="margin-top:12px"><b>記憶線索：</b>RBAC 看「你的角色是什麼」、ABAC 看「你與資料與當下環境的屬性」、PBAC 看「策略規則怎麼寫」、DAC 看「擁有者說了算」。</p>
+
+  <h3>稽核與 Zero Trust</h3>
+  <p class="prose">存取稽核要留下：查詢／修改／刪除的操作日誌、存取者身分與角色、時間戳記、來源設備資訊，並能匯出稽核報告供 GDPR、CCPA 等合規查核。Zero Trust 的前提是「<b>不預設信任任何人與裝置</b>」，連內網使用者也要持續驗證。四個落到資料層的原則（點卡片翻面）：</p>
+  <div class="cards" id="ztCards"></div>
+</section>
+
+<!-- 32.8 -->
+<section id="s8">
+  <div class="sec-head"><span class="sec-no">32.8</span><h2>官方考過什麼</h2></div>
+  <p class="lead">逐題檢視 114-2 ＋ 115-1 共 100 題：<b>核心 6 題</b>（判斷關鍵直接落在本節）＋<b>邊緣 4 題</b>（敘述踩到本節詞彙，考點在別處），合計 10%。以下皆為濃縮後的考點，不是原題。</p>
+  <h3>核心 6 題</h3>
+  <div id="examList"></div>
+  <h3>邊緣 4 題</h3>
+  <div id="examList2"></div>
+  <p class="prose hint" style="margin-top:10px">另有 115-1 第 47 題考 <code>pd.merge</code> 的 <code>how='inner'</code>，本質是 JOIN 的集合語意，可與 32.2 一起複習；它<b>不計入</b>上述任一組。</p>
+  <h3>從考法推出的複習優先序</h3>
+  <div class="pipe" id="prioPipe" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+    <div class="pnode on"><b>1. ACID 逐字定義</b>114-2 連考兩題（第 7、18 題），最接近純記憶，必須拿滿</div>
+    <div class="pnode on"><b>2. 依情境選資料庫</b>需求分裂時就分開選，不要為統一技術棧犧牲正確性</div>
+    <div class="pnode on"><b>3. 分片／副本／物化檢視／壓縮</b>曾被放在同一題四個選項，要一眼分辨</div>
+    <div class="pnode past"><b>4. 倉儲／湖／湖倉</b>沒出成單點題，但是 32.4 所有情境題的判斷底層</div>
+  </div>
+</section>
+
+<!-- 32.9 -->
+<section id="s9">
+  <div class="sec-head"><span class="sec-no">32.9</span><h2>易錯與陷阱</h2></div>
+  <p class="lead">逐條確認自己真的懂了再打勾（打勾狀態會記在這台裝置上）。</p>
+  <div class="traps" id="traps"></div>
+  <p class="hint" id="trapCount" style="margin-top:10px"></p>
+
+  <h3>情境測驗</h3>
+  <div class="qcard" id="quiz"></div>
+
+  <h3>延伸練習</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>資源</th><th>用法</th></tr>
+      <tr><td>L22 主題庫（290 題）→ 第四章 大數據處理技術</td><td>先只做資料庫選型、一致性與儲存架構相關題，錯了回頭對 32.3～32.5 的表格</td></tr>
+      <tr><td>L22 歷屆 100 題</td><td>做完整卷後，把 32.8 列出的核心 6 題與邊緣 4 題單獨重做一次，確認你分得清「考點在本節」與「只是敘述提到本節詞彙」</td></tr>
+    </table>
+  </div>
+</section>
+</main>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce){document.querySelectorAll('#heroSvg .movers').forEach(m=>m.remove());}
+
+/* ---------- generic matcher ---------- */
+function matcher(root,fb,left,right,doneMsg){
+  let sel=null,done=0;
+  const L=document.createElement('div');L.className='col';
+  const R=document.createElement('div');R.className='col';
+  left.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;
+    b.innerHTML=it.html;if(it.c)b.style.setProperty('--c',it.c);
+    b.onclick=()=>{if(b.classList.contains('done'))return;L.querySelectorAll('.mitem').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;fb.textContent='';fb.className='feedback';};
+    L.appendChild(b);
+  });
+  right.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;b.innerHTML=it.html;
+    b.onclick=()=>{
+      if(b.classList.contains('done'))return;
+      if(!sel){fb.textContent='請先點左邊一個項目。';fb.className='feedback';return;}
+      if(sel.dataset.k===b.dataset.k){
+        const c=sel.style.getPropertyValue('--c');
+        [sel,b].forEach(x=>{x.classList.remove('sel');x.classList.add('done');if(c)x.style.setProperty('--c',c);});
+        fb.textContent='✓ '+(it.ok||'答對了！');fb.className='feedback ok';sel=null;done++;
+        if(done===left.length){fb.textContent='✓ 全部配對完成！'+doneMsg;}
+      }else{
+        b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');
+        fb.textContent='✗ '+(it.bad||'不太對，再想想它的關鍵特性。');fb.className='feedback bad';
+      }
+    };
+    R.appendChild(b);
+  });
+  root.append(L,R);
+}
+
+/* ---------- steps / stage ---------- */
+function stepper(btnRoot,vizEl,txtEl,data){
+  function show(i){
+    btnRoot.querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));
+    vizEl.innerHTML=data[i].viz;txtEl.innerHTML=data[i].txt;
+  }
+  data.forEach((d,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=d.label;b.onclick=()=>show(i);btnRoot.appendChild(b);});
+  show(0);
+}
+
+/* ---------- tabs ---------- */
+function tabs(btnRoot,body,data){
+  function s(i){btnRoot.querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));body.innerHTML=data[i][1];if(data[i][2])data[i][2]();}
+  data.forEach((x,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=x[0];b.onclick=()=>s(i);btnRoot.appendChild(b);});
+  s(0);
+}
+
+/* ---------- flip cards ---------- */
+function flipCards(root,arr){
+  arr.forEach(([n,o,d])=>{
+    const b=document.createElement('button');b.className='flip';b.setAttribute('aria-pressed','false');
+    b.innerHTML=`<div class="in"><div class="f"><strong>${n}</strong><span>${o}</span><span style="margin-top:auto;font-size:12.5px">點我翻面</span></div><div class="b">${d}</div></div>`;
+    b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');
+    root.appendChild(b);
+  });
+}
+
+/* ---------- pipeline ---------- */
+function pipeline(pipeEl,outEl,nextBtn,resetBtn,nodes,outs){
+  let i=0;const last=nodes.length-1;
+  pipeEl.style.gridTemplateColumns=`repeat(${nodes.length},minmax(${nodes.length>5?80:90}px,1fr))`;
+  pipeEl.innerHTML=nodes.map(([a,b])=>`<div class="pnode"><b>${a}</b>${b}</div>`).join('');
+  function r(){pipeEl.querySelectorAll('.pnode').forEach((n,j)=>{n.classList.toggle('on',j===i);n.classList.toggle('past',j<i);});outEl.innerHTML=outs[i];nextBtn.disabled=i===last;nextBtn.style.opacity=i===last?.4:1;}
+  nextBtn.onclick=()=>{if(i<last){i++;r();}};
+  resetBtn.onclick=()=>{i=0;r();};
+  r();
+}
+
+/* ---------- strategy chooser ---------- */
+function strategy(root,vEl,mEl,whyEl,st,order,label){
+  (order||st.map((_,i)=>i)).forEach(i=>{const b=document.createElement('button');b.innerHTML=st[i][0];b.setAttribute('aria-pressed','false');b.onclick=()=>{root.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));const x=st[i];vEl.textContent=x[1];vEl.style.color=x[3];mEl.style.width=x[2]+'%';mEl.style.background=x[3];whyEl.innerHTML=(label||'合適度（示意）')+'：'+x[2]+'%　'+x[4];};root.appendChild(b);});
+}
+
+/* ---------- exam list ---------- */
+function examList(root,arr){
+  arr.forEach(([n,k,q,a])=>{root.insertAdjacentHTML('beforeend',`<details><summary><span class="tag">${n}</span>${k}</summary><div class="body"><p style="margin:0 0 6px"><span class="hint">怎麼問：</span>${q}</p><p style="margin:0"><span class="hint">正解思路：</span>${a}</p></div></details>`);});
+}
+
+/* ---------- traps ---------- */
+function traps(root,countEl,T,key){
+  let saved=[];try{saved=JSON.parse(localStorage.getItem(key)||'[]')||[];}catch(e){saved=[];}
+  T.forEach(([a,b],i)=>{
+    const l=document.createElement('label');const c=saved.includes(i);if(c)l.classList.add('chk');
+    l.innerHTML=`<input type="checkbox" ${c?'checked':''}><div><em>${a}</em><br><span>${b}</span></div>`;
+    l.querySelector('input').onchange=e=>{const on=e.target.checked;l.classList.toggle('chk',on);saved=on?[...new Set([...saved,i])]:saved.filter(x=>x!==i);try{localStorage.setItem(key,JSON.stringify(saved));}catch(err){}count();};
+    root.appendChild(l);
+  });
+  function count(){countEl.textContent=`已確認 ${saved.length}／${T.length} 條`;}
+  count();
+}
+
+/* ---------- quiz ---------- */
+function quiz(box,Q,msgFn){
+  let i=0,score=0;
+  const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+  function show(){
+    if(i>=Q.length){
+      box.innerHTML=`<div class="progress"><i style="width:100%"></i></div><div class="qtext" style="font-size:24px;font-family:var(--serif)">得分 ${score}／${Q.length}</div><p>${msgFn(score,Q.length)}</p><button class="btn primary" data-qr="1">重新測驗</button>`;
+      box.querySelector('[data-qr]').onclick=()=>{i=0;score=0;show();};return;
+    }
+    const [q,opts,ex]=Q[i];
+    const order=shuffle(opts.map((o,k)=>({o,k})));
+    box.innerHTML=`<div class="progress"><i style="width:${i/Q.length*100}%"></i></div><div class="qtop"><span>第 ${i+1}／${Q.length} 題</span><span>得分 ${score}</span></div><div class="qtext">${q}</div><div class="opts">${order.map(x=>`<button class="opt" data-k="${x.k}">${x.o}</button>`).join('')}</div><div class="expl"></div><div class="row" style="margin-top:14px;justify-content:flex-end"><button class="btn primary" data-qn="1" style="display:none">${i===Q.length-1?'看結果':'下一題'}</button></div>`;
+    const nx=box.querySelector('[data-qn]');
+    box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.k==='0';if(ok)score++;
+      box.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.k==='0')x.classList.add('right');});
+      if(!ok)b.classList.add('wrongpick');
+      const e=box.querySelector('.expl');e.innerHTML=(ok?'<b style="color:var(--ok)">答對了。</b>':'<b style="color:var(--bad)">這題要小心。</b>')+ex;e.classList.add('show');
+      nx.style.display='';nx.focus({preventScroll:true});
+    });
+    nx.onclick=()=>{i++;show();};
+  }
+  show();
+}
+
+/* ---------- nav highlight ---------- */
+function navHighlight(){
+  const links=[...document.querySelectorAll('nav.toc a')];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on&&window.innerWidth<=860)a.scrollIntoView({inline:'center',block:'nearest'});});}});},{rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('main section').forEach(s=>io.observe(s));
+}
+
+/* ---------- helpers ---------- */
+function btnGroup(root,labels,init,cb){labels.forEach((l,i)=>{const b=document.createElement('button');b.className='btn sm';b.textContent=l;b.setAttribute('aria-pressed',i===init);b.onclick=()=>{root.querySelectorAll('.btn').forEach(x=>x.setAttribute('aria-pressed',x===b));cb(i);};root.appendChild(b);});}
+const tbl=(head,rows,hl)=>`<div class="tbl-wrap"><table style="min-width:0"><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr>${rows.map((r,i)=>`<tr${hl&&hl(r,i)?' style="background:color-mix(in srgb,var(--aud) 16%,transparent)"':''}>${r.map(c=>`<td>${c===null?'<span style="color:var(--bad)">NULL</span>':c}</td>`).join('')}</tr>`).join('')}</table></div>`;
+function radio(sel,cb){document.querySelectorAll(sel).forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll(sel).forEach(x=>x.setAttribute('aria-pressed',x===b));cb(b);}));}
+
+/* ---------- 32.1 type sorter ---------- */
+(function(){
+  const NM=['結構化','半結構化','非結構化'],ST=['關聯式資料庫（RDBMS）','文件型 NoSQL、全文搜尋引擎或資料湖','物件儲存（S3、MinIO）或 HDFS'];
+  const S=[['POS 訂單交易紀錄',0],['商品規格（JSON，各品項欄位不同）',1],['商品圖片',2],['顧客文字留言',2],['物流 API 回傳的 JSON',1],['客服通話錄音',2],['CRM 客戶資料表',0],['IoT 倉儲溫度封包',1],['門市監視影像',2],['ERP 庫存表',0],['網頁擷取的 XML',1]];
+  let order=[],i=0,sc=0;
+  function start(){order=S.map((_,k)=>k).sort(()=>Math.random()-.5);i=0;sc=0;show();}
+  function show(){if(i>=order.length){$('#typeCard').innerHTML=`<div class="verdict">完成！答對 ${sc}／${S.length}</div><div class="hint">一個電商平台就同時有三種型態 → 多元持久化。按任一按鈕再玩一次。</div>`;$('#tyScore').textContent='';return;}$('#typeCard').innerHTML=`<small>電商平台的資料</small>${S[order[i]][0]}`;$('#tyScore').textContent=`第 ${i+1}／${S.length} 筆　答對 ${sc}`;}
+  function ans(t){if(i>=order.length){$('#tyFb').textContent='';start();return;}const s=S[order[i]];
+    if(s[1]===t){sc++;$('#tyFb').textContent=`✓ ${NM[t]} → 建議存放：${ST[t]}`;$('#tyFb').className='feedback ok';}
+    else{$('#tyFb').textContent=`✗ 這是${NM[s[1]]}資料 → ${ST[s[1]]}`;$('#tyFb').className='feedback bad';}
+    i++;show();}
+  $('#tyS').onclick=()=>ans(0);$('#tyM').onclick=()=>ans(1);$('#tyU').onclick=()=>ans(2);
+  start();
+})();
+
+/* ---------- 32.2 normalization ---------- */
+(function(){
+  let mode='de',act='';
+  function draw(){
+    let h='';
+    if(mode==='de'){h=tbl(['訂單','客戶','電話','商品','單價'],[['O1','王小明','0912','筆電','30000'],['O2','王小明','0912','滑鼠','800'],['O3','李小華','0933','螢幕','6000'],['O4','王小明','0912','鍵盤','1500']],r=>act==='upd'&&r[1]==='王小明');}
+    else{h=`<div class="fusion-meta" style="margin-top:0"><div><b class="hint">customers</b>${tbl(['客戶ID','姓名','電話'],[['C1','王小明','0912'],['C2','李小華','0933']],r=>act==='upd'&&r[0]==='C1')}</div><div><b class="hint">products</b>${tbl(['商品ID','名稱','單價'],[['P1','筆電','30000'],['P2','滑鼠','800'],['P3','螢幕','6000'],['P4','鍵盤','1500']])}</div></div><b class="hint">orders</b>${tbl(['訂單','客戶ID','商品ID'],[['O1','C1','P1'],['O2','C1','P2'],['O3','C2','P3'],['O4','C1','P4']],r=>act==='read')}`;}
+    $('#nfTables').innerHTML=h;
+    const T={
+      'de-upd':'<b>反正規化：要改 3 列。</b>同一事實（王小明的電話）存在多處，漏改一列就產生<b>更新異常</b>，資料自相矛盾。寫入成本高。',
+      'no-upd':'<b>正規化：只改 1 列。</b>電話只存在 customers 表，一處修改即可。寫入成本低。',
+      'de-read':'<b>反正規化：0 次 JOIN。</b>一張表就讀完，讀取快 → 適合 OLAP 報表、資料倉儲的星狀結構。',
+      'no-read':'<b>正規化：2 次 JOIN。</b>orders 要 JOIN customers 與 products 才湊得出明細 → 讀取成本高。適合 OLTP 交易系統。'
+    };
+    $('#nfOut').innerHTML=act?T[mode+'-'+act]:'按上方按鈕試試。';
+  }
+  document.querySelectorAll('#nfTabs .btn').forEach(b=>b.onclick=()=>{mode=b.dataset.n;document.querySelectorAll('#nfTabs .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));draw();});
+  $('#nfUpd').onclick=()=>{act='upd';draw();};$('#nfRead').onclick=()=>{act='read';draw();};
+  draw();
+})();
+
+/* ---------- SQL execution order ---------- */
+(function(){
+  const D=[['王小明','3C',8000,'2024-12-20'],['王小明','3C',6000,'2025-02-03'],['王小明','3C',7000,'2025-03-15'],['李小華','家電',12000,'2025-01-08'],['李小華','3C',3000,'2025-02-11'],['陳大文','家電',4000,'2025-04-02'],['陳大文','家電',5000,'2024-11-30'],['林美玲','書籍',11000,'2025-05-05']];
+  const L=["SELECT c.customer_name, p.category, SUM(o.amount) AS total_amount","FROM   orders AS o","JOIN   customers AS c ON o.customer_id = c.customer_id","JOIN   products  AS p ON o.product_id  = p.product_id","WHERE  o.order_date >= '2025-01-01'     -- 聚合「前」過濾單筆資料列","GROUP  BY c.customer_name, p.category","HAVING SUM(o.amount) > 10000            -- 聚合「後」過濾群組","ORDER  BY total_amount DESC","LIMIT  10;"];
+  const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const kept=D.filter(r=>r[3]>='2025-01-01');
+  const g={};kept.forEach(r=>{const k=r[0]+'|'+r[1];g[k]=(g[k]||0)+r[2];});
+  const G=Object.entries(g).map(([k,v])=>[...k.split('|'),v]);
+  const H=G.filter(r=>r[2]>10000),O=[...H].sort((a,b)=>b[2]-a[2]);
+  const ST=[
+    ['1. FROM＋JOIN',[1,2,3],tbl(['客戶','類別','金額','日期'],D,r=>r[3]<'2025-01-01'),'先把三張表 JOIN 成 8 列。（黃底兩列是 2024 年的訂單）'],
+    ['2. WHERE',[4],tbl(['客戶','類別','金額','日期'],kept),'<b>WHERE 在聚合前</b>過濾單筆資料列：2024 年的 2 列被濾掉，剩 6 列。'],
+    ['3. GROUP BY',[5],tbl(['客戶','類別','SUM(金額)'],G),'依（客戶, 類別）分組並加總，變成 5 個群組。'],
+    ['4. HAVING',[6],tbl(['客戶','類別','SUM(金額)'],H),'<b>HAVING 在聚合後</b>過濾群組：總額 &gt; 10000 的留下 3 組。注意王小明若沒先被 WHERE 濾掉 2024 那筆，總額會是 21000。'],
+    ['5. SELECT／ORDER BY',[0,7],tbl(['customer_name','category','total_amount'],O),'挑出欄位、依總額由大到小排序。'],
+    ['6. LIMIT',[8],tbl(['customer_name','category','total_amount'],O.slice(0,10)),'取前 10 筆（本例只有 3 筆）。']
+  ];
+  function show(i){
+    $('#sqlBtns').querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));
+    $('#sqlCode').innerHTML=L.map((l,k)=>ST[i][1].includes(k)?`<span style="background:color-mix(in srgb,var(--txt) 22%,transparent);border-radius:4px;font-weight:700">${esc(l)}</span>`:`<span style="opacity:.55">${esc(l)}</span>`).join('\n');
+    $('#sqlOut').innerHTML=`<p class="hint" style="margin:10px 0 6px">${ST[i][3]}</p>${ST[i][2]}`;
+  }
+  ST.forEach((s,i)=>{const b=document.createElement('button');b.className='btn sm';b.textContent=s[0];b.onclick=()=>show(i);$('#sqlBtns').appendChild(b);});
+  show(0);
+})();
+
+/* ---------- JOIN ---------- */
+(function(){
+  const C={C1:'王小明',C2:'李小華',C3:'陳大文'},Ors=[['O1','C1'],['O2','C1'],['O3','C2'],['O4','C9']];
+  const inner=Ors.filter(o=>C[o[1]]).map(o=>[o[1],C[o[1]],o[0]]);
+  const leftOnly=Object.keys(C).filter(k=>!Ors.some(o=>o[1]===k)).map(k=>[k,C[k],null]);
+  const rightOnly=Ors.filter(o=>!C[o[1]]).map(o=>[o[1],null,o[0]]);
+  const J=[
+    ['INNER JOIN',[1,0,0],inner,'只保留兩表都有對應鍵值的列 → <b>交集</b>。'],
+    ['LEFT OUTER JOIN',[1,1,0],inner.concat(leftOnly),'左表全留，右表無對應者填 NULL → <b>左表為主</b>。陳大文沒有訂單，訂單欄補 NULL。'],
+    ['RIGHT OUTER JOIN',[1,0,1],inner.concat(rightOnly),'右表全留 → <b>右表為主</b>。O4 的客戶 C9 不在顧客表，姓名補 NULL。'],
+    ['FULL OUTER JOIN',[1,1,1],inner.concat(leftOnly,rightOnly),'兩表全留 → <b>聯集</b>（pandas <code>how=\'outer\'</code>）。'],
+    ['CROSS JOIN',null,null,'每一列兩兩配對 → <b>笛卡兒積</b>：3 位顧客 × 4 筆訂單 = <b>12 列</b>，不看鍵值。']
+  ];
+  function venn(f){
+    if(!f)return `<g>${[0,1,2].map(i=>[0,1,2,3].map(j=>`<rect x="${40+j*48}" y="${18+i*40}" width="40" height="32" rx="6" fill="var(--sen)" opacity=".7"/>`).join('')).join('')}</g>`;
+    const col=v=>v?'var(--img)':'var(--surface2)';
+    return `<defs><clipPath id="vcL"><circle cx="100" cy="75" r="58"/></clipPath></defs>
+      <circle cx="100" cy="75" r="58" fill="${col(f[1])}" stroke="var(--txt)" stroke-width="2"/>
+      <circle cx="160" cy="75" r="58" fill="${col(f[2])}" stroke="var(--aud)" stroke-width="2"/>
+      <circle cx="160" cy="75" r="58" fill="${col(f[0])}" clip-path="url(#vcL)"/>
+      <circle cx="100" cy="75" r="58" fill="none" stroke="var(--txt)" stroke-width="2"/><circle cx="160" cy="75" r="58" fill="none" stroke="var(--aud)" stroke-width="2"/>
+      <text x="62" y="145" font-size="13" font-weight="700" fill="var(--txt)">顧客</text><text x="178" y="145" font-size="13" font-weight="700" fill="var(--aud)">訂單</text>`;
+  }
+  tabs($('#joinTabs'),$('#joinOut'),J.map(j=>[j[0],`<p style="margin:0 0 8px">${j[3]}</p>`+(j[2]?tbl(['客戶ID','姓名','訂單'],j[2]):''),()=>{$('#joinVenn').innerHTML=venn(j[1]);}]));
+})();
+
+/* ---------- ACID transfer ---------- */
+(function(){
+  let A=1000,B=500,noAtom=false;
+  function upd(log){$('#txA').textContent=A;$('#txB').textContent=B;$('#txT').textContent=A+B;$('#txT').style.color=A+B===1500?'var(--ink)':'var(--bad)';if(log!==undefined)$('#txLog').innerHTML=log;}
+  $('#txOk').onclick=()=>{A=1000;B=500;A-=300;B+=300;upd('BEGIN → A −300 ✓ → B +300 ✓ → <b>COMMIT</b>。總額仍是 1500。<div class="hint">提交成功後當機也不遺失 → 持久性（D）。</div>');};
+  $('#txCrash').onclick=()=>{A=1000;B=500;A-=300;
+    if(noAtom){upd('BEGIN → A −300 ✓ → <b style="color:var(--bad)">當機！B +300 沒執行</b> → 沒有回復…<div class="hint" style="color:var(--bad)">出現<b>部分更新</b>：300 元憑空消失，總額變 1200。</div>');}
+    else{upd('BEGIN → A −300 ✓ → <b style="color:var(--bad)">當機！</b>');setTimeout(()=>{A=1000;upd('BEGIN → A −300 ✓ → <b style="color:var(--bad)">當機！</b> → <b style="color:var(--ok)">ROLLBACK</b>：A 回到 1000。<div class="hint">全做完或全不做，系統不會出現部分更新 → <b>原子性（A）</b>。這正是 114-2 第 18 題的情境。</div>');},reduce?0:700);}
+  };
+  $('#txNoAtom').onclick=()=>{noAtom=!noAtom;$('#txNoAtom').setAttribute('aria-pressed',noAtom);$('#txLog').innerHTML=noAtom?'已關閉原子性保護（假想）。再按一次「扣款後當機」。':'已恢復原子性保護。';};
+  $('#txReset').onclick=()=>{A=1000;B=500;upd('');};
+  upd('');
+})();
+matcher($('#acidMatch'),$('#acidFb'),[
+  {k:'a',c:'var(--txt)',html:'A 原子性<small>Atomicity</small>'},
+  {k:'c',c:'var(--img)',html:'C 一致性<small>Consistency</small>'},
+  {k:'i',c:'var(--aud)',html:'I 隔離性<small>Isolation</small>'},
+  {k:'d',c:'var(--sen)',html:'D 持久性<small>Durability</small>'}
+],[
+  {k:'x',html:'所有副本的資料都相同',bad:'這是 CAP 的 C，不是 ACID 的 C！'},
+  {k:'i',html:'並行交易彼此不干擾，結果如同各自單獨執行',ok:'隔離性。'},
+  {k:'x',html:'多節點之間自動同步資料',bad:'這是原子性的常見誘答，屬於複寫／一致性議題。'},
+  {k:'a',html:'交易的所有操作全做完或全不做，失敗要 Rollback',ok:'原子性（114-2 第 7 題）。'},
+  {k:'x',html:'交易不能同時執行',bad:'隔離性的誘答：交易可以並行，只是彼此不干擾。'},
+  {k:'d',html:'一旦成功提交，變更永久保存，當機也不遺失',ok:'持久性。'},
+  {k:'x',html:'資料永遠不可刪除',bad:'持久性的誘答：說的是已提交的變更不遺失，不是禁止刪除。'},
+  {k:'c',html:'交易前後都必須符合主鍵、外鍵、約束等完整性規則',ok:'一致性（ACID 的 C）。'}
+],'ACID 是本節最接近純記憶的題型，必須拿滿。');
+
+/* ---------- 32.3 NoSQL ---------- */
+(function(){
+  const box=s=>`<div class="code-box" style="width:100%">${s}</div>`;
+  const N=[
+    ['鍵值',box('key                   → value\n"session:u_ming"      → (一包資料庫看不懂的位元組)\n"like_count:p1234"    → 87'),'<p><b>鍵值（Key-Value）</b></p><p>依 key 直接取值，極快；value 內容對資料庫<b>不透明</b>，不能用 value 的內容查詢。</p><p class="hint">Redis、Memcached、DynamoDB｜快取、Session、計數器、排行榜</p>'],
+    ['文件',box('{ "_id": "p1234",\n  "author": "u_ming",\n  "likes": [\n    { "user": "u_hua", "ts": "2025-03-01", "device": "iOS" }\n  ] }'),'<p><b>文件（Document）</b></p><p>key → JSON／BSON 文件，可巢狀；可查巢狀欄位、可建二級索引。</p><p class="hint">MongoDB、CouchDB｜欄位因品項而異的商品目錄、內容管理</p>'],
+    ['欄族',box('Row Key: p1234#2025-03-01\n  likes:u_hua   = "iOS"\n  likes:u_lin   = "Web"\n  (每列的欄可以完全不同，大量稀疏)'),'<p><b>欄族（Column-family／Wide-column）</b></p><p>Row Key ＋（欄族 → 大量稀疏欄）；依 Row Key 範圍掃描，寫入吞吐極高。</p><p class="hint">HBase、Cassandra｜時間序列、感測器紀錄、超寬稀疏表</p><p class="hint"><b>注意：</b>欄族是資料模型，不是 Parquet／ORC 那種「欄式儲存格式」。</p>'],
+    ['圖',`<svg viewBox="0 0 300 130" style="width:100%"><circle cx="50" cy="65" r="34" fill="var(--txt)"/><text x="50" y="70" text-anchor="middle" font-size="13" fill="#fff" font-weight="700">小明</text><circle cx="250" cy="35" r="30" fill="var(--aud)"/><text x="250" y="40" text-anchor="middle" font-size="12" fill="#fff" font-weight="700">#1234</text><circle cx="250" cy="105" r="22" fill="var(--txt)"/><text x="250" y="110" text-anchor="middle" font-size="12" fill="#fff" font-weight="700">小華</text><line x1="84" y1="58" x2="220" y2="38" stroke="var(--img)" stroke-width="3"/><text x="150" y="38" text-anchor="middle" font-size="11" fill="var(--img)" font-weight="700">LIKED</text><line x1="84" y1="74" x2="228" y2="102" stroke="var(--muted)" stroke-width="2"/><text x="150" y="104" text-anchor="middle" font-size="11" fill="var(--muted)">FOLLOWS</text></svg>`,'<p><b>圖（Graph）</b></p><p>節點／邊／屬性；擅長多跳關聯遍歷、最短路徑。</p><p class="hint">Neo4j、JanusGraph｜社群關係、詐欺網路、知識圖譜</p>']
+  ];
+  stepper($('#nsTabs'),$('#nsViz'),$('#nsTxt'),N.map(n=>({label:n[0],viz:n[1],txt:n[2]})));
+})();
+matcher($('#nsMatch'),$('#nsFb'),[
+  {k:'kv',c:'var(--txt)',html:'網站登入 Session、即時排行榜'},
+  {k:'doc',c:'var(--img)',html:'商品目錄：每個品項欄位都不同'},
+  {k:'col',c:'var(--aud)',html:'上萬台感測器的時間序列紀錄'},
+  {k:'gr',c:'var(--sen)',html:'追查詐欺帳戶之間的多層轉帳關係'},
+  {k:'vec',c:'var(--ok)',html:'RAG 要找語意最相近的文件段落'},
+  {k:'se',c:'var(--warn)',html:'客服知識庫的全文關鍵字檢索'}
+],[
+  {k:'gr',html:'圖資料庫（Neo4j）',ok:'多跳關聯遍歷是圖的強項。'},
+  {k:'vec',html:'向量資料庫（Milvus、Qdrant、pgvector）',ok:'用 ANN 索引做相似度搜尋，是 RAG 標配。'},
+  {k:'kv',html:'鍵值（Redis）',ok:'依 key 直接取值，最適合快取、Session、計數器。'},
+  {k:'se',html:'搜尋引擎型（Elasticsearch）',ok:'倒排索引支撐全文檢索；近即時、不保證強一致性。'},
+  {k:'col',html:'欄族（HBase、Cassandra）',ok:'依 Row Key 範圍掃描、寫入吞吐極高。'},
+  {k:'doc',html:'文件（MongoDB）',ok:'JSON 可巢狀、欄位彈性。'}
+],'需求分裂時就分開選 —— 這就是多元持久化。');
+flipCards($('#extraCards'),[
+  ['向量資料庫','Milvus、Qdrant、pgvector','存放嵌入向量，用近似最近鄰（ANN）索引做相似度搜尋，是 RAG 與推薦系統的標配。'],
+  ['搜尋引擎型','Elasticsearch、OpenSearch','以倒排索引支撐全文檢索，屬近即時（near real-time）索引，<b>不保證強一致性</b>。']
+]);
+
+/* ---------- graph modeling ---------- */
+(function(){
+  const node=(x,y,t,c,r=30)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${c}"/><text x="${x}" y="${y+5}" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">${t}</text>`;
+  const SV=[
+    ()=>node(90,100,'小明','var(--txt)',38)+node(550,100,'#1234','var(--aud)',38)+`<line x1="128" y1="100" x2="512" y2="100" stroke="var(--img)" stroke-width="4"/><polygon points="512,92 512,108 526,100" fill="var(--img)"/><rect x="220" y="62" width="200" height="30" rx="8" fill="var(--surface2)" stroke="var(--img)"/><text x="320" y="82" text-anchor="middle" font-size="13" font-weight="700" fill="var(--img)">LIKED {ts, device}</text><text x="320" y="140" text-anchor="middle" font-size="12" fill="var(--muted)">一條邊 ＝ 一次按讚，屬性掛在邊上</text>`,
+    ()=>node(70,100,'小明','var(--txt)',34)+node(320,100,'按讚#1','var(--warn)',38)+node(570,100,'#1234','var(--aud)',34)+`<line x1="104" y1="100" x2="282" y2="100" stroke="var(--muted)" stroke-width="3"/><line x1="358" y1="100" x2="536" y2="100" stroke="var(--muted)" stroke-width="3"/><text x="320" y="160" text-anchor="middle" font-size="12" fill="var(--bad)">每次按讚多一個節點＋兩條邊 → 結構與查詢成本膨脹</text>`,
+    ()=>node(140,100,'小明','var(--txt)',38)+`<rect x="190" y="60" width="220" height="80" rx="10" fill="var(--surface2)" stroke="var(--txt)"/><text x="300" y="88" text-anchor="middle" font-size="12" fill="var(--ink)">liked_ts: 2025-03-01</text><text x="300" y="112" text-anchor="middle" font-size="12" fill="var(--ink)">liked_device: iOS</text>`+node(540,100,'#1234','var(--aud)',34)+`<text x="540" y="160" text-anchor="middle" font-size="22" fill="var(--bad)">?</text><text x="320" y="180" text-anchor="middle" font-size="12" fill="var(--bad)">按的是哪一篇？對應關係丟失了</text>`
+  ];
+  strategy($('#gStrat'),$('#gV'),$('#gM'),$('#gWhy'),[
+    ['建成「邊」，屬性掛在邊上','✓ 正解',92,'var(--ok)','行為帶有屬性（時間戳記、裝置類型）→ 建成連接兩節點的邊，屬性掛在邊上。'],
+    ['把「按讚」獨立成一個節點','✗ 膨脹',40,'var(--bad)','會讓結構與查詢成本膨脹。'],
+    ['寫進使用者節點的屬性','✗ 失去對應',15,'var(--bad)','會弄丟「是對哪一篇貼文」的對應關係。']
+  ],[1,0,2],'建模合適度（示意）');
+  const order=[1,0,2];
+  $('#gStrat').querySelectorAll('button').forEach((b,k)=>b.addEventListener('click',()=>{$('#gSvg').innerHTML=SV[order[k]]();}));
+  $('#gSvg').innerHTML=`<text x="320" y="100" text-anchor="middle" font-size="14" fill="var(--muted)">（小明）對（貼文 #1234）按讚，帶 ts 與 device</text>`;
+})();
+
+/* ---------- 32.4 warehouse / lake / lakehouse ---------- */
+(function(){
+  const D=[
+    ['存什麼','已清洗、已建模的結構化資料','原始格式的結構化／半結構化／非結構化資料','開放檔案格式的原始與精煉資料並存'],
+    ['Schema 時機','Schema-on-Write（寫入時就要符合結構）','Schema-on-Read（讀取時才套用結構）','底層 Schema-on-Read，表層提供 schema 強制與演進'],
+    ['資料處理','ETL','ELT','ELT ＋ 分層（Bronze／Silver／Gold）'],
+    ['主要使用者','BI 分析師、報表','資料科學家、ML 工程師','兩者共用同一份資料'],
+    ['儲存成本','高（專有格式、需先加工）','低（物件儲存、按量計費）','低（沿用物件儲存）'],
+    ['查詢效能','高且穩定','視格式與分區而定，落差大','靠 metadata 層逼近倉儲'],
+    ['交易支援','完整 ACID','原生沒有','由 metadata 層補上 ACID'],
+    ['代表技術','Snowflake、BigQuery、Redshift','HDFS、Amazon S3、Azure Data Lake','Delta Lake、Apache Iceberg、Apache Hudi'],
+    ['失敗模式','加新來源要重做建模，彈性差','無治理就退化成資料沼澤（Data Swamp）','架構複雜、metadata 層需維運']
+  ];
+  const H=[['資料倉儲','var(--txt)'],['資料湖','var(--aud)'],['資料湖倉','var(--img)']];
+  tabs($('#dwTabs'),$('#dwBody'),D.map(d=>[d[0],H.map((h,i)=>`<div class="pnode" style="border-color:${h[1]}"><b style="color:${h[1]}">${h[0]}</b>${d[i+1]}</div>`).join('')]));
+  $('#dwFull').innerHTML=`<table><tr><th>維度</th>${H.map(h=>`<th>${h[0]}</th>`).join('')}</tr>${D.map(d=>`<tr><td><b>${d[0]}</b></td><td>${d[1]}</td><td>${d[2]}</td><td>${d[3]}</td></tr>`).join('')}</table>`;
+})();
+
+/* ---------- schema-on-write vs read ---------- */
+(function(){
+  const R=[['{id:1,name:"王",amount:500}','ok'],['{id:2,name:"李",amount:"五百"}','type'],['{id:3,name:"陳"}','miss'],['{id:4,name:"林",amount:300,tag:"VIP"}','extra']];
+  let mode='w';
+  function draw(){
+    let h=`<text x="10" y="16" font-size="12" font-weight="700" fill="var(--muted)">進場資料</text><text x="${mode==='w'?470:470}" y="16" font-size="12" font-weight="700" fill="var(--muted)">${mode==='w'?'資料倉儲':'資料湖'}</text>`;
+    h+=`<rect x="310" y="24" width="14" height="196" rx="4" fill="${mode==='w'?'var(--txt)':'var(--line)'}"/><text x="317" y="226" text-anchor="middle" font-size="11" fill="var(--muted)">${mode==='w'?'寫入時驗證':'照單全收'}</text>`;
+    R.forEach(([t,k],i)=>{const y=28+i*48,okW=k==='ok',pass=mode==='r'||okW;
+      h+=`<rect x="10" y="${y}" width="280" height="36" rx="8" fill="var(--surface2)" stroke="var(--line)"/><text x="20" y="${y+23}" font-size="11.5" font-family="ui-monospace,monospace" fill="var(--ink)">${t}</text>`;
+      h+=`<line x1="292" y1="${y+18}" x2="${pass?440:306}" y2="${y+18}" stroke="${pass?'var(--ok)':'var(--bad)'}" stroke-width="2.5" class="flow"/>`;
+      if(pass){const bad=mode==='r'&&!okW&&k!=='extra';h+=`<rect x="440" y="${y}" width="190" height="36" rx="8" fill="${bad?'color-mix(in srgb,var(--warn) 25%,var(--surface))':'color-mix(in srgb,var(--ok) 15%,var(--surface))'}" stroke="${bad?'var(--warn)':'var(--ok)'}"/><text x="535" y="${y+23}" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">${k==='ok'?'✓ 存入':k==='extra'?'✓ 存入，tag 也保留':'✓ 存入（讀取時才會出事）'}</text>`;}
+      else h+=`<text x="340" y="${y+23}" font-size="12" font-weight="700" fill="var(--bad)">✗ 拒收：${k==='type'?'amount 型別不符':k==='miss'?'缺 amount 欄位':'schema 沒有 tag 欄'}</text>`;
+    });
+    $('#sowSvg').innerHTML=h;
+    $('#sowTxt').innerHTML=mode==='w'?'<b>Schema-on-Write：</b>寫入時驗證，不合格就拒收 → 進得去的資料品質有保證、查詢可預先最佳化。代價：想收 <code>tag</code> 這種新欄位，得先做 <b>schema migration</b>；被拒收的原始資料通常不留。':'<b>Schema-on-Read：</b>寫入照單全收，連新欄位 <code>tag</code> 都不丟，新增來源成本低。代價：執行 <code>SUM(amount)</code> 時才發現「五百」無法解析、陳的金額是空的 —— <b>品質問題延後爆發</b>，讀取端要自行處理髒資料。';
+  }
+  document.querySelectorAll('#sowTabs .btn').forEach(b=>b.onclick=()=>{mode=b.dataset.s;document.querySelectorAll('#sowTabs .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));draw();});
+  draw();
+})();
+
+/* ---------- ETL / ELT pipeline ---------- */
+(function(){
+  const P={
+    etl:[[['來源系統','ERP、CRM'],['E 擷取','抽出資料'],['T 轉換','獨立轉換引擎'],['L 載入','進倉儲'],['資料倉儲','BI 報表']],
+      ['來源系統準備好資料。','<b>E 擷取：</b>從來源系統抽出資料。','<b>T 轉換：</b>在<b>載入之前</b>、於<b>獨立的轉換引擎</b>清洗與建模。只有符合結構的資料進得去。','<b>L 載入：</b>轉換好的資料寫入倉儲（Schema-on-Write）。對目標算力需求低。','<b>結果：</b>倉儲裡是乾淨的結構化資料，但<b>原始資料通常不保留</b>。']],
+    elt:[[['來源系統','三種型態'],['E 擷取','抽出資料'],['L 載入','原始直接進湖'],['T 轉換','用平台算力'],['分析','科學家＋BI']],
+      ['來源系統：結構化、半結構化、非結構化都有。','<b>E 擷取：</b>從來源系統抽出資料。','<b>L 載入：</b>原始資料<b>直接進湖</b>，完整保留（Schema-on-Read）。','<b>T 轉換：</b>在<b>載入之後</b>、用<b>目標平台的算力</b>轉換 → 對目標算力需求高，仰賴雲端彈性算力。','<b>結果：</b>原始資料完整保留，<b>轉換邏輯可重跑</b>；適合資料湖／湖倉。']]
+  };
+  function init(m){pipeline($('#etlPipe'),$('#etlOut'),$('#etlNext'),$('#etlReset'),P[m][0],P[m][1]);}
+  document.querySelectorAll('#etlTabs .btn').forEach(b=>b.onclick=()=>{document.querySelectorAll('#etlTabs .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));init(b.dataset.e);});
+  init('etl');
+})();
+
+/* ---------- 32.5 HDFS ---------- */
+(function(){
+  const DN=[{x:30,r:'機架 1'},{x:180,r:'機架 1'},{x:340,r:'機架 2'},{x:490,r:'機架 2'}];
+  const BL={blk_1:[0,2,3],blk_2:[1,2,3],blk_3:[0,2,3]},BC={blk_1:'var(--txt)',blk_2:'var(--img)',blk_3:'var(--aud)'};
+  let w=false,rd=false,fail=false;
+  function draw(){
+    let h=`<rect x="20" y="20" width="110" height="60" rx="12" fill="var(--ink)"/><text x="75" y="55" text-anchor="middle" font-size="14" font-weight="700" fill="var(--bg)">Client</text>`;
+    h+=`<rect x="240" y="10" width="220" height="80" rx="12" fill="var(--surface2)" stroke="var(--ink)" stroke-width="2"/><text x="350" y="32" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">NameNode（只管元資料）</text>`;
+    if(w)h+=`<text x="350" y="52" text-anchor="middle" font-size="11" fill="var(--muted)">file.csv → blk_1, blk_2, blk_3</text><text x="350" y="70" text-anchor="middle" font-size="11" fill="var(--muted)">blk → DataNode 位置對照表</text>`;
+    h+=`<rect x="20" y="148" width="290" height="140" rx="12" fill="none" stroke="var(--line)" stroke-dasharray="5 5"/><rect x="330" y="148" width="290" height="140" rx="12" fill="none" stroke="var(--line)" stroke-dasharray="5 5"/><text x="30" y="142" font-size="12" fill="var(--muted)">機架 1</text><text x="340" y="142" font-size="12" fill="var(--muted)">機架 2</text>`;
+    DN.forEach((d,i)=>{const dead=fail&&i===1;h+=`<rect x="${d.x}" y="158" width="120" height="120" rx="10" fill="${dead?'color-mix(in srgb,var(--bad) 14%,var(--surface))':'var(--surface)'}" stroke="${dead?'var(--bad)':'var(--ink)'}" stroke-width="1.5"/><text x="${d.x+60}" y="178" text-anchor="middle" font-size="13" font-weight="700" fill="${dead?'var(--bad)':'var(--ink)'}">DataNode${i+1}${dead?' ✗':''}</text>`;
+      if(w){let k=0;Object.entries(BL).forEach(([b,ns])=>{if(ns.includes(i)){h+=`<rect x="${d.x+12}" y="${188+k*28}" width="96" height="22" rx="5" fill="${BC[b]}" opacity="${dead?.25:1}"/><text x="${d.x+60}" y="${204+k*28}" text-anchor="middle" font-size="12" fill="#fff" font-weight="700">${b}</text>`;k++;}});
+        if(fail&&i===0){h+=`<rect x="${d.x+12}" y="${188+k*28}" width="96" height="22" rx="5" fill="none" stroke="${BC.blk_2}" stroke-width="2" stroke-dasharray="4 3"/><text x="${d.x+60}" y="${204+k*28}" text-anchor="middle" font-size="12" fill="${BC.blk_2}" font-weight="700">blk_2 補副本</text>`;}}
+      h+=`<line x1="${d.x+60}" y1="158" x2="350" y2="90" stroke="var(--muted)" stroke-width="1" stroke-dasharray="2 4" opacity="${dead?.15:.6}"/>`;});
+    if(w&&!rd)h+=`<path d="M130 40 L240 40" stroke="var(--txt)" stroke-width="2.5" class="flow" fill="none"/><text x="185" y="34" text-anchor="middle" font-size="11" fill="var(--txt)">① 請求</text><path d="M240 64 L130 64" stroke="var(--txt)" stroke-width="2.5" class="flow" fill="none"/><text x="185" y="80" text-anchor="middle" font-size="11" fill="var(--txt)">② 位置</text>`;
+    if(rd){const src=fail?[0,2,0]:[0,1,0];h+=`<path d="M130 40 L240 40" stroke="var(--img)" stroke-width="2.5" class="flow" fill="none"/><path d="M240 64 L130 64" stroke="var(--img)" stroke-width="2.5" class="flow" fill="none"/>`;[...new Set(src)].forEach(i=>h+=`<path d="M75 80 C 75 120, ${DN[i].x+60} 120, ${DN[i].x+60} 158" stroke="var(--ok)" stroke-width="3" class="flow" fill="none"/>`);h+=`<text x="140" y="104" font-size="11" font-weight="700" fill="var(--ok)">③ 直接向 DataNode 讀區塊</text>`;}
+    $('#hdSvg').innerHTML=h;
+  }
+  $('#hdWrite').onclick=()=>{w=true;rd=false;draw();$('#hdTxt').innerHTML='300 MB 切成 <b>blk_1（128）、blk_2（128）、blk_3（44 MB）</b>，每塊 <b>3 份副本</b>，機架感知：1 份放寫入端所在機架、另 2 份放到別的機架。NameNode 只記「哪塊在哪」，實際資料不經過它。';};
+  $('#hdRead').onclick=()=>{if(!w){$('#hdTxt').textContent='請先寫入檔案。';return;}rd=true;draw();$('#hdTxt').innerHTML='① Client 向 NameNode 要區塊位置 → ② NameNode 回傳位置 → ③ <b>Client 直接與 DataNode 讀寫資料區塊</b>。'+(fail?' DataNode2 掛了，blk_2 改從 DataNode3 讀。':'');};
+  $('#hdFail').onclick=()=>{if(!w){$('#hdTxt').textContent='請先寫入檔案。';return;}fail=!fail;$('#hdFail').setAttribute('aria-pressed',fail);draw();$('#hdTxt').innerHTML=fail?'DataNode2 停止送<b>心跳</b>。blk_2 在 DataNode3、4 還有副本，<b>資料不遺失</b>；NameNode 會安排在其他節點補副本，恢復 3 份。<div class="hint">注意：NameNode 本身的高可用靠 Active／Standby＋JournalNode，<b>Secondary NameNode 不是熱備援</b>。</div>':'DataNode2 恢復。';};
+  $('#hdReset').onclick=()=>{w=rd=fail=false;$('#hdFail').setAttribute('aria-pressed','false');draw();$('#hdTxt').textContent='按「寫入檔案」開始。';};
+  draw();$('#hdTxt').textContent='按「寫入檔案」開始。';
+})();
+
+/* ---------- sharding vs replication ---------- */
+(function(){
+  let mode='shard',n=3;const B='ABCDEFGHIJKL'.split('');
+  function draw(){
+    $('#srN').textContent=n+' 個節點';
+    const w=Math.min(110,(620-(n-1)*10)/n);let h='';
+    for(let i=0;i<n;i++){const x=10+i*(w+10);h+=`<rect x="${x}" y="10" width="${w}" height="150" rx="10" fill="var(--surface2)" stroke="var(--ink)"/><text x="${x+w/2}" y="28" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">節點 ${i+1}</text>`;
+      const blocks=mode==='shard'?B.filter((_,k)=>k%n===i):B;
+      blocks.forEach((b,k)=>{const cols=Math.max(1,Math.floor((w-8)/22)),bx=x+6+(k%cols)*22,by=38+Math.floor(k/cols)*22;if(by<150)h+=`<rect x="${bx}" y="${by}" width="18" height="18" rx="4" fill="${mode==='shard'?'var(--txt)':'var(--img)'}"/><text x="${bx+9}" y="${by+13}" text-anchor="middle" font-size="10" fill="#fff" font-weight="700">${b}</text>`;});}
+    $('#srSvg').innerHTML=h;
+    const M=mode==='shard'?[['總容量',n],['寫入吞吐',n],['分攤負載',n],['可容忍故障節點',0]]:[['總容量',1],['寫入吞吐',1],['讀取能力',n],['可容忍故障節點',n-1]];
+    $('#srBars').innerHTML=M.map(([l,v],k)=>`<div class="bar"><span>${l}</span><div class="track"><div class="fill" style="width:${(k===3?v/5:v/6)*100}%;background:${k===3?'var(--sen)':mode==='shard'?'var(--txt)':'var(--img)'}"></div></div><span class="num">${k===3?v+' 台':v+'×'}</span></div>`).join('');
+    $('#srNote').innerHTML=mode==='shard'?'<b>分片：</b>不同資料放到不同節點（水平切分）。加節點 → 總容量與寫入吞吐近線性成長。風險：分片鍵選不好造成熱點、跨分片 JOIN 昂貴；沒有副本時任何一台掛掉，該片資料就不見。':'<b>副本：</b>同一份資料複製到多個節點。加節點 → <b>容量不變</b>，讀取能力與耐故障度上升。風險：副本間同步延遲造成讀到舊值。';
+  }
+  document.querySelectorAll('#srMode .btn').forEach(b=>b.onclick=()=>{mode=b.dataset.m;document.querySelectorAll('#srMode .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));draw();});
+  $('#srPlus').onclick=()=>{if(n<6){n++;draw();}};$('#srMinus').onclick=()=>{if(n>1){n--;draw();}};
+  draw();
+})();
+
+/* ---------- shard key strategy ---------- */
+(function(){
+  let s=0,cnt=[0,0,0,0];
+  const NM=[['分片 1：1–3 月','分片 2：4–6 月','分片 3：7–9 月','分片 4：10–12 月（現在）'],['分片 1','分片 2','分片 3','分片 4'],['分片 1：北區','分片 2：中區','分片 3：南區','分片 4：東區']];
+  const NOTE=['<b>範圍分片：</b>依時間或數值區間切，範圍查詢快，但新資料全擠進「現在」那一片 → <b>熱點（Hotspot）</b>。','<b>雜湊分片：</b>對分片鍵取雜湊，分布均勻；代價是範圍查詢（例如「查 3 月所有訂單」）要掃全部分片。','<b>查表／目錄分片：</b>用一張對照表決定資料去哪一片（示意：依地區），彈性最高，但<b>查表本身可能成為單點</b>。'];
+  function draw(){const mx=Math.max(20,...cnt);$('#skBars').innerHTML=cnt.map((c,i)=>`<div class="bar${c===Math.max(...cnt)&&c>0&&s===0?' win':''}"><span>${NM[s][i]}</span><div class="track"><div class="fill" style="width:${c/mx*100}%;background:${s===0&&i===3&&c?'var(--bad)':'var(--txt)'}"></div></div><span class="num">${c}</span></div>`).join('');$('#skNote').innerHTML=NOTE[s];}
+  tabs($('#skTabs'),$('#skNote'),['範圍分片','雜湊分片','查表分片'].map((l,i)=>[l,'',()=>{s=i;cnt=[0,0,0,0];draw();}]));
+  $('#skWrite').onclick=()=>{for(let k=0;k<20;k++){if(s===0)cnt[3]++;else if(s===1)cnt[Math.floor(Math.random()*4)]++;else{const r=Math.random();cnt[r<.4?0:r<.7?1:r<.92?2:3]++;}}draw();};
+  $('#skReset').onclick=()=>{cnt=[0,0,0,0];draw();};
+})();
+
+/* ---------- CAP ---------- */
+(function(){
+  let mode='cp',part=false,A=1,B=1,pending=false;
+  function draw(msg){
+    let h=`<rect x="40" y="40" width="160" height="100" rx="14" fill="var(--surface)" stroke="var(--txt)" stroke-width="2.5"/><text x="120" y="70" text-anchor="middle" font-size="14" font-weight="700" fill="var(--txt)">節點 A</text><text x="120" y="112" text-anchor="middle" font-size="28" font-weight="900" fill="var(--ink)">x = ${A}</text>`;
+    h+=`<rect x="440" y="40" width="160" height="100" rx="14" fill="var(--surface)" stroke="var(--img)" stroke-width="2.5"/><text x="520" y="70" text-anchor="middle" font-size="14" font-weight="700" fill="var(--img)">節點 B</text><text x="520" y="112" text-anchor="middle" font-size="28" font-weight="900" fill="${A!==B?'var(--warn)':'var(--ink)'}">x = ${B}</text>`;
+    h+=part?`<line x1="200" y1="90" x2="300" y2="90" stroke="var(--muted)" stroke-width="3"/><line x1="340" y1="90" x2="440" y2="90" stroke="var(--muted)" stroke-width="3"/><text x="320" y="98" text-anchor="middle" font-size="26" fill="var(--bad)" font-weight="900">✕</text><text x="320" y="130" text-anchor="middle" font-size="12" fill="var(--bad)" font-weight="700">網路分區</text>`:`<line x1="200" y1="90" x2="440" y2="90" stroke="var(--ok)" stroke-width="3" class="flow"/><text x="320" y="80" text-anchor="middle" font-size="12" fill="var(--ok)">同步中</text>`;
+    h+=`<text x="320" y="168" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">${mode==='cp'?'CP：分區時寧可拒絕服務也要正確（HBase、ZooKeeper）':'AP：分區時照樣回應，可能是舊值（Cassandra、DynamoDB）'}</text>`;
+    $('#capSvg').innerHTML=h;if(msg!==undefined)$('#capTxt').innerHTML=msg;
+  }
+  document.querySelectorAll('#capMode .btn').forEach(b=>b.onclick=()=>{mode=b.dataset.m;document.querySelectorAll('#capMode .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));draw('');});
+  $('#capPart').onclick=()=>{part=!part;$('#capPart').setAttribute('aria-pressed',part);$('#capPart').textContent=part?'網路已切斷（點此恢復連線）':'切斷網路（分區 P）';if(!part&&pending){B=A;pending=false;}draw(part?'網路分區發生了。現在 C 與 A 只能二選一。':'網路恢復。');};
+  $('#capW').onclick=()=>{A=2;if(part)pending=true;else B=2;draw(part?'A 寫入 x = 2，但<b>同步不到 B</b>。':'A 寫入 x = 2，網路正常，立刻同步到 B。');};
+  $('#capR').onclick=()=>{
+    if(!part)return draw(`從 B 讀到 <b>x = ${B}</b>。網路正常時<b>一致性與可用性可以同時擁有</b> —— CAP 不是「任何時候只能三選二」。`);
+    if(mode==='cp')draw('<b style="color:var(--bad)">B 拒絕回應（錯誤／不可用）。</b>CP 系統寧可不回答，也不給可能過期的值 → 保住一致性（C），犧牲可用性（A）。');
+    else draw(`<b style="color:var(--warn)">B 回應 x = ${B}</b>${pending?'（舊值！）':''}。AP 系統一定給回應 → 保住可用性（A），犧牲一致性（C）。`);
+  };
+  $('#capHeal').onclick=()=>{part=false;$('#capPart').setAttribute('aria-pressed','false');$('#capPart').textContent='切斷網路（分區 P）';if(pending){B=A;pending=false;}draw('網路恢復，B 追上最新值 → <b>最終一致性</b>：暫時不同步，但最後會收斂，不是「永遠不保證一致」。');};
+  $('#capReset').onclick=()=>{part=false;pending=false;A=1;B=1;$('#capPart').setAttribute('aria-pressed','false');$('#capPart').textContent='切斷網路（分區 P）';draw('先按「在 A 寫入 x = 2」。');};
+  draw('先按「在 A 寫入 x = 2」。');
+})();
+
+/* ---------- 32.6 scan calculator ---------- */
+(function(){
+  let P=false,C=false,Z=false;
+  function draw(){
+    let h='';const cw=26,ch=12,x0=70,y0=20;
+    for(let m=0;m<12;m++){h+=`<text x="${x0-8}" y="${y0+m*14+10}" text-anchor="end" font-size="10" fill="var(--muted)">${m+1}月</text>`;for(let c=0;c<20;c++){const hit=(!P||m===2)&&(!C||c===5);h+=`<rect x="${x0+c*cw}" y="${y0+m*14}" width="${cw-3}" height="${ch}" rx="2" fill="${hit?(Z?'var(--img)':'var(--sen)'):'var(--surface2)'}" opacity="${hit&&Z?.6:1}"/>`;}}
+    h+=`<text x="${x0+5*cw+11}" y="${y0-6}" text-anchor="middle" font-size="10" font-weight="700" fill="var(--txt)">amount</text>`;
+    $('#pfSvg').innerHTML=h;
+    let v=1200;if(P)v/=12;if(C)v/=20;if(Z)v/=4;
+    $('#pfNum').textContent=(v>=1?v.toFixed(v<10?2:0):v.toFixed(3))+' GB';
+    $('#pfFill').style.width=Math.max(.6,v/1200*100)+'%';$('#pfFill').style.background=v<=5?'var(--ok)':v<=100?'var(--warn)':'var(--bad)';
+    const n=[];if(P)n.push('<b>分區裁剪</b>：只掃 3 月那一個分區');if(C)n.push('<b>欄式＋欄位裁剪</b>：只讀 amount 一欄');if(Z)n.push('<b>壓縮</b>：降低 I/O（解壓要吃 CPU）');
+    $('#pfNote').innerHTML=n.length?n.join('；')+'。':'什麼都沒開：整張表 1,200 GB 全掃（列式儲存要整列讀進來）。';
+  }
+  [['#pfPart',()=>P=!P],['#pfCol',()=>C=!C],['#pfZip',()=>Z=!Z]].forEach(([s,f])=>$(s).onclick=()=>{f();$(s).setAttribute('aria-pressed',$(s).getAttribute('aria-pressed')!=='true');draw();});
+  draw();
+})();
+tabs($('#techTabs'),$('#techBody'),[
+  ['分區','依時間、地區等欄位把資料切成目錄或區塊','查詢只掃描命中的分區（Partition Pruning）','分區過細產生大量小檔案，反而變慢'],
+  ['欄式儲存','同一欄的值連續存放（Parquet／ORC）','只讀需要的欄；同型別資料壓縮率高','逐列增刪改成本高，不適合 OLTP'],
+  ['壓縮','Snappy／ZSTD 壓小檔案體積','降低磁碟用量與 I/O 傳輸成本','解壓縮吃 CPU；壓縮率與速度需權衡'],
+  ['欄位裁剪','只載入 SELECT 用到的欄位（Column Pruning）','大幅減少讀取量','要搭配欄式格式才有明顯效果'],
+  ['儲存分層','熱資料放 SSD、冷資料放 HDD 或雲端封存','用成本換取整體效能平衡','冷資料取回有延遲與取回費用'],
+  ['物化檢視','預先算好結果並實際存下來','重複性查詢（日報、排行榜）直接讀結果','底層變動後需刷新，有資料新鮮度落差'],
+  ['索引','B-tree、倒排索引、文字索引','快速定位符合條件的資料列','佔空間、拖慢寫入'],
+  ['查詢引擎最佳化','Spark Catalyst、Presto CBO（成本導向最佳化器）','自動重排執行計畫、下推述詞','統計資訊過期會選錯計畫'],
+  ['資源管控','設定查詢優先序與資源上限（Throttling）','避免單一查詢拖垮整個叢集','需調參，設定過嚴會誤殺正常查詢']
+].map(t=>[t[0],`<div class="pipe" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="pnode past"><b>做什麼</b>${t[1]}</div><div class="pnode on"><b>為什麼快</b>${t[2]}</div><div class="pnode" style="border-color:var(--bad)"><b style="color:var(--bad)">反效果</b>${t[3]}</div></div>`]));
+
+/* ---------- view vs MV ---------- */
+(function(){
+  const base0={王小明:3000,李小華:2800,陳大文:2500};let base={...base0},mv={...base0};
+  const board=o=>Object.entries(o).sort((a,b)=>b[1]-a[1]).map(([k,v],i)=>`${i+1}. ${k}　${v}`).join('<br>');
+  function draw(stale){$('#mvV').innerHTML=`<div class="code-box" style="margin:8px 0">${board(base)}</div>`;$('#mvM').innerHTML=`<div class="code-box" style="margin:8px 0;${stale?'border:2px solid var(--warn)':''}">${board(mv)}${stale?'<br><b style="color:var(--warn)">⚠ 尚未刷新（舊結果）</b>':''}</div>`;}
+  $('#mvIns').textContent='陳大文新增訂單 +800';
+  $('#mvIns').onclick=()=>{base.陳大文+=800;draw(JSON.stringify(base)!==JSON.stringify(mv));};
+  $('#mvRef').onclick=()=>{mv={...base};draw(false);};
+  $('#mvReset').onclick=()=>{base={...base0};mv={...base0};draw(false);};
+  draw(false);
+})();
+
+/* ---------- 32.7 lineage ---------- */
+pipeline($('#linPipe'),$('#linOut'),$('#linNext'),$('#linReset'),
+  [['模型','← 起點'],['訓練資料 v2','上游 1'],['特徵表','上游 2'],['清洗作業','上游 3'],['CRM 原始表','來源']],
+  ['<b>模型預測異常：</b>收入相關特徵的影響突然變得很怪。沒有血緣，只能瞎猜。',
+   '<b>訓練資料 v2</b> 的元資料：產生自「特徵表」，建立時間有紀錄（示意）。',
+   '<b>特徵表</b> 的元資料：欄位 <code>income</code> 的定義、來源作業與更新時間都在資料目錄裡。',
+   '<b>清洗作業</b>：元資料顯示最近部署新版，把收入單位改成「千元」<b style="color:var(--bad)">← 找到了</b>（示意）。',
+   '<b>CRM 原始表</b>：來源本身沒問題。<div class="hint">資料血緣追蹤「來源 → 使用」的完整流向，出錯時能往回溯源。</div>']);
+
+/* ---------- time travel ---------- */
+(function(){
+  const V=[
+    [[['C1','王小明','台北'],['C2','李小華','台中'],['C3','陳大文','高雄']],'v0：初始匯入。'],
+    [[['C1','王小明','台北'],['C2','李小華','台中'],['C3','陳大文','高雄'],['C4','林美玲','台南']],'v1：新增 C4。'],
+    [[['C1','王小明','台北'],['C2','李小華','新竹'],['C3','陳大文','高雄'],['C4','林美玲','台南']],'v2：C2 搬家更新城市。<b>模型是用這一版訓練的</b> —— 要重現實驗，就讀 v2。'],
+    [[['C1','王小明','台北'],['C2','李小華','新竹'],['C4','林美玲','台南']],'v3：C3 被誤刪 → 讀 v2 即可回溯。Time Travel 讀的是同一份儲存上的歷史版本，<b>不是備份還原</b>。']
+  ];
+  function draw(){const v=+$('#ttV').value;$('#ttVv').textContent='v'+v;$('#ttTbl').innerHTML=`<tr><th>客戶ID</th><th>姓名</th><th>城市</th></tr>`+V[v][0].map(r=>`<tr${v===2?' style="background:color-mix(in srgb,var(--img) 12%,transparent)"':''}>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('');$('#ttNote').innerHTML=V[v][1];}
+  $('#ttV').oninput=draw;draw();
+})();
+
+/* ---------- RBAC vs ABAC ---------- */
+(function(){
+  let r=0,t=0,d=0;
+  function draw(){
+    const rb=r===0,ab=r===0&&t===0&&d===0;
+    $('#acR').innerHTML=`<div class="verdict" style="color:${rb?'var(--ok)':'var(--bad)'}">${rb?'✓ 允許':'✗ 拒絕'}</div><span class="hint">只問：你的角色是什麼？${r===0?'分析師角色有權限。':'實習生角色無權限。'}時間與裝置一概不看。</span>`;
+    const why=[];if(r!==0)why.push('角色不符');if(t!==0)why.push('非上班時間');if(d!==0)why.push('外部網路＋私人裝置');
+    $('#acA').innerHTML=`<div class="verdict" style="color:${ab?'var(--ok)':'var(--bad)'}">${ab?'✓ 允許':'✗ 拒絕'}</div><span class="hint">使用者屬性＋資料屬性＋<b>環境條件</b>一起判斷。${ab?'全部條件都符合。':'原因：'+why.join('、')+'。'}</span>`;
+  }
+  btnGroup($('#acRole'),['分析師','實習生'],0,i=>{r=i;draw();});
+  btnGroup($('#acTime'),['上班時間','深夜 2 點'],0,i=>{t=i;draw();});
+  btnGroup($('#acDev'),['公司內網＋公司裝置','外部網路＋私人裝置'],0,i=>{d=i;draw();});
+  draw();
+})();
+matcher($('#acMatch'),$('#acFb'),[
+  {k:'r',c:'var(--txt)',html:'部門制中小企業，依「工程師／分析師／主管」給權限'},
+  {k:'a',c:'var(--img)',html:'大型企業，依時間、地點、裝置動態授權'},
+  {k:'p',c:'var(--aud)',html:'跨雲跨系統，用 OPA／Rego 統一寫策略規則'},
+  {k:'d',c:'var(--sen)',html:'研發小團隊，資料擁有者自己決定要分享給誰'}
+],[
+  {k:'d',html:'DAC',ok:'擁有者說了算（不是系統管理員統一指派）。'},
+  {k:'p',html:'PBAC',ok:'看策略規則怎麼寫，可統一控管多系統。'},
+  {k:'r',html:'RBAC',ok:'看你的角色是什麼，邏輯清楚、實作簡單。'},
+  {k:'a',html:'ABAC',ok:'把環境條件納入判斷，彈性高、支援細緻動態授權。'}
+],'記憶線索：角色／屬性＋環境／策略規則／擁有者。');
+flipCards($('#ztCards'),[
+  ['最小權限','Least Privilege','只給完成任務所需的最小資料範圍。'],
+  ['動態授權','Just-In-Time Access','依行為、時間、裝置、網路位置動態調整，避免長期權限累積。'],
+  ['持續驗證','Continuous Authentication','搭配多因子驗證與行為分析；連內網使用者也不預設信任。'],
+  ['微分段','Microsegmentation','資料資源分區隔離，避免單點被攻破後橫向擴散。']
+]);
+
+/* ---------- 32.8 exams ---------- */
+examList($('#examList'),[
+  ['114-2 第 7 題','ACID 原子性','直接問「原子性」的定義','交易不可分割，全部成功或全部失敗。誘答把「多節點自動同步」塞進來，那屬於複寫／一致性議題'],
+  ['114-2 第 18 題','ACID 用在情境判讀','分散式資料庫多節點交易，一個節點失敗但系統不出現部分更新','「不會部分更新」＝<b>原子性（Rollback）</b>。四個選項把 A/C/I/D 各寫一個，必須逐字對定義'],
+  ['114-2 第 34 題','圖資料庫建模','「按讚」帶時間戳記與裝置類型，該怎麼建模','建成<b>邊</b>、屬性掛在邊上。建成節點會膨脹結構，寫進使用者節點會丟失對應的貼文'],
+  ['114-2 第 35 題','知識圖譜的圖模型','要語意擴展性與推理能力','選 <b>RDF 三元組（S–P–O）</b>，它是標準語意模型、可接本體與推理引擎'],
+  ['115-1 第 13 題','多元持久化選型','一題三需求：巢狀半結構化＋複雜查詢／1,536 維向量高 QPS／ACID 且延遲 &lt;10ms','<b>文件型＋專用向量資料庫＋關聯式</b>，各取所長。三個誘答都在「用比較少的資料庫種類硬吃所有需求」上吃虧'],
+  ['115-1 第 14 題','分片的目的','PB 級資料、單節點撐不住，Sharding 的主要目的','<b>水平切分以提升擴展性與負載均衡</b>。三個誘答分別是複寫（增加備份數）、物化檢視（預先計算）、壓縮（省空間）']
+]);
+[
+  ['114-2 第 11 題','「傳統關聯式資料庫」被設為誘答','IoT 即時監控要選大數據平台＋即時分析技術'],
+  ['114-2 第 19 題','「雲端資料湖」出現在正解鏈路末端','邊緣運算＋流式處理框架的資料流程設計'],
+  ['114-2 第 24 題','「建立資料湖結構」是正解前半','重點在 Spark／Ray 分散式預處理串接訓練管線'],
+  ['115-1 第 36 題','資料湖、權限控管、查詢審計','正解是 Text-to-SQL Agent，考的是生成式 AI 應用架構']
+].forEach(([n,a,b])=>$('#examList2').insertAdjacentHTML('beforeend',`<details><summary><span class="tag">${n}</span>${a}</summary><div class="body"><p style="margin:0 0 6px"><span class="hint">表面詞彙：</span>${a}</p><p style="margin:0"><span class="hint">真正考點：</span>${b}</p></div></details>`));
+
+/* ---------- traps ---------- */
+traps($('#traps'),$('#trapCount'),[
+  ['分片（Sharding）是把不同資料水平切到不同節點','不是把同一份資料複製多份 —— 後者是副本（Replication）。'],
+  ['副本提升的是可用性與讀取吞吐','不是總儲存容量；要擴容量得靠分片。'],
+  ['Schema-on-Read 對應資料湖（讀取時才套結構）','不是資料倉儲；Schema-on-Write 才對應資料倉儲。'],
+  ['ETL 的轉換發生在載入之前','不是之後；ELT 才是先載入原始資料、再在目標平台內轉換。'],
+  ['資料湖倉（Lakehouse）是在資料湖上補 ACID 與治理能力','不是資料倉儲的新名字，也不是資料湖的別稱。'],
+  ['資料湖存的是原始未轉換、未清洗的資料','不是「已清洗但還沒建模的資料」；缺乏治理會退化成資料沼澤。'],
+  ['ACID 的 C 指符合完整性規則（主鍵、外鍵、約束）','不是 CAP 的 C（各節點讀到同一份最新資料）。'],
+  ['CAP 是在網路分區發生時才被迫二選一','不是「任何情況下都只能三選二」；網路正常時可同時強一致又高可用。'],
+  ['最終一致性是「暫時不同步、最後會收斂」','不是「永遠不保證一致」。'],
+  ['NoSQL 是 Not Only SQL','不是「不能用 SQL 查詢」；Cassandra 有 CQL，多數產品也提供類 SQL 介面。'],
+  ['鍵值資料庫是依 key 取值','value 的內容對資料庫不透明，不能像文件型那樣直接查巢狀欄位。'],
+  ['欄族（Wide-column）資料庫是稀疏寬表的資料模型','不是「欄式儲存格式」；Parquet／ORC 才是檔案格式。'],
+  ['圖資料庫中帶屬性的互動行為要建成邊、屬性掛在邊上','不是建成獨立節點，也不是寫進某一端的節點屬性。'],
+  ['需要語意推理的知識圖譜選 RDF 三元組','不是把資訊全塞進屬性圖的節點屬性。'],
+  ['HDFS 的 NameNode 只管元資料','實際資料區塊在 DataNode，Client 取得位置後是直接與 DataNode 讀寫的。'],
+  ['Secondary NameNode 是做檢查點合併的角色','不是熱備援；高可用要靠 Active／Standby NameNode 搭配 JournalNode。'],
+  ['HDFS 不擅長大量小檔案與低延遲隨機讀取','不是「任何情境都比關聯式資料庫快」。'],
+  ['欄式儲存（Columnar）利於只讀少數欄位的分析查詢','不利於逐列增刪改，因此不適合當 OLTP 主儲存。'],
+  ['分區（Partitioning）縮小的是掃描範圍','不是「預先算好結果」—— 預先算好結果是物化檢視。'],
+  ['物化檢視實際存下結果、需要刷新','一般檢視（View）只是查詢別名、不佔額外儲存。'],
+  ['壓縮省的是空間與 I/O 成本','突破不了單節點的容量與運算上限。'],
+  ['正規化減少冗餘但增加 JOIN 成本，反正規化則相反','OLTP 偏正規化、OLAP 偏反正規化。'],
+  ['WHERE 在聚合前過濾資料列、HAVING 在聚合後過濾群組','兩者位置不能互換。'],
+  ['INNER JOIN 取交集、FULL OUTER JOIN 取聯集','pandas 的 how=\'inner\'／how=\'outer\' 是同一套語意。'],
+  ['RBAC 依角色授權，ABAC 才把時間、地點、裝置等環境條件納入判斷','兩者不是同義詞。'],
+  ['DAC 由資料擁有者自行決定授權','不是由系統管理員統一指派 —— 統一指派較接近 RBAC 的運作方式。'],
+  ['Zero Trust 的前提是連內網使用者也不預設信任','不是「把防火牆加厚、把外部擋在門外」。'],
+  ['Delta Lake 的 Time Travel 是資料版本回溯','不是備份還原機制；它讀的是同一份儲存上的歷史版本。'],
+  ['物件儲存（S3）是扁平的 key 命名空間','介面上的「資料夾」其實是 key 前綴，不是真正的階層式檔案系統。'],
+  ['同一情境同時要交易、彈性 schema 與向量搜尋','正解通常是分別選用最適資料庫，而不是為了統一技術棧全用同一種。']
+],'l22202-traps');
+
+/* ---------- quiz ---------- */
+quiz($('#quiz'),[
+  ['關於 ACID 中「原子性（Atomicity）」的定義，何者正確？',['交易中的所有操作必須全部完成或全部不做，失敗時回復','多個節點之間會自動同步資料','所有副本的資料必須相同','交易一旦提交，資料永遠不可刪除'],'「多節點自動同步」是常見誘答，屬於複寫／一致性議題。（114-2 第 7 題）'],
+  ['分散式資料庫執行多節點交易時，一個節點失敗，但系統不會出現部分更新。這體現 ACID 的哪一項？',['原子性（Atomicity）','一致性（Consistency）','隔離性（Isolation）','持久性（Durability）'],'「不會部分更新」＝全做完或全不做，靠 Rollback → 原子性。（114-2 第 18 題）'],
+  ['社群平台要記錄「使用者對貼文按讚」，且按讚帶有時間戳記與裝置類型，用屬性圖該怎麼建模？',['建成連接使用者與貼文的「邊」，屬性掛在邊上','把每次按讚建成獨立節點','把按讚資訊寫進使用者節點的屬性','把按讚資訊寫進貼文節點的屬性'],'獨立節點會膨脹結構；寫進某一端節點會丟失對應關係。（114-2 第 34 題）'],
+  ['要建置具語意擴展性與推理能力的知識圖譜，應選用哪種圖模型？',['RDF 三元組（Subject–Predicate–Object）','屬性圖，把資訊全塞進節點屬性','鍵值資料庫','欄族資料庫'],'RDF 是 W3C 標準語意模型，可搭配本體與推理引擎。（114-2 第 35 題）'],
+  ['同一系統有三個需求：巢狀半結構化資料＋複雜查詢、1,536 維向量高 QPS 相似度搜尋、ACID 且延遲 <10ms 的交易。最佳選型是？',['文件型資料庫＋專用向量資料庫＋關聯式資料庫，各取所長','全部使用關聯式資料庫，統一技術棧','全部使用文件型資料庫，向量存成陣列欄位','全部使用鍵值資料庫以求最低延遲'],'需求分裂時就分開選 → 多元持久化。（115-1 第 13 題）'],
+  ['PB 級資料、單節點撐不住，採用 Sharding 的主要目的是？',['水平切分資料以提升擴展性與負載均衡','增加資料的備份份數','預先計算常用查詢結果','壓縮資料以節省儲存空間'],'三個誘答分別是複寫、物化檢視、壓縮。（115-1 第 14 題）'],
+  ['SQL 中 WHERE 與 HAVING 的差別，何者正確？',['WHERE 在 GROUP BY 之前過濾資料列，HAVING 在之後過濾群組','WHERE 在 GROUP BY 之後過濾群組，HAVING 在之前過濾資料列','兩者完全相同，只是寫法不同','HAVING 只能搭配 ORDER BY 使用'],'WHERE 是聚合「前」、HAVING 是聚合「後」。'],
+  ['「寫入時照單全收，讀取時才套用結構」的做法，對應哪種架構？',['資料湖（Schema-on-Read）','資料倉儲（Schema-on-Write）','關聯式資料庫（Schema-on-Write）','OLTP 交易系統'],'Schema-on-Write 才對應資料倉儲與 RDBMS。'],
+  ['關於 ETL 與 ELT，何者正確？',['ELT 先載入原始資料，再於目標平台內轉換','ETL 的轉換發生在載入之後','ELT 通常不保留原始資料','ETL 對目標平台的算力需求比 ELT 高'],'ETL 在載入之前、於獨立引擎轉換，原始資料通常不保留；ELT 仰賴目標平台算力。'],
+  ['關於 CAP 定理，下列哪個說法最精確？',['只有在網路分區發生時，系統才被迫在一致性與可用性之間二選一','任何情況下分散式系統都只能三選二','分散式系統通常選擇放棄分區容忍性（P）','網路正常時也無法同時擁有強一致與高可用'],'P 在分散式環境實際上是必選，真正的選擇是 CP 或 AP，而且只在分區發生時才需要取捨。'],
+  ['HDFS 的 Secondary NameNode 主要負責什麼？',['合併 fsimage 與 editlog 的檢查點工作','NameNode 故障時立即接手的熱備援','存放實際資料區塊','平衡各 DataNode 的磁碟使用量'],'它不是熱備援；高可用要靠 Active／Standby NameNode 搭配 JournalNode。'],
+  ['日報與排行榜這類重複性查詢，想「預先算好結果並存下來」直接讀取，應使用？',['物化檢視（Materialized View）','分區（Partitioning）','一般檢視（View）','資料壓縮'],'分區縮小的是掃描範圍；一般 View 只是查詢別名，每次重新計算。']
+],(s,n)=>s>=n-1?'太強了，ACID、選型、分散式取捨都能秒答。':s>=n*0.6?'不錯！回頭看看答錯題對應的段落，再操作一次模擬器。':'建議重新操作 32.2 的轉帳模擬與 32.5 的分片／CAP 模擬器，再來一次。');
+
+navHighlight();
+</script>
+</body>
+</html>

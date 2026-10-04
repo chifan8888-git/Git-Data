@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L22 大數據處理分析與應用 科目總覽｜互動教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F5; --surface:#FFFFFF; --surface2:#F6F8FB; --ink:#18202E; --muted:#5A6475; --line:#D5DBE4;
+  --txt:#3B4CCA; --img:#0E8A7A; --aud:#B87812; --sen:#B8336A;
+  --ok:#1F8A4C; --bad:#C23B2E; --warn:#D9822B;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+    --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+  --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75}
+h1,h2,h3{font-family:var(--serif);line-height:1.3;margin:0}
+p{margin:0 0 1em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--txt);outline-offset:2px;border-radius:4px}
+svg{max-width:100%;height:auto;display:block}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1180px;margin:0 auto;gap:40px;padding:0 24px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;padding:32px 0;height:100vh;overflow:auto}
+nav.toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14.5px}
+nav.toc a span{font-variant-numeric:tabular-nums;font-size:13px;opacity:.8}
+nav.toc a.on{background:var(--surface);color:var(--ink);font-weight:700}
+.toc-title{font-family:var(--serif);font-weight:900;font-size:18px;padding:0 10px 14px}
+main{min-width:0;padding-bottom:80px}
+section{padding:56px 0 8px;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.sec-head{display:flex;gap:16px;align-items:baseline;margin-bottom:18px}
+.sec-no{font-family:var(--serif);font-weight:900;font-size:40px;color:var(--line);line-height:1}
+h2{font-size:28px;font-weight:900}
+h3{font-size:19px;margin:34px 0 10px}
+.lead{color:var(--muted);max-width:66ch}
+.prose{max-width:68ch}
+
+/* hero */
+.hero{padding:44px 0 24px}
+.hero .code{font-size:14px;color:var(--muted);margin-bottom:6px}
+.hero h1{font-size:clamp(34px,5.5vw,56px);font-weight:900;letter-spacing:.02em}
+.hero .one{font-size:18px;max-width:60ch;margin:16px 0 0;color:var(--muted)}
+.hero-fig{background:var(--surface);border-radius:20px;margin-top:28px;padding:14px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+.goal{border-left:4px solid var(--c);padding:6px 0 6px 14px;font-size:15px}
+
+/* panels */
+.panel{background:var(--surface);border-radius:16px;padding:22px;margin:16px 0}
+.panel.flat{background:var(--surface2)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font-size:15px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hint{font-size:14px;color:var(--muted)}
+.callout{border-left:4px solid var(--warn);background:var(--surface2);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;font-size:15px}
+.callout.exam{border-color:var(--txt)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:14px}
+
+/* modality chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+
+/* matcher */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.match .col{display:flex;flex-direction:column;gap:10px}
+.mitem{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15px;transition:border-color .2s,background .2s,transform .2s}
+.mitem small{display:block;color:var(--muted);font-size:13px}
+.mitem.sel{border-color:var(--ink);transform:translateX(4px)}
+.mitem.done{border-color:var(--c,var(--ok));background:var(--surface2);cursor:default}
+.mitem.wrong{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:1.8em;margin-top:12px;font-size:15px}
+.feedback.ok{color:var(--ok)} .feedback.bad{color:var(--bad)}
+
+/* timeline */
+.steps{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stage-viz{min-height:130px;display:flex;align-items:center;justify-content:center}
+.stage-viz .blk{display:inline-block;width:34px;height:34px;border-radius:6px;margin:2px;transition:all .5s}
+
+/* align toggle */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.compare>div{padding:18px}
+.compare>div+div{border-left:1px solid var(--line)}
+.compare .big{font-family:var(--serif);font-weight:900;font-size:22px;margin-bottom:6px}
+
+/* fusion */
+.meter{height:14px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:6px 0}
+.meter>i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .7s cubic-bezier(.3,.8,.3,1),background .4s}
+.flow{stroke-dasharray:6 7;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.jitter{animation:jit .25s steps(2) infinite}
+@keyframes jit{50%{transform:translate(1.5px,-1px)}}
+.fusion-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.pc{font-size:15px}
+.pc b{display:block;font-size:14px;color:var(--muted);font-weight:500}
+
+/* clip */
+.mat{display:grid;gap:4px;font-size:13px}
+.mat .cell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;transition:background .5s,color .5s}
+.mat .lab{display:flex;align-items:center;justify-content:center;font-size:22px}
+.mat .tlab{font-size:12px;text-align:center;color:var(--muted);display:flex;align-items:flex-end;justify-content:center;line-height:1.3}
+.zs-imgs{display:flex;gap:10px;flex-wrap:wrap}
+.zs-img{font-size:38px;width:72px;height:72px;border-radius:16px;border:2px solid var(--line);background:var(--surface2);display:flex;align-items:center;justify-content:center}
+.zs-img[aria-pressed="true"]{border-color:var(--img);box-shadow:0 0 0 3px color-mix(in srgb,var(--img) 25%,transparent)}
+.bar{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.bar .track{height:22px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;width:0;background:var(--txt);border-radius:6px;transition:width .8s cubic-bezier(.3,.8,.3,1)}
+.bar.win .fill{background:var(--img)}
+.bar.win{font-weight:700}
+.bar .num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.flip{perspective:900px;height:150px;border:0;background:none;padding:0;text-align:left}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flip[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:center}
+.flip .f{background:var(--surface);border:1.5px solid var(--line)}
+.flip .f strong{font-family:var(--serif);font-size:22px}
+.flip .f span{color:var(--muted);font-size:14px}
+.flip .b{background:var(--ink);color:var(--bg);transform:rotateY(180deg);font-size:15px}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.pnode{border:2px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;font-size:14px;background:var(--surface);transition:all .35s}
+.pnode b{display:block;font-size:16px}
+.pnode.on{border-color:var(--aud);background:color-mix(in srgb,var(--aud) 14%,var(--surface));transform:translateY(-3px)}
+.pnode.past{border-color:color-mix(in srgb,var(--aud) 45%,var(--line))}
+.pout{background:var(--surface2);border-radius:12px;padding:14px 16px;min-height:84px;font-size:15px}
+.wave{display:flex;gap:3px;align-items:center;height:30px}
+.wave i{width:4px;background:var(--aud);border-radius:2px;animation:wv 1s ease-in-out infinite}
+@keyframes wv{50%{transform:scaleY(.3)}}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+
+/* strategies */
+.strat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.strat button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;text-align:left;font-size:15px}
+.strat button[aria-pressed="true"]{border-color:var(--ink)}
+.verdict{font-family:var(--serif);font-weight:900;font-size:20px}
+
+details{border-bottom:1px solid var(--line)}
+details summary{cursor:pointer;padding:12px 4px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"+";font-weight:900;width:14px;color:var(--muted)}
+details[open] summary::before{content:"−"}
+details .body{padding:0 4px 14px 30px;font-size:15px}
+.tag{font-size:12.5px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums;min-width:80px}
+
+/* quiz */
+.qcard{background:var(--surface);border-radius:16px;padding:24px}
+.qtop{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
+.qtext{font-size:18px;font-weight:700;margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15.5px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+.opt.wrongpick{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.opt:disabled{cursor:default}
+.expl{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15px;display:none}
+.expl.show{display:block}
+.progress{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;margin-bottom:14px}
+.progress i{display:block;height:100%;background:var(--txt);transition:width .4s}
+
+.traps label{display:flex;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:15px}
+.traps input{width:18px;height:18px;margin-top:4px;flex:none;accent-color:var(--ok)}
+.traps label.chk>span{color:var(--muted)}
+.traps em{font-style:normal;font-weight:700}
+
+/* mobile */
+@media (max-width:860px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+  nav.toc{position:sticky;top:0;height:auto;z-index:10;background:var(--bg);display:flex;overflow-x:auto;padding:8px 0;padding-top:calc(8px + env(safe-area-inset-top,0px));gap:4px;border-bottom:1px solid var(--line)}
+  .toc-title{display:none}
+  nav.toc a{white-space:nowrap;flex:none}
+  .match,.stage,.fusion-meta,.compare{grid-template-columns:1fr}
+  .compare>div+div{border-left:0;border-top:1px solid var(--line)}
+  .pipe{grid-template-columns:repeat(5,minmax(90px,1fr));overflow-x:auto}
+  .bar{grid-template-columns:110px 1fr 56px}
+  h2{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* ---- page extras (L22 overview) ---- */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:12px}
+.kpi{background:var(--surface2);border-radius:12px;padding:10px 12px}
+.kpi b{display:block;font-size:13px;color:var(--muted);font-weight:500}
+.kpi span{font-family:var(--serif);font-weight:900;font-size:22px;font-variant-numeric:tabular-nums}
+.toggles{display:flex;flex-wrap:wrap;gap:8px}
+.kprow{display:grid;grid-template-columns:72px minmax(0,1fr) 120px;gap:10px;align-items:center;padding:8px 4px;border-bottom:1px solid var(--line);font-size:15px;transition:opacity .3s}
+.kprow .code{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.kprow a{color:var(--ink);text-decoration:none;font-weight:700}
+.kprow a:hover{text-decoration:underline}
+.kprow .track{height:14px;background:var(--surface2);border-radius:5px;overflow:hidden;margin-top:4px}
+.kprow .fill{height:100%;width:0;border-radius:5px;transition:width .8s cubic-bezier(.3,.8,.3,1);background:var(--c)}
+.kprow .num{text-align:right;font-variant-numeric:tabular-nums;font-size:14px}
+.kprow.dim{opacity:.25}
+.branches{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.branch{border:2px solid var(--line);background:var(--surface);border-radius:14px;padding:12px;text-align:left;font-size:15px;transition:border-color .2s,transform .2s}
+.branch b{display:block;font-family:var(--serif);font-size:18px;color:var(--c)}
+.branch small{color:var(--muted);font-size:13px}
+.branch[aria-pressed="true"]{border-color:var(--c);transform:translateY(-3px);background:color-mix(in srgb,var(--c) 8%,var(--surface))}
+.leafs{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.leaf{border-left:4px solid var(--c);background:var(--surface2);border-radius:0 10px 10px 0;padding:8px 12px;font-size:15px;animation:pop .45s both}
+.leaf a{color:var(--ink);font-weight:700}
+@keyframes pop{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+.guess{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+.grid-rc{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;max-width:320px}
+.grid-rc i{aspect-ratio:1.6;border-radius:6px;background:var(--surface2);transition:background .4s;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:12px;color:var(--muted)}
+.grid-rc i.hl{background:var(--sen);color:#fff}
+.weeks{display:grid;grid-template-columns:repeat(8,1fr);gap:6px}
+.wk{border:2px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 4px;text-align:center;font-size:13px;transition:all .25s}
+.wk b{display:block;font-size:15px}
+.wk span{display:block;height:6px;border-radius:3px;background:var(--c);margin-top:6px}
+.wk[aria-pressed="true"]{border-color:var(--ink);transform:translateY(-3px)}
+.wkdetail{margin-top:14px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips code{background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:3px 8px;font-size:14px}
+.qball{display:flex;flex-wrap:wrap;gap:4px;margin-top:10px}
+.qball i{width:18px;height:18px;border-radius:50%;background:var(--line);transition:background .4s}
+@media (max-width:860px){
+  .branches{grid-template-columns:1fr 1fr}
+  .weeks{grid-template-columns:repeat(4,1fr)}
+  .kprow{grid-template-columns:58px minmax(0,1fr) 84px}
+}
+input[type=range]{width:100%;accent-color:var(--txt)}
+.pout .bar .track{background:var(--surface)}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="toc" aria-label="章節">
+  <div class="toc-title">L22 科目總覽</div>
+  <a href="#intro"><span>●</span>導覽與目標</a>
+  <a href="#s1"><span>27.1</span>知識點索引</a>
+  <a href="#s2"><span>27.2</span>四大主題結構</a>
+  <a href="#s3"><span>27.3</span>破除誤解</a>
+  <a href="#s4"><span>27.4</span>實際題數分佈</a>
+  <a href="#s5"><span>27.5</span>命題風格</a>
+  <a href="#s6"><span>27.6</span>範圍外考點</a>
+  <a href="#s7"><span>27.7</span>用語地雷</a>
+  <a href="#s8"><span>27.8</span>讀書順序</a>
+  <a href="#s9"><span>→</span>延伸與自我檢核</a>
+</nav>
+
+<main>
+<!-- HERO -->
+<section id="intro" class="hero">
+  <div class="code">L22　中級 AI 應用規劃師（數據分析）　建議 30 分鐘</div>
+  <h1>大數據處理分析與應用<br>科目總覽</h1>
+  <p class="one">中級<b>必選考科目之一</b>（與科目3 擇一）。通過 L21 + L22 可取得「AI 應用規劃師（數據分析）」中級證書。本篇是科目層級的總覽與索引；<b>十三個知識點各有獨立講義</b>，從下方索引直接點進去。</p>
+  <div class="hero-fig" aria-hidden="true">
+    <svg id="heroSvg" viewBox="0 0 720 300">
+      <defs>
+        <path id="hp0" d="M150 150 C 230 150, 240 45, 320 45"/>
+        <path id="hp1" d="M150 150 C 230 150, 240 115, 320 115"/>
+        <path id="hp2" d="M150 150 C 230 150, 240 185, 320 185"/>
+        <path id="hp3" d="M150 150 C 230 150, 240 255, 320 255"/>
+      </defs>
+      <g fill="none" stroke-width="2" opacity=".35">
+        <use href="#hp0" stroke="var(--txt)"/><use href="#hp1" stroke="var(--img)"/>
+        <use href="#hp2" stroke="var(--aud)"/><use href="#hp3" stroke="var(--sen)"/>
+      </g>
+      <g id="heroLeaves"></g>
+      <g font-family="Noto Sans TC, sans-serif" font-size="15" font-weight="700">
+        <rect x="20" y="110" width="130" height="80" rx="16" fill="var(--ink)"/>
+        <text x="85" y="145" text-anchor="middle" fill="var(--bg)" font-size="20">L22</text>
+        <text x="85" y="170" text-anchor="middle" fill="var(--bg)" font-size="13">50 題</text>
+        <rect x="320" y="25" width="150" height="40" rx="20" fill="var(--txt)"/><text x="395" y="50" text-anchor="middle" fill="#fff">L221 機率統計</text>
+        <rect x="320" y="95" width="150" height="40" rx="20" fill="var(--img)"/><text x="395" y="120" text-anchor="middle" fill="#fff">L222 處理技術</text>
+        <rect x="320" y="165" width="150" height="40" rx="20" fill="var(--aud)"/><text x="395" y="190" text-anchor="middle" fill="#fff">L223 分析方法</text>
+        <rect x="320" y="235" width="150" height="40" rx="20" fill="var(--sen)"/><text x="395" y="260" text-anchor="middle" fill="#fff">L224 AI 應用</text>
+      </g>
+      <g class="movers">
+        <circle r="6" fill="var(--txt)"><animateMotion dur="2.4s" repeatCount="indefinite"><mpath href="#hp0"/></animateMotion></circle>
+        <circle r="6" fill="var(--img)"><animateMotion dur="2.4s" begin=".3s" repeatCount="indefinite"><mpath href="#hp1"/></animateMotion></circle>
+        <circle r="6" fill="var(--aud)"><animateMotion dur="2.4s" begin=".6s" repeatCount="indefinite"><mpath href="#hp2"/></animateMotion></circle>
+        <circle r="6" fill="var(--sen)"><animateMotion dur="2.4s" begin=".9s" repeatCount="indefinite"><mpath href="#hp3"/></animateMotion></circle>
+      </g>
+    </svg>
+  </div>
+  <h3>學完這一課，你應該能夠</h3>
+  <div class="goals">
+    <div class="goal" style="--c:var(--txt)">掌握 L22 的<b>四大主題結構</b>與十三個知識點的相對份量</div>
+    <div class="goal" style="--c:var(--img)">依官方篇幅與實測考點決定<b>時間配置</b></div>
+    <div class="goal" style="--c:var(--aud)">認識 L22 特有的<b>程式碼題、附圖題與題組題</b>應對方式</div>
+    <div class="goal" style="--c:var(--sen)">認出官方指引沒寫、但考題考過的<b>四個範圍外考點</b></div>
+  </div>
+  <p class="hint" style="margin-top:20px">本頁顏色固定代表四大主題：<span class="chip" style="--c:var(--txt)"><i class="dot"></i>L221 機率統計基礎</span>　<span class="chip" style="--c:var(--img)"><i class="dot"></i>L222 大數據處理技術</span>　<span class="chip" style="--c:var(--aud)"><i class="dot"></i>L223 分析方法與工具</span>　<span class="chip" style="--c:var(--sen)"><i class="dot"></i>L224 AI 之應用</span></p>
+</section>
+
+<!-- 27.1 -->
+<section id="s1">
+  <div class="sec-head"><span class="sec-no">27.1</span><h2>知識點索引</h2></div>
+  <p class="lead">十三個知識點，長條是官方指引篇幅（字數）。用篩選器只看某一主題，或改依篇幅排序。點名稱直接進入該講義。</p>
+  <div class="panel">
+    <div class="row" style="justify-content:space-between">
+      <div class="toggles" id="idxFilter"></div>
+      <div class="toggles" id="idxSort"></div>
+    </div>
+    <div id="idxList" style="margin-top:12px"></div>
+    <div class="kpis">
+      <div class="kpi"><b>官方指引合計</b><span>92,913 字</span></div>
+      <div class="kpi"><b>目前篩選篇幅</b><span id="idxSum">—</span></div>
+      <div class="kpi"><b>佔全科</b><span id="idxPct">—</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 27.2 -->
+<section id="s2">
+  <div class="sec-head"><span class="sec-no">27.2</span><h2>四大主題結構</h2></div>
+  <p class="lead">L22 大數據處理分析與應用（50 題）分成四大主題。點一個主題，展開它底下的知識點。</p>
+  <div class="panel">
+    <div class="branches" id="branches"></div>
+    <div id="branchNote" class="callout" style="margin-bottom:0"></div>
+    <div class="leafs" id="leafs"></div>
+  </div>
+</section>
+
+<!-- 27.3 -->
+<section id="s3">
+  <div class="sec-head"><span class="sec-no">27.3</span><h2>先破除一個誤解：L22 不是「大數據工具介紹」</h2></div>
+  <p class="lead">以中文關鍵詞掃描 100 題官方公告試題（114-2 + 115-1）。先猜猜看：<b>分散式處理（Hadoop／Spark／Kafka）</b>的命中率是多少？</p>
+  <div class="panel">
+    <div class="guess">
+      <input type="range" id="gsR" min="0" max="50" value="25" aria-label="猜測命中率">
+      <b id="gsV" style="font-variant-numeric:tabular-nums;min-width:3.5em;text-align:right">25%</b>
+    </div>
+    <div class="row" style="margin-top:10px"><button class="btn primary" id="gsBtn">揭曉全部命中率</button><span class="hint" id="gsFb"></span></div>
+    <div id="hitBars" style="margin-top:14px"></div>
+    <p class="hint" style="margin:8px 0 0">由 <code>scripts/topic_hit_stats.py l22</code> 重跑驗證，關鍵詞清單寫死在該檔內。</p>
+  </div>
+  <div class="callout exam"><b>分散式運算工具只佔 4%。</b>把時間押在背 Hadoop 生態系名詞上會押錯方向 —— L22 的真面目是「<b>統計 ＋ 資料工程 ＋ pandas</b>」。</div>
+</section>
+
+<!-- 27.4 -->
+<section id="s4">
+  <div class="sec-head"><span class="sec-no">27.4</span><h2>各知識點的實際題數分佈</h2></div>
+  <p class="lead">十三份講義各自從 100 題官方試題中挑出「核心相關題」。切換指標，看篇幅與題數哪裡不成比例。</p>
+  <div class="panel">
+    <div class="tabs" id="roiTabs"></div>
+    <div id="roiBars"></div>
+    <p class="hint" id="roiNote" style="margin:8px 0 0"></p>
+  </div>
+
+  <h3>這些數字不可以相加</h3>
+  <div class="panel">
+    <p class="hint">每個圓點代表 100 題官方試題中的一題。按按鈕比較兩種算法。</p>
+    <div class="row"><button class="btn" id="sumBtn">直接把 13 個核心題數相加</button><button class="btn" id="dedupBtn">扣掉重複後</button></div>
+    <div class="qball" id="qball" aria-hidden="true"></div>
+    <div class="verdict" id="sumV" style="margin-top:12px"></div>
+    <div class="hint" id="sumWhy"></div>
+  </div>
+  <div class="callout">每份講義的「官方考過什麼」都寫明了自己的計數基準，<b>基準不同的數字不能互相比較，更不能加總</b>。</div>
+
+  <h3>篇幅與題數不成比例的兩個地方</h3>
+  <div class="compare">
+    <div><div class="big" style="color:var(--txt)">L22103 假設檢定</div>官方篇幅 14,755 字（全科最大），但核心題只有 8 題。讀完整章的投報率低於預期，<b>重點放在「情境 → 選哪個檢定」的判斷，不要陷進公式推導</b>。</div>
+    <div><div class="big" style="color:var(--img)">L22201 數據收集與清理</div>官方篇幅只有 4,287 字（全科第二小），核心題卻有 13 題。<b>這一節要讀得比篇幅暗示的更深</b>。</div>
+  </div>
+</section>
+
+<!-- 27.5 -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-no">27.5</span><h2>命題風格：三個必須先知道的事</h2></div>
+  <div class="panel">
+    <div class="tabs" id="styTabs"></div>
+    <div id="styBars"></div>
+    <p class="hint" style="margin:8px 0 0">可由 <code>scripts/exam_style_stats.py</code> 重跑驗證，指標定義寫在該檔開頭。</p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>指標</th><th>L22</th><th>L23</th><th>L21</th></tr>
+      <tr><td>含程式語法的題目</td><td><b>21%</b></td><td>13%</td><td>2%</td></tr>
+      <tr><td>附圖題</td><td>23%</td><td>23%</td><td>1%</td></tr>
+      <tr><td>題組題（多題共用敘述）</td><td>18%</td><td>18%</td><td>0%</td></tr>
+      <tr><td>題幹平均字數</td><td>114</td><td>106</td><td>126</td></tr>
+    </table>
+  </div>
+
+  <h3>三件事，逐一看</h3>
+  <div class="panel">
+    <div class="steps" id="thrBtns"></div>
+    <div id="thrBody"></div>
+  </div>
+</section>
+
+<!-- 27.6 -->
+<section id="s6">
+  <div class="sec-head"><span class="sec-no">27.6</span><h2>官方指引沒寫、但考過的範圍外考點</h2></div>
+  <p class="lead">撰寫十三份講義時逐檔比對官方《學習指引》原文與實際考題，發現<b>官方出題已超出自己的指引範圍</b>。以下四項在指引全文零命中，卻都考過。點卡片翻面。</p>
+  <div class="cards" id="outCards"></div>
+  <div class="tbl-wrap" style="margin-top:16px">
+    <table>
+      <tr><th>範圍外考點</th><th>考題</th><th>已補寫在</th></tr>
+      <tr><td><b>向量資料庫、多元持久化</b></td><td>115-1 第 13 題</td><td><a href="L22202_data_storage_management.html">32. L22202</a></td></tr>
+      <tr><td><b>基尼不純度（Gini Impurity）</b></td><td>114-2 第 14 題、115-1 第 2 題</td><td><a href="L22302_bigdata_analysis_methods.html">35. L22302</a></td></tr>
+      <tr><td><b>SVD 奇異值分解</b>（指引零命中；「推薦系統」本身指引有提，但沒說用什麼方法做）</td><td>115-1 第 16 題</td><td><a href="L22302_bigdata_analysis_methods.html">35. L22302</a></td></tr>
+      <tr><td><b>Transformer 位置編碼</b></td><td>115-1 第 35 題</td><td><a href="L22401_bigdata_machine_learning.html">37. L22401</a></td></tr>
+    </table>
+  </div>
+  <h3>另一項：歸屬與指引不一致</h3>
+  <div class="compare">
+    <div><div class="big">官方指引寫在</div>關聯規則（Apriori／FP-Growth／Support／Confidence／Lift）寫在 <b>L22303（可視化）</b>的範例題中，L22302 原文完全沒提。</div>
+    <div><div class="big">實際考題與本站整理</div>114-2 第 26 題、115-1 第 18、19 題考得很重。本站把它整理在 <a href="L22302_bigdata_analysis_methods.html">35. L22302</a> 的分析方法章，L22303 只留指路。</div>
+  </div>
+  <div class="callout exam"><b>這件事的意義：</b>只照官方指引準備會漏掉這幾題。<b>指引是範圍下限，不是上限。</b></div>
+</section>
+
+<!-- 27.7 -->
+<section id="s7">
+  <div class="sec-head"><span class="sec-no">27.7</span><h2>用語地雷</h2></div>
+  <p class="lead">官方《學習指引》夾雜部分大陸用語，考場上看到要能反應過來。</p>
+  <div class="panel">
+    <h3 style="margin-top:0">「行」與「列」到底是哪一個方向？</h3>
+    <p class="hint">先選用語習慣，再點「行」或「列」，看它指的是直的還是橫的。</p>
+    <div class="row"><div class="tabs" id="rcLoc" style="margin:0"></div></div>
+    <div class="row" style="margin-top:8px"><div class="tabs" id="rcWord" style="margin:0"></div></div>
+    <div class="stage" style="margin-top:10px">
+      <div class="grid-rc" id="rcGrid" aria-hidden="true"></div>
+      <div id="rcTxt"></div>
+    </div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>官方寫法</th><th>台灣慣用</th><th>為什麼危險</th></tr>
+      <tr><td><b>列式儲存</b>（Columnar Storage）</td><td><b>欄式儲存</b></td><td>「列」在台灣指 row，意思正好相反；一律回頭確認英文</td></tr>
+      <tr><td>數據</td><td>資料</td><td>不影響理解，但術語檢索時要兩種都試</td></tr>
+      <tr><td>可視化</td><td>視覺化</td><td>同上</td></tr>
+    </table>
+  </div>
+  <div class="panel">
+    <h3 style="margin-top:0">反射練習：官方寫法 → 台灣慣用</h3>
+    <div class="match" id="termMatch"></div>
+    <div class="feedback" id="termFb" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- 27.8 -->
+<section id="s8">
+  <div class="sec-head"><span class="sec-no">27.8</span><h2>讀書順序建議</h2></div>
+  <p class="lead">八週計畫。點選任一週看內容；輸入每週可用時數，算出總投入與每週分配。</p>
+  <div class="panel">
+    <div class="weeks" id="weeks"></div>
+    <div class="row" style="margin-top:16px;justify-content:space-between"><b>每週可用時數</b><span id="hrV" style="font-variant-numeric:tabular-nums"></span></div>
+    <input type="range" id="hr" min="2" max="20" value="8" aria-label="每週可用時數">
+    <div class="kpis">
+      <div class="kpi"><b>八週總投入</b><span id="hrTot">—</span></div>
+      <div class="kpi"><b>L22 本科（第 1–6 週）</b><span id="hrL22">—</span></div>
+      <div class="kpi"><b>L21 ＋ 歷屆（第 7–8 週）</b><span id="hrRest">—</span></div>
+    </div>
+    <div class="wkdetail pout" id="wkDetail" aria-live="polite"></div>
+  </div>
+  <p class="prose">完整的時間配置與選科判斷，見 <a href="L1toL2_bridge_data_analytics.html">13. 銜接指南：數據分析路線</a>。</p>
+</section>
+
+<!-- extra -->
+<section id="s9">
+  <div class="sec-head"><span class="sec-no">→</span><h2>延伸練習、下一步與自我檢核</h2></div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>資源</th><th>題數</th><th>用途</th></tr>
+      <tr><td>L22 主題庫</td><td>290</td><td>依章節練，弱項可單章反覆做</td></tr>
+      <tr><td>L22 歷屆（114-2、115-1）</td><td>100</td><td>程式碼題、附圖題與題組題的實戰練習</td></tr>
+      <tr><td>L21 主題庫</td><td>311</td><td>必考科目1</td></tr>
+      <tr><td>L21 歷屆（114-2、115-1）</td><td>100</td><td>同上</td></tr>
+    </table>
+  </div>
+  <h3>下一步</h3>
+  <div class="cards" id="nextCards" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))"></div>
+
+  <h3>總覽易錯清單</h3>
+  <p class="lead">逐條確認自己真的懂了再打勾（打勾狀態會記在這台裝置上）。</p>
+  <div class="traps" id="traps"></div>
+  <p class="hint" id="trapCount" style="margin-top:10px"></p>
+
+  <h3>情境測驗</h3>
+  <div class="qcard" id="quiz"></div>
+</section>
+</main>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce){const m=document.querySelector('#heroSvg .movers');if(m)m.remove();}
+const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+
+/* ---------- generic matcher ---------- */
+function matcher(root,fb,left,right,doneMsg,badMsg){
+  let sel=null,done=0;
+  const L=document.createElement('div');L.className='col';
+  const R=document.createElement('div');R.className='col';
+  left.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;
+    b.innerHTML=it.html;if(it.c)b.style.setProperty('--c',it.c);
+    b.onclick=()=>{if(b.classList.contains('done'))return;L.querySelectorAll('.mitem').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;fb.textContent='';fb.className='feedback';};
+    L.appendChild(b);
+  });
+  right.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;b.innerHTML=it.html;
+    b.onclick=()=>{
+      if(b.classList.contains('done'))return;
+      if(!sel){fb.textContent='請先點左邊一個項目。';fb.className='feedback';return;}
+      if(sel.dataset.k===b.dataset.k){
+        const c=sel.style.getPropertyValue('--c');
+        [sel,b].forEach(x=>{x.classList.remove('sel');x.classList.add('done');if(c)x.style.setProperty('--c',c);});
+        fb.textContent='✓ '+(it.ok||'答對了！');fb.className='feedback ok';sel=null;done++;
+        if(done===left.length){fb.textContent='✓ 全部配對完成！'+(doneMsg||'');}
+      }else{
+        b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');
+        fb.textContent='✗ '+(it.bad||badMsg||'不太對，再想想。');fb.className='feedback bad';
+      }
+    };
+    R.appendChild(b);
+  });
+  root.append(L,R);
+}
+
+/* ---------- step buttons ---------- */
+function stepper(btnRoot,items,render,labelFn){
+  const show=i=>{btnRoot.querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));render(i);};
+  items.forEach((e,i)=>{const b=document.createElement('button');b.className='btn';b.setAttribute('aria-pressed','false');b.textContent=labelFn?labelFn(e,i):e.t;b.onclick=()=>show(i);btnRoot.appendChild(b);});
+  show(0);return show;
+}
+
+/* ---------- flip cards ---------- */
+function flips(root,arr){
+  arr.forEach(([n,o,d])=>{
+    const b=document.createElement('button');b.className='flip';b.setAttribute('aria-pressed','false');
+    b.innerHTML=`<div class="in"><div class="f"><strong>${n}</strong><span>${o}</span><span style="margin-top:auto;font-size:12.5px">點我翻面</span></div><div class="b">${d}</div></div>`;
+    b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');
+    root.appendChild(b);
+  });
+}
+
+/* ---------- strategy picker ---------- */
+function strategies(root,vEl,mEl,whyEl,st,order){
+  (order||st.map((_,i)=>i)).forEach(i=>{const b=document.createElement('button');b.innerHTML=st[i][0];b.setAttribute('aria-pressed','false');b.onclick=()=>{root.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));const x=st[i];vEl.textContent=x[1];vEl.style.color=x[3];mEl.style.width=x[2]+'%';mEl.style.background=x[3];whyEl.innerHTML=x[4];};root.appendChild(b);});
+}
+
+/* ---------- exam list ---------- */
+function examList(root,arr){
+  arr.forEach(([n,k,q,a])=>{root.insertAdjacentHTML('beforeend',`<details><summary><span class="tag">${n}</span>${k}</summary><div class="body"><p style="margin:0 0 6px"><span class="hint">怎麼問：</span>${q}</p><p style="margin:0"><span class="hint">正解思路：</span>${a}</p></div></details>`);});
+}
+
+/* ---------- traps ---------- */
+function traps(key,T){
+  let saved=[];try{saved=JSON.parse(localStorage.getItem(key)||'[]')||[];}catch(e){saved=[];}
+  T.forEach(([a,b],i)=>{
+    const l=document.createElement('label');const c=saved.includes(i);if(c)l.classList.add('chk');
+    l.innerHTML=`<input type="checkbox" ${c?'checked':''}><div><em>${a}</em><br><span>${b}</span></div>`;
+    l.querySelector('input').onchange=e=>{const on=e.target.checked;l.classList.toggle('chk',on);saved=on?[...new Set([...saved,i])]:saved.filter(x=>x!==i);try{localStorage.setItem(key,JSON.stringify(saved));}catch(err){}count();};
+    $('#traps').appendChild(l);
+  });
+  function count(){$('#trapCount').textContent=`已確認 ${saved.length}／${T.length} 條`;}
+  count();
+}
+
+/* ---------- quiz ---------- */
+function quiz(Q,msgs){
+  let i=0,score=0;const box=$('#quiz');
+  function show(){
+    if(i>=Q.length){
+      const msg=score>=Q.length-1?msgs[0]:score>=Math.ceil(Q.length*.65)?msgs[1]:msgs[2];
+      box.innerHTML=`<div class="progress"><i style="width:100%"></i></div><div class="qtext" style="font-size:24px;font-family:var(--serif)">得分 ${score}／${Q.length}</div><p>${msg}</p><button class="btn primary" id="qr">重新測驗</button>`;
+      $('#qr').onclick=()=>{i=0;score=0;show();};return;
+    }
+    const [q,opts,ex]=Q[i];
+    const order=shuffle(opts.map((o,k)=>({o,k})));
+    box.innerHTML=`<div class="progress"><i style="width:${i/Q.length*100}%"></i></div><div class="qtop"><span>第 ${i+1}／${Q.length} 題</span><span>得分 ${score}</span></div><div class="qtext">${q}</div><div class="opts">${order.map(x=>`<button class="opt" data-k="${x.k}">${x.o}</button>`).join('')}</div><div class="expl" id="qe"></div><div class="row" style="margin-top:14px;justify-content:flex-end"><button class="btn primary" id="qn" style="display:none">${i===Q.length-1?'看結果':'下一題'}</button></div>`;
+    box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.k==='0';if(ok)score++;
+      box.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.k==='0')x.classList.add('right');});
+      if(!ok)b.classList.add('wrongpick');
+      const e=$('#qe');e.innerHTML=(ok?'<b style="color:var(--ok)">答對了。</b>':'<b style="color:var(--bad)">這題要小心。</b>')+ex;e.classList.add('show');
+      $('#qn').style.display='';$('#qn').focus({preventScroll:true});
+    });
+    $('#qn').onclick=()=>{i++;show();};
+  }
+  show();
+}
+
+/* ---------- nav highlight ---------- */
+function navHighlight(){
+  const links=[...document.querySelectorAll('nav.toc a')];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on&&window.innerWidth<=860)a.scrollIntoView({inline:'center',block:'nearest'});});}});},{rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('main section').forEach(s=>io.observe(s));
+}
+
+/* ---------- seeded rng ---------- */
+function rng(seed){let s=seed>>>0||1;return()=>{s^=s<<13;s>>>=0;s^=s>>17;s^=s<<5;s>>>=0;return s/4294967296;};}
+function gauss(r){let u=0,v=0;while(u===0)u=r();while(v===0)v=r();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+
+/* ================= L22 overview ================= */
+const G={L221:{c:'var(--txt)',n:'機率統計基礎'},L222:{c:'var(--img)',n:'大數據處理技術'},L223:{c:'var(--aud)',n:'大數據分析方法與工具'},L224:{c:'var(--sen)',n:'大數據在人工智慧之應用'}};
+const KP=[
+  [1,'L22101','敘述性統計與資料摘要技術',5068,8,'L221','L22101_descriptive_statistics.html',28,''],
+  [2,'L22102','機率分佈與資料分佈模型',4961,5,'L221','L22102_probability_distributions.html',29,''],
+  [3,'L22103','假設檢定與統計推論',14755,8,'L221','L22103_hypothesis_testing.html',30,'官方篇幅最大，但題數不成比例'],
+  [4,'L22201','數據收集與清理',4287,13,'L222','L22201_data_collection_cleaning.html',31,''],
+  [5,'L22202','數據儲存與管理',7249,6,'L222','L22202_data_storage_management.html',32,''],
+  [6,'L22203','數據處理技術與工具',8033,27,'L222','L22203_data_processing_tools.html',33,'最高，pandas 語法與前處理流程都在這'],
+  [7,'L22301','統計學在大數據中的應用',4945,13,'L223','L22301_statistics_bigdata.html',34,''],
+  [8,'L22302','常見的大數據分析方法',11047,23,'L223','L22302_bigdata_analysis_methods.html',35,'分群／分類／迴歸／關聯規則'],
+  [9,'L22303','數據可視化工具',7823,10,'L223','L22303_data_visualization.html',36,''],
+  [10,'L22401','大數據與機器學習',8671,14,'L224','L22401_bigdata_machine_learning.html',37,''],
+  [11,'L22402','大數據在鑑別式AI中的應用',5487,16,'L224','L22402_bigdata_discriminative_ai.html',38,'其中 8 題圍繞類別不平衡'],
+  [12,'L22403','大數據在生成式AI中的應用',3066,3,'L224','L22403_bigdata_generative_ai.html',39,''],
+  [13,'L22404','大數據隱私保護、安全與合規',7521,5,'L224','L22404_privacy_security_compliance.html',40,'']
+];
+const TOTAL=92913;
+
+/* ---------- hero leaves ---------- */
+(function(){
+  const g={L221:45,L222:115,L223:185,L224:255};let h='';const cnt={};
+  KP.forEach(k=>{const grp=k[5];cnt[grp]=(cnt[grp]||0)+1;const i=cnt[grp]-1;const x=510+i*48,y=g[grp];h+=`<line x1="470" y1="${y}" x2="${x}" y2="${y}" stroke="${G[grp].c}" stroke-width="1.5" opacity=".35"/><circle cx="${x}" cy="${y}" r="${7+k[4]/3}" fill="${G[grp].c}" opacity=".85"/>`;});
+  h+=`<text x="600" y="292" text-anchor="middle" font-size="12" fill="var(--muted)">圓點大小＝核心題數</text>`;
+  $('#heroLeaves').innerHTML=h;
+})();
+
+/* ---------- index filter ---------- */
+(function(){
+  let f='all',sort='no';
+  const F=[['all','全部'],['L221','L221'],['L222','L222'],['L223','L223'],['L224','L224']],S=[['no','依順序'],['len','依篇幅']];
+  const mx=Math.max(...KP.map(k=>k[3]));
+  function draw(){
+    $$('#idxFilter .btn').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===f));
+    $$('#idxSort .btn').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===sort));
+    const L=[...KP].sort((a,b)=>sort==='len'?b[3]-a[3]:a[0]-b[0]);
+    $('#idxList').innerHTML=L.map(k=>`<div class="kprow ${f!=='all'&&k[5]!==f?'dim':''}" style="--c:${G[k[5]].c}"><span class="code">#${k[0]} ${k[1]}</span><div><a href="${k[6]}">${k[2]}</a><div class="track"><div class="fill" data-w="${k[3]/mx*100}"></div></div></div><span class="num">${k[3].toLocaleString()} 字${k[3]===mx?'<br><b style="color:var(--txt)">最大</b>':''}</span></div>`).join('');
+    setTimeout(()=>$$('#idxList .fill').forEach(x=>x.style.width=x.dataset.w+'%'),30);
+    const sum=KP.filter(k=>f==='all'||k[5]===f).reduce((s,k)=>s+k[3],0);
+    $('#idxSum').textContent=sum.toLocaleString()+' 字';$('#idxPct').textContent=(sum/TOTAL*100).toFixed(1)+'%';
+  }
+  F.forEach(([k,t])=>{const b=document.createElement('button');b.className='btn';b.dataset.k=k;b.textContent=t;b.onclick=()=>{f=k;draw();};$('#idxFilter').appendChild(b);});
+  S.forEach(([k,t])=>{const b=document.createElement('button');b.className='btn';b.dataset.k=k;b.textContent=t;b.onclick=()=>{sort=k;draw();};$('#idxSort').appendChild(b);});
+  draw();
+})();
+
+/* ---------- structure tree ---------- */
+(function(){
+  const note={L221:'<b>官方篇幅最大的區塊</b>（題數反而最少，見 27.4）。L22103 是單一知識點篇幅最大者。',L222:'<b>程式碼題的大本營</b>。L22203 是認領題數最多的知識點。',L223:'<b>方法選型題集中區</b>。',L224:'<b>與 L21／L23 的交界</b>。'};
+  function show(k){
+    $$('#branches .branch').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===k));
+    const L=KP.filter(x=>x[5]===k),sum=L.reduce((s,x)=>s+x[3],0);
+    $('#branchNote').innerHTML=`${k} ${G[k].n}：${note[k]}<span class="hint">　小計篇幅 ${sum.toLocaleString()} 字（${(sum/TOTAL*100).toFixed(0)}%）</span>`;
+    $('#branchNote').style.borderColor=G[k].c;
+    $('#leafs').innerHTML=L.map((x,i)=>`<div class="leaf" style="--c:${G[k].c};animation-delay:${i*.08}s"><a href="${x[6]}">${x[1]} ${x[2]}</a><span class="hint">　講義 ${x[7]}${x[8]?'｜'+x[8]:''}</span></div>`).join('');
+  }
+  Object.keys(G).forEach(k=>{const n=KP.filter(x=>x[5]===k).length;const b=document.createElement('button');b.className='branch';b.dataset.k=k;b.style.setProperty('--c',G[k].c);b.innerHTML=`<b>${k}</b>${G[k].n}<br><small>${n} 個知識點</small>`;b.onclick=()=>show(k);$('#branches').appendChild(b);});
+  show('L221');
+})();
+
+/* ---------- hit-rate guess ---------- */
+(function(){
+  const H=[['敘述統計／機率分佈',24,'L22101、L22102',1],['資料清理／資料品質',22,'L22201、L22203',1],['機器學習原理',19,'L22401、L22402',0],['資料視覺化',13,'L22303',1],['資料庫／儲存架構',11,'L22202',0],['假設檢定／統計推論',9,'L22103',0],['隱私／合規',5,'L22404',0],['分散式處理（Hadoop／Spark／Kafka）',4,'L22203',2],['大數據 5V 特徵',1,'L22401',0]];
+  $('#gsR').oninput=()=>{$('#gsV').textContent=$('#gsR').value+'%';};
+  $('#hitBars').innerHTML=H.map(h=>`<div class="bar${h[3]===2?' win':''}"><span>${h[0]}<br><small class="hint">${h[2]}</small></span><div class="track"><div class="fill" style="background:${h[3]===2?'var(--bad)':h[3]?'var(--txt)':'var(--muted)'}"></div></div><span class="num">?</span></div>`).join('');
+  let shown=false;
+  $('#gsBtn').onclick=()=>{
+    shown=!shown;
+    $$('#hitBars .bar').forEach((r,i)=>{r.querySelector('.fill').style.width=shown?(H[i][1]/24*100)+'%':'0';r.querySelector('.num').textContent=shown?H[i][1]+'%':'?';});
+    const g=+$('#gsR').value;
+    $('#gsFb').textContent=shown?(Math.abs(g-4)<=2?`你猜 ${g}%，非常接近！實際只有 4%。`:`你猜 ${g}%，實際只有 4%。`):'';
+    $('#gsBtn').textContent=shown?'收起':'揭曉全部命中率';
+  };
+})();
+
+/* ---------- ROI bars ---------- */
+(function(){
+  const M=[
+    {t:'核心題數',f:k=>k[4],u:'題',note:'L22203 的 27 題遙遙領先；L22403 只有 3 題。'},
+    {t:'官方篇幅',f:k=>k[3],u:'字',note:'L22103 一個知識點就有 14,755 字，是全科最大。'},
+    {t:'每千字核心題數（投報率，示意計算）',f:k=>k[4]/k[3]*1000,u:'',note:'以「核心題數 ÷ 篇幅 × 1000」粗估讀一千字能對應幾題（示意）。L22203、L22201 投報率最高；L22103 篇幅最大卻偏低。'}
+  ];
+  stepper($('#roiTabs'),M,i=>{
+    const m=M[i],vals=KP.map(m.f),mx=Math.max(...vals);
+    const order=KP.map((k,j)=>[k,vals[j]]).sort((a,b)=>b[1]-a[1]);
+    $('#roiBars').innerHTML=order.map(([k,v])=>{const hl=k[1]==='L22103'||k[1]==='L22201';return `<div class="bar${hl?' win':''}"><span>${k[1]}<br><small class="hint">${k[2]}</small></span><div class="track"><div class="fill" style="width:0;background:${G[k[5]].c}" data-w="${v/mx*100}"></div></div><span class="num">${i===2?v.toFixed(2):Math.round(v).toLocaleString()}${m.u?' '+m.u:''}</span></div>`;}).join('');
+    setTimeout(()=>$$('#roiBars .fill').forEach(x=>x.style.width=x.dataset.w+'%'),30);
+    $('#roiNote').textContent=m.note+'　粗體：本節點名的兩個不成比例知識點。';
+  },x=>x.t.split('（')[0]);
+})();
+
+/* ---------- cannot add up ---------- */
+(function(){
+  const box=$('#qball');box.innerHTML=Array.from({length:100},()=>'<i></i>').join('');
+  const balls=$$('#qball i');
+  $('#sumBtn').onclick=()=>{
+    const s=KP.reduce((a,k)=>a+k[4],0);
+    balls.forEach((b,i)=>{b.style.background='var(--bad)';});
+    $('#sumV').textContent=`合計 ${s} 題 ＞ 100 題 ✗`;$('#sumV').style.color='var(--bad)';
+    $('#sumWhy').innerHTML='全部 100 題都塗滿了還多出 '+(s-100)+' 題 —— 因為同一題常被多個知識點認領。例如 <b>115-1 第 21 題</b>（Spark 分散式標準差）同時屬於敘述統計、統計應用、分析方法與大數據 ML 四個知識點。';
+  };
+  $('#dedupBtn').onclick=()=>{
+    balls.forEach((b,i)=>{b.style.background=i<96?'var(--ok)':'var(--line)';});
+    $('#sumV').textContent='扣掉重複後：涵蓋 100 題中的 96 題 ✓';$('#sumV').style.color='var(--ok)';
+    $('#sumWhy').textContent='十三個知識點合計涵蓋 96 題，剩下灰色的 4 題不屬於任何一份講義的核心題。';
+  };
+})();
+
+/* ---------- style tabs ---------- */
+(function(){
+  const I=[['含程式語法的題目',[21,13,2],'%'],['附圖題',[23,23,1],'%'],['題組題',[18,18,0],'%'],['題幹平均字數',[114,106,126],' 字']];
+  const S=['L22','L23','L21'],C=['var(--img)','var(--aud)','var(--muted)'];
+  stepper($('#styTabs'),I,i=>{
+    const x=I[i],mx=Math.max(...x[1]);
+    $('#styBars').innerHTML=S.map((s,j)=>`<div class="bar${j===0?' win':''}"><span>${s}</span><div class="track"><div class="fill" style="width:0;background:${C[j]}" data-w="${x[1][j]/mx*100}"></div></div><span class="num">${x[1][j]}${x[2]}</span></div>`).join('');
+    setTimeout(()=>$$('#styBars .fill').forEach(f=>f.style.width=f.dataset.w+'%'),30);
+  },x=>x[0]);
+})();
+
+/* ---------- three things ---------- */
+(function(){
+  const T=[
+    {t:'1. 程式碼題 21%',h:'<p><b>程式碼題比例全科最高（21%）</b>，集中在 pandas：</p><div class="chips"><code>describe</code><code>groupby</code><code>merge(how=...)</code><code>astype(\'Int64\')</code><code>chunksize</code><code>isnull</code><code>isna</code></div><p style="margin-top:10px">以及少量 SQL 與 Spark。而且常整組連考 —— 114-2 第 43～50 題就是連續兩組資料處理題組（43～47 題共用 vgsales.csv 情境、48～50 題共用 marketing.csv 情境）。</p><div class="callout" style="margin-bottom:0"><b>讀講義時請同步打開 Python 跑一次</b>，光看選項判斷對錯，換個寫法就認不出來。</div>'},
+    {t:'2. 附圖題 23%',h:'<p><b>附圖題佔 23%</b>，常見的圖：</p><div class="chips"><code>盒鬚圖</code><code>直方圖</code><code>相關係數熱力圖</code><code>describe() 輸出表</code><code>公式截圖</code><code>程式碼截圖</code></div>'},
+    {t:'3. 題組題 18%',h:'<p><b>題組題佔 18%</b>：一段情境帶 2～5 題。</p><div class="pipe" style="grid-template-columns:repeat(3,1fr)"><div class="pnode on"><b>① 整段讀完</b>題組敘述</div><div class="pnode"><b>② 再看題目</b>2～5 題</div><div class="pnode"><b>③ 逐題作答</b>回頭對照</div></div><div class="callout" style="margin-bottom:0"><b>先把題組敘述整段讀完再作答</b>，不要邊讀邊答。</div>'}
+  ];
+  stepper($('#thrBtns'),T,i=>{$('#thrBody').innerHTML=T[i].h;},x=>x.t);
+})();
+
+/* ---------- out-of-scope flips ---------- */
+flips($('#outCards'),[
+  ['向量資料庫','多元持久化','考題：115-1 第 13 題<br>已補寫在 32. L22202'],
+  ['基尼不純度','Gini Impurity','考題：114-2 第 14 題、115-1 第 2 題<br>已補寫在 35. L22302'],
+  ['SVD','奇異值分解','考題：115-1 第 16 題<br>指引零命中；「推薦系統」本身指引有提，但沒說用什麼方法做。<br>已補寫在 35. L22302'],
+  ['位置編碼','Transformer','考題：115-1 第 35 題<br>已補寫在 37. L22401']
+]);
+
+/* ---------- row / column ---------- */
+(function(){
+  let loc='tw',word='hang';
+  const L=[['tw','台灣用語'],['cn','大陸用語']],W=[['hang','「行」'],['lie','「列」']];
+  $('#rcGrid').innerHTML=Array.from({length:12},(_,i)=>`<i>${i}</i>`).join('');
+  function draw(){
+    $$('#rcLoc .btn').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===loc));
+    $$('#rcWord .btn').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===word));
+    // 台灣：行=column、列=row；大陸相反
+    const isCol=(loc==='tw')===(word==='hang');
+    $$('#rcGrid i').forEach((c,i)=>{const r=Math.floor(i/4),cc=i%4;c.classList.toggle('hl',isCol?cc===1:r===1);c.textContent='';});
+    const w=word==='hang'?'行':'列';
+    $('#rcTxt').innerHTML=`<p><b>${loc==='tw'?'台灣':'大陸'}說「${w}」＝ ${isCol?'column（直的一欄）':'row（橫的一筆）'}</b></p><p class="hint">台灣「行＝column、列＝row」，大陸相反。所以官方寫「<b>列式儲存</b>」（Columnar Storage）指的其實是台灣說的<b>欄式儲存</b>。看到這類字，一律回頭確認英文。</p>`;
+  }
+  L.forEach(([k,t])=>{const b=document.createElement('button');b.className='btn';b.dataset.k=k;b.textContent=t;b.onclick=()=>{loc=k;draw();};$('#rcLoc').appendChild(b);});
+  W.forEach(([k,t])=>{const b=document.createElement('button');b.className='btn';b.dataset.k=k;b.textContent=t;b.onclick=()=>{word=k;draw();};$('#rcWord').appendChild(b);});
+  draw();
+})();
+
+matcher($('#termMatch'),$('#termFb'),[
+  {k:'c',c:'var(--sen)',html:'列式儲存<small>Columnar Storage</small>'},
+  {k:'d',c:'var(--txt)',html:'數據'},
+  {k:'v',c:'var(--img)',html:'可視化'}
+],[
+  {k:'v',html:'視覺化',ok:'不影響理解，但術語檢索時要兩種都試。'},
+  {k:'x',html:'列儲存（row-based）',bad:'陷阱！官方的「列式」是 Columnar，台灣叫「欄式」。'},
+  {k:'c',html:'欄式儲存',ok:'「列」在台灣指 row，意思正好相反。'},
+  {k:'d',html:'資料',ok:'術語檢索時兩種都要試。'}
+],'考場上看到就能反應過來了。');
+
+/* ---------- weeks + hours ---------- */
+(function(){
+  const pick=g=>KP.filter(k=>k[5]===g);
+  const W=[
+    {w:'1',g:'L221',c:'var(--txt)',t:'L221 機率統計基礎',items:pick('L221')},
+    {w:'2',g:'L221',c:'var(--txt)',t:'L221 機率統計基礎',items:pick('L221')},
+    {w:'3',g:'L222',c:'var(--img)',t:'L222 大數據處理技術（題數最多，配時最重）',items:pick('L222')},
+    {w:'4',g:'L222',c:'var(--img)',t:'L222 大數據處理技術（題數最多，配時最重）',items:pick('L222')},
+    {w:'5',g:'L223',c:'var(--aud)',t:'L223 分析方法與視覺化',items:pick('L223')},
+    {w:'6',g:'L224',c:'var(--sen)',t:'L224 大數據在 AI 的應用',items:pick('L224')},
+    {w:'7',g:'L21',c:'var(--muted)',t:'L21 全科',items:[],link:'<a href="L21_overview.html">17. L21 科目總覽</a>'},
+    {w:'8',g:'',c:'var(--ink)',t:'歷屆試題 ＋ 錯題複習',items:[]}
+  ];
+  let cur=0;
+  W.forEach((x,i)=>{const b=document.createElement('button');b.className='wk';b.style.setProperty('--c',x.c);b.setAttribute('aria-pressed','false');b.innerHTML=`<b>W${x.w}</b>${x.g||'複習'}<span></span>`;b.onclick=()=>{cur=i;draw();};$('#weeks').appendChild(b);});
+  function draw(){
+    const h=+$('#hr').value;
+    $('#hrV').textContent=h+' 小時／週';
+    $('#hrTot').textContent=(h*8)+' 小時';$('#hrL22').textContent=(h*6)+' 小時';$('#hrRest').textContent=(h*2)+' 小時';
+    $$('#weeks .wk').forEach((b,i)=>b.setAttribute('aria-pressed',i===cur));
+    const x=W[cur];
+    let body=`<b>第 ${x.w} 週：${x.t}</b>`;
+    if(x.items.length){
+      const span=W.filter(y=>y.g===x.g).length,tot=x.items.reduce((s,k)=>s+k[4],0);
+      body+=`<div class="hint" style="margin:4px 0 8px">本主題共 ${span} 週。下表依各知識點「核心題數」比例分配本週 ${h} 小時（示意；題數有重複認領，僅作相對參考）。</div>`;
+      body+=x.items.map(k=>{const hh=h*k[4]/tot;return `<div class="bar"><span><a href="${k[6]}">${k[1]}</a><br><small class="hint">${k[2]}</small></span><div class="track"><div class="fill" style="background:${x.c};width:${k[4]/tot*100}%"></div></div><span class="num">${hh.toFixed(1)} h</span></div>`;}).join('');
+    }else if(x.link){body+=`<p style="margin:6px 0 0">必考科目1，從 ${x.link} 開始，本週 ${h} 小時。</p>`;}
+    else body+=`<p style="margin:6px 0 0">L22 與 L21 歷屆（114-2、115-1）各 100 題實戰，重點練程式碼題、附圖題與題組題；本週 ${h} 小時。</p>`;
+    $('#wkDetail').innerHTML=body;
+  }
+  $('#hr').oninput=draw;draw();
+})();
+
+/* ---------- next cards ---------- */
+$('#nextCards').innerHTML=[
+  ['從第一個知識點開始','28. L22101 敘述性統計與資料摘要技術','L22101_descriptive_statistics.html'],
+  ['回到路線選擇與時間配置','13. 銜接指南：數據分析路線','L1toL2_bridge_data_analytics.html'],
+  ['科目1 的逐知識點重點','17. L21 科目總覽','L21_overview.html']
+].map(([a,b,h])=>`<a class="panel" href="${h}" style="display:block;margin:0;text-decoration:none;color:var(--ink);border:1.5px solid var(--line)"><span class="hint">${a}</span><br><b>${b} →</b></a>`).join('');
+
+/* ---------- traps ---------- */
+traps('l22-traps',[
+  ['L22 不是「大數據工具介紹」','分散式處理（Hadoop／Spark／Kafka）只佔 4%；真面目是「統計 ＋ 資料工程 ＋ pandas」。'],
+  ['各講義的核心題數不可以相加','合計 151 ＞ 100，因為同一題常被多個知識點認領；扣掉重複後涵蓋 96 題。'],
+  ['L22103 假設檢定篇幅最大，但核心題只有 8 題','重點放在「情境 → 選哪個檢定」的判斷，不要陷進公式推導。'],
+  ['L22201 數據收集與清理篇幅第二小，核心題卻有 13 題','這一節要讀得比篇幅暗示的更深。'],
+  ['程式碼題要同步打開 Python 跑一次','光看選項判斷對錯，換個寫法就認不出來。'],
+  ['題組題先把敘述整段讀完再作答','不要邊讀邊答。'],
+  ['官方指引是範圍下限，不是上限','向量資料庫、基尼不純度、SVD、Transformer 位置編碼都在指引外卻考過。'],
+  ['官方的「列式儲存」＝台灣的「欄式儲存」（Columnar）','「列」在台灣指 row，意思正好相反；一律回頭確認英文。']
+]);
+
+/* ---------- quiz ---------- */
+quiz([
+  ['依 100 題官方試題的關鍵詞掃描，下列哪個考點叢集的命中率最低？',['分散式處理（Hadoop／Spark／Kafka）','敘述統計／機率分佈','資料清理／資料品質','資料視覺化'],'分散式處理只佔 4%（5V 特徵 1% 未列入選項）；敘述統計／機率分佈 24% 最高。'],
+  ['十三份講義的核心題數合計 151 題，大於 100 題。原因是？',['同一題常被多個知識點認領，數字不能相加','官方試題其實有 151 題','有些題目被重複計算是統計錯誤','151 是兩屆加上主題庫的總數'],'例如 115-1 第 21 題同時屬於四個知識點。扣掉重複後涵蓋 96 題。'],
+  ['官方篇幅最大、但核心題數不成比例的知識點是？',['L22103 假設檢定與統計推論','L22203 數據處理技術與工具','L22201 數據收集與清理','L22302 常見的大數據分析方法'],'L22103 有 14,755 字，核心題只有 8 題。準備重點放在「情境 → 選哪個檢定」。'],
+  ['篇幅只有 4,287 字（全科第二小），核心題卻有 13 題，應讀得比篇幅暗示更深的是？',['L22201 數據收集與清理','L22403 大數據在生成式AI中的應用','L22102 機率分佈','L22404 隱私保護、安全與合規'],'L22201 是本總覽點名的另一個不成比例處。'],
+  ['L22 的命題風格中，比例全科最高、且集中在 pandas 的是哪一類題目？',['含程式語法的題目（21%）','附圖題（23%，與 L23 相同）','題組題（18%，與 L23 相同）','題幹平均字數最長'],'程式碼題 L22 21%、L23 13%、L21 2%。附圖題與題組題 L22 和 L23 一樣；題幹最長的是 L21。'],
+  ['遇到題組題（一段情境帶 2～5 題），建議的作答方式是？',['先把題組敘述整段讀完再作答','邊讀敘述邊作答以節省時間','先看選項再回頭找敘述','只讀與第一題相關的段落'],'題組題佔 18%，先整段讀完再作答。'],
+  ['下列哪一項是官方指引零命中、卻已在考題中出現的範圍外考點？',['基尼不純度（Gini Impurity）','敘述統計的平均數與中位數','資料清理的缺失值處理','數據可視化工具'],'四個範圍外考點：向量資料庫／多元持久化、基尼不純度、SVD、Transformer 位置編碼。'],
+  ['官方指引中出現「列式儲存（Columnar Storage）」，用台灣慣用語應理解為？',['欄式儲存','列儲存（以 row 為單位）','行列混合儲存','分散式儲存'],'台灣「行＝column、列＝row」，大陸相反。一律回頭確認英文。']
+],['太好了，整科地圖已經在腦中。','不錯！回頭看看 27.3 與 27.4 的數字。','建議重新操作 27.4 的題數長條與「不可相加」示範，再來一次。']);
+
+navHighlight();
+
+</script>
+</body>
+</html>

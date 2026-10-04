@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L22303 數據可視化工具｜互動教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F5; --surface:#FFFFFF; --surface2:#F6F8FB; --ink:#18202E; --muted:#5A6475; --line:#D5DBE4;
+  --txt:#3B4CCA; --img:#0E8A7A; --aud:#B87812; --sen:#B8336A;
+  --ok:#1F8A4C; --bad:#C23B2E; --warn:#D9822B;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+    --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+  --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75}
+h1,h2,h3{font-family:var(--serif);line-height:1.3;margin:0}
+p{margin:0 0 1em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--txt);outline-offset:2px;border-radius:4px}
+svg{max-width:100%;height:auto;display:block}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1180px;margin:0 auto;gap:40px;padding:0 24px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;padding:32px 0;height:100vh;overflow:auto}
+nav.toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14.5px}
+nav.toc a span{font-variant-numeric:tabular-nums;font-size:13px;opacity:.8}
+nav.toc a.on{background:var(--surface);color:var(--ink);font-weight:700}
+.toc-title{font-family:var(--serif);font-weight:900;font-size:18px;padding:0 10px 14px}
+main{min-width:0;padding-bottom:80px}
+section{padding:56px 0 8px;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.sec-head{display:flex;gap:16px;align-items:baseline;margin-bottom:18px}
+.sec-no{font-family:var(--serif);font-weight:900;font-size:40px;color:var(--line);line-height:1}
+h2{font-size:28px;font-weight:900}
+h3{font-size:19px;margin:34px 0 10px}
+.lead{color:var(--muted);max-width:66ch}
+.prose{max-width:68ch}
+
+/* hero */
+.hero{padding:44px 0 24px}
+.hero .code{font-size:14px;color:var(--muted);margin-bottom:6px}
+.hero h1{font-size:clamp(34px,5.5vw,56px);font-weight:900;letter-spacing:.02em}
+.hero .one{font-size:18px;max-width:60ch;margin:16px 0 0;color:var(--muted)}
+.hero-fig{background:var(--surface);border-radius:20px;margin-top:28px;padding:14px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+.goal{border-left:4px solid var(--c);padding:6px 0 6px 14px;font-size:15px}
+
+/* panels */
+.panel{background:var(--surface);border-radius:16px;padding:22px;margin:16px 0}
+.panel.flat{background:var(--surface2)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font-size:15px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hint{font-size:14px;color:var(--muted)}
+.callout{border-left:4px solid var(--warn);background:var(--surface2);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;font-size:15px}
+.callout.exam{border-color:var(--txt)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:14px}
+
+/* modality chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+
+/* matcher */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.match .col{display:flex;flex-direction:column;gap:10px}
+.mitem{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15px;transition:border-color .2s,background .2s,transform .2s}
+.mitem small{display:block;color:var(--muted);font-size:13px}
+.mitem.sel{border-color:var(--ink);transform:translateX(4px)}
+.mitem.done{border-color:var(--c,var(--ok));background:var(--surface2);cursor:default}
+.mitem.wrong{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:1.8em;margin-top:12px;font-size:15px}
+.feedback.ok{color:var(--ok)} .feedback.bad{color:var(--bad)}
+
+/* timeline */
+.steps{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stage-viz{min-height:130px;display:flex;align-items:center;justify-content:center}
+.stage-viz .blk{display:inline-block;width:34px;height:34px;border-radius:6px;margin:2px;transition:all .5s}
+
+/* align toggle */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.compare>div{padding:18px}
+.compare>div+div{border-left:1px solid var(--line)}
+.compare .big{font-family:var(--serif);font-weight:900;font-size:22px;margin-bottom:6px}
+
+/* fusion */
+.meter{height:14px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:6px 0}
+.meter>i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .7s cubic-bezier(.3,.8,.3,1),background .4s}
+.flow{stroke-dasharray:6 7;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.jitter{animation:jit .25s steps(2) infinite}
+@keyframes jit{50%{transform:translate(1.5px,-1px)}}
+.fusion-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.pc{font-size:15px}
+.pc b{display:block;font-size:14px;color:var(--muted);font-weight:500}
+
+/* clip */
+.mat{display:grid;gap:4px;font-size:13px}
+.mat .cell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;transition:background .5s,color .5s}
+.mat .lab{display:flex;align-items:center;justify-content:center;font-size:22px}
+.mat .tlab{font-size:12px;text-align:center;color:var(--muted);display:flex;align-items:flex-end;justify-content:center;line-height:1.3}
+.zs-imgs{display:flex;gap:10px;flex-wrap:wrap}
+.zs-img{font-size:38px;width:72px;height:72px;border-radius:16px;border:2px solid var(--line);background:var(--surface2);display:flex;align-items:center;justify-content:center}
+.zs-img[aria-pressed="true"]{border-color:var(--img);box-shadow:0 0 0 3px color-mix(in srgb,var(--img) 25%,transparent)}
+.bar{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.bar .track{height:22px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;width:0;background:var(--txt);border-radius:6px;transition:width .8s cubic-bezier(.3,.8,.3,1)}
+.bar.win .fill{background:var(--img)}
+.bar.win{font-weight:700}
+.bar .num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.flip{perspective:900px;height:150px;border:0;background:none;padding:0;text-align:left}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flip[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:center}
+.flip .f{background:var(--surface);border:1.5px solid var(--line)}
+.flip .f strong{font-family:var(--serif);font-size:22px}
+.flip .f span{color:var(--muted);font-size:14px}
+.flip .b{background:var(--ink);color:var(--bg);transform:rotateY(180deg);font-size:15px}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.pnode{border:2px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;font-size:14px;background:var(--surface);transition:all .35s}
+.pnode b{display:block;font-size:16px}
+.pnode.on{border-color:var(--aud);background:color-mix(in srgb,var(--aud) 14%,var(--surface));transform:translateY(-3px)}
+.pnode.past{border-color:color-mix(in srgb,var(--aud) 45%,var(--line))}
+.pout{background:var(--surface2);border-radius:12px;padding:14px 16px;min-height:84px;font-size:15px}
+.wave{display:flex;gap:3px;align-items:center;height:30px}
+.wave i{width:4px;background:var(--aud);border-radius:2px;animation:wv 1s ease-in-out infinite}
+@keyframes wv{50%{transform:scaleY(.3)}}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+
+/* strategies */
+.strat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.strat button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;text-align:left;font-size:15px}
+.strat button[aria-pressed="true"]{border-color:var(--ink)}
+.verdict{font-family:var(--serif);font-weight:900;font-size:20px}
+
+details{border-bottom:1px solid var(--line)}
+details summary{cursor:pointer;padding:12px 4px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"+";font-weight:900;width:14px;color:var(--muted)}
+details[open] summary::before{content:"−"}
+details .body{padding:0 4px 14px 30px;font-size:15px}
+.tag{font-size:12.5px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums;min-width:80px}
+
+/* quiz */
+.qcard{background:var(--surface);border-radius:16px;padding:24px}
+.qtop{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
+.qtext{font-size:18px;font-weight:700;margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15.5px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+.opt.wrongpick{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.opt:disabled{cursor:default}
+.expl{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15px;display:none}
+.expl.show{display:block}
+.progress{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;margin-bottom:14px}
+.progress i{display:block;height:100%;background:var(--txt);transition:width .4s}
+
+.traps label{display:flex;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:15px}
+.traps input{width:18px;height:18px;margin-top:4px;flex:none;accent-color:var(--ok)}
+.traps label.chk>span{color:var(--muted)}
+.traps em{font-style:normal;font-weight:700}
+
+/* mobile */
+@media (max-width:860px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+  nav.toc{position:sticky;top:0;height:auto;z-index:10;background:var(--bg);display:flex;overflow-x:auto;padding:8px 0;padding-top:calc(8px + env(safe-area-inset-top,0px));gap:4px;border-bottom:1px solid var(--line)}
+  .toc-title{display:none}
+  nav.toc a{white-space:nowrap;flex:none}
+  .match,.stage,.fusion-meta,.compare{grid-template-columns:1fr}
+  .compare>div+div{border-left:0;border-top:1px solid var(--line)}
+  .pipe{grid-template-columns:repeat(5,minmax(90px,1fr));overflow-x:auto}
+  .bar{grid-template-columns:110px 1fr 56px}
+  h2{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* ---- page-specific ---- */
+pre.cb{background:var(--surface2);border-radius:10px;padding:12px 14px;overflow-x:auto;font-size:13.5px;line-height:1.6;margin:10px 0;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;max-width:100%}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em;background:var(--surface2);padding:1px 5px;border-radius:5px;word-break:break-word}
+.strat button code{background:transparent;padding:0}
+.grow{transform-box:fill-box;transform-origin:50% 100%;animation:grow 3.2s ease-in-out infinite}
+@keyframes grow{0%{transform:scaleY(.15)}45%,80%{transform:scaleY(1)}100%{transform:scaleY(.15)}}
+.draw{stroke-dasharray:420;stroke-dashoffset:420;animation:draw 3.2s ease-in-out infinite}
+@keyframes draw{0%{stroke-dashoffset:420}50%,85%{stroke-dashoffset:0}100%{stroke-dashoffset:420}}
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-top:12px}
+.nums div{background:var(--surface2);border-radius:10px;padding:8px 10px;font-size:14px}
+.nums b{display:block;font-size:18px;font-variant-numeric:tabular-nums}
+.pick{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.pick button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 12px;text-align:left;font-size:14.5px}
+.pick button[aria-pressed="true"]{border-color:var(--ink);background:var(--surface2)}
+.pick small{display:block;color:var(--muted);font-size:12.5px}
+.chart-out{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:18px;align-items:center;margin-top:16px}
+.chart-out.even{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.hm{display:grid;gap:4px;font-size:13px;max-width:380px;margin:0 auto}
+.hm .cell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;transition:background .5s,color .5s}
+.hm .lab{display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--muted)}
+.typebar{display:grid;grid-template-columns:130px 1fr 40px;gap:10px;align-items:center;margin:6px 0;font-size:15px}
+@media (max-width:860px){
+  .chart-out,.chart-out.even{grid-template-columns:1fr}
+  .typebar{grid-template-columns:100px 1fr 32px}
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="toc" aria-label="章節">
+  <div class="toc-title">數據可視化</div>
+  <a href="#intro"><span>●</span>導覽與目標</a>
+  <a href="#s1"><span>36.1</span>資料配圖表</a>
+  <a href="#s2"><span>36.2</span>盒鬚圖判讀</a>
+  <a href="#s3"><span>36.3</span>關聯與空間</a>
+  <a href="#s4"><span>36.4</span>工具地圖</a>
+  <a href="#s5"><span>36.5</span>繪圖程式碼</a>
+  <a href="#s6"><span>36.6</span>設計與誤導</a>
+  <a href="#s7"><span>36.7</span>官方考題</a>
+  <a href="#s8"><span>36.8</span>易錯與測驗</a>
+</nav>
+
+<main>
+<!-- HERO -->
+<section id="intro" class="hero">
+  <div class="code">L22303　中級 AI 應用規劃師（科目 2）　建議 40 分鐘</div>
+  <h1>數據可視化工具</h1>
+  <p class="one">初級只要你認得「折線圖看趨勢、長條圖看比較」；中級要你在商業情境裡挑出<b>唯一最適合的圖表</b>、從盒鬚圖判讀<b>偏態與離群值</b>、看懂 pandas／seaborn 的繪圖語法在<b>聚合什麼</b>，並辨認出截斷 Y 軸這類「數字沒錯但視覺說謊」的設計。這是科目 2 少數同時出現「選型題＋判讀題＋程式碼題＋倫理題」四種題型的知識點。</p>
+  <div class="hero-fig" aria-hidden="true">
+    <svg id="heroSvg" viewBox="0 0 720 260">
+      <g font-family="Noto Sans TC, sans-serif" font-size="14" font-weight="700">
+        <!-- bar -->
+        <text x="110" y="28" text-anchor="middle" fill="var(--txt)">比較 → 長條圖</text>
+        <line x1="30" y1="220" x2="190" y2="220" stroke="var(--line)" stroke-width="2"/>
+        <rect class="grow" x="42" y="140" width="28" height="80" rx="4" fill="var(--txt)"/>
+        <rect class="grow" x="82" y="90" width="28" height="130" rx="4" fill="var(--txt)" style="animation-delay:.2s"/>
+        <rect class="grow" x="122" y="160" width="28" height="60" rx="4" fill="var(--txt)" style="animation-delay:.4s"/>
+        <rect class="grow" x="162" y="110" width="22" height="110" rx="4" fill="var(--txt)" style="animation-delay:.6s"/>
+        <!-- line -->
+        <text x="360" y="28" text-anchor="middle" fill="var(--aud)">趨勢 → 折線圖</text>
+        <line x1="270" y1="220" x2="450" y2="220" stroke="var(--line)" stroke-width="2"/>
+        <path id="hline" class="draw" d="M275 190 L305 170 L335 180 L365 130 L395 140 L425 90 L445 70" fill="none" stroke="var(--aud)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+        <!-- box -->
+        <text x="600" y="28" text-anchor="middle" fill="var(--img)">分佈 → 盒鬚圖</text>
+        <line x1="600" y1="200" x2="600" y2="160" stroke="var(--img)" stroke-width="3"/>
+        <line x1="585" y1="200" x2="615" y2="200" stroke="var(--img)" stroke-width="3"/>
+        <rect x="570" y="105" width="60" height="55" rx="4" fill="color-mix(in srgb,var(--img) 25%,var(--surface))" stroke="var(--img)" stroke-width="3"/>
+        <line x1="570" y1="145" x2="630" y2="145" stroke="var(--ink)" stroke-width="3"/>
+        <line x1="600" y1="105" x2="600" y2="60" stroke="var(--img)" stroke-width="3"/>
+        <line x1="585" y1="60" x2="615" y2="60" stroke="var(--img)" stroke-width="3"/>
+        <circle cx="600" cy="42" r="6" fill="var(--bad)"/>
+        <text x="650" y="46" fill="var(--bad)" font-size="12">離群值</text>
+        <text x="640" y="150" fill="var(--ink)" font-size="12">中位數偏下</text>
+        <text x="640" y="166" fill="var(--muted)" font-size="12">＝右偏</text>
+      </g>
+      <g class="movers">
+        <circle r="7" fill="var(--aud)" stroke="var(--surface)" stroke-width="2"><animateMotion dur="3.2s" repeatCount="indefinite" path="M275 190 L305 170 L335 180 L365 130 L395 140 L425 90 L445 70"/></circle>
+        <circle cx="600" cy="42" r="10" fill="none" stroke="var(--bad)" stroke-width="2"><animate attributeName="r" values="7;15;7" dur="1.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0;1" dur="1.6s" repeatCount="indefinite"/></circle>
+      </g>
+    </svg>
+  </div>
+  <h3>學完這一課，你應該能夠</h3>
+  <div class="goals">
+    <div class="goal" style="--c:var(--txt)">依「分析目的 × 資料型態」在主流圖表中選出最適者，並說得出每一種圖表的<b>禁區</b></div>
+    <div class="goal" style="--c:var(--img)">由五數綜合與 <b>1.5×IQR</b> 規則算出鬚端與離群值門檻，並從中位數位置判讀偏態方向</div>
+    <div class="goal" style="--c:var(--aud)">區分 Matplotlib／Seaborn／Plotly／Tableau／Power BI／Grafana 的定位，依資料規模、互動需求與使用者角色選型</div>
+    <div class="goal" style="--c:var(--sen)">指認截斷 Y 軸、雙 Y 軸、3D 效果、面積失真四類誤導手法，並用 Tufte 的資料墨水比與資料密度原則說明正確作法</div>
+  </div>
+  <p class="hint" style="margin-top:20px">本頁每個顏色固定代表一種分析目的：<span class="chip" style="--c:var(--txt)"><i class="dot"></i>比較</span>　<span class="chip" style="--c:var(--img)"><i class="dot"></i>分佈</span>　<span class="chip" style="--c:var(--aud)"><i class="dot"></i>趨勢</span>　<span class="chip" style="--c:var(--sen)"><i class="dot"></i>關聯／組成</span></p>
+</section>
+
+<!-- 36.1 -->
+<section id="s1">
+  <div class="sec-head"><span class="sec-no">36.1</span><h2>什麼資料配什麼圖表</h2></div>
+  <p class="lead">本節是命題核心。先問「分析目的是什麼」，再問「手上是什麼型態的變數」，圖表就定了。中級題幹幾乎都把目的藏在動詞裡：<b>趨勢／比較／分佈／關聯／組成／空間分佈</b>。</p>
+
+  <div class="panel">
+    <h3 style="margin-top:0">圖表選型器：點一個分析目的</h3>
+    <p class="hint">右側會畫出首選圖表的樣子，並列出次選與「禁區」—— 禁區才是考題最愛挖的坑。</p>
+    <div class="pick" id="chartPick"></div>
+    <div class="chart-out">
+      <svg id="chartSvg" viewBox="0 0 260 180" role="img" aria-label="首選圖表示意"></svg>
+      <div id="chartTxt"></div>
+    </div>
+  </div>
+
+  <details>
+    <summary>展開完整主對照表（目的、資料型態、首選、次選、禁區）</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>分析目的</th><th>資料型態</th><th>首選圖表</th><th>次選</th><th>不適合用在什麼（禁區）</th></tr>
+        <tr><td><b>看分佈</b>（形狀、偏態、多峰）</td><td>單一連續數值</td><td>直方圖（Histogram）</td><td>KDE 曲線、小提琴圖</td><td>類別比較；資料筆數太少（bins 一變結論就變）；時間趨勢</td></tr>
+        <tr><td><b>比較多組分佈＋抓離群值</b></td><td>數值 × 少數幾組</td><td>盒鬚圖／箱型圖（Box Plot）</td><td>小提琴圖（要看形狀時）</td><td><b>看不出多峰</b>——雙峰與單峰的盒子可以長得一模一樣；也不適合呈現精確的分佈形狀</td></tr>
+        <tr><td><b>比較大小</b></td><td>類別 × 數值</td><td>長條圖（Bar Chart）</td><td>點圖（Dot Plot，差異極小時）</td><td>密集時間序列（柱體過多）；「部分對全體」的比例；類別數過多（十幾類以上就擁擠）</td></tr>
+        <tr><td><b>看趨勢／隨時間變化</b></td><td>時間 × 連續數值</td><td>折線圖（Line Chart）</td><td>面積圖（強調累積量時）</td><td><b>無序類別</b>——點與點連線會暗示不存在的連續性；線條超過 5～7 條會變義大利麵</td></tr>
+        <tr><td><b>看兩變數關聯</b></td><td>連續 × 連續</td><td>散佈圖（Scatter Plot）＋趨勢線</td><td>六角分箱（Hexbin，點過多時）</td><td>時間趨勢（沒有連線看不出走向）；點大量重疊時需調透明度或分箱；高維無效</td></tr>
+        <tr><td><b>看組成／比例</b></td><td>類別 × 佔比</td><td>堆疊長條圖（多組比較）／圓餅圖（單一組、<b>5～6 類以內</b>）</td><td>100% 堆疊長條圖</td><td>圓餅圖不適合精細比較（角度難目測）、不適合負值、不適合多類別；堆疊長條的<b>中間層基線不對齊</b>，跨組比較中間層極易誤判</td></tr>
+        <tr><td><b>看多變數兩兩關聯</b></td><td>多個連續變數</td><td>熱力圖（Heatmap）＋相關係數矩陣</td><td>散佈圖矩陣（Pair Plot）</td><td>只反映<b>線性</b>相關，非線性關係會被誤讀成「無關」；變數過多時格子太小；配色不當會直接改變結論</td></tr>
+        <tr><td><b>逐筆比較高維樣本</b></td><td>多變數 × 每一筆</td><td>平行座標圖（Parallel Coordinates）</td><td>雷達圖（項目少時）</td><td>樣本數一多就糊成一團；<b>軸的排列順序會改變讀者看到的「模式」</b></td></tr>
+        <tr><td><b>看空間分佈</b></td><td>地理位置 × 數值</td><td>地理熱力圖／分級著色地圖（Choropleth）</td><td>點位圖、互動式地圖</td><td>Choropleth 用<b>絕對數</b>會被面積大但人口少的區域搶走視覺權重，應改用比率或密度</td></tr>
+        <tr><td><b>看單一 KPI 當前狀態</b></td><td>單一數值</td><td>儀表圖（Gauge）／指標卡</td><td>—</td><td>不適合多項目比較，也不適合呈現趨勢，一個儀表圖只講一個數字</td></tr>
+        <tr><td><b>看事件先後</b></td><td>時間 × 事件</td><td>時間軸圖（Timeline）</td><td>甘特圖</td><td>不適合量化比較數值大小</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <div class="panel">
+    <h3 style="margin-top:0">配對遊戲：圈出題幹的限制詞，選出圖表</h3>
+    <p class="hint">先點左邊的情境，再點右邊的圖表。</p>
+    <div class="match" id="sceneMatch"></div>
+    <div class="feedback" id="sceneFb" aria-live="polite"></div>
+  </div>
+
+  <h3>三組最容易被混用的圖</h3>
+  <div class="panel">
+    <div class="tabs" id="pairTabs"></div>
+    <div class="compare" id="pairBody"></div>
+    <p class="prose" id="pairRule" style="margin:14px 0 0"></p>
+  </div>
+</section>
+
+<!-- 36.2 -->
+<section id="s2">
+  <div class="sec-head"><span class="sec-no">36.2</span><h2>盒鬚圖：五數、1.5×IQR 與偏態判讀</h2></div>
+  <p class="lead"><b>五數綜合（Five-number Summary）＝最小值、Q1、中位數（Q2）、Q3、最大值。</b>但 Tukey 式盒鬚圖畫出來的鬚端<b>不一定</b>等於最小值與最大值——鬚只延伸到「圍欄以內最遠的那個實際觀測值」，圍欄以外的點另外用符號單獨標記為離群值。</p>
+  <p class="prose hint">五數綜合的統計定義、IQR 與標準差的取捨、離群值判定規則的完整推導，已整理在 <a href="L22101_descriptive_statistics.html">28.5（L22101 敘述性統計）</a>。這裡只留「畫出來以後怎麼判讀、什麼時候該選它」這一面，以及考場上會直接用到的計算流程。</p>
+
+  <div class="callout">官方《學習指引》把上／下鬚直接寫成 <code>Q3 + 1.5×IQR</code> 與 <code>Q1 − 1.5×IQR</code>，那其實是<b>圍欄（fence）</b>的位置；matplotlib 與 seaborn 實際畫出的鬚線則停在圍欄內最遠的資料點。兩種說法在考題中收斂到同一個考點：<b>鬚端不等於資料集的最大／最小值</b>。</div>
+
+  <h3>盒鬚圖模擬器</h3>
+  <div class="panel">
+    <p class="hint">選一組資料，看五數、IQR、圍欄與鬚端怎麼算出來；再試試把最大值往上推，看它何時「跳出圍欄」變成離群值。</p>
+    <div class="tabs" id="boxSets"></div>
+    <svg id="boxSvg" viewBox="0 0 660 200" role="img" aria-label="盒鬚圖模擬"></svg>
+    <div class="row" style="margin-top:8px">
+      <button class="btn" id="maxDown">最大值 −10</button>
+      <button class="btn" id="maxUp">最大值 ＋10</button>
+      <button class="btn" id="qMethod" aria-pressed="false">改用 numpy.percentile 內插</button>
+      <button class="btn" id="logBtn" aria-pressed="false">對數刻度</button>
+    </div>
+    <p class="hint" id="boxData" style="margin:10px 0 0;word-break:break-all"></p>
+    <div class="nums" id="boxNums"></div>
+    <p id="boxNote" style="margin:12px 0 0"></p>
+  </div>
+
+  <h3>計算題示範（逐步）</h3>
+  <div class="panel">
+    <p class="hint">資料（已排序，共 11 筆）：<code>2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 60</code>　按「下一步」跟著算。</p>
+    <div class="pipe" id="calcPipe"></div>
+    <div class="pout" id="calcOut" aria-live="polite"></div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn primary" id="calcNext">下一步</button>
+      <button class="btn" id="calcReset">從頭開始</button>
+    </div>
+  </div>
+  <p class="prose"><b>四分位數的算法不只一種，中間數字可能不同。</b>上面用的是「排除中位數後取上下半中位數」的 Tukey hinge 法。若改用 <code>numpy.percentile</code> 的線性內插，同一組資料會得到 Q1 = 7、Q3 = 17、IQR = 10、上圍欄 = 32——<b>離群值的判定結論相同（60 仍是離群值），但過程數字不同</b>。考場上若題目直接給了 <code>describe()</code> 的輸出，就用輸出的 25%／50%／75% 三個數字代入，不要自己重算。</p>
+  <div class="callout exam"><b>114Q2 第 48 題：</b><code>df.describe()</code> 一次回傳 count／mean／std／min／25%／50%／75%／max，後五個正是五數綜合——<b>25% 那一列是 Q1、50% 是中位數、75% 是 Q3</b>，看錯行就直接選錯。</div>
+
+  <h3>從盒子與鬚判讀偏態（115Q1 第 1 題完整考點）</h3>
+  <div class="panel">
+    <p class="hint">點選一種圖形特徵，看判讀結果與常見誤讀。</p>
+    <div class="strat" id="skewPick"></div>
+    <div style="margin-top:14px" class="stage">
+      <div class="stage-viz"><svg id="skewSvg" viewBox="0 0 300 120" role="img" aria-label="偏態盒鬚圖"></svg></div>
+      <div id="skewTxt"></div>
+    </div>
+  </div>
+  <p class="prose">記法：<b>偏態的方向由「尾巴往哪裡拉」決定，不是由「大多數資料堆在哪裡」決定。</b>右偏＝尾巴向右＝平均數 &gt; 中位數；左偏＝尾巴向左＝平均數 &lt; 中位數。<b>114Q2 第 3 題</b>就是給一張分佈圖問偏態值的正負，尾巴向左 → Skewness &lt; 0。</p>
+
+  <h3>盒鬚圖看得出偏態，卻看不出多峰</h3>
+  <div class="panel">
+    <div class="row"><button class="btn" id="modeBtn" aria-pressed="false">切換：雙峰資料</button><span class="hint" id="modeNote">單峰資料（示意）</span></div>
+    <svg id="modeSvg" viewBox="0 0 600 210" style="margin-top:10px" role="img" aria-label="直方圖與盒鬚圖比較"></svg>
+    <p class="hint" style="margin:6px 0 0">上方直方圖會變，下方盒鬚圖幾乎不動 —— 要看形狀得用直方圖、KDE 或小提琴圖。</p>
+  </div>
+
+  <h3>右偏長尾資料怎麼畫才看得清楚</h3>
+  <p class="prose">當 IQR 很小、上鬚拉得很長、高值區又一堆離群值（典型的消費金額、收入、停留時間），<b>改用對數刻度（Log Scale）繪製</b>，可以壓縮大數值端、放大中低值端的相對差異，讓各層級分得開。這是 <b>114Q2 第 25 題</b>的正解方向。到上面的模擬器選「長尾消費」，再按「對數刻度」親眼看看。</p>
+  <div class="callout">反面的三個做法都錯：<b>移除離群值</b>會把「高消費族群」這個最有價值的分群直接抹掉；<b>等距分箱（Equal-Width Binning）</b>在偏態資料上會讓絕大多數樣本擠進頭一兩個箱；<b>改畫折線圖</b>則是把「分層」問題錯當成「時間趨勢」問題。</div>
+</section>
+
+<!-- 36.3 -->
+<section id="s3">
+  <div class="sec-head"><span class="sec-no">36.3</span><h2>關聯、多變量與空間</h2></div>
+  <p class="lead">散佈圖 → 相關係數 → 熱力圖，是一條「從看一對、到量化一對、到一次看全部」的遞進。</p>
+
+  <div class="panel">
+    <div class="steps" id="relBtns"></div>
+    <div class="stage">
+      <div class="stage-viz" id="relViz"></div>
+      <div id="relTxt"></div>
+    </div>
+  </div>
+  <p class="prose hint">Pearson／Spearman／Kendall 三種相關係數怎麼選、以及「相關不等於因果」的四種替代解釋，整理在 <a href="L22301_statistics_bigdata.html">34.5（L22301 大數據下的統計分析）</a>。本節只處理「這些係數怎麼畫成圖、畫錯會怎樣」。</p>
+
+  <h3>散佈圖與 r：|r| 是強度、正負是方向</h3>
+  <div class="panel">
+    <div class="tabs" id="rTabs"></div>
+    <svg id="rSvg" viewBox="0 0 400 240" style="max-width:420px;margin:0 auto" role="img" aria-label="散佈圖"></svg>
+    <p id="rNote" style="margin:8px 0 0"></p>
+  </div>
+  <div class="callout exam"><b>114Q2 第 30 題：</b>已經畫了散佈圖、看到明顯線性趨勢、且無明顯離群值，要「衡量線性關係的強度與方向」——選<b>皮爾森相關係數</b>。誘答放了 RMSE 與 MAE，但那兩個是<b>預測模型的誤差指標</b>，衡量的是預測值與實際值的差距，不是兩變數之間的關聯；共變異數雖能表方向，卻受單位尺度影響而無法直接判讀強度。<br><span class="hint">另見 <a href="L22103_hypothesis_testing.html">30.6</a> 的相關係數選用題。</span></div>
+
+  <h3>熱力圖的配色：不只是美感，也是正確性</h3>
+  <div class="panel">
+    <p class="hint">四檔股票的相關係數矩陣（數值為示意）。切換色階，看同一組數字被「說」成什麼樣子。</p>
+    <div class="tabs" id="hmTabs"></div>
+    <div class="hm" id="hm"></div>
+    <p id="hmNote" style="margin:12px 0 0"></p>
+  </div>
+  <div class="callout exam"><b>114Q2 第 22 題：</b>四檔股票要「以<b>單一圖表</b>快速呈現各股票間的關聯強度與方向」，正解是<b>熱力圖＋相關係數矩陣</b>。散佈圖加趨勢線本身沒錯，但<b>一次只能比一對</b>，四檔要畫六張圖，違反「單一圖表」這個限制；雙軸折線圖呈現的是價格走勢而非量化關聯，而且雙軸本身就有比例誤導問題。</div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>資料性質</th><th>該用的色階</th><th>用錯的後果</th></tr>
+      <tr><td>有自然中點（相關係數以 0 為中心、盈虧）</td><td><b>發散色階（Diverging）</b>，中點固定對齊 0</td><td>中點沒對齊 0，正相關與負相關的視覺強度會被扭曲</td></tr>
+      <tr><td>單向遞增（銷售額、密度、次數）</td><td><b>連續色階（Sequential）</b></td><td>用發散色階會憑空製造一個不存在的「中點」</td></tr>
+      <tr><td>無序類別</td><td><b>質性色階（Qualitative）</b></td><td>用連續色階會暗示不存在的大小順序</td></tr>
+      <tr><td>任何情況</td><td>避免彩虹（Rainbow）色階</td><td>彩虹色階的亮度不單調，會在數值平滑變化處製造出假的邊界</td></tr>
+    </table>
+  </div>
+
+  <h3>平行座標圖：軸的順序會改變你看到的模式</h3>
+  <div class="panel">
+    <p class="hint">每個變數一根垂直軸，每一筆樣本是一條橫跨所有軸的折線。兩群樣本（示意）在 X1 與 X3 上差異明顯——但只有當這兩根軸<b>相鄰</b>時才看得出來。</p>
+    <button class="btn" id="pcBtn" aria-pressed="false">調換軸的順序</button>
+    <svg id="pcSvg" viewBox="0 0 520 220" style="margin-top:10px" role="img" aria-label="平行座標圖"></svg>
+    <p class="hint" id="pcNote" style="margin:6px 0 0"></p>
+  </div>
+  <p class="prose">限制有兩個：樣本一多就糊成一片（需配合透明度或互動篩選）；<b>軸的排列順序會改變讀者看到的模式</b>，相鄰軸之間的關係最容易被看見，不相鄰的則幾乎看不見。</p>
+
+  <h3>分級著色地圖：絕對數 vs 比率</h3>
+  <div class="panel">
+    <div class="tabs" id="mapTabs">
+      <button class="btn" data-m="abs" aria-pressed="true">填入絕對數（案件數）</button>
+      <button class="btn" data-m="rate" aria-pressed="false">填入比率（每十萬人）</button>
+    </div>
+    <svg id="mapSvg" viewBox="0 0 520 240" role="img" aria-label="分級著色地圖示意"></svg>
+    <p id="mapNote" style="margin:8px 0 0"></p>
+  </div>
+</section>
+
+<!-- 36.4 -->
+<section id="s4">
+  <div class="sec-head"><span class="sec-no">36.4</span><h2>工具地圖：依部署模式與呈現方式選型</h2></div>
+  <h3 style="margin-top:0">四層部署模式</h3>
+  <div class="panel">
+    <div class="steps" id="layerBtns"></div>
+    <div class="stage">
+      <div class="stage-viz" id="layerViz"></div>
+      <div id="layerTxt"></div>
+    </div>
+  </div>
+
+  <h3>程式化工具速記（點卡片翻面）</h3>
+  <div class="cards" id="toolCards"></div>
+  <details>
+    <summary>展開程式化工具完整比較表</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>工具</th><th>語言</th><th>定位</th><th>互動性</th><th>最適合</th><th>最不適合</th></tr>
+        <tr><td><b>Matplotlib</b></td><td>Python</td><td>底層繪圖引擎，什麼都能畫但什麼都要自己設</td><td>靜態</td><td>論文圖、報表、需要精細控制版面時</td><td>快速產出統計圖；需要互動的儀表板</td></tr>
+        <tr><td><b>Seaborn</b></td><td>Python</td><td>建構在 Matplotlib 之上的<b>統計圖表高階 API</b></td><td>靜態</td><td>盒鬚圖、熱力圖、KDE、pairplot，幾行就有預設美觀樣式</td><td>高度客製化版面（仍需落回 Matplotlib 調整）</td></tr>
+        <tr><td><b>Plotly</b></td><td>Python／R／JS</td><td><b>互動式</b>圖表，可縮放、懸停顯示、篩選，可輸出 HTML</td><td>互動</td><td>Web 應用、動態儀表板（搭配 Dash）</td><td>印刷品與正式出版用的靜態圖</td></tr>
+        <tr><td><b>Altair</b></td><td>Python</td><td>基於 Vega-Lite 的<b>聲明式</b>語法</td><td>互動</td><td>快速原型、語法簡潔</td><td>極端客製化</td></tr>
+        <tr><td><b>ggplot2</b></td><td>R</td><td><b>圖層文法（Grammar of Graphics）</b>，高品質靜態圖</td><td>靜態</td><td>統計分析報告</td><td>互動儀表板（需改用 Shiny）</td></tr>
+        <tr><td><b>Shiny</b></td><td>R</td><td>互動式 Web 應用框架</td><td>互動</td><td>即時資料探索、研究型儀表板</td><td>大量並行使用者的企業級部署</td></tr>
+        <tr><td><b>D3.js</b></td><td>JavaScript</td><td>最靈活，可畫網路圖等任意自訂視覺化</td><td>互動</td><td>敘事型／高度客製化的 Web 視覺化</td><td>趕時間的一般報表（開發成本高）</td></tr>
+        <tr><td><b>Chart.js</b></td><td>JavaScript</td><td>輕量級，支援簡單互動圖</td><td>互動</td><td>網頁嵌入的基礎圖表</td><td>複雜或大資料量的視覺化</td></tr>
+      </table>
+    </div>
+  </details>
+  <details>
+    <summary>展開平台工具完整比較表</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>平台</th><th>定位</th><th>選它的理由</th><th>不選它的理由</th></tr>
+        <tr><td><b>Tableau</b></td><td>商業 BI 代表</td><td>探索式分析體驗佳、複雜互動儀表板</td><td>授權成本高</td></tr>
+        <tr><td><b>Power BI</b></td><td>微軟生態 BI</td><td>與 Excel／Office／Azure 整合，<b>成本相對較低</b></td><td>深度客製化與跨平台彈性不如 Tableau</td></tr>
+        <tr><td><b>Google Looker</b></td><td>雲端 BI</td><td>即時查詢與集中式資料建模</td><td>需先投入資料建模</td></tr>
+        <tr><td><b>Qlik Sense</b></td><td>關聯式分析</td><td>強調變數間的關聯探索</td><td>學習曲線較陡</td></tr>
+        <tr><td><b>Grafana</b></td><td><b>時序資料視覺化與即時監控</b></td><td>串接 InfluxDB／Prometheus 等時序資料庫，支援門檻告警</td><td>不是拿來做商業報表的</td></tr>
+        <tr><td><b>Metabase／Redash</b></td><td>輕量 BI</td><td>開源免費版即可自建，SQL 查詢＋基礎儀表板</td><td>圖表豐富度不及商業平台</td></tr>
+        <tr><td><b>Apache Superset</b></td><td>開源 BI 平台</td><td>圖表豐富、可整合 BigQuery／Snowflake</td><td>自建與維運需要技術團隊</td></tr>
+        <tr><td><b>Kibana</b></td><td>日誌分析</td><td>搭配 Elasticsearch 做日誌與全文檢索的視覺化</td><td>通用商業 BI 場景</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <h3>選型練習：題幹出現什麼關鍵字？</h3>
+  <div class="panel">
+    <p class="hint">點一個情境，看「一句話判準」會把你帶到哪個工具。</p>
+    <div class="strat" id="toolPick"></div>
+    <div style="margin-top:16px">
+      <div class="verdict" id="toolV">選一個情境試試</div>
+      <div id="toolWhy" class="hint" style="margin-top:6px"></div>
+    </div>
+  </div>
+
+  <h3>依呈現方式分類</h3>
+  <div class="panel">
+    <div class="tabs" id="presTabs"></div>
+    <div id="presBody"></div>
+  </div>
+</section>
+
+<!-- 36.5 -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-no">36.5</span><h2>繪圖程式碼題（pandas／seaborn）</h2></div>
+  <p class="lead">官方 114Q2 的題組連考三題繪圖語法，考的不是艱深 API，而是<b>「這行程式碼實際上聚合了什麼」</b>。下面用一張 8 筆的小遊戲銷售表（示意）真的算一遍。</p>
+
+  <details>
+    <summary>展開示意資料表 data（8 筆）</summary>
+    <div class="body tbl-wrap" id="gameTbl"></div>
+  </details>
+
+  <div class="panel">
+    <h3 style="margin-top:0">程式碼實驗室</h3>
+    <div class="tabs" id="codeTabs"></div>
+    <p id="codeAsk" style="margin:0 0 10px"></p>
+    <div class="strat" id="codeOpts"></div>
+    <div style="margin-top:16px">
+      <div class="verdict" id="codeV">點一行程式碼，看它實際畫出什麼</div>
+      <div id="codeChart" style="margin-top:10px"></div>
+      <p class="hint" id="codeWhy" style="margin:8px 0 0"></p>
+    </div>
+  </div>
+
+  <p class="prose"><b>題幹的動詞直接決定聚合函式：</b>總額 → <code>sum()</code>；平均 → <code>mean()</code>；筆數／出現次數 → <code>count()</code> 或 <code>value_counts()</code>。看到「總額」卻選了 <code>count()</code>，是這一組題最典型的失分。</p>
+
+  <h3>seaborn 四個函式的分工</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>函式</th><th>畫什麼</th><th>Y 軸是什麼</th><th>常見誤用</th></tr>
+      <tr><td><code>sns.barplot()</code></td><td>長條圖</td><td>數值欄位的<b>聚合結果</b>，<b>預設聚合是平均值</b>，要總和得寫 <code>estimator=sum</code></td><td>以為預設就是加總</td></tr>
+      <tr><td><code>sns.countplot()</code></td><td>長條圖</td><td><b>只計次數</b>，不吃數值型的 y</td><td>拿來呈現連續型的銷售金額</td></tr>
+      <tr><td><code>sns.histplot()</code></td><td>直方圖</td><td>分佈的頻次</td><td>拿來比較各類別的總額</td></tr>
+      <tr><td><code>sns.lineplot()</code></td><td>折線圖</td><td>數值</td><td>y 不接受多欄清單；也不適合呈現類別排名</td></tr>
+    </table>
+  </div>
+  <pre class="cb"># 比較四個地區的銷售總額：寬表 → 先 melt 轉長表 → barplot 指定 estimator=sum
+sns.barplot(x="variable", y="value",
+            data=pd.melt(data, value_vars=["NA_Sales","EU_Sales","JP_Sales","Other_Sales"]),
+            estimator=sum)                                              # 正確
+
+# 取北美銷售「前五名」：先 nlargest 篩出最大的五筆，再畫長條圖
+sns.barplot(x="Name", y="NA_Sales", data=data.nlargest(5, "NA_Sales"))  # 正確
+sns.barplot(x="NA_Sales", y="Name", data=data.head(5))                  # head(5) 是「前五列」不是「最大五筆」
+sns.lineplot(x="Name", y="NA_Sales", data=data.nlargest(5, "NA_Sales")) # 類別排名不該用折線圖</pre>
+  <div class="callout"><b><code>head(5)</code> 與 <code>nlargest(5, col)</code> 的差別是這組題的核心陷阱：</b>前者取的是資料表的前五<b>列</b>，後者取的是該欄數值最大的五<b>筆</b>。</div>
+</section>
+
+<!-- 36.6 -->
+<section id="s6">
+  <div class="sec-head"><span class="sec-no">36.6</span><h2>設計原則與誤導性視覺化</h2></div>
+  <h3 style="margin-top:0">Tufte 的四個概念（官方考過兩題）</h3>
+  <div class="cards" id="tufteCards"></div>
+
+  <h3>動手刪：哪些墨水該刪、哪些不能刪？</h3>
+  <div class="panel">
+    <p class="hint">點按鈕開關圖上的元素。資料墨水比（示意）會跟著變；但刪到「解讀資料的必要元素」時會被警告。</p>
+    <div class="row" id="inkBtns"></div>
+    <div class="chart-out even">
+      <svg id="inkSvg" viewBox="0 0 320 220" role="img" aria-label="資料墨水比示意"></svg>
+      <div>
+        <div class="row" style="justify-content:space-between"><b>資料墨水比（示意）</b><span id="inkNum" style="font-variant-numeric:tabular-nums"></span></div>
+        <div class="meter"><i id="inkMeter"></i></div>
+        <p id="inkNote" class="hint" style="margin:8px 0 0"></p>
+      </div>
+    </div>
+  </div>
+  <p class="prose">資料密度是 <b>114Q2 第 21 題與 115Q1 第 27 題</b>的共同考點，兩題的誘答幾乎是同一套：</p>
+  <div class="panel flat">
+    <div class="strat" id="densPick"></div>
+    <div style="margin-top:14px"><div class="verdict" id="densV">哪一個是「提高資料密度」的正解？</div><p id="densWhy" class="hint" style="margin:6px 0 0"></p></div>
+  </div>
+
+  <h3>截斷 Y 軸模擬器（115Q1 第 28 題）</h3>
+  <div class="panel">
+    <p class="hint">轉換率 A 3.2%、B 3.8%、C 4.0%。改變長條圖 Y 軸的起點，看差異被放大成幾倍。</p>
+    <div class="tabs" id="truncTabs"></div>
+    <div class="chart-out even">
+      <svg id="truncSvg" viewBox="0 0 300 220" role="img" aria-label="截斷 Y 軸長條圖"></svg>
+      <div>
+        <div class="nums" id="truncNums" style="margin-top:0"></div>
+        <p id="truncNote" style="margin:10px 0 0"></p>
+      </div>
+    </div>
+  </div>
+  <p class="prose">正解是「<b>造成視覺誤導並放大實際差異感</b>」。誘答「增強小幅差異的可視化辨識能力」聽起來像優點——差異確實「看起來」更明顯了，但那是以扭曲比例為代價換來的，屬於誤導而非正當的強化。另一個誘答「提升圖表計算準確性」更直接：<b>呈現方式完全不會改變底層數據</b>，談不上提升準確性。</p>
+  <div class="callout"><b>一個需要分清楚的例外：折線圖的 Y 軸可以不從 0 開始。</b>折線圖編碼的是斜率與變化量，放大縱軸範圍是觀察波動的正當手段，但必須清楚標示刻度起點。長條圖則因為以長度編碼絕對量，沒有這個空間。兩者的差別來自<b>編碼方式不同</b>，不是雙重標準。</div>
+
+  <h3>四種誤導手法</h3>
+  <div class="panel">
+    <div class="tabs" id="misTabs"></div>
+    <div class="stage">
+      <div class="stage-viz" id="misViz"></div>
+      <div id="misTxt"></div>
+    </div>
+  </div>
+
+  <h3>五項設計原則（官方《學習指引》版本）</h3>
+  <details><summary>1. 以閱讀者為中心</summary><div class="body">工程師、業務主管、高階決策者關注的指標不同。決策層的圖表要突出趨勢與異常，避免細節過載。</div></details>
+  <details><summary>2. 圖表類型要符合資料型態與目的</summary><div class="body">比較用長條圖、趨勢用折線圖、比例用堆疊圖、關聯用散佈圖。</div></details>
+  <details><summary>3. 簡化資訊、去除冗餘</summary><div class="body">不要同時塞太多維度、顏色與標籤；減少多餘線條、陰影與 3D 效果。</div></details>
+  <details><summary>4. 合理使用顏色與標示</summary><div class="body">顏色要有一致的語意（綠＝成長、紅＝下降、灰＝不活躍）；關鍵資訊（如 KPI 未達標）要有視覺強化。另需留意色盲讀者，紅綠對比不宜作為唯一的區分手段。</div></details>
+  <details><summary>5. 支援互動與探索</summary><div class="body">需要深入時提供點擊、篩選、時間滑動視窗；儀表板可依角色動態切換內容（業務看區域、行銷看活動）。</div></details>
+</section>
+
+<!-- 36.7 -->
+<section id="s7">
+  <div class="sec-head"><span class="sec-no">36.7</span><h2>官方考過什麼</h2></div>
+  <p class="lead"><b>計數基準：</b>以「題幹或選項<b>直接</b>涉及圖表選擇、圖形判讀或視覺化設計原則」為準（不含只在解析中提到圖表者），在 L22 官方公告的 100 題（114-2 與 115-1 各 50 題）中命中 <b>10 題（10%）</b>。若再放寬納入 3 題「以圖形為引子、但主考點落在敘述統計或相關係數」的題目，合計為 13 題。</p>
+  <div class="callout">其中 114Q2-25、115Q1-1 兩題的圖形判讀部分，<a href="L22101_descriptive_statistics.html">28.7（L22101）</a>也依它自己的基準計入；114Q2-3、114Q2-30、114Q2-48 三題同樣出現在 <a href="L22102_probability_distributions.html">29.7</a> 的清單中（114Q2-30 另見 <a href="L22103_hypothesis_testing.html">30.6</a> 的相關係數選用題）；114Q2-45／46／47 的語法部分則計入 <a href="L22203_data_processing_tools.html">33.6（L22203）</a>。<b>各講義的計數基準不同，這些數字不可相加</b>，看到重複出現不必懷疑哪邊算錯，那代表這題跨了兩個知識點。</div>
+  <h3>核心 10 題</h3>
+  <div id="examList"></div>
+  <h3>邊界題（以圖形為引子、主考點在統計量）</h3>
+  <div id="examList2"></div>
+  <h3>題型分佈（同一計數基準，10 題核心）</h3>
+  <div class="panel" id="typeBars"></div>
+  <div class="callout exam">設計原則與倫理題<b>兩次考 Tufte 資料密度、一次考截斷 Y 軸，比例意外地高</b>，這一塊千萬別跳過。選型題的題幹一定藏著限制詞：「單一圖表」「隨時間」「即時監控」「凸顯層級差異」，圈出限制詞答案就定了。</div>
+</section>
+
+<!-- 36.8 -->
+<section id="s8">
+  <div class="sec-head"><span class="sec-no">36.8</span><h2>易錯與陷阱</h2></div>
+  <p class="lead">逐條確認自己真的懂了再打勾（打勾狀態會記在這台裝置上）。</p>
+  <div class="traps" id="traps"></div>
+  <p class="hint" id="trapCount" style="margin-top:10px"></p>
+
+  <h3>情境測驗</h3>
+  <div class="qcard" id="quiz"></div>
+
+  <h3>延伸練習</h3>
+  <p class="prose"><b>L22 主題庫 290 題：</b>篩選「視覺化／圖表／儀表板／BI 工具」相關題目。優先練三類——一是<b>情境選型題</b>（給一段業務描述選圖表，練到讀完題幹前兩行就能圈出限制詞）；二是<b>盒鬚圖與直方圖判讀題</b>（五數、1.5×IQR、偏態方向）；三是 <b>pandas／seaborn 繪圖語法題</b>（聚合函式與各函式分工）。</p>
+  <p class="prose"><b>L22 歷屆 100 題：</b>本節命中 10 題（計數基準見 36.7）。建議把 114Q2-21 與 115Q1-27 兩題 Tufte 題並排讀，誘答結構幾乎一致，抓到套路等於一次拿下兩題；114Q2-45／46／47 三連題請逐行比對四個選項的聚合函式差異。</p>
+  <p class="prose"><b>跨知識點交叉複習</b>（先確認你要補的是哪一塊，再翻對應章節）：</p>
+  <details><summary><a href="L22101_descriptive_statistics.html">28.5（L22101）</a></summary><div class="body">五數綜合、IQR、離群值判定規則的完整統計推導。本節 36.2 只保留判讀與選型。</div></details>
+  <details><summary><a href="L22301_statistics_bigdata.html">34.5（L22301）</a></summary><div class="body">Pearson／Spearman／Kendall 的取捨、相關不等於因果。本節 36.3 只處理它們的視覺呈現。</div></details>
+  <details><summary><a href="L22201_data_collection_cleaning.html">32（L22201 資料蒐集與清理）</a></summary><div class="body">離群值該不該剔除、分箱與對數轉換的前處理決策。36.2 的「對數刻度」是它在視覺化端的對應手段。</div></details>
+  <details><summary><a href="L22302_bigdata_analysis_methods.html">35.6（L22302）</a></summary><div class="body">關聯規則（Apriori、Support／Confidence／Lift）雖然被寫在官方 L22303 的原文範例題裡，但原理、公式與手算已由該節完整處理，本節不重複，請直接翻過去。</div></details>
+  <details><summary><a href="L21302_integration_deployment.html">L21302</a>、<a href="L23303_training_evaluation.html">L23303</a></summary><div class="body">「模型監控儀表板」與本節共用即時視覺化與 SLA 門檻線的概念。</div></details>
+  <p class="prose" style="margin-top:16px"><b>動手驗證：</b>用 seaborn 內建的 <code>tips</code> 或 <code>penguins</code> 資料集，親手做三件事——(1) 對同一欄位分別畫直方圖、KDE、盒鬚圖與小提琴圖，比較各自看得見與看不見什麼；(2) 把同一張長條圖的 Y 軸分別設為從 0 起算與截斷起算，親眼看差異被放大多少倍；(3) 對相關係數矩陣分別套用連續色階與以 0 為中心的發散色階，體會配色如何改變結論。</p>
+</section>
+</main>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce){document.querySelectorAll('#heroSvg .movers').forEach(m=>m.remove());}
+
+/* ---------- generic matcher ---------- */
+function matcher(root,fb,left,right,doneMsg){
+  let sel=null,done=0;
+  const L=document.createElement('div');L.className='col';
+  const R=document.createElement('div');R.className='col';
+  left.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;
+    b.innerHTML=it.html;if(it.c)b.style.setProperty('--c',it.c);
+    b.onclick=()=>{if(b.classList.contains('done'))return;L.querySelectorAll('.mitem').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;fb.textContent='';fb.className='feedback';};
+    L.appendChild(b);
+  });
+  right.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;b.innerHTML=it.html;
+    b.onclick=()=>{
+      if(b.classList.contains('done'))return;
+      if(!sel){fb.textContent='請先點左邊一個項目。';fb.className='feedback';return;}
+      if(sel.dataset.k===b.dataset.k){
+        const c=sel.style.getPropertyValue('--c');
+        [sel,b].forEach(x=>{x.classList.remove('sel');x.classList.add('done');if(c)x.style.setProperty('--c',c);});
+        fb.textContent='✓ '+(it.ok||'答對了！');fb.className='feedback ok';sel=null;done++;
+        if(done===left.length){fb.textContent='✓ 全部配對完成！'+doneMsg;}
+      }else{
+        b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');
+        fb.textContent='✗ '+(it.bad||'不太對，再想想看。');fb.className='feedback bad';
+      }
+    };
+    R.appendChild(b);
+  });
+  root.append(L,R);
+}
+
+/* ---------- flip cards ---------- */
+function flipCards(root,arr){
+  arr.forEach(([n,o,d])=>{
+    const b=document.createElement('button');b.className='flip';b.setAttribute('aria-pressed','false');
+    b.innerHTML=`<div class="in"><div class="f"><strong>${n}</strong><span>${o}</span><span style="margin-top:auto;font-size:12.5px">點我翻面</span></div><div class="b">${d}</div></div>`;
+    b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');
+    root.appendChild(b);
+  });
+}
+
+/* ---------- tabs helper ---------- */
+function tabset(btnRoot,bodyRoot,items,render,after){
+  items.forEach((x,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=x[0];b.onclick=()=>s(i);btnRoot.appendChild(b);});
+  function s(i){btnRoot.querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));bodyRoot.innerHTML=render(items[i],i);if(after)after(items[i],i);}
+  s(0);
+}
+
+/* ---------- step stage helper ---------- */
+function stepper(btnRoot,vizRoot,txtRoot,items){
+  items.forEach((e,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=e.b;b.onclick=()=>show(i);btnRoot.appendChild(b);});
+  function show(i){btnRoot.querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));vizRoot.innerHTML=items[i].viz;txtRoot.innerHTML=items[i].txt;}
+  show(0);
+}
+
+/* ---------- exam list ---------- */
+function examList(root,rows){
+  rows.forEach(([n,k,q,a])=>{root.insertAdjacentHTML('beforeend',`<details><summary><span class="tag">${n}</span>${k}</summary><div class="body">${q?`<p style="margin:0 0 6px"><span class="hint">怎麼問：</span>${q}</p>`:''}<p style="margin:0"><span class="hint">正解思路：</span>${a}</p></div></details>`);});
+}
+
+/* ---------- traps ---------- */
+function traps(key,T){
+  let saved=[];try{saved=JSON.parse(localStorage.getItem(key)||'[]')||[];}catch(e){saved=[];}
+  T.forEach(([a,b],i)=>{
+    const l=document.createElement('label');const c=saved.includes(i);if(c)l.classList.add('chk');
+    l.innerHTML=`<input type="checkbox" ${c?'checked':''}><div><em>${a}</em><br><span>${b}</span></div>`;
+    l.querySelector('input').onchange=e=>{const on=e.target.checked;l.classList.toggle('chk',on);saved=on?[...new Set([...saved,i])]:saved.filter(x=>x!==i);try{localStorage.setItem(key,JSON.stringify(saved));}catch(err){}count();};
+    $('#traps').appendChild(l);
+  });
+  function count(){$('#trapCount').textContent=`已確認 ${saved.length}／${T.length} 條`;}
+  count();
+}
+
+/* ---------- quiz ---------- */
+function quiz(Q,msgs){
+  let i=0,score=0;const box=$('#quiz');
+  const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+  function show(){
+    if(i>=Q.length){
+      const r=score/Q.length;
+      const msg=r>=.9?msgs[0]:r>=.65?msgs[1]:msgs[2];
+      box.innerHTML=`<div class="progress"><i style="width:100%"></i></div><div class="qtext" style="font-size:24px;font-family:var(--serif)">得分 ${score}／${Q.length}</div><p>${msg}</p><button class="btn primary" id="qr">重新測驗</button>`;
+      $('#qr').onclick=()=>{i=0;score=0;show();};return;
+    }
+    const [q,opts,ex]=Q[i];
+    const order=shuffle(opts.map((o,k)=>({o,k})));
+    box.innerHTML=`<div class="progress"><i style="width:${i/Q.length*100}%"></i></div><div class="qtop"><span>第 ${i+1}／${Q.length} 題</span><span>得分 ${score}</span></div><div class="qtext">${q}</div><div class="opts">${order.map(x=>`<button class="opt" data-k="${x.k}">${x.o}</button>`).join('')}</div><div class="expl" id="qe"></div><div class="row" style="margin-top:14px;justify-content:flex-end"><button class="btn primary" id="qn" style="display:none">${i===Q.length-1?'看結果':'下一題'}</button></div>`;
+    box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.k==='0';if(ok)score++;
+      box.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.k==='0')x.classList.add('right');});
+      if(!ok)b.classList.add('wrongpick');
+      const e=$('#qe');e.innerHTML=(ok?'<b style="color:var(--ok)">答對了。</b>':'<b style="color:var(--bad)">這題要小心。</b>')+ex;e.classList.add('show');
+      $('#qn').style.display='';$('#qn').focus();
+    });
+    $('#qn').onclick=()=>{i++;show();};
+  }
+  show();
+}
+
+/* ---------- nav highlight ---------- */
+function navHighlight(){
+  const links=[...document.querySelectorAll('nav.toc a')];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on&&window.innerWidth<=860)a.scrollIntoView({inline:'center',block:'nearest'});});}});},{rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('main section').forEach(s=>io.observe(s));
+}
+
+/* ================= 36.1 chart picker ================= */
+const MINI={
+  hist:()=>{let h='';[20,45,80,110,95,60,35,18,10].forEach((v,i)=>h+=`<rect x="${30+i*22}" y="${160-v}" width="22" height="${v}" fill="var(--img)" stroke="var(--surface)" stroke-width="1"/>`);return h+'<text x="130" y="176" text-anchor="middle" font-size="11" fill="var(--muted)">連續區間，柱體相鄰無縫隙</text>';},
+  box:()=>{let h='';[[60,95,110,130,160,'A'],[50,80,100,110,150,'B'],[75,100,125,140,165,'C']].forEach(([a,q1,m,q3,b,n],i)=>{const x=55+i*75;h+=`<line x1="${x}" y1="${180-a}" x2="${x}" y2="${180-b}" stroke="var(--img)" stroke-width="2"/><rect x="${x-18}" y="${180-q3}" width="36" height="${q3-q1}" fill="color-mix(in srgb,var(--img) 25%,var(--surface))" stroke="var(--img)" stroke-width="2"/><line x1="${x-18}" y1="${180-m}" x2="${x+18}" y2="${180-m}" stroke="var(--ink)" stroke-width="2.5"/><text x="${x}" y="176" text-anchor="middle" font-size="11" fill="var(--muted)">${n}</text>`;});return h+'<circle cx="130" cy="18" r="4" fill="var(--bad)"/>';},
+  bar:()=>{let h='';[110,80,60,40,25].forEach((v,i)=>h+=`<rect x="${30+i*44}" y="${160-v}" width="30" height="${v}" rx="3" fill="var(--txt)"/>`);return h+'<line x1="25" y1="160" x2="245" y2="160" stroke="var(--muted)"/><text x="135" y="176" text-anchor="middle" font-size="11" fill="var(--muted)">離散類別，可依大小重排</text>';},
+  line:()=>`<polyline points="25,140 60,125 95,130 130,95 165,100 200,60 240,45" fill="none" stroke="var(--aud)" stroke-width="3"/><line x1="20" y1="160" x2="245" y2="160" stroke="var(--muted)"/><text x="135" y="176" text-anchor="middle" font-size="11" fill="var(--muted)">X 軸有順序（時間）</text>`,
+  scatter:()=>{let h='',s=7;const r=()=>{s=(s*9301+49297)%233280;return s/233280;};for(let i=0;i<30;i++){const x=30+r()*200;h+=`<circle cx="${x}" cy="${150-(x-30)*.55-r()*35}" r="4" fill="var(--sen)" opacity=".75"/>`;}return h+'<line x1="30" y1="140" x2="230" y2="30" stroke="var(--ink)" stroke-dasharray="5 4"/>';},
+  stack:()=>{let h='';[[50,40,30],[30,60,30],[70,20,30]].forEach((g,i)=>{let y=160;g.forEach((v,j)=>{y-=v;h+=`<rect x="${40+i*65}" y="${y}" width="40" height="${v}" fill="${['var(--txt)','var(--sen)','var(--aud)'][j]}" stroke="var(--surface)"/>`;});});return h+'<text x="135" y="176" text-anchor="middle" font-size="11" fill="var(--muted)">只有最底層基線對齊</text>';},
+  heat:()=>{const v=[[1,.8,-.4,.1],[.8,1,-.3,0],[-.4,-.3,1,-.6],[.1,0,-.6,1]];let h='';v.forEach((r,i)=>r.forEach((x,j)=>{const c=x>=0?'var(--sen)':'var(--txt)';h+=`<rect x="${60+j*36}" y="${12+i*36}" width="34" height="34" rx="4" fill="color-mix(in srgb,${c} ${Math.round(Math.abs(x)*100)}%,var(--surface2))"/>`;}));return h+'<text x="135" y="176" text-anchor="middle" font-size="11" fill="var(--muted)">一張圖看完所有配對</text>';},
+  par:()=>{let h='';[40,100,160,220].forEach(x=>h+=`<line x1="${x}" y1="20" x2="${x}" y2="160" stroke="var(--muted)"/>`);[[30,60,40,120],[40,70,50,110],[130,120,140,40],[140,100,150,50]].forEach((p,i)=>h+=`<polyline points="${p.map((y,j)=>`${40+j*60},${20+y}`).join(' ')}" fill="none" stroke="${i<2?'var(--txt)':'var(--aud)'}" stroke-width="2"/>`);return h;},
+  map:()=>`<path d="M20 20 H140 V100 H20Z" fill="color-mix(in srgb,var(--sen) 80%,var(--surface2))" stroke="var(--surface)" stroke-width="3"/><path d="M140 20 H240 V70 H140Z" fill="color-mix(in srgb,var(--sen) 30%,var(--surface2))" stroke="var(--surface)" stroke-width="3"/><path d="M140 70 H240 V160 H140Z" fill="color-mix(in srgb,var(--sen) 55%,var(--surface2))" stroke="var(--surface)" stroke-width="3"/><path d="M20 100 H140 V160 H20Z" fill="color-mix(in srgb,var(--sen) 15%,var(--surface2))" stroke="var(--surface)" stroke-width="3"/>`,
+  gauge:()=>`<path d="M40 140 A90 90 0 0 1 220 140" fill="none" stroke="var(--surface2)" stroke-width="22"/><path d="M40 140 A90 90 0 0 1 185 77" fill="none" stroke="var(--ok)" stroke-width="22"/><line x1="130" y1="140" x2="180" y2="85" stroke="var(--ink)" stroke-width="4"/><text x="130" y="168" text-anchor="middle" font-size="20" font-weight="700" fill="var(--ink)">72%</text>`,
+  time:()=>{let h='<line x1="20" y1="90" x2="245" y2="90" stroke="var(--muted)" stroke-width="2"/>';['規劃','開發','測試','上線'].forEach((t,i)=>h+=`<circle cx="${40+i*65}" cy="90" r="8" fill="var(--aud)"/><text x="${40+i*65}" y="${i%2?120:70}" text-anchor="middle" font-size="13" fill="var(--ink)">${t}</text>`);return h;}
+};
+const PURPOSE=[
+  ['看分佈','單一連續數值','hist','直方圖（Histogram）','KDE 曲線、小提琴圖','類別比較；資料筆數太少（bins 一變結論就變）；時間趨勢','var(--img)'],
+  ['比較多組分佈＋抓離群值','數值 × 少數幾組','box','盒鬚圖／箱型圖（Box Plot）','小提琴圖（要看形狀時）','<b>看不出多峰</b>——雙峰與單峰的盒子可以長得一模一樣；也不適合呈現精確的分佈形狀','var(--img)'],
+  ['比較大小','類別 × 數值','bar','長條圖（Bar Chart）','點圖（Dot Plot，差異極小時）','密集時間序列（柱體過多）；「部分對全體」的比例；類別數過多（十幾類以上就擁擠）','var(--txt)'],
+  ['看趨勢／隨時間變化','時間 × 連續數值','line','折線圖（Line Chart）','面積圖（強調累積量時）','<b>無序類別</b>——點與點連線會暗示不存在的連續性；線條超過 5～7 條會變義大利麵','var(--aud)'],
+  ['看兩變數關聯','連續 × 連續','scatter','散佈圖（Scatter Plot）＋趨勢線','六角分箱（Hexbin，點過多時）','時間趨勢（沒有連線看不出走向）；點大量重疊時需調透明度或分箱；高維無效','var(--sen)'],
+  ['看組成／比例','類別 × 佔比','stack','堆疊長條圖（多組比較）／圓餅圖（單一組、5～6 類以內）','100% 堆疊長條圖','圓餅圖不適合精細比較（角度難目測）、不適合負值、不適合多類別；堆疊長條的<b>中間層基線不對齊</b>，跨組比較中間層極易誤判','var(--sen)'],
+  ['看多變數兩兩關聯','多個連續變數','heat','熱力圖（Heatmap）＋相關係數矩陣','散佈圖矩陣（Pair Plot）','只反映<b>線性</b>相關，非線性關係會被誤讀成「無關」；變數過多時格子太小；配色不當會直接改變結論','var(--sen)'],
+  ['逐筆比較高維樣本','多變數 × 每一筆','par','平行座標圖（Parallel Coordinates）','雷達圖（項目少時）','樣本數一多就糊成一團；<b>軸的排列順序會改變讀者看到的「模式」</b>','var(--sen)'],
+  ['看空間分佈','地理位置 × 數值','map','地理熱力圖／分級著色地圖（Choropleth）','點位圖、互動式地圖','Choropleth 用<b>絕對數</b>會被面積大但人口少的區域搶走視覺權重，應改用比率或密度','var(--sen)'],
+  ['看單一 KPI 當前狀態','單一數值','gauge','儀表圖（Gauge）／指標卡','—','不適合多項目比較，也不適合呈現趨勢，一個儀表圖只講一個數字','var(--txt)'],
+  ['看事件先後','時間 × 事件','time','時間軸圖（Timeline）','甘特圖','不適合量化比較數值大小','var(--aud)']
+];
+(function(){
+  const root=$('#chartPick');
+  PURPOSE.forEach((p,i)=>{const b=document.createElement('button');b.innerHTML=`<span class="chip" style="--c:${p[6]}"><i class="dot"></i>${p[0]}</span><small>${p[1]}</small>`;b.setAttribute('aria-pressed','false');b.onclick=()=>pick(i);root.appendChild(b);});
+  function pick(i){
+    root.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));
+    const p=PURPOSE[i];
+    $('#chartSvg').innerHTML=MINI[p[2]]();
+    $('#chartTxt').innerHTML=`<p style="margin:0 0 6px"><span class="hint">首選：</span><b>${p[3]}</b></p><p style="margin:0 0 6px"><span class="hint">次選：</span>${p[4]}</p><p style="margin:0;color:var(--bad)"><b>禁區：</b><span style="color:var(--ink)">${p[5]}</span></p>`;
+  }
+  pick(0);
+})();
+
+matcher($('#sceneMatch'),$('#sceneFb'),[
+  {k:'line',c:'var(--aud)',html:'儀表板呈現推論延遲<b>隨時間</b>變化以監控 SLA<small>115Q1-29</small>'},
+  {k:'heat',c:'var(--sen)',html:'四檔股票，<b>單一圖表</b>看兩兩關聯的強度與方向<small>114Q2-22</small>'},
+  {k:'box',c:'var(--img)',html:'<b>比較三個城市</b>的房價分佈並標出離群值<small>多組分佈</small>'},
+  {k:'bar',c:'var(--txt)',html:'<b>類別變數</b>的分佈：各門市來客數<small>離散類別</small>'},
+  {k:'hist',c:'var(--img)',html:'<b>這一組</b>連續數值長什麼形狀<small>單組分佈</small>'}
+],[
+  {k:'hist',html:'直方圖',ok:'連續變數的分佈、單組形狀 → 直方圖。'},
+  {k:'heat',html:'熱力圖＋相關係數矩陣',ok:'散佈圖一次只能比一對，四檔要畫六張，違反「單一圖表」。'},
+  {k:'pie',html:'圓餅圖',bad:'圓餅圖只表達「部分對全體」，而且建議 5～6 類以內。'},
+  {k:'line',html:'折線圖',ok:'面積圖干擾閾值判讀、散佈圖無時序連線、長條圖在密集時序上柱體過多。'},
+  {k:'bar',html:'長條圖',ok:'類別變數的分佈用長條圖，連續變數的分佈才用直方圖。'},
+  {k:'box',html:'盒鬚圖',ok:'「比較三個城市」→ 盒鬚圖擅長多組並排與標記離群值。'}
+],'題幹的限制詞決定了圖表。');
+
+tabset($('#pairTabs'),$('#pairBody'),[
+  ['直方圖 vs 長條圖','<div><div class="big">直方圖</div>X 軸是「<b>連續數值切出來的區間</b>」<br>→ 柱體相鄰<b>無縫隙</b>，順序不可調動</div><div><div class="big">長條圖</div>X 軸是「<b>離散類別</b>」<br>→ 柱體之間<b>有間隔</b>，順序可依大小重排</div>','⇒ 題幹說「類別變數的分佈」→ 長條圖；說「連續變數的分佈」→ 直方圖'],
+  ['折線圖 vs 長條圖','<div><div class="big">折線圖</div>X 軸有<b>內在順序</b>（通常是時間），線段的<b>斜率</b>本身帶有意義</div><div><div class="big">長條圖</div>X 軸<b>無內在順序</b>，用<b>長度</b>編碼數量</div>','⇒ 「每日／每週／隨時間」出現在題幹 → 折線圖'],
+  ['盒鬚圖 vs 直方圖','<div><div class="big">盒鬚圖</div>擅長「<b>多組並排比較</b>」與「<b>標記離群值</b>」，但看不到分佈形狀</div><div><div class="big">直方圖</div>擅長「<b>單組的分佈形狀</b>」，但並排多組就互相遮擋</div>','⇒ 「比較三個城市」→ 盒鬚圖；「這一組長什麼形狀」→ 直方圖']
+],x=>x[1],x=>{$('#pairRule').innerHTML='<b>'+x[2]+'</b>';});
+
+/* ================= 36.2 box plot simulator ================= */
+(function(){
+  const SETS=[
+    ['講義計算題',[2,4,6,8,10,12,14,16,18,20,60]],
+    ['右偏',[3,4,4,5,5,6,7,9,12,16,22]],
+    ['左偏',[3,9,13,16,18,19,20,20,21,21,22]],
+    ['近似對稱',[4,6,7,8,9,10,11,12,13,14,16]],
+    ['長尾消費（示意）',[1,1,2,2,2,3,3,4,5,8,15,40,120,300]]
+  ];
+  let cur=0,data=[],np=false,logS=false;
+  const med=a=>{const n=a.length,m=Math.floor(n/2);return n%2?a[m]:(a[m-1]+a[m])/2;};
+  const pct=(a,p)=>{const k=(a.length-1)*p,f=Math.floor(k),c=Math.ceil(k);return a[f]+(a[c]-a[f])*(k-f);};
+  function stats(a){
+    const n=a.length,q2=med(a);let q1,q3;
+    if(np){q1=pct(a,.25);q3=pct(a,.75);}
+    else{const h=Math.floor(n/2);q1=med(a.slice(0,h));q3=med(a.slice(n%2?h+1:h));}
+    const iqr=q3-q1,lf=q1-1.5*iqr,uf=q3+1.5*iqr;
+    const inside=a.filter(v=>v>=lf&&v<=uf);
+    return {q1,q2,q3,iqr,lf,uf,lw:Math.min(...inside),uw:Math.max(...inside),out:a.filter(v=>v<lf||v>uf),min:a[0],max:a[n-1]};
+  }
+  const fmt=v=>Number.isInteger(v)?v:v.toFixed(1);
+  function draw(){
+    const a=data.slice().sort((x,y)=>x-y),s=stats(a);
+    const lo=logS?Math.max(.5,Math.min(a[0],s.lf>0?s.lf:a[0])*.8):Math.min(a[0],s.lf),hi=Math.max(a[a.length-1],s.uf);
+    const X=v=>{if(logS){v=Math.max(v,lo);return 40+(Math.log10(v)-Math.log10(lo))/(Math.log10(hi*1.05)-Math.log10(lo))*580;}return 40+(v-lo)/(hi-lo||1)*580;};
+    let h='';
+    // axis
+    h+=`<line x1="40" y1="170" x2="620" y2="170" stroke="var(--muted)"/>`;
+    const ticks=logS?[1,10,100,1000].filter(t=>t>=lo&&t<=hi*1.05):Array.from({length:6},(_,i)=>lo+(hi-lo)*i/5);
+    ticks.forEach(t=>h+=`<line x1="${X(t)}" y1="166" x2="${X(t)}" y2="174" stroke="var(--muted)"/><text x="${X(t)}" y="190" text-anchor="middle" font-size="12" fill="var(--muted)">${Math.round(t)}</text>`);
+    // fences
+    [[s.lf,'下圍欄'],[s.uf,'上圍欄']].forEach(([f,t])=>{if(logS&&f<=0)return;h+=`<line x1="${X(f)}" y1="30" x2="${X(f)}" y2="160" stroke="var(--warn)" stroke-dasharray="5 4" stroke-width="2"/><text x="${X(f)}" y="22" text-anchor="middle" font-size="12" fill="var(--warn)" font-weight="700">${t} ${fmt(f)}</text>`;});
+    // whiskers
+    h+=`<line x1="${X(s.lw)}" y1="85" x2="${X(s.q1)}" y2="85" stroke="var(--img)" stroke-width="3"/><line x1="${X(s.q3)}" y1="85" x2="${X(s.uw)}" y2="85" stroke="var(--img)" stroke-width="3"/>`;
+    h+=`<line x1="${X(s.lw)}" y1="70" x2="${X(s.lw)}" y2="100" stroke="var(--img)" stroke-width="3"/><line x1="${X(s.uw)}" y1="70" x2="${X(s.uw)}" y2="100" stroke="var(--img)" stroke-width="3"/>`;
+    h+=`<rect x="${X(s.q1)}" y="60" width="${Math.max(2,X(s.q3)-X(s.q1))}" height="50" rx="4" fill="color-mix(in srgb,var(--img) 22%,var(--surface))" stroke="var(--img)" stroke-width="3"/>`;
+    h+=`<line x1="${X(s.q2)}" y1="60" x2="${X(s.q2)}" y2="110" stroke="var(--ink)" stroke-width="3.5"/>`;
+    // points strip
+    a.forEach((v,i)=>{const o=v<s.lf||v>s.uf;h+=`<circle cx="${X(v)}" cy="${o?85:140+(i%3)*7}" r="${o?7:4.5}" fill="${o?'var(--bad)':'var(--muted)'}" opacity="${o?1:.7}"><title>${v}</title></circle>`;});
+    h+=`<text x="${X(s.uw)}" y="128" text-anchor="middle" font-size="11" fill="var(--img)">鬚端 ${fmt(s.uw)}</text>`;
+    $('#boxSvg').innerHTML=h;
+    $('#boxData').textContent='資料（'+a.length+' 筆）：'+a.join(', ');
+    const N=[['Q1',s.q1],['中位數 Q2',s.q2],['Q3',s.q3],['IQR＝Q3−Q1',s.iqr],['下圍欄',s.lf],['上圍欄',s.uf],['下鬚端',s.lw],['上鬚端',s.uw],['最大值 max',s.max]];
+    $('#boxNums').innerHTML=N.map(([k,v])=>`<div>${k}<b>${fmt(v)}</b></div>`).join('');
+    const up=s.q3-s.q2,dn=s.q2-s.q1;
+    let sk=Math.abs(up-dn)<=.15*s.iqr?'中位數大致置中 → 近似對稱':up>dn?'中位數靠近盒子下緣（貼 Q1）→ 上半被拉長 → <b>右偏（正偏）</b>':'中位數靠近盒子上緣（貼 Q3）→ 下半被拉長 → <b>左偏（負偏）</b>';
+    const outs=s.out.length?`離群值：<b style="color:var(--bad)">${s.out.join('、')}</b>（落在圍欄外，用符號單獨標記，不是自動刪除）。`:'沒有任何值落在圍欄外，鬚端就等於 min／max。';
+    const wnote=s.uw!==s.max?`上鬚端停在 <b>${fmt(s.uw)}</b>——圍欄內最大的實際值，<b>不是</b> max（${s.max}），也不是圍欄（${fmt(s.uf)}）。`:'';
+    $('#boxNote').innerHTML=`${outs}${wnote}<br>偏態判讀：${sk}。${np?'<br><span class="hint">目前用 numpy.percentile 線性內插，數字和 Tukey hinge 不同，但離群值結論通常一致。</span>':''}${logS?'<br><span class="hint">對數刻度壓縮了大數值端、放大了中低值端的相對差異——這是 114Q2-25 的正解方向。</span>':''}`;
+  }
+  function load(i){cur=i;data=SETS[i][1].slice();$('#boxSets').querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));draw();}
+  SETS.forEach((s,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=s[0];b.onclick=()=>load(i);$('#boxSets').appendChild(b);});
+  $('#maxUp').onclick=()=>{data.sort((x,y)=>x-y);data[data.length-1]+=10;draw();};
+  $('#maxDown').onclick=()=>{data.sort((x,y)=>x-y);const n=data.length;data[n-1]=Math.max(data[n-2],data[n-1]-10);draw();};
+  $('#qMethod').onclick=()=>{np=!np;$('#qMethod').setAttribute('aria-pressed',np);$('#qMethod').textContent=np?'改回 Tukey hinge':'改用 numpy.percentile 內插';draw();};
+  $('#logBtn').onclick=()=>{logS=!logS;$('#logBtn').setAttribute('aria-pressed',logS);draw();};
+  load(0);
+})();
+
+/* calc pipeline */
+(function(){
+  const nodes=[['排序','11 筆'],['Q2','中位數'],['Q1／Q3','上下半'],['IQR／圍欄','1.5×IQR'],['判定','鬚端與離群值']];
+  const out=[
+    '<code>2, 4, 6, 8, 10, <b>12</b>, 14, 16, 18, 20, 60</code><div class="hint">資料已排序，共 11 筆（奇數），中位數是第 6 筆。</div>',
+    '<b>中位數 Q2 = 第 6 筆 = 12</b>',
+    '下半部（不含中位數）：2, 4, <b>6</b>, 8, 10 → <b>Q1 = 6</b><br>上半部（不含中位數）：14, 16, <b>18</b>, 20, 60 → <b>Q3 = 18</b>',
+    'IQR = Q3 − Q1 = 18 − 6 = <b>12</b><br>上圍欄 = 18 + 1.5 × 12 = 18 + 18 = <b>36</b><br>下圍欄 = 6 − 1.5 × 12 = 6 − 18 = <b>−12</b>',
+    '判定：60 &gt; 36 → <b style="color:var(--bad)">離群值，單獨標記</b><br>上鬚端 = 圍欄內最大的實際值 = <b>20</b>（不是 60，也不是 36）<br>下鬚端 = <b>2</b>（沒有任何值小於 −12）'
+  ];
+  let i=0;
+  $('#calcPipe').innerHTML=nodes.map(([a,b])=>`<div class="pnode"><b>${a}</b>${b}</div>`).join('');
+  function r(){document.querySelectorAll('#calcPipe .pnode').forEach((n,j)=>{n.classList.toggle('on',j===i);n.classList.toggle('past',j<i);});$('#calcOut').innerHTML=out[i];$('#calcNext').disabled=i===4;$('#calcNext').style.opacity=i===4?.4:1;}
+  $('#calcNext').onclick=()=>{if(i<4){i++;r();}};
+  $('#calcReset').onclick=()=>{i=0;r();};
+  r();
+})();
+
+/* skew pick */
+(function(){
+  const S=[
+    ['盒子短、鬚很長','中段資料高度集中，但存在偏離中段甚遠的極端值','<b>不是</b>「離群值少」——鬚長恰恰代表尾端拉得遠',[40,135,150,165,260]],
+    ['盒子長','中間 50% 的變異大','與離群值多寡無關',[50,80,150,220,250]],
+    ['中位數靠近盒子下緣（貼 Q1）','Q3 − Q2 &gt; Q2 − Q1 → 上半被拉長 → <b>右偏（正偏）</b>','直覺常誤判成左偏，方向剛好相反',[60,100,115,190,260]],
+    ['中位數靠近盒子上緣（貼 Q3）','下半被拉長 → <b>左偏（負偏）</b>','同上，方向易寫反',[40,110,185,200,240]],
+    ['中位數置中、上下鬚等長','近似對稱','—',[50,110,150,190,250]]
+  ];
+  S.forEach((s,i)=>{const b=document.createElement('button');b.textContent=s[0];b.setAttribute('aria-pressed','false');b.onclick=()=>pick(i);$('#skewPick').appendChild(b);});
+  function pick(i){
+    $('#skewPick').querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));
+    const [a,q1,m,q3,b]=S[i][3];
+    $('#skewSvg').innerHTML=`<line x1="${a}" y1="60" x2="${b}" y2="60" stroke="var(--img)" stroke-width="3"/><line x1="${a}" y1="45" x2="${a}" y2="75" stroke="var(--img)" stroke-width="3"/><line x1="${b}" y1="45" x2="${b}" y2="75" stroke="var(--img)" stroke-width="3"/><rect x="${q1}" y="35" width="${q3-q1}" height="50" rx="4" fill="color-mix(in srgb,var(--img) 22%,var(--surface))" stroke="var(--img)" stroke-width="3" style="transition:all .5s"/><line x1="${m}" y1="35" x2="${m}" y2="85" stroke="var(--ink)" stroke-width="4"/><text x="${q1}" y="105" text-anchor="middle" font-size="12" fill="var(--muted)">Q1</text><text x="${m}" y="25" text-anchor="middle" font-size="12" fill="var(--ink)">Q2</text><text x="${q3}" y="105" text-anchor="middle" font-size="12" fill="var(--muted)">Q3</text>`;
+    $('#skewTxt').innerHTML=`<p style="margin:0 0 6px"><b>判讀：</b>${S[i][1]}</p><p class="hint" style="margin:0"><b>常見誤讀：</b>${S[i][2]}</p><p class="hint" style="margin:8px 0 0">（橫向盒鬚圖：左＝小、右＝大；「下緣」即 Q1 那一側）</p>`;
+  }
+  pick(2);
+})();
+
+/* multimodal vs box */
+(function(){
+  let bi=false;
+  const uni=[2,5,10,18,26,30,26,18,10,5,2],bim=[4,14,22,14,6,4,6,14,22,14,4];
+  function draw(){
+    const d=bi?bim:uni;let h='';
+    d.forEach((v,i)=>h+=`<rect x="${80+i*40}" y="${110-v*3.4}" width="40" height="${v*3.4}" fill="var(--img)" stroke="var(--surface)" style="transition:all .6s"/>`);
+    h+=`<line x1="60" y1="110" x2="540" y2="110" stroke="var(--muted)"/><text x="40" y="70" font-size="12" fill="var(--muted)" transform="rotate(-90 40 70)">直方圖</text>`;
+    // box roughly same
+    const q1=bi?183:190,q3=bi?417:410;
+    h+=`<line x1="80" y1="165" x2="${q1}" y2="165" stroke="var(--img)" stroke-width="3"/><line x1="${q3}" y1="165" x2="520" y2="165" stroke="var(--img)" stroke-width="3"/><rect x="${q1}" y="140" width="${q3-q1}" height="50" rx="4" fill="color-mix(in srgb,var(--img) 22%,var(--surface))" stroke="var(--img)" stroke-width="3" style="transition:all .6s"/><line x1="300" y1="140" x2="300" y2="190" stroke="var(--ink)" stroke-width="3.5"/><text x="40" y="190" font-size="12" fill="var(--muted)" transform="rotate(-90 40 190)">盒鬚圖</text>`;
+    $('#modeSvg').innerHTML=h;
+    $('#modeNote').textContent=bi?'雙峰資料（示意）：直方圖出現兩座山，盒子卻幾乎一樣':'單峰資料（示意）';
+    $('#modeBtn').textContent=bi?'切換：單峰資料':'切換：雙峰資料';$('#modeBtn').setAttribute('aria-pressed',bi);
+  }
+  $('#modeBtn').onclick=()=>{bi=!bi;draw();};
+  draw();
+})();
+
+/* ================= 36.3 ================= */
+stepper($('#relBtns'),$('#relViz'),$('#relTxt'),[
+  {b:'1. 散佈圖',viz:`<svg viewBox="0 0 200 140" style="max-width:240px">${(()=>{let h='',s=3;const r=()=>{s=(s*9301+49297)%233280;return s/233280;};for(let i=0;i<22;i++){const x=15+r()*170;h+=`<circle cx="${x}" cy="${125-(x-15)*.55-r()*30}" r="4" fill="var(--sen)" opacity=".8"/>`;}return h+'<line x1="15" y1="118" x2="185" y2="28" stroke="var(--ink)" stroke-dasharray="4 4"/>';})()}</svg>`,txt:'<p><b>2 個變數：散佈圖（Scatter Plot）＋趨勢線</b></p><p>看得到形狀、群聚、離群點，但<b>一次只能看一對</b>。</p>'},
+  {b:'2. 相關係數 r',viz:`<div style="font-family:var(--serif);font-size:44px;font-weight:900;color:var(--sen)">r = 0.82</div>`,txt:'<p><b>2 個變數的「量化」：皮爾森相關係數 r ∈ [−1, 1]</b></p><p>r 的正負 = 方向，|r| 的大小 = 強度。<b>只衡量「線性」關係。</b></p><p class="hint">r 數值為示意。</p>'},
+  {b:'3. 熱力圖',viz:MINI.heat().replace(/^/,'<svg viewBox="40 0 190 170" style="max-width:220px">')+'</svg>',txt:'<p><b>k 個變數：相關係數矩陣（k×k）以熱力圖呈現</b></p><p>一張圖同時看完所有配對，色階表達強弱與正負。</p>'}
+]);
+
+(function(){
+  const R=[['r ≈ −0.9',-.9],['r ≈ −0.5',-.5],['r ≈ 0',0],['r ≈ 0.5',.5],['r ≈ 0.9',.9],['非線性 U 型','u']];
+  function gen(t){
+    let s=11;const rnd=()=>{s=(s*9301+49297)%233280;return s/233280;};
+    const g=()=>{let u=0;for(let k=0;k<6;k++)u+=rnd();return u-3;};
+    const P=[];
+    for(let i=0;i<60;i++){const x=g();let y;if(t==='u'){y=x*x*.8-1+g()*.25;}else{y=t*x+Math.sqrt(1-t*t)*g();}P.push([x,y]);}
+    return P;
+  }
+  function pear(P){const n=P.length,mx=P.reduce((a,p)=>a+p[0],0)/n,my=P.reduce((a,p)=>a+p[1],0)/n;let sxy=0,sx=0,sy=0;P.forEach(([x,y])=>{sxy+=(x-mx)*(y-my);sx+=(x-mx)**2;sy+=(y-my)**2;});return sxy/Math.sqrt(sx*sy);}
+  tabset($('#rTabs'),$('#rNote'),R,(x)=>{
+    const P=gen(x[1]),r=pear(P);
+    let h='<line x1="30" y1="210" x2="390" y2="210" stroke="var(--muted)"/><line x1="30" y1="10" x2="30" y2="210" stroke="var(--muted)"/>';
+    P.forEach(([a,b])=>{h+=`<circle cx="${210+a*55}" cy="${110-b*40}" r="5" fill="var(--sen)" opacity=".7"/>`;});
+    $('#rSvg').innerHTML=h;
+    const msg=x[1]==='u'?'兩變數明顯有關係（U 型），但 r 卻接近 0——<b>r 接近 0 只代表沒有「線性」關係，不代表兩變數獨立</b>。熱力圖上這一格會被誤讀成「無關」。':`計算出的 r = <b>${r.toFixed(2)}</b>。正負代表方向，|r| 愈接近 1，點愈貼近一條直線。`;
+    return `<span class="hint">實際計算 r = ${r.toFixed(2)}（資料為示意）　</span>${msg}`;
+  });
+})();
+
+(function(){
+  const N=['A','B','C','D'];
+  const M=[[1,.82,-.45,.1],[.82,1,-.3,.05],[-.45,-.3,1,-.6],[.1,.05,-.6,1]];
+  const modes=[
+    ['發散色階（中點＝0）',v=>{const c=v>=0?'var(--sen)':'var(--txt)';return `color-mix(in srgb,${c} ${Math.round(Math.abs(v)*90)}%,var(--surface2))`;},'✓ 正確：中點對齊 0。粉紅＝正相關、藍＝負相關，顏色深淺＝強度。A–B 強正相關、C–D 中度負相關一眼可見。'],
+    ['發散色階（中點錯置在 0.5）',v=>{const t=v-.5;const c=t>=0?'var(--sen)':'var(--txt)';return `color-mix(in srgb,${c} ${Math.round(Math.min(1,Math.abs(t)/1.5)*90)}%,var(--surface2))`;},'✗ 中點沒對齊 0：r = 0.1、0.05 這種「幾乎無關」被染成藍色，看起來像負相關；正相關與負相關的視覺強度被扭曲。'],
+    ['連續色階',v=>`color-mix(in srgb,var(--img) ${Math.round((v+1)/2*90)}%,var(--surface2))`,'✗ 相關係數有自然中點 0，用單向的連續色階會讓 −0.6 看起來像「很弱」，正負方向消失了。連續色階該用在銷售額、密度、次數這類單向遞增的資料。'],
+    ['彩虹色階',v=>`hsl(${Math.round((1-(v+1)/2)*270)} 85% 55%)`,'✗ 彩虹色階的亮度不單調：數值平滑變化時，黃綠交界處會冒出一條「假的邊界」，讓人以為那裡有斷層。任何情況都應避免。']
+  ];
+  tabset($('#hmTabs'),$('#hmNote'),modes,(m)=>{
+    let h=`<div class="hm" style="grid-template-columns:32px repeat(4,1fr)"><div></div>${N.map(n=>`<div class="lab">${n}</div>`).join('')}`;
+    M.forEach((r,i)=>{h+=`<div class="lab">${N[i]}</div>`;r.forEach(v=>{h+=`<div class="cell" style="background:${m[1](v)};color:var(--ink);font-weight:700">${v.toFixed(2)}</div>`;});});
+    $('#hm').outerHTML=h.replace('<div class="hm"','<div class="hm" id="hm"')+'</div>';
+    return m[2];
+  });
+})();
+
+(function(){
+  let swapped=false;
+  const A=[[20,70,30,60],[25,40,22,130],[30,110,35,90],[150,60,155,40],[160,120,150,140],[145,30,160,100]];
+  function draw(){
+    const order=swapped?[0,1,2,3]:[0,2,1,3];
+    const names=['X1','X2','X3','X4'];
+    let h='';
+    order.forEach((k,j)=>{const x=60+j*130;h+=`<line x1="${x}" y1="20" x2="${x}" y2="190" stroke="var(--muted)" stroke-width="2"/><text x="${x}" y="210" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">${names[k]}</text>`;});
+    A.forEach((p,i)=>{h+=`<polyline points="${order.map((k,j)=>`${60+j*130},${25+p[k]}`).join(' ')}" fill="none" stroke="${i<3?'var(--txt)':'var(--aud)'}" stroke-width="2.5" opacity=".85" style="transition:all .6s"/>`;});
+    $('#pcSvg').innerHTML=h;
+    $('#pcNote').innerHTML=swapped?'X1 與 X3 被 X2 隔開：中間的 X2 是雜訊，線條交錯成一團，<b>兩群的差異幾乎看不見</b>。':'X1 與 X3 <b>相鄰</b>：兩群線條在這一段各走各的，群聚一目了然。';
+    $('#pcBtn').setAttribute('aria-pressed',swapped);
+  }
+  $('#pcBtn').onclick=()=>{swapped=!swapped;draw();};
+  draw();
+})();
+
+(function(){
+  const R=[
+    {n:'甲區',d:'M20 20 H300 V150 H20Z',lx:160,ly:90,abs:600,pop:300,area:'面積大'},
+    {n:'乙區',d:'M300 20 H400 V90 H300Z',lx:350,ly:60,abs:250,pop:50,area:'面積小'},
+    {n:'丙區',d:'M20 150 H300 V220 H20Z',lx:160,ly:190,abs:150,pop:100,area:'面積中'},
+    {n:'丁區',d:'M300 90 H400 V220 H300Z',lx:350,ly:155,abs:240,pop:40,area:'面積小'}
+  ];
+  let mode='abs';
+  function draw(){
+    const vals=R.map(r=>mode==='abs'?r.abs:r.abs/r.pop*100/10);
+    const mx=Math.max(...vals);
+    let h='';
+    R.forEach((r,i)=>{const v=vals[i];h+=`<path d="${r.d}" fill="color-mix(in srgb,var(--sen) ${Math.round(v/mx*85+5)}%,var(--surface2))" stroke="var(--surface)" stroke-width="4" style="transition:fill .6s"/><text x="${r.lx}" y="${r.ly}" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">${r.n}</text><text x="${r.lx}" y="${r.ly+18}" text-anchor="middle" font-size="12" fill="var(--ink)">${mode==='abs'?r.abs+' 件':Math.round(v)+'／10萬人'}</text>`;});
+    h+=`<text x="410" y="40" font-size="12" fill="var(--muted)">人口（示意）</text>`;R.forEach((r,i)=>h+=`<text x="410" y="${60+i*18}" font-size="12" fill="var(--muted)">${r.n} ${r.pop} 萬</text>`);
+    $('#mapSvg').innerHTML=h;
+    $('#mapNote').innerHTML=mode==='abs'?'填絕對數時，<b>面積最大的甲區</b>顏色最深、佔掉大半版面，看起來是「最嚴重」的地方。':'改填每十萬人比率後，真正風險高的是<b>面積小的乙、丁區</b>；甲區只是人多。<b>Choropleth 應填比率或密度。</b>';
+  }
+  document.querySelectorAll('#mapTabs .btn').forEach(b=>b.onclick=()=>{mode=b.dataset.m;document.querySelectorAll('#mapTabs .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));draw();});
+  draw();
+})();
+
+/* ================= 36.4 ================= */
+(function(){
+  const L=[
+    ['第 1 層　工具內建報表','Excel / Google Sheets','免寫程式、雲端協作，適合中小型資料快速做原型','資料量一大，讀取與呈現效能就撐不住'],
+    ['第 2 層　自行搭建（程式化）','Python / R / JavaScript 函式庫','客製化程度最高、可與模型管線整合','要寫程式，維運與權限管理都得自己來'],
+    ['第 3 層　半商業化 / 輕量 BI','Metabase、Redash、Apache Superset、Grafana','開源免費版可自建，付費版提供雲端託管、SSO 與技術支援；Web 介面 + SQL 查詢，是中小企業與分析師的平衡點','—'],
+    ['第 4 層　商業化 BI 平台','Tableau、Power BI、Google Looker、Qlik Sense、SAP Lumira','拖拉式操作、權限管理、多資料源整合、企業級穩定性','授權成本高，客製化受平台限制']
+  ];
+  const cs=['var(--txt)','var(--img)','var(--aud)','var(--sen)'];
+  stepper($('#layerBtns'),$('#layerViz'),$('#layerTxt'),L.map((l,i)=>({b:`第 ${i+1} 層`,viz:`<div style="display:flex;flex-direction:column-reverse;gap:6px;width:100%;max-width:240px">${L.map((x,j)=>`<div style="padding:8px 12px;border-radius:8px;font-size:14px;font-weight:700;background:${j===i?cs[j]:'var(--surface2)'};color:${j===i?'#fff':'var(--muted)'};transition:all .4s">${x[0].split('　')[1]}</div>`).join('')}</div>`,txt:`<p><b>${l[0]}</b></p><p>${l[1]}</p><p>✓ ${l[2]}</p>${l[3]!=='—'?`<p class="hint">✗ ${l[3]}</p>`:''}`})));
+})();
+flipCards($('#toolCards'),[
+  ['Matplotlib','Python｜靜態','底層繪圖引擎，什麼都能畫但什麼都要自己設。適合論文圖、需精細控制版面。'],
+  ['Seaborn','Python｜靜態','建構在 Matplotlib 之上的統計圖表高階 API；盒鬚圖、熱力圖、KDE、pairplot 幾行搞定。'],
+  ['Plotly','Python／R／JS｜互動','互動式圖表，可縮放、懸停、篩選，可輸出 HTML；搭配 Dash 做儀表板。不適合印刷品。'],
+  ['Altair','Python｜互動','基於 Vega-Lite 的聲明式語法；快速原型、語法簡潔。'],
+  ['ggplot2','R｜靜態','圖層文法（Grammar of Graphics），高品質靜態圖；互動要改用 Shiny。'],
+  ['Shiny','R｜互動','互動式 Web 應用框架；研究型儀表板，不適合大量並行使用者的企業級部署。'],
+  ['D3.js','JavaScript｜互動','最靈活，可畫網路圖等任意自訂視覺化；開發成本高。'],
+  ['Chart.js','JavaScript｜互動','輕量級，網頁嵌入的基礎圖表；不適合複雜或大資料量。']
+]);
+(function(){
+  const T=[
+    ['工廠感測器即時監控，資料存在時序資料庫','Grafana','題幹出現「即時監控／感測器／時序資料庫」→ Grafana。串接 InfluxDB／Prometheus，支援門檻告警；它不是拿來做商業報表的。'],
+    ['跨部門拖拉式報表，需要權限管理','Tableau 或 Power BI','「跨部門拖拉式報表／權限管理」→ 商業 BI 平台。'],
+    ['公司全面使用 Office 與 Azure，預算有限','Power BI','「與 Office／Azure 整合、成本考量」→ Power BI。它與 Tableau 都能做互動儀表板，差別在生態與成本。'],
+    ['要把圖表整合進模型訓練管線，高度客製','Python 函式庫','「客製化分析、與模型管線整合」→ Python 函式庫（Matplotlib／Seaborn／Plotly）。'],
+    ['新創要快速做個免費原型','Metabase 或 Google Sheets','「快速原型、免費」→ Metabase 或 Google Sheets。'],
+    ['搭配 Elasticsearch 做日誌視覺化','Kibana','Kibana 的主場是日誌與全文檢索；通用商業 BI 不選它。']
+  ];
+  T.forEach((t,i)=>{const b=document.createElement('button');b.textContent=t[0];b.setAttribute('aria-pressed','false');b.onclick=()=>{$('#toolPick').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#toolV').textContent='→ '+t[1];$('#toolWhy').textContent=t[2];};$('#toolPick').appendChild(b);});
+})();
+tabset($('#presTabs'),$('#presBody'),[
+  ['靜態 Static','固定圖片／PDF，無互動','正式報告、簡報、印刷出版'],
+  ['動態 Animated','以動畫展示數值或排序隨時間變動','趨勢說故事、排名變化動畫'],
+  ['互動式 Interactive','支援篩選、點擊、下鑽（Drill-down），可依角色切換檢視','多角色共用的儀表板、深度探索'],
+  ['即時 Real-time','資料串流持續更新，常搭配門檻告警','設備監控、詐欺偵測、SLA 監控']
+],x=>`<p style="margin:0 0 6px"><b>特性：</b>${x[1]}</p><p style="margin:0"><b>典型場景：</b>${x[2]}</p>`);
+
+/* ================= 36.5 code lab ================= */
+(function(){
+  const G=[
+    {Name:'Alpha',Platform:'PS',NA:4.1,EU:3.2,JP:.6,Other:1.0},
+    {Name:'Bravo',Platform:'Switch',NA:2.0,EU:1.5,JP:3.8,Other:.4},
+    {Name:'Comet',Platform:'PS',NA:1.2,EU:2.6,JP:.3,Other:.7},
+    {Name:'Delta',Platform:'Xbox',NA:5.3,EU:1.9,JP:.1,Other:.6},
+    {Name:'Echo',Platform:'Switch',NA:.9,EU:.8,JP:2.4,Other:.2},
+    {Name:'Fable',Platform:'PS',NA:.7,EU:1.1,JP:.2,Other:.3},
+    {Name:'Gale',Platform:'Xbox',NA:3.6,EU:1.0,JP:0,Other:.4},
+    {Name:'Hero',Platform:'Switch',NA:2.8,EU:2.2,JP:1.9,Other:.5}
+  ];
+  G.forEach(g=>g.Global=+(g.NA+g.EU+g.JP+g.Other).toFixed(1));
+  $('#gameTbl').innerHTML='<table><tr><th>列</th><th>Name</th><th>Platform</th><th>NA_Sales</th><th>EU_Sales</th><th>JP_Sales</th><th>Other_Sales</th><th>Global_Sales</th></tr>'+G.map((g,i)=>`<tr><td>${i}</td><td>${g.Name}</td><td>${g.Platform}</td><td>${g.NA}</td><td>${g.EU}</td><td>${g.JP}</td><td>${g.Other}</td><td>${g.Global}</td></tr>`).join('')+'</table><p class="hint">單位：百萬套（示意資料）</p>';
+  const grp=f=>{const o={};G.forEach(g=>{(o[g.Platform]=o[g.Platform]||[]).push(g.Global);});return Object.entries(o).map(([k,a])=>[k,f(a)]);};
+  const sum=a=>a.reduce((x,y)=>x+y,0),mean=a=>sum(a)/a.length;
+  const regs=['NA','EU','JP','Other'];
+  const regAgg=f=>regs.map(r=>[r+'_Sales',f(G.map(g=>g[r]))]);
+  const top=G.slice().sort((a,b)=>b.NA-a.NA).slice(0,5).map(g=>[g.Name,g.NA]);
+  const head=G.slice(0,5).map(g=>[g.Name,g.NA]);
+  const TASK=[
+    ['114Q2-45','畫出各平台的全球銷售「<b>總額</b>」長條圖。',[
+      ['data.groupby("Platform")["Global_Sales"].sum().plot(kind="bar")',true,()=>grp(sum),'✓ 正確：分組後 sum，Y 軸是總額。'],
+      ['data.groupby("Platform")["Global_Sales"].count().plot(kind="bar")',false,()=>grp(a=>a.length),'✗ 算的是「筆數」——看到「總額」卻選了 count()，是這組題最典型的失分。'],
+      ['data["Platform"].value_counts().plot(kind="bar")',false,()=>grp(a=>a.length),'✗ 算的是各平台「出現次數」，和 count() 一樣不是總額。'],
+      ['data.groupby("Platform")["Global_Sales"].mean().plot(kind="bar")',false,()=>grp(mean),'✗ 算的是「平均」。']
+    ]],
+    ['114Q2-46','比較<b>四個地區</b>的銷售<b>總額</b>（資料是寬表：NA／EU／JP／Other 各一欄）。',[
+      ['sns.barplot(x="variable", y="value", data=pd.melt(data, value_vars=[...4 欄]), estimator=sum)',true,()=>regAgg(sum),'✓ 正確：寬表先 pd.melt 轉長表，再指定 estimator=sum。'],
+      ['sns.barplot(x="variable", y="value", data=pd.melt(data, value_vars=[...4 欄]))',false,()=>regAgg(mean),'✗ 沒寫 estimator：<b>barplot 預設聚合是平均值</b>，畫出來是各地區的平均銷量。'],
+      ['sns.countplot(x="variable", data=pd.melt(data, value_vars=[...4 欄]))',false,()=>regAgg(a=>a.length),'✗ countplot 只計次數、不吃數值型的 y：每個地區都是 8 筆，四根一樣高。'],
+      ['sns.histplot(data=pd.melt(data, value_vars=[...4 欄]), x="value")',false,null,'✗ histplot 畫的是「value 的分佈頻次」直方圖，不能比較各類別的總額。']
+    ]],
+    ['114Q2-47','畫出北美銷售（NA_Sales）<b>前五名</b>的條狀圖。',[
+      ['sns.barplot(x="Name", y="NA_Sales", data=data.nlargest(5, "NA_Sales"))',true,()=>top,'✓ 正確：nlargest(5, col) 取該欄數值最大的五「筆」。'],
+      ['sns.barplot(x="NA_Sales", y="Name", data=data.head(5))',false,()=>head,'✗ head(5) 取的是資料表的前五「列」（Alpha～Echo），Gale、Hero 明明更高卻沒入選，Comet、Echo 反而上榜。'],
+      ['sns.lineplot(x="Name", y="NA_Sales", data=data.nlargest(5, "NA_Sales"))',false,'line','✗ 資料篩對了，但<b>類別排名不該用折線圖</b>——點與點連線暗示不存在的連續性。']
+    ]]
+  ];
+  let t=0;
+  function bars(rows){const mx=Math.max(...rows.map(r=>r[1]),1);return rows.map(([k,v])=>`<div class="bar"><span>${k}</span><div class="track"><div class="fill" style="width:${(v/mx*100).toFixed(1)}%"></div></div><span class="num">${(+v).toFixed(Number.isInteger(v)?0:2)}</span></div>`).join('');}
+  function lineSvg(rows){const mx=Math.max(...rows.map(r=>r[1]));const pts=rows.map((r,i)=>[40+i*80,150-r[1]/mx*120]);return `<svg viewBox="0 0 400 180" style="max-width:420px"><polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="var(--aud)" stroke-width="3"/>${pts.map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="5" fill="var(--aud)"/><text x="${p[0]}" y="172" text-anchor="middle" font-size="12" fill="var(--muted)">${rows[i][0]}</text>`).join('')}</svg>`;}
+  function setTask(i){
+    t=i;$('#codeTabs').querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));
+    $('#codeAsk').innerHTML=`<span class="hint">${TASK[i][0]}　</span>${TASK[i][1]}`;
+    $('#codeOpts').innerHTML='';
+    TASK[i][2].forEach((o,k)=>{const b=document.createElement('button');b.innerHTML=`<code>${o[0]}</code>`;b.setAttribute('aria-pressed','false');b.onclick=()=>run(k,b);$('#codeOpts').appendChild(b);});
+    $('#codeV').textContent='點一行程式碼，看它實際畫出什麼';$('#codeV').style.color='';$('#codeChart').innerHTML='';$('#codeWhy').innerHTML='';
+  }
+  function run(k,b){
+    $('#codeOpts').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+    const o=TASK[t][2][k];
+    $('#codeV').textContent=o[1]?'✓ 符合題意':'✗ 答非所問';$('#codeV').style.color=o[1]?'var(--ok)':'var(--bad)';
+    if(o[2]===null)$('#codeChart').innerHTML='<div class="pout">（畫出的是單一數值欄位的分佈直方圖，沒有「地區」這個維度）</div>';
+    else if(o[2]==='line')$('#codeChart').innerHTML=lineSvg(top);
+    else{$('#codeChart').innerHTML=bars(o[2]());const fs=[...document.querySelectorAll('#codeChart .fill')];const w=fs.map(f=>f.style.width);fs.forEach(f=>f.style.width='0');setTimeout(()=>fs.forEach((f,j)=>f.style.width=w[j]),30);}
+    $('#codeWhy').innerHTML=o[3];
+  }
+  TASK.forEach((x,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=x[0];b.onclick=()=>setTask(i);$('#codeTabs').appendChild(b);});
+  setTask(0);
+})();
+
+/* ================= 36.6 ================= */
+flipCards($('#tufteCards'),[
+  ['資料墨水比','Data-Ink Ratio','呈現資料本身的墨水 ÷ 圖表總墨水，愈高愈好。該刪的是<b>裝飾</b>，不是軸標籤與圖例。'],
+  ['圖表垃圾','Chartjunk','只增加墨水卻不承載資料的元素：陰影、漸層色塊、3D 效果、背景圖。看到「加入 3D 效果使視覺更豐富」就是錯的。'],
+  ['資料密度','Data Density','在有限版面中承載盡可能多的有效資料資訊，同時維持可讀性與清楚的視覺層次。拆成十張圖是降低密度；刪光圖例軸標籤是過度誤用。'],
+  ['說謊因子','Lie Factor','圖形效果的變化幅度 ÷ 資料本身的變化幅度，理想值 = 1；遠大於 1 就是視覺誇大。']
+]);
+(function(){
+  const E=[
+    {k:'shadow',n:'3D 陰影',junk:true,w:14},
+    {k:'bg',n:'漸層背景',junk:true,w:18},
+    {k:'grid',n:'粗重格線',junk:true,w:10},
+    {k:'deco',n:'裝飾圖示',junk:true,w:8},
+    {k:'axis',n:'軸標籤',junk:false,w:5},
+    {k:'legend',n:'圖例',junk:false,w:5}
+  ];
+  const on={};E.forEach(e=>on[e.k]=true);
+  E.forEach(e=>{const b=document.createElement('button');b.className='btn';b.dataset.k=e.k;b.onclick=()=>{on[e.k]=!on[e.k];draw();};$('#inkBtns').appendChild(b);});
+  function draw(){
+    $('#inkBtns').querySelectorAll('.btn').forEach(b=>{const e=E.find(x=>x.k===b.dataset.k);b.textContent=(on[e.k]?'刪除 ':'加回 ')+e.n;b.setAttribute('aria-pressed',!on[e.k]);});
+    const vals=[[70,'甲'],[110,'乙'],[90,'丙'],[140,'丁']];
+    let h='<defs><linearGradient id="gbg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="var(--aud)" stop-opacity=".35"/><stop offset="1" stop-color="var(--sen)" stop-opacity=".35"/></linearGradient></defs>';
+    if(on.bg)h+='<rect x="0" y="0" width="320" height="220" fill="url(#gbg)"/>';
+    if(on.grid)for(let i=0;i<5;i++)h+=`<line x1="40" y1="${30+i*35}" x2="300" y2="${30+i*35}" stroke="var(--muted)" stroke-width="3"/>`;
+    h+='<line x1="40" y1="180" x2="300" y2="180" stroke="var(--ink)" stroke-width="1.5"/>';
+    vals.forEach(([v,n],i)=>{const x=60+i*60;if(on.shadow)h+=`<path d="M${x} ${180-v} l10 -10 h30 v${v} l-10 10Z" fill="var(--muted)" opacity=".6"/>`;h+=`<rect x="${x}" y="${180-v}" width="30" height="${v}" fill="var(--txt)"/>`;if(on.axis)h+=`<text x="${x+15}" y="198" text-anchor="middle" font-size="13" fill="var(--ink)">${n}</text>`;});
+    if(on.axis)h+='<text x="14" y="110" font-size="12" fill="var(--ink)" transform="rotate(-90 14 110)">營收（百萬）</text>';
+    if(on.legend)h+='<rect x="210" y="12" width="12" height="12" fill="var(--txt)"/><text x="228" y="23" font-size="12" fill="var(--ink)">2025 營收</text>';
+    if(on.deco)h+='<text x="70" y="40" font-size="28">💰</text><text x="160" y="36" font-size="22">⭐</text>';
+    $('#inkSvg').innerHTML=h;
+    const junk=E.filter(e=>e.junk&&on[e.k]).reduce((s,e)=>s+e.w,0);
+    const r=Math.round(50/(50+junk)*100);
+    $('#inkNum').textContent=r+'%';$('#inkMeter').style.width=r+'%';
+    const missing=!on.axis||!on.legend;
+    $('#inkMeter').style.background=missing?'var(--bad)':r>90?'var(--ok)':'var(--warn)';
+    $('#inkNote').innerHTML=missing?'<b style="color:var(--bad)">過度誤用！</b>比率看起來更高，但圖例或軸標籤是<b>解讀資料的必要元素</b>，刪掉圖就不能讀了。Tufte 主張刪的是非資料墨水中的多餘裝飾。':r>90?'✓ 裝飾都刪掉了，必要元素都保留——這才是資料墨水比的正確用法。':'陰影、漸層、粗格線、裝飾圖示都是 chartjunk：只增加墨水，不承載任何資料。';
+  }
+  draw();
+})();
+(function(){
+  const D=[
+    ['拆成多張圖避免資訊過載',false,'✗ 這是刻意<b>降低</b>資料密度，讀者得反覆跨圖比對，認知負擔反而增加。'],
+    ['移除所有圖例、軸標籤與輔助線',false,'✗ 過度誤用了資料墨水比。圖例與軸標籤是解讀資料的必要元素，刪光了圖就不能讀了。'],
+    ['同一張圖內以顏色區分序列、整合多組趨勢線、比例一致且標註清晰',true,'✓ 正解方向：讓決策者一眼掌握全貌。'],
+    ['加入色塊、陰影、3D 效果',false,'✗ 典型的 chartjunk，與提高資料墨水比的精神完全相反。']
+  ];
+  D.forEach(d=>{const b=document.createElement('button');b.textContent=d[0];b.setAttribute('aria-pressed','false');b.onclick=()=>{$('#densPick').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#densV').textContent=d[1]?'✓ 正解':'✗ 誘答';$('#densV').style.color=d[1]?'var(--ok)':'var(--bad)';$('#densWhy').innerHTML=d[2];};$('#densPick').appendChild(b);});
+})();
+(function(){
+  const V=[['A',3.2],['B',3.8],['C',4.0]];
+  const S=[['從 0 起算',0],['從 2.0 起算',2],['從 3.0 起算',3],['從 3.1 起算',3.1]];
+  tabset($('#truncTabs'),$('#truncNote'),S,(s)=>{
+    const st=s[1],top=4.2;
+    const H=v=>(v-st)/(top-st)*160;
+    let h=`<line x1="40" y1="190" x2="290" y2="190" stroke="var(--ink)"/><line x1="40" y1="30" x2="40" y2="190" stroke="var(--muted)"/>`;
+    h+=`<text x="34" y="194" text-anchor="end" font-size="12" fill="${st>0?'var(--bad)':'var(--muted)'}" font-weight="700">${st.toFixed(1)}%</text><text x="34" y="34" text-anchor="end" font-size="12" fill="var(--muted)">${top}%</text>`;
+    if(st>0)h+='<path d="M34 176 l12 -5 M34 182 l12 -5" stroke="var(--bad)" stroke-width="2"/>';
+    V.forEach(([n,v],i)=>{const x=70+i*75,hh=H(v);h+=`<rect x="${x}" y="${190-hh}" width="46" height="${hh}" rx="3" fill="var(--txt)" style="transition:all .6s"/><text x="${x+23}" y="${184-hh}" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">${v}%</text><text x="${x+23}" y="208" text-anchor="middle" font-size="13" fill="var(--muted)">${n}</text>`;});
+    $('#truncSvg').innerHTML=h;
+    const dataR=4.0/3.2,visR=H(4.0)/H(3.2);
+    const lf=((H(4.0)-H(3.2))/H(3.2))/((4.0-3.2)/3.2);
+    $('#truncNums').innerHTML=`<div>資料比 C÷A<b>${dataR.toFixed(2)} 倍</b></div><div>視覺高度比 C÷A<b style="color:${visR>1.3?'var(--bad)':'var(--ok)'}">${visR.toFixed(2)} 倍</b></div><div>說謊因子<b style="color:${lf>1.05?'var(--bad)':'var(--ok)'}">${lf.toFixed(1)}</b></div>`;
+    return st===0?'✓ Y 軸從 0 起算：長度比例＝數值比例，說謊因子 = 1。':`✗ 截斷後，0.8 個百分點的差距在視覺上被放大成 <b>${visR.toFixed(1)} 倍</b>落差。這是<b>造成視覺誤導、放大實際差異感</b>，底層數據一個字都沒變。`;
+  });
+})();
+(function(){
+  const M=[
+    ['截斷 Y 軸','長條圖的 Y 軸不從 0 起算','長條圖以<b>長度</b>編碼數量，讀者靠柱體長度比例感知大小；軸一截斷，長度比例就不再等於數值比例','<b>長條圖的 Y 軸從 0 開始</b>；真要凸顯小差異，改用點圖並標註數值與誤差範圍',()=>`<svg viewBox="0 0 200 130" style="max-width:240px"><rect x="40" y="90" width="40" height="30" fill="var(--txt)"/><rect x="110" y="20" width="40" height="100" fill="var(--txt)"/><line x1="30" y1="120" x2="170" y2="120" stroke="var(--ink)"/><text x="25" y="124" text-anchor="end" font-size="11" fill="var(--bad)">3.0</text></svg>`],
+    ['雙 Y 軸','兩個序列各用一根刻度不同的 Y 軸','兩軸的縮放與起點可任意調整，交叉點與「誰領先誰」都能被人為操縱','改用同基期指數化（基期 = 100）、小倍數多圖（Small Multiples），或乾脆分成兩張圖','dual'],
+    ['3D 效果／3D 圓餅','給圓餅或長條加上透視','透視讓靠近讀者的扇形看起來更大，角度與面積雙雙失真','一律改用 2D；類別多時直接改用長條圖',()=>`<svg viewBox="0 0 200 130" style="max-width:240px"><ellipse cx="100" cy="75" rx="80" ry="30" fill="var(--muted)"/><ellipse cx="100" cy="62" rx="80" ry="30" fill="var(--txt)"/><path d="M100 62 L180 62 A80 30 0 0 1 60 88 Z" fill="var(--sen)"/><text x="125" y="80" font-size="11" fill="#fff">25%</text><text x="70" y="55" font-size="11" fill="#fff">25%</text></svg><p class="hint" style="text-align:center;margin:0">兩塊一樣 25%，靠近你的那塊看起來更大</p>`],
+    ['面積／體積失真','用圖示或氣泡表示數量時，寬與高<b>同時</b>等比例放大','數值變 2 倍，面積卻變 4 倍，視覺增幅遠超過資料增幅（說謊因子 ≫ 1）','氣泡圖以<b>面積</b>（不是半徑或直徑）編碼數值','bubble']
+  ];
+  let dualAlt=false,bubArea=false;
+  function viz(i){
+    const m=M[i];
+    if(m[4]==='dual'){
+      const a=[40,45,50,55,60],b=[200,205,210,215,220];
+      const sc=dualAlt?[180,230]:[100,400];
+      const ya=v=>150-(v-30)/40*130,yb=v=>150-(v-sc[0])/(sc[1]-sc[0])*130;
+      return `<div style="width:100%"><svg viewBox="0 0 260 170" style="max-width:300px;margin:0 auto"><polyline points="${a.map((v,j)=>`${30+j*50},${ya(v)}`).join(' ')}" fill="none" stroke="var(--txt)" stroke-width="3"/><polyline points="${b.map((v,j)=>`${30+j*50},${yb(v)}`).join(' ')}" fill="none" stroke="var(--aud)" stroke-width="3" style="transition:all .6s"/><text x="5" y="14" font-size="11" fill="var(--txt)">左軸 營收</text><text x="255" y="14" text-anchor="end" font-size="11" fill="var(--aud)">右軸 用戶 ${sc[0]}–${sc[1]}</text></svg><div class="row" style="justify-content:center"><button class="btn" id="dualBtn">調整右軸刻度</button></div><p class="hint" style="text-align:center;margin:6px 0 0">${dualAlt?'右軸範圍一縮，用戶線就「超車」營收了——數據完全沒變。':'目前看起來營收遙遙領先用戶數。'}</p></div>`;
+    }
+    if(m[4]==='bubble'){
+      const r2=bubArea?Math.SQRT2*30:60;
+      return `<div style="width:100%"><svg viewBox="0 0 240 140" style="max-width:280px;margin:0 auto"><circle cx="50" cy="80" r="30" fill="var(--img)"/><text x="50" y="85" text-anchor="middle" font-size="13" fill="#fff">1</text><circle cx="${110+r2}" cy="80" r="${r2}" fill="var(--sen)" style="transition:all .6s"/><text x="${110+r2}" y="85" text-anchor="middle" font-size="13" fill="#fff">2</text></svg><div class="row" style="justify-content:center"><button class="btn" id="bubBtn" aria-pressed="${bubArea}">${bubArea?'改回：半徑 ×2':'改成：面積 ×2'}</button></div><p class="hint" style="text-align:center;margin:6px 0 0">${bubArea?'✓ 以面積編碼：數值 2 倍、面積 2 倍，說謊因子 = 1。':'✗ 半徑 ×2 → 面積 ×4：視覺增幅 300% ÷ 資料增幅 100%，說謊因子 = 3。'}</p></div>`;
+    }
+    return m[4]();
+  }
+  let cur=0;
+  function bind(){const d=$('#dualBtn');if(d)d.onclick=()=>{dualAlt=!dualAlt;$('#misViz').innerHTML=viz(cur);bind();};const b=$('#bubBtn');if(b)b.onclick=()=>{bubArea=!bubArea;$('#misViz').innerHTML=viz(cur);bind();};}
+  tabset($('#misTabs'),$('#misTxt'),M,(m,i)=>{cur=i;return `<p style="margin:0 0 6px"><b>做法：</b>${m[1]}</p><p style="margin:0 0 6px"><b>為什麼會誤導：</b>${m[2]}</p><p style="margin:0;color:var(--ok)"><b>正確作法：</b><span style="color:var(--ink)">${m[3]}</span></p>`;},(m,i)=>{$('#misViz').innerHTML=viz(i);bind();});
+})();
+
+/* ================= 36.7 ================= */
+examList($('#examList'),[
+  ['114Q2-21','Tufte 資料密度','單頁呈現多區域 × 多產品線的趨勢，何者符合資料密度原則','<b>同一張圖整合</b>、顏色區分序列、比例一致且標註清晰；拆多張圖／刪光標籤／改表格都不是'],
+  ['114Q2-22','多變數關聯的圖表選型','四檔股票，<b>單一圖表</b>看兩兩關聯的強度與方向','<b>熱力圖＋相關係數矩陣</b>；散佈圖一次只能比一對，雙軸折線圖易誤導比例'],
+  ['114Q2-25','盒鬚圖判讀＋長尾處理','IQR 極小、上鬚極長、高值多離群值，如何凸顯消費層級','<b>對數刻度</b>壓縮大值、放大層級差；移除離群值等於抹掉高消費族群'],
+  ['114Q2-45','pandas 繪圖語法','各平台全球銷售「總額」的長條圖','<code>groupby(...).sum().plot(kind="bar")</code>；count／value_counts／mean 都答非所問'],
+  ['114Q2-46','seaborn 聚合語法','四地區銷售總額比例的長條圖','寬表先 <code>pd.melt</code> → <code>sns.barplot(..., estimator=sum)</code>；<b>barplot 預設是平均</b>'],
+  ['114Q2-47','seaborn 排名圖','北美銷售<b>前五名</b>的條狀圖','<code>data.nlargest(5, "NA_Sales")</code> ＋ barplot；head(5) 是前五列不是最大五筆'],
+  ['115Q1-1','盒鬚圖偏態判讀','盒短鬚長／盒長對稱／中位數偏下，何者敘述正確','盒短鬚長＝中段集中但有極端值；<b>中位數偏下＝右偏</b>；盒鬚圖本來就能判讀偏態'],
+  ['115Q1-27','Tufte 資料密度','單頁呈現 1,000 位使用者的三項指標','有限版面<b>盡可能多的有效資訊＋維持可讀性與視覺層次</b>；刪圖例、拆多圖、加 3D 全錯'],
+  ['115Q1-28','誤導性視覺化','長條圖 Y 軸截斷（3.2%／3.8%／4.0%）','<b>造成視覺誤導、放大實際差異感</b>；呈現方式不會改變底層數據'],
+  ['115Q1-29','時序圖表選型','儀表板呈現推論延遲隨時間變化以監控 SLA','<b>折線圖</b>；面積圖干擾閾值判讀、散佈圖無時序連線、長條圖在密集時序上柱體過多']
+]);
+examList($('#examList2'),[
+  ['114Q2-3','由分佈圖判讀偏態的正負','','尾巴向左 → <b>Skewness &lt; 0</b>（左偏／負偏）'],
+  ['114Q2-30','散佈圖看到線性趨勢後選量化指標','','<b>皮爾森相關係數</b>；RMSE／MAE 是預測誤差指標，共變異數受單位影響'],
+  ['114Q2-48','describe() 輸出的四分位數判讀','','25%／50%／75% 分別是 Q1／中位數／Q3，逐欄對照即可']
+]);
+(function(){
+  const T=[['圖表選型題',3,'var(--txt)','114Q2-22、114Q2-25、115Q1-29'],['設計原則與倫理',3,'var(--sen)','114Q2-21、115Q1-27、115Q1-28'],['程式碼題',3,'var(--aud)','114Q2-45、46、47'],['圖形判讀題',1,'var(--img)','115Q1-1（＋邊界 114Q2-3、114Q2-48）']];
+  $('#typeBars').innerHTML=T.map(([n,v,c,q])=>`<div class="typebar"><span>${n}</span><div class="meter" style="height:18px;margin:0"><i style="width:0;background:${c}" data-w="${v/3*100}"></i></div><b>${v}</b></div><div class="hint" style="margin:-4px 0 8px">${q}</div>`).join('');
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('i[data-w]').forEach(i=>i.style.width=i.dataset.w+'%');io.disconnect();}}));
+  io.observe($('#typeBars'));
+})();
+
+/* ================= 36.8 ================= */
+traps('l22303-traps',[
+  ['盒鬚圖的鬚端是「1.5×IQR 圍欄以內最遠的實際觀測值」，不是最大值／最小值，也不是圍欄本身','五數綜合的 min／max 與 Tukey 盒鬚圖的鬚端，在有離群值時並不相等。'],
+  ['中位數貼近盒子下緣代表右偏，不是左偏','下緣是 Q1；中位數靠 Q1 表示 Q3−Q2 較長、上半被拉長，尾巴往右。偏態方向看尾巴往哪拉，不看資料堆在哪。'],
+  ['1.5×IQR 裡的 IQR 是 Q3−Q1，不是 max−min','全距（Range）才是 max−min，兩者不可互換。'],
+  ['盒鬚圖標記離群值的方式是「用符號單獨標出」，不是自動刪除，也不是用箱體大小表示','它只負責標記，是否剔除是後續分析的決定。'],
+  ['盒鬚圖看不出多峰分佈，但看得出偏態','要看形狀得用直方圖、KDE 或小提琴圖；「盒鬚圖無法判斷偏態」這種說法是錯的。'],
+  ['直方圖的 X 軸是連續數值的區間，長條圖的 X 軸是離散類別','題幹說「類別變數的分佈」選長條圖，說「連續變數的分佈」才選直方圖。'],
+  ['長條圖的 Y 軸要從 0 起算；折線圖可以不從 0 但要標示刻度起點','差別來自編碼方式：長條用長度編碼絕對量，折線用斜率編碼變化。'],
+  ['截斷 Y 軸是「放大視覺差異造成誤導」，不是「提升辨識能力」，更不會改變底層數據','誘答常把它包裝成優點。'],
+  ['圓餅圖的建議上限是 5～6 類，而且只能表達「部分對全體」','類別多、要精細比較、或含負值時一律改長條圖。'],
+  ['堆疊長條圖只有最底層的基線是對齊的','跨組比較中間層時視覺誤差最大；若重點是比較某一個子類別，改用分組長條圖（Grouped Bar）。'],
+  ['相關係數矩陣熱力圖只反映線性關係','r 接近 0 只代表沒有線性關係，不代表兩變數獨立；非線性關聯要用互資訊等方法。'],
+  ['Seaborn 的 barplot 預設聚合是平均值，不是總和','要總額必須明確寫 estimator=sum；countplot 只計次數，不吃連續數值。'],
+  ['head(5) 取的是前五「列」，nlargest(5, col) 取的才是該欄最大的五「筆」','排名題只能用後者。'],
+  ['value_counts() 算的是類別出現次數，groupby(...).sum() 算的才是數值總額','題幹的「總額／平均／筆數」三個詞直接決定選哪一個。'],
+  ['Tufte 主張刪的是裝飾性的非資料墨水，不是圖例與軸標籤','把座標軸標籤也刪掉，是對資料墨水比的過度誤用。'],
+  ['資料密度是「單頁承載更多有效資訊並維持可讀性」，不是「拆成多張圖避免過載」','拆圖正好是降低密度。'],
+  ['Seaborn 建構在 Matplotlib 之上，不是彼此獨立的替代品','Seaborn 負責統計圖表的高階介面，細部版面仍要回到 Matplotlib 調整。'],
+  ['Grafana 的主場是時序資料與即時監控，Tableau／Power BI 的主場是商業報表與跨部門儀表板','題幹出現「感測器／即時／時序資料庫」就往 Grafana 靠。'],
+  ['Power BI 的賣點是與 Office／Azure 整合且成本較低，Tableau 的賣點是探索式分析體驗','兩者都能做互動儀表板，差別在生態與成本，不在「能不能做」。'],
+  ['分級著色地圖應填比率或密度，不是絕對數','填絕對數會讓面積大的區域取得不成比例的視覺權重。'],
+  ['雙 Y 軸不是「一次看兩個指標」的萬用解','兩軸刻度可任意調整，交叉點是人為決定的；改用同基期指數化或小倍數多圖較安全。'],
+  ['右偏長尾資料的處理是換成對數刻度，不是刪掉離群值','刪掉離群值等於刪掉你正要分析的那個族群。']
+]);
+quiz([
+  ['儀表板要呈現模型推論延遲「隨時間」的變化，以監控 SLA，最適合哪種圖表？',['折線圖','面積圖','散佈圖','長條圖'],'115Q1-29：面積圖干擾閾值判讀、散佈圖沒有時序連線、長條圖在密集時序上柱體過多。'],
+  ['四檔股票要以「單一圖表」快速呈現各股票間關聯的強度與方向，應選？',['熱力圖＋相關係數矩陣','散佈圖加趨勢線','雙 Y 軸折線圖','堆疊長條圖'],'114Q2-22：散佈圖一次只能比一對，四檔要畫六張，違反「單一圖表」；雙軸折線圖呈現的是走勢不是關聯。'],
+  ['資料 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 60（Tukey hinge 法），盒鬚圖的上鬚端是多少？',['20','60','36','18'],'Q1=6、Q3=18、IQR=12、上圍欄=36；60 是離群值，上鬚端停在圍欄內最大的實際值 20。'],
+  ['盒鬚圖中，中位數明顯靠近盒子下緣（Q1），代表？',['右偏（正偏）','左偏（負偏）','近似對稱','離群值很少'],'115Q1-1：Q3−Q2 > Q2−Q1，上半被拉長、尾巴往右。直覺常誤判成左偏。'],
+  ['消費金額的盒鬚圖 IQR 極小、上鬚極長、高值區很多離群值，要凸顯各消費層級差異，最適合的作法是？',['改用對數刻度繪製','移除所有離群值','改用等距分箱','改畫折線圖'],'114Q2-25：對數刻度壓縮大值、放大層級差。移除離群值會抹掉高消費族群；等距分箱讓多數樣本擠進頭一兩個箱。'],
+  ['散佈圖看到明顯線性趨勢、無離群值，要衡量兩變數線性關係的強度與方向，應選？',['皮爾森相關係數','RMSE','MAE','共變異數'],'114Q2-30：RMSE／MAE 是預測誤差指標；共變異數受單位尺度影響，無法直接判讀強度。'],
+  ['要畫各平台全球銷售「總額」的長條圖，哪一行正確？',['data.groupby("Platform")["Global_Sales"].sum().plot(kind="bar")','data.groupby("Platform")["Global_Sales"].count().plot(kind="bar")','data["Platform"].value_counts().plot(kind="bar")','data.groupby("Platform")["Global_Sales"].mean().plot(kind="bar")'],'114Q2-45：總額 → sum()；count 與 value_counts 是筆數，mean 是平均。'],
+  ['用 sns.barplot 比較四個地區的銷售「總額」，沒寫 estimator 會畫出什麼？',['各地區的平均值','各地區的總和','各地區的筆數','各地區的中位數'],'114Q2-46：barplot 預設聚合是平均值，要總額必須寫 estimator=sum。'],
+  ['要畫北美銷售「前五名」的條狀圖，下列何者正確？',['sns.barplot(x="Name", y="NA_Sales", data=data.nlargest(5, "NA_Sales"))','sns.barplot(x="NA_Sales", y="Name", data=data.head(5))','sns.lineplot(x="Name", y="NA_Sales", data=data.nlargest(5, "NA_Sales"))','sns.countplot(x="Name", data=data.head(5))'],'114Q2-47：head(5) 是前五列不是最大五筆；類別排名不該用折線圖；countplot 只計次數。'],
+  ['單頁要呈現多區域 × 多產品線的趨勢，何者符合 Tufte 的「資料密度」原則？',['同一張圖以顏色區分序列、整合多組趨勢線，比例一致且標註清晰','拆成多張圖避免資訊過載','移除所有圖例、軸標籤與輔助線','加入色塊、陰影與 3D 效果使視覺更豐富'],'114Q2-21／115Q1-27：拆圖是降低密度；刪光標籤是過度誤用資料墨水比；3D 是 chartjunk。'],
+  ['轉換率 A 3.2%、B 3.8%、C 4.0% 的長條圖把 Y 軸截斷，最主要的影響是？',['造成視覺誤導並放大實際差異感','增強小幅差異的可視化辨識能力','提升圖表計算準確性','讓圖表更符合資料墨水比'],'115Q1-28：差異「看起來」更明顯是以扭曲比例為代價；呈現方式不會改變底層數據。'],
+  ['工廠要即時監控感測器數據並設定門檻告警，資料存在時序資料庫，最適合的工具是？',['Grafana','Tableau','Power BI','ggplot2'],'題幹出現「即時監控／感測器／時序資料庫」→ Grafana。Tableau／Power BI 的主場是商業報表。']
+],['太強了，選型、判讀、程式碼、倫理四種題型都能秒答。','不錯！回頭看看答錯的那幾題對應的段落。','建議重新操作 36.2 的盒鬚圖模擬器、36.5 的程式碼實驗室與 36.6 的截斷 Y 軸模擬器，再來一次。']);
+
+navHighlight();
+</script>
+</body>
+</html>

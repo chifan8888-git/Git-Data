@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L22203 數據處理技術與工具｜互動教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F5; --surface:#FFFFFF; --surface2:#F6F8FB; --ink:#18202E; --muted:#5A6475; --line:#D5DBE4;
+  --txt:#3B4CCA; --img:#0E8A7A; --aud:#B87812; --sen:#B8336A;
+  --ok:#1F8A4C; --bad:#C23B2E; --warn:#D9822B;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+    --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+  --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75}
+h1,h2,h3{font-family:var(--serif);line-height:1.3;margin:0}
+p{margin:0 0 1em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--txt);outline-offset:2px;border-radius:4px}
+svg{max-width:100%;height:auto;display:block}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1180px;margin:0 auto;gap:40px;padding:0 24px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;padding:32px 0;height:100vh;overflow:auto}
+nav.toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14.5px}
+nav.toc a span{font-variant-numeric:tabular-nums;font-size:13px;opacity:.8}
+nav.toc a.on{background:var(--surface);color:var(--ink);font-weight:700}
+.toc-title{font-family:var(--serif);font-weight:900;font-size:18px;padding:0 10px 14px}
+main{min-width:0;padding-bottom:80px}
+section{padding:56px 0 8px;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.sec-head{display:flex;gap:16px;align-items:baseline;margin-bottom:18px}
+.sec-no{font-family:var(--serif);font-weight:900;font-size:40px;color:var(--line);line-height:1}
+h2{font-size:28px;font-weight:900}
+h3{font-size:19px;margin:34px 0 10px}
+.lead{color:var(--muted);max-width:66ch}
+.prose{max-width:68ch}
+
+/* hero */
+.hero{padding:44px 0 24px}
+.hero .code{font-size:14px;color:var(--muted);margin-bottom:6px}
+.hero h1{font-size:clamp(34px,5.5vw,56px);font-weight:900;letter-spacing:.02em}
+.hero .one{font-size:18px;max-width:60ch;margin:16px 0 0;color:var(--muted)}
+.hero-fig{background:var(--surface);border-radius:20px;margin-top:28px;padding:14px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+.goal{border-left:4px solid var(--c);padding:6px 0 6px 14px;font-size:15px}
+
+/* panels */
+.panel{background:var(--surface);border-radius:16px;padding:22px;margin:16px 0}
+.panel.flat{background:var(--surface2)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font-size:15px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hint{font-size:14px;color:var(--muted)}
+.callout{border-left:4px solid var(--warn);background:var(--surface2);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;font-size:15px}
+.callout.exam{border-color:var(--txt)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:14px}
+
+/* modality chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+
+/* matcher */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.match .col{display:flex;flex-direction:column;gap:10px}
+.mitem{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15px;transition:border-color .2s,background .2s,transform .2s}
+.mitem small{display:block;color:var(--muted);font-size:13px}
+.mitem.sel{border-color:var(--ink);transform:translateX(4px)}
+.mitem.done{border-color:var(--c,var(--ok));background:var(--surface2);cursor:default}
+.mitem.wrong{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:1.8em;margin-top:12px;font-size:15px}
+.feedback.ok{color:var(--ok)} .feedback.bad{color:var(--bad)}
+
+/* timeline */
+.steps{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stage-viz{min-height:130px;display:flex;align-items:center;justify-content:center}
+.stage-viz .blk{display:inline-block;width:34px;height:34px;border-radius:6px;margin:2px;transition:all .5s}
+
+/* align toggle */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.compare>div{padding:18px}
+.compare>div+div{border-left:1px solid var(--line)}
+.compare .big{font-family:var(--serif);font-weight:900;font-size:22px;margin-bottom:6px}
+
+/* fusion */
+.meter{height:14px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:6px 0}
+.meter>i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .7s cubic-bezier(.3,.8,.3,1),background .4s}
+.flow{stroke-dasharray:6 7;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.jitter{animation:jit .25s steps(2) infinite}
+@keyframes jit{50%{transform:translate(1.5px,-1px)}}
+.fusion-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.pc{font-size:15px}
+.pc b{display:block;font-size:14px;color:var(--muted);font-weight:500}
+
+/* clip */
+.mat{display:grid;gap:4px;font-size:13px}
+.mat .cell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;transition:background .5s,color .5s}
+.mat .lab{display:flex;align-items:center;justify-content:center;font-size:22px}
+.mat .tlab{font-size:12px;text-align:center;color:var(--muted);display:flex;align-items:flex-end;justify-content:center;line-height:1.3}
+.zs-imgs{display:flex;gap:10px;flex-wrap:wrap}
+.zs-img{font-size:38px;width:72px;height:72px;border-radius:16px;border:2px solid var(--line);background:var(--surface2);display:flex;align-items:center;justify-content:center}
+.zs-img[aria-pressed="true"]{border-color:var(--img);box-shadow:0 0 0 3px color-mix(in srgb,var(--img) 25%,transparent)}
+.bar{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.bar .track{height:22px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;width:0;background:var(--txt);border-radius:6px;transition:width .8s cubic-bezier(.3,.8,.3,1)}
+.bar.win .fill{background:var(--img)}
+.bar.win{font-weight:700}
+.bar .num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.flip{perspective:900px;height:150px;border:0;background:none;padding:0;text-align:left}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flip[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:center}
+.flip .f{background:var(--surface);border:1.5px solid var(--line)}
+.flip .f strong{font-family:var(--serif);font-size:22px}
+.flip .f span{color:var(--muted);font-size:14px}
+.flip .b{background:var(--ink);color:var(--bg);transform:rotateY(180deg);font-size:15px}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.pnode{border:2px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;font-size:14px;background:var(--surface);transition:all .35s}
+.pnode b{display:block;font-size:16px}
+.pnode.on{border-color:var(--aud);background:color-mix(in srgb,var(--aud) 14%,var(--surface));transform:translateY(-3px)}
+.pnode.past{border-color:color-mix(in srgb,var(--aud) 45%,var(--line))}
+.pout{background:var(--surface2);border-radius:12px;padding:14px 16px;min-height:84px;font-size:15px}
+.wave{display:flex;gap:3px;align-items:center;height:30px}
+.wave i{width:4px;background:var(--aud);border-radius:2px;animation:wv 1s ease-in-out infinite}
+@keyframes wv{50%{transform:scaleY(.3)}}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+
+/* strategies */
+.strat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.strat button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;text-align:left;font-size:15px}
+.strat button[aria-pressed="true"]{border-color:var(--ink)}
+.verdict{font-family:var(--serif);font-weight:900;font-size:20px}
+
+details{border-bottom:1px solid var(--line)}
+details summary{cursor:pointer;padding:12px 4px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"+";font-weight:900;width:14px;color:var(--muted)}
+details[open] summary::before{content:"−"}
+details .body{padding:0 4px 14px 30px;font-size:15px}
+.tag{font-size:12.5px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums;min-width:80px}
+
+/* quiz */
+.qcard{background:var(--surface);border-radius:16px;padding:24px}
+.qtop{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
+.qtext{font-size:18px;font-weight:700;margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15.5px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+.opt.wrongpick{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.opt:disabled{cursor:default}
+.expl{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15px;display:none}
+.expl.show{display:block}
+.progress{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;margin-bottom:14px}
+.progress i{display:block;height:100%;background:var(--txt);transition:width .4s}
+
+.traps label{display:flex;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:15px}
+.traps input{width:18px;height:18px;margin-top:4px;flex:none;accent-color:var(--ok)}
+.traps label.chk>span{color:var(--muted)}
+.traps em{font-style:normal;font-weight:700}
+
+/* mobile */
+@media (max-width:860px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+  nav.toc{position:sticky;top:0;height:auto;z-index:10;background:var(--bg);display:flex;overflow-x:auto;padding:8px 0;padding-top:calc(8px + env(safe-area-inset-top,0px));gap:4px;border-bottom:1px solid var(--line)}
+  .toc-title{display:none}
+  nav.toc a{white-space:nowrap;flex:none}
+  .match,.stage,.fusion-meta,.compare{grid-template-columns:1fr}
+  .compare>div+div{border-left:0;border-top:1px solid var(--line)}
+  .pipe{grid-template-columns:repeat(5,minmax(90px,1fr));overflow-x:auto}
+  .bar{grid-template-columns:110px 1fr 56px}
+  h2{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* ---- extra components (same tokens) ---- */
+pre.code{background:var(--surface2);border-radius:12px;padding:14px 16px;overflow-x:auto;font-size:13.5px;line-height:1.65;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;margin:12px 0;white-space:pre}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em;background:var(--surface2);padding:1px 5px;border-radius:5px;overflow-wrap:anywhere}
+pre.code code{background:none;padding:0}
+.cm{color:var(--muted)}
+input[type=range]{width:100%;accent-color:var(--txt)}
+.slider{display:grid;grid-template-columns:170px 1fr 80px;gap:12px;align-items:center;font-size:15px;margin:6px 0}
+.slider output{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:12px}
+.kpi{background:var(--surface2);border-radius:12px;padding:10px 14px;border-top:3px solid var(--c,var(--line))}
+.kpi b{display:block;font-family:var(--serif);font-size:22px;font-variant-numeric:tabular-nums}
+.kpi span{font-size:13px;color:var(--muted)}
+.pipe{grid-template-columns:repeat(var(--n,5),1fr)}
+.mini{font-size:14px;min-width:0}
+.mini th,.mini td{padding:6px 8px}
+.ok-t{color:var(--ok);font-weight:700}.bad-t{color:var(--bad);font-weight:700}.warn-t{color:var(--warn);font-weight:700}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:14px;color:var(--muted);margin-top:8px}
+a{color:var(--txt)}
+.out{background:var(--surface2);border-radius:12px;padding:12px 16px;font-size:15px;min-height:60px;margin-top:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:860px){
+  .slider{grid-template-columns:1fr 70px;gap:4px 10px}
+  .slider label{grid-column:1/-1}
+  .pipe{grid-template-columns:repeat(var(--n,5),minmax(90px,1fr))}
+  .grid2{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="toc" aria-label="章節">
+  <div class="toc-title">數據處理技術與工具</div>
+  <a href="#intro"><span>●</span>導覽與目標</a>
+  <a href="#s1"><span>33.1</span>資料轉換</a>
+  <a href="#s2"><span>33.2</span>特徵工程</a>
+  <a href="#s3"><span>33.3</span>分散式框架</a>
+  <a href="#s4"><span>33.4</span>Lambda／Kappa 與管線</a>
+  <a href="#s5"><span>33.5</span>pandas 與 sklearn</a>
+  <a href="#s6"><span>33.6</span>官方考題</a>
+  <a href="#s7"><span>33.7</span>易錯與測驗</a>
+</nav>
+
+<main>
+<!-- HERO -->
+<section id="intro" class="hero">
+  <div class="code">L22203　中級 AI 應用規劃師（大數據分析）　建議 45 分鐘</div>
+  <h1>數據處理技術與工具</h1>
+  <p class="one"><a href="L22201_data_collection_cleaning.html">L22201</a>／<a href="L22202_data_storage_management.html">L22202</a> 把資料「蒐集進來、洗乾淨、存起來」，本節負責把乾淨資料變成<b>可運算、算得動、算得完</b>的資源 —— 前半是單機上的轉換與特徵工程，後半是資料量超過單機之後的分散式運算與管線工程，而中級最愛考的正是後半段的<b>框架選型</b>與<b>流程順序</b>。</p>
+  <div class="hero-fig" aria-hidden="true">
+    <svg id="heroSvg" viewBox="0 0 720 300">
+      <defs>
+        <path id="hp0" d="M110 150 L 230 150"/>
+        <path id="hp1" d="M300 150 C 360 150, 380 60, 440 60"/>
+        <path id="hp2" d="M300 150 L 440 150"/>
+        <path id="hp3" d="M300 150 C 360 150, 380 240, 440 240"/>
+        <path id="hp4" d="M500 60 C 560 60, 560 150, 610 150"/>
+        <path id="hp5" d="M500 150 L 610 150"/>
+        <path id="hp6" d="M500 240 C 560 240, 560 150, 610 150"/>
+      </defs>
+      <g fill="none" stroke-width="2" opacity=".35">
+        <use href="#hp0" stroke="var(--txt)"/><use href="#hp1" stroke="var(--aud)"/><use href="#hp2" stroke="var(--aud)"/><use href="#hp3" stroke="var(--aud)"/>
+        <use href="#hp4" stroke="var(--sen)"/><use href="#hp5" stroke="var(--sen)"/><use href="#hp6" stroke="var(--sen)"/>
+      </g>
+      <g font-family="Noto Sans TC, sans-serif" font-size="15" font-weight="700">
+        <rect x="10" y="125" width="100" height="50" rx="12" fill="var(--surface2)" stroke="var(--line)"/><text x="60" y="155" text-anchor="middle" fill="var(--ink)">乾淨資料</text>
+        <rect x="230" y="100" width="70" height="100" rx="14" fill="var(--txt)"/><text x="265" y="145" text-anchor="middle" fill="#fff">轉換</text><text x="265" y="168" text-anchor="middle" fill="#fff" font-size="13">＋特徵</text>
+        <rect x="440" y="38" width="60" height="44" rx="10" fill="var(--aud)"/><text x="470" y="65" text-anchor="middle" fill="#fff" font-size="13">節點1</text>
+        <rect x="440" y="128" width="60" height="44" rx="10" fill="var(--aud)"/><text x="470" y="155" text-anchor="middle" fill="#fff" font-size="13">節點2</text>
+        <rect x="440" y="218" width="60" height="44" rx="10" fill="var(--aud)"/><text x="470" y="245" text-anchor="middle" fill="#fff" font-size="13">節點3</text>
+        <text x="470" y="292" text-anchor="middle" fill="var(--muted)" font-size="13">分散式運算</text>
+        <rect x="610" y="120" width="100" height="60" rx="12" fill="var(--sen)"/><text x="660" y="146" text-anchor="middle" fill="#fff">管線</text><text x="660" y="166" text-anchor="middle" fill="#fff" font-size="13">→ 模型</text>
+      </g>
+      <g class="movers">
+        <circle r="6" fill="var(--txt)"><animateMotion dur="1.4s" repeatCount="indefinite"><mpath href="#hp0"/></animateMotion></circle>
+        <circle r="6" fill="var(--aud)"><animateMotion dur="1.8s" begin=".2s" repeatCount="indefinite"><mpath href="#hp1"/></animateMotion></circle>
+        <circle r="6" fill="var(--aud)"><animateMotion dur="1.8s" begin=".4s" repeatCount="indefinite"><mpath href="#hp2"/></animateMotion></circle>
+        <circle r="6" fill="var(--aud)"><animateMotion dur="1.8s" begin=".6s" repeatCount="indefinite"><mpath href="#hp3"/></animateMotion></circle>
+        <circle r="6" fill="var(--sen)"><animateMotion dur="1.6s" begin="1s" repeatCount="indefinite"><mpath href="#hp4"/></animateMotion></circle>
+        <circle r="6" fill="var(--sen)"><animateMotion dur="1.6s" begin="1.2s" repeatCount="indefinite"><mpath href="#hp5"/></animateMotion></circle>
+        <circle r="6" fill="var(--sen)"><animateMotion dur="1.6s" begin="1.4s" repeatCount="indefinite"><mpath href="#hp6"/></animateMotion></circle>
+      </g>
+    </svg>
+  </div>
+  <h3>學完這一課，你應該能夠</h3>
+  <div class="goals">
+    <div class="goal" style="--c:var(--txt)">依資料性質與下游模型，選出正確的型別轉換、分箱、編碼與縮放方法，並說明其副作用</div>
+    <div class="goal" style="--c:var(--img)">對照 Hadoop MapReduce、Spark、Flink、Beam 的處理模式與適用情境，判斷情境題該選哪一個</div>
+    <div class="goal" style="--c:var(--aud)">區辨批次、微批次與原生串流的延遲特性，並說明 Lambda 與 Kappa 架構的取捨</div>
+    <div class="goal" style="--c:var(--sen)">寫出 pandas 與 scikit-learn 常考的分組、合併、分批讀取與縮放語法，並指出錯誤寫法錯在哪</div>
+  </div>
+  <p class="hint" style="margin-top:20px">本頁顏色代表四段工作：<span class="chip" style="--c:var(--txt)"><i class="dot"></i>資料轉換</span>　<span class="chip" style="--c:var(--img)"><i class="dot"></i>特徵工程</span>　<span class="chip" style="--c:var(--aud)"><i class="dot"></i>分散式運算</span>　<span class="chip" style="--c:var(--sen)"><i class="dot"></i>串流與管線</span></p>
+</section>
+
+<!-- 33.1 -->
+<section id="s1">
+  <div class="sec-head"><span class="sec-no">33.1</span><h2>資料轉換：把「乾淨」變成「可運算」</h2></div>
+  <p class="lead">清理完的資料只是沒有髒值，還不等於模型吃得下。官方指引把這段拆成四類作業，先點卡片看每一類「最常被考的副作用」。</p>
+  <div class="cards" id="tfCards"></div>
+  <details>
+    <summary>展開完整對照表（類別、做什麼、典型操作、副作用）</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>類別</th><th>做什麼</th><th>典型操作</th><th>最常被考的副作用</th></tr>
+        <tr><td><b>型別轉換與欄位整理</b></td><td>統一型別、命名與結構</td><td><code>str → int</code>、時間統一為 datetime／ISO 8601、<code>cust_id → customer_id</code>、欄位合併或拆分</td><td>整數欄含 NaN 會被升格成 float64</td></tr>
+        <tr><td><b>分箱與分類重組</b></td><td>連續值離散化、稀疏類別合併</td><td>等寬／等頻／K-Means 分箱；小類別併為 Other</td><td>切分點沒依分佈設計 → 資訊損失、邊界偏誤</td></tr>
+        <tr><td><b>編碼轉換</b></td><td>類別變數轉為數值</td><td>Label／Ordinal、One-Hot、Target Encoding</td><td>虛假順序、維度爆炸、目標洩漏</td></tr>
+        <tr><td><b>標準化與正規化</b></td><td>消除量尺差異</td><td>Min-Max、Z-score、Robust Scaling</td><td>對離群值的抵抗力完全不同</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <h3>型別轉換：pandas 的兩個經典坑（114-2 直接考過）</h3>
+  <div class="panel">
+    <p class="hint">下面是一欄 Year。先決定要不要讓它含一個缺值，再選一種轉換寫法，看 pandas 會怎麼回應。</p>
+    <div class="row" style="justify-content:space-between">
+      <button class="btn" id="nanBtn" aria-pressed="false">放進一個 NaN</button>
+      <div class="tabs" id="castTabs" style="margin:0">
+        <button class="btn" data-m="raw" aria-pressed="true">不轉換（看 dtype）</button>
+        <button class="btn" data-m="int" aria-pressed="false">astype(int)</button>
+        <button class="btn" data-m="fill" aria-pressed="false">fillna(0).astype(int)</button>
+        <button class="btn" data-m="Int64" aria-pressed="false">astype('Int64')</button>
+      </div>
+    </div>
+    <div class="grid2" style="margin-top:14px">
+      <div class="tbl-wrap"><table class="mini" id="yearTbl"></table></div>
+      <div class="out" id="castOut" aria-live="polite"></div>
+    </div>
+  </div>
+  <p class="prose"><code>'Int64'</code>（大寫）是 pandas 的 <b>nullable integer</b>，同時保留整數型態與缺值；<code>int64</code>（小寫）是 NumPy 型別，不接受 NaN。注意：這不是「pandas 一律把數值讀成 float64」，純整數欄預設仍是 int64。</p>
+
+  <h3>分箱（Binning）＝ 特徵離散化（Feature Discretization）</h3>
+  <div class="panel">
+    <p class="hint">同一組右偏的消費金額（示意資料，30 筆）。切換等寬／等頻、調箱數，看每一箱裝了幾筆。</p>
+    <div class="row" style="justify-content:space-between">
+      <div class="tabs" id="binTabs" style="margin:0">
+        <button class="btn" data-m="w" aria-pressed="true">等寬 Equal-width</button>
+        <button class="btn" data-m="f" aria-pressed="false">等頻 Equal-frequency</button>
+      </div>
+    </div>
+    <div class="slider"><label for="binK">箱數</label><input type="range" id="binK" min="3" max="6" value="5"><output id="binKv">5</output></div>
+    <svg id="binSvg" viewBox="0 0 640 230" role="img" aria-label="分箱示意圖"></svg>
+    <p class="hint" id="binNote" style="margin:8px 0 0"></p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>方法</th><th>切法</th><th>適用</th></tr>
+      <tr><td><b>等寬（Equal-width）</b></td><td>數值範圍等距切（0–100 切 5 段，每段寬 20）</td><td>分佈接近均勻；偏態資料容易出現空箱</td></tr>
+      <tr><td><b>等頻（Equal-frequency／Quantile）</b></td><td>每箱樣本數相近（如四分位）</td><td>偏態資料、需要穩定樣本數</td></tr>
+      <tr><td><b>K-Means 分箱</b></td><td>用分群結果決定切點</td><td>資料有明顯群聚結構</td></tr>
+    </table>
+  </div>
+  <div class="callout exam"><b>115-1 考用詞精確度：</b>把 UNIX 時間戳記轉成「早晨／下午／夜晚」，<b>最精確的名稱是特徵離散化（又稱分箱）</b>，不是 One-Hot，也不是降維。</div>
+
+  <h3>編碼：選錯的代價取決於下游模型</h3>
+  <div class="panel">
+    <div class="tabs" id="encTabs"></div>
+    <div id="encBody"></div>
+  </div>
+
+  <h3>樹模型到底受不受編碼影響？</h3>
+  <div class="panel">
+    <p class="hint">城市被 Label Encoding 成 1、2、3。真正的規律是「城市 1 和 3 的流失率高、城市 2 低」。樹每次只能問「編碼 ≤ 門檻？」—— 移動門檻試試看，能不能一刀把 {1,3} 和 {2} 分開。</p>
+    <div class="row" id="treeBtns"></div>
+    <svg id="treeSvg" viewBox="0 0 640 170" role="img" aria-label="樹切分示意" style="margin-top:10px"></svg>
+    <p class="hint" id="treeNote" style="margin:6px 0 0"></p>
+  </div>
+  <div class="compare">
+    <div><div class="big">比線性模型耐受</div>樹只用「是否大於門檻」切分 → 對編碼數值的<b>單調變換不敏感</b>。<br><span class="hint">115-1 第 42 題：不准改 1/2/3 的編碼，就改用隨機森林。</span></div>
+    <div><div class="big">但不是完全不受影響</div>單次切分只能沿編碼順序切成前後兩段，永遠切不出 {1,3} vs {2} → 需要更深的樹，<b>特徵重要性也會被編碼順序影響</b>。<br><span class="hint">114-2 第 17 題：GBT 直接吃 Label Encoding 會造成特徵重要性偏誤。所以 XGBoost 才提供 <code>enable_categorical</code>。</span></div>
+  </div>
+
+  <h3>縮放模擬器：三選一的判準是「有沒有離群值」</h3>
+  <div class="panel">
+    <p class="hint">九筆正常值（示意）加上一筆你可以拖動的極端值。看三種縮放後，<b>那九筆正常值</b>還剩多少空間可以彼此區分。</p>
+    <div class="slider"><label for="outV">極端值大小</label><input type="range" id="outV" min="10" max="500" value="150" step="10"><output id="outVv">150</output></div>
+    <svg id="scaleSvg" viewBox="0 0 660 250" role="img" aria-label="縮放比較圖"></svg>
+    <div class="kpis" id="scaleKpi"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>方法</th><th>中心／尺度</th><th>輸出</th><th>對離群值</th></tr>
+      <tr><td><b>Min-Max Normalization</b></td><td>min／max</td><td>壓到 0～1</td><td><b>最敏感</b>，一個極端值就壓扁其餘資料</td></tr>
+      <tr><td><b>Z-score Standardization</b></td><td>平均數／標準差</td><td>平均 0、標準差 1（<b>不是 0～1</b>）</td><td>仍敏感，μ 與 σ 都會被拉偏</td></tr>
+      <tr><td><b>Robust Scaling</b></td><td>中位數／四分位距（IQR）</td><td>無固定範圍</td><td><b>最穩健</b>，偏態或含離群值首選</td></tr>
+    </table>
+  </div>
+  <p class="prose">需要縮放的是<b>距離型</b>（KNN、SVM、K-Means）、<b>梯度型</b>（線性／邏輯迴歸、神經網路）與<b>含正則化</b>的模型（Lasso、Ridge）；<b>樹模型不需要</b>。</p>
+</section>
+
+<!-- 33.2 -->
+<section id="s2">
+  <div class="sec-head"><span class="sec-no">33.2</span><h2>特徵工程：選擇、衍生、增強</h2></div>
+  <h3>特徵選擇三家族</h3>
+  <div class="panel">
+    <div class="tabs" id="fsTabs"></div>
+    <div id="fsBody"></div>
+  </div>
+
+  <h3>特徵衍生與聚合</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>類型</th><th>做法</th><th>例子</th></tr>
+      <tr><td><b>交互特徵</b></td><td>特徵間四則運算</td><td>消費頻率 × 平均消費金額 = 年度消費總額；銷售金額 ÷ 瀏覽次數</td></tr>
+      <tr><td><b>時間特徵</b></td><td>從時間欄位衍生</td><td>星期幾、是否假日、距上次購買天數（Recency）</td></tr>
+      <tr><td><b>聚合特徵</b></td><td>群組統計</td><td>顧客近三個月平均交易額、產品月銷售排名</td></tr>
+    </table>
+  </div>
+  <div class="panel">
+    <h3 style="margin-top:0">配對：三個官方直接考過分辨的名詞</h3>
+    <p class="hint">先點左邊的操作，再點右邊的名詞。</p>
+    <div class="match" id="fdMatch"></div>
+    <div class="feedback" id="fdFb" aria-live="polite"></div>
+  </div>
+
+  <h3>資料增強：依資料型態選手法</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>資料型態</th><th>方法</th><th>案例</th></tr>
+      <tr><td><b>圖像</b></td><td>翻轉、旋轉、裁剪、縮放、色彩變換</td><td>人臉辨識、醫學影像</td></tr>
+      <tr><td><b>文字</b></td><td>同義詞替換、隨機插入／刪除／交換</td><td>情感分析、主題分類</td></tr>
+      <tr><td><b>時序</b></td><td>加噪、局部縮放（Jittering）、視窗裁切</td><td>設備故障預測、股市趨勢</td></tr>
+      <tr><td><b>表格</b></td><td><b>SMOTE</b>（少數類特徵空間內插生成）</td><td>詐欺偵測、疾病診斷</td></tr>
+    </table>
+  </div>
+
+  <div class="panel">
+    <h3 style="margin-top:0">SMOTE vs Random Oversampling（114-2 兩題考在這條分界）</h3>
+    <p class="hint">紅點是少數類（5 筆）。按按鈕各補 10 筆，看新樣本落在哪裡。</p>
+    <div class="row">
+      <button class="btn" id="rosBtn">Random Oversampling（複製）</button>
+      <button class="btn" id="smoteBtn">SMOTE（內插生成）</button>
+      <button class="btn" id="osReset">重設</button>
+    </div>
+    <svg id="osSvg" viewBox="0 0 640 240" role="img" aria-label="過採樣示意" style="margin-top:10px"></svg>
+    <p class="hint" id="osNote" style="margin:6px 0 0">尚未補樣本。</p>
+  </div>
+  <p class="prose">另外要注意：增強的價值來自「<b>每個訓練回合看到不同變化</b>」。若為了吞吐量而把樣本預先轉成固定特徵並快取重複使用，等於凍結多樣性，過擬合反而惡化（115Q1-15）。</p>
+
+  <h3>流程順序：本節最高頻的失分點</h3>
+  <div class="panel">
+    <p class="hint">選一種流程，看測試分數還可不可信（數值為示意）。</p>
+    <div class="strat" id="flowStrat"></div>
+    <div style="margin-top:18px">
+      <div class="verdict" id="flowV">選一個流程試試</div>
+      <div class="meter" style="height:18px;margin:10px 0"><i id="flowM" style="width:0"></i></div>
+      <div id="flowWhy" class="hint"></div>
+    </div>
+  </div>
+  <pre class="code">❌ 全體資料 → SMOTE / 目標編碼 / 特徵篩選 / 縮放 → 切分訓練與測試
+✅ 切分訓練與測試 → 只用「訓練集」fit 轉換器 → 套用（transform）到測試集</pre>
+  <div class="callout">任何會「學習資料統計性質」的步驟（SMOTE 的鄰居、目標編碼的平均值、相關係數門檻、StandardScaler 的 μ／σ）如果在切分前做，測試集資訊就滲進建模流程，分數虛高而不可信。<b>115-1 連考三題（第 10、11、32 題）</b>都踩這條線。</div>
+</section>
+
+<!-- 33.3 -->
+<section id="s3">
+  <div class="sec-head"><span class="sec-no">33.3</span><h2>分散式運算框架：本節主幹</h2></div>
+  <p class="lead">四大框架對照。先用配對遊戲練「題幹關鍵字 → 框架」，再展開完整表。</p>
+  <div class="panel">
+    <h3 style="margin-top:0">配對：看情境選框架</h3>
+    <div class="match" id="fwMatch"></div>
+    <div class="feedback" id="fwFb" aria-live="polite"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>框架</th><th>處理模式</th><th>適用情境</th><th>優點</th><th>缺點</th></tr>
+      <tr><td><b>Apache Hadoop（MapReduce）</b></td><td>批次處理</td><td>離線大量作業、日誌彙總、歷史分析</td><td>成熟穩定、HDFS 容錯強、易水平擴充</td><td>速度慢，不適合即時</td></tr>
+      <tr><td><b>Apache Spark</b></td><td><b>記憶體內運算</b>；批次與互動式查詢，串流採<b>微批次</b></td><td>大規模快速批次、資料分析、ML 訓練（MLlib）</td><td>速度快、函式庫豐富、社群大</td><td>記憶體需求高、運維中等複雜</td></tr>
+      <tr><td><b>Apache Flink</b></td><td><b>原生逐事件串流</b>，批次視為有界串流</td><td>高頻即時事件（風控、即時推薦、IoT）</td><td>真即時、高吞吐、狀態管理一致性佳</td><td>生態系比 Spark 小、維運投入較多</td></tr>
+      <tr><td><b>Apache Beam</b></td><td>統一批次／串流的<b>程式模型</b></td><td>跨平台、多雲、混合架構</td><td>可移植，換 Runner 不改邏輯</td><td>抽象層高、需理解 Dataflow Model</td></tr>
+    </table>
+  </div>
+  <div class="callout"><b>Beam 本身不含執行引擎：</b>它定義的是管線寫法，實際運算要指定 Runner（Flink／Spark／Google Dataflow）。這是它「可移植性強」的來源，也是它唯一的定位。</div>
+
+  <h3>MapReduce vs Spark：快在哪裡</h3>
+  <div class="panel">
+    <p class="hint">同一個三步驟作業。切換引擎後按「執行」，看中間結果去了哪裡（耗時為示意）。</p>
+    <div class="row" style="justify-content:space-between">
+      <div class="tabs" id="mrTabs" style="margin:0">
+        <button class="btn" data-m="mr" aria-pressed="true">Hadoop MapReduce</button>
+        <button class="btn" data-m="sp" aria-pressed="false">Apache Spark</button>
+      </div>
+      <button class="btn primary" id="mrRun">執行</button>
+    </div>
+    <svg id="mrSvg" viewBox="0 0 660 220" role="img" aria-label="MapReduce 與 Spark 中間結果比較" style="margin-top:12px"></svg>
+    <div class="row" style="justify-content:space-between"><b>耗時（示意）</b><span id="mrNum" style="font-variant-numeric:tabular-nums">—</span></div>
+    <div class="meter"><i id="mrMeter" style="width:0"></i></div>
+    <p class="hint" id="mrNote" style="margin:4px 0 0"></p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>面向</th><th>Hadoop MapReduce</th><th>Apache Spark</th></tr>
+      <tr><td><b>中間結果</b></td><td>每階段寫回 HDFS（<b>磁碟</b>）</td><td>留在<b>記憶體</b>，可 <code>cache()</code>／<code>persist()</code></td></tr>
+      <tr><td><b>運算抽象</b></td><td>Map → Shuffle → Reduce 固定兩段</td><td>RDD／DataFrame 上的任意轉換鏈</td></tr>
+      <tr><td><b>排程</b></td><td>一個 Job 一組 Map/Reduce，多步驟要串多個 Job</td><td><b>DAG（有向無環圖）排程器</b>，跨多步合併最佳化</td></tr>
+      <tr><td><b>求值時機</b></td><td>提交即執行</td><td><b>惰性求值（Lazy Evaluation）</b></td></tr>
+      <tr><td><b>容錯機制</b></td><td>失敗的 Task 重跑 + HDFS 多副本</td><td><b>Lineage（血統）</b>記錄轉換來源，遺失分區就地重算</td></tr>
+      <tr><td><b>串流支援</b></td><td>無</td><td>Structured Streaming（微批次）</td></tr>
+    </table>
+  </div>
+
+  <h3>RDD 三個必考性質</h3>
+  <div class="cards" id="rddCards"></div>
+
+  <h3>惰性求值：Transformation vs Action</h3>
+  <div class="panel">
+    <p class="hint">點 Transformation 只會在 DAG 上加節點，什麼都還沒算；點 Action 才真正觸發整條 DAG。</p>
+    <div class="row">
+      <span class="hint" style="min-width:110px">Transformation</span>
+      <button class="btn" data-t="map">map</button><button class="btn" data-t="filter">filter</button><button class="btn" data-t="select">select</button><button class="btn" data-t="join">join</button><button class="btn" data-t="groupBy">groupBy</button>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <span class="hint" style="min-width:110px">Action</span>
+      <button class="btn primary" data-a="count">count</button><button class="btn primary" data-a="collect">collect</button><button class="btn primary" data-a="show">show</button><button class="btn primary" data-a="write">write</button>
+      <button class="btn" id="lazyReset">清空</button>
+    </div>
+    <div class="out" id="dag" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center"></div>
+    <p class="hint" id="lazyNote" style="margin:8px 0 0"></p>
+  </div>
+  <p class="prose"><b>好處：</b>引擎能在執行前把多個 filter、select 合併，少掃一次資料。</p>
+
+  <h3>批次 vs 微批次 vs 原生串流</h3>
+  <div class="panel">
+    <p class="hint">按「送出事件」，看同一批事件在三種模式下各自何時被處理完（時間軸為示意）。</p>
+    <button class="btn primary" id="lat">送出 6 個事件</button>
+    <svg id="latSvg" viewBox="0 0 660 230" role="img" aria-label="延遲比較" style="margin-top:10px"></svg>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>面向</th><th>批次（Batch）</th><th>微批次（Micro-batch）</th><th>原生串流（Native Streaming）</th></tr>
+      <tr><td><b>代表</b></td><td>MapReduce、Spark 批次作業</td><td>Spark Streaming／Structured Streaming</td><td>Flink、Kafka Streams</td></tr>
+      <tr><td><b>觸發方式</b></td><td>定時（每日／每小時）</td><td>每隔一小段時間收一批</td><td>事件一到就處理</td></tr>
+      <tr><td><b>延遲量級</b></td><td>分鐘～小時</td><td>通常秒級</td><td>毫秒～次秒級</td></tr>
+      <tr><td><b>吞吐 vs 延遲</b></td><td>吞吐最佳、延遲最差</td><td>折衷</td><td>延遲最佳</td></tr>
+      <tr><td><b>題幹關鍵字</b></td><td>「每日報表」「歷史回溯」</td><td>「近即時儀表板」</td><td>「毫秒級回應」「即時攔截」</td></tr>
+    </table>
+  </div>
+
+  <h3>串流生態裡誰負責什麼</h3>
+  <div class="panel">
+    <p class="hint">點每一層，看它的角色與常見誤解。</p>
+    <div class="pipe" id="ecoPipe" style="--n:5"></div>
+    <div class="pout" id="ecoOut" aria-live="polite"></div>
+  </div>
+
+  <h3>平行化與分散式運算</h3>
+  <div class="compare">
+    <div><div class="big">垂直擴充 Scale-up</div>加大單機 CPU／記憶體 → 有物理上限、成本非線性</div>
+    <div><div class="big">水平擴充 Scale-out</div>加節點 → 分散式框架的基本假設</div>
+  </div>
+  <div class="compare" style="margin-top:12px">
+    <div><div class="big">資料平行</div>同一段邏輯套到不同資料分區（Spark 的主要模式）</div>
+    <div><div class="big">任務平行</div>不同任務同時跑（Airflow DAG 上的分支）</div>
+  </div>
+  <div class="panel">
+    <h3 style="margin-top:0">Shuffle 與資料傾斜模擬器</h3>
+    <p class="hint">分散式的主要成本在 Shuffle（跨節點搬資料）。選運算類型、拖動傾斜程度，看各分區的工作量與整個 Job 的完成時間（示意）。</p>
+    <div class="tabs" id="shTabs">
+      <button class="btn" data-m="n" aria-pressed="true">窄依賴（map / filter）</button>
+      <button class="btn" data-m="w" aria-pressed="false">寬依賴（groupBy / join / sortBy）</button>
+    </div>
+    <div class="slider"><label for="skew">某個 key 的資料佔比</label><input type="range" id="skew" min="25" max="85" value="25" step="5"><output id="skewv">25%</output></div>
+    <div id="skewBars"></div>
+    <p class="hint" id="skewNote" style="margin:8px 0 0"></p>
+  </div>
+
+  <h3>分散式算全域統計：115-1 第 21 題</h3>
+  <div class="panel">
+    <p class="hint">10 億筆 RDD／DataFrame 要算標準差。選一種做法。</p>
+    <div class="strat" id="aggStrat"></div>
+    <div style="margin-top:18px">
+      <div class="verdict" id="aggV">選一個做法試試</div>
+      <div class="meter" style="height:18px;margin:10px 0"><i id="aggM" style="width:0"></i></div>
+      <div id="aggWhy" class="hint"></div>
+    </div>
+  </div>
+  <p class="prose"><b>規則：</b>各 Executor 先算局部統計量（筆數、總和、平方和），再彙總成全域結果；而不是 <code>collect()</code> 把資料拉回 Driver 再用單機函式算。</p>
+</section>
+
+<!-- 33.4 -->
+<section id="s4">
+  <div class="sec-head"><span class="sec-no">33.4</span><h2>Lambda vs Kappa 架構與資料管線</h2></div>
+  <h3>兩種混合架構</h3>
+  <div class="panel">
+    <div class="tabs" id="lkTabs">
+      <button class="btn" data-m="l" aria-pressed="true">Lambda 架構</button>
+      <button class="btn" data-m="k" aria-pressed="false">Kappa 架構</button>
+    </div>
+    <svg id="lkSvg" viewBox="0 0 660 230" role="img" aria-label="Lambda 與 Kappa 架構圖"></svg>
+    <div id="lkTxt" class="hint" style="margin-top:8px"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>面向</th><th>Lambda 架構</th><th>Kappa 架構</th></tr>
+      <tr><td><b>組成</b></td><td>批次層（Batch Layer）＋ 速度層（Speed Layer）＋ 服務層（Serving Layer）</td><td><b>只有串流層</b>＋ 服務層</td></tr>
+      <tr><td><b>歷史資料怎麼算</b></td><td>批次層定期全量重算，產出準確結果</td><td><b>重播（Replay）事件日誌</b>，用同一套串流程式重算</td></tr>
+      <tr><td><b>即時結果</b></td><td>速度層先給近似值，等批次層追上後被取代</td><td>串流層直接產出</td></tr>
+      <tr><td><b>程式碼</b></td><td><b>兩套</b>（批次一套、串流一套），邏輯要人工保持一致</td><td><b>一套</b></td></tr>
+      <tr><td><b>主要代價</b></td><td>維護成本高、兩層結果可能不一致</td><td>重播成本高，依賴可長期保存且可重播的日誌（如 Kafka）</td></tr>
+    </table>
+  </div>
+  <p class="prose">官方指引用的詞是「<b>混合資料管線（Hybrid Pipeline）</b>」—— 批次與即時並行，適用於「即時儀表板 ＋ 歷史回溯分析」這種複合需求，概念上就是 Lambda。</p>
+
+  <h3>IoT 情境題的標準答案形狀（114-2 第 19 題）</h3>
+  <div class="panel">
+    <p class="hint">按下一步，跟著一筆感測資料走完全程。</p>
+    <div class="pipe" id="iotPipe" style="--n:5"></div>
+    <div class="pout" id="iotOut" aria-live="polite"></div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn primary" id="iotNext">下一步</button>
+      <button class="btn" id="iotReset">從頭開始</button>
+    </div>
+  </div>
+  <div class="callout">三個需求要同時滿足：<b>毫秒級即時性、資料完整性、可擴展性</b>。只要流程主幹出現「批次特徵工程」或「雲端報表系統」，即時性就不成立。</div>
+
+  <h3>管線設計四原則</h3>
+  <details><summary>可重現性（Reproducibility）</summary><div class="body">意思：同樣輸入每次跑出同樣結果。<br>落地手段：版本控制、容器化。</div></details>
+  <details><summary>容錯與回復（Fault Tolerance &amp; Recovery）</summary><div class="body">意思：任務失敗能自動重試並告警。<br>落地手段：重試策略、冪等任務設計。</div></details>
+  <details><summary>擴充性與彈性（Scalability &amp; Flexibility）</summary><div class="body">意思：資料量或任務變多能加節點。<br>落地手段：任務模組化、無狀態設計。</div></details>
+  <details><summary>監控與可觀測性（Observability）</summary><div class="body">意思：看得到當下與歷史執行狀態。<br>落地手段：Grafana／Prometheus ＋ Slack／Email 告警。</div></details>
+
+  <h3>管線工具對照</h3>
+  <div class="panel">
+    <div class="tabs" id="toolTabs"></div>
+    <div id="toolBody"></div>
+  </div>
+  <p class="prose"><b>自動化建構要點的順序：</b>任務拆解與模組化 → 版本控管與 CI/CD 整合（Git、GitHub Actions、Jenkins）→ 監控與警示設計 → 容器化與彈性擴充（Docker、Kubernetes）。</p>
+  <div class="callout exam"><b>115-1 第 31 題：</b>多個團隊都要同一份行為資料時，導入統一管理與共用特徵（特徵平台）的<b>主要目的是消除跨團隊重複開發、降低維護成本並確保特徵定義一致</b>。誘答「解決推論延遲、儲存空間或模型版本管理」分屬服務架構、基礎設施與模型註冊表的範疇。</div>
+</section>
+
+<!-- 33.5 -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-no">33.5</span><h2>pandas 與 scikit-learn：官方真的考語法</h2></div>
+  <p class="lead">用一份 7 筆的迷你交易表（示意資料）實際跑跑看。每個按鈕都會把該寫法的<b>真實結果</b>算出來。</p>
+  <div class="grid2">
+    <div class="tbl-wrap"><table class="mini" id="ordTbl"></table></div>
+    <div class="tbl-wrap"><table class="mini" id="cusTbl"></table></div>
+  </div>
+
+  <h3>1. 分組彙總：先 sum 再取前 N，順序不能反（115Q1-45）</h3>
+  <div class="panel">
+    <div class="tabs" id="gbTabs"></div>
+    <pre class="code" id="gbCode"></pre>
+    <div class="out" id="gbOut"></div>
+  </div>
+
+  <h3>2. 條件篩選：布林遮罩要在中括號「外面」比較（115Q1-46）</h3>
+  <div class="panel">
+    <div class="tabs" id="flTabs"></div>
+    <pre class="code" id="flCode"></pre>
+    <div class="out" id="flOut"></div>
+  </div>
+
+  <h3>3. 表格合併：how 決定保留誰（115Q1-47）</h3>
+  <div class="panel">
+    <div class="tabs" id="mgTabs"></div>
+    <pre class="code" id="mgCode"></pre>
+    <div class="out tbl-wrap" id="mgOut"></div>
+  </div>
+
+  <h3>4～8. 其他必考語法</h3>
+  <div class="panel">
+    <div class="tabs" id="synTabs"></div>
+    <div id="synBody"></div>
+  </div>
+</section>
+
+<!-- 33.6 -->
+<section id="s6">
+  <div class="sec-head"><span class="sec-no">33.6</span><h2>官方考過什麼</h2></div>
+  <p class="lead">計數基準：以「題幹或選項<b>直接觸及</b> L22203 官方指引涵蓋的主題（資料轉換與編碼、特徵工程、資料增強與不平衡處理、分散式運算框架、資料管線、pandas／scikit-learn 處理語法）」認定。在 114-2 與 115-1 共 100 題中，<b>核心命中 27 題</b>（114-2 佔 13 題、115-1 佔 14 題），另有 4 題屬部分相關（主要考點落在其他知識點）。</p>
+  <div class="panel flat">
+    <h3 style="margin-top:0">準備重點按性價比排序</h3>
+    <div class="bar win"><span>① 流程順序</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="num">最高</span></div>
+    <div class="bar"><span>② pandas 語法</span><div class="track"><div class="fill" style="width:80%"></div></div><span class="num"></span></div>
+    <div class="bar"><span>③ 編碼 × 模型</span><div class="track"><div class="fill" style="width:62%"></div></div><span class="num"></span></div>
+    <div class="bar"><span>④ 框架關鍵字</span><div class="track"><div class="fill" style="width:46%"></div></div><span class="num"></span></div>
+    <p class="hint" style="margin:6px 0 0">長條只表示排序先後（示意），不是題數。</p>
+  </div>
+  <div id="examList"></div>
+  <div class="callout exam"><b>命題觀察：</b>27／100，是 L22 最吃重的知識點之一。純名詞題只有少數幾題（如 114Q2-5、115Q1-26），其餘全是<b>情境選型</b>與<b>程式碼判讀</b>。框架選型的關鍵字：毫秒級／每日報表／完整保留。</div>
+</section>
+
+<!-- 33.7 -->
+<section id="s7">
+  <div class="sec-head"><span class="sec-no">33.7</span><h2>易錯與陷阱</h2></div>
+  <p class="lead">逐條確認自己真的懂了再打勾（打勾狀態會記在這台裝置上）。</p>
+  <div class="traps" id="traps"></div>
+  <p class="hint" id="trapCount" style="margin-top:10px"></p>
+
+  <h3>情境測驗</h3>
+  <div class="qcard" id="quiz"></div>
+
+  <h3>延伸練習</h3>
+  <p class="prose"><b>L22 主題庫 290 題：</b>篩選「資料轉換／編碼／特徵工程／分散式框架／資料管線／pandas」相關題目，先練<b>程式碼判讀</b>與<b>框架選型</b>兩類，這是本節投報率最高的部分。<br>
+  <b>L22 歷屆 100 題：</b>本節核心命中 27 題（計數基準見 33.6）。建議把 114Q2-43～45 與 115Q1-45～48 兩組 pandas／sklearn 題組<b>手寫一遍程式碼</b>再核對，光讀選項記不住。<br>
+  <b>交叉複習 <a href="L23301_feature_engineering.html">49_L23301（數據準備與特徵工程）</a>：</b>編碼、縮放、特徵選擇、資料增強與資料洩漏在兩科都考 —— L23 側重統計與建模理由，L22 側重工具與流程，兩邊一起看可以互相補洞。<br>
+  <b>交叉複習 <a href="L22201_data_collection_cleaning.html">L22201</a>／<a href="L22202_data_storage_management.html">L22202</a>（資料清理與儲存）：</b>缺失值、離群值與資料湖／資料倉儲的題目常和本節寫在同一個情境裡，先判斷「這題問的是清理還是轉換」本身就是得分點。</p>
+</section>
+</main>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce){document.querySelectorAll('#heroSvg .movers').forEach(m=>m.remove());}
+
+/* ---------- generic matcher ---------- */
+function matcher(root,fb,left,right,doneMsg){
+  let sel=null,done=0;
+  const L=document.createElement('div');L.className='col';
+  const R=document.createElement('div');R.className='col';
+  left.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;
+    b.innerHTML=it.html;if(it.c)b.style.setProperty('--c',it.c);
+    b.onclick=()=>{if(b.classList.contains('done'))return;L.querySelectorAll('.mitem').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;fb.textContent='';fb.className='feedback';};
+    L.appendChild(b);
+  });
+  right.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;b.innerHTML=it.html;
+    b.onclick=()=>{
+      if(b.classList.contains('done'))return;
+      if(!sel){fb.textContent='請先點左邊一個項目。';fb.className='feedback';return;}
+      if(sel.dataset.k===b.dataset.k){
+        const c=sel.style.getPropertyValue('--c');
+        [sel,b].forEach(x=>{x.classList.remove('sel');x.classList.add('done');if(c)x.style.setProperty('--c',c);});
+        fb.textContent='✓ '+(it.ok||'答對了！');fb.className='feedback ok';sel=null;done++;
+        if(done===left.length){fb.textContent='✓ 全部配對完成！'+doneMsg;}
+      }else{
+        b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');
+        fb.textContent='✗ '+(it.bad||'不太對，再想想。');fb.className='feedback bad';
+      }
+    };
+    R.appendChild(b);
+  });
+  root.append(L,R);
+}
+
+/* ---------- flip cards ---------- */
+function mkCards(root,list){
+  list.forEach(([n,o,d])=>{
+    const b=document.createElement('button');b.className='flip';b.setAttribute('aria-pressed','false');
+    b.innerHTML=`<div class="in"><div class="f"><strong>${n}</strong><span>${o}</span><span style="margin-top:auto;font-size:12.5px">點我翻面</span></div><div class="b">${d}</div></div>`;
+    b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');
+    root.appendChild(b);
+  });
+}
+
+/* ---------- tabs helper ---------- */
+function mkTabs(tabsSel,bodySel,items,render,after){
+  const tabs=$(tabsSel);
+  items.forEach((x,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=x.name||x[0];b.onclick=()=>s(i);tabs.appendChild(b);});
+  function s(i){tabs.querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));$(bodySel).innerHTML=render(items[i],i);if(after)after(i);}
+  s(0);return s;
+}
+
+/* ---------- strategy picker ---------- */
+function mkStrat(rootSel,vSel,mSel,whySel,st,order,prefix){
+  (order||st.map((_,i)=>i)).forEach(i=>{const b=document.createElement('button');b.innerHTML=st[i][0];b.setAttribute('aria-pressed','false');b.onclick=()=>{document.querySelectorAll(rootSel+' button').forEach(x=>x.setAttribute('aria-pressed',x===b));const x=st[i];$(vSel).textContent=x[1];$(vSel).style.color=x[3];$(mSel).style.width=x[2]+'%';$(mSel).style.background=x[3];$(whySel).innerHTML=(prefix||'')+x[2]+'%　'+x[4];};$(rootSel).appendChild(b);});
+}
+
+/* ---------- exam list ---------- */
+function mkExam(root,list){
+  list.forEach(([n,k,q,a])=>{root.insertAdjacentHTML('beforeend',`<details><summary><span class="tag">${n}</span>${k}</summary><div class="body"><p style="margin:0 0 6px"><span class="hint">怎麼問：</span>${q}</p><p style="margin:0"><span class="hint">正解思路：</span>${a}</p></div></details>`);});
+}
+
+/* ---------- traps ---------- */
+function mkTraps(key,T){
+  let saved=[];try{saved=JSON.parse(localStorage.getItem(key)||'[]')||[];}catch(e){saved=[];}
+  T.forEach(([a,b],i)=>{
+    const l=document.createElement('label');const c=saved.includes(i);if(c)l.classList.add('chk');
+    l.innerHTML=`<input type="checkbox" ${c?'checked':''}><div><em>${a}</em><br><span>${b}</span></div>`;
+    l.querySelector('input').onchange=e=>{const on=e.target.checked;l.classList.toggle('chk',on);saved=on?[...new Set([...saved,i])]:saved.filter(x=>x!==i);try{localStorage.setItem(key,JSON.stringify(saved));}catch(err){}count();};
+    $('#traps').appendChild(l);
+  });
+  function count(){$('#trapCount').textContent=`已確認 ${saved.length}／${T.length} 條`;}
+  count();
+}
+
+/* ---------- quiz ---------- */
+function mkQuiz(Q,msgs){
+  let i=0,score=0;const box=$('#quiz');
+  const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+  function show(){
+    if(i>=Q.length){
+      const msg=score>=Q.length-1?msgs[0]:score>=Math.ceil(Q.length*.65)?msgs[1]:msgs[2];
+      box.innerHTML=`<div class="progress"><i style="width:100%"></i></div><div class="qtext" style="font-size:24px;font-family:var(--serif)">得分 ${score}／${Q.length}</div><p>${msg}</p><button class="btn primary" id="qr">重新測驗</button>`;
+      $('#qr').onclick=()=>{i=0;score=0;show();};return;
+    }
+    const [q,opts,ex]=Q[i];
+    const order=shuffle(opts.map((o,k)=>({o,k})));
+    box.innerHTML=`<div class="progress"><i style="width:${i/Q.length*100}%"></i></div><div class="qtop"><span>第 ${i+1}／${Q.length} 題</span><span>得分 ${score}</span></div><div class="qtext">${q}</div><div class="opts">${order.map(x=>`<button class="opt" data-k="${x.k}">${x.o}</button>`).join('')}</div><div class="expl" id="qe"></div><div class="row" style="margin-top:14px;justify-content:flex-end"><button class="btn primary" id="qn" style="display:none">${i===Q.length-1?'看結果':'下一題'}</button></div>`;
+    box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.k==='0';if(ok)score++;
+      box.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.k==='0')x.classList.add('right');});
+      if(!ok)b.classList.add('wrongpick');
+      const e=$('#qe');e.innerHTML=(ok?'<b style="color:var(--ok)">答對了。</b>':'<b style="color:var(--bad)">這題要小心。</b>')+ex;e.classList.add('show');
+      $('#qn').style.display='';$('#qn').focus();
+    });
+    $('#qn').onclick=()=>{i++;show();};
+  }
+  show();
+}
+
+/* ---------- nav highlight ---------- */
+function navHighlight(){
+  const links=[...document.querySelectorAll('nav.toc a')];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on&&window.innerWidth<=860)a.scrollIntoView({inline:'center',block:'nearest'});});}});},{rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('main section').forEach(s=>io.observe(s));
+}
+
+/* ---------- 33.1 transform cards ---------- */
+mkCards($('#tfCards'),[
+  ['型別轉換與欄位整理','統一型別、命名與結構','副作用：整數欄含 NaN 會被升格成 float64'],
+  ['分箱與分類重組','連續值離散化、稀疏類別合併','副作用：切分點沒依分佈設計 → 資訊損失、邊界偏誤'],
+  ['編碼轉換','類別變數轉為數值','副作用：虛假順序、維度爆炸、目標洩漏'],
+  ['標準化與正規化','消除量尺差異','副作用：Min-Max、Z-score、Robust 對離群值的抵抗力完全不同']
+]);
+
+/* ---------- dtype simulator ---------- */
+(function(){
+  let nan=false,mode='raw';
+  function draw(){
+    const vals=nan?[2004,2006,null,2015]:[2004,2006,2010,2015];
+    let dtype,cells,msg,cls='';
+    if(mode==='raw'){
+      dtype=nan?'float64':'int64';
+      cells=vals.map(v=>v===null?'NaN':(nan?v+'.0':String(v)));
+      msg=nan?'<b>坑 1：</b>只要含一個 NaN，整欄被升格成 <b>float64</b>（NaN 本身是浮點數）→ 年份顯示成 2006.0。':'純整數欄預設就是 <b>int64</b>。pandas 並不會「一律把數值讀成 float64」。';
+    }else if(mode==='int'){
+      if(nan){dtype='—';cells=vals.map(v=>v===null?'NaN':v+'.0');msg='<span class="bad-t">報錯：無法轉換 NaN。</span>小寫 int64 是 NumPy 型別，不接受缺值。';}
+      else{dtype='int64';cells=vals.map(String);msg='沒有缺值時當然轉得過去。試試右上角放進一個 NaN。';}
+    }else if(mode==='fill'){
+      dtype='int64';cells=vals.map(v=>v===null?'<span class="bad-t">0</span>':String(v));
+      msg=nan?'<span class="warn-t">跑得動，但……</span>多了一個「西元 0 年」，會汙染趨勢分析、扭曲分佈。':'沒有缺值時 fillna 沒作用。';
+    }else{
+      dtype='Int64';cells=vals.map(v=>v===null?'&lt;NA&gt;':String(v));
+      msg='<span class="ok-t">正解：</span>大寫 I 的 <b>nullable integer</b>，同時保留整數型態與缺值（114Q2-44）。';
+    }
+    $('#yearTbl').innerHTML='<tr><th>index</th><th>Year</th></tr>'+cells.map((c,i)=>`<tr><td>${i}</td><td>${c}</td></tr>`).join('')+`<tr><td class="hint">dtype</td><td><b>${dtype}</b></td></tr>`;
+    $('#castOut').innerHTML=`<code>${mode==='raw'?"df['Year'].dtype":mode==='int'?"df['Year'].astype(int)":mode==='fill'?"df['Year'].fillna(0).astype(int)":"df['Year'].astype('Int64')"}</code><p style="margin:10px 0 0">${msg}</p>`;
+  }
+  $('#nanBtn').onclick=()=>{nan=!nan;$('#nanBtn').setAttribute('aria-pressed',nan);$('#nanBtn').textContent=nan?'移除 NaN':'放進一個 NaN';draw();};
+  document.querySelectorAll('#castTabs .btn').forEach(b=>b.onclick=()=>{mode=b.dataset.m;document.querySelectorAll('#castTabs .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));draw();});
+  draw();
+})();
+
+/* ---------- binning ---------- */
+(function(){
+  const D=[3,5,6,8,9,10,11,12,13,14,15,16,18,19,21,22,24,26,28,30,33,36,40,45,52,60,70,82,95,100];
+  let m='w';
+  const X=v=>40+v/100*580;
+  function draw(){
+    const k=+$('#binK').value;$('#binKv').textContent=k;
+    let edges=[];
+    if(m==='w'){for(let i=0;i<=k;i++)edges.push(i*100/k);}
+    else{edges.push(0);for(let i=1;i<k;i++){const idx=Math.round(i*D.length/k);edges.push((D[idx-1]+D[idx])/2);}edges.push(100);}
+    const cnt=[];for(let i=0;i<k;i++)cnt.push(D.filter(v=>(i===0?v>=edges[i]:v>edges[i])&&v<=edges[i+1]).length);
+    const mx=Math.max(...cnt);
+    let h=`<line x1="40" y1="180" x2="620" y2="180" stroke="var(--line)" stroke-width="2"/>`;
+    cnt.forEach((c,i)=>{const x1=X(edges[i]),x2=X(edges[i+1]),hh=c/mx*130;h+=`<rect x="${x1+2}" y="${180-hh}" width="${Math.max(0,x2-x1-4)}" height="${hh}" rx="4" fill="${c===0?'var(--bad)':'var(--txt)'}" opacity=".75" style="transition:all .5s"/><text x="${(x1+x2)/2}" y="${170-hh}" text-anchor="middle" font-size="13" fill="${c===0?'var(--bad)':'var(--ink)'}" font-weight="700">${c===0?'空箱':c}</text>`;});
+    edges.forEach(e=>{h+=`<line x1="${X(e)}" y1="40" x2="${X(e)}" y2="200" stroke="var(--muted)" stroke-dasharray="3 4"/><text x="${X(e)}" y="218" text-anchor="middle" font-size="11" fill="var(--muted)">${Math.round(e)}</text>`;});
+    D.forEach((v,i)=>{h+=`<circle cx="${X(v)}" cy="${190+(i%2)*4}" r="3.5" fill="var(--ink)"/>`;});
+    $('#binSvg').innerHTML=h;
+    const empty=cnt.filter(c=>c===0).length;
+    $('#binNote').innerHTML=m==='w'?`等寬：每箱寬 ${Math.round(100/k)}。右偏資料擠在左邊，右側箱子幾乎沒人${empty?`，出現 <b>${empty} 個空箱</b>`:''}。`:'等頻：每箱樣本數相近，切點跟著資料分佈走 —— 偏態資料、需要穩定樣本數時用它。';
+  }
+  document.querySelectorAll('#binTabs .btn').forEach(b=>b.onclick=()=>{m=b.dataset.m;document.querySelectorAll('#binTabs .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));draw();});
+  $('#binK').oninput=draw;draw();
+})();
+
+/* ---------- encoding tabs ---------- */
+mkTabs('#encTabs','#encBody',[
+  {name:'Label / Ordinal',h:`<div class="grid2"><div class="tbl-wrap"><table class="mini"><tr><th>教育程度（有序）</th><th>編碼</th></tr><tr><td>高中</td><td>1</td></tr><tr><td>大學</td><td>2</td></tr><tr><td>碩士</td><td>3</td></tr></table><p class="ok-t" style="margin:6px 0 0">✓ 有序類別：順序本來就存在</p></div><div class="tbl-wrap"><table class="mini"><tr><th>縣市（無序）</th><th>編碼</th></tr><tr><td>台北</td><td>1</td></tr><tr><td>台中</td><td>2</td></tr><tr><td>高雄</td><td>3</td></tr></table><p class="bad-t" style="margin:6px 0 0">✗ 線性模型會以為「高雄 − 台中 = 台中 − 台北」</p></div></div><p style="margin:12px 0 0"><b>做法：</b>每個類別給一個整數。<b>適用：</b>有序類別（教育程度、Basic/Premium/VIP、滿意度 5 級）。<br><b>風險：</b>用在無序類別 → 線性與距離模型讀出<b>虛假順序與虛假間距</b>（114Q2-5：主要風險是虛假順序，不是記憶體過高）。</p>`},
+  {name:'One-Hot',h:`<div class="tbl-wrap"><table class="mini"><tr><th>縣市</th><th>台北</th><th>台中</th><th>高雄</th></tr><tr><td>台北</td><td>1</td><td>0</td><td>0</td></tr><tr><td>台中</td><td>0</td><td>1</td><td>0</td></tr><tr><td>高雄</td><td>0</td><td>0</td><td>1</td></tr></table></div><p style="margin:12px 0 0"><b>做法：</b>每個類別一個 0/1 欄位。<b>適用：</b>無序類別、類別數不多。<br><b>風險：</b>高基數（High Cardinality）→ <b>維度爆炸</b>；線性模型要 <code>drop_first</code> 避免虛擬變數陷阱（115Q1-11：LR 對無序縣市用 One-Hot + drop_first）。</p>`},
+  {name:'Target Encoding',h:`<div class="tbl-wrap"><table class="mini"><tr><th>縣市</th><th>以該縣市的目標平均取代（示意）</th></tr><tr><td>台北</td><td>0.18</td></tr><tr><td>台中</td><td>0.25</td></tr><tr><td>高雄</td><td>0.31</td></tr></table></div><p style="margin:12px 0 0"><b>做法：</b>以該類別在目標變數上的統計量取代。<b>適用：</b>高基數且與目標高度相關。<br><b>風險：</b><span class="bad-t">目標洩漏</span>；必須<b>只用訓練折計算</b>（115Q1-11：目標編碼切分前算就是洩漏；114Q2-17：目標編碼不會「自動消除」過擬合）。</p>`}
+],x=>x.h);
+
+/* ---------- tree split ---------- */
+(function(){
+  const city=[{c:1,r:70},{c:2,r:20},{c:3,r:75}];
+  const opts=[['≤ 1.5 切一刀','t1'],['≤ 2.5 切一刀','t2'],['enable_categorical（自己找分組）','cat']];
+  function draw(k){
+    document.querySelectorAll('#treeBtns .btn').forEach((b,i)=>b.setAttribute('aria-pressed',opts[i][1]===k));
+    let L,R;
+    if(k==='t1'){L=[1];R=[2,3];}else if(k==='t2'){L=[1,2];R=[3];}else{L=[1,3];R=[2];}
+    const pos={};let h='';
+    const grp=(arr,x0,title)=>{let s=`<rect x="${x0}" y="20" width="280" height="120" rx="14" fill="var(--surface2)" stroke="var(--line)"/><text x="${x0+140}" y="42" text-anchor="middle" font-size="13" fill="var(--muted)">${title}</text>`;
+      arr.forEach((c,i)=>{const it=city.find(z=>z.c===c);const cx=x0+140+(i-(arr.length-1)/2)*80;s+=`<circle cx="${cx}" cy="88" r="28" fill="${it.r>50?'var(--bad)':'var(--ok)'}"/><text x="${cx}" y="86" text-anchor="middle" fill="#fff" font-weight="700" font-size="15">城市${c}</text><text x="${cx}" y="104" text-anchor="middle" fill="#fff" font-size="12">流失 ${it.r}%</text>`;});return s;};
+    h+=grp(L,20,k==='cat'?'分組 A':'編碼 ≤ 門檻');h+=grp(R,340,k==='cat'?'分組 B':'編碼 > 門檻');
+    const pure=arr=>arr.every(c=>city.find(z=>z.c===c).r>50)||arr.every(c=>city.find(z=>z.c===c).r<=50);
+    const ok=pure(L)&&pure(R);
+    h+=`<text x="320" y="162" text-anchor="middle" font-size="14" font-weight="700" fill="${ok?'var(--ok)':'var(--bad)'}">${ok?'兩邊都純了：一刀到位':'有一邊高低混在一起 → 還得再切一層'}</text>`;
+    $('#treeSvg').innerHTML=h;
+    $('#treeNote').innerHTML=k==='cat'?'XGBoost 的 <code>enable_categorical</code> 讓演算法自己找最佳分組，才切得出 {1,3} vs {2}。':'不管門檻放哪，單次切分只能沿編碼順序切成前後兩段 —— 所以要更深的樹，特徵重要性也會被編碼順序影響。';
+  }
+  opts.forEach(([t,k])=>{const b=document.createElement('button');b.className='btn';b.textContent=t;b.onclick=()=>draw(k);$('#treeBtns').appendChild(b);});
+  draw('t1');
+})();
+
+/* ---------- scaling simulator ---------- */
+(function(){
+  const base=[20,22,25,27,30,31,33,35,38];
+  const methods=[['Min-Max','var(--txt)'],['Z-score','var(--aud)'],['Robust','var(--img)']];
+  const q=(a,p)=>{const s=[...a].sort((x,y)=>x-y),pos=(s.length-1)*p,lo=Math.floor(pos),hi=Math.ceil(pos);return s[lo]+(s[hi]-s[lo])*(pos-lo);};
+  function draw(){
+    const o=+$('#outV').value;$('#outVv').textContent=o;
+    const all=[...base,o];
+    const mn=Math.min(...all),mx=Math.max(...all),mu=all.reduce((a,b)=>a+b,0)/all.length,sd=Math.sqrt(all.reduce((a,b)=>a+(b-mu)**2,0)/all.length),md=q(all,.5),iqr=q(all,.75)-q(all,.25);
+    const f=[v=>(v-mn)/(mx-mn),v=>(v-mu)/sd,v=>(v-md)/iqr];
+    let h='',k='';
+    methods.forEach(([n,c],r)=>{
+      const sc=all.map(f[r]);const lo=Math.min(...sc),hi=Math.max(...sc);const X=v=>130+(v-lo)/(hi-lo||1)*500;const y=40+r*75;
+      h+=`<text x="10" y="${y+5}" font-size="14" font-weight="700" fill="${c}">${n}</text><line x1="130" y1="${y}" x2="630" y2="${y}" stroke="var(--line)" stroke-width="2"/>`;
+      h+=`<text x="130" y="${y+26}" font-size="12" fill="var(--muted)">${lo.toFixed(2)}</text><text x="630" y="${y+26}" text-anchor="end" font-size="12" fill="var(--muted)">${hi.toFixed(2)}</text>`;
+      sc.forEach((v,i)=>{h+=`<circle cx="${X(v)}" cy="${y}" r="${i===9?8:6}" fill="${i===9?'var(--bad)':c}" opacity="${i===9?1:.8}" style="transition:cx .4s"/>`;});
+      const ns=sc.slice(0,9),spread=(Math.max(...ns)-Math.min(...ns))/(hi-lo)*100;
+      k+=`<div class="kpi" style="--c:${c}"><span>${n}：正常值佔軸寬</span><b>${spread.toFixed(0)}%</b><span>${r===0?'輸出固定 0～1':r===1?`平均 0、標準差 1（範圍 ${lo.toFixed(1)}～${hi.toFixed(1)}，不是 0～1）`:'用中位數與 IQR，無固定範圍'}</span></div>`;
+    });
+    $('#scaleSvg').innerHTML=h+`<text x="330" y="245" text-anchor="middle" font-size="12" fill="var(--muted)">每列各自以輸出的最小～最大值為軸；紅點＝極端值</text>`;
+    $('#scaleKpi').innerHTML=k;
+  }
+  $('#outV').oninput=draw;draw();
+})();
+
+/* ---------- 33.2 feature selection tabs ---------- */
+mkTabs('#fsTabs','#fsBody',[
+  ['Filter（過濾法）','統計量，獨立於模型','皮爾森相關係數、卡方檢定、ANOVA','快、不綁模型','看不到特徵間交互作用；相關係數只抓<b>線性</b>關係'],
+  ['Wrapper（包裝法）','模型表現（準確率、F1）','RFE、前向／後向選擇','考慮互動效果','計算成本高、易過擬合'],
+  ['Embedded（嵌入法）','訓練過程中內建','樹的特徵重要性、Lasso／Ridge','建模同時完成篩選','需特定模型支援，受超參數影響']
+],x=>`<div class="kpis"><div class="kpi" style="--c:var(--img)"><span>判準</span>${x[1]}</div><div class="kpi" style="--c:var(--img)"><span>代表方法</span>${x[2]}</div><div class="kpi" style="--c:var(--ok)"><span>優點</span>${x[3]}</div><div class="kpi" style="--c:var(--bad)"><span>限制</span>${x[4]}</div></div>`);
+
+matcher($('#fdMatch'),$('#fdFb'),[
+  {k:'d',c:'var(--img)',html:'銷售金額 ÷ 瀏覽次數<small>用既有欄位算出新欄位</small>'},
+  {k:'s',c:'var(--txt)',html:'從 50 個欄位挑出 10 個<small>示意</small>'},
+  {k:'t',c:'var(--aud)',html:'對收入欄取對數<small>單一欄位做數學變換</small>'},
+  {k:'b',c:'var(--sen)',html:'時間戳記切成早／午／夜<small>連續值切成區間</small>'}
+],[
+  {k:'s',html:'特徵選擇',ok:'選擇是挑子集。'},
+  {k:'b',html:'特徵離散化（分箱）',ok:'115-1 第 26 題考的就是這個用詞。'},
+  {k:'x',html:'One-Hot 編碼',bad:'One-Hot 是離散化之後「可以再接」的下一步，不是同一件事。'},
+  {k:'d',html:'特徵衍生',ok:'114Q2-8：銷售金額 ÷ 瀏覽次數是特徵衍生。'},
+  {k:'t',html:'特徵轉換',ok:'取對數、縮放屬於特徵轉換。'}
+],'三個名詞官方直接考過分辨。');
+
+/* ---------- oversampling ---------- */
+(function(){
+  const maj=[];let sd=7;const rnd=()=>{sd=(sd*16807)%2147483647;return sd/2147483647;};for(let i=0;i<34;i++){maj.push([40+rnd()*320,30+rnd()*180]);}
+  const mino=[[420,70],[470,110],[440,160],[510,80],[500,170]];
+  let extra=[],mode='';
+  function draw(){
+    let h=`<rect x="5" y="5" width="630" height="230" rx="14" fill="none" stroke="var(--line)"/>`;
+    maj.forEach(p=>h+=`<circle cx="${p[0]}" cy="${p[1]}" r="6" fill="var(--txt)" opacity=".45"/>`);
+    if(mode==='smote')extra.forEach(e=>h+=`<line x1="${e.a[0]}" y1="${e.a[1]}" x2="${e.b[0]}" y2="${e.b[1]}" stroke="var(--sen)" stroke-dasharray="3 4" opacity=".6"/>`);
+    mino.forEach(p=>h+=`<circle cx="${p[0]}" cy="${p[1]}" r="8" fill="var(--sen)"/>`);
+    extra.forEach((e,i)=>{h+=mode==='ros'?`<circle cx="${e.p[0]}" cy="${e.p[1]}" r="${12+e.n*3}" fill="none" stroke="var(--bad)" stroke-width="2"/>`:`<circle cx="${e.p[0]}" cy="${e.p[1]}" r="6" fill="none" stroke="var(--sen)" stroke-width="2.5"/>`;});
+    if(mode==='ros')h+=`<text x="560" y="220" text-anchor="middle" font-size="13" fill="var(--bad)">圈越大＝同一點被複製越多次</text>`;
+    $('#osSvg').innerHTML=h;
+  }
+  $('#rosBtn').onclick=()=>{mode='ros';const cnt=[0,0,0,0,0];for(let i=0;i<10;i++)cnt[(i*3)%5]++;extra=mino.map((p,i)=>({p,n:cnt[i]}));draw();$('#osNote').innerHTML='<b>Random Oversampling：</b>10 筆新樣本全是既有點的<b>完全複製</b>，模型反覆背同幾個點 → <span class="bad-t">過擬合風險明顯較高</span>（114Q2-12）。';};
+  $('#smoteBtn').onclick=()=>{mode='smote';extra=[];for(let i=0;i<10;i++){const a=mino[i%5],b=mino[(i*2+1)%5===i%5?(i+1)%5:(i*2+1)%5],t=.2+((i*37)%60)/100;extra.push({a,b,p:[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t]});}draw();$('#osNote').innerHTML='<b>SMOTE：</b>在少數類鄰居之間的連線上<b>內插生成</b>新樣本，每筆都不一樣 → 114Q2-37 罕病 &lt;1% 且短期無法補資料時，優於複製、欠採樣與單改閾值。<br>⚠ 但 SMOTE 必須在切分<b>之後</b>、只對訓練集做。';};
+  $('#osReset').onclick=()=>{mode='';extra=[];draw();$('#osNote').textContent='尚未補樣本。';};
+  draw();
+})();
+
+/* ---------- flow order ---------- */
+mkStrat('#flowStrat','#flowV','#flowM','#flowWhy',[
+  ['全體資料先 SMOTE → 再切分','✗ 測得 AUC 0.91，但不可信',20,'var(--bad)','115Q1-32：切分前過採樣 → 合成樣本的「鄰居」跨進測試集，分數虛高。'],
+  ['全體資料算相關係數刪特徵 → 再切分','✗ 洩漏',25,'var(--bad)','115Q1-10：用到含測試集的統計量就是洩漏；而且相關係數只抓線性關係，可能誤刪有用特徵。'],
+  ['全體資料算目標編碼 → 再切分','✗ 洩漏',20,'var(--bad)','115Q1-11：目標編碼切分前算就是洩漏 —— 測試集的答案已經被平均進特徵裡。'],
+  ['先切分 → 只用訓練集 fit → transform 測試集','✓ 可信',92,'var(--ok)','測試集全程沒被「學習」過，分數才代表上線後的真實表現。']
+],[0,3,1,2],'分數可信度（示意）：');
+
+/* ---------- 33.3 framework matcher ---------- */
+matcher($('#fwMatch'),$('#fwFb'),[
+  {k:'h',c:'var(--txt)',html:'離線大量作業、日誌彙總、歷史分析<small>不在乎快，在乎穩</small>'},
+  {k:'s',c:'var(--img)',html:'大規模快速批次、互動查詢、ML 訓練<small>MLlib</small>'},
+  {k:'f',c:'var(--aud)',html:'高頻即時事件：風控、即時推薦、IoT<small>毫秒級</small>'},
+  {k:'b',c:'var(--sen)',html:'跨平台、多雲、混合架構<small>換執行引擎不改邏輯</small>'}
+],[
+  {k:'f',html:'Apache Flink<small>原生逐事件串流</small>',ok:'批次被視為有界串流，真即時。'},
+  {k:'x',html:'Kafka<small>事件傳輸與可重播儲存</small>',bad:'Kafka 在典型考題架構中不是運算引擎，後面要接 Flink／Spark Streaming。'},
+  {k:'b',html:'Apache Beam<small>統一程式模型</small>',ok:'Beam 不含執行引擎，要指定 Runner。'},
+  {k:'h',html:'Hadoop MapReduce<small>批次處理</small>',ok:'成熟穩定、HDFS 容錯強，但速度慢。'},
+  {k:'s',html:'Apache Spark<small>記憶體內運算</small>',ok:'速度快、函式庫豐富；串流採微批次。'}
+],'題幹關鍵字一出現就要能反射。');
+
+/* ---------- MR vs Spark ---------- */
+(function(){
+  let m='mr',timer=[];
+  const box=(x,y,w,h,t,f,tc,id)=>`<g id="${id||''}"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="${f}" style="transition:fill .3s"/><text x="${x+w/2}" y="${y+h/2+5}" text-anchor="middle" font-size="14" font-weight="700" fill="${tc}">${t}</text></g>`;
+  function draw(){
+    let h='';
+    const xs=[30,250,470];
+    xs.forEach((x,i)=>{h+=box(x,30,160,50,'步驟 '+(i+1),'var(--surface2)','var(--ink)','st'+i);});
+    if(m==='mr'){
+      h+=`<rect x="30" y="160" width="600" height="46" rx="12" fill="var(--surface2)" stroke="var(--line)"/><text x="330" y="189" text-anchor="middle" font-size="14" fill="var(--muted)" font-weight="700">HDFS（磁碟）</text>`;
+      [0,1].forEach(i=>{h+=`<path id="wr${i}" d="M${xs[i]+120} 80 L${xs[i]+120} 160" stroke="var(--bad)" stroke-width="2.5" fill="none" opacity=".25"/><path id="rd${i}" d="M${xs[i+1]+40} 160 L${xs[i+1]+40} 80" stroke="var(--bad)" stroke-width="2.5" fill="none" opacity=".25"/><text x="${xs[i]+180}" y="125" text-anchor="middle" font-size="12" fill="var(--bad)">寫出 ↓　↑ 讀回</text>`;});
+    }else{
+      h+=`<rect x="190" y="110" width="280" height="44" rx="22" fill="color-mix(in srgb,var(--img) 18%,var(--surface))" stroke="var(--img)"/><text x="330" y="137" text-anchor="middle" font-size="14" font-weight="700" fill="var(--img)">記憶體（cache／persist）</text>`;
+      [0,1].forEach(i=>{h+=`<path id="wr${i}" d="M${xs[i]+160} 55 L${xs[i+1]} 55" stroke="var(--img)" stroke-width="2.5" fill="none" opacity=".25"/>`;});
+      h+=`<text x="330" y="190" text-anchor="middle" font-size="13" fill="var(--muted)">DAG 排程器把多步合併最佳化；惰性求值，Action 才觸發</text>`;
+    }
+    $('#mrSvg').innerHTML=h;
+  }
+  function run(){
+    timer.forEach(clearTimeout);timer=[];draw();
+    $('#mrMeter').style.width='0';$('#mrNum').textContent='執行中…';
+    const T=m==='mr'?100:30,dt=reduce?0:(m==='mr'?500:220);
+    for(let i=0;i<3;i++){timer.push(setTimeout(()=>{const s=document.querySelector('#st'+i+' rect');if(s)s.style.fill=m==='mr'?'var(--aud)':'var(--img)';const w=document.getElementById('wr'+i);if(w)w.setAttribute('opacity','1');const r=document.getElementById('rd'+i);if(r)r.setAttribute('opacity','1');$('#mrMeter').style.width=(T*(i+1)/3)+'%';},dt*(i+1)));}
+    timer.push(setTimeout(()=>{$('#mrNum').textContent=T+'（相對值）';$('#mrMeter').style.background=m==='mr'?'var(--bad)':'var(--ok)';$('#mrNote').innerHTML=m==='mr'?'每一步的中間結果都寫回 HDFS 磁碟、下一步再讀回來；多步驟要串多個 Job。':'中間結果留在記憶體、用 DAG 合併階段。<b>注意：</b>快不是因為演算法比較聰明；記憶體不足時 Spark 一樣會溢寫到磁碟，速度優勢隨之縮小。';},dt*3+50));
+  }
+  document.querySelectorAll('#mrTabs .btn').forEach(b=>b.onclick=()=>{m=b.dataset.m;document.querySelectorAll('#mrTabs .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#mrNum').textContent='—';$('#mrMeter').style.width='0';$('#mrNote').textContent='';draw();});
+  $('#mrRun').onclick=run;draw();
+})();
+
+mkCards($('#rddCards'),[
+  ['不可變','Immutable','任何轉換都產生新的 RDD，不改動原本的'],
+  ['分區','Partitioned','切成多個分區分散在各 Executor 上平行處理'],
+  ['可重算','Lineage','記住「我是從哪個 RDD 經哪些轉換來的」，分區掉了就照血統重算，不必把中間結果全部落盤（多副本是 HDFS 儲存層的機制）']
+]);
+
+/* ---------- lazy evaluation ---------- */
+(function(){
+  let nodes=[];
+  function draw(run,act){
+    $('#dag').innerHTML=nodes.length?nodes.map((n,i)=>`<span class="pnode${run?' on':''}" style="padding:4px 10px">${n}</span>${i<nodes.length-1?'→':''}`).join('')+(act?` → <b style="color:var(--ok)">${act}()</b>`:''):'<span class="hint">DAG 是空的。先點幾個 Transformation。</span>';
+  }
+  document.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{nodes.push(b.dataset.t);draw(false);$('#lazyNote').innerHTML=`已加入 ${nodes.length} 個節點，<b>實際運算次數：0</b>。Transformation 只是往 DAG 上加節點。`;});
+  document.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{
+    if(!nodes.length){$('#lazyNote').textContent='先加幾個 Transformation，Action 才有東西可以觸發。';return;}
+    draw(true,b.dataset.a);
+    const f=nodes.filter(n=>n==='filter'||n==='select').length;
+    $('#lazyNote').innerHTML=`<b>${b.dataset.a}</b> 是 Action → 整條 DAG（${nodes.length} 個節點）送去執行。`+(f>1?`引擎可先把 ${f} 個 filter／select 合併，少掃一次資料。`:'');
+  });
+  $('#lazyReset').onclick=()=>{nodes=[];draw(false);$('#lazyNote').textContent='';};
+  draw(false);
+})();
+
+/* ---------- latency lanes ---------- */
+(function(){
+  const ev=[8,22,35,50,63,80];
+  const lanes=[['批次','var(--txt)',e=>100,'分鐘～小時'],['微批次','var(--aud)',e=>Math.ceil(e/25)*25,'通常秒級'],['原生串流','var(--sen)',e=>e+2,'毫秒～次秒級']];
+  const X=t=>130+t*5;
+  function base(){let h=`<text x="${X(0)}" y="18" font-size="12" fill="var(--muted)">時間 →</text>`;lanes.forEach(([n,c],r)=>{const y=55+r*65;h+=`<text x="10" y="${y+5}" font-size="14" font-weight="700" fill="${c}">${n}</text><line x1="${X(0)}" y1="${y}" x2="${X(102)}" y2="${y}" stroke="var(--line)" stroke-width="2"/>`;if(r===1)[25,50,75,100].forEach(t=>h+=`<line x1="${X(t)}" y1="${y-14}" x2="${X(t)}" y2="${y+14}" stroke="var(--aud)" stroke-dasharray="2 3"/>`);if(r===0)h+=`<line x1="${X(100)}" y1="${y-14}" x2="${X(100)}" y2="${y+14}" stroke="var(--txt)" stroke-width="2"/>`;});return h;}
+  $('#latSvg').innerHTML=base();
+  $('#lat').onclick=()=>{
+    let h=base();
+    lanes.forEach(([n,c,f,lat],r)=>{const y=55+r*65;let tot=0;
+      ev.forEach((e,i)=>{const d=f(e);tot+=d-e;h+=`<circle cx="${X(e)}" cy="${y}" r="5" fill="var(--muted)"/><line x1="${X(e)}" y1="${y}" x2="${X(d)}" y2="${y}" stroke="${c}" stroke-width="3" opacity=".5"/><circle cx="${X(d)}" cy="${y}" r="7" fill="${c}"><animate attributeName="r" from="0" to="7" dur=".5s" begin="${reduce?0:i*.15+r*.3}s" fill="freeze"/></circle>`;});
+      h+=`<text x="${X(0)}" y="${y+30}" font-size="12" fill="var(--muted)">平均等待（示意）${(tot/ev.length).toFixed(0)} 單位　·　延遲量級：${lat}</text>`;});
+    $('#latSvg').innerHTML=h;
+  };
+})();
+
+/* ---------- streaming ecosystem ---------- */
+(function(){
+  const E=[['MQTT Broker','IoT 裝置端','IoT 裝置端的<b>輕量訊息協定</b>。','常見誤解：不等於串流運算能力。'],['Kafka','傳輸與儲存層','事件串流的<b>傳輸與儲存層</b>（訊息代理、可重播的事件日誌）。','常見誤解：以為 Kafka 自己做複雜分析；典型架構是 Kafka 後面接處理引擎（Kafka Streams 是同生態的函式庫，屬例外而非題目預設）。'],['Flink／Spark Streaming','運算層','<b>運算層</b>，做聚合、視窗運算、異常偵測。','常見誤解：以為有 Kafka 就不必再選運算引擎。'],['資料湖／資料倉儲','落地層','<b>落地層</b>，保存完整資料供訓練與回溯。','常見誤解：以為它能提供即時性。'],['Airflow／Prefect','編排層','<b>編排層</b>，負責排程、相依與監控。','常見誤解：以為它是運算引擎。']];
+  E.forEach((e,i)=>{const b=document.createElement('button');b.className='pnode';b.innerHTML=`<b>${e[0]}</b>${e[1]}`;b.onclick=()=>show(i);$('#ecoPipe').appendChild(b);});
+  function show(i){document.querySelectorAll('#ecoPipe .pnode').forEach((n,j)=>n.classList.toggle('on',j===i));$('#ecoOut').innerHTML=`<b>${E[i][0]}</b>：${E[i][2]}<div class="hint">${E[i][3]}</div>`;}
+  show(1);
+})();
+
+/* ---------- shuffle & skew ---------- */
+(function(){
+  let m='n';
+  function draw(){
+    const p=+$('#skew').value;$('#skewv').textContent=p+'%';
+    const loads=m==='n'?[25,25,25,25]:[p,(100-p)/3,(100-p)/3,(100-p)/3];
+    const shuffle=m==='n'?0:30;
+    const mx=Math.max(...loads);
+    $('#skewBars').innerHTML=loads.map((l,i)=>`<div class="bar${l===mx&&m==='w'&&p>25?' win':''}"><span>分區 ${i+1}</span><div class="track"><div class="fill" style="width:${l}%;background:${m==='w'&&i===0&&p>25?'var(--bad)':'var(--aud)'}"></div></div><span class="num">${l.toFixed(0)}%</span></div>`).join('')+`<div class="bar"><span><b>Job 完成時間</b></span><div class="track"><div class="fill" style="width:${Math.min(100,(mx+shuffle)/1.15)}%;background:var(--ink)"></div></div><span class="num">${(mx+shuffle).toFixed(0)}</span></div>`;
+    $('#skewNote').innerHTML=m==='n'?'<b>窄依賴：</b>分區各算各的，不必搬資料 → 便宜。傾斜滑桿在這裡沒影響，因為不需要依 key 重新分配。':`<b>寬依賴：</b>要跨分區重新分配（Shuffle）→ 貴，且是 Stage 的邊界。${p>40?'<span class="bad-t">資料傾斜（Data Skew）：</span>熱門 key 全擠進分區 1，它變成長尾，拖垮整個 Job。':'把傾斜拉高看看會怎樣。'}`;
+  }
+  document.querySelectorAll('#shTabs .btn').forEach(b=>b.onclick=()=>{m=b.dataset.m;document.querySelectorAll('#shTabs .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));draw();});
+  $('#skew').oninput=draw;draw();
+})();
+
+mkStrat('#aggStrat','#aggV','#aggM','#aggWhy',[
+  ['<code>collect()</code> 拉回 Driver，再用單機函式算標準差','✗ OOM',10,'var(--bad)','10 億筆拉回單一節點必 OOM，也放棄了叢集的平行能力。'],
+  ['<code>DataFrame.agg</code>／<code>RDD.aggregate</code>：各 Executor 算局部筆數、總和、平方和，再彙總','✓ 正解',95,'var(--ok)','局部統計量可以相加，彙總後就能還原全域平均與標準差 —— 資料不必搬家。'],
+  ['每個分區各算一個標準差，再把幾個標準差平均','✗ 數學上不等價（示意）',35,'var(--warn)','標準差不能直接平均；要彙總的是可加的量（筆數、總和、平方和）。']
+],[0,2,1],'可行性（示意）：');
+
+/* ---------- 33.4 Lambda / Kappa ---------- */
+(function(){
+  const box=(x,y,w,h,t,f,tc)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="${f}"/>${t.split('|').map((l,i,a)=>`<text x="${x+w/2}" y="${y+h/2+5+(i-(a.length-1)/2)*17}" text-anchor="middle" font-size="13.5" font-weight="700" fill="${tc}">${l}</text>`).join('')}`;
+  const ln=(d,c)=>`<path d="${d}" fill="none" stroke="${c}" stroke-width="2.5" class="flow"/>`;
+  function draw(m){
+    document.querySelectorAll('#lkTabs .btn').forEach(b=>b.setAttribute('aria-pressed',b.dataset.m===m));
+    let h=box(10,90,100,50,'事件來源','var(--surface2)','var(--ink)');
+    if(m==='l'){
+      h+=ln('M110 115 C 150 115, 150 50, 190 50','var(--txt)')+ln('M110 115 C 150 115, 150 180, 190 180','var(--sen)');
+      h+=box(190,25,200,50,'批次層 Batch Layer|定期全量重算（準確）','var(--txt)','#fff');
+      h+=box(190,155,200,50,'速度層 Speed Layer|先給近似值','var(--sen)','#fff');
+      h+=ln('M390 50 C 430 50, 430 115, 470 115','var(--txt)')+ln('M390 180 C 430 180, 430 115, 470 115','var(--sen)');
+      h+=box(470,90,170,50,'服務層 Serving','var(--ink)','var(--bg)');
+      h+=`<text x="290" y="120" text-anchor="middle" font-size="13" fill="var(--bad)" font-weight="700">兩套程式碼，要人工保持一致</text>`;
+      $('#lkTxt').innerHTML='<b>Lambda：</b>批次層＋速度層＋服務層。速度層先給近似值，等批次層追上後被取代。代價：<b>維護成本高、兩層結果可能不一致</b>。';
+    }else{
+      h+=ln('M110 115 L 170 115','var(--sen)');
+      h+=box(170,85,130,60,'Kafka 事件日誌|（可重播）','var(--surface2)','var(--ink)');
+      h+=ln('M300 115 L 340 115','var(--sen)');
+      h+=box(340,85,130,60,'串流層|一套程式','var(--sen)','#fff');
+      h+=ln('M470 115 L 500 115','var(--sen)');
+      h+=box(500,90,140,50,'服務層 Serving','var(--ink)','var(--bg)');
+      h+=`<path d="M405 145 C 405 200, 235 200, 235 145" fill="none" stroke="var(--aud)" stroke-width="2.5" stroke-dasharray="6 5"/><text x="320" y="215" text-anchor="middle" font-size="13" fill="var(--aud)" font-weight="700">重播（Replay）事件日誌補算歷史</text>`;
+      $('#lkTxt').innerHTML='<b>Kappa：</b>只有串流層＋服務層，<b>一套程式碼</b>。歷史資料靠重播事件日誌、用同一套串流程式重算。代價：<b>重播成本高</b>，依賴可長期保存且可重播的日誌（如 Kafka）。';
+    }
+    $('#lkSvg').innerHTML=h;
+  }
+  document.querySelectorAll('#lkTabs .btn').forEach(b=>b.onclick=()=>draw(b.dataset.m));
+  draw('l');
+})();
+
+/* ---------- IoT pipeline ---------- */
+(function(){
+  const nodes=[['感測器','產生資料'],['邊緣運算節點','降低延遲'],['串流處理框架','即時偵測'],['雲端資料湖','保留完整原始資料'],['模型推論／再訓練','閉環']];
+  const out=['感測器每秒送出大量讀數。題目要求：<b>毫秒級即時性、資料完整性、可擴展性</b>三者同時滿足。','<b>邊緣運算節點：</b>在靠近裝置的地方先處理，<b>降低延遲</b>。','<b>串流處理框架：</b>事件一到就做即時偵測（例如 Flink）。<div class="hint">若這裡換成「批次特徵工程」，即時性就不成立。</div>','<b>雲端資料湖：</b>保留完整原始資料，供回溯與再訓練。<div class="hint">若主幹改成「雲端報表系統」，即時性就不成立。</div>','<b>模型推論／再訓練：</b>這就是 114-2 第 19 題的標準答案形狀。'];
+  let i=0;
+  $('#iotPipe').innerHTML=nodes.map(([a,b])=>`<div class="pnode"><b>${a}</b>${b}</div>`).join('');
+  function r(){document.querySelectorAll('#iotPipe .pnode').forEach((n,j)=>{n.classList.toggle('on',j===i);n.classList.toggle('past',j<i);});$('#iotOut').innerHTML=out[i];$('#iotNext').disabled=i===4;$('#iotNext').style.opacity=i===4?.4:1;}
+  $('#iotNext').onclick=()=>{if(i<4){i++;r();}};
+  $('#iotReset').onclick=()=>{i=0;r();};
+  r();
+})();
+
+mkTabs('#toolTabs','#toolBody',[
+  ['Apache Airflow','Python 撰寫 DAG，Operator 與排程功能豐富','大規模、相依複雜的多任務管線','部署與維運相對複雜'],
+  ['Luigi','Spotify 開源，架構清晰輕量','中小型任務、流程單純','功能單純、監控與圖形介面較弱'],
+  ['Prefect','現代化設計，容錯與監控強、UI 友善','追求操作簡便的資料科學團隊','功能不及 Airflow 廣，完整功能需雲端服務'],
+  ['Kubeflow Pipelines','以 Kubernetes 為基礎，專注 ML／AI 訓練流程','以機器學習為主的團隊、容器環境','安裝設定複雜、學習曲線陡']
+],x=>`<div class="kpis"><div class="kpi" style="--c:var(--sen)"><span>特點</span>${x[1]}</div><div class="kpi" style="--c:var(--ok)"><span>適用</span>${x[2]}</div><div class="kpi" style="--c:var(--bad)"><span>弱點</span>${x[3]}</div></div><p class="hint" style="margin:10px 0 0">提醒：Airflow／Prefect 是編排與排程工具，不是運算引擎 —— 實際運算仍交給 Spark、SQL 或 Python 任務。</p>`);
+
+/* ---------- 33.5 pandas lab ---------- */
+(function(){
+  const O=[['O1','C1','Electronics',500],['O2','C2','Books',900],['O3','C3','Electronics',400],['O4','C3','Electronics',400],['O5','C3','Books',300],['O6','C4','Toys',700],['O7','C1','Books',100]];
+  const C=[['C1','王'],['C2','李'],['C3','陳'],['C5','林']];
+  $('#ordTbl').innerHTML='<tr><th>df</th><th>CustomerID</th><th>Category</th><th>Revenue</th></tr>'+O.map((r,i)=>`<tr><td>${i}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('');
+  $('#cusTbl').innerHTML='<tr><th>customers</th><th>CustomerID</th><th>Name</th></tr>'+C.map((r,i)=>`<tr><td>${i}</td><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');
+  const sum={},mx={};O.forEach(r=>{sum[r[1]]=(sum[r[1]]||0)+r[3];mx[r[1]]=Math.max(mx[r[1]]||0,r[3]);});
+  const top=(o,n)=>Object.entries(o).sort((a,b)=>b[1]-a[1]).slice(0,n);
+  const ser=a=>a.map(([k,v])=>`${k}　${v}`).join('<br>');
+  mkTabs('#gbTabs','#gbOut',[
+    {name:'✓ sum().nlargest(3)',c:"df.groupby('CustomerID')['Revenue'].sum().nlargest(3)",o:()=>`<code>${ser(top(sum,3))}</code><p class="ok-t" style="margin:8px 0 0">✓ 先加總每位客戶的總營收，再取前三：C3 靠三筆中型訂單累積到最高。</p>`},
+    {name:'✗ max()',c:"df.groupby('CustomerID')['Revenue'].max().nlargest(3)",o:()=>`<code>${ser(top(mx,3))}</code><p class="bad-t" style="margin:8px 0 0">✗ max 是每位客戶的「單筆」最高消費，不是總額。</p>`},
+    {name:'✗ sum().head(3)',c:"df.groupby('CustomerID')['Revenue'].sum().head(3)",o:()=>`<code>${ser(Object.entries(sum).slice(0,3))}</code><p class="bad-t" style="margin:8px 0 0">✗ head(3) 依 CustomerID 索引順序取前三個客戶，與金額高低無關。</p>`},
+    {name:'✗ sort_values()',c:"df.sort_values('Revenue', ascending=False).head(3)",o:()=>`<code>${[...O].sort((a,b)=>b[3]-a[3]).slice(0,3).map(r=>`${r[1]}　${r[3]}`).join('<br>')}</code><p class="bad-t" style="margin:8px 0 0">✗ 排的是「單筆訂單」，靠多筆中型訂單累積的大客戶 C3 落選了。</p>`}
+  ],x=>{$('#gbCode').textContent=x.c;return x.o();});
+  const el=O.filter(r=>r[2]==='Electronics').map(r=>r[3]);
+  mkTabs('#flTabs','#flOut',[
+    {name:'✓ 布林遮罩',c:"df[df['Category'] == 'Electronics']['Revenue'].mean()",o:`<code>${(el.reduce((a,b)=>a+b,0)/el.length).toFixed(2)}</code><p class="ok-t" style="margin:8px 0 0">✓ 先用 <code>df['Category'] == 'Electronics'</code> 產生 True/False 遮罩，再套回 df。</p>`},
+    {name:"✗ df['Category' == ...]",c:"df['Category' == 'Electronics']",o:`<p class="bad-t" style="margin:0">✗ 括號裡是兩個字串常數相比，結果永遠 False —— 根本沒有比對欄位值。</p>`},
+    {name:'✗ df.loc[...]',c:"df.loc['Electronics', 'Revenue']",o:`<p class="bad-t" style="margin:0">✗ KeyError：loc 第一軸是列索引（這裡是 0～6），未 set_index 就找不到 'Electronics'。</p>`},
+    {name:'✗ df.filter(items=...)',c:"df.filter(items=['Electronics'])",o:`<p class="bad-t" style="margin:0">✗ filter 篩的是「欄位名稱」，不是欄位內的值 → 沒有叫 Electronics 的欄位，得到空表。</p>`}
+  ],x=>{$('#flCode').textContent=x.c;return x.o;});
+  const name=id=>{const c=C.find(r=>r[0]===id);return c?c[1]:'<span class="bad-t">NaN</span>';};
+  const tbl=rows=>`<table class="mini"><tr><th>CustomerID</th><th>Revenue</th><th>Name</th></tr>${rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('')}</table>`;
+  const inner=O.filter(r=>C.some(c=>c[0]===r[1])).map(r=>[r[1],r[3],name(r[1])]);
+  const left=O.map(r=>[r[1],r[3],name(r[1])]);
+  const rightOnly=C.filter(c=>!O.some(r=>r[1]===c[0])).map(c=>[c[0],'<span class="bad-t">NaN</span>',c[1]]);
+  mkTabs('#mgTabs','#mgOut',[
+    {name:"how='inner'",c:"pd.merge(df, customers, on='CustomerID', how='inner')",o:()=>tbl(inner)+`<p class="ok-t" style="margin:8px 0 0">✓ 交集：C4（沒有客戶資料）與 C5（沒有交易）都不見。115Q1-47「只保留有對應客戶的交易」就選它。</p>`},
+    {name:"how='left'",c:"pd.merge(df, customers, on='CustomerID', how='left')",o:()=>tbl(left)+`<p class="hint" style="margin:8px 0 0">保留左表全部：C4 的 Name 是 NaN。</p>`},
+    {name:"how='right'",c:"pd.merge(df, customers, on='CustomerID', how='right')",o:()=>tbl(inner.concat(rightOnly))+`<p class="hint" style="margin:8px 0 0">保留右表全部：C5 沒有交易，Revenue 是 NaN；C4 消失。</p>`},
+    {name:"how='outer'",c:"pd.merge(df, customers, on='CustomerID', how='outer')",o:()=>tbl(left.concat(rightOnly))+`<p class="hint" style="margin:8px 0 0">聯集：C4、C5 都留下，缺的補 NaN。</p>`},
+    {name:'✗ concat(axis=1)',c:"pd.concat([df, customers], axis=1)",o:()=>`<table class="mini"><tr><th>df.CustomerID</th><th>customers.CustomerID</th><th>Name</th></tr>${O.map((r,i)=>`<tr><td>${r[1]}</td><td>${C[i]?C[i][0]:'NaN'}</td><td>${C[i]?C[i][1]:'NaN'}</td></tr>`).join('')}</table><p class="bad-t" style="margin:8px 0 0">✗ 依位置硬並排，完全不比對鍵值：前三列碰巧對上，第 4 列的 C3 旁邊卻是 C5（林），之後全是 NaN。</p>`},
+    {name:'✗ df.join(on=)',c:"df.join(customers, on='CustomerID')",o:()=>`<p class="bad-t" style="margin:0">✗ <code>df.join</code> 預設對的是<b>右表的 index</b>（這裡是 0～3），且是 left join → CustomerID 'C1' 對不到 index，Name 全是 NaN。</p>`}
+  ],x=>{$('#mgCode').textContent=x.c;return x.o();});
+})();
+
+/* ---------- syntax tabs 4-8 ---------- */
+mkTabs('#synTabs','#synBody',[
+  {name:'4. 長寬轉換',h:`<pre class="code">pd.melt(df, value_vars=['NA_Sales', 'EU_Sales'])       <span class="cm"># 寬 → 長</span>
+df.pivot_table(index='Region', columns='Category',
+               values='Revenue', aggfunc='sum')         <span class="cm"># 長 → 寬，會聚合</span>
+<span class="cm">#   df.pivot() 不做聚合，index/columns 組合重複就報錯</span></pre><div class="grid2"><div class="tbl-wrap"><table class="mini"><tr><th>Game</th><th>NA_Sales</th><th>EU_Sales</th></tr><tr><td>A</td><td>3</td><td>2</td></tr><tr><td>B</td><td>1</td><td>4</td></tr></table><p class="hint">寬表（示意）</p></div><div class="tbl-wrap"><table class="mini"><tr><th>Game</th><th>variable</th><th>value</th></tr><tr><td>A</td><td>NA_Sales</td><td>3</td></tr><tr><td>B</td><td>NA_Sales</td><td>1</td></tr><tr><td>A</td><td>EU_Sales</td><td>2</td></tr><tr><td>B</td><td>EU_Sales</td><td>4</td></tr></table><p class="hint">melt 之後的長表（114Q2-46／47 搭配 barplot）</p></div></div>`},
+  {name:'5. 分批讀取',h:`<pre class="code">for chunk in pd.read_csv('big.csv', chunksize=100_000):
+    process(chunk)</pre><div class="row" id="chBtns"><button class="btn" data-c="0">直接 read_csv</button><button class="btn" data-c="1">nrows=10000</button><button class="btn" data-c="2">dtype=...</button><button class="btn" data-c="3">chunksize=100_000</button></div><div style="margin-top:12px"><div class="row" style="justify-content:space-between"><b>記憶體佔用（示意，50GB CSV）</b><span id="chNum">—</span></div><div class="meter" style="height:18px"><i id="chM" style="width:0"></i></div><p class="hint" id="chNote" style="margin:4px 0 0">115Q1-12：50GB CSV 直接 read_csv 就 OOM。</p></div>`},
+  {name:'6. apply 軸向',h:`<pre class="code">df.apply(f, axis=0)   <span class="cm"># f 每次收到「一個欄（column）」，沿 index 方向運算（預設）</span>
+df.apply(f, axis=1)   <span class="cm"># f 每次收到「一列（row）」</span></pre><div class="row"><button class="btn" id="ax0">axis=0</button><button class="btn" id="ax1">axis=1</button></div><div id="axGrid" style="display:grid;grid-template-columns:repeat(3,56px);gap:4px;margin-top:12px"></div><p class="hint" id="axNote" style="margin:8px 0 0"></p>`},
+  {name:'7. agg vs transform',h:`<pre class="code">df.groupby('Region')['Revenue'].agg('mean')            <span class="cm"># 每個 Region 一列</span>
+df['region_avg'] = df.groupby('Region')['Revenue'].transform('mean')   <span class="cm"># 可直接指派回原表</span></pre><div class="grid2"><div class="tbl-wrap"><table class="mini"><tr><th colspan="2">agg('mean')</th></tr><tr><td>北</td><td>150</td></tr><tr><td>南</td><td>300</td></tr></table><p class="hint">每組一列（示意）</p></div><div class="tbl-wrap"><table class="mini"><tr><th>Region</th><th>Revenue</th><th>region_avg</th></tr><tr><td>北</td><td>100</td><td>150</td></tr><tr><td>北</td><td>200</td><td>150</td></tr><tr><td>南</td><td>300</td><td>300</td></tr></table><p class="hint">transform：與原資料等長，可直接當新欄位</p></div></div>`},
+  {name:'8. fit / transform',h:`<pre class="code">scaler = StandardScaler()
+X_train_s = scaler.fit_transform(X_train)   <span class="cm"># 從訓練集學 μ、σ 並轉換</span>
+X_test_s  = scaler.transform(X_test)        <span class="cm"># 測試集只 transform，不可再 fit</span>
+<span class="cm">#   未 fit 就呼叫 transform → NotFittedError</span>
+<span class="cm">#   scaler.fit(X) 的回傳值是 scaler 物件本身，不是轉換後的陣列</span></pre><div class="callout exam" style="margin:0"><b>115Q1-48：</b>StandardScaler 的正確寫法是 <code>fit_transform(X)</code>；<code>fit()</code> 回傳的是物件本身。<br><b>115Q1-39（管線程式碼）：</b>清洗函式連續處理兩筆資料的結果 → <b>可變預設參數陷阱</b>，<code>tags=[]</code> 只在定義時求值一次。</div>`}
+],x=>x.h,i=>{
+  if(i===1){const S=[['直接 read_csv',100,'var(--bad)','整份讀進來 → OOM。'],['nrows=10000',2,'var(--warn)','只讀前 N 筆，<b>等於丟掉絕大部分資料</b>。記憶體是省了，但答案是錯的。'],['dtype=...',70,'var(--warn)','能等比例壓低佔用，是<b>輔助手段</b>；50GB 打折後仍塞不進記憶體。'],['chunksize',8,'var(--ok)','<b>分批讀，不是少讀</b>：一次只有一批在記憶體裡，全部資料都處理到。']];
+    document.querySelectorAll('#chBtns .btn').forEach(b=>b.onclick=()=>{const s=S[+b.dataset.c];document.querySelectorAll('#chBtns .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#chM').style.width=s[1]+'%';$('#chM').style.background=s[2];$('#chNum').textContent=s[1]>=100?'OOM':s[1]+'%';$('#chNote').innerHTML=s[3];});}
+  if(i===2){const g=$('#axGrid');const cells=[];for(let r=0;r<3;r++)for(let c=0;c<3;c++)cells.push(`<div class="cell" data-r="${r}" data-c="${c}" style="aspect-ratio:1;border-radius:6px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:13px;transition:background .4s">${r},${c}</div>`);g.innerHTML=cells.join('');
+    let t=[];const run=ax=>{t.forEach(clearTimeout);t=[];$('#ax0').setAttribute('aria-pressed',ax===0);$('#ax1').setAttribute('aria-pressed',ax===1);[0,1,2].forEach(k=>t.push(setTimeout(()=>{g.querySelectorAll('.cell').forEach(c=>{const on=ax===0?+c.dataset.c===k:+c.dataset.r===k;c.style.background=on?(ax===0?'var(--txt)':'var(--aud)'):'var(--surface2)';c.style.color=on?'#fff':'var(--ink)';});},reduce?0:k*600)));$('#axNote').innerHTML=ax===0?'axis=0：f 依序收到<b>第 0、1、2 欄</b>（預設）。':'axis=1：f 依序收到<b>第 0、1、2 列</b>。';};
+    $('#ax0').onclick=()=>run(0);$('#ax1').onclick=()=>run(1);run(0);}
+});
+
+/* ---------- exam list ---------- */
+mkExam($('#examList'),[
+  ['115Q1-32','資料洩漏（最高頻）','先對全體 SMOTE 再切分，AUC 0.91 可信嗎','<b>切分前過採樣 → 合成樣本跨集</b>，分數虛高'],
+  ['115Q1-10','資料洩漏','在含測試集的全體資料上算相關係數刪特徵','<b>洩漏</b>；且相關係數只抓線性關係，可能誤刪'],
+  ['115Q1-11','編碼選型','有序 5 級 ＋ 無序 22 縣市，LR 與 XGBoost 分別怎麼編','有序用 Ordinal；LR 對無序用 <b>One-Hot + drop_first</b>；XGBoost 用 <code>enable_categorical</code>；目標編碼<b>切分前算就是洩漏</b>'],
+  ['114Q2-5','Label Encoding 風險','最常見的潛在風險是什麼','<b>引入虛假順序關係</b>（不是記憶體過高）'],
+  ['114Q2-17','編碼 × 樹模型','GBT 直接吃 Label Encoding 要注意什麼','<b>誤判順序 → 特徵重要性偏誤</b>；目標編碼不會「自動消除」過擬合'],
+  ['115Q1-42','編碼 × 模型替換','不准改 1/2/3 編碼，怎麼降低線性誤解','換<b>隨機森林</b>；樹以門檻切分，不吃數值間距'],
+  ['114Q2-6','綜合（選「不正確」）','One-Hot／Label／標準化／分箱四段敘述','<b>標準化不會壓到 0～1</b>，那是 Min-Max'],
+  ['114Q2-9','縮放選型','有極端值時用哪一種','<b>Robust Scaling</b>（中位數 ＋ IQR）'],
+  ['114Q2-36','分佈轉換','Y 右偏且變異數隨 X 增大','<b>對 Y 做 Box–Cox</b>，同時修偏態與異質變異'],
+  ['115Q1-26','分箱用詞','時間戳記切成早／午／夜叫什麼','<b>特徵離散化（分箱）</b>，不是 One-Hot、不是降維'],
+  ['114Q2-8','特徵衍生','銷售金額 ÷ 瀏覽次數屬哪一類','<b>特徵衍生</b>（非選擇、非轉換、非分箱）'],
+  ['114Q2-12','不平衡處理','隨機過採樣最常造成什麼','<b>增加過擬合風險</b>（樣本完全重複）'],
+  ['114Q2-37','不平衡處理','罕病 &lt;1% 且短期無法補資料','<b>SMOTE 內插生成</b>，優於複製、欠採樣與單改閾值'],
+  ['115Q1-15','資料增強（選「最無效」）','哪個資料層面調整無法改善過擬合','<b>預先轉固定特徵並快取重複使用</b> → 凍結多樣性，反而更糟'],
+  ['115Q1-21','Spark 分散式統計','10 億筆 RDD／DataFrame 算標準差','<b><code>DataFrame.agg</code>／<code>RDD.aggregate</code></b>，各 Executor 算局部再彙總；<code>collect()</code> 必 OOM'],
+  ['114Q2-24','分散式預處理','多來源非結構化資料要高效且一致地前處理','<b>資料湖 ＋ Spark／Ray 分散式預處理 ＋ 串接訓練管線</b>'],
+  ['114Q2-19','串流架構','IoT 毫秒級回應且要保留完整資料','<b>邊緣節點 → 串流處理框架 → 雲端資料湖 → 模型推論</b>'],
+  ['115Q1-12','pandas 記憶體','50GB CSV 直接 <code>read_csv</code> 就 OOM','<b><code>chunksize</code></b> 分批；<code>nrows</code> 是丟資料、<code>dtype</code> 只是輔助'],
+  ['115Q1-45','pandas 分組','總貢獻營收最高的前 3 名客戶','<code>groupby(...).sum().nlargest(3)</code>'],
+  ['115Q1-46','pandas 篩選','單一分類的平均營收','布林遮罩 <code>df[df[\'Category\'] == \'Electronics\']</code>'],
+  ['115Q1-47','pandas 合併','只保留有對應客戶的交易','<code>pd.merge(..., how=\'inner\')</code>'],
+  ['114Q2-43','pandas 型別','Year 為何是 float64','<b>含 NaN 自動升格</b> ＋ 原值帶小數點；並非「一律讀成 float64」'],
+  ['114Q2-44','pandas 型別','含 NaN 又要轉整數','<b><code>astype(\'Int64\')</code></b>（可空整數）'],
+  ['114Q2-45','pandas 彙總','各平台銷售總額長條圖','<code>groupby(\'Platform\')[\'Global_Sales\'].sum().plot(kind=\'bar\')</code>'],
+  ['115Q1-48','sklearn 語法','StandardScaler 的正確寫法','<b><code>fit_transform(X)</code></b>；<code>fit()</code> 回傳的是物件本身'],
+  ['115Q1-39','管線程式碼','清洗函式連續處理兩筆資料的結果','<b>可變預設參數陷阱</b>，<code>tags=[]</code> 只在定義時求值一次'],
+  ['115Q1-31','特徵共用管理','兩團隊都要同一份行為資料','<b>降低跨團隊重複開發的維護成本</b>'],
+  ['114Q2-11','即時架構（部分相關）','即時監控大量 IoT 裝置的組合','大數據平台 ＋ 即時資料分析技術'],
+  ['115Q1-41','補值（部分相關）','右偏、max 4500、5% 缺值怎麼補','中位數填補'],
+  ['114Q2-46／47','視覺化（部分相關）','<code>pd.melt</code> ＋ <code>barplot</code>、<code>nlargest(5)</code> 取前五','長寬轉換與排名取值的語法仍屬本節工具']
+]);
+
+/* ---------- traps ---------- */
+mkTraps('l22203-traps',[
+  ['Z-score 標準化是「平均 0、標準差 1」，不是「壓到 0～1」','把範圍壓到 [0,1] 的是 Min-Max 正規化；官方刻意把這兩句寫進同一個選項當誘答。'],
+  ['Robust Scaling 用的是中位數與四分位距（IQR），不是平均數與標準差','所以它抗離群值；Min-Max 與 Z-score 的參數都會被極端值污染。'],
+  ['Label Encoding 的主要風險是虛假順序，不是記憶體佔用過高','它只用一個整數欄，記憶體反而最省；會維度爆炸的是 One-Hot。'],
+  ['樹模型是「對編碼數值的單調變換不敏感」，不是「完全不受編碼影響」','單次切分只能沿編碼順序切成前後兩段，切不出 {1,3} vs {2}，所以 XGBoost 才要 enable_categorical。'],
+  ['分箱／特徵離散化是把連續值切成區間，不是 One-Hot 編碼','One-Hot 是離散化之後「可以再接」的下一步，而且展開後會丟掉區間之間的順序。'],
+  ['特徵衍生是用既有欄位算出新欄位，不是特徵選擇，也不是特徵轉換','選擇是挑子集，轉換是對單一欄位做數學變換。'],
+  ['SMOTE 是在少數類特徵空間內插生成，不是複製既有樣本','複製的是 Random Oversampling，那一個的過擬合風險才最高。'],
+  ['SMOTE、目標編碼、特徵篩選與 Scaler 都必須「先切分、只用訓練集 fit」','順序顛倒就是資料洩漏，測試分數會虛高到不可信。'],
+  ['Spark 快是因為中間結果留在記憶體、用 DAG 合併階段，不是演算法比 MapReduce 聰明','記憶體不足時 Spark 一樣會溢寫到磁碟，速度優勢隨之縮小。'],
+  ['RDD 的容錯靠 Lineage 重算遺失分區，不是把每個中間結果都寫多份到磁碟','寫多副本的是 HDFS 儲存層的機制。'],
+  ['Transformation（map／filter／join）是惰性的、只在 DAG 上加節點','真正觸發運算的是 Action（count／collect／show／write）。'],
+  ['Flink 是原生逐事件串流、把批次視為有界串流，不是把串流切成微批次','微批次是 Spark Streaming 的做法，延遲量級通常在秒級。'],
+  ['Kafka 是事件的傳輸與可重播儲存層，在典型考題架構中不是運算引擎','即時聚合與異常偵測要靠後面接的 Flink／Spark Streaming（Kafka Streams 屬例外而非題目預設）。'],
+  ['Lambda 架構是批次層與速度層並存、維護兩套邏輯，Kappa 才是只留串流層','Kappa 靠重播事件日誌補算歷史，換來一套程式碼，但重播成本高。'],
+  ['Apache Beam 是統一的程式模型，本身不含執行引擎','實際運算要指定 Runner（Flink／Spark／Dataflow），可移植性正是它的賣點。'],
+  ['分散式算全域統計要「各節點先算局部、再彙總」，不是 collect() 回 Driver','10 億筆拉回單一節點會 OOM，也放棄了叢集的平行能力。'],
+  ['Airflow／Prefect 是編排與排程工具，不是運算引擎','它負責觸發、相依與監控，實際運算仍交給 Spark、SQL 或 Python 任務。'],
+  ['讀不下大檔要用 chunksize 分批，不是 nrows','nrows 只讀前 N 筆等於丟資料；dtype 只能等比例壓縮，是輔助不是解法。'],
+  ["pd.merge(how='inner') 取交集、how='outer' 取聯集，pd.concat(axis=1) 完全不比對鍵值",'df.join 預設對的是右表的 index 且為 left join。'],
+  ['整數欄含 NaN 會被升格成 float64，不是「pandas 一律把數值讀成 float64」',"要同時保留整數與缺值，用 astype('Int64')（大寫 I）。"],
+  ['groupby().agg() 每組回傳一列，groupby().transform() 回傳與原資料等長','想把組統計量指派回原表當新欄位，要用 transform。']
+]);
+
+/* ---------- quiz ---------- */
+mkQuiz([
+  ['團隊先對全體資料做 SMOTE，再切分訓練與測試集，得到 AUC 0.91。這個分數可信嗎？',['不可信：切分前過採樣讓合成樣本跨集，分數虛高','可信：SMOTE 是內插生成，不是複製，所以不會洩漏','可信：只要測試集比例夠大就沒問題','不可信：因為 SMOTE 一定比隨機過採樣差'],'115Q1-32。任何會學習資料統計性質的步驟都必須先切分、只用訓練集 fit。'],
+  ['關於資料縮放的敘述，下列何者「不正確」？',['Z-score 標準化會把資料壓到 0～1 之間','Min-Max 正規化對離群值最敏感','Robust Scaling 使用中位數與 IQR','樹模型通常不需要縮放'],'114Q2-6。Z-score 是平均 0、標準差 1；壓到 0～1 的是 Min-Max。'],
+  ['資料含明顯極端值，應優先採用哪種縮放？',['Robust Scaling','Min-Max Normalization','Z-score Standardization','One-Hot Encoding'],'114Q2-9。中位數與 IQR 不會被極端值拉偏。'],
+  ['pandas 讀入後 Year 欄顯示成 2006.0、dtype 為 float64，最可能的原因是？',['該整數欄含有 NaN，被自動升格成 float64','pandas 一律把數值讀成 float64','CSV 檔案編碼錯誤','Year 欄被當成字串讀入'],'114Q2-43。純整數欄預設仍是 int64；含 NaN 才會升格。要保留缺值又是整數，用 astype(\'Int64\')。'],
+  ['把 UNIX 時間戳記轉成「早晨／下午／夜晚」，最精確的名稱是？',['特徵離散化（分箱）','One-Hot 編碼','降維','特徵選擇'],'115Q1-26 考用詞精確度。One-Hot 是離散化之後可以再接的下一步。'],
+  ['Label Encoding 用在無序類別上，最常見的潛在風險是？',['引入虛假順序關係','記憶體佔用過高','維度爆炸','目標洩漏'],'114Q2-5。Label Encoding 只用一個整數欄，記憶體反而最省；維度爆炸是 One-Hot 的問題。'],
+  ['10 億筆 Spark DataFrame 要計算標準差，最合適的做法是？',['用 DataFrame.agg／RDD.aggregate，各 Executor 算局部統計量再彙總','collect() 拉回 Driver 後用 NumPy 計算','把資料寫成 CSV 再用 pandas 讀','改用 MapReduce 一定比較快'],'115Q1-21。collect() 會讓 10 億筆擠進單一節點而 OOM。'],
+  ['IoT 系統要求毫秒級回應，同時要保留完整原始資料，下列哪個架構最合理？',['感測器 → 邊緣節點 → 串流處理框架 → 雲端資料湖 → 模型推論','感測器 → 雲端資料湖 → 每日批次特徵工程 → 模型推論','感測器 → 雲端報表系統 → 人工判讀','感測器 → MQTT Broker → 直接存入資料倉儲'],'114Q2-19。主幹出現批次特徵工程或報表系統，即時性就不成立。'],
+  ['50GB 的 CSV 直接 read_csv 會記憶體不足，最正確的解法是？',['用 chunksize 分批讀取並處理','用 nrows=10000 只讀前 1 萬筆','只靠 dtype 壓縮欄位型別','換成 df.head() 讀取'],'115Q1-12。nrows 是丟資料；dtype 只是輔助，50GB 打折後仍塞不進記憶體。'],
+  ['要找出「總貢獻營收最高的前 3 名客戶」，正確寫法是？',["df.groupby('CustomerID')['Revenue'].sum().nlargest(3)","df.groupby('CustomerID')['Revenue'].max().nlargest(3)","df.groupby('CustomerID')['Revenue'].sum().head(3)","df.sort_values('Revenue').head(3)"],'115Q1-45。max 是單筆最高、head 依索引順序、sort_values 排的是單筆訂單。'],
+  ['關於 Lambda 與 Kappa 架構，下列何者正確？',['Kappa 只保留串流層，靠重播事件日誌重算歷史，只需一套程式碼','Lambda 只有串流層，因此維護成本最低','Kappa 需要批次層與速度層兩套程式','Lambda 不需要服務層'],'Lambda 是批次層＋速度層＋服務層、兩套邏輯；Kappa 一套程式但重播成本高。'],
+  ['兩個團隊都需要同一份顧客行為資料，導入共用特徵管理（特徵平台）的主要目的是？',['消除跨團隊重複開發、降低維護成本並確保特徵定義一致','降低模型推論延遲','節省儲存空間','管理模型版本'],'115Q1-31。推論延遲、儲存空間、模型版本分屬服務架構、基礎設施與模型註冊表的範疇。']
+],['太強了，流程順序與語法判讀都能秒答。','不錯！回頭看看答錯的那幾題對應的段落。','建議重新操作 33.2 的流程順序、33.3 的分散式模擬器與 33.5 的 pandas 實驗室，再來一次。']);
+
+navHighlight();
+
+</script>
+</body>
+</html>

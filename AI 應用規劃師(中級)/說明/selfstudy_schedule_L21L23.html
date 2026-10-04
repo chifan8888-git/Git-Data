@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>九週自學排程：L21＋L23 機器學習路線｜互動教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F5; --surface:#FFFFFF; --surface2:#F6F8FB; --ink:#18202E; --muted:#5A6475; --line:#D5DBE4;
+  --txt:#3B4CCA; --img:#0E8A7A; --aud:#B87812; --sen:#B8336A;
+  --ok:#1F8A4C; --bad:#C23B2E; --warn:#D9822B;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+    --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+  --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75}
+h1,h2,h3{font-family:var(--serif);line-height:1.3;margin:0}
+p{margin:0 0 1em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--txt);outline-offset:2px;border-radius:4px}
+svg{max-width:100%;height:auto;display:block}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1180px;margin:0 auto;gap:40px;padding:0 24px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;padding:32px 0;height:100vh;overflow:auto}
+nav.toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14.5px}
+nav.toc a span{font-variant-numeric:tabular-nums;font-size:13px;opacity:.8}
+nav.toc a.on{background:var(--surface);color:var(--ink);font-weight:700}
+.toc-title{font-family:var(--serif);font-weight:900;font-size:18px;padding:0 10px 14px}
+main{min-width:0;padding-bottom:80px}
+section{padding:56px 0 8px;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.sec-head{display:flex;gap:16px;align-items:baseline;margin-bottom:18px}
+.sec-no{font-family:var(--serif);font-weight:900;font-size:40px;color:var(--line);line-height:1}
+h2{font-size:28px;font-weight:900}
+h3{font-size:19px;margin:34px 0 10px}
+.lead{color:var(--muted);max-width:66ch}
+.prose{max-width:68ch}
+
+/* hero */
+.hero{padding:44px 0 24px}
+.hero .code{font-size:14px;color:var(--muted);margin-bottom:6px}
+.hero h1{font-size:clamp(34px,5.5vw,56px);font-weight:900;letter-spacing:.02em}
+.hero .one{font-size:18px;max-width:60ch;margin:16px 0 0;color:var(--muted)}
+.hero-fig{background:var(--surface);border-radius:20px;margin-top:28px;padding:14px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+.goal{border-left:4px solid var(--c);padding:6px 0 6px 14px;font-size:15px}
+
+/* panels */
+.panel{background:var(--surface);border-radius:16px;padding:22px;margin:16px 0}
+.panel.flat{background:var(--surface2)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font-size:15px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hint{font-size:14px;color:var(--muted)}
+.callout{border-left:4px solid var(--warn);background:var(--surface2);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;font-size:15px}
+.callout.exam{border-color:var(--txt)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:14px}
+
+/* modality chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+
+/* matcher */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.match .col{display:flex;flex-direction:column;gap:10px}
+.mitem{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15px;transition:border-color .2s,background .2s,transform .2s}
+.mitem small{display:block;color:var(--muted);font-size:13px}
+.mitem.sel{border-color:var(--ink);transform:translateX(4px)}
+.mitem.done{border-color:var(--c,var(--ok));background:var(--surface2);cursor:default}
+.mitem.wrong{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:1.8em;margin-top:12px;font-size:15px}
+.feedback.ok{color:var(--ok)} .feedback.bad{color:var(--bad)}
+
+/* timeline */
+.steps{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stage-viz{min-height:130px;display:flex;align-items:center;justify-content:center}
+.stage-viz .blk{display:inline-block;width:34px;height:34px;border-radius:6px;margin:2px;transition:all .5s}
+
+/* align toggle */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.compare>div{padding:18px}
+.compare>div+div{border-left:1px solid var(--line)}
+.compare .big{font-family:var(--serif);font-weight:900;font-size:22px;margin-bottom:6px}
+
+/* fusion */
+.meter{height:14px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:6px 0}
+.meter>i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .7s cubic-bezier(.3,.8,.3,1),background .4s}
+.flow{stroke-dasharray:6 7;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.jitter{animation:jit .25s steps(2) infinite}
+@keyframes jit{50%{transform:translate(1.5px,-1px)}}
+.fusion-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.pc{font-size:15px}
+.pc b{display:block;font-size:14px;color:var(--muted);font-weight:500}
+
+/* clip */
+.mat{display:grid;gap:4px;font-size:13px}
+.mat .cell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;transition:background .5s,color .5s}
+.mat .lab{display:flex;align-items:center;justify-content:center;font-size:22px}
+.mat .tlab{font-size:12px;text-align:center;color:var(--muted);display:flex;align-items:flex-end;justify-content:center;line-height:1.3}
+.zs-imgs{display:flex;gap:10px;flex-wrap:wrap}
+.zs-img{font-size:38px;width:72px;height:72px;border-radius:16px;border:2px solid var(--line);background:var(--surface2);display:flex;align-items:center;justify-content:center}
+.zs-img[aria-pressed="true"]{border-color:var(--img);box-shadow:0 0 0 3px color-mix(in srgb,var(--img) 25%,transparent)}
+.bar{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.bar .track{height:22px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;width:0;background:var(--txt);border-radius:6px;transition:width .8s cubic-bezier(.3,.8,.3,1)}
+.bar.win .fill{background:var(--img)}
+.bar.win{font-weight:700}
+.bar .num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.flip{perspective:900px;height:150px;border:0;background:none;padding:0;text-align:left}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flip[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:center}
+.flip .f{background:var(--surface);border:1.5px solid var(--line)}
+.flip .f strong{font-family:var(--serif);font-size:22px}
+.flip .f span{color:var(--muted);font-size:14px}
+.flip .b{background:var(--ink);color:var(--bg);transform:rotateY(180deg);font-size:15px}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.pnode{border:2px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;font-size:14px;background:var(--surface);transition:all .35s}
+.pnode b{display:block;font-size:16px}
+.pnode.on{border-color:var(--aud);background:color-mix(in srgb,var(--aud) 14%,var(--surface));transform:translateY(-3px)}
+.pnode.past{border-color:color-mix(in srgb,var(--aud) 45%,var(--line))}
+.pout{background:var(--surface2);border-radius:12px;padding:14px 16px;min-height:84px;font-size:15px}
+.wave{display:flex;gap:3px;align-items:center;height:30px}
+.wave i{width:4px;background:var(--aud);border-radius:2px;animation:wv 1s ease-in-out infinite}
+@keyframes wv{50%{transform:scaleY(.3)}}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+
+/* strategies */
+.strat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.strat button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;text-align:left;font-size:15px}
+.strat button[aria-pressed="true"]{border-color:var(--ink)}
+.verdict{font-family:var(--serif);font-weight:900;font-size:20px}
+
+details{border-bottom:1px solid var(--line)}
+details summary{cursor:pointer;padding:12px 4px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"+";font-weight:900;width:14px;color:var(--muted)}
+details[open] summary::before{content:"−"}
+details .body{padding:0 4px 14px 30px;font-size:15px}
+.tag{font-size:12.5px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums;min-width:80px}
+
+/* quiz */
+.qcard{background:var(--surface);border-radius:16px;padding:24px}
+.qtop{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
+.qtext{font-size:18px;font-weight:700;margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15.5px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+.opt.wrongpick{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.opt:disabled{cursor:default}
+.expl{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15px;display:none}
+.expl.show{display:block}
+.progress{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;margin-bottom:14px}
+.progress i{display:block;height:100%;background:var(--txt);transition:width .4s}
+
+.traps label{display:flex;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:15px}
+.traps input{width:18px;height:18px;margin-top:4px;flex:none;accent-color:var(--ok)}
+.traps label.chk>span{color:var(--muted)}
+.traps em{font-style:normal;font-weight:700}
+
+/* mobile */
+@media (max-width:860px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+  nav.toc{position:sticky;top:0;height:auto;z-index:10;background:var(--bg);display:flex;overflow-x:auto;padding:8px 0;padding-top:calc(8px + env(safe-area-inset-top,0px));gap:4px;border-bottom:1px solid var(--line)}
+  .toc-title{display:none}
+  nav.toc a{white-space:nowrap;flex:none}
+  .match,.stage,.fusion-meta,.compare{grid-template-columns:1fr}
+  .compare>div+div{border-left:0;border-top:1px solid var(--line)}
+  .pipe{grid-template-columns:repeat(5,minmax(90px,1fr));overflow-x:auto}
+  .bar{grid-template-columns:110px 1fr 56px}
+  h2{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* ---- shared extras (same tokens as template) ---- */
+input[type=range]{width:100%;accent-color:var(--ink)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:14px 0}
+.kpi{background:var(--surface2);border-radius:12px;padding:12px 14px;font-size:14px;color:var(--muted)}
+.kpi b{display:block;font-family:var(--serif);font-weight:900;font-size:26px;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1.3}
+.stack{display:flex;height:30px;border-radius:8px;overflow:hidden;background:var(--surface2);margin:8px 0}
+.stack i{display:flex;align-items:center;justify-content:center;font-style:normal;font-size:12px;color:#fff;white-space:nowrap;overflow:hidden;min-width:0;transition:flex-grow .7s cubic-bezier(.3,.8,.3,1)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13.5px;color:var(--muted)}
+.weeks{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}
+.wk{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 8px;text-align:left;font-size:13.5px;line-height:1.4;transition:all .25s}
+.wk b{display:block;font-size:15px}
+.wk[aria-pressed="true"]{border-color:var(--c,var(--ink));background:color-mix(in srgb,var(--c,var(--ink)) 12%,var(--surface));transform:translateY(-3px)}
+.wkout{background:var(--surface2);border-radius:12px;padding:14px 16px;margin-top:12px;font-size:15px;min-height:90px}
+.tree{font-size:15px}
+.tree .node{display:block;width:100%;text-align:left;border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 14px;margin:6px 0;transition:all .25s}
+.tree .node small{display:block;color:var(--muted);font-size:13px}
+.tree .kids{margin-left:22px;padding-left:14px;border-left:2px dashed var(--line)}
+.tree .node[aria-pressed="true"],.tree .node.hl{border-color:var(--c,var(--ink));background:color-mix(in srgb,var(--c,var(--ink)) 12%,var(--surface))}
+.tree .node.dim{opacity:.4}
+.mbar{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px;align-items:center;margin:10px 0;font-size:14.5px}
+.mbar .tracks{display:flex;flex-direction:column;gap:3px}
+.mbar .t{display:grid;grid-template-columns:minmax(0,1fr) 62px;gap:6px;align-items:center}
+.mbar .t span{font-size:12.5px;text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+.mbar .tr{height:12px;background:var(--surface2);border-radius:4px;overflow:hidden}
+.mbar .tr i{display:block;height:100%;width:0;border-radius:4px;transition:width .8s cubic-bezier(.3,.8,.3,1)}
+.waffle{display:grid;grid-template-columns:repeat(20,1fr);gap:2px;max-width:420px}
+.waffle i{aspect-ratio:1;border-radius:2px;background:var(--surface2);transition:background .4s}
+.grid-tbl{display:inline-grid;gap:3px;font-size:13px}
+.grid-tbl span{padding:6px 10px;border-radius:6px;background:var(--surface2);text-align:center;transition:background .35s,color .35s}
+.grid-tbl span.h{font-weight:700;color:var(--muted);background:none}
+.grid-tbl span.on{background:var(--c,var(--txt));color:#fff}
+.check{display:flex;gap:10px;align-items:flex-start;padding:8px 0;font-size:15px;cursor:pointer}
+.check input{width:18px;height:18px;margin-top:4px;flex:none;accent-color:var(--ink)}
+.res{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.res>div{background:var(--surface2);border-radius:12px;padding:12px 14px;font-size:14.5px}
+pre{max-width:100%}
+@media (max-width:860px){
+  .mbar{grid-template-columns:minmax(0,1fr);gap:4px}
+  .tree .kids{margin-left:8px;padding-left:10px}
+}
+
+.slots{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;align-items:end}
+.slot{display:flex;flex-direction:column-reverse;gap:4px;min-height:150px;background:var(--surface2);border-radius:10px;padding:6px}
+.slot i{display:block;height:28px;border-radius:6px;opacity:0;transform:translateY(-14px);transition:opacity .4s,transform .4s}
+.slot i.in{opacity:1;transform:none}
+.slot-lab{text-align:center;font-size:12.5px;color:var(--muted);margin-top:4px}
+.wk.dim{opacity:.35}
+.wk .mini{display:flex;gap:3px;margin-top:6px;flex-wrap:wrap}
+.wk .mini i{width:12px;height:12px;border-radius:3px;background:var(--c2)}
+.alist a{display:block;padding:6px 0;border-bottom:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="toc" aria-label="章節">
+  <div class="toc-title">九週排程 L21＋L23</div>
+  <a href="#intro"><span>●</span>導覽與目標</a>
+  <a href="#s1"><span>16.1</span>先算時間</a>
+  <a href="#s2"><span>16.2</span>容量盤點</a>
+  <a href="#s3"><span>16.3</span>九週排程</a>
+  <a href="#s4"><span>16.4</span>每週怎麼跑</a>
+  <a href="#s5"><span>16.5</span>最後兩週</a>
+  <a href="#s6"><span>16.6</span>為何交錯</a>
+  <a href="#s7"><span>16.7</span>週數不同</a>
+  <a href="#s8"><span>16.8</span>讀書會</a>
+  <a href="#s9"><span>✓</span>資源與檢核</a>
+</nav>
+
+<main>
+<section id="intro" class="hero">
+  <div class="code">自學排程　L21＋L23 機器學習路線　建議 25 分鐘</div>
+  <h1>九週自學排程：L21＋L23</h1>
+  <p class="one">適用對象：報考中級<b>科目1（L21）＋科目3（L23）</b>、自己安排進度的考生，通過取得「AI 應用規劃師（機器學習）」中級證書。本篇排的是「<b>第幾週讀什麼</b>」，內容本身在各科的逐知識點講義。全篇用<b>相對週次</b>，不綁特定梯次，換一次考試可以直接沿用。走數據分析路線的請改看 <a href="selfstudy_schedule_L21L22.html">15. 自學排程：L21＋L22</a>。</p>
+  <div class="hero-fig" aria-hidden="true">
+    <svg id="heroSvg" viewBox="0 0 720 220">
+      <defs><path id="hp0" d="M40 120 L 680 120"/></defs>
+      <line x1="40" y1="120" x2="680" y2="120" stroke="var(--line)" stroke-width="6" stroke-linecap="round"/>
+      <g id="heroWeeks" font-family="Noto Sans TC, sans-serif" font-weight="700"></g>
+      <g class="movers"><circle r="9" fill="var(--ink)"><animateMotion dur="6s" repeatCount="indefinite"><mpath href="#hp0"/></animateMotion></circle></g>
+    </svg>
+  </div>
+  <h3>學完這一課，你應該能夠</h3>
+  <div class="goals">
+    <div class="goal" style="--c:var(--sen)">算清楚自己每週要投入多少小時，而不是憑感覺讀</div>
+    <div class="goal" style="--c:var(--img)">依九週的容量把 23 篇講義排進去，並保留兩週總複習</div>
+    <div class="goal" style="--c:var(--txt)">理解為什麼 L21 與 L23 前四週要交錯排、後三週反而分開</div>
+    <div class="goal" style="--c:var(--aud)">知道可用週數不是九週時該怎麼壓縮</div>
+  </div>
+  <p class="hint" style="margin-top:20px">本頁顏色固定代表：<span class="chip" style="--c:var(--txt)"><i class="dot"></i>L21 講義</span>　<span class="chip" style="--c:var(--img)"><i class="dot"></i>L23 講義</span>　<span class="chip" style="--c:var(--aud)"><i class="dot"></i>總複習週</span>　<span class="chip" style="--c:var(--sen)"><i class="dot"></i>時間／你的投入</span></p>
+</section>
+
+<section id="s1">
+  <div class="sec-head"><span class="sec-no">16.1</span><h2>先把時間算出來</h2></div>
+  <p class="lead"><a href="L1toL2_bridge_machine_learning.html">14. 銜接指南</a> 建議的總備考時數是 <b>80～100 小時</b>。攤到九週，每週要 <b>9～11 h</b>（讀講義 2～3 h＋刷主題庫、整理錯題 5～7 h）。</p>
+  <h3>每週時數計算器</h3>
+  <div class="panel">
+    <p class="hint">輸入你實際排得出來的時間。預設就是「平日每天 1 小時＋週末各 3 小時」。</p>
+    <div class="row" style="justify-content:space-between"><b>平日每天</b><span id="wdV" style="font-variant-numeric:tabular-nums"></span></div>
+    <input type="range" id="wdR" min="0" max="3" step=".5" value="1" aria-label="平日每天小時數">
+    <div class="row" style="justify-content:space-between;margin-top:8px"><b>週末每天</b><span id="weV" style="font-variant-numeric:tabular-nums"></span></div>
+    <input type="range" id="weR" min="0" max="8" step=".5" value="3" aria-label="週末每天小時數">
+    <div class="kpis">
+      <div class="kpi">每週合計<b id="kW"></b></div>
+      <div class="kpi">九週累計<b id="k9"></b></div>
+      <div class="kpi">讀講義／刷題整理（示意分配）<b id="kSplit" style="font-size:20px"></b></div>
+    </div>
+    <div class="row" style="justify-content:space-between"><span class="hint">目標區間 9～11 h／週</span><span class="hint" id="kPct"></span></div>
+    <div class="meter" style="height:18px"><i id="kMeter" style="width:0"></i></div>
+    <div class="verdict" id="kV"></div>
+    <div class="hint" id="kWhy"></div>
+  </div>
+  <div class="callout">排不出來就要<b>提早調整目標</b>，不要等到第七週才發現進度差一半。</div>
+
+  <h3>講義自讀時數 ≠ 讀懂時數</h3>
+  <p class="prose">各講義標示的分鐘數是<b>第一次讀完</b>的估計。真正吃進去還要下面三個動作（點卡片看為什麼不能省）：</p>
+  <div class="cards" id="needCards"></div>
+</section>
+
+<section id="s2">
+  <div class="sec-head"><span class="sec-no">16.2</span><h2>容量盤點</h2></div>
+  <div class="panel">
+    <div id="capBars"></div>
+    <div class="kpis"><div class="kpi">講義合計<b>23 篇</b></div><div class="kpi">自讀時數合計<b>17.9 h</b></div><div class="kpi">每週自讀量<b>105～185 分</b></div></div>
+  </div>
+  <h3>把 23 篇裝進 7 個內容週</h3>
+  <div class="panel">
+    <p class="hint">按下裝箱，看每週分到幾篇。七個內容週要放 23 篇，所以<b>有兩週是四篇</b>。</p>
+    <div class="slots" id="slots"></div>
+    <div class="slots" id="slotLab" style="min-height:0"></div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" id="packBtn">裝箱</button><span class="hint" id="packInfo"></span></div>
+  </div>
+</section>
+
+<section id="s3">
+  <div class="sec-head"><span class="sec-no">16.3</span><h2>九週排程</h2></div>
+  <p class="lead">第 1～7 週讀內容，第 8～9 週總複習。點任一週看當週範圍，講義名稱可直接點進去。</p>
+  <div class="panel">
+    <div class="tabs" id="fTabs"></div>
+    <div class="weeks" id="weeks"></div>
+    <div class="wkout alist" id="wkOut" aria-live="polite"></div>
+  </div>
+  <h3>每週自讀分鐘數</h3>
+  <div class="panel"><div id="minBars"></div><p class="hint" style="margin:6px 0 0">七週合計 1075 分 ≈ 17.9 h，與 16.2 的容量盤點一致。</p></div>
+</section>
+
+<section id="s4">
+  <div class="sec-head"><span class="sec-no">16.4</span><h2>每週怎麼跑</h2></div>
+  <div class="panel">
+    <p class="hint">一週四個環節。按下一步走一輪。</p>
+    <div class="pipe" id="pipe" style="grid-template-columns:repeat(4,1fr)"></div>
+    <div class="pout" id="pout" aria-live="polite"></div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" id="pipeNext">下一步</button><button class="btn" id="pipeReset">從頭開始</button></div>
+  </div>
+  <div class="callout exam"><b>L23 有 23% 是附圖題</b>，其中不少是程式碼截圖。第 3～5 週讀到演算法與建模時，<b>請打開 Python 實際跑一次</b> scikit-learn 與 PyTorch/Keras 的基本語法—— 看得懂截圖是這一科的基本門檻。</div>
+</section>
+
+<section id="s5">
+  <div class="sec-head"><span class="sec-no">16.5</span><h2>最後兩週</h2></div>
+  <h3>第 8 週　整卷模考</h3>
+  <p class="prose">分別做 L21 與 L23 的歷屆 100 題整卷，<b>計時</b>。重點不是分數，是<b>發現時間分配問題</b>。</p>
+  <div class="compare">
+    <div><div class="big" style="color:var(--img)">L23</div><b>23% 附圖題、18% 題組題</b>—— 題組敘述沒讀懂會連錯數題。</div>
+    <div><div class="big" style="color:var(--txt)">L21</div>沒有題組題，但<b>題幹平均 126 字是五科最長</b>，一題常帶 2～3 個限制條件，讀題慢一樣會失分。</div>
+  </div>
+  <div class="panel">
+    <h3 style="margin-top:0">錯題分類練習：每類該怎麼處置？</h3>
+    <p class="hint">先點左邊錯題類型，再點右邊處置。</p>
+    <div class="match" id="errMatch"></div>
+    <div class="feedback" id="errFb" aria-live="polite"></div>
+  </div>
+  <h3>第 9 週　錯題與高頻考點，不讀新內容</h3>
+  <p class="prose">距考試只剩幾天，<b>補洞的效益已經低於鞏固</b>。</p>
+  <div class="panel">
+    <div class="tabs" id="w9Tabs"></div>
+    <div id="w9Body"></div>
+  </div>
+  <div class="callout"><b>最後一週不要引入任何沒讀過的東西。</b></div>
+</section>
+
+<section id="s6">
+  <div class="sec-head"><span class="sec-no">16.6</span><h2>為什麼前四週交錯、後三週分開</h2></div>
+  <p class="lead">直覺會想「先讀完一科再讀另一科」，但這條路線<b>前四週交錯比較省力</b>，理由是兩科的技術底層重疊。</p>
+  <div class="panel">
+    <p class="hint">上排是 L23、下排是 L21。虛線流動代表同週兩科有技術重疊。點任一週看為什麼。</p>
+    <svg id="laneSvg" viewBox="0 0 660 250" role="img" aria-label="兩科每週技術重疊"></svg>
+    <div class="weeks" id="laneBtns" style="grid-template-columns:repeat(7,minmax(0,1fr))"></div>
+    <div class="compare" style="margin-top:12px">
+      <div><div class="big" style="color:var(--img)">L23 在讀</div><div id="pairA"></div></div>
+      <div><div class="big" style="color:var(--txt)">同週的 L21</div><div id="pairB"></div></div>
+    </div>
+    <p class="hint" id="pairWhy" style="margin:12px 0 0"></p>
+  </div>
+  <div class="callout"><a href="L1toL2_bridge_machine_learning.html">14. 銜接指南</a> 的 14.5 節也是這個順序：<b>L23 的機器學習與深度學習跟 L21 的 AI 技術應用一起讀，效率最高。</b></div>
+  <p class="prose"><b>後三週則刻意分開</b>：第 5 週集中在 L23 的建模流程，第 6 週集中在 L21 的導入評估與規劃，第 7 週收尾兩科的治理與部署。這幾塊彼此的技術重疊低，硬要交錯反而切碎思路。</p>
+</section>
+
+<section id="s7">
+  <div class="sec-head"><span class="sec-no">16.7</span><h2>可用週數不是九週怎麼辦</h2></div>
+  <div class="panel">
+    <p class="hint">拖動你距離考試還有幾週，看排程怎麼變形。</p>
+    <div class="row" style="justify-content:space-between"><b>可用週數</b><span id="nwV" style="font-variant-numeric:tabular-nums"></span></div>
+    <input type="range" id="nwR" min="5" max="12" value="9" aria-label="可用週數">
+    <div class="weeks" id="nwStrip" style="margin-top:12px;grid-template-columns:repeat(auto-fill,minmax(64px,1fr))"></div>
+    <div class="wkout" id="nwOut" aria-live="polite"></div>
+  </div>
+  <div class="callout">壓縮時<b>優先砍的是 L21</b>，不是 L23—— L21 有三分之一與初級重疊（導入評估、風險管理、AI 治理），靠初級底子補得回來；L23 的數學地基與演算法原理是全新內容，補不回來。</div>
+</section>
+
+<section id="s8">
+  <div class="sec-head"><span class="sec-no">16.8</span><h2>如果你有讀書會</h2></div>
+  <p class="lead">本排程是<b>個人進度表</b>。若同時有共讀團體，把它當成每週的共同進度即可。</p>
+  <div class="compare">
+    <div><div class="big">會前（各自）</div>讀完當週講義＋做該章主題庫</div>
+    <div><div class="big">會中（一起）</div>對易錯清單、講誘答、把卡住的地方問掉</div>
+  </div>
+  <h3>聚會時間怎麼用？點選一種開法</h3>
+  <div class="panel">
+    <div class="strat" id="clubStrat"></div>
+    <div style="margin-top:16px">
+      <div class="verdict" id="clubV">選一種開法</div>
+      <div class="stack" id="clubStack" style="margin-top:10px"></div>
+      <div class="hint" id="clubWhy"></div>
+    </div>
+  </div>
+  <p class="prose">主持人可以每週輪，但輪的是「<b>誰出題、誰帶討論</b>」，不是「誰講課」。</p>
+</section>
+
+<section id="s9">
+  <div class="sec-head"><span class="sec-no">✓</span><h2>延伸練習與執行檢核</h2></div>
+  <div class="tbl-wrap"><table>
+    <tr><th>資源</th><th>題數</th><th>在排程中的用法</th></tr>
+    <tr><td>L23 主題庫</td><td>326</td><td>每週當週 L23 篇目的題目來源</td></tr>
+    <tr><td>L21 主題庫</td><td>311</td><td>每週當週 L21 篇目的題目來源</td></tr>
+    <tr><td>L23 歷屆（114-2、115-1）</td><td>100</td><td>第 8 週整卷模考</td></tr>
+    <tr><td>L21 歷屆（114-2、115-1）</td><td>100</td><td>第 8 週整卷模考</td></tr>
+    <tr><td>初級歷屆</td><td>400</td><td>第 1 週之前自我檢核，見 <a href="L1toL2_bridge_machine_learning.html">14</a> 的銜接檢核表</td></tr>
+  </table></div>
+
+  <h3>排程執行檢核（打勾狀態會記在這台裝置上）</h3>
+  <div class="traps" id="traps"></div>
+  <p class="hint" id="trapCount" style="margin-top:10px"></p>
+
+  <h3>情境測驗</h3>
+  <div class="qcard" id="quiz"></div>
+
+  <h3>下一步</h3>
+  <p class="prose"><b>還沒確定考 L23 還是 L22</b> → 見 <a href="L1toL2_bridge_machine_learning.html">14. 銜接指南：機器學習路線</a> 的 14.1 節<br><b>開始第 1 週的內容</b> → 見 <a href="L21_overview.html">17. L21 科目總覽</a><br><b>改走數據分析路線</b> → 見 <a href="selfstudy_schedule_L21L22.html">15. 自學排程：L21＋L22</a><br><b>產生行事曆檔</b>：<code>python scripts/build_selfstudy_ics.py &lt;考試日期&gt; L23</code></p>
+</section>
+</main>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce){const m=document.querySelector('#heroSvg .movers');if(m)m.remove();}
+
+/* ---------- generic matcher ---------- */
+function matcher(root,fb,left,right,doneMsg){
+  let sel=null,done=0;
+  const L=document.createElement('div');L.className='col';
+  const R=document.createElement('div');R.className='col';
+  left.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;
+    b.innerHTML=it.html;if(it.c)b.style.setProperty('--c',it.c);
+    b.onclick=()=>{if(b.classList.contains('done'))return;L.querySelectorAll('.mitem').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;fb.textContent='';fb.className='feedback';};
+    L.appendChild(b);
+  });
+  right.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;b.innerHTML=it.html;
+    b.onclick=()=>{
+      if(b.classList.contains('done'))return;
+      if(!sel){fb.textContent='請先點左邊一個項目。';fb.className='feedback';return;}
+      if(sel.dataset.k===b.dataset.k){
+        const c=sel.style.getPropertyValue('--c');
+        [sel,b].forEach(x=>{x.classList.remove('sel');x.classList.add('done');if(c)x.style.setProperty('--c',c);});
+        fb.textContent='✓ '+(it.ok||'答對了！');fb.className='feedback ok';sel=null;done++;
+        if(done===left.length){fb.textContent='✓ 全部配對完成！'+doneMsg;}
+      }else{
+        b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');
+        fb.textContent='✗ '+(it.bad||'不太對，再想想。');fb.className='feedback bad';
+      }
+    };
+    R.appendChild(b);
+  });
+  root.append(L,R);
+}
+
+/* ---------- tabs helper ---------- */
+function tabs(root,labels,onPick,start=0){
+  labels.forEach((t,i)=>{const b=document.createElement('button');b.className='btn';b.innerHTML=t;b.onclick=()=>pick(i);root.appendChild(b);});
+  function pick(i){[...root.children].forEach((b,j)=>b.setAttribute('aria-pressed',i===j));onPick(i);}
+  pick(start);return pick;
+}
+
+/* ---------- flip cards ---------- */
+function flips(root,arr){
+  arr.forEach(([n,o,d])=>{
+    const b=document.createElement('button');b.className='flip';b.setAttribute('aria-pressed','false');
+    b.innerHTML=`<div class="in"><div class="f"><strong>${n}</strong><span>${o}</span><span style="margin-top:auto;font-size:12.5px">點我翻面</span></div><div class="b">${d}</div></div>`;
+    b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');
+    root.appendChild(b);
+  });
+}
+
+/* ---------- animated bars ---------- */
+function bars(root,rows,max,fmt=v=>v+'%'){
+  root.innerHTML=rows.map(r=>`<div class="bar${r.win?' win':''}"><span>${r.l}</span><div class="track"><div class="fill" style="${r.c?'background:'+r.c:''}"></div></div><span class="num">${fmt(r.v)}</span></div>`).join('');
+  const f=root.querySelectorAll('.fill');
+  setTimeout(()=>rows.forEach((r,i)=>{f[i].style.width=(r.v/max*100)+'%';}),30);
+}
+
+/* ---------- multi-series bars ---------- */
+function mbars(root,rows,series,max){
+  root.innerHTML=rows.map(r=>`<div class="mbar"><span>${r.l}</span><div class="tracks">${r.v.map((v,j)=>`<div class="t"><div class="tr"><i style="background:${series[j].c}" data-w="${v/max*100}"></i></div><span>${series[j].n} ${v}%</span></div>`).join('')}</div></div>`).join('');
+  setTimeout(()=>root.querySelectorAll('.tr i').forEach(i=>i.style.width=i.dataset.w+'%'),30);
+}
+
+/* ---------- exam / list details ---------- */
+function detailsList(root,rows){rows.forEach(([tag,k,body])=>root.insertAdjacentHTML('beforeend',`<details><summary><span class="tag">${tag}</span>${k}</summary><div class="body">${body}</div></details>`));}
+
+/* ---------- traps (localStorage) ---------- */
+function traps(root,countEl,key,T){
+  let saved=[];try{saved=JSON.parse(localStorage.getItem(key)||'[]')||[];}catch(e){saved=[];}
+  T.forEach(([a,b],i)=>{
+    const l=document.createElement('label');const c=saved.includes(i);if(c)l.classList.add('chk');
+    l.innerHTML=`<input type="checkbox" ${c?'checked':''}><div><em>${a}</em><br><span>${b}</span></div>`;
+    l.querySelector('input').onchange=e=>{const on=e.target.checked;l.classList.toggle('chk',on);saved=on?[...new Set([...saved,i])]:saved.filter(x=>x!==i);try{localStorage.setItem(key,JSON.stringify(saved));}catch(err){}count();};
+    root.appendChild(l);
+  });
+  function count(){countEl.textContent=`已確認 ${saved.length}／${T.length} 條`;}
+  count();
+}
+
+/* ---------- quiz ---------- */
+function quiz(box,Q,msgs){
+  let i=0,score=0;
+  const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+  function show(){
+    if(i>=Q.length){
+      const r=score/Q.length;
+      const msg=r>=.9?msgs[0]:r>=.65?msgs[1]:msgs[2];
+      box.innerHTML=`<div class="progress"><i style="width:100%"></i></div><div class="qtext" style="font-size:24px;font-family:var(--serif)">得分 ${score}／${Q.length}</div><p>${msg}</p><button class="btn primary" id="qr">重新測驗</button>`;
+      box.querySelector('#qr').onclick=()=>{i=0;score=0;show();};return;
+    }
+    const [q,opts,ex]=Q[i];
+    const order=shuffle(opts.map((o,k)=>({o,k})));
+    box.innerHTML=`<div class="progress"><i style="width:${i/Q.length*100}%"></i></div><div class="qtop"><span>第 ${i+1}／${Q.length} 題</span><span>得分 ${score}</span></div><div class="qtext">${q}</div><div class="opts">${order.map(x=>`<button class="opt" data-k="${x.k}">${x.o}</button>`).join('')}</div><div class="expl" id="qe"></div><div class="row" style="margin-top:14px;justify-content:flex-end"><button class="btn primary" id="qn" style="display:none">${i===Q.length-1?'看結果':'下一題'}</button></div>`;
+    box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.k==='0';if(ok)score++;
+      box.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.k==='0')x.classList.add('right');});
+      if(!ok)b.classList.add('wrongpick');
+      const e=box.querySelector('#qe');e.innerHTML=(ok?'<b style="color:var(--ok)">答對了。</b>':'<b style="color:var(--bad)">這題要小心。</b>')+ex;e.classList.add('show');
+      box.querySelector('#qn').style.display='';box.querySelector('#qn').focus({preventScroll:true});
+    });
+    box.querySelector('#qn').onclick=()=>{i++;show();};
+  }
+  show();
+}
+
+/* ---------- nav highlight ---------- */
+function navHighlight(){
+  const links=[...document.querySelectorAll('nav.toc a')];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on&&window.innerWidth<=860)a.scrollIntoView({inline:'center',block:'nearest'});});}});},{rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('main section').forEach(s=>io.observe(s));
+}
+
+
+/* ===== route data ===== */
+const A=(n,code,name,f)=>({n,code,name,f,s:code.startsWith('L21')?'L21':'L23'});
+const WEEKS=[
+  {m:105,a:[A(17,'L21','L21 科目總覽','L21_overview.html'),A(41,'L23','L23 科目總覽','L23_overview.html'),A(42,'L23101','機率統計之機器學習基礎應用','L23101_probability_statistics.html')]},
+  {m:155,a:[A(43,'L23102','線性代數之機器學習基礎應用','L23102_linear_algebra.html'),A(44,'L23103','數值優化技術與方法','L23103_numerical_optimization.html'),A(18,'L21101','自然語言處理技術與應用','L21101_nlp_technologies.html')]},
+  {m:160,a:[A(45,'L23201','機器學習原理與技術','L23201_ml_principles.html'),A(46,'L23202','常見機器學習演算法','L23202_ml_algorithms.html'),A(19,'L21102','電腦視覺技術與應用','L21102_computer_vision.html')]},
+  {m:150,a:[A(47,'L23203','深度學習原理與框架','L23203_deep_learning_frameworks.html'),A(20,'L21103','生成式AI技術與應用','L21103_generative_ai.html'),A(21,'L21104','多模態人工智慧應用','L21104_multimodal_ai.html')]},
+  {m:180,a:[A(48,'L23301','數據準備與特徵工程','L23301_feature_engineering.html'),A(49,'L23302','模型選擇與架構設計','L23302_model_selection.html'),A(50,'L23303','模型訓練、評估與驗證','L23303_training_evaluation.html'),A(25,'L21301','數據準備與模型選擇','L21301_dataprep_model_selection.html')]},
+  {m:185,a:[A(51,'L23304','模型調整與優化','L23304_tuning_optimization.html'),A(22,'L21201','AI導入評估','L21201_adoption_assessment.html'),A(23,'L21202','AI導入規劃','L21202_adoption_planning.html'),A(24,'L21203','AI風險管理','L21203_risk_management.html')]},
+  {m:140,a:[A(52,'L23401','數據隱私、安全與合規','L23401_privacy_compliance.html'),A(53,'L23402','演算法偏見與公平性','L23402_bias_fairness.html'),A(26,'L21302','AI技術系統集成與部署','L21302_integration_deployment.html')]}
+];
+const SC={L21:'var(--txt)',L23:'var(--img)'};
+
+/* ---------- hero weeks ---------- */
+(function(){
+  let h='';for(let i=0;i<9;i++){const x=40+i*80,rev=i>=7,col=rev?'var(--aud)':(i%2?'var(--txt)':'var(--img)');
+    h+=`<circle cx="${x}" cy="120" r="22" fill="${col}"/><text x="${x}" y="126" text-anchor="middle" fill="#fff" font-size="15">${i+1}</text>`;
+    if(!rev){const w=WEEKS[i];w.a.forEach((a,k)=>{h+=`<rect x="${x-14}" y="${82-k*14}" width="28" height="10" rx="3" fill="${SC[a.s]}"><animate attributeName="opacity" values="0;1;1;0" dur="6s" begin="${i*0.6}s" repeatCount="indefinite"/></rect>`;});}
+    h+=`<text x="${x}" y="${170}" text-anchor="middle" fill="var(--muted)" font-size="12">${rev?'複習':'內容'}</text>`;}
+  h+=`<text x="40" y="205" fill="var(--muted)" font-size="13">第 1～7 週讀內容</text><text x="680" y="205" text-anchor="end" fill="var(--aud)" font-size="13">第 8～9 週總複習</text>`;
+  $('#heroWeeks').innerHTML=h;
+})();
+
+/* ---------- hours calculator ---------- */
+(function(){
+  const LO=9,HI=11;
+  function r(){
+    const wd=+$('#wdR').value,we=+$('#weR').value,w=wd*5+we*2;
+    $('#wdV').textContent=wd+' h';$('#weV').textContent=we+' h';
+    $('#kW').textContent=w+' h';$('#k9').textContent=(w*9)+' h';
+    const rd=Math.min(3,Math.max(0,w*0.25));$('#kSplit').textContent=`${rd.toFixed(1)} h／${(w-rd).toFixed(1)} h`;
+    $('#kPct').textContent=`${w} h`;$('#kMeter').style.width=Math.min(100,w/16*100)+'%';
+    const col=w<LO?'var(--bad)':w<=HI?'var(--ok)':'var(--warn)';$('#kMeter').style.background=col;
+    $('#kV').style.color=col;
+    if(w<LO){$('#kV').textContent='✗ 不夠：九週只有 '+(w*9)+' h';$('#kWhy').innerHTML=`建議總時數 80～100 h。現在每週少 ${(LO-w).toFixed(1)} h —— <b>提早調整目標</b>，或參考 16.7 拉長週數。`;}
+    else if(w<=HI){$('#kV').textContent='✓ 落在 9～11 h，照排程走';$('#kWhy').innerHTML='九週累計落在建議的 80～100 h 附近。';}
+    else{$('#kV').textContent='△ 超過 11 h';$('#kWhy').innerHTML='時間充裕，可以照 16.7「10 週以上」的做法加一次期中模考，而不是加讀新東西。';}
+  }
+  $('#wdR').oninput=r;$('#weR').oninput=r;r();
+})();
+flips($('#needCards'),[
+  ['逐條自問','「易錯與陷阱」','兩科合計 300 多條對比句，每條都要能講出反例，<b>答不出來就是沒讀通</b>'],
+  ['做該章主題庫','答對率門檻 70%','答對率低於 70% 就回頭重讀，<b>不要往下衝</b>'],
+  ['錯題寫理由','其他三個選項各錯在哪','中級的誘答都寫得像對的，<b>能選出正解不代表讀懂了</b>']
+]);
+
+/* ---------- capacity ---------- */
+bars($('#capBars'),[{l:'L21（10 篇）',v:7.8,c:'var(--txt)'},{l:'L23（13 篇）',v:10.2,c:'var(--img)'}],12,v=>v+' h');
+(function(){
+  $('#slots').innerHTML=WEEKS.map(()=>'<div class="slot"></div>').join('');
+  $('#slotLab').innerHTML=WEEKS.map((w,i)=>`<div class="slot-lab">W${i+1}</div>`).join('');
+  let packed=false;
+  $('#packBtn').onclick=()=>{
+    packed=!packed;const S=$$('#slots .slot');
+    S.forEach(s=>s.innerHTML='');
+    if(packed){let t=0;WEEKS.forEach((w,i)=>w.a.forEach(a=>{const el=document.createElement('i');el.style.background=SC[a.s];el.title=a.code;S[i].appendChild(el);setTimeout(()=>el.classList.add('in'),reduce?0:(t++)*70);}));}
+    $('#packBtn').textContent=packed?'清空':'裝箱';
+    $('#packInfo').innerHTML=packed?'第 5、6 週各 <b>4 篇</b>，其餘 3 篇。':'';
+  };
+})();
+
+/* ---------- 9-week schedule ---------- */
+(function(){
+  let filt='all';
+  const all=WEEKS.concat([{m:0,rev:'整卷模考（見 16.5）'},{m:0,rev:'錯題與高頻考點（見 16.5）'}]);
+  $('#weeks').innerHTML=all.map((w,i)=>`<button class="wk" data-i="${i}" style="--c:${w.rev?'var(--aud)':'var(--ink)'}"><b>第 ${i+1} 週</b>${w.rev?'總複習':w.m+' 分'}<span class="mini">${w.rev?'':w.a.map(a=>`<i style="--c2:${SC[a.s]}"></i>`).join('')}</span></button>`).join('');
+  function show(i){
+    $$('#weeks .wk').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));
+    const w=all[i];
+    $('#wkOut').innerHTML=w.rev?`<b style="color:var(--aud)">第 ${i+1} 週</b><p style="margin:6px 0 0">${w.rev}</p>`:`<b>第 ${i+1} 週｜自讀 ${w.m} 分</b>`+w.a.map(a=>`<a href="${a.f}" style="${filt!=='all'&&a.s!==filt?'opacity:.35':''}"><span class="chip" style="--c:${SC[a.s]}"><i class="dot"></i></span>[${a.n}] ${a.code} ${a.name}</a>`).join('');
+  }
+  $$('#weeks .wk').forEach(b=>b.onclick=()=>show(+b.dataset.i));
+  tabs($('#fTabs'),['全部','只看 L21','只看 L23'],k=>{
+    filt=['all','L21','L23'][k];
+    $$('#weeks .wk').forEach((b,i)=>{const w=all[i];b.classList.toggle('dim',filt!=='all'&&(w.rev||!w.a.some(a=>a.s===filt)));b.querySelectorAll('.mini i').forEach((m,j)=>m.style.opacity=filt==='all'||w.a[j].s===filt?1:.2);});
+    const cur=$$('#weeks .wk').findIndex(b=>b.getAttribute('aria-pressed')==='true');show(cur<0?0:cur);
+  });
+  bars($('#minBars'),WEEKS.map((w,i)=>({l:`第 ${i+1} 週（${w.a.length} 篇）`,v:w.m,win:w.m===Math.max(...WEEKS.map(x=>x.m))})),200,v=>v+' 分');
+})();
+
+/* ---------- weekly loop ---------- */
+(function(){
+  const nodes=[['讀講義','2～3 h'],['做主題庫','2～3 h'],['整理錯題','1～2 h'],['回顧','30 分']];
+  const out=['<b>讀講義（2～3 h，可拆成 2～3 天）</b><br>① 先看「官方考過什麼」那一節，知道這章要往哪讀 → ② 再讀正文 → ③ 最後把「易錯與陷阱」逐條自問。','<b>做主題庫（2～3 h）</b><br>只做當週章節的題。答對率 &lt; 70% 就回頭重讀，不要往下衝。','<b>整理錯題（1～2 h）</b><br>每題寫下「其他三個選項各錯在哪」。寫不出來的，回去找對應的易錯清單那一條。','<b>回顧（30 分，建議排在週末）</b><br>把上週的錯題重做一次。'];
+  let i=0;$('#pipe').innerHTML=nodes.map(([a,b])=>`<div class="pnode"><b>${a}</b>${b}</div>`).join('');
+  function r(){$$('#pipe .pnode').forEach((n,j)=>{n.classList.toggle('on',j===i);n.classList.toggle('past',j<i);});$('#pout').innerHTML=out[i];$('#pipeNext').disabled=i===3;$('#pipeNext').style.opacity=i===3?.4:1;}
+  $('#pipeNext').onclick=()=>{if(i<3){i++;r();}};$('#pipeReset').onclick=()=>{i=0;r();};r();
+})();
+
+/* ---------- error matcher ---------- */
+matcher($('#errMatch'),$('#errFb'),[
+  {k:'a',c:'var(--bad)',html:'觀念沒讀通'},
+  {k:'b',c:'var(--warn)',html:'讀過但選錯（誘答）'},
+  {k:'c',c:'var(--sen)',html:'時間不夠沒作答'}
+],[
+  {k:'c',html:'調整答題順序策略',ok:'這不是知識問題，是時間分配問題。'},
+  {k:'a',html:'回去重讀該節，列入第 9 週追蹤',ok:'觀念缺口要回到正文補。'},
+  {k:'b',html:'回到該節易錯清單，找出對應那一條',ok:'誘答型錯誤，要對到那一條對比句。'},
+  {k:'x',html:'立刻讀一本新的參考書',bad:'第 8～9 週不引入新內容。'}
+],'第 8 週做完模考就用這三類分錯題。');
+(function(){
+  const F=[['L23','過擬合主幹：成因 → 判斷 → 正則化 → 交叉驗證','100 題裡有 <b>27 題</b>的題幹、選項或解析提到，接近四分之一考卷。','var(--img)'],['L21','系統部署與維運','該類題佔 L21 的 <b>38%</b>，全科最高頻。','var(--txt)']];
+  tabs($('#w9Tabs'),F.map(f=>f[0]),i=>{const f=F[i];$('#w9Body').innerHTML=`<div class="verdict" style="color:${f[3]}">${f[1]}</div><p class="hint" style="margin:6px 0 0">依據：${f[2]}</p>`;});
+})();
+
+/* ---------- lanes (16.6) ---------- */
+(function(){
+  const P={1:['線性代數、數值優化','自然語言處理','詞向量、嵌入空間用的就是<b>向量與相似度</b>。'],2:['機器學習原理、常見演算法','電腦視覺','CNN 是「常見模型」的一種，<b>分類／偵測的評估指標共用</b>。'],3:['深度學習原理與框架','生成式AI技術、多模態','Transformer、擴散模型、CLIP <b>都建在深度學習之上</b>。']};
+  const SEP={0:['L23 科目總覽、L23101 機率統計','L21 科目總覽','第 1 週先打開兩科總覽，並開始 L23 的數學地基。'],4:['建模流程（L23301～L23303）','L21301 數據準備與模型選擇','後三週刻意分開：第 5 週<b>集中在 L23 的建模流程</b>。'],5:['L23304 模型調整與優化','L21 導入評估、規劃、風險管理','第 6 週<b>集中在 L21 的導入評估與規劃</b>。'],6:['L23 隱私合規、偏見公平','L21302 系統集成與部署','第 7 週<b>收尾兩科的治理與部署</b>。這幾塊技術重疊低，硬要交錯反而切碎思路。']};
+  let h='<text x="10" y="58" font-size="13" font-weight="700" fill="var(--img)">L23</text><text x="10" y="188" font-size="13" font-weight="700" fill="var(--txt)">L21</text>';
+  h+='<rect x="60" y="8" width="352" height="232" rx="14" fill="var(--surface2)"/><text x="236" y="122" text-anchor="middle" font-size="13" fill="var(--muted)">前四週：交錯</text><text x="530" y="122" text-anchor="middle" font-size="13" fill="var(--muted)">後三週：分開</text>';
+  WEEKS.forEach((w,i)=>{const x=70+i*84;const n23=w.a.filter(a=>a.s==='L23').length,n21=w.a.filter(a=>a.s==='L21').length;
+    h+=`<g class="ln" data-i="${i}"><rect x="${x}" y="30" width="70" height="50" rx="10" fill="var(--img)" opacity="${.35+n23*.2}"/><text x="${x+35}" y="60" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">${n23} 篇</text>`;
+    h+=`<rect x="${x}" y="160" width="70" height="50" rx="10" fill="var(--txt)" opacity="${.35+n21*.2}"/><text x="${x+35}" y="190" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">${n21} 篇</text>`;
+    if(P[i])h+=`<path d="M${x+35} 80 L${x+35} 160" stroke="var(--ink)" stroke-width="3" class="flow"/>`;
+    h+=`<text x="${x+35}" y="232" text-anchor="middle" font-size="12" fill="var(--muted)">第${i+1}週</text></g>`;});
+  $('#laneSvg').innerHTML=h;
+  $('#laneBtns').innerHTML=WEEKS.map((w,i)=>`<button class="wk" style="--c:${P[i]?'var(--ink)':'var(--muted)'};text-align:center;padding:8px 2px"><b>W${i+1}</b></button>`).join('');
+  function show(i){$$('#laneBtns .wk').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));$$('#laneSvg .ln').forEach((g,j)=>g.style.opacity=i===j?1:.45);const d=P[i]||SEP[i];$('#pairA').innerHTML=d[0];$('#pairB').innerHTML=d[1];$('#pairWhy').innerHTML=(P[i]?'為什麼放一起：':'')+d[2];}
+  $$('#laneBtns .wk').forEach((b,i)=>b.onclick=()=>show(i));show(1);
+})();
+
+/* ---------- weeks available ---------- */
+(function(){
+  const T={
+    9:'<b>9 週：</b>本排程（7 內容＋2 複習）。',
+    8:'<b>8 週：</b>第 8 週模考照做，第 9 週的錯題複習壓進<b>考前那幾天的零碎時間</b>。',
+    7:'<b>7 週：</b>內容壓成 6 週：把第 6 週的 L21 導入三篇（22／23／24）<b>合併成一次帶過</b>，只留 1 週複習。',
+    6:'<b>6 週以下：不要照排程走。</b>改為只讀各科的「官方考過什麼」與「易錯與陷阱」兩節，加上整卷歷屆。'
+  };
+  function r(){
+    const n=+$('#nwR').value;$('#nwV').textContent=n+' 週';
+    let seg=[];
+    if(n>=10){for(let i=0;i<n-9;i++)seg.push(['初級複習','var(--sen)']);for(let i=1;i<=7;i++)seg.push(['內容 '+i,'var(--img)']);seg.push(['模考','var(--aud)'],['錯題','var(--aud)']);}
+    else if(n===9){for(let i=1;i<=7;i++)seg.push(['內容 '+i,'var(--img)']);seg.push(['模考','var(--aud)'],['錯題','var(--aud)']);}
+    else if(n===8){for(let i=1;i<=7;i++)seg.push(['內容 '+i,'var(--img)']);seg.push(['模考＋零碎複習','var(--aud)']);}
+    else if(n===7){for(let i=1;i<=5;i++)seg.push(['內容 '+i,'var(--img)']);seg.push(['內容 6＋7（L21 導入三篇合併帶過）','var(--txt)'],['複習','var(--aud)']);}
+    else{for(let i=0;i<n;i++)seg.push(['官方考過＋易錯＋歷屆','var(--bad)']);}
+    $('#nwStrip').innerHTML=seg.map((s,i)=>`<div class="wk" aria-pressed="true" style="--c:${s[1]};cursor:default"><b>W${i+1}</b>${s[0]}</div>`).join('');
+    $('#nwOut').innerHTML=n>=10?`<b>${n} 週（10 週以上）：</b>內容週維持 7 週，多出來的往前面加「初級複習週」（見 01 L11 科目總覽、06 L12 科目總覽），<b>或</b>在第 4 週後插一次期中模考。`:T[Math.max(6,n)];
+  }
+  $('#nwR').oninput=r;r();
+})();
+
+/* ---------- study club ---------- */
+(function(){
+  const S=[
+    ['照著念講義',0,'var(--bad)','✗ 不建議','一次聚會兩三個小時，念完當週 105～185 分鐘的內容就<b>沒時間討論了</b>（比例為示意）。'],
+    ['會前各自讀完，會中只討論',1,'var(--ok)','✓ 建議','對易錯清單、講誘答、把卡住的地方問掉 —— <b>討論才是共讀唯一比自己讀有價值的地方</b>。']
+  ];
+  S.forEach(s=>{const b=document.createElement('button');b.textContent=s[0];b.setAttribute('aria-pressed','false');b.onclick=()=>{$$('#clubStrat button').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#clubV').textContent=s[3];$('#clubV').style.color=s[2];
+    $('#clubStack').innerHTML=s[1]?'<i style="flex-grow:1;background:var(--ok)">討論 100%</i>':'<i style="flex-grow:85;background:var(--bad)">念講義</i><i style="flex-grow:15;background:var(--ok)">討論</i>';
+    $('#clubWhy').innerHTML=s[4];};$('#clubStrat').appendChild(b);});
+})();
+
+/* ---------- checklist ---------- */
+traps($('#traps'),$('#trapCount'),'selfstudy-l21l23-traps',[
+  ['每週 9～11 h 排得出來','平日每天 1 小時＋週末各 3 小時；排不出來就提早調整目標。'],
+  ['先看「官方考過什麼」再讀正文','知道這章要往哪讀。'],
+  ['「易錯與陷阱」逐條自問','每條都要能講出反例。'],
+  ['主題庫答對率 < 70% 就回頭重讀','不要往下衝。'],
+  ['錯題寫下其他三個選項各錯在哪','能選出正解不代表讀懂了。'],
+  ['第 3～5 週打開 Python 實際跑一次','scikit-learn 與 PyTorch/Keras 的基本語法；L23 有 23% 附圖題。'],
+  ['第 8 週分科整卷計時模考','重點是發現時間分配問題。'],
+  ['第 9 週不讀新內容','L23 盯過擬合主幹，L21 盯系統部署與維運。']
+]);
+
+/* ---------- quiz ---------- */
+quiz($('#quiz'),[
+  ['照本排程，每週大約要投入多少時數？',['9～11 h（讀講義 2～3 h＋刷題與整理錯題 5～7 h）','2～3 h，只要讀講義','20 h 以上','不用算，憑感覺讀'],'平日每天 1 小時＋週末各 3 小時大約就是這個量；總時數 80～100 h。'],
+  ['做完某章主題庫，答對率 62%，下一步應該？',['回頭重讀該章','直接往下一章衝','改做別科題目','把答案背下來'],'答對率低於 70% 就回頭重讀，不要往下衝。'],
+  ['七個內容週要放 23 篇講義，結果是？',['有兩週是四篇','每週都剛好 3 篇','有三週是四篇','要再加兩個內容週'],'第 5、6 週各 4 篇，其餘 3 篇。'],
+  ['第 2 週把 L23 線性代數、數值優化和 L21 自然語言處理放在一起，原因是？',['詞向量、嵌入空間用的就是向量與相似度','兩者是同一個知識點','自然語言處理可以抵免','第 2 週篇數最少'],'這是兩科技術底層重疊的例子。'],
+  ['第 4 週 L23203 深度學習配 L21103 生成式 AI、L21104 多模態，理由是？',['Transformer、擴散模型、CLIP 都建在深度學習之上','三者都考 pandas','它們都屬於治理章節','生成式 AI 需要先學 SQL'],'前四週交錯就是利用這種技術重疊。'],
+  ['為什麼第 5～7 週反而把兩科分開？',['這幾塊彼此技術重疊低，硬要交錯反而切碎思路','因為 L21 可以跳過','因為後三週不考','因為後三週只讀 L23'],'第 5 週 L23 建模、第 6 週 L21 導入、第 7 週兩科治理與部署。'],
+  ['模考後發現有幾題「時間不夠沒作答」，該怎麼處置？',['調整答題順序策略','回去重讀該節','回到易錯清單找對應條目','多背一些名詞'],'這不是知識問題。'],
+  ['第 9 週 L23 該盯的高頻考點是？',['過擬合主幹：成因 → 判斷 → 正則化 → 交叉驗證','Hadoop 生態系名詞','No／Low code','pandas merge 語法'],'100 題裡有 27 題提到，接近四分之一考卷。'],
+  ['只有 7 週可用，該怎麼調整？',['內容壓成 6 週，把第 6 週的 L21 導入三篇（22／23／24）合併帶過，只留 1 週複習','直接跳過 L23 數學地基','不做模考，七週全讀內容','照九週排程走，最後兩週不做'],'這是 16.7 的壓縮方式。'],
+  ['壓縮排程時，應優先砍哪一科？為什麼？',['L21，因為有三分之一與初級重疊，補得回來','L23，因為題目比較少','兩科平均砍','都不能砍，改延考'],'L23 的數學地基與演算法原理是全新內容，補不回來。'],
+  ['讀書會一次聚會兩三小時，最好的用法是？',['會前各自讀完，會中對易錯清單、講誘答','現場一起念講義','輪流由一人講課','只對答案不討論'],'主持人輪的是誰出題、誰帶討論，不是誰講課。']
+],['太強了，排程邏輯都掌握了，照表開跑吧。','不錯！回頭看看答錯題對應的段落。','建議重新操作 16.6 的兩科重疊圖與 16.7 的週數滑桿，再來一次。']);
+
+navHighlight();
+</script>
+</body>
+</html>

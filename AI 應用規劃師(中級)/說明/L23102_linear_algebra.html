@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L23102 線性代數之機器學習基礎應用｜互動教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F5; --surface:#FFFFFF; --surface2:#F6F8FB; --ink:#18202E; --muted:#5A6475; --line:#D5DBE4;
+  --txt:#3B4CCA; --img:#0E8A7A; --aud:#B87812; --sen:#B8336A;
+  --ok:#1F8A4C; --bad:#C23B2E; --warn:#D9822B;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+    --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+  --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75}
+h1,h2,h3{font-family:var(--serif);line-height:1.3;margin:0}
+p{margin:0 0 1em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--txt);outline-offset:2px;border-radius:4px}
+svg{max-width:100%;height:auto;display:block}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1180px;margin:0 auto;gap:40px;padding:0 24px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;padding:32px 0;height:100vh;overflow:auto}
+nav.toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14.5px}
+nav.toc a span{font-variant-numeric:tabular-nums;font-size:13px;opacity:.8}
+nav.toc a.on{background:var(--surface);color:var(--ink);font-weight:700}
+.toc-title{font-family:var(--serif);font-weight:900;font-size:18px;padding:0 10px 14px}
+main{min-width:0;padding-bottom:80px}
+section{padding:56px 0 8px;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.sec-head{display:flex;gap:16px;align-items:baseline;margin-bottom:18px}
+.sec-no{font-family:var(--serif);font-weight:900;font-size:40px;color:var(--line);line-height:1}
+h2{font-size:28px;font-weight:900}
+h3{font-size:19px;margin:34px 0 10px}
+.lead{color:var(--muted);max-width:66ch}
+.prose{max-width:68ch}
+
+/* hero */
+.hero{padding:44px 0 24px}
+.hero .code{font-size:14px;color:var(--muted);margin-bottom:6px}
+.hero h1{font-size:clamp(34px,5.5vw,56px);font-weight:900;letter-spacing:.02em}
+.hero .one{font-size:18px;max-width:60ch;margin:16px 0 0;color:var(--muted)}
+.hero-fig{background:var(--surface);border-radius:20px;margin-top:28px;padding:14px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+.goal{border-left:4px solid var(--c);padding:6px 0 6px 14px;font-size:15px}
+
+/* panels */
+.panel{background:var(--surface);border-radius:16px;padding:22px;margin:16px 0}
+.panel.flat{background:var(--surface2)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font-size:15px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hint{font-size:14px;color:var(--muted)}
+.callout{border-left:4px solid var(--warn);background:var(--surface2);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;font-size:15px}
+.callout.exam{border-color:var(--txt)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:14px}
+
+/* modality chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+
+/* matcher */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.match .col{display:flex;flex-direction:column;gap:10px}
+.mitem{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15px;transition:border-color .2s,background .2s,transform .2s}
+.mitem small{display:block;color:var(--muted);font-size:13px}
+.mitem.sel{border-color:var(--ink);transform:translateX(4px)}
+.mitem.done{border-color:var(--c,var(--ok));background:var(--surface2);cursor:default}
+.mitem.wrong{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:1.8em;margin-top:12px;font-size:15px}
+.feedback.ok{color:var(--ok)} .feedback.bad{color:var(--bad)}
+
+/* timeline */
+.steps{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stage-viz{min-height:130px;display:flex;align-items:center;justify-content:center}
+.stage-viz .blk{display:inline-block;width:34px;height:34px;border-radius:6px;margin:2px;transition:all .5s}
+
+/* align toggle */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.compare>div{padding:18px}
+.compare>div+div{border-left:1px solid var(--line)}
+.compare .big{font-family:var(--serif);font-weight:900;font-size:22px;margin-bottom:6px}
+
+/* fusion */
+.meter{height:14px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:6px 0}
+.meter>i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .7s cubic-bezier(.3,.8,.3,1),background .4s}
+.flow{stroke-dasharray:6 7;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.jitter{animation:jit .25s steps(2) infinite}
+@keyframes jit{50%{transform:translate(1.5px,-1px)}}
+.fusion-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.pc{font-size:15px}
+.pc b{display:block;font-size:14px;color:var(--muted);font-weight:500}
+
+/* clip */
+.mat{display:grid;gap:4px;font-size:13px}
+.mat .cell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;transition:background .5s,color .5s}
+.mat .lab{display:flex;align-items:center;justify-content:center;font-size:22px}
+.mat .tlab{font-size:12px;text-align:center;color:var(--muted);display:flex;align-items:flex-end;justify-content:center;line-height:1.3}
+.zs-imgs{display:flex;gap:10px;flex-wrap:wrap}
+.zs-img{font-size:38px;width:72px;height:72px;border-radius:16px;border:2px solid var(--line);background:var(--surface2);display:flex;align-items:center;justify-content:center}
+.zs-img[aria-pressed="true"]{border-color:var(--img);box-shadow:0 0 0 3px color-mix(in srgb,var(--img) 25%,transparent)}
+.bar{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.bar .track{height:22px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;width:0;background:var(--txt);border-radius:6px;transition:width .8s cubic-bezier(.3,.8,.3,1)}
+.bar.win .fill{background:var(--img)}
+.bar.win{font-weight:700}
+.bar .num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.flip{perspective:900px;height:150px;border:0;background:none;padding:0;text-align:left}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flip[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:center}
+.flip .f{background:var(--surface);border:1.5px solid var(--line)}
+.flip .f strong{font-family:var(--serif);font-size:22px}
+.flip .f span{color:var(--muted);font-size:14px}
+.flip .b{background:var(--ink);color:var(--bg);transform:rotateY(180deg);font-size:15px}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.pnode{border:2px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;font-size:14px;background:var(--surface);transition:all .35s}
+.pnode b{display:block;font-size:16px}
+.pnode.on{border-color:var(--aud);background:color-mix(in srgb,var(--aud) 14%,var(--surface));transform:translateY(-3px)}
+.pnode.past{border-color:color-mix(in srgb,var(--aud) 45%,var(--line))}
+.pout{background:var(--surface2);border-radius:12px;padding:14px 16px;min-height:84px;font-size:15px}
+.wave{display:flex;gap:3px;align-items:center;height:30px}
+.wave i{width:4px;background:var(--aud);border-radius:2px;animation:wv 1s ease-in-out infinite}
+@keyframes wv{50%{transform:scaleY(.3)}}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+
+/* strategies */
+.strat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.strat button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;text-align:left;font-size:15px}
+.strat button[aria-pressed="true"]{border-color:var(--ink)}
+.verdict{font-family:var(--serif);font-weight:900;font-size:20px}
+
+details{border-bottom:1px solid var(--line)}
+details summary{cursor:pointer;padding:12px 4px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"+";font-weight:900;width:14px;color:var(--muted)}
+details[open] summary::before{content:"−"}
+details .body{padding:0 4px 14px 30px;font-size:15px}
+.tag{font-size:12.5px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums;min-width:80px}
+
+/* quiz */
+.qcard{background:var(--surface);border-radius:16px;padding:24px}
+.qtop{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
+.qtext{font-size:18px;font-weight:700;margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15.5px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+.opt.wrongpick{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.opt:disabled{cursor:default}
+.expl{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15px;display:none}
+.expl.show{display:block}
+.progress{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;margin-bottom:14px}
+.progress i{display:block;height:100%;background:var(--txt);transition:width .4s}
+
+.traps label{display:flex;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:15px}
+.traps input{width:18px;height:18px;margin-top:4px;flex:none;accent-color:var(--ok)}
+.traps label.chk>span{color:var(--muted)}
+.traps em{font-style:normal;font-weight:700}
+
+/* mobile */
+@media (max-width:860px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+  nav.toc{position:sticky;top:0;height:auto;z-index:10;background:var(--bg);display:flex;overflow-x:auto;padding:8px 0;padding-top:calc(8px + env(safe-area-inset-top,0px));gap:4px;border-bottom:1px solid var(--line)}
+  .toc-title{display:none}
+  nav.toc a{white-space:nowrap;flex:none}
+  .match,.stage,.fusion-meta,.compare{grid-template-columns:1fr}
+  .compare>div+div{border-left:0;border-top:1px solid var(--line)}
+  .pipe{grid-template-columns:repeat(5,minmax(90px,1fr));overflow-x:auto}
+  .bar{grid-template-columns:110px 1fr 56px}
+  h2{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* ---- 本系列擴充元件（沿用範本色票） ---- */
+.stage>*,.compare>div,.fusion-meta>*{min-width:0}
+pre.code{background:var(--surface2);border-radius:12px;padding:12px 14px;font-size:13.5px;line-height:1.6;overflow-x:auto;margin:10px 0;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre}
+code{overflow-wrap:anywhere;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em;background:var(--surface2);padding:1px 5px;border-radius:5px}
+pre.code code{background:none;padding:0}
+.hl{background:color-mix(in srgb,var(--warn) 32%,transparent);border-radius:4px;padding:0 2px}
+.ctrl{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:10px 0}
+.ctrl .lbl{font-size:13px;color:var(--muted);margin-bottom:4px}
+.btn.sm{padding:4px 12px;font-size:14px}
+.stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:12px}
+.stat>div{background:var(--surface2);border-radius:10px;padding:8px 12px;font-size:13.5px;color:var(--muted)}
+.stat b{display:block;font-size:20px;color:var(--ink);font-variant-numeric:tabular-nums;font-family:var(--serif)}
+.shape{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:clamp(17px,4vw,24px);font-weight:700;text-align:center;margin:8px 0}
+.vbar{display:grid;grid-template-columns:96px 1fr 128px;gap:10px;align-items:center;margin:8px 0;font-size:14.5px}
+.vbar .track{height:22px;background:var(--surface2);border-radius:6px;overflow:hidden;position:relative}
+.vbar .fill{height:100%;width:0;background:var(--aud);border-radius:6px;transition:width .7s cubic-bezier(.3,.8,.3,1)}
+.vbar .num{text-align:right;font-variant-numeric:tabular-nums}
+.thr{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--bad);transition:left .5s}
+.folds{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin:10px 0}
+.fold{border-radius:10px;padding:8px 4px;text-align:center;font-size:13px;border:2px solid var(--line);background:var(--surface);transition:all .35s}
+.fold.test{border-color:var(--txt);background:color-mix(in srgb,var(--txt) 14%,var(--surface))}
+.fold.leak{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 16%,var(--surface))}
+.fold.fit{box-shadow:inset 0 -5px 0 var(--aud)}
+.coef{display:grid;grid-template-columns:70px 1fr 1fr;gap:8px;align-items:center;font-size:14px;margin:6px 0}
+.ctrack{height:16px;background:var(--surface2);border-radius:5px;position:relative;overflow:hidden}
+.ctrack i{position:absolute;top:0;bottom:0;background:var(--sen);transition:all .5s}
+.ctrack::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--muted)}
+.mini{display:block;width:100%;max-width:150px;margin-top:6px}
+.formula{font-family:var(--serif);font-size:18px;text-align:center;margin:8px 0;font-weight:700}
+a.xref{color:var(--txt);font-weight:700}
+@media (max-width:860px){
+  .vbar{grid-template-columns:70px 1fr 104px;font-size:13.5px}
+  .coef{grid-template-columns:56px 1fr 1fr}
+  .fold{font-size:12px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="toc" aria-label="章節">
+  <div class="toc-title">線性代數基礎</div>
+  <a href="#intro"><span>●</span>導覽與目標</a>
+  <a href="#s1"><span>43.1</span>向量與矩陣</a>
+  <a href="#s2"><span>43.2</span>線性變換</a>
+  <a href="#s3"><span>43.3</span>分解與降維</a>
+  <a href="#s4"><span>43.4</span>最小平方</a>
+  <a href="#s5"><span>43.5</span>官方考題</a>
+  <a href="#s6"><span>43.6</span>易錯與測驗</a>
+</nav>
+
+<main>
+<!-- HERO -->
+<section id="intro" class="hero">
+  <div class="code">L23102　中級 AI 應用規劃師　建議 45 分鐘</div>
+  <h1>線性代數之機器學習基礎應用</h1>
+  <p class="one">科目 3 裡<b>最容易靠理解拿分</b>的知識點。初級只要你知道「PCA 是降維」；中級要你<b>算得出</b>解釋變異比例、<b>看得懂</b>矩陣形狀相不相容、<b>分得清</b> <code>np.linalg</code> 三個函式各自回傳什麼。</p>
+  <div class="hero-fig" aria-hidden="true">
+    <svg id="heroSvg" viewBox="0 0 720 300">
+      <defs>
+        <path id="hp0" d="M150 70 C 250 70, 270 150, 340 150"/>
+        <path id="hp1" d="M150 230 C 250 230, 270 150, 340 150"/>
+        <path id="hp2" d="M420 150 L 540 150"/>
+      </defs>
+      <g fill="none" stroke-width="2" opacity=".35">
+        <use href="#hp0" stroke="var(--txt)"/><use href="#hp1" stroke="var(--sen)"/><use href="#hp2" stroke="var(--aud)"/>
+      </g>
+      <g font-family="Noto Sans TC, sans-serif" font-size="15" font-weight="700">
+        <g>
+          <rect x="20" y="30" width="130" height="80" rx="14" fill="var(--txt)"/>
+          <text x="85" y="62" text-anchor="middle" fill="#fff">X (n × d)</text>
+          <text x="85" y="88" text-anchor="middle" fill="#fff" font-size="13">每一列一筆樣本</text>
+        </g>
+        <g>
+          <rect x="20" y="190" width="130" height="80" rx="14" fill="var(--sen)"/>
+          <text x="85" y="222" text-anchor="middle" fill="#fff">y ≈ Xθ</text>
+          <text x="85" y="248" text-anchor="middle" fill="#fff" font-size="13">最小平方＝投影</text>
+        </g>
+        <circle cx="380" cy="150" r="54" fill="var(--surface2)" stroke="var(--img)" stroke-width="2.5"/>
+        <g transform="translate(380 150)">
+          <g class="spin">
+            <line x1="-36" y1="0" x2="36" y2="0" stroke="var(--img)" stroke-width="3"/>
+            <line x1="0" y1="-20" x2="0" y2="20" stroke="var(--img)" stroke-width="3" opacity=".5"/>
+            <animateTransform attributeName="transform" type="rotate" values="0;-30;-30;0;0" keyTimes="0;.35;.6;.9;1" dur="4s" repeatCount="indefinite"/>
+          </g>
+        </g>
+        <text x="380" y="228" text-anchor="middle" fill="var(--ink)" font-size="14">Av = λv（線性變換）</text>
+        <rect x="540" y="105" width="160" height="90" rx="14" fill="var(--aud)"/>
+        <text x="620" y="140" text-anchor="middle" fill="#fff">PCA：Z = Xc·W</text>
+        <text x="620" y="168" text-anchor="middle" fill="#fff" font-size="13">d 維 → k 維</text>
+      </g>
+      <g class="movers">
+        <circle r="6" fill="var(--txt)"><animateMotion dur="2.4s" repeatCount="indefinite"><mpath href="#hp0"/></animateMotion></circle>
+        <circle r="6" fill="var(--sen)"><animateMotion dur="2.4s" begin=".6s" repeatCount="indefinite"><mpath href="#hp1"/></animateMotion></circle>
+        <circle r="6" fill="var(--aud)"><animateMotion dur="1.4s" begin="1.2s" repeatCount="indefinite"><mpath href="#hp2"/></animateMotion></circle>
+      </g>
+    </svg>
+  </div>
+  <h3>學完這一課，你應該能夠</h3>
+  <div class="goals">
+    <div class="goal" style="--c:var(--txt)">判讀 NumPy 向量與矩陣運算的<b>回傳型別與形狀</b>，辨識語法敘述題中的錯誤選項</div>
+    <div class="goal" style="--c:var(--img)">說明線性變換的<b>四種幾何操作</b>，並對應到模型中的實際位置</div>
+    <div class="goal" style="--c:var(--aud)">推導 <b>PCA 與共變異數矩陣特徵分解</b>的關係，並由特徵值算出解釋變異比例</div>
+    <div class="goal" style="--c:var(--sen)">用「<b>投影</b>」與「<b>正規方程</b>」解釋最小平方估計，並說明共線性為何讓 OLS 係數不穩</div>
+  </div>
+  <p class="hint" style="margin-top:20px">本頁每個顏色固定代表一個主題：<span class="chip" style="--c:var(--txt)"><i class="dot"></i>向量與矩陣</span>　<span class="chip" style="--c:var(--img)"><i class="dot"></i>線性變換</span>　<span class="chip" style="--c:var(--aud)"><i class="dot"></i>分解與 PCA</span>　<span class="chip" style="--c:var(--sen)"><i class="dot"></i>最小平方</span></p>
+</section>
+
+<!-- 43.1 -->
+<section id="s1">
+  <div class="sec-head"><span class="sec-no">43.1</span><h2>向量與矩陣表示</h2></div>
+  <p class="lead">先搞清楚資料在機器學習裡以什麼「形狀」出現，再分清楚三（四）種乘法。這一節是 NumPy 程式碼截圖題的全部底子。</p>
+
+  <h3>資料在機器學習裡的四種身分</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>物件</th><th>數學符號</th><th>NumPy 形狀</th><th>在模型中的角色</th></tr>
+      <tr><td>樣本向量（Vector）</td><td>x ∈ ℝ^d</td><td><code>(d,)</code></td><td>單筆資料的特徵組合</td></tr>
+      <tr><td>特徵矩陣（Matrix）</td><td>X ∈ ℝ^(n×d)</td><td><code>(n, d)</code></td><td>n 筆樣本，<b>每一列一筆樣本</b></td></tr>
+      <tr><td>參數向量</td><td>θ ∈ ℝ^d</td><td><code>(d,)</code></td><td>線性模型的權重</td></tr>
+      <tr><td>權重矩陣</td><td>W ∈ ℝ^(d×k)</td><td><code>(d, k)</code></td><td>把 d 維輸入映射成 k 維輸出</td></tr>
+    </table>
+  </div>
+  <p class="prose" style="margin-top:12px">線性迴歸的預測寫成 <b>ŷ = Xθ</b>；神經網路每一層的前向傳播寫成 <b>z⁽ˡ⁾ = W⁽ˡ⁾a⁽ˡ⁻¹⁾ + b⁽ˡ⁾</b>。兩者本質相同：都是「矩陣乘向量」再加偏差，差別只在後面有沒有接非線性激活函數。</p>
+
+  <h3>三種「乘法」必須分清楚</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>運算</th><th>寫法</th><th>形狀變化</th><th>幾何／實務意義</th></tr>
+      <tr><td><b>內積（Dot Product）</b></td><td><code>np.dot(v1, v2)</code>、<code>v1 @ v2</code></td><td><code>(d,)·(d,)</code> → <b>純量</b></td><td>投影、相似度，線性模型預測的核心</td></tr>
+      <tr><td><b>逐元素相乘（Hadamard）</b></td><td><code>v1 * v2</code>、<code>np.multiply</code></td><td><code>(d,)*(d,)</code> → <code>(d,)</code></td><td>遮罩、加權、閘門（如 LSTM 的 gate）</td></tr>
+      <tr><td><b>矩陣乘法</b></td><td><code>A @ B</code>、<code>np.matmul</code>、<code>np.dot</code></td><td><code>(m,n)·(n,p)</code> → <code>(m,p)</code></td><td>批次預測、特徵空間轉換</td></tr>
+      <tr><td><b>外積（Outer Product）</b></td><td><code>np.outer(v1, v2)</code></td><td><code>(d,)·(e,)</code> → <code>(d,e)</code></td><td>梯度外積、秩一更新</td></tr>
+    </table>
+  </div>
+  <div class="callout"><b><code>np.dot</code> 的雙重人格：</b>輸入兩個一維陣列時做內積回傳純量；輸入兩個二維陣列時等同矩陣乘法。二維以上（張量批次）時 <code>np.matmul</code>／<code>@</code> 是逐批相乘，<code>np.dot</code> 則是另一種和乘規則，兩者會不同 —— 實務上<b>一律用 <code>@</code></b>，只有考試題目愛寫 <code>np.dot</code>。</div>
+
+  <div class="panel">
+    <h3 style="margin-top:0">配對遊戲：這行程式回傳什麼？</h3>
+    <p class="hint">v1 = [1,2,3]、v2 = [4,5,6]、A = [[4,1],[2,3]]。先點左邊的程式，再點右邊的回傳值。</p>
+    <div class="match" id="npMatch"></div>
+    <div class="feedback" id="npFb" aria-live="polite"></div>
+  </div>
+
+  <details>
+    <summary>展開 NumPy 函式對照表（考試固定班底）</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>寫法</th><th>做什麼</th><th>輸入限制</th><th>回傳型別／形狀</th></tr>
+        <tr><td><code>np.dot(v1, v2)</code></td><td><b>內積</b></td><td>兩個一維向量</td><td><b>純量</b>（如 <code>np.int64(32)</code>）</td></tr>
+        <tr><td><code>v1 * v2</code></td><td><b>逐元素相乘</b></td><td>形狀相同或可廣播</td><td>與輸入<b>同形狀的陣列</b></td></tr>
+        <tr><td><code>np.linalg.inv(A)</code></td><td><b>反矩陣</b></td><td><b>方陣</b>且 det ≠ 0</td><td>與 A 同形狀的方陣</td></tr>
+        <tr><td><code>np.linalg.det(A)</code></td><td><b>行列式</b></td><td><b>方陣</b></td><td><b>純量</b>（float）</td></tr>
+        <tr><td><code>np.linalg.eig(A)</code></td><td><b>特徵值分解</b></td><td><b>方陣</b></td><td><b>(特徵值一維陣列, 特徵向量二維陣列)</b> 兩個東西</td></tr>
+        <tr><td><code>np.linalg.norm(v)</code></td><td>L2 範數（長度）</td><td>任意</td><td>純量</td></tr>
+        <tr><td><code>np.linalg.pinv(A)</code></td><td>偽逆（Pseudo-Inverse）</td><td>任意形狀</td><td>轉置形狀的矩陣</td></tr>
+        <tr><td><code>A.T</code></td><td>轉置（Transpose）</td><td>任意</td><td>行列互換</td></tr>
+      </table>
+    </div>
+  </details>
+  <div class="callout exam"><b>三個 <code>np.linalg</code> 函式的張冠李戴是最常見的誘答設計：</b>把 <code>inv</code> 說成算行列式、把 <code>eig</code> 說成算反矩陣、把 <code>det</code> 說成回傳矩陣。記憶法：<b>inv → 矩陣、det → 數字、eig → 一組數字＋一組方向</b>。</div>
+
+  <h3>判讀範例：逐行執行</h3>
+  <div class="panel">
+    <div class="steps" id="codeBtns" role="tablist"></div>
+    <div class="stage">
+      <div id="codeViz"></div>
+      <div id="codeTxt"></div>
+    </div>
+  </div>
+  <p class="prose"><b>三個延伸提醒：</b></p>
+  <ul class="prose">
+    <li><b>向量沒有反矩陣。</b><code>np.linalg.inv</code> 丟一維陣列進去會直接報 <code>LinAlgError</code>，任何說「對向量求反矩陣」的選項必錯。</li>
+    <li><b>對稱矩陣（如共變異數矩陣）建議用 <code>np.linalg.eigh</code></b>，保證特徵值為實數且由小到大排序；<code>eig</code> 對非對稱矩陣可能回傳複數。</li>
+    <li><b>判斷矩陣是否奇異不要用 <code>det(A) == 0</code></b>，浮點誤差會讓它幾乎永遠不等於 0，實務上看條件數或用 <code>np.linalg.matrix_rank</code>。</li>
+  </ul>
+
+  <h3>矩陣形狀相容性模擬器（必考的算式）</h3>
+  <div class="panel">
+    <p class="hint">(m, n) @ (n, p) → (m, p)：<b>內側維度必須相等</b>，運算後被「吃掉」；<b>外側維度留下來</b>，就是輸出形狀。調整四個維度看看。</p>
+    <div class="ctrl" id="shpCtrl"></div>
+    <svg id="shpSvg" viewBox="0 0 540 150" role="img" aria-label="矩陣形狀示意"></svg>
+    <div class="shape" id="shpOut"></div>
+    <div class="row" style="justify-content:center">
+      <button class="btn primary" id="shpPreset">載入 115Q1-3 原題：Q(1,10) @ W_Q(10,64)</button>
+      <button class="btn" id="shpTrap">誤配第一維會怎樣？</button>
+    </div>
+    <p class="hint" id="shpNote" style="margin:10px 0 0;text-align:center"></p>
+  </div>
+  <div class="callout exam"><b>判讀範例（115Q1 第 3 題）：</b>Transformer 的 Q 攤平成 <code>(1, 10)</code>，Query 投影權重 W_Q 為 <code>(10, 64)</code>。內側都是 10 → 可以相乘 → 輸出 <b><code>(1, 64)</code></b>。三種標準誘答：<code>(10, 10)</code> 是誤把兩個矩陣的第一維相配；<code>(64, 1)</code> 是正解的轉置（只有算 W_Qᵀ Qᵀ 才會出現）；「維度不相容」則是沒看內側維度。</div>
+
+  <h3>L2 範數與相似度：內積 vs 餘弦</h3>
+  <div class="panel">
+    <p class="hint">固定向量 a，旋轉或拉長向量 b。注意：<b>拉長 b 時內積跟著變，餘弦相似度不變</b>。</p>
+    <svg id="cosSvg" viewBox="0 0 400 260" role="img" aria-label="內積與餘弦相似度"></svg>
+    <div class="row" style="justify-content:center;margin-top:8px">
+      <button class="btn" id="cosL">b 逆時針轉 15°</button>
+      <button class="btn" id="cosR">b 順時針轉 15°</button>
+      <button class="btn" id="cosUp">b 長度 ×2</button>
+      <button class="btn" id="cosDn">b 長度 ÷2</button>
+    </div>
+    <div class="stat" id="cosStat"></div>
+  </div>
+  <ul class="prose">
+    <li><b>L2 範數：</b>‖x‖₂ = √(Σxᵢ²)，<code>np.linalg.norm(x)</code> —— 向量的「長度」，也是歐氏距離與 L2 正則化的基礎。</li>
+    <li><b>餘弦相似度：</b>cos(a, b) = (a·b) / (‖a‖·‖b‖) —— 內積除掉兩邊長度，<b>只看方向不看大小</b>，這是向量資料庫語意檢索的預設度量。</li>
+    <li>對照：<b>內積會被向量長度影響，餘弦不會</b>。題幹若強調「不受文件長度／熱門度影響」，指向餘弦相似度。</li>
+  </ul>
+</section>
+
+<!-- 43.2 -->
+<section id="s2">
+  <div class="sec-head"><span class="sec-no">43.2</span><h2>線性變換與特徵空間</h2></div>
+  <p class="lead">向量 x 被矩陣 A 左乘得到 Ax，就是對 x 做一次線性變換。一次矩陣乘法＝一次幾何操作。</p>
+
+  <h3>線性變換模擬器：四種基本型態</h3>
+  <div class="panel">
+    <div class="row" style="justify-content:space-between">
+      <div class="tabs" id="ltTabs" style="margin:0"></div>
+      <div class="row">
+        <button class="btn" id="ltPlay">重播變換</button>
+        <button class="btn" id="ltEig" aria-pressed="false">顯示特徵向量</button>
+      </div>
+    </div>
+    <div class="stage" style="margin-top:12px">
+      <svg id="ltSvg" viewBox="0 0 360 360" role="img" aria-label="線性變換網格"></svg>
+      <div id="ltTxt"></div>
+    </div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>操作</th><th>矩陣特徵</th><th>對長度／方向的影響</th><th>機器學習中的對應</th></tr>
+      <tr><td><b>縮放（Scaling）</b></td><td>對角矩陣</td><td>改變尺度，<b>不改方向</b></td><td>特徵標準化、學習率縮放</td></tr>
+      <tr><td><b>旋轉（Rotation）</b></td><td>正交矩陣（QᵀQ = I）</td><td>改變方向，<b>不改長度</b></td><td>PCA 換基底、特徵對齊</td></tr>
+      <tr><td><b>剪切（Shearing）</b></td><td>非對角元素不為零</td><td>方向傾斜、角度改變</td><td>一般全連接層的權重</td></tr>
+      <tr><td><b>投影（Projection）</b></td><td>rank(A) &lt; d</td><td><b>降維，且不可逆</b></td><td>PCA、LDA、分類超平面</td></tr>
+    </table>
+  </div>
+  <p class="prose" style="margin-top:12px">只有<b>投影</b>會損失資訊 —— 這正是降維的本質：壓扁之後回不去，所以要挑「壓扁後損失最少」的方向。</p>
+
+  <h3>特徵值與特徵向量（點卡片翻面）</h3>
+  <p class="formula">Av = λv：v 經過變換 A 之後<b>方向不變</b>，只被拉長（或壓縮）λ 倍</p>
+  <div class="cards" id="eigCards"></div>
+  <p class="hint" style="margin-top:10px">回到上面的模擬器按「顯示特徵向量」：縮放有兩支、剪切只剩一支、旋轉一支實數特徵向量都沒有、投影有一支 λ = 0 被壓扁。</p>
+
+  <h3>det、rank 與可逆性是同一件事</h3>
+  <div class="panel">
+    <p class="hint">矩陣 A 的兩欄 c₁、c₂ 張成一個平行四邊形，它的面積就是 |det(A)|。讓 c₂ 越來越靠近 c₁ 的方向（兩個特徵越來越共線），看看會發生什麼。</p>
+    <div class="row" id="detBtns"></div>
+    <div class="stage" style="margin-top:10px">
+      <svg id="detSvg" viewBox="0 0 360 250" role="img" aria-label="行列式面積"></svg>
+      <div><div class="stat" id="detStat" style="margin-top:0"></div><p class="hint" id="detNote" style="margin-top:10px"></p></div>
+    </div>
+  </div>
+  <pre class="code">det(A) = 0  ⇔  rank(A) &lt; n  ⇔  A 不可逆（奇異矩陣 Singular）
+    │
+    ├─ 幾何解讀：det 是變換後的「體積縮放倍率」，等於 0 表示空間被壓扁到更低維
+    │
+    └─ 資料解讀：某一欄特徵是其他欄的線性組合（完全共線）→ XᵀX 不可逆 → OLS 無解</pre>
+
+  <h3>線性變換在模型裡的出現位置</h3>
+  <div class="panel flat">
+    <div class="tabs" id="whereTabs"></div>
+    <div id="whereBody"></div>
+  </div>
+</section>
+
+<!-- 43.3 -->
+<section id="s3">
+  <div class="sec-head"><span class="sec-no">43.3</span><h2>矩陣分解與維度簡化</h2></div>
+  <p class="lead">記憶點：<b>EVD 挑食（只吃方陣），SVD 來者不拒（任意矩陣），NMF 只吃非負但換來可解釋性</b>。</p>
+
+  <div class="panel">
+    <div class="tabs" id="decTabs"></div>
+    <div id="decBody"></div>
+  </div>
+  <details>
+    <summary>展開三種分解完整對照表</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th></th><th>特徵值分解（EVD）</th><th>奇異值分解（SVD）</th><th>非負矩陣分解（NMF）</th></tr>
+        <tr><td>形式</td><td>A = QΛQᵀ</td><td>X = UΣVᵀ</td><td>X ≈ WH</td></tr>
+        <tr><td>適用矩陣</td><td><b>必須是方陣</b>（實務上用對稱方陣）</td><td><b>任意 m×n 實數矩陣</b></td><td>元素<b>全非負</b>的矩陣</td></tr>
+        <tr><td>成分意義</td><td>特徵向量＝軸，特徵值＝該軸變異量</td><td>U＝樣本方向，Σ＝重要性，V＝特徵方向</td><td>W＝潛在基底，H＝組合係數</td></tr>
+        <tr><td>結果性質</td><td>正交基底</td><td>正交基底、數值穩定性最佳</td><td>非負、稀疏、<b>可加疊</b></td></tr>
+        <tr><td>典型應用</td><td><b>PCA</b>、LDA</td><td>PCA 的實作、推薦系統、LSA、影像壓縮</td><td>主題建模、腦波拆解、影像部件分析</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <h3>PCA 與共變異數矩陣特徵分解（本節核心）</h3>
+  <div class="panel">
+    <p class="hint">用 40 筆二維示意資料，跟著五個步驟走一遍。右下的數字都是真的從這批點算出來的。</p>
+    <div class="pipe" id="pcaPipe"></div>
+    <div class="stage">
+      <svg id="pcaSvg" viewBox="0 0 420 300" role="img" aria-label="PCA 步驟示意"></svg>
+      <div class="pout" id="pcaOut" aria-live="polite"></div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn primary" id="pcaNext">下一步</button>
+      <button class="btn" id="pcaReset">從頭開始</button>
+    </div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>線性代數物件</th><th>在 PCA 裡的身分</th></tr>
+      <tr><td>C 的特徵向量 qᵢ</td><td><b>第 i 主成分的方向</b>（載荷 loading）</td></tr>
+      <tr><td>C 的特徵值 λᵢ</td><td>資料在該主成分方向上的<b>變異量</b></td></tr>
+      <tr><td>λᵢ / Σλ</td><td><b>第 i 主成分的解釋變異比例</b></td></tr>
+      <tr><td>Λ 是對角矩陣</td><td>主成分之間<b>共變異數為 0</b>（彼此不相關）</td></tr>
+      <tr><td>Q 是正交矩陣</td><td>主成分<b>互相垂直</b></td></tr>
+    </table>
+  </div>
+
+  <h3>解釋變異比例計算器（114Q2 第 35 題）</h3>
+  <div class="panel">
+    <p class="hint">預設是官方原題：某製程資料標準化後做共變異數矩陣分解，得 λ₁=6.0、λ₂=3.0、λ₃=1.0。調整特徵值或門檻，看要保留幾個主成分。</p>
+    <div class="ctrl" id="evCtrl"></div>
+    <div class="row" id="evThr" style="margin:6px 0 10px"><span class="hint">累積門檻：</span></div>
+    <div id="evBars"></div>
+    <div class="verdict" id="evV" style="margin-top:10px"></div>
+    <p class="hint" id="evNote" style="margin:6px 0 0"></p>
+  </div>
+  <div class="callout"><b>三個標準誘答：</b>①「只留 PC1」—— 只有 60%，不足門檻；②「PC2 貢獻高達 30% 所以不能丟 PC3」—— 把<b>單一成分的貢獻</b>跟<b>累積門檻</b>混為一談，前兩者累積已達 90%；③「特徵值相差不大」—— 6:3:1 落差明顯，敘述與數據不符。</div>
+
+  <h3>SVD 才是實作上的主流</h3>
+  <div class="compare">
+    <div><div class="big">共變異數矩陣 EVD</div>先建出 d×d 的 C，再分解 C = QΛQᵀ。<br><span class="hint">特徵數很大時，C 本身就很佔記憶體</span></div>
+    <div><div class="big">直接對 Xc 做 SVD</div>Xc = UΣVᵀ：<b>V 的各行就是 C 的特徵向量</b>，<b>λᵢ = σᵢ² / (n−1)</b>。<br><span class="hint">scikit-learn 的 <code>PCA</code> 內部走這條</span></div>
+  </div>
+  <p class="prose" style="margin-top:12px">所以 SVD 與共變異數矩陣特徵分解得到的主成分<b>完全相同</b>。走 SVD 是因為不必顯式建出 d×d 共變異數矩陣，<b>數值更穩定、特徵數很大時也省記憶體</b>。</p>
+
+  <h3>為什麼 PCA 前必須先標準化</h3>
+  <div class="panel">
+    <p class="hint">示意資料：30 位員工的「年資（年）」與「年收入（元）」。按下按鈕切換標準化前後，看 PC1 被誰綁架。</p>
+    <div class="row"><button class="btn" id="stdBtn" aria-pressed="false">套用標準化（Z-score）</button><span class="hint" id="stdState"></span></div>
+    <div id="stdOut" style="margin-top:12px"></div>
+  </div>
+  <p class="prose">共變異數對<b>尺度</b>極度敏感。年收入以「元」為單位、年資以「年」為單位時，年收入的變異數可能大上千萬倍，PC1 幾乎就等於年收入本身，其他特徵完全被稀釋。標準化之後的共變異數矩陣，其實就是<b>相關係數矩陣</b>。同理，<b>異質的多模態特徵不可直接 concat 後做 PCA</b>，高維模態的變異會主導所有主成分。</p>
+
+  <h3>PCA 降噪：改哪一行？（114Q2 第 46 題）</h3>
+  <div class="panel">
+    <p class="hint">訊號的能量集中在少數大特徵值方向，雜訊散布在眾多小特徵值方向。保留前 k 個主成分後重建（<code>inverse_transform</code>），小特徵值方向的雜訊就被濾掉。調整 <code>n_components</code>（示意：原始維度 16）。</p>
+    <div class="row" id="dnBtns"></div>
+    <pre class="code" id="dnCode"></pre>
+    <svg id="dnSvg" viewBox="0 0 600 180" role="img" aria-label="降噪重建波形"></svg>
+    <div class="row" style="justify-content:space-between"><b>重建後雜訊殘留（示意）</b><span id="dnNum" style="font-variant-numeric:tabular-nums"></span></div>
+    <div class="meter"><i id="dnMeter"></i></div>
+    <p class="hint" id="dnNote" style="margin:6px 0 0"></p>
+  </div>
+  <div class="callout"><b>降噪失效的典型 bug：</b><code>n_components</code> 設得太大（例如等於原始維度），重建結果＝原圖，雜訊原封不動。要修的永遠是<b>設定主成分數量那一行</b>，不是資料載入或繪圖那幾行。</div>
+
+  <h3>降維方法選型：情境 × 方法</h3>
+  <div class="panel">
+    <p class="hint">先選情境，再點一個降維方法看判定。</p>
+    <div class="tabs" id="drTabs"></div>
+    <div class="strat" id="drStrat"></div>
+    <div style="margin-top:18px">
+      <div class="verdict" id="drV">選一個方法試試</div>
+      <div class="meter" style="height:18px;margin:10px 0"><i id="drM" style="width:0"></i></div>
+      <div id="drWhy" class="hint"></div>
+    </div>
+  </div>
+  <details>
+    <summary>展開降維方法選型對照表</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>方法</th><th>線性？</th><th>用標籤？</th><th>能對新資料投影？</th><th>最適用途</th></tr>
+        <tr><td><b>PCA</b></td><td>線性</td><td>非監督</td><td><b>可</b>（存下 W 即可）</td><td>前處理、當模型輸入特徵</td></tr>
+        <tr><td><b>LDA</b></td><td>線性</td><td><b>監督</b></td><td>可</td><td>分類前降維、最大化類別間差異</td></tr>
+        <tr><td><b>t-SNE</b></td><td>非線性</td><td>非監督</td><td><b>不可</b>（無固定轉換函數）</td><td><b>只做視覺化</b></td></tr>
+        <tr><td><b>Autoencoder</b></td><td>非線性</td><td>非監督</td><td>可</td><td>表示學習、非線性壓縮</td></tr>
+        <tr><td><b>NMF</b></td><td>線性、非負</td><td>非監督</td><td>可</td><td>主題建模、可解釋的部件分解</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <h3>降維器必須放進 Pipeline（115Q1 第 44 題）</h3>
+  <div class="panel">
+    <p class="hint">五折交叉驗證。藍框是這一折的測試資料；底部橘色條代表「參與了降維器擬合」。切換寫法、逐折檢查。</p>
+    <div class="row">
+      <button class="btn" id="lkBad" aria-pressed="true">錯誤：先對全資料 fit_transform</button>
+      <button class="btn" id="lkGood" aria-pressed="false">正確：放進 Pipeline</button>
+      <button class="btn" id="lkNext">下一折</button>
+    </div>
+    <div class="folds" id="lkFolds"></div>
+    <pre class="code" id="lkCode"></pre>
+    <p id="lkNote" style="margin:0;font-size:15px"></p>
+  </div>
+  <p class="prose"><b>t-SNE 的高頻陷阱：</b>t-SNE 保留的是<b>局部鄰域結構，不保留全局距離與尺度</b>，也沒有可重複套用到新樣本的轉換，因此適合把 512 維詞嵌入投影到二維看群集，<b>不適合當 XGBoost 的輸入特徵</b>。反過來說 PCA 才是可外推的那一個。</p>
+
+  <h3>維度簡化帶來的四個好處（點卡片翻面）</h3>
+  <div class="cards" id="benCards"></div>
+</section>
+
+<!-- 43.4 -->
+<section id="s4">
+  <div class="sec-head"><span class="sec-no">43.4</span><h2>最小平方估計與線性迴歸</h2></div>
+  <p class="lead">從損失函數到正規方程，只有四行；但真正要懂的是它的幾何意義：<b>迴歸就是正交投影</b>。</p>
+  <pre class="code">損失：  J(θ) = ‖y − Xθ‖₂²          （殘差平方和 RSS）
+求導：  ∂J/∂θ = −2Xᵀ(y − Xθ) = 0
+整理：  XᵀX θ = Xᵀy                 ← 正規方程（Normal Equation）
+封閉解：θ̂ = (XᵀX)⁻¹ Xᵀ y</pre>
+
+  <h3>投影模擬器：殘差什麼時候最短？</h3>
+  <div class="panel">
+    <p class="hint">灰線是 col(X)（X 各欄張成的空間，這裡簡化成一條線）。調整 θ 讓 ŷ = Xθ 在線上移動，觀察殘差 e = y − ŷ 的長度，以及它和 col(X) 的夾角。</p>
+    <svg id="prSvg" viewBox="0 0 420 260" role="img" aria-label="最小平方投影"></svg>
+    <div class="row" style="justify-content:center;margin-top:8px">
+      <button class="btn" id="prDn">θ − 0.1</button>
+      <button class="btn" id="prUp">θ ＋ 0.1</button>
+      <button class="btn primary" id="prSolve">用正規方程直接求 θ̂</button>
+    </div>
+    <div class="stat" id="prStat"></div>
+  </div>
+  <p class="prose">「殘差垂直於行空間」寫成數學就是 <b>Xᵀe = 0</b> → <b>Xᵀ(y − Xθ) = 0</b> → 正是正規方程。所以<b>最小平方解＝把觀測值投影到特徵所能張成的空間上最近的那一點</b>。投影矩陣 H = X(XᵀX)⁻¹Xᵀ（帽子矩陣），ŷ = Hy。這也解釋了為什麼<b>離群點會扭曲擬合平面</b>：平方損失讓遠離的點取得極大的權重。</p>
+
+  <h3>XᵀX 不可逆時怎麼辦</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>情況</th><th>線性代數原因</th><th>對策</th></tr>
+      <tr><td>特徵數 &gt; 樣本數</td><td>rank(X) &lt; d，XᵀX 必奇異</td><td>偽逆 <code>pinv</code>（取最小範數解）、降維、正則化</td></tr>
+      <tr><td><b>完全共線</b></td><td>某欄是他欄的線性組合 → det = 0</td><td>刪除重複特徵</td></tr>
+      <tr><td><b>近似共線</b></td><td>det 接近 0，(XᵀX)⁻¹ 數值爆大</td><td><b>Ridge（L2）</b></td></tr>
+    </table>
+  </div>
+
+  <h3>共線性 × Ridge 模擬器</h3>
+  <div class="panel">
+    <p class="hint">兩個標準化特徵「月收入」「年收入」，相關係數 ρ。示意設定：真實模型 y = x₁ + x₂ ＋ 雜訊。XᵀX（除以 n）的兩個特徵值是 1+ρ 與 1−ρ；Ridge 會把它們都抬高 λ。</p>
+    <div class="ctrl">
+      <div><div class="lbl">特徵相關係數 ρ</div><div class="row" id="rgRho"></div></div>
+      <div><div class="lbl">Ridge 強度 λ</div><div class="row" id="rgLam"></div></div>
+    </div>
+    <div id="rgEig"></div>
+    <div class="stat" id="rgStat"></div>
+    <h3 style="margin-top:18px;font-size:16px">重抽樣訓練三次，看係數穩不穩</h3>
+    <div class="row"><button class="btn primary" id="rgSample">重抽樣訓練 ×3</button><button class="btn" id="rgLasso" aria-pressed="false">改用 Lasso（L1）比較</button></div>
+    <div id="rgCoef" style="margin-top:10px"></div>
+    <p class="hint" id="rgNote" style="margin:6px 0 0"></p>
+  </div>
+  <p class="prose"><b>Ridge 的線性代數解釋：</b>θ̂ = (XᵀX + λI)⁻¹Xᵀy。λI 把 XᵀX 的每個特徵值整體抬高 λ，<b>保證可逆且條件數下降</b>，於是高度相關特徵的權重被<b>平均分攤並同步縮小</b>，估計穩定卻<b>不會歸零</b>。</p>
+  <p class="prose">對照 <b>Lasso（L1）</b>：絕對值懲罰不可微、沒有封閉解（用座標下降求解），且具稀疏化效果。面對「月收入／年收入／季收入」這種高度相關的一組特徵，只要留一個就能把損失壓到相近水準，<b>留哪一個會隨抽樣與初始化改變</b>，於是每次重訓的重要特徵清單就在三者間反覆跳動 —— 這是解釋性上的大麻煩，不是梯度消失。</p>
+
+  <h3>封閉解 vs 梯度下降</h3>
+  <div class="compare">
+    <div><div class="big">正規方程（封閉解）</div>計算複雜度 O(nd² + d³)，含矩陣反轉。<br>特徵數 d 很大時很慢，甚至算不動。<br>不用調超參數。<br><span class="hint">適用：d 小（數百以內）</span></div>
+    <div><div class="big">梯度下降</div>每次迭代 O(nd)。<br>特徵數 d 很大時仍然可行。<br>要調學習率、迭代次數。<br><span class="hint">適用：d 大、資料量大、線上學習</span></div>
+  </div>
+
+  <h3>OLS 的假設與殘差圖診斷（115Q1 第 5 題）</h3>
+  <div class="panel">
+    <h3 style="margin-top:0;font-size:17px">配對遊戲：這張殘差圖代表什麼？</h3>
+    <p class="hint">先點左邊的殘差圖，再點右邊的診斷。小心右邊有一個「殘差圖根本看不出來」的選項。</p>
+    <div class="match" id="resMatch"></div>
+    <div class="feedback" id="resFb" aria-live="polite"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>假設</th><th>違反時的正式名稱</th><th>怎麼看出來</th></tr>
+      <tr><td>誤差<b>變異數固定</b></td><td><b>異質變異數（Heteroscedasticity）</b></td><td>殘差圖隨預測值增大呈<b>喇叭狀擴散</b></td></tr>
+      <tr><td>誤差<b>彼此獨立</b></td><td>自相關（Autocorrelation）</td><td>殘差依觀測順序呈週期或趨勢（多見於時間序列）</td></tr>
+      <tr><td>誤差<b>常態分布</b></td><td>非常態</td><td><b>Q-Q 圖</b>、殘差直方圖</td></tr>
+      <tr><td>特徵<b>不共線</b></td><td>多重共線性（Multicollinearity）</td><td><b>VIF、相關矩陣 —— 殘差圖看不出來</b></td></tr>
+      <tr><td>關係<b>為線性</b></td><td>模型設定錯誤</td><td>殘差對預測值呈系統性彎曲</td></tr>
+    </table>
+  </div>
+  <div class="callout exam">這張表就是殘差圖題型的全部答案：<b>擴散＝異質變異數、彎曲＝非線性、順序上有規律＝自相關、殘差圖看不到的＝共線性與常態性</b>。</div>
+
+  <h3>最小平方之外的損失選擇</h3>
+  <div class="panel">
+    <p class="hint">示意資料 10 個點。切換損失函數、加入一個離群點，看擬合線被拉走多少。</p>
+    <div class="row" style="justify-content:space-between">
+      <div class="tabs" id="lsTabs" style="margin:0"></div>
+      <button class="btn" id="lsOut" aria-pressed="false">加入離群點</button>
+    </div>
+    <svg id="lsSvg" viewBox="0 0 420 240" style="margin-top:10px" role="img" aria-label="損失函數擬合比較"></svg>
+    <p id="lsNote" style="margin:6px 0 0;font-size:15px"></p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>損失</th><th>懲罰型態</th><th>對離群值</th><th>什麼時候選它</th></tr>
+      <tr><td><b>MSE（最小平方）</b></td><td>平方</td><td><b>極敏感</b>，梯度與誤差成正比</td><td>題幹說「要對極端高值誤差<b>更敏感</b>」</td></tr>
+      <tr><td>MAE</td><td>線性</td><td>抗離群值，梯度近乎常數</td><td>題幹說「<b>不希望</b>被離群值主導」</td></tr>
+      <tr><td>Huber</td><td>小誤差平方、大誤差線性</td><td>折衷</td><td>想兼顧兩者</td></tr>
+      <tr><td>交叉熵</td><td>機率分布差異</td><td>—</td><td><b>分類</b>任務，連續值迴歸不適用</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 43.5 -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-no">43.5</span><h2>官方考過什麼</h2></div>
+  <p class="lead">從 114-2 與 115-1 兩份官方公告試題（各 50 題）中，與本知識點直接相關的有 <b>10 題</b>。點開看怎麼問、怎麼解。</p>
+  <div id="examList"></div>
+  <div class="callout exam"><b>規律：</b>本知識點幾乎不考抽象證明，全部落在「<b>算得出來</b>」（解釋變異、矩陣形狀）與「<b>辨得出誰是誰</b>」（三個 <code>np.linalg</code> 函式、PCA/LDA/t-SNE、L1/L2）兩類。</div>
+</section>
+
+<!-- 43.6 -->
+<section id="s6">
+  <div class="sec-head"><span class="sec-no">43.6</span><h2>易錯與陷阱</h2></div>
+  <p class="lead">逐條確認自己真的懂了再打勾（打勾狀態會記在這台裝置上）。</p>
+  <div class="traps" id="traps"></div>
+  <p class="hint" id="trapCount" style="margin-top:10px"></p>
+
+  <h3>情境測驗</h3>
+  <div class="qcard" id="quiz"></div>
+
+  <h3>延伸練習</h3>
+  <p class="prose"><b>L23 主題庫 326 題：</b>篩選「線性代數／PCA／降維／NumPy」相關題目，先把<b>解釋變異比例</b>與<b>矩陣形狀</b>兩類計算題練到不用想。<br><b>L23 歷屆 100 題（整卷）：</b>本科 23% 是附圖題，NumPy 與 scikit-learn 程式碼截圖題只能靠整卷練習累積讀碼速度，單題練習會低估壓力。<br><b>L21 主題庫 311 題：</b>向量相似度、嵌入向量與向量檢索的題目可與本節 43.1 的「L2 範數與相似度」互相補強。<br><b>跨知識點串連：</b>本節的 PCA 與共變異數矩陣接 <a class="xref" href="L23101_probability_statistics.html">L23101（機率統計）</a>，Ridge／Lasso 接 <a class="xref" href="L23304_tuning_optimization.html">L23304（模型調整與優化）</a>，資料洩漏與 Pipeline 接 <a class="xref" href="L23301_feature_engineering.html">L23301（數據準備與特徵工程）</a>，建議三處一起複習。</p>
+</section>
+</main>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce){const m=document.querySelector('#heroSvg .movers');if(m)m.remove();}
+/* 可重現的示意亂數 */
+function rng(seed){let a=seed>>>0;return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function gauss(r){let u=0,v=0;while(u===0)u=r();while(v===0)v=r();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+const fx=(v,d=2)=>(Math.abs(v)<1e-12?0:v).toFixed(d);
+
+/* ---------- generic matcher（照抄範本） ---------- */
+function matcher(root,fb,left,right,doneMsg){
+  let sel=null,done=0;
+  const L=document.createElement('div');L.className='col';
+  const R=document.createElement('div');R.className='col';
+  left.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;
+    b.innerHTML=it.html;if(it.c)b.style.setProperty('--c',it.c);
+    b.onclick=()=>{if(b.classList.contains('done'))return;L.querySelectorAll('.mitem').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;fb.textContent='';fb.className='feedback';};
+    L.appendChild(b);
+  });
+  right.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;b.innerHTML=it.html;
+    b.onclick=()=>{
+      if(b.classList.contains('done'))return;
+      if(!sel){fb.textContent='請先點左邊一個項目。';fb.className='feedback';return;}
+      if(sel.dataset.k===b.dataset.k){
+        const c=sel.style.getPropertyValue('--c');
+        [sel,b].forEach(x=>{x.classList.remove('sel');x.classList.add('done');if(c)x.style.setProperty('--c',c);});
+        fb.textContent='✓ '+(it.ok||'答對了！');fb.className='feedback ok';sel=null;done++;
+        if(done===left.length){fb.textContent='✓ 全部配對完成！'+doneMsg;}
+      }else{
+        b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');
+        fb.textContent='✗ '+(it.bad||'不太對，再想想。');fb.className='feedback bad';
+      }
+    };
+    R.appendChild(b);
+  });
+  root.append(L,R);
+}
+/* ---------- tabs helper ---------- */
+function tabs(root,items,render,start=0){
+  items.forEach((x,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=x;b.onclick=()=>go(i);root.appendChild(b);});
+  function go(i){root.querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));render(i);}
+  go(start);return go;
+}
+/* ---------- flip cards ---------- */
+function flips(root,list){list.forEach(([n,o,d])=>{const b=document.createElement('button');b.className='flip';b.setAttribute('aria-pressed','false');b.innerHTML=`<div class="in"><div class="f"><strong>${n}</strong><span>${o}</span><span style="margin-top:auto;font-size:12.5px">點我翻面</span></div><div class="b">${d}</div></div>`;b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');root.appendChild(b);});}
+/* ---------- exam list ---------- */
+function examList(root,list){list.forEach(([n,k,q,a])=>{root.insertAdjacentHTML('beforeend',`<details><summary><span class="tag">${n}</span>${k}</summary><div class="body"><p style="margin:0 0 6px"><span class="hint">怎麼問：</span>${q}</p><p style="margin:0"><span class="hint">正解思路：</span>${a}</p></div></details>`);});}
+/* ---------- strat（策略選擇＋meter） ---------- */
+function strat(root,list,V,M,W,order){
+  root.innerHTML='';
+  (order||list.map((_,i)=>i)).forEach(i=>{const x=list[i];const b=document.createElement('button');b.innerHTML=x[0];b.setAttribute('aria-pressed','false');b.onclick=()=>{root.querySelectorAll('button').forEach(y=>y.setAttribute('aria-pressed',y===b));V.textContent=x[1];V.style.color=x[3];M.style.width=x[2]+'%';M.style.background=x[3];W.innerHTML=x[4];};root.appendChild(b);});
+  V.textContent='選一個試試';V.style.color='';M.style.width='0';W.innerHTML='';
+}
+/* ---------- traps ---------- */
+function traps(key,T){
+  let saved=[];try{saved=JSON.parse(localStorage.getItem(key)||'[]')||[];}catch(e){saved=[];}
+  T.forEach(([a,b],i)=>{
+    const l=document.createElement('label');const c=saved.includes(i);if(c)l.classList.add('chk');
+    l.innerHTML=`<input type="checkbox" ${c?'checked':''}><div><em>${a}</em><br><span>${b}</span></div>`;
+    l.querySelector('input').onchange=e=>{const on=e.target.checked;l.classList.toggle('chk',on);saved=on?[...new Set([...saved,i])]:saved.filter(x=>x!==i);try{localStorage.setItem(key,JSON.stringify(saved));}catch(err){}count();};
+    $('#traps').appendChild(l);
+  });
+  function count(){$('#trapCount').textContent=`已確認 ${saved.length}／${T.length} 條`;}
+  count();
+}
+/* ---------- quiz（照抄範本邏輯） ---------- */
+function quiz(Q,msgs){
+  let i=0,score=0;const box=$('#quiz');
+  const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+  function show(){
+    if(i>=Q.length){
+      const r=score/Q.length;const msg=r>=.9?msgs[0]:r>=.65?msgs[1]:msgs[2];
+      box.innerHTML=`<div class="progress"><i style="width:100%"></i></div><div class="qtext" style="font-size:24px;font-family:var(--serif)">得分 ${score}／${Q.length}</div><p>${msg}</p><button class="btn primary" id="qr">重新測驗</button>`;
+      $('#qr').onclick=()=>{i=0;score=0;show();};return;
+    }
+    const [q,opts,ex]=Q[i];
+    const order=shuffle(opts.map((o,k)=>({o,k})));
+    box.innerHTML=`<div class="progress"><i style="width:${i/Q.length*100}%"></i></div><div class="qtop"><span>第 ${i+1}／${Q.length} 題</span><span>得分 ${score}</span></div><div class="qtext">${q}</div><div class="opts">${order.map(x=>`<button class="opt" data-k="${x.k}">${x.o}</button>`).join('')}</div><div class="expl" id="qe"></div><div class="row" style="margin-top:14px;justify-content:flex-end"><button class="btn primary" id="qn" style="display:none">${i===Q.length-1?'看結果':'下一題'}</button></div>`;
+    box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.k==='0';if(ok)score++;
+      box.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.k==='0')x.classList.add('right');});
+      if(!ok)b.classList.add('wrongpick');
+      const e=$('#qe');e.innerHTML=(ok?'<b style="color:var(--ok)">答對了。</b>':'<b style="color:var(--bad)">這題要小心。</b>')+ex;e.classList.add('show');
+      $('#qn').style.display='';$('#qn').focus();
+    });
+    $('#qn').onclick=()=>{i++;show();};
+  }
+  show();
+}
+/* ---------- nav highlight（照抄範本） ---------- */
+function navHighlight(){
+  const links=[...document.querySelectorAll('nav.toc a')];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on&&window.innerWidth<=860)a.scrollIntoView({inline:'center',block:'nearest'});});}});},{rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('main section').forEach(s=>io.observe(s));
+}
+/* svg arrow helper */
+function arrow(x1,y1,x2,y2,col,w=3,id=''){const a=Math.atan2(y2-y1,x2-x1),h=10;const p1=[x2-h*Math.cos(a-.4),y2-h*Math.sin(a-.4)],p2=[x2-h*Math.cos(a+.4),y2-h*Math.sin(a+.4)];return `<g ${id?`id="${id}"`:''}><line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${col}" stroke-width="${w}" stroke-linecap="round"/><polygon points="${x2},${y2} ${p1[0]},${p1[1]} ${p2[0]},${p2[1]}" fill="${col}"/></g>`;}
+</script>
+<script>
+/* ---------- 43.1 NumPy matcher ---------- */
+matcher($('#npMatch'),$('#npFb'),[
+  {k:'d',c:'var(--txt)',html:'<code>np.dot(v1, v2)</code><small>內積</small>'},
+  {k:'m',c:'var(--img)',html:'<code>v1 * v2</code><small>逐元素相乘</small>'},
+  {k:'i',c:'var(--aud)',html:'<code>np.linalg.inv(A)</code><small>反矩陣</small>'},
+  {k:'t',c:'var(--sen)',html:'<code>np.linalg.det(A)</code><small>行列式</small>'},
+  {k:'e',c:'var(--ok)',html:'<code>w, v = np.linalg.eig(A)</code><small>特徵值分解</small>'}
+],[
+  {k:'t',html:'<code>10.0</code><small>float 純量</small>',ok:'det(A) = 4×3 − 1×2 = 10，回傳的是 float 不是 int。'},
+  {k:'x',html:'<code>array([5, 7, 9])</code><small>陣列</small>',bad:'這是 114Q2-40 的經典誘答：[5,7,9] 是「相加」不是「相乘」。'},
+  {k:'d',html:'<code>np.int64(32)</code><small>純量</small>',ok:'1×4 + 2×5 + 3×6 = 32，兩個一維向量內積回傳純量。'},
+  {k:'e',html:'<code>array([5., 2.])</code> ＋ 特徵向量矩陣<small>兩個物件</small>',ok:'eig 回傳「兩個」東西；特徵向量按行（column）存放，v[:, 0] 對應 w[0]。'},
+  {k:'m',html:'<code>array([ 4, 10, 18])</code><small>同形狀陣列</small>',ok:'逐元素相乘，形狀與輸入相同。'},
+  {k:'i',html:'<code>[[ 0.3, -0.1], [-0.2, 0.4]]</code><small>同形狀方陣</small>',ok:'det = 10 ≠ 0，可逆，回傳與 A 同形狀的方陣。'}
+],'記住：inv → 矩陣、det → 數字、eig → 一組數字＋一組方向。');
+
+/* ---------- 43.1 code stepper ---------- */
+(function(){
+  const S=[
+    ['① 內積','np.dot(v1, v2)','1*4 + 2*5 + 3*6 = 32','回傳 <b>np.int64(32)</b>，一個<b>純量</b>。'],
+    ['② 逐元素','v1 * v2','array([ 4, 10, 18])','<b>同形狀陣列</b>。常見誘答寫成 [5, 7, 9]，那是「相加」不是「相乘」。'],
+    ['③ 反矩陣','np.linalg.inv(A)','array([[ 0.3, -0.1],\n       [-0.2,  0.4]])','det = 4×3 − 1×2 = 10 ≠ 0，<b>可逆</b>，回傳方陣。'],
+    ['④ 行列式','np.linalg.det(A)','10.0','<b>純量，而且是 float 不是 int</b>。'],
+    ['⑤ 特徵值分解','w, v = np.linalg.eig(A)','w = array([5., 2.])\nv = 2×2 特徵向量矩陣','回傳<b>兩個</b>物件。特徵值順序由 LAPACK 決定，<b>不保證由大到小</b>；特徵向量<b>按「行（column）」存放</b>，<code>v[:, 0]</code> 才是對應 <code>w[0]</code> 的那一支；每支已正規化成單位長度，正負號不唯一。']
+  ];
+  S.forEach((s,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=s[0];b.onclick=()=>go(i);$('#codeBtns').appendChild(b);});
+  function go(i){
+    document.querySelectorAll('#codeBtns .btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));
+    $('#codeViz').innerHTML=`<pre class="code" style="margin:0">v1 = np.array([1, 2, 3])\nv2 = np.array([4, 5, 6])\nA  = np.array([[4, 1],\n               [2, 3]])\n\n<span class="hl">${S[i][1]}</span></pre>`;
+    $('#codeTxt').innerHTML=`<p style="margin:0 0 6px"><b>輸出</b></p><pre class="code" style="margin:0 0 10px">${S[i][2]}</pre><p style="margin:0">${S[i][3]}</p>`;
+  }
+  go(0);
+})();
+
+/* ---------- 43.1 shape simulator ---------- */
+(function(){
+  const vals=[1,2,3,10,64];
+  let d={m:1,n:10,n2:10,p:64},note='';
+  const ctr=$('#shpCtrl');
+  [['m','A 的列數 m'],['n','A 的行數 n（內側）'],['n2','B 的列數 n′（內側）'],['p','B 的行數 p']].forEach(([k,l])=>{
+    const w=document.createElement('div');
+    w.innerHTML=`<div class="lbl">${l}</div><div class="row"><button class="btn sm" data-k="${k}" data-d="-1" aria-label="減少">−</button><b id="shp_${k}" style="min-width:2.2em;text-align:center;font-variant-numeric:tabular-nums">${d[k]}</b><button class="btn sm" data-k="${k}" data-d="1" aria-label="增加">＋</button></div>`;
+    ctr.appendChild(w);
+  });
+  ctr.querySelectorAll('button').forEach(b=>b.onclick=()=>{const k=b.dataset.k;let i=vals.indexOf(d[k])+ +b.dataset.d;i=Math.max(0,Math.min(vals.length-1,i));d[k]=vals[i];note='';draw();});
+  const sz=v=>14+Math.log2(v)*13;
+  function rect(x,y,r,c,col,lab){const w=sz(c),h=sz(r);return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="${col}" opacity=".85"/><text x="${x+w/2}" y="${y+h+16}" text-anchor="middle" font-size="13" fill="var(--ink)">${lab}</text>`;}
+  function draw(){
+    ['m','n','n2','p'].forEach(k=>$('#shp_'+k).textContent=d[k]);
+    const ok=d.n===d.n2;
+    let h=rect(20,10,d.m,d.n,'var(--txt)',`A (${d.m}, ${d.n})`);
+    h+=`<text x="${20+sz(d.n)+22}" y="60" font-size="22" text-anchor="middle" fill="var(--ink)">@</text>`;
+    const bx=20+sz(d.n)+44;
+    h+=rect(bx,10,d.n2,d.p,'var(--img)',`B (${d.n2}, ${d.p})`);
+    const ax=bx+sz(d.p)+30;
+    h+=`<text x="${ax}" y="60" font-size="22" text-anchor="middle" fill="${ok?'var(--ok)':'var(--bad)'}">${ok?'→':'✗'}</text>`;
+    if(ok)h+=rect(ax+28,10,d.m,d.p,'var(--aud)',`結果 (${d.m}, ${d.p})`);
+    else h+=`<text x="${ax+28}" y="64" font-size="16" fill="var(--bad)" font-weight="700">內側 ${d.n} ≠ ${d.n2}</text>`;
+    $('#shpSvg').innerHTML=h;
+    const io=c=>`<span style="color:${ok?'var(--ok)':'var(--bad)'}">${c}</span>`;
+    $('#shpOut').innerHTML=`(<span style="color:var(--aud)">${d.m}</span>, ${io(d.n)}) @ (${io(d.n2)}, <span style="color:var(--aud)">${d.p}</span>) → `+(ok?`<span style="color:var(--aud)">(${d.m}, ${d.p})</span>`:'<span style="color:var(--bad)">維度不相容</span>');
+    $('#shpNote').innerHTML=note||(ok?'內側維度相等 → 被「吃掉」；外側維度留下來就是輸出形狀。':'內側維度不相等，無法相乘（NumPy 會丟 ValueError）。');
+  }
+  $('#shpPreset').onclick=()=>{d={m:1,n:10,n2:10,p:64};note='Q (1,10) @ W_Q (10,64) → <b>(1, 64)</b>。誘答 (64,1) 是正解的轉置，只有算 W_Qᵀ Qᵀ 才會出現。';draw();};
+  $('#shpTrap').onclick=()=>{d={m:1,n:10,n2:10,p:64};note='誤把兩個矩陣的「第一維」拿來配：Q 的第一維是 1、W_Q 的第一維是 10 —— 這種亂配會湊出 <b>(10, 10)</b> 這個誘答。正確做法永遠是看<b>內側</b>：A 的行數對 B 的列數。';draw();};
+  draw();
+})();
+
+/* ---------- 43.1 dot vs cosine ---------- */
+(function(){
+  const O=[60,210],S=40,a=[3,1];let ang=60,L=2.5;
+  function draw(){
+    const r=ang*Math.PI/180,b=[L*Math.cos(r),L*Math.sin(r)];
+    const X=v=>O[0]+v[0]*S,Y=v=>O[1]-v[1]*S;
+    let h=`<line x1="10" y1="${O[1]}" x2="390" y2="${O[1]}" stroke="var(--line)"/><line x1="${O[0]}" y1="10" x2="${O[0]}" y2="250" stroke="var(--line)"/>`;
+    const ua=[a[0]/Math.hypot(...a),a[1]/Math.hypot(...a)],pj=b[0]*ua[0]+b[1]*ua[1];
+    h+=`<line x1="${X(b)}" y1="${Y(b)}" x2="${X([pj*ua[0],pj*ua[1]])}" y2="${Y([pj*ua[0],pj*ua[1]])}" stroke="var(--muted)" stroke-dasharray="4 4"/>`;
+    h+=arrow(O[0],O[1],X(a),Y(a),'var(--txt)',4)+`<text x="${X(a)+8}" y="${Y(a)+4}" font-size="15" font-weight="700" fill="var(--txt)">a</text>`;
+    h+=arrow(O[0],O[1],X(b),Y(b),'var(--img)',4)+`<text x="${X(b)+8}" y="${Y(b)}" font-size="15" font-weight="700" fill="var(--img)">b</text>`;
+    $('#cosSvg').innerHTML=h;
+    const dot=a[0]*b[0]+a[1]*b[1],na=Math.hypot(...a),nb=Math.hypot(...b);
+    $('#cosStat').innerHTML=`<div>內積 a·b<b>${fx(dot)}</b></div><div>‖a‖₂<b>${fx(na)}</b></div><div>‖b‖₂<b>${fx(nb)}</b></div><div>餘弦相似度<b style="color:var(--img)">${fx(dot/(na*nb),3)}</b></div>`;
+  }
+  $('#cosL').onclick=()=>{ang=Math.min(ang+15,165);draw();};
+  $('#cosR').onclick=()=>{ang=Math.max(ang-15,-45);draw();};
+  $('#cosUp').onclick=()=>{L=Math.min(L*2,4.8);draw();};
+  $('#cosDn').onclick=()=>{L=Math.max(L/2,.6);draw();};
+  draw();
+})();
+
+/* ---------- 43.2 linear transformation ---------- */
+(function(){
+  const c=Math.cos(Math.PI/6),s=Math.sin(Math.PI/6);
+  const M=[
+    {n:'縮放',A:[[1.6,0],[0,.6]],eig:[[1,0,'λ=1.6'],[0,1,'λ=0.6']],t:'對角矩陣 diag(1.6, 0.6)',len:'改變尺度，<b>不改方向</b>（沿座標軸）',ml:'特徵標準化、學習率縮放',inv:'可逆'},
+    {n:'旋轉',A:[[c,-s],[s,c]],eig:[],t:'正交矩陣（QᵀQ = I），轉 30°',len:'改變方向，<b>不改長度</b>',ml:'PCA 換基底、特徵對齊',inv:'可逆'},
+    {n:'剪切',A:[[1,.8],[0,1]],eig:[[1,0,'λ=1']],t:'非對角元素不為零',len:'方向傾斜、角度改變',ml:'一般全連接層的權重',inv:'可逆'},
+    {n:'投影',A:[[1,0],[0,0]],eig:[[1,0,'λ=1'],[0,1,'λ=0']],t:'rank(A) = 1 &lt; 2',len:'<b>降維，且不可逆</b>：整個平面被壓到一條線',ml:'PCA、LDA、分類超平面',inv:'<span style="color:var(--bad)">不可逆</span>'}
+  ];
+  let mode=0,showE=false,raf=0;
+  const C=180,S=50,P=(x,y)=>[C+x*S,C-y*S];
+  const mul=(A,v)=>[A[0][0]*v[0]+A[0][1]*v[1],A[1][0]*v[0]+A[1][1]*v[1]];
+  function frame(t){
+    const A=M[mode].A,T=[[1+t*(A[0][0]-1),t*A[0][1]],[t*A[1][0],1+t*(A[1][1]-1)]];
+    let h='';
+    for(let k=-3;k<=3;k++){h+=`<line x1="${P(k,-3.4)[0]}" y1="${P(k,-3.4)[1]}" x2="${P(k,3.4)[0]}" y2="${P(k,3.4)[1]}" stroke="var(--line)"/><line x1="${P(-3.4,k)[0]}" y1="${P(-3.4,k)[1]}" x2="${P(3.4,k)[0]}" y2="${P(3.4,k)[1]}" stroke="var(--line)"/>`;}
+    for(let k=-3;k<=3;k++){const a=mul(T,[k,-3]),b=mul(T,[k,3]),c2=mul(T,[-3,k]),d=mul(T,[3,k]);h+=`<line x1="${P(...a)[0]}" y1="${P(...a)[1]}" x2="${P(...b)[0]}" y2="${P(...b)[1]}" stroke="var(--img)" opacity=".35"/><line x1="${P(...c2)[0]}" y1="${P(...c2)[1]}" x2="${P(...d)[0]}" y2="${P(...d)[1]}" stroke="var(--img)" opacity=".35"/>`;}
+    const sq=[[0,0],[1,0],[1,1],[0,1]].map(v=>P(...mul(T,v)).join(',')).join(' ');
+    h+=`<polygon points="${sq}" fill="var(--img)" opacity=".28" stroke="var(--img)" stroke-width="2"/>`;
+    if(showE&&t>=1){M[mode].eig.forEach(([x,y,l])=>{const a=P(-3.3*x,-3.3*y),b=P(3.3*x,3.3*y);h+=`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="var(--aud)" stroke-width="3" stroke-dasharray="8 6"/><text x="${P(2.2*x+.15,2.2*y+.25)[0]}" y="${P(2.2*x+.15,2.2*y+.25)[1]}" font-size="14" font-weight="700" fill="var(--aud)">${l}</text>`;});
+      if(!M[mode].eig.length)h+=`<text x="180" y="30" text-anchor="middle" font-size="14" font-weight="700" fill="var(--aud)">旋轉：沒有任何實數方向保持不變</text>`;}
+    const v0=[1,1],v=mul(T,v0);
+    h+=arrow(C,C,P(...v0)[0],P(...v0)[1],'var(--muted)',2);
+    h+=arrow(C,C,P(...v)[0],P(...v)[1],'var(--txt)',4)+`<text x="${P(...v)[0]+6}" y="${P(...v)[1]-6}" font-size="14" font-weight="700" fill="var(--txt)">Av</text>`;
+    $('#ltSvg').innerHTML=h;
+  }
+  function info(){
+    const m=M[mode],A=m.A,det=A[0][0]*A[1][1]-A[0][1]*A[1][0],v=mul(A,[1,1]);
+    $('#ltTxt').innerHTML=`<p class="verdict" style="margin:0 0 6px">${m.n}</p><p style="margin:0 0 6px;font-size:15px"><b>矩陣：</b>${m.t}<br><code>[[${fx(A[0][0])}, ${fx(A[0][1])}], [${fx(A[1][0])}, ${fx(A[1][1])}]]</code></p><p style="margin:0 0 6px;font-size:15px"><b>效果：</b>${m.len}</p><div class="stat" style="margin:8px 0"><div>det（面積倍率）<b>${fx(det)}</b></div><div>‖v‖ → ‖Av‖<b>${fx(Math.SQRT2)} → ${fx(Math.hypot(...v))}</b></div></div><p style="margin:0;font-size:15px"><b>可逆？</b>${m.inv}<br><b>ML 對應：</b>${m.ml}</p>`;
+  }
+  function play(){
+    cancelAnimationFrame(raf);info();
+    if(reduce){frame(1);return;}
+    const t0=performance.now();
+    const step=now=>{const t=Math.min(1,(now-t0)/800);frame(t<1?1-Math.pow(1-t,3):1);if(t<1)raf=requestAnimationFrame(step);};
+    frame(0);raf=requestAnimationFrame(step);
+  }
+  tabs($('#ltTabs'),M.map(m=>m.n),i=>{mode=i;play();});
+  $('#ltPlay').onclick=play;
+  $('#ltEig').onclick=()=>{showE=!showE;$('#ltEig').setAttribute('aria-pressed',showE);cancelAnimationFrame(raf);frame(1);};
+})();
+
+flips($('#eigCards'),[
+  ['特徵向量','Eigenvector','這個變換的「軸」—— 變換下<b>不會被轉歪</b>的方向。'],
+  ['特徵值','Eigenvalue','那個軸上的<b>縮放倍率</b>，量化該方向的「重要性／變異量」。'],
+  ['λ = 0','被壓扁的方向','某個方向被完全壓扁 → 矩陣<b>不可逆</b>。'],
+  ['實對稱矩陣','共變異數矩陣就是','保證特徵值為實數、特徵向量<b>互相正交</b> —— PCA 能得到一組彼此垂直主成分的數學保證。']
+]);
+
+/* ---------- 43.2 det / collinearity ---------- */
+(function(){
+  const E=[1,.5,.2,.05,0];let e=1;
+  E.forEach(v=>{const b=document.createElement('button');b.className='btn';b.textContent=v===1?'c₂ 與 c₁ 方向不同':v===0?'完全共線（ε = 0）':`ε = ${v}`;b.onclick=()=>{e=v;draw();};$('#detBtns').appendChild(b);});
+  function draw(){
+    document.querySelectorAll('#detBtns .btn').forEach((b,j)=>b.setAttribute('aria-pressed',E[j]===e));
+    const c1=[2,1],c2=[4-e,2+2*e],det=c1[0]*c2[1]-c2[0]*c1[1];
+    const O=[40,225],S=34,P=v=>[O[0]+v[0]*S,O[1]-v[1]*S];
+    const s=[c1[0]+c2[0],c1[1]+c2[1]];
+    let h=`<line x1="10" y1="${O[1]}" x2="350" y2="${O[1]}" stroke="var(--line)"/><line x1="${O[0]}" y1="10" x2="${O[0]}" y2="245" stroke="var(--line)"/>`;
+    h+=`<polygon points="${[[0,0],c1,s,c2].map(v=>P(v).join(',')).join(' ')}" fill="var(--img)" opacity=".25" stroke="var(--img)"/>`;
+    h+=arrow(O[0],O[1],...P(c1),'var(--txt)',4)+arrow(O[0],O[1],...P(c2),'var(--sen)',4);
+    h+=`<text x="${P(c1)[0]+6}" y="${P(c1)[1]+16}" font-size="14" font-weight="700" fill="var(--txt)">c₁</text><text x="${P(c2)[0]-22}" y="${P(c2)[1]-4}" font-size="14" font-weight="700" fill="var(--sen)">c₂</text>`;
+    $('#detSvg').innerHTML=h;
+    const inv=det===0?'∞（不存在）':fx(Math.max(Math.abs(c2[1]),Math.abs(c2[0]),Math.abs(c1[1]),Math.abs(c1[0]))/Math.abs(det),1);
+    $('#detStat').innerHTML=`<div>det(A)＝面積<b>${fx(det)}</b></div><div>rank(A)<b>${det===0?1:2}</b></div><div>A⁻¹ 最大元素<b style="color:${det<1.5?'var(--bad)':'var(--ink)'}">${inv}</b></div>`;
+    $('#detNote').innerHTML=det===0?'<b style="color:var(--bad)">平行四邊形被壓成一條線</b>：c₂ 是 c₁ 的 2 倍（完全共線），det = 0、rank 掉到 1、不可逆。換成資料就是 XᵀX 不可逆 → OLS 無解。':det<1.5?'c₂ 幾乎和 c₁ 同方向（近似共線）：面積很小，反矩陣的數值<b>開始爆大</b> —— 這就是近似共線讓 OLS 係數不穩的原因。':'兩欄方向明顯不同，面積大、可逆，反矩陣數值溫和。';
+  }
+  draw();
+})();
+
+/* ---------- 43.2 where ---------- */
+(function(){
+  const W=[
+    ['線性／邏輯迴歸','y = wᵀx + b','把 d 維特徵投影到一條直線上。'],
+    ['神經網路前向傳播','z⁽ˡ⁾ = W⁽ˡ⁾a⁽ˡ⁻¹⁾ + b⁽ˡ⁾','每一層先做線性變換再套非線性激活。'],
+    ['嵌入層','Embedding Layer','把離散類別索引查表成稠密向量，本質是一組特定矩陣的查詢與轉換；用來避免 One-Hot 的維度爆炸。'],
+    ['特徵投影與壓縮','LDA、Autoencoder 編碼器','都是把高維重構為低維潛在空間。']
+  ];
+  tabs($('#whereTabs'),W.map(w=>w[0]),i=>{$('#whereBody').innerHTML=`<p class="formula" style="text-align:left;margin:4px 0 8px">${W[i][1]}</p><p style="margin:0">${W[i][2]}</p>`;});
+})();
+
+/* ---------- 43.3 decomposition tabs ---------- */
+(function(){
+  const D=[
+    ['EVD 特徵值分解','A = QΛQᵀ','<b>必須是方陣</b>（實務上用對稱方陣）','特徵向量＝軸，特徵值＝該軸變異量','正交基底','<b>PCA</b>、LDA','挑食：只吃方陣。「用 EVD 分解 m×n 使用者-項目矩陣」是錯的。'],
+    ['SVD 奇異值分解','X = UΣVᵀ','<b>任意 m×n 實數矩陣</b>','U＝樣本方向，Σ＝重要性，V＝特徵方向','正交基底、數值穩定性最佳','PCA 的實作、推薦系統、LSA、影像壓縮','來者不拒：任意矩陣都能分解。'],
+    ['NMF 非負矩陣分解','X ≈ WH','元素<b>全非負</b>的矩陣','W＝潛在基底，H＝組合係數','非負、稀疏、<b>可加疊</b>','主題建模、腦波拆解、影像部件分析','賣點是可加疊的解釋性，不是數值精度。']
+  ];
+  tabs($('#decTabs'),D.map(d=>d[0]),i=>{const d=D[i];$('#decBody').innerHTML=`<p class="formula">${d[1]}</p><div class="stat"><div>適用矩陣<br><span style="color:var(--ink)">${d[2]}</span></div><div>成分意義<br><span style="color:var(--ink)">${d[3]}</span></div><div>結果性質<br><span style="color:var(--ink)">${d[4]}</span></div><div>典型應用<br><span style="color:var(--ink)">${d[5]}</span></div></div><p class="hint" style="margin:10px 0 0">${d[6]}</p>`;});
+})();
+
+/* ---------- 43.3 PCA pipeline ---------- */
+(function(){
+  const r=rng(43),n=40,mu=[4,2.6],ang=30*Math.PI/180,u=[Math.cos(ang),Math.sin(ang)],w=[-Math.sin(ang),Math.cos(ang)];
+  const X=[];for(let i=0;i<n;i++){const a=gauss(r)*1.5,b=gauss(r)*.45;X.push([mu[0]+a*u[0]+b*w[0],mu[1]+a*u[1]+b*w[1]]);}
+  const m=[X.reduce((s,p)=>s+p[0],0)/n,X.reduce((s,p)=>s+p[1],0)/n];
+  const Xc=X.map(p=>[p[0]-m[0],p[1]-m[1]]);
+  const ca=Xc.reduce((s,p)=>s+p[0]*p[0],0)/(n-1),cb=Xc.reduce((s,p)=>s+p[0]*p[1],0)/(n-1),cd=Xc.reduce((s,p)=>s+p[1]*p[1],0)/(n-1);
+  const tr=ca+cd,dt=ca*cd-cb*cb,disc=Math.sqrt(tr*tr/4-dt),l1=tr/2+disc,l2=tr/2-disc;
+  let q1=[cb,l1-ca];const nq=Math.hypot(...q1);q1=[q1[0]/nq,q1[1]/nq];const q2=[-q1[1],q1[0]];
+  const O=[150,175],S=30,P=v=>[O[0]+v[0]*S,O[1]-v[1]*S];
+  const nodes=[['① 中心化','減平均'],['② 共變異數','C = XcᵀXc/(n−1)'],['③ 特徵分解','C = QΛQᵀ'],['④ 排序取前 k','W (d×k)'],['⑤ 投影','Z = Xc·W']];
+  $('#pcaPipe').innerHTML=nodes.map(([a,b])=>`<div class="pnode"><b>${a}</b>${b}</div>`).join('');
+  let svg=`<line x1="0" y1="${O[1]}" x2="420" y2="${O[1]}" stroke="var(--line)"/><line x1="${O[0]}" y1="0" x2="${O[0]}" y2="300" stroke="var(--line)"/><text x="${O[0]+4}" y="${O[1]+16}" font-size="12" fill="var(--muted)">原點</text><g id="pcaAx"></g>`;
+  X.forEach((p,i)=>{svg+=`<circle r="5" cx="0" cy="0" fill="var(--aud)" opacity=".85" class="pp" style="transition:transform .9s cubic-bezier(.5,0,.2,1) ${i*8}ms"/>`;});
+  $('#pcaSvg').innerHTML=svg;
+  const pts=[...document.querySelectorAll('#pcaSvg .pp')];
+  const place=f=>pts.forEach((c,i)=>{const p=P(f(i));c.style.transform=`translate(${p[0]}px,${p[1]}px)`;});
+  const out=[
+    `<b>原始資料 X（n×d = 40×2）</b>：中心在 (${fx(m[0])}, ${fx(m[1])})，離原點很遠。<div class="hint">按「下一步」開始。<b>中心化是必做</b>；各特徵單位不同時，再除以標準差 → 標準化。</div>`,
+    `<b>① 中心化：</b>每一欄減去該特徵的平均值，整團點移到原點附近。`,
+    `<b>② 共變異數矩陣</b>（d×d 對稱半正定方陣）：<pre class="code" style="margin:6px 0">C = [[${fx(ca)}, ${fx(cb)}],\n     [${fx(cb)}, ${fx(cd)}]]</pre><div class="hint">非對角的 ${fx(cb)} 表示兩個特徵正相關。</div>`,
+    `<b>③ 特徵分解 C = QΛQᵀ：</b>λ₁ = ${fx(l1)}、λ₂ = ${fx(l2)}。<br>q₁ = (${fx(q1[0])}, ${fx(q1[1])})、q₂ = (${fx(q2[0])}, ${fx(q2[1])})，兩者<b>互相垂直</b>（內積 = 0）。<div class="hint">箭頭長度 ∝ √λ：資料在那個方向上散得多開。</div>`,
+    `<b>④ 依 λ 由大到小排序，取前 k = 1 支：</b>PC1 解釋變異比例 = λ₁ / (λ₁+λ₂) = <b>${fx(l1/(l1+l2)*100,1)}%</b>，所以投影矩陣 W 只放 q₁。`,
+    `<b>⑤ 投影 Z = Xc·W：</b>每個點沿著垂直方向落到 PC1 這條線上，40×2 → <b>40×1</b>。丟掉的只有 PC2 方向那 ${fx(l2/(l1+l2)*100,1)}% 的變異。`
+  ];
+  let i=0;
+  function axes(k){
+    let h='';
+    if(k>=3){[[q1,l1,'PC1','var(--img)'],[q2,l2,'PC2','var(--sen)']].forEach(([q,l,t,col],j)=>{const L=2*Math.sqrt(l);const e=P([q[0]*L,q[1]*L]);if(k>=4&&j===1){h+=`<g opacity=".25">`;}h+=arrow(O[0],O[1],e[0],e[1],col,3)+`<text x="${e[0]+6}" y="${e[1]-4}" font-size="13" font-weight="700" fill="${col}">${t}</text>`;if(k>=4&&j===1)h+='</g>';});}
+    if(k>=4){const a=P([-q1[0]*5,-q1[1]*5]),b=P([q1[0]*8,q1[1]*8]);h=`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="var(--img)" stroke-width="1.5" stroke-dasharray="5 5"/>`+h;}
+    $('#pcaAx').innerHTML=h;
+  }
+  function render(){
+    document.querySelectorAll('#pcaPipe .pnode').forEach((nd,j)=>{nd.classList.toggle('on',j===i-1);nd.classList.toggle('past',j<i-1);});
+    if(i===0)place(k=>X[k]);
+    else if(i<5)place(k=>Xc[k]);
+    else place(k=>{const t=Xc[k][0]*q1[0]+Xc[k][1]*q1[1];return [t*q1[0],t*q1[1]];});
+    axes(i);$('#pcaOut').innerHTML=out[i];
+    $('#pcaNext').disabled=i===5;$('#pcaNext').style.opacity=i===5?.4:1;
+  }
+  $('#pcaNext').onclick=()=>{if(i<5){i++;render();}};
+  $('#pcaReset').onclick=()=>{i=0;render();};
+  render();
+})();
+
+/* ---------- 43.3 explained variance ---------- */
+(function(){
+  let L=[6,3,1],thr=80;
+  L.forEach((_,k)=>{const w=document.createElement('div');w.innerHTML=`<div class="lbl">λ${'₁₂₃'[k]}</div><div class="row"><button class="btn sm" data-k="${k}" data-d="-0.5" aria-label="減少">−</button><b id="ev_${k}" style="min-width:2.4em;text-align:center;font-variant-numeric:tabular-nums"></b><button class="btn sm" data-k="${k}" data-d="0.5" aria-label="增加">＋</button></div>`;$('#evCtrl').appendChild(w);});
+  $('#evCtrl').querySelectorAll('button').forEach(b=>b.onclick=()=>{const k=+b.dataset.k;L[k]=Math.max(.5,Math.min(10,L[k]+ +b.dataset.d));draw();});
+  [70,80,90,95].forEach(t=>{const b=document.createElement('button');b.className='btn sm';b.textContent=t+'%';b.dataset.t=t;b.onclick=()=>{thr=t;draw();};$('#evThr').appendChild(b);});
+  const reset=document.createElement('button');reset.className='btn sm';reset.textContent='回到原題 6 : 3 : 1';reset.onclick=()=>{L=[6,3,1];thr=80;draw();};$('#evThr').appendChild(reset);
+  function draw(){
+    $('#evThr').querySelectorAll('[data-t]').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.t===thr));
+    const idx=[0,1,2].sort((a,b)=>L[b]-L[a]),tot=L.reduce((a,b)=>a+b,0);
+    L.forEach((v,k)=>$('#ev_'+k).textContent=v.toFixed(1));
+    let cum=0,k=0,h='';
+    idx.forEach((j,r)=>{const p=L[j]/tot*100;cum+=p;if(k===0&&cum>=thr-1e-9)k=r+1;h+=`<div class="vbar"><span>PC${r+1}（λ=${L[j].toFixed(1)}）</span><div class="track"><div class="fill" style="width:${p}%;${k&&r+1>k?'opacity:.35':''}"></div><i class="thr" style="left:${Math.min(cum,100)}%;background:var(--ink);width:3px" title="累積"></i></div><span class="num">${p.toFixed(0)}%｜累積 ${cum.toFixed(0)}%</span></div>`;});
+    $('#evBars').innerHTML=h+`<div class="vbar"><span class="hint">門檻</span><div class="track" style="background:none"><i class="thr" style="left:${thr}%"></i></div><span class="num hint">${thr}%</span></div>`;
+    $('#evV').innerHTML=`總變異量 = ${L.map(v=>v.toFixed(1)).join(' + ')} = ${tot.toFixed(1)} → 保留 <span style="color:var(--aud)">${k} 個主成分</span>`;
+    $('#evNote').innerHTML=(k<3?`前 ${k} 個累積已達 ${thr}%，後面的單一成分貢獻再大也可以捨棄 —— 門檻看的是<b>累積</b>。`:'要保留全部三個才達門檻，等於沒有降維。')+'　每條上的黑色刻度是累積到該成分為止的位置。';
+  }
+  draw();
+})();
+
+/* ---------- 43.3 standardization ---------- */
+(function(){
+  const r=rng(7),n=30,yr=[],inc=[];
+  for(let i=0;i<n;i++){const y=1+r()*29;yr.push(y);inc.push(300000+25000*y+gauss(r)*120000);}
+  function pca(a,b){const ma=a.reduce((s,v)=>s+v,0)/n,mb=b.reduce((s,v)=>s+v,0)/n;let ca=0,cb=0,cd=0;for(let i=0;i<n;i++){const x=a[i]-ma,y=b[i]-mb;ca+=x*x;cb+=x*y;cd+=y*y;}ca/=n-1;cb/=n-1;cd/=n-1;const tr=ca+cd,dt=ca*cd-cb*cb,l1=tr/2+Math.sqrt(tr*tr/4-dt);let q=[cb,l1-ca];const nq=Math.hypot(...q);q=[Math.abs(q[0]/nq),Math.abs(q[1]/nq)];return{ca,cb,cd,l1,ratio:l1/tr,q};}
+  const z=a=>{const m=a.reduce((s,v)=>s+v,0)/n,sd=Math.sqrt(a.reduce((s,v)=>s+(v-m)**2,0)/(n-1));return a.map(v=>(v-m)/sd);};
+  const raw=pca(inc,yr),std=pca(z(inc),z(yr));let on=false;
+  const big=v=>Math.abs(v)>=1e6?v.toExponential(2).replace('e+',' × 10^'):fx(v);
+  function draw(){
+    const R=on?std:raw;
+    $('#stdBtn').setAttribute('aria-pressed',on);$('#stdBtn').textContent=on?'取消標準化（回到原始單位）':'套用標準化（Z-score）';
+    $('#stdState').textContent=on?'目前：標準化後（共變異數矩陣＝相關係數矩陣）':'目前：原始單位（元、年）';
+    $('#stdOut').innerHTML=`<pre class="code" style="margin:0 0 10px">C = [[${big(R.ca)}, ${big(R.cb)}],\n     [${big(R.cb)}, ${big(R.cd)}]]   ← 第一列／欄是年收入</pre>
+    <b>PC1 的載荷（絕對值）</b>
+    <div class="bar"><span>年收入</span><div class="track"><div class="fill" style="width:${R.q[0]*100}%"></div></div><span class="num">${fx(R.q[0])}</span></div>
+    <div class="bar"><span>年資</span><div class="track"><div class="fill" style="width:${R.q[1]*100}%;background:var(--sen)"></div></div><span class="num">${fx(R.q[1])}</span></div>
+    <p class="hint" style="margin:6px 0 0">${on?`兩個特徵對 PC1 的貢獻接近，PC1 抓到的是「年資高、收入也高」這個真實的共同趨勢（解釋 ${fx(R.ratio*100,1)}%）。`:`年收入的變異數大到以「10 的次方」計，PC1 幾乎就等於年收入本身（解釋 ${fx(R.ratio*100,4)}%），年資被完全稀釋。這個「99.99%」是單位造成的假象。`}</p>`;
+  }
+  $('#stdBtn').onclick=()=>{on=!on;draw();};
+  draw();
+})();
+
+/* ---------- 43.3 denoise ---------- */
+(function(){
+  const r=rng(46),N=90,D=16,K=[1,2,4,8,16];let k=16;
+  const s1=[],s2=[],nz=[];for(let i=0;i<N;i++){const t=i/N*4*Math.PI;s1.push(Math.sin(t));s2.push(.5*Math.sin(2.3*t+1));nz.push(gauss(r)*.42);}
+  K.forEach(v=>{const b=document.createElement('button');b.className='btn';b.textContent=`n_components = ${v}${v===16?'（= 原始維度）':''}`;b.onclick=()=>{k=v;draw();};$('#dnBtns').appendChild(b);});
+  function draw(){
+    document.querySelectorAll('#dnBtns .btn').forEach((b,j)=>b.setAttribute('aria-pressed',K[j]===k));
+    $('#dnCode').innerHTML=`X = load_noisy_images()                      # 資料載入\n<span class="hl">pca = PCA(n_components=${k})</span>               # ← 設定主成分數量\nZ = pca.fit_transform(X)\nX_rec = pca.inverse_transform(Z)            # 重建\nplot(X_rec)                                  # 繪圖`;
+    const keepN=k<=2?0:Math.sqrt((k-2)/(D-2)),rec=s1.map((v,i)=>v+(k>=2?s2[i]:0)+nz[i]*keepN);
+    const Xp=i=>10+i*(580/(N-1)),Yp=v=>90-v*48;
+    const path=a=>a.map((v,i)=>(i?'L':'M')+Xp(i).toFixed(1)+' '+Yp(v).toFixed(1)).join(' ');
+    $('#dnSvg').innerHTML=`<path d="${path(s1.map((v,i)=>v+s2[i]))}" fill="none" stroke="var(--muted)" stroke-width="2" stroke-dasharray="5 5"/><path d="${path(rec)}" fill="none" stroke="var(--aud)" stroke-width="2.5"/><text x="12" y="172" font-size="12" fill="var(--muted)">虛線＝乾淨訊號　實線＝重建結果（示意）</text>`;
+    const pct=Math.round(keepN*keepN*100);
+    $('#dnNum').textContent=pct+'%';$('#dnMeter').style.width=Math.max(pct,2)+'%';$('#dnMeter').style.background=pct>60?'var(--bad)':pct>20?'var(--warn)':'var(--ok)';
+    $('#dnNote').innerHTML=k===16?'<b style="color:var(--bad)">這就是 bug：</b>保留全部成分 ＝ 重建結果等於原圖，雜訊原封不動。':k===1?'太少了：雜訊沒了，但訊號的第二個成分也被丟掉，波形失真（欠擬合）。':k===2?'剛好：示意訊號只由 2 個成分組成，保留 2 個主成分即可濾掉散在小特徵值方向的雜訊。':'還留著部分小特徵值方向 → 殘留一些雜訊。';
+  }
+  draw();
+})();
+
+/* ---------- 43.3 dimred selector ---------- */
+(function(){
+  const sc=['視覺化 512 維詞嵌入','當 XGBoost 輸入特徵','有標籤，分類前降維','主題建模要可解釋'];
+  const meth=['PCA','LDA','t-SNE','Autoencoder','NMF'];
+  const ok='var(--ok)',mid='var(--warn)',bad='var(--bad)';
+  const V=[
+    [['△ 可以，但看不到非線性群集',55,mid,'PCA 是線性降維，2 維圖能看大方向，但複雜的局部群集常擠成一團。'],['✗ 不適用',25,bad,'LDA 是監督式，要標籤；詞嵌入視覺化通常沒有類別標籤。'],['✓ 最佳',92,ok,'t-SNE 保留<b>局部鄰域結構</b>，最適合看群集（115Q1-6）。注意它不保留全局距離與尺度。'],['△ 可行但重',55,mid,'能做非線性壓縮，但為了看圖訓練一個網路成本高。'],['✗ 不適用',20,bad,'詞嵌入有負值，NMF 只吃全非負矩陣。']],
+    [['✓ 最佳',92,ok,'PCA 有固定的投影矩陣 W，<b>可對新資料投影</b>，能當模型輸入（115Q1-6）。'],['△ 有標籤時可行',60,mid,'可對新資料投影，但需要類別標籤。'],['✗ 錯誤',10,bad,'t-SNE <b>無固定轉換函數、不能外推</b>到新樣本，只做視覺化。這是 115Q1-6 的核心誘答。'],['△ 可行',65,mid,'可對新資料投影，但要另外訓練網路。'],['△ 限非負資料',45,mid,'只適用全非負的特徵。']],
+    [['△ 可行，但沒用到標籤',55,mid,'PCA 是非監督，最大化的是變異量，不一定最能分開類別。'],['✓ 最佳',92,ok,'LDA 是<b>監督式</b>線性降維，目標就是最大化類別間差異。記得放進 Pipeline，避免 115Q1-44 的資料洩漏。'],['✗ 不適用',15,bad,'不能對新資料投影，無法接分類器。'],['△ 可行',50,mid,'非監督表示學習，沒有針對類別分離。'],['△ 不是它的強項',35,mid,'NMF 的強項是可解釋的部件分解，不是分類。']],
+    [['△ 成分有正有負',40,mid,'正交基底，但載荷有正有負，主題不好解讀。'],['✗ 不適用',15,bad,'主題建模沒有類別標籤。'],['✗ 不適用',10,bad,'只做視覺化。'],['△ 黑箱',35,mid,'潛在空間不易解讀。'],['✓ 最佳',92,ok,'NMF 非負、稀疏、<b>可加疊</b>：W＝主題基底，H＝每篇文件的主題組合係數。']]
+  ];
+  tabs($('#drTabs'),sc,i=>strat($('#drStrat'),meth.map((m,j)=>[m,...V[i][j]]),$('#drV'),$('#drM'),$('#drWhy')));
+})();
+
+/* ---------- 43.3 leakage folds ---------- */
+(function(){
+  let bad=true,f=0;
+  function draw(){
+    $('#lkBad').setAttribute('aria-pressed',bad);$('#lkGood').setAttribute('aria-pressed',!bad);
+    $('#lkFolds').innerHTML=[0,1,2,3,4].map(j=>{const t=j===f;const fit=bad||!t;return `<div class="fold ${t?(bad?'test leak':'test'):''} ${fit?'fit':''}">第 ${j+1} 份<br><small>${t?'測試':'訓練'}</small></div>`;}).join('');
+    $('#lkCode').innerHTML=bad?`<span class="hl">X_lda = lda.fit_transform(X, y)</span>   # 用了全部資料（含標籤）\ncross_val_score(clf, X_lda, y, cv=5)`:`pipe = Pipeline([('lda', LDA()), ('clf', clf)])\ncross_val_score(pipe, X, y, cv=5)       # 每折只用該折訓練資料 fit`;
+    $('#lkNote').innerHTML=bad?`<b style="color:var(--bad)">第 ${f+1} 折的測試資料早就參與過降維擬合</b>（紅框也有橘條）—— 典型的<b>資料洩漏</b>，估出來的準確率偏樂觀。`:`<b style="color:var(--ok)">第 ${f+1} 折：</b>降維器只在 4 份訓練資料上 fit，測試資料（藍框）完全沒被看過。`;
+  }
+  $('#lkBad').onclick=()=>{bad=true;draw();};
+  $('#lkGood').onclick=()=>{bad=false;draw();};
+  $('#lkNext').onclick=()=>{f=(f+1)%5;draw();};
+  draw();
+})();
+
+flips($('#benCards'),[
+  ['訓練效率','更快','參數量與運算量下降，大型資料集特別明顯。'],
+  ['模型穩定','更穩','去除共線性與雜訊，降低過擬合風險。'],
+  ['解釋性','更好懂','轉換後的成分常具明確幾何或語意意義。'],
+  ['視覺化','看得到','降到 2～3 維後可直接畫圖做群集判斷與異常偵測。']
+]);
+
+/* ---------- 43.4 projection ---------- */
+(function(){
+  const x=[4,1],y=[2,3],O=[40,225],S=50,P=v=>[O[0]+v[0]*S,O[1]-v[1]*S];
+  const xx=x[0]*x[0]+x[1]*x[1],xy=x[0]*y[0]+x[1]*y[1],opt=xy/xx;let th=.2,raf=0;
+  function draw(){
+    const yh=[th*x[0],th*x[1]],e=[y[0]-yh[0],y[1]-yh[1]],rss=e[0]**2+e[1]**2,xe=x[0]*e[0]+x[1]*e[1];
+    const ang=Math.acos(Math.max(-1,Math.min(1,xe/(Math.sqrt(xx)*Math.hypot(...e)))))*180/Math.PI;
+    const a=P([-x[0]*.15,-x[1]*.15]),b=P([x[0]*1.75,x[1]*1.75]);
+    const perp=Math.abs(xe)<.05;
+    let h=`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="var(--muted)" stroke-width="3" opacity=".45"/><text x="${b[0]-60}" y="${b[1]+22}" font-size="13" fill="var(--muted)">col(X)</text>`;
+    h+=arrow(O[0],O[1],...P(y),'var(--txt)',3)+`<text x="${P(y)[0]-6}" y="${P(y)[1]-10}" font-size="15" font-weight="700" fill="var(--txt)">y</text>`;
+    h+=arrow(O[0],O[1],...P(yh),'var(--aud)',4)+`<text x="${P(yh)[0]+4}" y="${P(yh)[1]+20}" font-size="14" font-weight="700" fill="var(--aud)">ŷ = Xθ</text>`;
+    h+=`<line x1="${P(yh)[0]}" y1="${P(yh)[1]}" x2="${P(y)[0]}" y2="${P(y)[1]}" stroke="${perp?'var(--ok)':'var(--sen)'}" stroke-width="3" stroke-dasharray="${perp?'0':'6 5'}"/>`;
+    const mid=P([(y[0]+yh[0])/2,(y[1]+yh[1])/2]);h+=`<text x="${mid[0]+8}" y="${mid[1]}" font-size="14" font-weight="700" fill="${perp?'var(--ok)':'var(--sen)'}">e</text>`;
+    if(perp){const ux=[x[0]/Math.sqrt(xx),x[1]/Math.sqrt(xx)],ue=[-ux[1],ux[0]],q=.22,c0=yh,c1=[c0[0]+ux[0]*q,c0[1]+ux[1]*q],c2=[c1[0]+ue[0]*q,c1[1]+ue[1]*q],c3=[c0[0]+ue[0]*q,c0[1]+ue[1]*q];h+=`<polyline points="${[c1,c2,c3].map(v=>P(v).join(',')).join(' ')}" fill="none" stroke="var(--ok)" stroke-width="2"/>`;}
+    $('#prSvg').innerHTML=h;
+    $('#prStat').innerHTML=`<div>θ<b>${fx(th,3)}</b></div><div>RSS = ‖e‖²<b style="color:${perp?'var(--ok)':'var(--ink)'}">${fx(rss,3)}</b></div><div>Xᵀe<b style="color:${perp?'var(--ok)':'var(--ink)'}">${fx(xe,3)}</b></div><div>e 與 col(X) 夾角<b>${fx(ang,1)}°</b></div>`+(perp?`<div style="grid-column:1/-1;color:var(--ok)"><b style="font-size:16px">RSS 最小！殘差垂直於 col(X)，Xᵀe = 0 ⇒ 這就是正規方程的解 θ̂ = xᵀy / xᵀx = ${xy}/${xx}</b></div>`:'');
+  }
+  $('#prDn').onclick=()=>{cancelAnimationFrame(raf);th=Math.round((th-.1)*1000)/1000;th=Math.max(-.2,th);draw();};
+  $('#prUp').onclick=()=>{cancelAnimationFrame(raf);th=Math.round((th+.1)*1000)/1000;th=Math.min(1.2,th);draw();};
+  $('#prSolve').onclick=()=>{cancelAnimationFrame(raf);if(reduce){th=opt;draw();return;}const s=th,t0=performance.now();const st=now=>{const t=Math.min(1,(now-t0)/700);th=s+(opt-s)*(1-Math.pow(1-t,3));draw();if(t<1)raf=requestAnimationFrame(st);else{th=opt;draw();}};raf=requestAnimationFrame(st);};
+  draw();
+})();
+
+/* ---------- 43.4 ridge ---------- */
+(function(){
+  const RH=[.5,.9,.99,.999,1],LA=[0,.1,1];let rho=.9,lam=0,lasso=false,samples=null;
+  RH.forEach(v=>{const b=document.createElement('button');b.className='btn sm';b.textContent=v===1?'1（完全共線）':v;b.onclick=()=>{rho=v;samples=null;draw();};$('#rgRho').appendChild(b);});
+  LA.forEach(v=>{const b=document.createElement('button');b.className='btn sm';b.textContent=v===0?'0（純 OLS）':v;b.onclick=()=>{lam=v;samples=null;draw();};$('#rgLam').appendChild(b);});
+  function sample(){
+    const out=[];for(let s=0;s<3;s++){
+      if(lasso){if(rho>=.9){const pick=Math.random()<.5?0:1;const v=1.8+Math.random()*.2;out.push(pick?[0,v]:[v,0]);}else out.push([.9+Math.random()*.15,.9+Math.random()*.15]);continue;}
+      const lo=1-rho+lam,hi=1+rho+lam;
+      if(lo<=1e-12){out.push(null);continue;}
+      const mean=(1+rho)/hi,du=gauss(Math.random)*.15*Math.sqrt(1+rho)/hi,dv=gauss(Math.random)*.15*Math.sqrt(1-rho)/lo;
+      const a=mean+du/Math.SQRT2+dv/Math.SQRT2,b=mean+du/Math.SQRT2-dv/Math.SQRT2;
+      out.push([Math.max(-9.9,Math.min(9.9,a)),Math.max(-9.9,Math.min(9.9,b))]);
+    }return out;
+  }
+  function cbar(v){const R=4,c=Math.max(-R,Math.min(R,v)),w=Math.abs(c)/R*50;return `<div class="ctrack"><i style="left:${c>=0?50:50-w}%;width:${w}%"></i></div>`;}
+  function draw(){
+    $('#rgRho').querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',RH[j]===rho));
+    $('#rgLam').querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',LA[j]===lam));
+    $('#rgLasso').setAttribute('aria-pressed',lasso);$('#rgLasso').textContent=lasso?'改回 OLS／Ridge':'改用 Lasso（L1）比較';
+    const e1=1+rho+lam,e2=1-rho+lam,det=e1*e2,cond=e2<=1e-12?Infinity:e1/e2;
+    $('#rgEig').innerHTML=`<div class="vbar"><span>λ_max</span><div class="track"><div class="fill" style="width:${e1/3*100}%;background:var(--img)"></div></div><span class="num">1+ρ${lam?'+λ':''} = ${fx(e1,3)}</span></div><div class="vbar"><span>λ_min</span><div class="track"><div class="fill" style="width:${Math.max(e2/3*100,.5)}%;background:${e2<.05?'var(--bad)':'var(--img)'}"></div></div><span class="num">1−ρ${lam?'+λ':''} = ${fx(e2,3)}</span></div>`;
+    $('#rgStat').innerHTML=`<div>det(XᵀX${lam?'+λI':''})<b style="color:${det<.02?'var(--bad)':'var(--ink)'}">${fx(det,4)}</b></div><div>條件數<b style="color:${cond>100?'var(--bad)':'var(--ink)'}">${cond===Infinity?'∞':fx(cond,1)}</b></div><div>可逆？<b>${e2<=1e-12?'<span style="color:var(--bad)">否</span>':'是'}</b></div>`;
+    if(!samples)samples=sample();
+    $('#rgCoef').innerHTML=`<div class="coef hint"><span></span><span>β 月收入（−4 … 4）</span><span>β 年收入</span></div>`+samples.map((s,k)=>s?`<div class="coef"><span>第 ${k+1} 次</span><div>${cbar(s[0])}<small>${fx(s[0])}</small></div><div>${cbar(s[1])}<small>${fx(s[1])}</small></div></div>`:`<div class="coef"><span>第 ${k+1} 次</span><span style="grid-column:2/4;color:var(--bad)">XᵀX 不可逆，正規方程無唯一解</span></div>`).join('');
+    let note;
+    if(lasso)note=rho>=.9?'<b>Lasso：</b>高度相關時只留其中一個、另一個歸零，<b>留誰每次都不同</b> —— 重要特徵清單反覆跳動（115Q1-7），不是梯度消失。':'相關不高時，Lasso 兩個都保留。';
+    else if(e2<=1e-12)note='ρ = 1 且 λ = 0：完全共線，det = 0，OLS 無解。把 λ 調大試試 —— (XᵀX + λI) 必可逆。';
+    else if(lam===0)note=rho>=.99?'<b>OLS 係數劇烈擺盪</b>：兩個係數一個大正、一個大負，但加起來仍約等於 2 —— 預測沒差，解釋性全毀。':'相關不高時，OLS 係數穩定落在 1 附近。';
+    else note=`<b>Ridge（λ = ${lam}）：</b>λ_min 被抬高、條件數下降，兩個係數<b>平均分攤、同步縮小</b>到約 ${fx((1+rho)/(1+rho+lam))}，穩定且<b>不歸零</b>（115Q1-33）。`;
+    $('#rgNote').innerHTML=note;
+  }
+  $('#rgSample').onclick=()=>{samples=sample();draw();};
+  $('#rgLasso').onclick=()=>{lasso=!lasso;samples=null;draw();};
+  draw();
+})();
+
+/* ---------- 43.4 residual matcher ---------- */
+(function(){
+  const r=rng(5);
+  function mini(kind){
+    let h=`<svg class="mini" viewBox="0 0 150 70" aria-hidden="true"><line x1="0" y1="35" x2="150" y2="35" stroke="var(--muted)" stroke-dasharray="3 3"/>`;
+    for(let i=0;i<34;i++){const x=6+i*4.2,t=i/33;let y;
+      if(kind==='f')y=35+gauss(r)*(2+t*13);
+      else if(kind==='c')y=35+(t-.5)*(t-.5)*-110+12+gauss(r)*2.5;
+      else y=35+Math.sin(t*12)*12+gauss(r)*2;
+      h+=`<circle cx="${x}" cy="${Math.max(3,Math.min(67,y))}" r="2.3" fill="var(--ink)"/>`;}
+    return h+'</svg>';
+  }
+  matcher($('#resMatch'),$('#resFb'),[
+    {k:'h',c:'var(--sen)',html:'殘差 vs 預測值'+mini('f')},
+    {k:'n',c:'var(--img)',html:'殘差 vs 預測值'+mini('c')},
+    {k:'a',c:'var(--txt)',html:'殘差 vs 觀測順序'+mini('s')}
+  ],[
+    {k:'x',html:'多重共線性<small>Multicollinearity</small>',bad:'殘差圖看不出共線性！要用 VIF 或相關矩陣。這是 115Q1-5 的誘答。'},
+    {k:'a',html:'自相關<small>誤差不獨立</small>',ok:'殘差依觀測順序呈週期或趨勢，多見於時間序列。'},
+    {k:'h',html:'異質變異數<small>Heteroscedasticity</small>',ok:'喇叭狀擴散＝誤差變異數不固定（115Q1-5 正解）。'},
+    {k:'n',html:'模型設定錯誤<small>關係不是線性</small>',ok:'殘差對預測值呈系統性彎曲 → 關係不是線性。'}
+  ],'常態性要看 Q-Q 圖，共線性要看 VIF，這兩個殘差圖都看不出來。');
+})();
+
+/* ---------- 43.4 loss fit ---------- */
+(function(){
+  const r=rng(11),base=[];for(let i=1;i<=10;i++)base.push([i,.5*i+1+gauss(r)*.35]);
+  const OUT=[9,14];let mode=0,outl=false;
+  function fit(pts,kind){
+    let a=0,b=1,w=pts.map(()=>1);
+    for(let it=0;it<(kind===0?1:60);it++){
+      let sw=0,sx=0,sy=0,sxx=0,sxy=0;pts.forEach(([x,y],i)=>{sw+=w[i];sx+=w[i]*x;sy+=w[i]*y;sxx+=w[i]*x*x;sxy+=w[i]*x*y;});
+      const den=sw*sxx-sx*sx;a=(sw*sxy-sx*sy)/den;b=(sy-a*sx)/sw;
+      w=pts.map(([x,y])=>{const e=Math.abs(y-(a*x+b));return kind===1?1/Math.max(e,1e-3):kind===2?(e<=1?1:1/e):1;});
+    }return [a,b];
+  }
+  const names=['MSE（最小平方）','MAE','Huber'],cols=['var(--sen)','var(--img)','var(--aud)'];
+  function draw(){
+    $('#lsOut').setAttribute('aria-pressed',outl);$('#lsOut').textContent=outl?'移除離群點':'加入離群點';
+    const pts=outl?[...base,OUT]:base,X=x=>30+x*34,Y=y=>220-y*13;
+    let h=`<line x1="30" y1="220" x2="410" y2="220" stroke="var(--line)"/><line x1="30" y1="10" x2="30" y2="220" stroke="var(--line)"/>`;
+    const fits=[0,1,2].map(k=>fit(pts,k));
+    fits.forEach(([a,b],k)=>{h+=`<line x1="${X(0)}" y1="${Y(b)}" x2="${X(11)}" y2="${Y(a*11+b)}" stroke="${cols[k]}" stroke-width="${k===mode?4:1.5}" opacity="${k===mode?1:.35}"/>`;});
+    pts.forEach(([x,y],i)=>{const o=outl&&i===pts.length-1;h+=`<circle cx="${X(x)}" cy="${Y(y)}" r="${o?7:5}" fill="${o?'var(--bad)':'var(--ink)'}"/>`;if(o)h+=`<text x="${X(x)-10}" y="${Y(y)-12}" font-size="13" fill="var(--bad)" font-weight="700" text-anchor="end">離群點</text>`;});
+    $('#lsSvg').innerHTML=h;
+    const [a]=fits[mode],[a0]=fit(base,mode);
+    const why=['平方損失讓遠離的點取得極大權重，梯度與誤差成正比','線性懲罰，梯度近乎常數，抗離群值','小誤差平方、大誤差線性，折衷'][mode];
+    $('#lsNote').innerHTML=`<b style="color:${cols[mode]}">${names[mode]}</b>：斜率 ${fx(a0)}${outl?` → <b>${fx(a)}</b>（被拉動 ${fx(Math.abs(a-a0))}）`:''}。${why}。<span class="hint">　分類任務則用交叉熵，連續值迴歸不適用。</span>`;
+  }
+  tabs($('#lsTabs'),names,i=>{mode=i;draw();});
+  $('#lsOut').onclick=()=>{outl=!outl;draw();};
+})();
+
+/* ---------- exam list ---------- */
+examList($('#examList'),[
+  ['114Q2-40','NumPy 語法辨正','給一段程式碼截圖，問四個敘述何者正確','<code>np.dot([1,2,3],[4,5,6])</code> = <b>32</b>（<code>np.int64</code>）。誘答：<code>v1*v2</code> 說成 <code>[5,7,9]</code>（那是相加）、<code>inv</code> 說成算行列式、<code>eig</code> 說成算反矩陣'],
+  ['114Q2-35','PCA 解釋變異比例','給 λ₁=6, λ₂=3, λ₃=1，問保留 80% 變異該降到幾維','Σλ=10 → PC1 60%、PC1+PC2 <b>90%</b> ≥ 80% → <b>降到二維</b>。誘答把單一成分貢獻與累積門檻混用'],
+  ['114Q2-46','PCA 降噪失效除錯','PCA 降噪後影像仍有雜訊，問哪段程式碼要改','改<b>設定 <code>n_components</code> 的那一段</b>。設太高＝保留全部成分，重建後雜訊原封不動'],
+  ['114Q2-48','標準化的數學效果','<code>X -= X.mean(axis=0)</code>、<code>X /= X.std(axis=0)</code> 各做了什麼','減均值 → 均值 <b>0</b>；除標準差 → 標準差 <b>1</b>（不是 0）。這是 Z-score，<b>不是</b>壓到 0～1，也<b>不是</b>特徵選擇'],
+  ['115Q1-3','矩陣乘法形狀','Q=(1,10)、W_Q=(10,64)，問 Q×W_Q 的形狀','內側 10 相等可乘 → <b>(1, 64)</b>。誘答 (10,10) 是配錯維度，(64,1) 是轉置'],
+  ['115Q1-5','殘差圖診斷','殘差隨預測值增大而擴散，代表什麼問題','<b>殘差變異數不一致（異質變異數）</b>。共線性要用 VIF，殘差圖看不出來'],
+  ['115Q1-6','PCA vs t-SNE 選型','一邊要視覺化詞嵌入，一邊要當 XGBoost 輸入','t-SNE 保留<b>局部</b>鄰域、適合視覺化；<b>無固定轉換不能外推</b>，不能當模型輸入。PCA 是<b>線性</b>降維，可對新資料投影'],
+  ['115Q1-7','L1 與相關特徵','重要特徵清單每次重訓都在三個高相關特徵間跳動','<b>L1（Lasso）稀疏化</b>時只保留其中之一，留誰隨抽樣改變。與梯度消失無關'],
+  ['115Q1-33','共線性下的正則化選型','150 個特徵高度相關，要控過擬合又不讓係數歸零','<b>Ridge（L2）</b>：(XᵀX+λI) 必可逆，權重平均分攤同步縮小但不歸零。Lasso 與 Elastic Net 都會產生零係數'],
+  ['115Q1-44','降維的資料洩漏','先對全資料 <code>lda.fit_transform(X, y)</code> 再交叉驗證','<b>資料洩漏</b>。降維必須放進 Pipeline，讓每一折只用該折訓練資料擬合']
+]);
+
+/* ---------- traps ---------- */
+traps('l23102-traps',[
+  ['np.dot(v1, v2) 回傳純量，v1 * v2 回傳陣列','前者是內積（1×4+2×5+3×6=32），後者是逐元素（[4,10,18]）；誘答常寫成 [5,7,9]，那是相加不是相乘。'],
+  ['np.linalg.inv 算反矩陣，不是行列式','行列式是 det，回傳一個 float 純量；反矩陣回傳同形狀方陣。'],
+  ['np.linalg.eig 算特徵值分解，不是反矩陣','回傳「特徵值陣列＋特徵向量矩陣」兩個物件；特徵向量逐行（column）存放，第 i 個特徵值對應 eigenvectors[:, i] 而非 eigenvectors[i]，順序也不保證由大到小。'],
+  ['向量沒有反矩陣也沒有行列式','這兩者只對方陣定義，選項若把它們套在一維向量上一定錯。'],
+  ['矩陣相乘看內側維度，輸出取外側','(m,n)@(n,p)=(m,p)；把第一維相配得到的 (m,m) 是最常見誘答。'],
+  ['λ 的比例是「累積」門檻，不是單一成分門檻','PC2 貢獻 30% 不構成保留 PC3 的理由，只要累積達標就可捨棄後面的。'],
+  ['PCA 做的是共變異數矩陣的特徵分解，不是原始矩陣的特徵分解','要先中心化（通常再標準化），才建 C = XcᵀXc/(n−1)。'],
+  ['PCA 前不標準化，主成分會被「單位大」的特徵綁架','標準化後的共變異數矩陣就是相關係數矩陣。'],
+  ['PCA 是線性降維，t-SNE 才是非線性','說「PCA 能保留複雜流形結構」必錯。'],
+  ['t-SNE 不能外推到新資料，PCA 可以','所以 t-SNE 只做視覺化，PCA 才能當模型輸入特徵。'],
+  ['SVD 適用任意矩陣，EVD 只適用方陣','「用 EVD 分解 m×n 使用者-項目矩陣」是錯的，那是 SVD 的地盤。'],
+  ['NMF 的賣點是非負與可加疊的解釋性，不是數值精度','主題建模、部件分解才是它的場域。'],
+  ['最小平方是投影，殘差垂直於特徵張成的空間','這個垂直條件直接推出正規方程 Xᵀ(y−Xθ)=0。'],
+  ['XᵀX 不可逆的原因是共線或 d>n，不是資料太少沒洗乾淨','對策是偽逆、降維或 Ridge。'],
+  ['Ridge 讓係數縮小但不歸零，Lasso 才會歸零','要求「保留所有特徵的解釋能力」時只能選 Ridge。'],
+  ['殘差圖擴散＝異質變異數，不是共線性也不是非常態','共線性看 VIF、常態性看 Q-Q 圖。'],
+  ['降維步驟必須進 Pipeline','先對全資料 fit 再做交叉驗證，就是資料洩漏，估出來的準確率偏樂觀。'],
+  ['標準化（Z-score）把標準差調成 1，不是把資料壓到 0～1','壓到 0～1 是 Min-Max 正規化；而且標準化屬於特徵縮放，不是特徵選擇。']
+]);
+
+/* ---------- quiz ---------- */
+quiz([
+  ['v1 = np.array([1,2,3])、v2 = np.array([4,5,6])，<code>np.dot(v1, v2)</code> 的結果是？',['32（純量 np.int64）','array([4, 10, 18])','array([5, 7, 9])','array([32])'],'兩個一維向量的內積：1×4 + 2×5 + 3×6 = 32，回傳純量。'],
+  ['同上兩個向量，<code>v1 * v2</code> 的結果是？',['array([ 4, 10, 18])','array([5, 7, 9])','32','會報錯，向量不能相乘'],'<code>*</code> 是逐元素相乘，回傳同形狀陣列；[5,7,9] 是相加。'],
+  ['關於 <code>np.linalg</code> 函式的敘述，何者正確？',['np.linalg.eig 回傳特徵值陣列與特徵向量矩陣兩個物件','np.linalg.inv 用來計算行列式','np.linalg.eig 用來計算反矩陣','np.linalg.det 回傳與輸入同形狀的矩陣'],'記憶法：inv → 矩陣、det → 數字、eig → 一組數字＋一組方向。'],
+  ['Transformer 的 Q 攤平成 (1, 10)，W_Q 為 (10, 64)，Q × W_Q 的形狀是？',['(1, 64)','(10, 10)','(64, 1)','維度不相容，無法相乘'],'內側 10 相等可乘，輸出取外側 (1, 64)。(64,1) 是轉置，(10,10) 是配錯維度。'],
+  ['標準化後做共變異數矩陣分解得 λ₁=6、λ₂=3、λ₃=1，要保留至少 80% 變異，應如何處理？',['降到二維（累積 90%）','只留 PC1 即可','PC2 貢獻高達 30%，所以不能丟 PC3，保留三維','特徵值相差不大，無法有效降維'],'Σλ=10，PC1 60%、PC1+PC2 90% ≥ 80%。門檻看累積，不看單一成分。'],
+  ['PCA 降噪後重建影像仍滿是雜訊，最應該修改哪一段程式？',['設定 n_components 的那一行','資料載入的那一行','繪圖的那一行','把 n_components 設成原始維度'],'n_components 太大＝保留全部成分，重建等於原圖，雜訊原封不動。'],
+  ['<code>X -= X.mean(axis=0)</code>；<code>X /= X.std(axis=0)</code> 執行後，各特徵的狀態為何？',['平均為 0、標準差為 1','平均為 0、標準差為 0','數值被壓到 0～1 之間','完成了特徵選擇'],'這是 Z-score 標準化。壓到 0～1 是 Min-Max；標準化屬於特徵縮放，不是特徵選擇。'],
+  ['線性迴歸的殘差圖中，殘差隨預測值增大而呈喇叭狀擴散，代表什麼問題？',['異質變異數（殘差變異數不一致）','多重共線性','誤差不是常態分布','特徵沒有標準化'],'共線性要看 VIF、常態性要看 Q-Q 圖，殘差圖看不出來。'],
+  ['團隊一邊要把 512 維詞嵌入畫成 2D 看群集，一邊要把降維結果當 XGBoost 的輸入特徵，最合理的搭配是？',['視覺化用 t-SNE，模型輸入用 PCA','兩者都用 t-SNE','PCA 是非線性，能保留複雜流形，兩者都用 PCA 最好','t-SNE 可對新資料投影，適合當模型輸入'],'t-SNE 保留局部鄰域、適合視覺化，但沒有固定轉換、不能外推；PCA 是線性、可對新資料投影。'],
+  ['模型重訓後，重要特徵清單每次都在「月收入／年收入／季收入」之間跳動，最可能的原因是？',['使用 L1（Lasso）正則化，高相關特徵中只保留其一，留誰隨抽樣改變','發生梯度消失','使用 L2 正則化讓係數歸零','資料量太大'],'Lasso 稀疏化面對高相關特徵時會隨機挑一個，與梯度消失無關。'],
+  ['150 個特徵高度相關，要控制過擬合又「不讓任何係數歸零」，應選哪種正則化？',['Ridge（L2）','Lasso（L1）','Elastic Net','不加正則化的 OLS'],'(XᵀX+λI) 必可逆，權重平均分攤同步縮小但不歸零；Lasso 與 Elastic Net 都會產生零係數。'],
+  ['先對全部資料執行 <code>lda.fit_transform(X, y)</code>，再拿結果做 5 折交叉驗證，這個流程的問題是？',['資料洩漏，降維應放進 Pipeline 只用每折訓練資料擬合','沒有問題，LDA 是監督式所以必須用全部標籤','會造成欠擬合','只是計算比較慢'],'每一折的測試資料早就參與過降維擬合，準確率會虛高。']
+],['太強了，計算題和「誰是誰」都能秒答。','不錯！回頭看看答錯的那幾題對應的段落。','建議重新操作 43.1 的形狀模擬器與 43.3 的解釋變異計算器，再來一次。']);
+
+navHighlight();
+</script>
+</body>
+</html>

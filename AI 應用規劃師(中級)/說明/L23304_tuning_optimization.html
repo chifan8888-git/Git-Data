@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L23304 模型調整與優化｜互動教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F5; --surface:#FFFFFF; --surface2:#F6F8FB; --ink:#18202E; --muted:#5A6475; --line:#D5DBE4;
+  --txt:#3B4CCA; --img:#0E8A7A; --aud:#B87812; --sen:#B8336A;
+  --ok:#1F8A4C; --bad:#C23B2E; --warn:#D9822B;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+    --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+  --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75}
+h1,h2,h3{font-family:var(--serif);line-height:1.3;margin:0}
+p{margin:0 0 1em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--txt);outline-offset:2px;border-radius:4px}
+svg{max-width:100%;height:auto;display:block}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1180px;margin:0 auto;gap:40px;padding:0 24px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;padding:32px 0;height:100vh;overflow:auto}
+nav.toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14.5px}
+nav.toc a span{font-variant-numeric:tabular-nums;font-size:13px;opacity:.8}
+nav.toc a.on{background:var(--surface);color:var(--ink);font-weight:700}
+.toc-title{font-family:var(--serif);font-weight:900;font-size:18px;padding:0 10px 14px}
+main{min-width:0;padding-bottom:80px}
+section{padding:56px 0 8px;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.sec-head{display:flex;gap:16px;align-items:baseline;margin-bottom:18px}
+.sec-no{font-family:var(--serif);font-weight:900;font-size:40px;color:var(--line);line-height:1}
+h2{font-size:28px;font-weight:900}
+h3{font-size:19px;margin:34px 0 10px}
+.lead{color:var(--muted);max-width:66ch}
+.prose{max-width:68ch}
+
+/* hero */
+.hero{padding:44px 0 24px}
+.hero .code{font-size:14px;color:var(--muted);margin-bottom:6px}
+.hero h1{font-size:clamp(34px,5.5vw,56px);font-weight:900;letter-spacing:.02em}
+.hero .one{font-size:18px;max-width:60ch;margin:16px 0 0;color:var(--muted)}
+.hero-fig{background:var(--surface);border-radius:20px;margin-top:28px;padding:14px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+.goal{border-left:4px solid var(--c);padding:6px 0 6px 14px;font-size:15px}
+
+/* panels */
+.panel{background:var(--surface);border-radius:16px;padding:22px;margin:16px 0}
+.panel.flat{background:var(--surface2)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font-size:15px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hint{font-size:14px;color:var(--muted)}
+.callout{border-left:4px solid var(--warn);background:var(--surface2);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;font-size:15px}
+.callout.exam{border-color:var(--txt)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:14px}
+
+/* modality chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+
+/* matcher */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.match .col{display:flex;flex-direction:column;gap:10px}
+.mitem{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15px;transition:border-color .2s,background .2s,transform .2s}
+.mitem small{display:block;color:var(--muted);font-size:13px}
+.mitem.sel{border-color:var(--ink);transform:translateX(4px)}
+.mitem.done{border-color:var(--c,var(--ok));background:var(--surface2);cursor:default}
+.mitem.wrong{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:1.8em;margin-top:12px;font-size:15px}
+.feedback.ok{color:var(--ok)} .feedback.bad{color:var(--bad)}
+
+/* timeline */
+.steps{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stage-viz{min-height:130px;display:flex;align-items:center;justify-content:center}
+.stage-viz .blk{display:inline-block;width:34px;height:34px;border-radius:6px;margin:2px;transition:all .5s}
+
+/* align toggle */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.compare>div{padding:18px}
+.compare>div+div{border-left:1px solid var(--line)}
+.compare .big{font-family:var(--serif);font-weight:900;font-size:22px;margin-bottom:6px}
+
+/* fusion */
+.meter{height:14px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:6px 0}
+.meter>i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .7s cubic-bezier(.3,.8,.3,1),background .4s}
+.flow{stroke-dasharray:6 7;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.jitter{animation:jit .25s steps(2) infinite}
+@keyframes jit{50%{transform:translate(1.5px,-1px)}}
+.fusion-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.pc{font-size:15px}
+.pc b{display:block;font-size:14px;color:var(--muted);font-weight:500}
+
+/* clip */
+.mat{display:grid;gap:4px;font-size:13px}
+.mat .cell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;transition:background .5s,color .5s}
+.mat .lab{display:flex;align-items:center;justify-content:center;font-size:22px}
+.mat .tlab{font-size:12px;text-align:center;color:var(--muted);display:flex;align-items:flex-end;justify-content:center;line-height:1.3}
+.zs-imgs{display:flex;gap:10px;flex-wrap:wrap}
+.zs-img{font-size:38px;width:72px;height:72px;border-radius:16px;border:2px solid var(--line);background:var(--surface2);display:flex;align-items:center;justify-content:center}
+.zs-img[aria-pressed="true"]{border-color:var(--img);box-shadow:0 0 0 3px color-mix(in srgb,var(--img) 25%,transparent)}
+.bar{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.bar .track{height:22px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;width:0;background:var(--txt);border-radius:6px;transition:width .8s cubic-bezier(.3,.8,.3,1)}
+.bar.win .fill{background:var(--img)}
+.bar.win{font-weight:700}
+.bar .num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.flip{perspective:900px;height:150px;border:0;background:none;padding:0;text-align:left}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flip[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:center}
+.flip .f{background:var(--surface);border:1.5px solid var(--line)}
+.flip .f strong{font-family:var(--serif);font-size:22px}
+.flip .f span{color:var(--muted);font-size:14px}
+.flip .b{background:var(--ink);color:var(--bg);transform:rotateY(180deg);font-size:15px}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.pnode{border:2px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;font-size:14px;background:var(--surface);transition:all .35s}
+.pnode b{display:block;font-size:16px}
+.pnode.on{border-color:var(--aud);background:color-mix(in srgb,var(--aud) 14%,var(--surface));transform:translateY(-3px)}
+.pnode.past{border-color:color-mix(in srgb,var(--aud) 45%,var(--line))}
+.pout{background:var(--surface2);border-radius:12px;padding:14px 16px;min-height:84px;font-size:15px}
+.wave{display:flex;gap:3px;align-items:center;height:30px}
+.wave i{width:4px;background:var(--aud);border-radius:2px;animation:wv 1s ease-in-out infinite}
+@keyframes wv{50%{transform:scaleY(.3)}}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+
+/* strategies */
+.strat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.strat button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;text-align:left;font-size:15px}
+.strat button[aria-pressed="true"]{border-color:var(--ink)}
+.verdict{font-family:var(--serif);font-weight:900;font-size:20px}
+
+details{border-bottom:1px solid var(--line)}
+details summary{cursor:pointer;padding:12px 4px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"+";font-weight:900;width:14px;color:var(--muted)}
+details[open] summary::before{content:"−"}
+details .body{padding:0 4px 14px 30px;font-size:15px}
+.tag{font-size:12.5px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums;min-width:80px}
+
+/* quiz */
+.qcard{background:var(--surface);border-radius:16px;padding:24px}
+.qtop{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
+.qtext{font-size:18px;font-weight:700;margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15.5px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+.opt.wrongpick{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.opt:disabled{cursor:default}
+.expl{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15px;display:none}
+.expl.show{display:block}
+.progress{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;margin-bottom:14px}
+.progress i{display:block;height:100%;background:var(--txt);transition:width .4s}
+
+.traps label{display:flex;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:15px}
+.traps input{width:18px;height:18px;margin-top:4px;flex:none;accent-color:var(--ok)}
+.traps label.chk>span{color:var(--muted)}
+.traps em{font-style:normal;font-weight:700}
+
+/* mobile */
+@media (max-width:860px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+  nav.toc{position:sticky;top:0;height:auto;z-index:10;background:var(--bg);display:flex;overflow-x:auto;padding:8px 0;padding-top:calc(8px + env(safe-area-inset-top,0px));gap:4px;border-bottom:1px solid var(--line)}
+  .toc-title{display:none}
+  nav.toc a{white-space:nowrap;flex:none}
+  .match,.stage,.fusion-meta,.compare{grid-template-columns:1fr}
+  .compare>div+div{border-left:0;border-top:1px solid var(--line)}
+  .pipe{grid-template-columns:repeat(5,minmax(90px,1fr));overflow-x:auto}
+  .bar{grid-template-columns:110px 1fr 56px}
+  h2{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+/* ---------- page-specific ---------- */
+input[type=range]{width:100%;accent-color:var(--txt)}
+.kv{display:grid;grid-template-columns:120px 1fr;gap:4px 12px;font-size:15px}
+.kv b{color:var(--muted);font-weight:500}
+.sort{display:flex;flex-direction:column;gap:8px}
+.sitem{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;border:2px solid var(--line);border-radius:12px;padding:8px 12px;background:var(--surface);font-size:15px;transition:border-color .3s}
+.sitem .row{gap:6px}
+.sitem .btn{padding:4px 12px;font-size:14px}
+.sitem.ok{border-color:var(--ok)} .sitem.no{border-color:var(--bad);animation:shake .4s}
+.sitem small{display:block;width:100%;font-size:13px;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:14px}
+.stat{background:var(--surface2);border-radius:12px;padding:10px 12px}
+.stat b{display:block;font-size:13px;color:var(--muted);font-weight:500}
+.stat span{font-family:var(--serif);font-weight:900;font-size:24px;font-variant-numeric:tabular-nums}
+.stat small{display:block;font-size:12.5px;color:var(--muted)}
+pre.code{background:var(--surface2);border-radius:10px;padding:12px 14px;font-size:13.5px;line-height:1.6;overflow-x:auto;margin:10px 0;white-space:pre}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:14px;color:var(--muted);margin-top:6px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.glyphs{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.glyph{width:96px;border-radius:14px;background:var(--surface2);border:2px solid var(--line);padding:8px;text-align:center;transition:border-color .3s}
+.glyph .ch{font-family:var(--serif);font-weight:900;font-size:52px;line-height:1.1;display:inline-block;transition:transform .6s}
+.glyph.flip .ch{transform:scaleX(-1)}
+.glyph small{display:block;font-size:13px;color:var(--muted)}
+.glyph.bad{border-color:var(--bad)}
+.acc{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+.acc i{width:54px;height:40px;border-radius:8px;background:var(--surface2);border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-style:normal;font-size:13px;transition:all .3s}
+.acc i.on{background:color-mix(in srgb,var(--aud) 25%,var(--surface));border-color:var(--aud)}
+.acc i.up{background:var(--ok);border-color:var(--ok);color:#fff}
+@media (max-width:860px){.kv{grid-template-columns:96px 1fr}.glyph{width:76px}.glyph .ch{font-size:42px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="toc" aria-label="章節">
+  <div class="toc-title">調整與優化</div>
+  <a href="#intro"><span>●</span>導覽與目標</a>
+  <a href="#s1"><span>51.1</span>超參數</a>
+  <a href="#s2"><span>51.2</span>優化器</a>
+  <a href="#s3"><span>51.3</span>正則化</a>
+  <a href="#s4"><span>51.4</span>曲線判讀</a>
+  <a href="#s5"><span>51.5</span>增強與重取樣</a>
+  <a href="#s6"><span>51.6</span>壓縮與加速</a>
+  <a href="#s7"><span>51.7</span>官方考題</a>
+  <a href="#s8"><span>51.8</span>易錯與測驗</a>
+</nav>
+
+<main>
+<!-- HERO -->
+<section id="intro" class="hero">
+  <div class="code">L23304　中級 AI 應用規劃師（機器學習）　建議 55 分鐘</div>
+  <h1>模型調整與優化</h1>
+  <p class="one">初級只要求你知道「過擬合要正則化」；中級要你在情境題裡判斷<b>該動哪一個超參數</b>、<b>該用哪一種正則化</b>、看一張<b>訓練曲線圖就說出病名</b>，並分清「<b>壓縮</b>」「<b>加速</b>」「<b>微調</b>」三件完全不同的事。</p>
+  <div class="hero-fig" aria-hidden="true">
+    <svg id="heroSvg" viewBox="0 0 720 300"></svg>
+  </div>
+  <h3>學完這一課，你應該能夠</h3>
+  <div class="goals">
+    <div class="goal" style="--c:var(--txt)">分辨<b>超參數</b>與<b>模型參數</b>，說明學習率、批次大小、網路深度寬度各自的失效症狀</div>
+    <div class="goal" style="--c:var(--img)">比較 <b>Grid／Random／貝葉斯</b>搜尋的成本與時機，並會算網格搜尋的訓練次數</div>
+    <div class="goal" style="--c:var(--aud)">判讀訓練／驗證曲線的四種典型形態，指出<b>過擬合、欠擬合、學習率過大</b>的對策</div>
+    <div class="goal" style="--c:var(--sen)">區辨<b>知識蒸餾、剪枝、量化、混合精度、梯度累積、LoRA</b> 各自解決什麼問題</div>
+  </div>
+  <p class="hint" style="margin-top:20px">本頁顏色固定代表：<span class="chip" style="--c:var(--txt)"><i class="dot"></i>調參與搜尋</span>　<span class="chip" style="--c:var(--img)"><i class="dot"></i>正則化</span>　<span class="chip" style="--c:var(--aud)"><i class="dot"></i>訓練與加速</span>　<span class="chip" style="--c:var(--sen)"><i class="dot"></i>壓縮與微調</span></p>
+</section>
+
+<!-- 51.1 -->
+<section id="s1">
+  <div class="sec-head"><span class="sec-no">51.1</span><h2>超參數：定義、清單與失效症狀</h2></div>
+  <p class="lead">判準只有一句：<b>訓練前由人指定</b>的是超參數，<b>訓練過程中由資料學出來或算出來</b>的不是。逐一分類看看（114Q2 第 12 題的核心）。</p>
+  <div class="panel">
+    <div class="sort" id="hpSort"></div>
+    <p class="feedback" id="hpFb" aria-live="polite"></p>
+  </div>
+  <div class="compare">
+    <div><div class="big">超參數 Hyperparameter</div><b>開發者訓練前手動指定</b><br>學習率、批次大小、層數、Dropout 率、λ、patience<br><span class="hint">何時固定：訓練開始前</span></div>
+    <div><div class="big">參數 Parameter</div>訓練過程由資料自動學出<br>權重 W、偏差 b<br><span class="hint">何時固定：每個 batch 更新一次</span></div>
+  </div>
+  <div class="callout exam"><b>官方誘答就長這樣：</b>114Q2 第 12 題把「每個神經元的輸出結果」「梯度變化值」「訓練後產生的權重值」放進選項充當超參數。三個都是<b>訓練的產物或計算過程量</b>，一律排除，正解是學習率。</div>
+
+  <h3>六大超參數症狀速查：設太大、設太小各會怎樣？</h3>
+  <div class="panel">
+    <div class="tabs" id="hpTabs"></div>
+    <div class="row" style="margin-bottom:10px"><button class="btn" id="hpBig" aria-pressed="true">設太大</button><button class="btn" id="hpSmall" aria-pressed="false">設太小</button></div>
+    <div id="hpBody"></div>
+  </div>
+
+  <h3>學習率：官方三題都在考同一個直覺</h3>
+  <div class="panel">
+    <p class="hint">把學習率想成「在損失地形上一步跨多遠」。切換三種設定，看損失曲線的形狀。（曲線為示意）</p>
+    <div class="tabs" id="lrTabs">
+      <button class="btn" data-m="big" aria-pressed="true">學習率過大</button>
+      <button class="btn" data-m="ok" aria-pressed="false">學習率適中</button>
+      <button class="btn" data-m="small" aria-pressed="false">學習率過小</button>
+      <button class="btn" data-m="sched" aria-pressed="false">退火／Scheduler</button>
+    </div>
+    <svg id="lrSvg" viewBox="0 0 640 210" role="img" aria-label="學習率對損失曲線的影響"></svg>
+    <p class="hint" id="lrNote" style="margin:6px 0 0"></p>
+  </div>
+  <ul class="prose">
+    <li><b>115Q1 第 8 題</b>：驗證損失第 15 個 Epoch 起上升（＝過擬合），工程師把學習率調高後<b>訓練損失開始震盪</b> —— 學習率過大最直接導致<b>損失函數震盪或發散</b>。誘答「過擬合」是題幹前半段既有的現象；梯度消失來自激活函數飽和或網路過深，跟學習率無直接關係。</li>
+    <li><b>115Q1 第 43 題</b>：遷移學習微調時把學習率設成 1e-4 這種極小值，是為了<b>避免更新步伐過大、破壞預訓練模型已學好的特徵表示</b>，不是為了省記憶體、也不是為了加速收斂（調小反而更慢）。</li>
+    <li><b>實務補充</b>：初期用大一點的學習率快速下降，後期降低以細調，就是<b>學習率退火（Annealing）／調度器（Scheduler）</b>。固定學習率無法兼顧兩階段需求，是官方指引點名的常見問題。</li>
+  </ul>
+
+  <h3>批次大小（115Q1 第 11 題）</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>策略</th><th>梯度穩定性</th><th>GPU 吞吐量</th><th>官方評語</th></tr>
+      <tr><td>全批次 Full-batch GD</td><td>最穩</td><td>每次更新 45 秒，太慢</td><td>不可行</td></tr>
+      <tr><td>隨機 SGD（單樣本）</td><td>極不穩、曲線劇烈震盪</td><td>每次 0.01 秒但無法平行</td><td>不可行</td></tr>
+      <tr><td><b>小批次 Mini-batch（256～2048）</b></td><td><b>靠樣本平均抵銷雜訊</b></td><td><b>一次前向反向充分平行</b></td><td><b>業界標準，正解</b></td></tr>
+    </table>
+  </div>
+  <p class="prose hint">牛頓法（二階梯度法）在億級參數的 LLM 上要計算並反轉 Hessian 矩陣，記憶體與計算成本根本不可行 —— 這是本題的高級誘答。</p>
+
+  <h3>搜尋策略模擬器：Grid vs Random vs 貝葉斯</h3>
+  <div class="panel">
+    <p class="hint">同樣只能試 9 次。橫軸是<b>重要</b>的超參數（如學習率），縱軸是<b>幾乎不影響結果</b>的超參數。上方曲線是重要參數對分數的影響。看哪種方法在重要維度上試到的值最多。（示意）</p>
+    <div class="tabs" id="srTabs">
+      <button class="btn" data-m="grid" aria-pressed="true">Grid Search</button>
+      <button class="btn" data-m="rand" aria-pressed="false">Random Search</button>
+      <button class="btn" data-m="bayes" aria-pressed="false">貝葉斯最佳化</button>
+    </div>
+    <svg id="srSvg" viewBox="0 0 640 300" role="img" aria-label="搜尋策略示意"></svg>
+    <div class="row"><button class="btn" id="srAgain">重新抽樣</button><span class="hint" id="srInfo"></span></div>
+  </div>
+  <details>
+    <summary>展開搜尋策略完整對照表</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>方法</th><th>運作方式</th><th>成本</th><th>最適用時機</th><th>弱點</th></tr>
+        <tr><td><b>網格搜尋</b></td><td>窮舉所有組合的笛卡兒積</td><td><b>隨參數個數指數成長</b></td><td>參數少（2～3 個）、範圍明確</td><td>高維時完全不可行</td></tr>
+        <tr><td><b>隨機搜尋</b></td><td>在參數空間隨機抽樣固定次數</td><td>可控（自訂試驗次數）</td><td><b>高維參數空間</b></td><td>不保證命中最佳組合</td></tr>
+        <tr><td><b>貝葉斯最佳化</b></td><td>用代理模型（如高斯過程）依<b>已試結果</b>決定下一組</td><td>達到同等效果所需試驗最少</td><td>單次訓練成本很高時</td><td>實作複雜、序列進行不易平行</td></tr>
+        <tr><td><b>AutoML</b></td><td>自動化特徵處理＋模型選擇＋調參</td><td>平台代勞</td><td><b>缺專職工程師、要快速比較多種模型</b></td><td>客製化控制度低</td></tr>
+      </table>
+    </div>
+  </details>
+  <div class="callout exam"><b>114Q2 第 11 題：</b>Random Search 相較 Grid Search 的主要優勢 → <b>能更有效率搜尋高維參數空間</b>。誘答：「自動產生模型架構」（那是 NAS）、「可使用更大的訓練集」（無關）、「避免過擬合」（那要靠正則化與驗證控制）。<br><b>115Q1 第 34 題：</b>learning_rate 3 個、max_depth 4 個、n_estimators 5 個、subsample 3 個、colsample_bytree 3 個，配 5-Fold → 組合數 3×4×5×3×3 = <b>540</b>（是「乘」不是「加」），訓練數 540×5 = <b>2,700</b>。誘答：相加（18）、只算折數（25）、取最大值再乘折數（25）。<br><b>114Q2 第 10 題（AutoML）：</b>最適合的是「行銷部門要在短時間內比較多種流失預測模型，且<b>缺乏專職工程師</b>」。</div>
+</section>
+
+<!-- 51.2 -->
+<section id="s2">
+  <div class="sec-head"><span class="sec-no">51.2</span><h2>優化器家族</h2></div>
+  <p class="lead">同一個「狹長山谷」形狀的損失地形：一個方向很陡、一個方向很平。按「開跑」，看各優化器怎麼走到谷底（綠點）。（路徑為依公式模擬的示意）</p>
+  <div class="panel">
+    <div class="row" id="optBtns"></div>
+    <svg id="optSvg" viewBox="0 0 640 260" role="img" aria-label="優化器路徑比較" style="margin-top:10px"></svg>
+    <div class="row" style="margin-top:8px"><button class="btn primary" id="optRun">開跑</button><span class="hint" id="optInfo"></span></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>優化器</th><th>核心機制</th><th>一階動量</th><th>自適應學習率</th><th>適用場景</th><th>弱點</th></tr>
+      <tr><td><b>SGD</b></td><td>沿梯度方向直接更新</td><td>✗</td><td>✗</td><td>小模型、記憶體有限</td><td>易受雜訊、收斂慢、極依賴學習率</td></tr>
+      <tr><td><b>Momentum</b></td><td>累積過去梯度產生慣性</td><td>✓</td><td>✗</td><td>梯度震盪大、想加快收斂</td><td>多一個動量係數要調（常 0.5～0.9）</td></tr>
+      <tr><td><b>Adagrad</b></td><td>累積梯度平方和，逐參數縮放步長</td><td>✗</td><td>✓</td><td><b>稀疏特徵（NLP、文字）</b></td><td>學習率持續衰減至極小，訓練可能停滯</td></tr>
+      <tr><td><b>RMSProp</b></td><td>改用梯度平方的<b>指數移動平均</b>（解 Adagrad 衰減）</td><td>✗</td><td>✓</td><td>RNN、非平穩目標</td><td>本身不含動量項</td></tr>
+      <tr><td><b>Adam</b></td><td>Momentum ＋ RMSProp ＋ 偏差修正</td><td>✓</td><td>✓</td><td><b>幾乎所有深度學習，萬用預設</b></td><td>記憶體需求高，部分情境泛化略輸 SGD</td></tr>
+    </table>
+  </div>
+  <div class="callout exam"><b>115Q1 第 9 題：</b>損失震盪且收斂慢，改用 Adam 後變穩定又更快 → <b>同時結合一階動量與自適應學習率，為每個參數調整更新步長</b>。一階動量讓方向沿歷史梯度平滑前進（治震盪），二階動量依各參數梯度平方的移動平均縮放步長（治收斂慢與尺度差異）。誘答「強制所有參數使用相同學習率」講的是傳統 SGD；Batch Normalization 是網路層設計；梯度裁剪是獨立技巧，Adam 本身沒內建。<br><br><b>114Q2 第 17 題：</b>問「哪一種優化演算法<b>內建</b>動量設計」，選項同時有 SGD+Momentum 與 Adam，<b>官方答案是 Adam</b>。這題選項設計有瑕疵（SGD+Momentum 顯然也有動量），官方判準是「Adam 是<b>整合</b>動量與自適應學習率的代表性優化器」。考場策略：兩者同時出現且問「內建／整合」→ 選 <b>Adam</b>；唯有題幹強調「最基本、僅在 SGD 上加入慣性」才選 SGD+Momentum。</div>
+  <h3>記憶口訣（點卡片翻面）</h3>
+  <div class="cards" id="optCards"></div>
+</section>
+
+<!-- 51.3 -->
+<section id="s3">
+  <div class="sec-head"><span class="sec-no">51.3</span><h2>正則化技術與模型穩定化</h2></div>
+  <p class="lead">為什麼 L1 會把權重壓到 0、L2 不會？看幾何圖就懂：損失等高線第一次碰到「懲罰區域」的那一點，就是解。</p>
+  <div class="panel">
+    <div class="tabs" id="regTabs">
+      <button class="btn" data-m="l1" aria-pressed="true">L1（Lasso）菱形</button>
+      <button class="btn" data-m="l2" aria-pressed="false">L2（Ridge）圓形</button>
+    </div>
+    <div class="row" style="justify-content:space-between"><b>損失中心位置（拖動看看）</b><span id="ctrLab" class="hint"></span></div>
+    <input type="range" id="ctr" min="0" max="100" value="0" aria-label="損失中心位置">
+    <svg id="regSvg" viewBox="0 0 640 300" role="img" aria-label="L1 L2 幾何示意"></svg>
+    <p class="hint" id="regNote" style="margin:6px 0 0"></p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th></th><th>L1（Lasso）</th><th>L2（Ridge）</th><th>Elastic Net</th></tr>
+      <tr><td>懲罰項</td><td>λ × Σ 權重絕對值</td><td>λ × Σ 權重平方</td><td>兩者各配一個係數</td></tr>
+      <tr><td>對權重的作用</td><td><b>可直接壓到 0</b></td><td>只縮小，<b>不會歸零</b></td><td>兼具兩者</td></tr>
+      <tr><td>附帶效果</td><td><b>自動特徵選擇 → 稀疏模型</b></td><td>穩定權重、緩解多重共線性</td><td>特徵選擇＋避免過度稀疏</td></tr>
+      <tr><td>命名由來</td><td>Least <b>A</b>bsolute <b>S</b>hrinkage and <b>S</b>election <b>O</b>perator</td><td>解落在橢球狀的「脊線（Ridge）」範圍內</td><td>—</td></tr>
+      <tr><td>調參難度</td><td>一個 λ</td><td>一個 λ</td><td><b>要同時調兩個係數，較複雜</b></td></tr>
+    </table>
+  </div>
+  <div class="callout exam"><b>114Q2 第 2 題：</b>L1 的主要效果 → <b>產生稀疏模型，使部分參數權重收斂為零</b>。<br><b>114Q2 第 32 題：</b>特徵高度相關、又懷疑部分特徵貢獻有限，希望防過擬合的同時<b>自動篩選</b>代表性特徵 → <b>L1（Lasso）</b>。誘答：只用 L2（抑制所有權重幅度但保留全部特徵，不會歸零）、先人工移除共線性再加 L2（那是人工不是自動）、Early Stopping（只控制訓練回合數，不篩選特徵）。<br><b>判斷句式：</b>「自動特徵選擇／稀疏／係數歸零」→ L1；「穩定權重／多重共線性／全部保留」→ L2。</div>
+
+  <h3>Dropout：把輸出設為 0（不是 1）</h3>
+  <div class="panel">
+    <p class="hint">訓練階段每個 batch 隨機把部分神經元輸出設為 0，等於每次訓練一個不同的「子網路」，產生類似集成的效果。推論階段不再丟棄。</p>
+    <div class="row">
+      <button class="btn primary" id="dpNext">下一個 batch</button>
+      <button class="btn" id="dpMode" aria-pressed="false">切換到推論模式</button>
+      <span class="hint" id="dpInfo"></span>
+    </div>
+    <svg id="dpSvg" viewBox="0 0 640 250" role="img" aria-label="Dropout 示意"></svg>
+  </div>
+  <div class="callout exam"><b>114Q2 第 39 題（附圖）：</b>程式以隨機方式在訓練中暫時關閉（歸零）一部分神經元的輸出 → <b>Dropout</b>。L1／L2 是在損失函數加權重懲罰項；Batch Normalization 是對批次激活值做標準化。<br><b>115Q1 第 47 題（附圖）：</b>錯誤描述是「Dropout 把被選中的神經元輸出<b>設為 1</b>」——實際是<b>設為 0</b>。同題另考：BatchNormalization 接在 Conv2D 之後可穩定各層輸入分布、緩解梯度消失或爆炸；Flatten 把三維特徵圖攤平成一維向量再送入全連結層。</div>
+
+  <h3>Early Stopping（兩份試題共出現 4 題）</h3>
+  <div class="panel">
+    <div class="strat" id="esStrat"></div>
+    <div style="margin-top:16px"><div class="verdict" id="esV">選一個做法看看</div><div id="esWhy" class="hint"></div></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>項目</th><th>正確作法</th><th>官方誘答</th></tr>
+      <tr><td><b>監控對象</b></td><td><b>驗證集損失</b></td><td>訓練集損失最低點（→ 必然過擬合）；測試集損失（→ <b>洩漏測試資訊、破壞評估獨立性</b>）</td></tr>
+      <tr><td><b>停止條件</b></td><td>連續 patience 輪未改善才停</td><td>一看到上升就立刻停（被單次偶發波動誤判）</td></tr>
+      <tr><td><b>patience 太短</b></td><td>—</td><td>提早停止 → <b>欠擬合</b></td></tr>
+      <tr><td><b>patience 太長</b></td><td>—</td><td>仍然過擬合</td></tr>
+      <tr><td><b>技術性質</b></td><td><b>訓練策略</b>，不修改模型架構</td><td>誤以為它能篩選特徵或降低參數量</td></tr>
+    </table>
+  </div>
+  <ul class="prose">
+    <li><b>114Q2 第 31 題</b>：驗證損失呈<b>週期性上升與下降</b> → 監控驗證集損失並設定適度的 patience，在連續多輪未改善後再停止。</li>
+    <li><b>114Q2 第 26 題</b>：哪一種<b>不屬於</b>降低模型複雜度的防過擬合作法 → <b>擴增輸入特徵變數以提升模型表達能力</b>（反而加重過擬合）。L1／L2、Dropout、Early Stopping 三者都屬於。</li>
+    <li><b>114Q2 第 29 題</b>：設備工況隨時間變化、固定驗證集已無法反映現況 → <b>時間序列交叉驗證或滑動視窗驗證</b>。誘答「不使用驗證集、全部資料拿去訓練、靠 Early Stopping 控制」—— <b>沒有驗證集就沒有早停的依據</b>，自相矛盾。</li>
+  </ul>
+
+  <h3>容易被誤歸類的三個技術</h3>
+  <div class="panel">
+    <div class="tabs" id="misTabs"></div>
+    <div id="misBody"></div>
+  </div>
+  <p class="prose hint">補充：<b>115Q1 第 16 題</b>把正則化延伸到樹模型 —— XGBoost 相較傳統 GBDT 的關鍵改良，是<b>在目標函數中加入樹的複雜度懲罰項（葉節點數量乘上 gamma，再加上葉節點權重的 L2 正則化）</b>，使每次分裂都要在增益與複雜度之間權衡。</p>
+</section>
+
+<!-- 51.4 -->
+<section id="s4">
+  <div class="sec-head"><span class="sec-no">51.4</span><h2>訓練曲線判讀（附圖題必考）</h2></div>
+  <p class="lead">繪圖慣例（114Q2 第 50 題直接考）：<b>實線＝訓練，虛線＝驗證</b>，例如 <code>"r-"</code>（紅實線）配 <code>"r--"</code>（紅虛線）。</p>
+  <div class="panel">
+    <h3 style="margin-top:0">看圖診斷：這是什麼病？</h3>
+    <p class="hint">按「換一張圖」，判讀曲線後點選病名。（曲線為示意）</p>
+    <svg id="dxSvg" viewBox="0 0 640 230" role="img" aria-label="訓練曲線"></svg>
+    <div class="legend"><span><i style="background:var(--bad)"></i>實線＝訓練 <code>"r-"</code></span><span><i style="background:transparent;border:2px dashed var(--bad)"></i>虛線＝驗證 <code>"r--"</code></span></div>
+    <div class="row" style="margin-top:10px" id="dxOpts"></div>
+    <p class="feedback" id="dxFb" aria-live="polite"></p>
+    <div class="row"><button class="btn primary" id="dxNext">換一張圖</button><span class="hint" id="dxScore"></span></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>觀察到的現象</th><th>病名</th><th>優先對策</th></tr>
+      <tr><td>訓練損失↓，<b>驗證損失↑</b>（或驗證準確率回落）</td><td><b>過擬合</b></td><td>資料增強、L1／L2、Dropout、Early Stopping、簡化模型</td></tr>
+      <tr><td>訓練與驗證<b>都高、都平</b></td><td><b>欠擬合</b></td><td>加深加寬、減小正則化強度、延長訓練、改進特徵</td></tr>
+      <tr><td><b>訓練損失本身劇烈震盪</b></td><td><b>學習率過大</b></td><td>降學習率、改用 Adam、梯度裁剪</td></tr>
+      <tr><td>兩線都緩慢下降、遲遲不收斂</td><td>學習率過小</td><td>提高學習率、改自適應優化器</td></tr>
+      <tr><td><b>加深網路後訓練損失反而更高</b></td><td><b>最佳化問題（梯度消失）</b></td><td>殘差連接（Skip Connection）、BatchNorm、ReLU 系激活</td></tr>
+    </table>
+  </div>
+  <div class="callout exam"><b>114Q2 第 50 題：</b>正解組合「空格 1 填 <code>"r-"</code>、空格 2 填 <code>"r--"</code>」。同題誘答敘述「驗證損失明顯較訓練損失減少更明顯」——<b>與一般過擬合趨勢相反</b>，凡含此敘述的組合一律錯。正常訓練中訓練損失總是降得比驗證損失快、位置比驗證損失低。<br><br><b>115Q1 第 48 題（附圖）：</b>Epochs=6 時訓練 0.81 明顯大於驗證 0.72，兩線分離且訓練持續領先 → <b>過擬合</b>。反駁誘答：學習率太低會讓<b>兩條曲線都上升緩慢並貼在一起</b>；批次大小太大主要影響梯度雜訊與每輪更新次數，不會直接造成分離；欠擬合是<b>訓練與驗證同時偏低</b>，但此處訓練已達 0.81 且仍在上升。<br><br><b>115Q1 第 17 題：</b>3 層 CNN 升級為 16 層後<b>訓練損失反而高於 3 層版本</b> → 問題出在<b>最佳化</b>而非泛化，是<b>梯度消失</b>，對策為 ResNet 殘差連接。把 ReLU 改成 Sigmoid 是反向操作（Sigmoid 飽和區導數更小，梯度消失更嚴重）。</div>
+</section>
+
+<!-- 51.5 -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-no">51.5</span><h2>資料增強與重取樣</h2></div>
+  <p class="lead">增強手法必須<b>保持標籤不變</b>。來重現 115Q1 第 41 題：OCR 手寫字母訓練加了 <code>RandomHorizontalFlip(p=0.5)</code>。</p>
+  <div class="panel">
+    <pre class="code">transforms.Compose([
+    transforms.RandomHorizontalFlip(p=0.5),   # ← 問題在這裡
+    transforms.RandomRotation(15),
+    transforms.ColorJitter(brightness=0.2),
+    transforms.ToTensor(),
+])</pre>
+    <div class="glyphs" id="glyphs"></div>
+    <div class="row" style="margin-top:12px;justify-content:center"><button class="btn primary" id="flipBtn" aria-pressed="false">套用水平翻轉</button><button class="btn" id="rotBtn" aria-pressed="false">改套 RandomRotation(15)</button></div>
+    <p class="hint" id="flipNote" style="margin:10px 0 0" aria-live="polite"></p>
+  </div>
+  <p class="prose">為什麼「驗證損失看起來還持續下降」？<b>訓練與驗證套用了同一組轉換</b>，錯誤在驗證集上被一起複製，問題要到部署後才爆發。其餘誘答：<code>RandomRotation(15)</code> 只旋轉 15 度不會讓字母互換身分、<code>ColorJitter</code> 僅調整亮度不改變筆畫形狀語意、<code>ToTensor()</code> 本來就應該放在 PIL 影像的幾何變換<b>之後</b>。</p>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>資料型態</th><th>常見手法</th><th>危險手法（會破壞標籤語意）</th></tr>
+      <tr><td><b>影像</b></td><td>旋轉、平移、翻轉、縮放、裁切、加雜訊、調亮度</td><td><b>水平翻轉</b>用於字元／文字／具方向性的標的</td></tr>
+      <tr><td><b>文字</b></td><td>同義字替換、隨機刪詞、分詞打亂、句序調整</td><td>替換掉否定詞、專有名詞、數量詞</td></tr>
+      <tr><td><b>音訊</b></td><td>變速、音量變化、加背景噪音、隨機靜音片段</td><td>變速過度改變語意或音高判定</td></tr>
+    </table>
+  </div>
+  <div class="callout"><b>三條增強鐵律：</b>① 增強<b>只套用在訓練集</b>，驗證／測試集要保持原始分布，否則評估會失真。② 增強手法必須<b>保持標籤不變（label-preserving）</b>，否則是在製造雜訊標註。③ 大規模增強會提高計算成本，不是越多越好，要依應用場景選擇。</div>
+
+  <h3>重取樣三法：不平衡資料怎麼補？</h3>
+  <div class="panel">
+    <p class="hint">原始資料：多數類 97、少數類 3（確診病例 3%，114Q2 第 19 題情境）。切換方法看兩類的「份量」怎麼變。</p>
+    <div class="tabs" id="rsTabs"></div>
+    <div id="rsBars"></div>
+    <div class="kv" id="rsKv" style="margin-top:10px"></div>
+  </div>
+  <div class="callout exam"><b>114Q2 第 19 題：</b>正樣本僅佔 3%，哪個作法<b>最不適合</b>提升少數類預測力 → <b>使用準確率（Accuracy）作為評估指標</b>。全部預測為多數類就能拿到 97% 準確率。SMOTE 過採樣、調整類別權重、欠採樣多數類都是恰當手段。<b>不平衡資料要看 Recall、F1、AUC-PR，不看 Accuracy。</b><br><b>115Q1 第 26 題：</b>時間序列的<b>滑動窗口（Sliding Window）不是資料增強</b>。它把 t-1…t-k 的歷史觀測值攤平成同一筆樣本的多個欄位，建立的是<b>滯後特徵（Lag Features）</b>；樣本資訊並未增加，特徵維度反而變高。</div>
+</section>
+
+<!-- 51.6 -->
+<section id="s6">
+  <div class="sec-head"><span class="sec-no">51.6</span><h2>模型壓縮與加速技術</h2></div>
+  <p class="lead">最常被混淆的是：<b>壓縮</b>（模型變小）、<b>訓練加速</b>（訓得更快、不改模型本體）、<b>微調</b>（改變能力、不是大小）。先分類看看。</p>
+  <div class="panel">
+    <div class="sort" id="cmpSort"></div>
+    <p class="feedback" id="cmpFb" aria-live="polite"></p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>目的</th><th>代表技術</th><th>一句話</th></tr>
+      <tr><td><b>壓縮</b>（模型變小）</td><td>知識蒸餾、剪枝、量化、低秩分解</td><td>改變模型本體</td></tr>
+      <tr><td><b>訓練加速</b>（訓得更快／更省顯存）</td><td>混合精度、梯度累積、分散式訓練</td><td><b>不改變模型本體</b></td></tr>
+      <tr><td><b>微調</b>（讓模型適應新任務）</td><td>Full Fine-tuning、<b>LoRA</b>、特徵萃取</td><td>改變的是<b>能力</b>，不是大小</td></tr>
+    </table>
+  </div>
+
+  <h3>四大壓縮技術（點卡片翻面，務必背表）</h3>
+  <div class="cards" id="zipCards"></div>
+  <div class="tbl-wrap" style="margin-top:14px">
+    <table>
+      <tr><th>技術</th><th>改變的是什麼</th><th>需要重新訓練？</th><th>典型收益</th><th>風險</th></tr>
+      <tr><td><b>知識蒸餾</b></td><td><b>換成一個更小的學生模型</b>，以教師的軟標籤訓練</td><td><b>必須訓練</b>（教師＋學生兩個模型）</td><td>體積小、推論快、精度接近教師</td><td>額外訓練成本；<b>教師的偏誤會被繼承</b></td></tr>
+      <tr><td><b>剪枝</b></td><td><b>參數數量／稀疏度</b></td><td>通常需微調以恢復精度</td><td>縮小儲存需求、降低推論延遲</td><td>剪過頭精度明顯下降</td></tr>
+      <tr><td><b>量化</b></td><td><b>數值精度</b>（FP32 → INT8）</td><td><b>可不重訓</b>（PTQ）；QAT 則需要</td><td>大幅縮小體積、適配 NPU／Edge TPU</td><td>直接量化可能掉精度</td></tr>
+      <tr><td><b>張量／低秩分解</b></td><td><b>矩陣結構</b>（拆為多個低秩矩陣相乘）</td><td>通常需微調</td><td>減少乘加運算量</td><td>分解的秩不易選擇</td></tr>
+    </table>
+  </div>
+  <div class="callout exam"><b>115Q1 第 21 題：</b>32-bit 浮點轉 8-bit 整數、<b>且不重新訓練</b> → <b>模型量化</b>，精確說是<b>訓練後量化（PTQ）</b>。誘答切割正好是上表四列：蒸餾必然要訓練、剪枝改參數數量、張量分解屬結構層面。<br><b>官方指引附題：</b>蒸餾的主要目的是<b>將大型模型的知識轉移至小型模型</b>。誘答「降低參數數量使模型更小」是<b>剪枝</b>的定義；蒸餾的小模型是另外訓練出來的，不是把大模型削小。</div>
+
+  <h3>量化兩條路線、剪枝兩種型態</h3>
+  <div class="panel">
+    <div class="tabs" id="qpTabs"></div>
+    <div id="qpBody"></div>
+  </div>
+  <p class="prose hint">補充：不同層級對量化的敏感度不一（首層與末層通常較敏感），實務上需逐層設計，不會全網路一視同仁。</p>
+
+  <h3>訓練期加速：梯度累積逐步看</h3>
+  <div class="panel">
+    <p class="hint">顯存只塞得下 micro-batch = 32，想要等效批次 128 → accumulation_steps = 4。按「跑一個 micro-batch」。</p>
+    <div class="acc" id="acc"></div>
+    <div class="row"><button class="btn primary" id="accNext">跑一個 micro-batch</button><button class="btn" id="accReset">重設</button></div>
+    <p class="hint" id="accNote" style="margin:8px 0 0" aria-live="polite"></p>
+  </div>
+  <div class="compare">
+    <div><div class="big">混合精度訓練</div>前向／反向用 <b>FP16</b>（快、省顯存），主權重與參數更新保留 <b>FP32</b>（穩）<br>收益：加速、省記憶體 → 可用更大批次或更深模型<br>前提：需硬體支援（如 NVIDIA Tensor Cores）<br><span class="hint">風險：低精度易數值不穩，須搭配「梯度縮放（Gradient / Loss Scaling）」把損失先放大再反向傳播，避免微小梯度在 FP16 下下溢為 0</span></div>
+    <div><div class="big">梯度累積</div>連續跑 N 個小批次，梯度只累加不更新；第 N 次才更新一次<br>等效批次 = micro_batch_size × accumulation_steps<br>收益：用小顯存換到大批次的梯度穩定性<br><span class="hint">代價：訓練時間變長（只省顯存、不省計算）；BatchNorm 的統計量仍只看 micro-batch，並非完全等價</span></div>
+  </div>
+
+  <h3>LoRA 計算器（115Q1 第 35 題）</h3>
+  <div class="panel">
+    <p class="hint"><b>LoRA 不是壓縮技術</b>，屬參數高效微調（PEFT）：凍結原權重、只訓練低秩旁路矩陣，推論時模型沒有變小。情境：法律摘要模型常遺漏複雜條款，但 GPU 顯存已近上限。可訓練參數量 ≈ rank × 套用層數（示意單位）。</p>
+    <div class="row" style="justify-content:space-between"><b>LoRA rank</b><span id="rkLab" style="font-weight:700">16</span></div>
+    <input type="range" id="rk" min="2" max="32" step="2" value="16" aria-label="LoRA rank">
+    <div class="row" style="justify-content:space-between"><b>套用層數</b><span id="lyLab" style="font-weight:700">8</span></div>
+    <input type="range" id="ly" min="2" max="32" step="2" value="8" aria-label="套用層數">
+    <div class="bar"><span>可訓練參數（顯存）</span><div class="track"><div class="fill" id="loFill"></div></div><span class="num" id="loNum"></span></div>
+    <div class="bar"><span>微調覆蓋廣度</span><div class="track"><div class="fill" id="loCov" style="background:var(--img)"></div></div><span class="num" id="loCovN"></span></div>
+    <div class="row" style="margin-top:6px"><button class="btn" id="loA">原設定 rank 16 × 8 層</button><button class="btn" id="loB">正解：rank 4 × 32 層</button><button class="btn" id="loC">誘答：提高 rank 到 32</button></div>
+    <p class="hint" id="loNote" style="margin:8px 0 0"></p>
+  </div>
+  <div class="callout exam"><b>115Q1 第 35 題：</b>正解是<b>降低 LoRA rank 但套用到更多層，保持 trainable 總參數不變</b>（從只改 Q、V 擴及 K、O 與前饋層），廣度提升而顯存不增。提高 rank 會直接增加可訓練參數與優化器狀態；改完整微調顯存需求遠更高；單純降 rank 只是削弱表達能力。<br><b>115Q1 第 42 題：</b>程式把所有既有權重 <code>requires_grad = False</code> 凍結主幹、只替換並訓練最後的 <code>model.fc</code> → <b>特徵萃取（Feature Extraction）</b>。不是全面微調（全層一起更新）、不是知識蒸餾（需要教師＋學生）、也不是零樣本學習（完全不用目標任務資料訓練）。</div>
+</section>
+
+<!-- 51.7 -->
+<section id="s7">
+  <div class="sec-head"><span class="sec-no">51.7</span><h2>官方考過什麼</h2></div>
+  <p class="lead">114-2 與 115-1 兩份官方公告試題（共 100 題）中，可歸為「模型調整與優化」的共 <b>23 題</b>，是 L23 佔比最高的知識點之一；且<b>附圖題有 5 題</b>（114Q2-39、114Q2-50、115Q1-41、115Q1-47、115Q1-48）集中在這裡，密度是全科最高。</p>
+  <div id="examList"></div>
+  <p class="prose hint">（上表 23 題另需搭配 <b>115Q1-48</b>「訓練曲線 0.81 vs 0.72 判讀為過擬合」一併複習，該題已在 51.4 詳述，性質上與 L23305 模型評估重疊。）</p>
+  <div class="callout exam">準備方向：先把「訓練曲線判讀」與「壓縮三兄弟」兩張表練到反射，再補超參數與正則化的細節。</div>
+</section>
+
+<!-- 51.8 -->
+<section id="s8">
+  <div class="sec-head"><span class="sec-no">51.8</span><h2>易錯與陷阱</h2></div>
+  <p class="lead">逐條確認自己真的懂了再打勾（打勾狀態會記在這台裝置上）。</p>
+  <div class="traps" id="traps"></div>
+  <p class="hint" id="trapCount" style="margin-top:10px"></p>
+
+  <h3>情境測驗</h3>
+  <div class="qcard" id="quiz"></div>
+
+  <h3>延伸練習</h3>
+  <p class="prose"><b>L23 主題庫 326 題：</b>篩選「超參數／正則化／Early Stopping／資料增強／模型壓縮」相關題目，附圖題與情境判斷題要優先刷。<br><b>L21 主題庫 311 題：</b>L21 的生成式 AI 與微調題（LoRA、PEFT、知識蒸餾）可與本節 51.6 的三欄辨析表互相對照，避免把「壓縮」與「微調」混用。<br><b>各科歷屆 100 題：</b>與 <a href="L23303_training_evaluation.html">L23303</a>（模型選擇與訓練）、L23305（模型評估）連著複習 —— 交叉驗證、評估指標與本節的早停、重取樣經常在同一題情境中混合出現。</p>
+</section>
+</main>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce){const m=document.querySelector('#heroSvg .movers');if(m)m.remove();}
+
+/* ---------- generic matcher ---------- */
+function matcher(root,fb,left,right,doneMsg){
+  let sel=null,done=0;
+  const L=document.createElement('div');L.className='col';
+  const R=document.createElement('div');R.className='col';
+  left.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;
+    b.innerHTML=it.html;if(it.c)b.style.setProperty('--c',it.c);
+    b.onclick=()=>{if(b.classList.contains('done'))return;L.querySelectorAll('.mitem').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;fb.textContent='';fb.className='feedback';};
+    L.appendChild(b);
+  });
+  right.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;b.innerHTML=it.html;
+    b.onclick=()=>{
+      if(b.classList.contains('done'))return;
+      if(!sel){fb.textContent='請先點左邊一個項目。';fb.className='feedback';return;}
+      if(sel.dataset.k===b.dataset.k){
+        const c=sel.style.getPropertyValue('--c');
+        [sel,b].forEach(x=>{x.classList.remove('sel');x.classList.add('done');if(c)x.style.setProperty('--c',c);});
+        fb.textContent='✓ '+(it.ok||'答對了！');fb.className='feedback ok';sel=null;done++;
+        if(done===left.length){fb.textContent='✓ 全部配對完成！'+doneMsg;}
+      }else{
+        b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');
+        fb.textContent='✗ '+(it.bad||'不太對，再想想它的資料結構特性。');fb.className='feedback bad';
+      }
+    };
+    R.appendChild(b);
+  });
+  root.append(L,R);
+}
+/* ---------- traps (generic) ---------- */
+function trapList(T,key){
+  let saved=[];try{saved=JSON.parse(localStorage.getItem(key)||'[]')||[];}catch(e){saved=[];}
+  T.forEach(([a,b],i)=>{
+    const l=document.createElement('label');const c=saved.includes(i);if(c)l.classList.add('chk');
+    l.innerHTML=`<input type="checkbox" ${c?'checked':''}><div><em>${a}</em><br><span>${b}</span></div>`;
+    l.querySelector('input').onchange=e=>{const on=e.target.checked;l.classList.toggle('chk',on);saved=on?[...new Set([...saved,i])]:saved.filter(x=>x!==i);try{localStorage.setItem(key,JSON.stringify(saved));}catch(err){}count();};
+    $('#traps').appendChild(l);
+  });
+  function count(){$('#trapCount').textContent=`已確認 ${saved.length}／${T.length} 條`;}
+  count();
+}
+/* ---------- quiz (generic) ---------- */
+function runQuiz(Q,msgs){
+  let i=0,score=0;const box=$('#quiz');
+  const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+  function show(){
+    if(i>=Q.length){
+      const msg=score>=Q.length-1?msgs[0]:score>=Math.ceil(Q.length*.65)?msgs[1]:msgs[2];
+      box.innerHTML=`<div class="progress"><i style="width:100%"></i></div><div class="qtext" style="font-size:24px;font-family:var(--serif)">得分 ${score}／${Q.length}</div><p>${msg}</p><button class="btn primary" id="qr">重新測驗</button>`;
+      $('#qr').onclick=()=>{i=0;score=0;show();};return;
+    }
+    const [q,opts,ex]=Q[i];
+    const order=shuffle(opts.map((o,k)=>({o,k})));
+    box.innerHTML=`<div class="progress"><i style="width:${i/Q.length*100}%"></i></div><div class="qtop"><span>第 ${i+1}／${Q.length} 題</span><span>得分 ${score}</span></div><div class="qtext">${q}</div><div class="opts">${order.map(x=>`<button class="opt" data-k="${x.k}">${x.o}</button>`).join('')}</div><div class="expl" id="qe"></div><div class="row" style="margin-top:14px;justify-content:flex-end"><button class="btn primary" id="qn" style="display:none">${i===Q.length-1?'看結果':'下一題'}</button></div>`;
+    box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.k==='0';if(ok)score++;
+      box.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.k==='0')x.classList.add('right');});
+      if(!ok)b.classList.add('wrongpick');
+      const e=$('#qe');e.innerHTML=(ok?'<b style="color:var(--ok)">答對了。</b>':'<b style="color:var(--bad)">這題要小心。</b>')+ex;e.classList.add('show');
+      $('#qn').style.display='';$('#qn').focus();
+    });
+    $('#qn').onclick=()=>{i++;show();};
+  }
+  show();
+}
+/* ---------- exam list (generic) ---------- */
+function examList(rows){rows.forEach(([n,k,q,a])=>{$('#examList').insertAdjacentHTML('beforeend',`<details><summary><span class="tag">${n}</span>${k}</summary><div class="body"><p style="margin:0 0 6px"><span class="hint">怎麼問：</span>${q}</p><p style="margin:0"><span class="hint">正解思路：</span>${a}</p></div></details>`);});}
+/* ---------- flip cards (generic) ---------- */
+function flipCards(root,list){list.forEach(([n,o,d])=>{const b=document.createElement('button');b.className='flip';b.setAttribute('aria-pressed','false');b.innerHTML=`<div class="in"><div class="f"><strong>${n}</strong><span>${o}</span><span style="margin-top:auto;font-size:12.5px">點我翻面</span></div><div class="b">${d}</div></div>`;b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');root.appendChild(b);});}
+/* ---------- tabs (generic) ---------- */
+function tabSet(tabRoot,bodyRoot,items){items.forEach((x,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=x[0];b.onclick=()=>s(i);tabRoot.appendChild(b);});function s(i){tabRoot.querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));bodyRoot.innerHTML=items[i][1];}s(0);}
+/* ---------- hero: loss landscape + 3 learners ---------- */
+(function(){
+  const X=w=>360+w*150,Y=v=>250-v*48;
+  let p='';for(let i=0;i<=120;i++){const w=-2.2+4.4*i/120;p+=(i?'L':'M')+X(w).toFixed(1)+' '+Y(w*w).toFixed(1);}
+  let h=`<path d="${p}" fill="none" stroke="var(--line)" stroke-width="4"/><circle cx="${X(0)}" cy="${Y(0)}" r="7" fill="var(--ok)"/>`;
+  const paths=[['var(--bad)',.95,'過大'],['var(--ok)',.3,'適中'],['var(--warn)',.04,'過小']];
+  const ff='font-family="Noto Sans TC, sans-serif"';
+  paths.forEach(([c,lr,l],k)=>{let w=-1.9,pts=[w];for(let i=0;i<10;i++){w=w-lr*2*w;pts.push(w);}
+    const d=pts.map((v,i)=>(i?'L':'M')+X(v).toFixed(1)+' '+(Y(v*v)-k*4).toFixed(1)).join('');
+    h+=`<path d="${d}" fill="none" stroke="${c}" stroke-width="2" stroke-dasharray="5 4" opacity=".8"/>`;
+    if(!reduce)h+=`<circle r="8" fill="${c}"><animateMotion dur="${3+k*.4}s" repeatCount="indefinite" path="${d}" calcMode="linear"/></circle>`;
+    else h+=`<circle cx="${X(pts[10])}" cy="${Y(pts[10]**2)}" r="8" fill="${c}"/>`;
+    h+=`<rect x="${20}" y="${20+k*34}" width="16" height="16" rx="4" fill="${c}"/><text x="44" y="${33+k*34}" font-size="15" ${ff} fill="var(--ink)" font-weight="700">學習率${l}</text>`;});
+  h+=`<text x="${X(0)}" y="285" text-anchor="middle" font-size="14" ${ff} fill="var(--ok)" font-weight="700">損失最低點</text>`;
+  $('#heroSvg').innerHTML=h;
+})();
+
+/* ---------- generic sorter ---------- */
+function sorter(root,fb,cats,items,done){
+  let n=0;
+  items.forEach(([t,c,why])=>{
+    const d=document.createElement('div');d.className='sitem';
+    d.innerHTML=`<span>${t}</span><div class="row">${cats.map((k,i)=>`<button class="btn" data-i="${i}">${k}</button>`).join('')}</div><small style="display:none"></small>`;
+    d.querySelectorAll('.btn').forEach(b=>b.onclick=()=>{
+      if(d.classList.contains('ok'))return;
+      const ok=+b.dataset.i===c;d.classList.remove('no');void d.offsetWidth;
+      d.classList.add(ok?'ok':'no');
+      b.setAttribute('aria-pressed','true');
+      const s=d.querySelector('small');s.style.display='block';s.textContent=(ok?'✓ ':'✗ 應為「'+cats[c]+'」：')+why;
+      if(ok){n++;d.querySelectorAll('.btn').forEach(x=>{if(x!==b)x.disabled=true;x.style.opacity=x===b?1:.35;});}
+      fb.textContent=n===items.length?'✓ 全部分類正確！'+done:`已正確分類 ${n}／${items.length}`;fb.className='feedback '+(n===items.length?'ok':'');
+    });
+    root.appendChild(d);
+  });
+}
+sorter($('#hpSort'),$('#hpFb'),['超參數','不是超參數'],[
+  ['學習率 Learning Rate',0,'訓練前人為指定。'],
+  ['訓練後產生的權重值',1,'權重是由資料學出來的「參數」。'],
+  ['批次大小 Batch Size',0,'訓練前人為指定。'],
+  ['每個神經元的輸出結果',1,'是前向計算的產物。'],
+  ['Dropout 率',0,'訓練前人為指定。'],
+  ['梯度變化值',1,'是反向傳播的計算過程量。'],
+  ['正則化係數 λ、patience、層數',0,'都是訓練前設定的。']
+],'這正是 114Q2 第 12 題的判準。');
+
+/* ---------- hyperparameter symptoms ---------- */
+(function(){
+  const H=[
+    ['學習率','損失震盪、發散、梯度爆炸','收斂極慢、卡在局部極小','「收斂不穩定」「損失來回跳」'],
+    ['批次大小','梯度穩但泛化變差、吃爆 GPU 記憶體','梯度雜訊大、訓練震盪、迭代次數暴增','「GPU 利用率」「吞吐量」'],
+    ['網路深度／寬度','參數爆炸、過擬合、梯度消失','表達力不足、欠擬合','「加深後訓練損失反而更高」'],
+    ['正則化係數 λ','權重被壓太小 → 欠擬合','限制太鬆 → 過擬合','「同時要防過擬合又要選特徵」'],
+    ['Dropout 率 p','學不起來（資訊被丟太多）','幾乎沒有抑制過擬合的效果','「訓練損失降不下來」'],
+    ['Early Stopping patience','仍會過擬合','提早停止 → 欠擬合','「驗證損失週期性波動」']
+  ];
+  let cur=0,big=true;
+  H.forEach((h,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=h[0];b.onclick=()=>{cur=i;render();};$('#hpTabs').appendChild(b);});
+  function render(){
+    document.querySelectorAll('#hpTabs .btn').forEach((b,j)=>b.setAttribute('aria-pressed',j===cur));
+    $('#hpBig').setAttribute('aria-pressed',big);$('#hpSmall').setAttribute('aria-pressed',!big);
+    const h=H[cur];
+    $('#hpBody').innerHTML=`<div class="verdict" style="color:${big?'var(--bad)':'var(--warn)'}">${h[0]}設${big?'太大':'太小'}</div><p style="margin:6px 0">${big?h[1]:h[2]}</p><p class="hint" style="margin:0">情境題關鍵字：${h[3]}</p>`;
+  }
+  $('#hpBig').onclick=()=>{big=true;render();};$('#hpSmall').onclick=()=>{big=false;render();};
+  render();
+})();
+
+/* ---------- learning rate curves ---------- */
+(function(){
+  const F={
+    big:[e=>.9+.35*Math.sin(e*1.4)*Math.min(1,e/3)+e*.012,'學習率過大：參數在最低點兩側反覆跨越 → 損失震盪；嚴重時越跑越高（發散）。對策：降學習率、改用 Adam、梯度裁剪。','var(--bad)'],
+    ok:[e=>1.6*Math.exp(-e/6)+.2,'學習率適中：平滑下降並穩定收斂。','var(--ok)'],
+    small:[e=>1.8-e*.022,'學習率過小：每步太短，跑很久還在半山腰（還在下降…）。','var(--warn)'],
+    sched:[e=>e<15?1.6*Math.exp(-e/4)+.42+.08*Math.sin(e*2):.42*Math.exp(-(e-15)/8)+.12+.015*Math.sin(e*2),'退火／Scheduler：前期大學習率快速下降，第 15 輪後降低學習率細調，震盪消失、損失再往下探。','var(--txt)']
+  };
+  function draw(m){
+    document.querySelectorAll('#lrTabs .btn').forEach(b=>b.setAttribute('aria-pressed',b.dataset.m===m));
+    const [fn,note,c]=F[m],X=e=>40+e*14.5,Y=v=>195-v*85;
+    let p='';for(let e=0;e<=40;e++)p+=(e?'L':'M')+X(e).toFixed(1)+' '+Y(Math.max(0,Math.min(2.1,fn(e)))).toFixed(1);
+    let h=`<line x1="40" y1="10" x2="40" y2="195" stroke="var(--line)"/><line x1="40" y1="195" x2="630" y2="195" stroke="var(--line)"/><text x="46" y="22" font-size="12" fill="var(--muted)">訓練損失</text><text x="630" y="210" text-anchor="end" font-size="12" fill="var(--muted)">Epoch</text>`;
+    if(m==='sched')h+=`<line x1="${X(15)}" y1="10" x2="${X(15)}" y2="195" stroke="var(--muted)" stroke-dasharray="4 4"/><text x="${X(15)+6}" y="30" font-size="12" fill="var(--muted)">調降學習率</text>`;
+    h+=`<path d="${p}" fill="none" stroke="${c}" stroke-width="3"/>`;
+    $('#lrSvg').innerHTML=h;$('#lrNote').textContent=note;
+  }
+  document.querySelectorAll('#lrTabs .btn').forEach(b=>b.onclick=()=>draw(b.dataset.m));
+  draw('big');
+})();
+
+/* ---------- search strategies ---------- */
+(function(){
+  let mode='grid',sd=5;
+  const score=x=>Math.exp(-((x-.63)**2)/.006)*.85+.1;
+  function pts(){
+    let s=sd*7919;const r=()=>{s=(s*16807)%2147483647;return (s-1)/2147483646;};
+    if(mode==='grid'){const o=[];[.2,.5,.8].forEach(x=>[.2,.5,.8].forEach(y=>o.push([x,y])));return o;}
+    if(mode==='rand')return Array.from({length:9},()=>[.05+.9*r(),.05+.9*r()]);
+    const o=[[.2,.5],[.5,.3],[.8,.7]];
+    for(let i=0;i<6;i++){const best=o.reduce((a,p)=>score(p[0])>score(a[0])?p:a);o.push([Math.max(.05,Math.min(.95,best[0]+(r()-.5)*.22/(1+i*.6))),.1+.8*r()]);}
+    return o;
+  }
+  function draw(){
+    document.querySelectorAll('#srTabs .btn').forEach(b=>b.setAttribute('aria-pressed',b.dataset.m===mode));
+    const P=pts(),X=x=>80+x*480,Y=y=>270-y*170;
+    let h=`<rect x="80" y="100" width="480" height="170" fill="var(--surface2)" rx="8"/>`;
+    let c='';for(let i=0;i<=100;i++){const x=i/100;c+=(i?'L':'M')+X(x).toFixed(1)+' '+(92-score(x)*80).toFixed(1);}
+    h+=`<path d="${c}" fill="none" stroke="var(--ok)" stroke-width="2.5"/><text x="76" y="20" text-anchor="end" font-size="12" fill="var(--muted)">分數</text>`;
+    h+=`<text x="320" y="292" text-anchor="middle" font-size="12" fill="var(--muted)">重要超參數（如學習率）→</text><text x="70" y="185" text-anchor="end" font-size="12" fill="var(--muted)">不重要</text><text x="70" y="200" text-anchor="end" font-size="12" fill="var(--muted)">參數</text>`;
+    const xs=new Set();
+    P.forEach((p,i)=>{xs.add(p[0].toFixed(2));h+=`<line x1="${X(p[0])}" y1="${Y(p[1])}" x2="${X(p[0])}" y2="${92-score(p[0])*80}" stroke="var(--txt)" stroke-dasharray="2 4" opacity=".5"/><circle cx="${X(p[0])}" cy="${Y(p[1])}" r="7" fill="var(--txt)"/>${mode==='bayes'?`<text x="${X(p[0])}" y="${Y(p[1])+4}" text-anchor="middle" font-size="10" fill="#fff">${i+1}</text>`:''}<circle cx="${X(p[0])}" cy="${92-score(p[0])*80}" r="4" fill="var(--txt)"/>`;});
+    $('#srSvg').innerHTML=h;
+    const best=Math.max(...P.map(p=>score(p[0])));
+    $('#srInfo').textContent=mode==='grid'?`9 次試驗，但重要參數只試到 ${xs.size} 個不同值 —— 另外 6 次浪費在不重要的維度上。最佳分數 ${best.toFixed(2)}。參數越多，組合呈指數成長。`
+      :mode==='rand'?`9 次試驗，重要參數試到 ${xs.size} 個不同值，涵蓋範圍更廣。最佳分數 ${best.toFixed(2)}（不保證命中，可按「重新抽樣」）。`
+      :`前 3 次探索後，依已試結果決定下一組（數字是順序），越試越往好區域集中。最佳分數 ${best.toFixed(2)}。代價：序列進行、不易平行。`;
+    $('#srAgain').style.display=mode==='grid'?'none':'';
+  }
+  document.querySelectorAll('#srTabs .btn').forEach(b=>b.onclick=()=>{mode=b.dataset.m;draw();});
+  $('#srAgain').onclick=()=>{sd++;draw();};
+  draw();
+})();
+
+/* ---------- optimizer race ---------- */
+(function(){
+  const g=(x,y)=>[.1*x,4*y];
+  const O={
+    sgd:{n:'SGD',c:'var(--muted)',run(){let x=-9,y=1.6;const o=[[x,y]];for(let i=0;i<60;i++){const[a,b]=g(x,y);x-=.46*a;y-=.46*b;o.push([x,y]);}return o;}},
+    mom:{n:'Momentum',c:'var(--aud)',run(){let x=-9,y=1.6,vx=0,vy=0;const o=[[x,y]];for(let i=0;i<60;i++){const[a,b]=g(x,y);vx=.85*vx+.08*a;vy=.85*vy+.08*b;x-=vx;y-=vy;o.push([x,y]);}return o;}},
+    rms:{n:'RMSProp',c:'var(--img)',run(){let x=-9,y=1.6,sx=0,sy=0;const o=[[x,y]];for(let i=0;i<60;i++){const[a,b]=g(x,y);sx=.9*sx+.1*a*a;sy=.9*sy+.1*b*b;x-=.25*a/(Math.sqrt(sx)+1e-8);y-=.25*b/(Math.sqrt(sy)+1e-8);o.push([x,y]);}return o;}},
+    adam:{n:'Adam',c:'var(--txt)',run(){let x=-9,y=1.6,mx=0,my=0,vx=0,vy=0;const o=[[x,y]];for(let t=1;t<=60;t++){const[a,b]=g(x,y);mx=.9*mx+.1*a;my=.9*my+.1*b;vx=.999*vx+.001*a*a;vy=.999*vy+.001*b*b;const mhx=mx/(1-.9**t),mhy=my/(1-.9**t),vhx=vx/(1-.999**t),vhy=vy/(1-.999**t);x-=.45*mhx/(Math.sqrt(vhx)+1e-8);y-=.45*mhy/(Math.sqrt(vhy)+1e-8);o.push([x,y]);}return o;}}
+  };
+  const on=new Set(['sgd','adam']);let shown=60,timer=null;
+  Object.keys(O).forEach(k=>{const b=document.createElement('button');b.className='btn';b.innerHTML=`<span class="chip" style="--c:${O[k].c}"><i class="dot"></i>${O[k].n}</span>`;b.setAttribute('aria-pressed',on.has(k));b.onclick=()=>{on.has(k)?on.delete(k):on.add(k);b.setAttribute('aria-pressed',on.has(k));draw(shown);};$('#optBtns').appendChild(b);});
+  const X=x=>560+x*58,Y=y=>130-y*62;
+  function draw(n){
+    let h='';for(let r=1;r<=6;r++)h+=`<ellipse cx="${X(0)}" cy="${Y(0)}" rx="${r*95}" ry="${r*7.6}" fill="none" stroke="var(--line)"/>`;
+    h+=`<rect x="0" y="0" width="640" height="260" fill="none"/>`;
+    h+=`<circle cx="${X(0)}" cy="${Y(0)}" r="7" fill="var(--ok)"/><circle cx="${X(-9)}" cy="${Y(1.6)}" r="6" fill="var(--ink)"/><text x="${X(-9)}" y="${Y(1.6)-12}" font-size="12" fill="var(--ink)" text-anchor="middle">起點</text>`;
+    const res=[];
+    Object.keys(O).forEach(k=>{if(!on.has(k))return;const P=O[k].run().slice(0,n+1).map(([x,y])=>[Math.max(-9.6,Math.min(1.3,x)),Math.max(-2,Math.min(2,y))]);
+      h+=`<path d="${P.map((p,i)=>(i?'L':'M')+X(p[0]).toFixed(1)+' '+Y(p[1]).toFixed(1)).join('')}" fill="none" stroke="${O[k].c}" stroke-width="2.2" stroke-linejoin="round"/>`;
+      const l=P[P.length-1];h+=`<circle cx="${X(l[0])}" cy="${Y(l[1])}" r="5" fill="${O[k].c}"/>`;
+      const full=O[k].run()[n];res.push(`${O[k].n} 距谷底 ${Math.hypot(full[0],full[1]).toFixed(2)}`);});
+    $('#optSvg').innerHTML=h;
+    $('#optInfo').textContent=`第 ${n} 步：`+(res.join('｜')||'請至少選一個優化器');
+  }
+  $('#optRun').onclick=()=>{clearInterval(timer);if(reduce){shown=60;draw(60);return;}shown=0;timer=setInterval(()=>{shown++;draw(shown);if(shown>=60)clearInterval(timer);},60);};
+  draw(60);
+})();
+flipCards($('#optCards'),[
+  ['Adagrad','記「稀疏」','累積梯度平方和逐參數縮放，適合稀疏特徵（NLP、文字）；缺點是學習率衰減到極小、訓練可能停滯。'],
+  ['RMSProp','記「移動平均」','改用梯度平方的指數移動平均，解決 Adagrad 衰減問題；適合 RNN、非平穩目標；本身不含動量。'],
+  ['Adam','記「一階＋二階都要」','Momentum ＋ RMSProp ＋ 偏差修正，幾乎所有深度學習的萬用預設。'],
+  ['Momentum','記「慣性」','累積過去梯度產生慣性，治梯度震盪；多一個動量係數要調（常 0.5～0.9）。']
+]);
+
+/* ---------- L1 vs L2 geometry ---------- */
+(function(){
+  let mode='l1';
+  const C=[260,185],R=62;
+  function solve(cx,cy){
+    // contour ellipse centered at (cx,cy) in weight space, metric diag(1,2.2); find point on constraint minimizing loss
+    let best=null,bv=1e9;
+    for(let i=0;i<720;i++){const t=i/720*2*Math.PI;let x,y;
+      if(mode==='l2'){x=Math.cos(t);y=Math.sin(t);}else{const c=Math.cos(t),s=Math.sin(t),d=Math.abs(c)+Math.abs(s);x=c/d;y=s/d;}
+      const v=(x-cx)**2+2.2*(y-cy)**2;if(v<bv){bv=v;best=[x,y];}}
+    return [best,bv];
+  }
+  function draw(){
+    document.querySelectorAll('#regTabs .btn').forEach(b=>b.setAttribute('aria-pressed',b.dataset.m===mode));
+    const t=+$('#ctr').value/100,cx=1.1+t*1.2,cy=1.9-t*1.5;
+    $('#ctrLab').textContent=`未正則化最佳解 ≈ (w₁ ${cx.toFixed(2)}, w₂ ${cy.toFixed(2)})`;
+    const [b,bv]=solve(cx,cy),P=([x,y])=>[C[0]+x*R,C[1]-y*R];
+    let h=`<line x1="${C[0]-200}" y1="${C[1]}" x2="${C[0]+300}" y2="${C[1]}" stroke="var(--line)"/><line x1="${C[0]}" y1="10" x2="${C[0]}" y2="295" stroke="var(--line)"/><text x="${C[0]+290}" y="${C[1]-6}" font-size="12" fill="var(--muted)" text-anchor="end">w₁</text><text x="${C[0]+8}" y="22" font-size="12" fill="var(--muted)">w₂</text>`;
+    h+=mode==='l2'?`<circle cx="${C[0]}" cy="${C[1]}" r="${R}" fill="color-mix(in srgb,var(--img) 22%,transparent)" stroke="var(--img)" stroke-width="2"/>`:`<path d="M${C[0]+R} ${C[1]} L${C[0]} ${C[1]-R} L${C[0]-R} ${C[1]} L${C[0]} ${C[1]+R}Z" fill="color-mix(in srgb,var(--img) 22%,transparent)" stroke="var(--img)" stroke-width="2"/>`;
+    const [ex,ey]=P([cx,cy]);
+    [1,1.6,2.2].forEach(k=>{const s=Math.sqrt(bv)*k;h+=`<ellipse cx="${ex}" cy="${ey}" rx="${(s*R).toFixed(1)}" ry="${(s*R/Math.sqrt(2.2)).toFixed(1)}" fill="none" stroke="var(--bad)" stroke-width="${k===1?2.5:1}" opacity="${k===1?1:.4}"/>`;});h=`<defs><clipPath id="rc"><rect width="640" height="300"/></clipPath></defs><g clip-path="url(#rc)">`+h+'</g>';
+    h+=`<circle cx="${ex}" cy="${ey}" r="5" fill="var(--bad)"/><text x="${ex+8}" y="${ey-8}" font-size="12" fill="var(--bad)">損失最低</text>`;
+    const [sx,sy]=P(b);const zero=Math.abs(b[0])<.02||Math.abs(b[1])<.02;
+    h+=`<circle cx="${sx}" cy="${sy}" r="8" fill="${zero?'var(--ok)':'var(--ink)'}"/><text x="${sx-12}" y="${sy+22}" font-size="12" fill="var(--ink)" text-anchor="end">解 (${b[0].toFixed(2)}, ${b[1].toFixed(2)})</text>`;
+    $('#regSvg').innerHTML=h;
+    $('#regNote').innerHTML=mode==='l1'?(zero?`菱形有<b>尖角落在座標軸上</b>，等高線最容易先碰到尖角 → 某個權重<b>剛好等於 0</b>。這就是 L1 產生稀疏模型、自動特徵選擇的原因。`:`此位置等高線碰到菱形的邊，兩個權重都不為 0；拖動滑桿，大多數位置都會先碰到尖角。`):`圓形沒有尖角，接觸點幾乎不會剛好落在座標軸上 → 權重<b>只縮小、不歸零</b>，所有特徵都保留。`;
+  }
+  document.querySelectorAll('#regTabs .btn').forEach(b=>b.onclick=()=>{mode=b.dataset.m;draw();});
+  $('#ctr').oninput=draw;draw();
+})();
+
+/* ---------- dropout ---------- */
+(function(){
+  const L=[3,5,5,2];let infer=false,batch=0,drop=[];
+  let s=11;const r=()=>{s=(s*16807)%2147483647;return (s-1)/2147483646;};
+  function roll(){drop=L.map((n,li)=>Array.from({length:n},()=>li>0&&li<3&&r()<.4));}
+  function draw(){
+    const X=li=>90+li*160,Y=(n,i)=>125+(i-(n-1)/2)*44;let h='';
+    for(let li=0;li<3;li++)for(let i=0;i<L[li];i++)for(let j=0;j<L[li+1];j++){const off=!infer&&(drop[li][i]||drop[li+1][j]);h+=`<line x1="${X(li)}" y1="${Y(L[li],i)}" x2="${X(li+1)}" y2="${Y(L[li+1],j)}" stroke="${off?'var(--line)':'var(--txt)'}" stroke-width="${off?1:1.6}" opacity="${off?.35:.7}" ${off?'stroke-dasharray="3 4"':''}/>`;}
+    L.forEach((n,li)=>{for(let i=0;i<n;i++){const off=!infer&&drop[li][i];h+=`<circle cx="${X(li)}" cy="${Y(n,i)}" r="16" fill="${off?'var(--surface2)':li===0?'var(--aud)':li===3?'var(--ok)':'var(--txt)'}" stroke="${off?'var(--bad)':'none'}" stroke-width="2" stroke-dasharray="${off?'4 3':''}"/>${off?`<text x="${X(li)}" y="${Y(n,i)+5}" text-anchor="middle" font-size="14" font-weight="700" fill="var(--bad)">0</text>`:''}`;}});
+    ['輸入','隱藏層 1','隱藏層 2','輸出'].forEach((t,li)=>h+=`<text x="${X(li)}" y="245" text-anchor="middle" font-size="12" fill="var(--muted)">${t}</text>`);
+    $('#dpSvg').innerHTML=h;
+    const k=drop.flat().filter(Boolean).length;
+    $('#dpInfo').textContent=infer?'推論模式：不再丟棄，全部神經元都參與（PyTorch 需呼叫 model.eval()）。':`訓練模式・第 ${batch} 個 batch：這次有 ${k} 個神經元輸出被設為 0（不是 1、不是刪掉整層）。`;
+    $('#dpMode').textContent=infer?'切換回訓練模式':'切換到推論模式';$('#dpMode').setAttribute('aria-pressed',infer);
+    $('#dpNext').disabled=infer;$('#dpNext').style.opacity=infer?.4:1;
+  }
+  $('#dpNext').onclick=()=>{batch++;roll();draw();};
+  $('#dpMode').onclick=()=>{infer=!infer;draw();};
+  batch=1;roll();draw();
+})();
+
+/* ---------- early stopping strat ---------- */
+(function(){
+  const S=[
+    ['監控訓練集損失最低點','✗ 必然過擬合','var(--bad)','訓練損失幾乎一直下降，等於沒在早停。'],
+    ['監控測試集損失','✗ 洩漏測試資訊','var(--bad)','破壞最終評估的獨立性。'],
+    ['驗證損失一上升就立刻停','✗ 被偶發波動誤判','var(--bad)','週期性波動下會過早停止 → 欠擬合。'],
+    ['全部資料拿去訓練，靠 Early Stopping 控制','✗ 自相矛盾','var(--bad)','沒有驗證集就沒有早停的依據（114Q2 第 29 題誘答）。'],
+    ['監控驗證集損失＋適度 patience','✓ 正解','var(--ok)','連續多輪未改善後再停止（114Q2 第 31 題）。Early Stopping 是訓練策略，不修改模型架構。']
+  ];
+  [1,4,0,3,2].forEach(i=>{const s=S[i];const b=document.createElement('button');b.textContent=s[0];b.setAttribute('aria-pressed','false');b.onclick=()=>{document.querySelectorAll('#esStrat button').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#esV').textContent=s[1];$('#esV').style.color=s[2];$('#esWhy').textContent=s[3];};$('#esStrat').appendChild(b);});
+})();
+tabSet($('#misTabs'),$('#misBody'),[
+  ['Batch Normalization','<div class="kv"><b>它到底是什麼</b><span><b>穩定化技術</b>：標準化各層輸入分布，緩解梯度消失／爆炸、允許更高學習率</span><b>常被誤認成</b><span>正則化（它只有<b>附帶的</b>輕微正則效果）</span></div>'],
+  ['Early Stopping','<div class="kv"><b>它到底是什麼</b><span><b>訓練策略</b></span><b>常被誤認成</b><span>模型架構修改</span></div>'],
+  ['資料增強','<div class="kv"><b>它到底是什麼</b><span><b>資料層面</b>的擴增</span><b>常被誤認成</b><span>模型層面的正則化（抑制過擬合的效果類似，但機制完全不同）</span></div>']
+]);
+
+/* ---------- curve diagnosis game ---------- */
+(function(){
+  const D=[
+    {k:'正常收斂',tr:e=>1.6*Math.exp(-e/6)+.25,va:e=>1.6*Math.exp(-e/6)+.33,why:'兩線貼近、同時走平 → 不必動。'},
+    {k:'過擬合',tr:e=>1.6*Math.exp(-e/6)+.1,va:e=>1.5*Math.exp(-e/6)+.38+Math.max(0,e-12)*.035,why:'訓練持續下降、驗證先降後升；分岔點就是 Early Stopping 該停的位置。對策：資料增強、L1／L2、Dropout、Early Stopping、簡化模型。'},
+    {k:'欠擬合',tr:e=>.6*Math.exp(-e/4)+1.25,va:e=>.6*Math.exp(-e/4)+1.35,why:'兩線都高、都不再下降 → 加深加寬、減小 λ、延長訓練、改進特徵。'},
+    {k:'學習率過大',tr:e=>1.1+.38*Math.sin(e*1.5)+e*.01,va:e=>1.25+.3*Math.sin(e*1.5+.6)+e*.012,why:'訓練損失本身劇烈震盪 → 降學習率、改用 Adam、梯度裁剪。'},
+    {k:'學習率過小',tr:e=>1.9-e*.016,va:e=>1.95-e*.015,why:'兩線都緩慢下降、遲遲不收斂 → 提高學習率、改自適應優化器。'}
+  ];
+  let cur=0,answered=false,score=0,total=0,order=[1,2,3,0,4],oi=0;
+  D.forEach((d,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=d.k;b.onclick=()=>pick(i,b);$('#dxOpts').appendChild(b);});
+  function draw(){
+    const d=D[cur],X=e=>40+e*14.5,Y=v=>200-v*85;
+    const p=fn=>{let s='';for(let e=0;e<=40;e++)s+=(e?'L':'M')+X(e).toFixed(1)+' '+Y(Math.max(0,Math.min(2.2,fn(e)))).toFixed(1);return s;};
+    $('#dxSvg').innerHTML=`<line x1="40" y1="8" x2="40" y2="200" stroke="var(--line)"/><line x1="40" y1="200" x2="630" y2="200" stroke="var(--line)"/><text x="46" y="20" font-size="12" fill="var(--muted)">loss</text><text x="630" y="218" text-anchor="end" font-size="12" fill="var(--muted)">epoch</text><path d="${p(d.tr)}" fill="none" stroke="var(--bad)" stroke-width="3"/><path d="${p(d.va)}" fill="none" stroke="var(--bad)" stroke-width="3" stroke-dasharray="9 6"/>`;
+    $('#dxOpts').querySelectorAll('.btn').forEach(b=>{b.disabled=false;b.style.opacity=1;b.style.borderColor='';});
+    $('#dxFb').textContent='這張圖是什麼病？';$('#dxFb').className='feedback';answered=false;
+  }
+  function pick(i,b){
+    if(answered)return;answered=true;total++;const ok=i===cur;if(ok)score++;
+    b.style.borderColor=ok?'var(--ok)':'var(--bad)';
+    $('#dxOpts').querySelectorAll('.btn').forEach((x,j)=>{if(j===cur)x.style.borderColor='var(--ok)';});
+    $('#dxFb').textContent=(ok?'✓ 正確：':'✗ 答案是「'+D[cur].k+'」：')+D[cur].why;$('#dxFb').className='feedback '+(ok?'ok':'bad');
+    $('#dxScore').textContent=`答對 ${score}／${total}`;
+  }
+  $('#dxNext').onclick=()=>{oi=(oi+1)%order.length;cur=order[oi];draw();};
+  cur=order[0];draw();
+})();
+
+/* ---------- OCR flip ---------- */
+(function(){
+  const G=[['b','d'],['d','b'],['p','q'],['q','p'],['a',null]];let mode='none';
+  function draw(){
+    $('#glyphs').innerHTML=G.map(([c,m])=>{const f=mode==='flip';const bad=f&&m;return `<div class="glyph ${f?'flip':''} ${bad?'bad':''}"><span class="ch" style="${mode==='rot'?'transform:rotate(15deg)':''}">${c}</span><small>標籤：${c}</small><small style="color:${bad?'var(--bad)':'var(--muted)'}">${f?(m?`看起來是 ${m} ✗`:'仍可辨識'):mode==='rot'?'仍是 '+c+' ✓':'原圖'}</small></div>`;}).join('');
+    $('#flipBtn').setAttribute('aria-pressed',mode==='flip');$('#rotBtn').setAttribute('aria-pressed',mode==='rot');
+    $('#flipNote').innerHTML=mode==='flip'?'<b>水平鏡像後 b 直接變成 d、p 變成 q，但標籤沒跟著改</b>，等於餵給模型大量錯誤標註 —— 這就是 b／d／p／q 錯誤率異常偏高的根本原因。（「a」翻轉後仍可辨識，但也已經不是正常字形。）':mode==='rot'?'旋轉 15 度不會讓字母互換身分，標籤語意仍然正確 —— 所以 RandomRotation(15) 是誘答。':'按按鈕套用轉換，注意每張圖下方的「標籤」不會跟著變。';
+  }
+  $('#flipBtn').onclick=()=>{mode=mode==='flip'?'none':'flip';draw();};
+  $('#rotBtn').onclick=()=>{mode=mode==='rot'?'none':'rot';draw();};
+  draw();
+})();
+
+/* ---------- resampling ---------- */
+(function(){
+  const M=[
+    ['原始資料',97,3,'',['—','—','全部預測多數類就有 97% Accuracy','—']],
+    ['過採樣（SMOTE）',97,97,'合成',['增加少數類樣本；複製或用 SMOTE 合成新樣本','平衡分布、<b>不損失原始資料</b>','單純複製易過擬合；合成點可能不自然']],
+    ['欠採樣',3,3,'',['減少多數類樣本','降低計算成本、實作簡單','<b>丟失有價值資料</b>；少數類本就稀少時不適用']],
+    ['類別權重',97,3,'×32 權重',['在損失函數對少數類賦予更高權重','<b>不動樣本數</b>、保留原始資料完整性、資源消耗低','權重過大會過度補償，過小則無效']]
+  ];
+  M.forEach((m,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=m[0];b.onclick=()=>show(i);$('#rsTabs').appendChild(b);});
+  function show(i){
+    document.querySelectorAll('#rsTabs .btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));
+    const [n,a,b,tag,kv]=M[i];const eff=i===3?96:b;
+    $('#rsBars').innerHTML=`<div class="bar"><span>多數類（健康）</span><div class="track"><div class="fill" style="width:0;background:var(--muted)"></div></div><span class="num">${a}</span></div><div class="bar win"><span>少數類（確診）</span><div class="track"><div class="fill" style="width:0;background:var(--sen)"></div></div><span class="num">${b}${tag?'<br><small>'+tag+'</small>':''}</span></div>`;
+    const ws=[a,eff];setTimeout(()=>document.querySelectorAll('#rsBars .fill').forEach((f,k)=>f.style.width=ws[k]+'%'),30);
+    $('#rsKv').innerHTML=i===0?`<b>問題</b><span>少數類份量太小，模型傾向全部猜多數類；只看 Accuracy 會被騙（97%）。</span>`:`<b>原理</b><span>${kv[0]}</span><b>優點</b><span>${kv[1]}</span><b>缺點</b><span>${kv[2]}</span>`+(i===3?`<b>說明</b><span>樣本數不變，但少數類在損失中的「份量」被放大（長條為加權後份量，示意）。</span>`:'');
+  }
+  show(0);
+})();
+
+/* ---------- compression sorter ---------- */
+sorter($('#cmpSort'),$('#cmpFb'),['壓縮','訓練加速','微調'],[
+  ['知識蒸餾',0,'換成一個更小的學生模型。'],
+  ['LoRA',2,'屬 PEFT，凍結原權重只訓練低秩旁路；推論時模型沒有變小。'],
+  ['混合精度訓練',1,'FP16 運算、FP32 主權重，不改變模型本體。'],
+  ['剪枝',0,'減少參數數量／稀疏度。'],
+  ['梯度累積',1,'只省顯存、不省計算，不改模型本體。'],
+  ['量化（PTQ）',0,'改數值精度 FP32 → INT8。'],
+  ['特徵萃取（凍結主幹只訓練 fc）',2,'115Q1 第 42 題：改變能力，不是大小。'],
+  ['低秩分解',0,'改變矩陣結構。']
+],'「部署到行動裝置」的題目，只能從「壓縮」那一欄選。');
+flipCards($('#zipCards'),[
+  ['知識蒸餾','改：換成小學生模型','以教師的軟標籤訓練學生。<b>必須訓練</b>；教師的偏誤會被繼承。重點是「知識轉移」。'],
+  ['剪枝','改：參數數量／稀疏度','移除貢獻低的權重或通道。通常需微調以恢復精度；剪過頭精度明顯下降。'],
+  ['量化','改：數值精度','FP32 → INT8。<b>可不重訓（PTQ）</b>；QAT 則需要。適配 NPU／Edge TPU。'],
+  ['張量分解','改：矩陣結構','拆為多個低秩矩陣相乘，減少乘加運算量；秩不易選擇，通常需微調。']
+]);
+tabSet($('#qpTabs'),$('#qpBody'),[
+  ['PTQ vs QAT','<div class="compare"><div><div class="big">PTQ 訓練後量化</div>訓練完成後直接轉低精度<br>成本：<b>極低</b><br><span class="hint">精度：可能明顯下降</span></div><div><div class="big">QAT 量化感知訓練</div><b>訓練過程中就模擬量化誤差</b>，讓模型學會適應<br>成本：需要重新訓練<br><span class="hint">精度：較能保住精度</span></div></div>'],
+  ['結構化 vs 非結構化剪枝','<div class="compare"><div><div class="big">結構化剪枝</div>移除整個神經元、卷積通道或層級<br>硬體友善度：<b>高，容易與硬體加速器整合</b><br><span class="hint">實際加速：真實可見</span><div style="display:grid;grid-template-columns:repeat(6,1fr);gap:3px;margin-top:10px;max-width:180px">'+Array.from({length:36},(_,i)=>`<span style="height:18px;border-radius:3px;background:${i%6===1||i%6===4?'var(--surface2)':'var(--txt)'}"></span>`).join('')+'</div></div><div><div class="big">非結構化剪枝</div>移除零散的單一權重參數<br>硬體友善度：低，<b>多數硬體對稀疏矩陣支援有限</b><br><span class="hint">實際加速：常出現「參數少了但沒變快」</span><div style="display:grid;grid-template-columns:repeat(6,1fr);gap:3px;margin-top:10px;max-width:180px">'+Array.from({length:36},(_,i)=>`<span style="height:18px;border-radius:3px;background:${(i*7)%5===0?'var(--surface2)':'var(--txt)'}"></span>`).join('')+'</div></div></div>']
+]);
+
+/* ---------- gradient accumulation ---------- */
+(function(){
+  let k=0,upd=0;
+  function draw(){
+    $('#acc').innerHTML=Array.from({length:4},(_,i)=>`<i class="${i<k?'on':''}">mb ${i+1}</i>`).join('')+`<i class="${k===4?'up':''}" style="width:80px">更新參數</i>`;
+    $('#accNote').textContent=k===0?`已更新參數 ${upd} 次。`:k<4?`第 ${k} 個 micro-batch：算梯度、只累加不更新（累積 ${k*32} 筆的梯度）。`:`累積滿 4 次 → 做一次參數更新，等效批次 = 32 × 4 = 128。已更新 ${upd} 次。代價：跑了 4 次前向反向才更新一次，只省顯存、不省計算。`;
+    $('#accNext').textContent=k===4?'開始下一輪':'跑一個 micro-batch';
+  }
+  $('#accNext').onclick=()=>{if(k===4)k=0;else{k++;if(k===4)upd++;}draw();};
+  $('#accReset').onclick=()=>{k=0;upd=0;draw();};
+  draw();
+})();
+
+/* ---------- LoRA calculator ---------- */
+(function(){
+  const base=16*8;
+  function render(){
+    const r=+$('#rk').value,l=+$('#ly').value,p=r*l;$('#rkLab').textContent=r;$('#lyLab').textContent=l;
+    $('#loFill').style.width=Math.min(100,p/(32*32)*100)+'%';$('#loFill').style.background=p>base?'var(--bad)':'var(--txt)';
+    $('#loNum').textContent=p===base?'不變':p>base?'×'+(p/base).toFixed(1)+' ↑':'×'+(p/base).toFixed(2);
+    $('#loCov').style.width=(l/32*100)+'%';$('#loCovN').textContent=l+' 層';
+    let n;
+    if(p>base)n='可訓練參數與優化器狀態增加 → 顯存已近上限，會爆。（提高 rank 是誘答）';
+    else if(p===base&&l>8)n='✓ 正解：總參數量不變（顯存不增），但微調能力分散到更多層，覆蓋廣度提升，改善複雜條款遺漏。';
+    else if(p<base)n='只是削弱表達能力；省下的顯存換來的大 Batch Size 解決不了內容遺漏。';
+    else n='原設定：只套用在少數層（例如 Q、V），顯存已近上限。';
+    $('#loNote').textContent=`可訓練參數 ≈ ${r} × ${l} = ${p}（原本 ${base}）。`+n;
+  }
+  $('#rk').oninput=render;$('#ly').oninput=render;
+  $('#loA').onclick=()=>{$('#rk').value=16;$('#ly').value=8;render();};
+  $('#loB').onclick=()=>{$('#rk').value=4;$('#ly').value=32;render();};
+  $('#loC').onclick=()=>{$('#rk').value=32;$('#ly').value=8;render();};
+  render();
+})();
+
+/* ---------- exam list ---------- */
+examList([
+  ['114Q2-2','L1 正則化','Lasso 的主要效果為何','<b>產生稀疏模型、部分權重收斂為零</b>'],
+  ['114Q2-10','AutoML','哪種情境最適合導入','缺專職工程師、要短時間比較多種模型'],
+  ['114Q2-11','搜尋策略','Random Search 優於 Grid Search 之處','<b>高維參數空間的搜尋效率更高</b>'],
+  ['114Q2-12','超參數定義','收斂不穩定該調哪個超參數','<b>學習率</b>；神經元輸出／梯度／權重都不是超參數'],
+  ['114Q2-17','優化器','哪個內建動量機制','官方答案 <b>Adam</b>（整合一階動量＋自適應學習率）'],
+  ['114Q2-19','不平衡資料','3% 正樣本，何者<b>最不適合</b>','<b>用 Accuracy 當評估指標</b>；SMOTE／權重／欠採樣都適當'],
+  ['114Q2-26','防過擬合','哪個<b>不屬於</b>降低模型複雜度','<b>擴增輸入特徵變數</b>'],
+  ['114Q2-29','驗證集老化','工況漂移使固定驗證集失真','<b>時間序列 CV／滑動視窗驗證</b>；「不用驗證集靠早停」自相矛盾'],
+  ['114Q2-31','Early Stopping','驗證損失週期性波動如何早停','<b>監控驗證損失＋適度 patience</b>；不可用訓練損失或測試集'],
+  ['114Q2-32','L1 vs L2','要防過擬合又要自動選特徵','<b>L1（Lasso）</b>；L2 只縮小不歸零'],
+  ['114Q2-39','Dropout（附圖）','程式隨機關閉神經元屬何種技術','<b>Dropout</b>；非 L1／L2／BatchNorm'],
+  ['114Q2-50','曲線繪圖（附圖）','訓練／驗證損失曲線格式字串','<b><code>"r-"</code> 實線訓練、<code>"r--"</code> 虛線驗證</b>；「驗證降更多」敘述錯'],
+  ['115Q1-8','學習率過大','調高學習率後訓練損失震盪','<b>損失震盪或發散</b>；非過擬合、非梯度消失'],
+  ['115Q1-9','Adam','為何能同時治震盪與收斂慢','<b>一階動量＋自適應學習率，逐參數調整步長</b>'],
+  ['115Q1-11','批次大小','兼顧梯度穩定與 GPU 吞吐量','<b>Mini-batch GD（256～2048）</b>'],
+  ['115Q1-16','樹模型正則化','XGBoost 比 GBDT 多了什麼設計','<b>目標函數加樹複雜度懲罰（葉數 gamma ＋葉權重 L2）</b>'],
+  ['115Q1-17','網路深度','加深後<b>訓練損失反而更高</b>','<b>梯度消失 → 殘差連接</b>；非參數過多，不可改 Sigmoid'],
+  ['115Q1-21','量化','FP32→INT8 且不重訓叫什麼','<b>量化（PTQ）</b>；蒸餾要訓練、剪枝改參數量、分解改結構'],
+  ['115Q1-26','辨析','滑動窗口的主要目的','<b>建立滯後特徵</b>，<b>不是</b>資料增強'],
+  ['115Q1-34','Grid Search 成本','3×4×5×3×3 配 5-Fold 共訓練幾個','<b>540 × 5 = 2,700</b>；成本呈指數成長'],
+  ['115Q1-35','LoRA','顯存近上限又要改善表現','<b>降 rank 但套用更多層，trainable 總量不變</b>'],
+  ['115Q1-41','資料增強陷阱（附圖）','OCR 對 b/d/p/q 錯誤率異常高','<b>RandomHorizontalFlip 破壞方向語意，製造錯誤標籤</b>'],
+  ['115Q1-43','微調學習率','為何設 1e-4 這種極小值','<b>避免破壞預訓練已學好的特徵表示</b>'],
+  ['115Q1-47','Dropout／BN（附圖）','哪組描述組合正確','Dropout 把輸出設為 <b>0</b>（非 1）；BN 穩定分布；Flatten 攤平']
+]);
+
+/* ---------- traps ---------- */
+trapList([
+  ['Early Stopping 監控的是「驗證損失」','用訓練損失必然過擬合；用測試集會洩漏資訊、破壞評估獨立性。'],
+  ['沒有驗證集就不能做 Early Stopping','「把全部資料拿去訓練、靠早停控制」這種選項自相矛盾，是固定誘答。'],
+  ['patience 太短導致欠擬合，太長仍然過擬合','它本身也是要調的超參數，不是設了就萬事太平。'],
+  ['L1 會把權重壓到 0，L2 只會縮小','要「自動特徵選擇／稀疏」選 L1；要「保留全部特徵、緩解共線性」選 L2。'],
+  ['Dropout 是把輸出設為 0，不是設為 1，也不是刪除那一層','115Q1-47 就靠這一個字設陷阱。'],
+  ['Dropout 只在訓練階段生效，推論時必須關閉','PyTorch 用 model.eval()、Keras 自動切換。教科書說「推論時要乘上保留率」，現行框架採 Inverted Dropout 已在訓練時先除以保留率，兩種說法結果等價。'],
+  ['Batch Normalization 是穩定化技術，不是正則化技術','題目問「哪一項是正則化方法」時，答案是 L1／L2／Dropout／Early Stopping，不是 BN。'],
+  ['知識蒸餾是壓縮，LoRA 是微調','蒸餾產生一個更小的學生模型；LoRA 推論時模型大小不變，省的是訓練顯存。'],
+  ['量化改「數值精度」，剪枝改「參數數量」','FP32→INT8 一律是量化；移除通道或權重才是剪枝。'],
+  ['非結構化剪枝常常「參數變少但沒變快」','多數硬體對稀疏矩陣支援有限，這是官方指引點名的落差。'],
+  ['混合精度與梯度累積是訓練期加速，不會讓部署的模型變小','別拿它們回答「部署到行動裝置或邊緣運算」的題目。'],
+  ['梯度累積只省顯存、不省計算','等效批次 = micro batch × 累積步數，但總訓練時間會變長。'],
+  ['訓練降、驗證升＝過擬合；兩者都高＝欠擬合；訓練自己就震盪＝學習率過大','先看「訓練端」再看「兩線是否分岔」。'],
+  ['加深網路後「訓練損失」變高是最佳化問題（梯度消失），不是過擬合','過擬合的症狀一定是訓練損失很低。'],
+  ['曲線圖慣例：實線訓練、虛線驗證；正常情況訓練線較低','任何說「驗證損失下降得比訓練更明顯」的敘述都要懷疑。'],
+  ['資料增強只套訓練集，且必須保持標籤語意','水平翻轉用在字元或具方向性的標的會直接製造錯誤標註。'],
+  ['驗證集若套了同一組增強，錯誤會被掩蓋','這正是 115Q1-41「驗證損失看起來很好卻上線爆炸」的機制。'],
+  ['滑動窗口是建立滯後特徵，不是資料增強','它只重組既有觀測值，沒有新增樣本資訊，維度還變高。'],
+  ['不平衡資料不要用 Accuracy','改看 Recall／F1／AUC-PR，這是官方最愛的「最不適合」題型。'],
+  ['Grid Search 的成本是「乘」不是「加」，還要再乘折數','相加、只算折數、取最大值都是誘答。'],
+  ['Random Search 的優勢是「高維搜尋效率」，不是「避免過擬合」','搜尋策略本身不具備正則化效果。'],
+  ['微調時學習率設很小，是為了保護預訓練特徵','不是為了省記憶體或加速收斂 —— 調小其實讓收斂更慢。'],
+  ['學習率、批次大小、層數是超參數；權重、梯度、神經元輸出不是','判準是「訓練前人為指定」還是「訓練過程產生」。']
+],'l23304-traps');
+
+/* ---------- quiz ---------- */
+runQuiz([
+  ['模型收斂「有時過快導致過擬合、有時遲遲達不到最佳準確率」，應調整下列哪個超參數？',['學習率','每個神經元的輸出結果','梯度變化值','訓練後產生的權重值'],'後三者都是訓練的產物或計算過程量，不是人為設定的超參數。'],
+  ['Random Search 相較 Grid Search 的主要優勢是？',['能更有效率搜尋高維參數空間','能自動產生模型架構','可使用更大的訓練集','能避免過擬合'],'自動產生架構是 NAS；避免過擬合要靠正則化與驗證控制。'],
+  ['損失震盪且收斂慢，改用 Adam 後變穩定又更快，主要原因是？',['同時結合一階動量與自適應學習率，逐參數調整步長','強制所有參數使用相同學習率','內建 Batch Normalization','內建梯度裁剪'],'「所有參數同一學習率」是傳統 SGD；BN 是網路層設計；梯度裁剪是獨立技巧。'],
+  ['特徵彼此高度相關、又懷疑部分特徵貢獻有限，希望防過擬合的同時自動篩選特徵，應使用？',['L1（Lasso）正則化','只用 L2 正則化','先人工移除共線性再加 L2','Early Stopping'],'L1 會把部分權重壓到 0；L2 只縮小不歸零；Early Stopping 不篩選特徵。'],
+  ['關於 Dropout 的描述，何者錯誤？',['Dropout 把被選中的神經元輸出設為 1','訓練時隨機停用部分神經元以抑制過擬合','推論階段不再丟棄神經元','每個 batch 等於訓練一個不同的子網路'],'Dropout 是把輸出設為 0（115Q1 第 47 題陷阱）。'],
+  ['驗證損失因季節性波動呈週期性上升下降，如何合理運用 Early Stopping？',['監控驗證集損失並設定適度 patience','監控訓練集損失最低點','改以測試集損失作早停','不用驗證集，全部資料訓練並靠早停控制'],'沒有驗證集就沒有早停依據；用測試集會洩漏。'],
+  ['訓練曲線在 Epoch 6 時訓練準確率 0.81、驗證 0.72，兩線明顯分離且訓練持續領先，最可能是？',['過擬合','學習率太低','批次大小太大','欠擬合'],'學習率太低會讓兩線貼在一起緩慢上升；欠擬合是兩者同時偏低。'],
+  ['3 層 CNN 升級到 16 層後，訓練損失反而高於 3 層版本，最合理的對策是？',['加入殘差連接（Skip Connection）','把 ReLU 改成 Sigmoid','加強 Dropout','增加 L2 正則化'],'訓練損失變高是最佳化問題（梯度消失）；改 Sigmoid 會讓梯度消失更嚴重。'],
+  ['OCR 手寫字母模型對 b／d／p／q 錯誤率異常偏高，pipeline 中最可能的原因是？',['RandomHorizontalFlip 讓字母鏡像互換但標籤未變','RandomRotation(15) 旋轉角度太大','ColorJitter 改變了亮度','ToTensor() 放在最後'],'水平翻轉後 b 變 d、p 變 q，等於製造錯誤標註。'],
+  ['把 32-bit 浮點權重轉成 8-bit 整數，且不重新訓練，這屬於？',['訓練後量化（PTQ）','知識蒸餾','剪枝','張量分解'],'蒸餾必然要訓練；剪枝改參數數量；分解改矩陣結構。'],
+  ['LoRA 微調的法律摘要模型常遺漏複雜條款，但 GPU 顯存已近上限，最合理的調整是？',['降低 rank 但套用到更多層，保持可訓練總參數不變','提高 LoRA rank','改用完整微調','單純降低 rank 並加大 Batch Size'],'可訓練參數 ≈ rank × 層數；總量不變時顯存不增，但覆蓋廣度提升。'],
+  ['程式把所有既有權重設 requires_grad = False，只替換並訓練最後的 model.fc，這是？',['特徵萃取（Feature Extraction）','全面微調','知識蒸餾','零樣本學習'],'全面微調要全層一起更新；蒸餾需要教師＋學生；零樣本不用目標資料訓練。']
+],['太強了，曲線判讀與壓縮三兄弟都已經反射。','不錯！回頭看看答錯題對應的模擬器。','建議重新操作 51.4 的看圖診斷與 51.6 的分類練習，再來一次。']);
+/* ---------- nav highlight ---------- */
+(function(){
+  const links=[...document.querySelectorAll('nav.toc a')];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on&&window.innerWidth<=860)a.scrollIntoView({inline:'center',block:'nearest'});});}});},{rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('main section').forEach(s=>io.observe(s));
+})();
+</script>
+</body>
+</html>

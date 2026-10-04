@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L22404 大數據隱私保護、安全與合規｜互動教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F5; --surface:#FFFFFF; --surface2:#F6F8FB; --ink:#18202E; --muted:#5A6475; --line:#D5DBE4;
+  --txt:#3B4CCA; --img:#0E8A7A; --aud:#B87812; --sen:#B8336A;
+  --ok:#1F8A4C; --bad:#C23B2E; --warn:#D9822B;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+    --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+  --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75}
+h1,h2,h3{font-family:var(--serif);line-height:1.3;margin:0}
+p{margin:0 0 1em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--txt);outline-offset:2px;border-radius:4px}
+svg{max-width:100%;height:auto;display:block}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1180px;margin:0 auto;gap:40px;padding:0 24px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;padding:32px 0;height:100vh;overflow:auto}
+nav.toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14.5px}
+nav.toc a span{font-variant-numeric:tabular-nums;font-size:13px;opacity:.8}
+nav.toc a.on{background:var(--surface);color:var(--ink);font-weight:700}
+.toc-title{font-family:var(--serif);font-weight:900;font-size:18px;padding:0 10px 14px}
+main{min-width:0;padding-bottom:80px}
+section{padding:56px 0 8px;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.sec-head{display:flex;gap:16px;align-items:baseline;margin-bottom:18px}
+.sec-no{font-family:var(--serif);font-weight:900;font-size:40px;color:var(--line);line-height:1}
+h2{font-size:28px;font-weight:900}
+h3{font-size:19px;margin:34px 0 10px}
+.lead{color:var(--muted);max-width:66ch}
+.prose{max-width:68ch}
+
+/* hero */
+.hero{padding:44px 0 24px}
+.hero .code{font-size:14px;color:var(--muted);margin-bottom:6px}
+.hero h1{font-size:clamp(34px,5.5vw,56px);font-weight:900;letter-spacing:.02em}
+.hero .one{font-size:18px;max-width:60ch;margin:16px 0 0;color:var(--muted)}
+.hero-fig{background:var(--surface);border-radius:20px;margin-top:28px;padding:14px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+.goal{border-left:4px solid var(--c);padding:6px 0 6px 14px;font-size:15px}
+
+/* panels */
+.panel{background:var(--surface);border-radius:16px;padding:22px;margin:16px 0}
+.panel.flat{background:var(--surface2)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font-size:15px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hint{font-size:14px;color:var(--muted)}
+.callout{border-left:4px solid var(--warn);background:var(--surface2);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;font-size:15px}
+.callout.exam{border-color:var(--txt)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:14px}
+
+/* modality chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+
+/* matcher */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.match .col{display:flex;flex-direction:column;gap:10px}
+.mitem{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15px;transition:border-color .2s,background .2s,transform .2s}
+.mitem small{display:block;color:var(--muted);font-size:13px}
+.mitem.sel{border-color:var(--ink);transform:translateX(4px)}
+.mitem.done{border-color:var(--c,var(--ok));background:var(--surface2);cursor:default}
+.mitem.wrong{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:1.8em;margin-top:12px;font-size:15px}
+.feedback.ok{color:var(--ok)} .feedback.bad{color:var(--bad)}
+
+/* timeline */
+.steps{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stage-viz{min-height:130px;display:flex;align-items:center;justify-content:center}
+.stage-viz .blk{display:inline-block;width:34px;height:34px;border-radius:6px;margin:2px;transition:all .5s}
+
+/* align toggle */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.compare>div{padding:18px}
+.compare>div+div{border-left:1px solid var(--line)}
+.compare .big{font-family:var(--serif);font-weight:900;font-size:22px;margin-bottom:6px}
+
+/* fusion */
+.meter{height:14px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:6px 0}
+.meter>i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .7s cubic-bezier(.3,.8,.3,1),background .4s}
+.flow{stroke-dasharray:6 7;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.jitter{animation:jit .25s steps(2) infinite}
+@keyframes jit{50%{transform:translate(1.5px,-1px)}}
+.fusion-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.pc{font-size:15px}
+.pc b{display:block;font-size:14px;color:var(--muted);font-weight:500}
+
+/* clip */
+.mat{display:grid;gap:4px;font-size:13px}
+.mat .cell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;transition:background .5s,color .5s}
+.mat .lab{display:flex;align-items:center;justify-content:center;font-size:22px}
+.mat .tlab{font-size:12px;text-align:center;color:var(--muted);display:flex;align-items:flex-end;justify-content:center;line-height:1.3}
+.zs-imgs{display:flex;gap:10px;flex-wrap:wrap}
+.zs-img{font-size:38px;width:72px;height:72px;border-radius:16px;border:2px solid var(--line);background:var(--surface2);display:flex;align-items:center;justify-content:center}
+.zs-img[aria-pressed="true"]{border-color:var(--img);box-shadow:0 0 0 3px color-mix(in srgb,var(--img) 25%,transparent)}
+.bar{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.bar .track{height:22px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;width:0;background:var(--txt);border-radius:6px;transition:width .8s cubic-bezier(.3,.8,.3,1)}
+.bar.win .fill{background:var(--img)}
+.bar.win{font-weight:700}
+.bar .num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.flip{perspective:900px;height:150px;border:0;background:none;padding:0;text-align:left}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flip[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:center}
+.flip .f{background:var(--surface);border:1.5px solid var(--line)}
+.flip .f strong{font-family:var(--serif);font-size:22px}
+.flip .f span{color:var(--muted);font-size:14px}
+.flip .b{background:var(--ink);color:var(--bg);transform:rotateY(180deg);font-size:15px}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.pnode{border:2px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;font-size:14px;background:var(--surface);transition:all .35s}
+.pnode b{display:block;font-size:16px}
+.pnode.on{border-color:var(--aud);background:color-mix(in srgb,var(--aud) 14%,var(--surface));transform:translateY(-3px)}
+.pnode.past{border-color:color-mix(in srgb,var(--aud) 45%,var(--line))}
+.pout{background:var(--surface2);border-radius:12px;padding:14px 16px;min-height:84px;font-size:15px}
+.wave{display:flex;gap:3px;align-items:center;height:30px}
+.wave i{width:4px;background:var(--aud);border-radius:2px;animation:wv 1s ease-in-out infinite}
+@keyframes wv{50%{transform:scaleY(.3)}}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+
+/* strategies */
+.strat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.strat button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;text-align:left;font-size:15px}
+.strat button[aria-pressed="true"]{border-color:var(--ink)}
+.verdict{font-family:var(--serif);font-weight:900;font-size:20px}
+
+details{border-bottom:1px solid var(--line)}
+details summary{cursor:pointer;padding:12px 4px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"+";font-weight:900;width:14px;color:var(--muted)}
+details[open] summary::before{content:"−"}
+details .body{padding:0 4px 14px 30px;font-size:15px}
+.tag{font-size:12.5px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums;min-width:80px}
+
+/* quiz */
+.qcard{background:var(--surface);border-radius:16px;padding:24px}
+.qtop{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
+.qtext{font-size:18px;font-weight:700;margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15.5px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+.opt.wrongpick{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.opt:disabled{cursor:default}
+.expl{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15px;display:none}
+.expl.show{display:block}
+.progress{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;margin-bottom:14px}
+.progress i{display:block;height:100%;background:var(--txt);transition:width .4s}
+
+.traps label{display:flex;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:15px}
+.traps input{width:18px;height:18px;margin-top:4px;flex:none;accent-color:var(--ok)}
+.traps label.chk>span{color:var(--muted)}
+.traps em{font-style:normal;font-weight:700}
+
+/* mobile */
+@media (max-width:860px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+  nav.toc{position:sticky;top:0;height:auto;z-index:10;background:var(--bg);display:flex;overflow-x:auto;padding:8px 0;padding-top:calc(8px + env(safe-area-inset-top,0px));gap:4px;border-bottom:1px solid var(--line)}
+  .toc-title{display:none}
+  nav.toc a{white-space:nowrap;flex:none}
+  .match,.stage,.fusion-meta,.compare{grid-template-columns:1fr}
+  .compare>div+div{border-left:0;border-top:1px solid var(--line)}
+  .pipe{grid-template-columns:repeat(5,minmax(90px,1fr));overflow-x:auto}
+  .bar{grid-template-columns:110px 1fr 56px}
+  h2{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* ===== page-specific ===== */
+.sld{display:grid;grid-template-columns:150px 1fr 80px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.sld input{width:100%;accent-color:var(--ink)}
+.sld output{text-align:right;font-variant-numeric:tabular-nums}
+.fields{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.fbtn{border:2px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-size:14.5px;transition:all .25s}
+.fbtn.sel{border-color:var(--ink);transform:translateY(-2px)}
+.fbtn.done{border-color:var(--c);background:color-mix(in srgb,var(--c) 14%,var(--surface));cursor:default}
+.fbtn.wrong{animation:shake .4s}
+.bins{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.bin{border:2px dashed var(--c);border-radius:14px;padding:12px;background:var(--surface);text-align:left;font-size:14px;min-height:96px}
+.bin b{display:block;font-size:16px;color:var(--c)}
+.bin .got{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.bin .got span{font-size:12.5px;padding:2px 8px;border-radius:99px;background:color-mix(in srgb,var(--c) 18%,var(--surface))}
+.ppl td,.ppl th{padding:6px 8px;font-size:14px}
+.ppl tr.uniq td{background:color-mix(in srgb,var(--bad) 12%,transparent)}
+.ppl td.off,.ppl th.off{opacity:.25}
+.recbox{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.rf{background:var(--surface2);border-radius:10px;padding:8px 12px;font-size:14px;transition:background .4s}
+.rf b{display:block;font-size:12.5px;color:var(--muted);font-weight:500}
+.rf span{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:15px;overflow-wrap:anywhere}
+.rf.chg{background:color-mix(in srgb,var(--img) 18%,var(--surface))}
+.layers{display:flex;flex-direction:column;gap:8px}
+.layer{border:2px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--surface);text-align:left;font-size:14.5px;transition:all .3s}
+.layer b{font-family:var(--serif);font-size:17px}
+.layer[aria-pressed="true"]{border-color:var(--c);background:color-mix(in srgb,var(--c) 10%,var(--surface))}
+.life{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:12px 0}
+.lnode{border:2px solid var(--line);border-radius:10px;padding:8px 6px;text-align:center;font-size:13.5px;background:var(--surface);transition:all .35s}
+.lnode.on{border-color:var(--sen);background:color-mix(in srgb,var(--sen) 14%,var(--surface));transform:translateY(-3px);font-weight:700}
+.kgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;font-size:13px;width:100%}
+.kgrid div{padding:5px 4px;border-radius:6px;background:var(--surface2);text-align:center;transition:background .4s}
+.kgrid .h{background:none;color:var(--muted);font-size:12px}
+.kgrid .s{font-weight:700}
+.hist{display:flex;align-items:flex-end;gap:2px;height:120px;border-bottom:1.5px solid var(--line)}
+.hist i{flex:1;background:var(--sen);border-radius:2px 2px 0 0;transition:height .3s}
+.users{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.mask{color:var(--muted)}
+.lin{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.ln{border:2px solid var(--line);border-radius:10px;padding:8px;font-size:13.5px;text-align:center;background:var(--surface);transition:all .35s}
+.ln.hit{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,var(--surface))}
+.ladder{display:flex;flex-direction:column-reverse;gap:6px}
+.rung{border-radius:10px;padding:10px 14px;background:var(--surface2);font-size:14.5px;transition:all .4s;border-left:6px solid var(--line)}
+.rung.on{border-left-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+.timebar{position:relative;height:46px;background:var(--surface2);border-radius:10px;margin:8px 0;overflow:hidden}
+.timebar i{position:absolute;left:0;top:0;bottom:0;border-radius:10px;transition:width 1s cubic-bezier(.3,.8,.3,1);display:flex;align-items:center;padding-left:12px;color:#fff;font-weight:700;font-size:14px;white-space:nowrap}
+@media (max-width:860px){
+  .bins,.recbox{grid-template-columns:1fr}
+  .life{grid-template-columns:repeat(5,minmax(84px,1fr));overflow-x:auto}
+  .lin{grid-template-columns:1fr 1fr}
+  .sld{grid-template-columns:90px 1fr 64px}
+  .kgrid{font-size:11.5px}
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="toc" aria-label="章節">
+  <div class="toc-title">隱私、安全與合規</div>
+  <a href="#intro"><span>●</span>導覽與目標</a>
+  <a href="#s1"><span>40.1</span>風險放大在哪</a>
+  <a href="#s2"><span>40.2</span>去識別化五技術</a>
+  <a href="#s3"><span>40.3</span>進階 PETs</a>
+  <a href="#s4"><span>40.4</span>合規與法規</a>
+  <a href="#s5"><span>40.5</span>安全控制面</a>
+  <a href="#s6"><span>40.6</span>內部治理</a>
+  <a href="#s7"><span>40.7</span>官方考題</a>
+  <a href="#s8"><span>40.8</span>易錯與測驗</a>
+</nav>
+
+<main>
+<!-- HERO -->
+<section id="intro" class="hero">
+  <div class="code">L22404　中級 AI 應用規劃師（大數據分析）　建議 45 分鐘</div>
+  <h1>大數據隱私保護、安全與合規</h1>
+  <p class="one">初級只要你知道「個資要保護」。中級 L22 則把你放進一座<b>已經蓋好的大數據平台</b>——資料湖裡躺著數百億筆行為紀錄、下游有多個團隊與外部夥伴要取用——然後問你：這一層該套哪一種去識別化、這個請求該不該放行、這條跨境管線合不合法。</p>
+  <div class="hero-fig" aria-hidden="true">
+    <svg id="heroSvg" viewBox="0 0 720 300">
+      <defs>
+        <path id="hp0" d="M60 150 L 210 150"/>
+        <path id="hp1" d="M330 150 L 420 150"/>
+        <path id="hp2" d="M540 150 L 640 150"/>
+      </defs>
+      <g font-family="Noto Sans TC, sans-serif" font-weight="700">
+        <rect x="90" y="40" width="120" height="220" rx="16" fill="var(--surface2)" stroke="var(--line)" stroke-width="2"/>
+        <text x="150" y="30" text-anchor="middle" font-size="14" fill="var(--muted)">Bronze 落地層</text>
+        <rect x="210" y="40" width="120" height="220" rx="16" fill="var(--surface2)" stroke="var(--line)" stroke-width="2"/>
+        <text x="270" y="30" text-anchor="middle" font-size="14" fill="var(--muted)">Silver 整理層</text>
+        <rect x="420" y="40" width="120" height="220" rx="16" fill="var(--surface2)" stroke="var(--line)" stroke-width="2"/>
+        <text x="480" y="30" text-anchor="middle" font-size="14" fill="var(--muted)">Gold 應用層</text>
+        <g font-size="14">
+          <rect x="105" y="70" width="90" height="30" rx="15" fill="var(--txt)"/><text x="150" y="90" text-anchor="middle" fill="#fff">王大明</text>
+          <rect x="105" y="115" width="90" height="30" rx="15" fill="var(--img)"/><text x="150" y="135" text-anchor="middle" fill="#fff">1987-03-12</text>
+          <rect x="105" y="160" width="90" height="30" rx="15" fill="var(--aud)"/><text x="150" y="180" text-anchor="middle" fill="#fff">病歷</text>
+          <rect x="225" y="70" width="90" height="30" rx="15" fill="var(--txt)" opacity=".55"/><text x="270" y="90" text-anchor="middle" fill="#fff">#a9f3…</text>
+          <rect x="225" y="115" width="90" height="30" rx="15" fill="var(--img)" opacity=".55"/><text x="270" y="135" text-anchor="middle" fill="#fff">1980 年代</text>
+          <rect x="225" y="160" width="90" height="30" rx="15" fill="var(--aud)" opacity=".55"/><text x="270" y="180" text-anchor="middle" fill="#fff">另區授權</text>
+          <rect x="435" y="90" width="90" height="80" rx="12" fill="var(--ink)"/><text x="480" y="128" text-anchor="middle" fill="var(--bg)">聚合指標</text><text x="480" y="150" text-anchor="middle" fill="var(--bg)" font-size="12">k≥5 / ε</text>
+        </g>
+        <rect x="350" y="120" width="50" height="60" rx="10" fill="var(--sen)"/><text x="375" y="157" text-anchor="middle" fill="#fff" font-size="22">🛡</text>
+        <rect x="600" y="115" width="100" height="70" rx="12" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/>
+        <text x="650" y="145" text-anchor="middle" fill="var(--ink)" font-size="14">外部夥伴</text><text x="650" y="166" text-anchor="middle" fill="var(--muted)" font-size="12">稽核軌跡</text>
+        <text x="40" y="285" font-size="13" fill="var(--muted)" font-weight="500">去識別化「往下游逐層加強」，不是最後一關才做</text>
+      </g>
+      <g class="movers">
+        <circle r="6" fill="var(--txt)"><animateMotion dur="2s" repeatCount="indefinite"><mpath href="#hp0"/></animateMotion></circle>
+        <circle r="6" fill="var(--sen)"><animateMotion dur="2s" begin=".7s" repeatCount="indefinite"><mpath href="#hp1"/></animateMotion></circle>
+        <circle r="6" fill="var(--ink)"><animateMotion dur="2s" begin="1.4s" repeatCount="indefinite"><mpath href="#hp2"/></animateMotion></circle>
+      </g>
+    </svg>
+  </div>
+  <h3>學完這一課，你應該能夠</h3>
+  <div class="goals">
+    <div class="goal" style="--c:var(--txt)">說明量、速、多樣、長期留存各自放大哪種<b>再識別風險</b>，分清橫向比對與時間軸拼接</div>
+    <div class="goal" style="--c:var(--img)">依三個判準，把七種去識別化／隱私強化技術定位到<b>資料管線的正確層級</b></div>
+    <div class="goal" style="--c:var(--aud)">對照 <b>GDPR、CCPA、我國個資法</b>的同意模式、權利、期限與跨境傳輸，判斷合法依據</div>
+    <div class="goal" style="--c:var(--sen)">設計資料湖的<b>存取控制、加密三態與稽核軌跡</b>，並對上生命週期的治理控制項</div>
+  </div>
+  <p class="hint" style="margin-top:20px">本頁顏色固定代表：<span class="chip" style="--c:var(--txt)"><i class="dot"></i>直接識別</span>　<span class="chip" style="--c:var(--img)"><i class="dot"></i>準識別</span>　<span class="chip" style="--c:var(--aud)"><i class="dot"></i>敏感資料</span>　<span class="chip" style="--c:var(--sen)"><i class="dot"></i>防護技術</span></p>
+</section>
+
+<!-- 40.1 -->
+<section id="s1">
+  <div class="sec-head"><span class="sec-no">40.1</span><h2>大數據把個資風險放大在哪裡</h2></div>
+  <p class="lead">三類資料，三種處理邏輯。先把欄位分對類。</p>
+
+  <div class="panel">
+    <h3 style="margin-top:0">分類遊戲：這個欄位屬於哪一類？</h3>
+    <p class="hint">先點一個欄位，再點下方的分類箱。</p>
+    <div class="fields" id="fields"></div>
+    <div class="bins" id="bins"></div>
+    <div class="feedback" id="binFb" aria-live="polite"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>類別</th><th>定義</th><th>典型欄位</th><th>大數據平台的處理原則</th></tr>
+      <tr><td><span class="chip" style="--c:var(--txt)"><i class="dot"></i>直接識別資訊</span></td><td>單一欄位即可指向特定個人</td><td>姓名、身分證號、電話、Email、裝置 ID</td><td>進入分析層之前就移除、遮蔽或雜湊；原始值只留在最高權限的落地層</td></tr>
+      <tr><td><span class="chip" style="--c:var(--img)"><i class="dot"></i>準識別資訊</span><br><small>Quasi-identifier</small></td><td>單看無識別性，組合後可能唯一</td><td>性別、出生年月、郵遞區號、瀏覽紀錄、GPS 軌跡</td><td>不能只靠移除，要用泛化／分桶／K-匿名降低鑑別力</td></tr>
+      <tr><td><span class="chip" style="--c:var(--aud)"><i class="dot"></i>敏感資料</span></td><td>外洩後傷害特別大的資訊</td><td>健康紀錄、信用狀況、宗教信仰、族群</td><td>原則上另案授權、獨立儲存區、獨立稽核；其中病歷、醫療、基因、性生活、健康檢查與犯罪前科屬我國個資法第 6 條的特種個資（宗教、族群是 GDPR 第 9 條的特種類別，我國並未列入）</td></tr>
+    </table>
+  </div>
+
+  <h3>再識別模擬器：「匿名」的表格其實不匿名</h3>
+  <div class="panel">
+    <p class="hint">下表已移除姓名（示意資料）。勾選要公開的準識別欄位，看有幾筆因組合唯一而可被定位。美國學界經典研究指出，僅憑「郵遞區號＋出生日期＋性別」就足以定位該國人口中的絕大多數人。</p>
+    <div class="row" id="qiBtns"></div>
+    <div class="tbl-wrap" style="margin-top:10px"><table class="ppl" id="ppl"></table></div>
+    <div class="row" style="justify-content:space-between;margin-top:10px"><b>可被唯一定位的筆數（示意）</b><span id="uniqN" style="font-variant-numeric:tabular-nums"></span></div>
+    <div class="meter"><i id="uniqM"></i></div>
+    <p class="hint" id="uniqNote" style="margin:6px 0 0"></p>
+  </div>
+  <div class="callout"><b>核心命題：</b>欄位愈多、時間跨度愈長，準識別欄位的組合鑑別力愈接近直接識別。</div>
+
+  <h3>大數據的四項特性各自放大哪一種風險</h3>
+  <div class="panel">
+    <div class="tabs" id="vTabs"></div>
+    <div class="stage">
+      <div class="stage-viz" id="vViz"></div>
+      <div id="vTxt"></div>
+    </div>
+  </div>
+
+  <h3>《學習指引》的四個實務案例（點卡片翻面）</h3>
+  <div class="cards" id="caseCards"></div>
+  <div class="callout">四個案例的共同結構一樣：<b>不是加密被攻破，而是「以為移除了識別欄位就安全」</b>。</div>
+</section>
+
+<!-- 40.2 -->
+<section id="s2">
+  <div class="sec-head"><span class="sec-no">40.2</span><h2>基礎去識別化五技術與它們在資料管線的落點</h2></div>
+  <p class="lead">同一筆紀錄，套上不同技術會長成什麼樣子？點按鈕看變化。</p>
+  <div class="panel">
+    <div class="tabs" id="tkTabs"></div>
+    <div class="recbox" id="recbox"></div>
+    <div id="tkInfo" style="margin-top:12px;font-size:15px"></div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>技術</th><th>原理</th><th>大數據管線落點</th><th>優點</th><th>限制</th></tr>
+      <tr><td><b>遮蔽 Masking</b></td><td>以符號或假值取代部分內容（王大明→王○○；A123456789→A12******89）</td><td>報表層、測試環境複製、前端顯示層（可用動態遮罩在查詢當下即時套用）</td><td>簡單快速，<b>保留欄位格式</b>（長度、型別不變）</td><td>只隱藏部分字元，配合旁證仍可能被推回</td></tr>
+      <tr><td><b>雜湊 Hashing</b></td><td>單向雜湊（如 SHA-256）產生固定長度字串，供比對而非顯示</td><td>ETL 載入時對用戶 ID 做一致性雜湊，讓跨資料表仍可 join</td><td>不可逆、跨庫比對一致、支援去重</td><td>原始值種類少（短 ID、手機號）易被窮舉或彩虹表還原，<b>應加 salt</b>；雜湊值無法做數值運算</td></tr>
+      <tr><td><b>泛化 Generalization</b></td><td>降低<b>階層式</b>資訊精度（1987-03-12→1980 年代；信義區某路→台北市）</td><td>Silver 層轉換階段</td><td>保留分佈特性，處理地理與時間階層特別有效</td><td>精度損失影響細分群分析</td></tr>
+      <tr><td><b>分桶 Bucketing</b></td><td>把<b>連續數值</b>切成區間（58,000→50K–60K；32 歲→30–39 歲）</td><td>特徵工程階段，可與建模的分箱共用邏輯</td><td>保留趨勢，降低個體識別</td><td>分桶過細仍可能剩下極少數人，等於沒保護</td></tr>
+      <tr><td><b>隨機擾動 Noise Injection</b></td><td>對數值加隨機噪音（如高斯噪音）：50,000→50,123</td><td>對外發布的統計資料集</td><td>保留平均數、變異數等整體統計特性</td><td>噪音幅度過大失去效用、過小無保護；<b>單純加噪不等於差分隱私</b>（差分隱私要求噪音依敏感度與 ε 校準）</td></tr>
+    </table>
+  </div>
+
+  <h3>雜湊為什麼要加 salt</h3>
+  <div class="panel">
+    <p class="hint">手機號碼只有 10 位數，攻擊者可以把所有可能號碼預先算好雜湊（彩虹表）。按按鈕看差別（雜湊值為示意）。</p>
+    <div class="row"><button class="btn" id="saltBtn" aria-pressed="false">加上 salt</button><button class="btn primary" id="rainBtn">攻擊者查彩虹表</button></div>
+    <div class="pout" id="saltOut" style="margin-top:12px" aria-live="polite"></div>
+  </div>
+
+  <h3>泛化 vs 分桶：配對練習</h3>
+  <div class="panel">
+    <p class="hint">兩者都在降精度，差別在<b>對象</b>：泛化處理階層式／類別式資訊，分桶處理連續數值。先點一個轉換，再點它屬於哪個技術。</p>
+    <div class="fields" id="gbFields"></div>
+    <div class="bins" id="gbBins" style="grid-template-columns:1fr 1fr"></div>
+    <div class="feedback" id="gbFb" aria-live="polite"></div>
+  </div>
+
+  <h3>去識別化該發生在資料湖的哪一層</h3>
+  <div class="panel">
+    <p class="hint">點一層，看裡面放什麼、誰能碰、要套什麼控制。</p>
+    <div class="layers" id="layers"></div>
+    <div class="pout" id="layerOut" style="margin-top:12px"></div>
+  </div>
+  <div class="callout"><b>要點：</b>去識別化是「往下游逐層加強」，不是最後一關才做。Gold 層若要對外，必須在 Silver → Gold 之間補上 K-匿名或差分隱私，而不是靠口頭約束。</div>
+</section>
+
+<!-- 40.3 -->
+<section id="s3">
+  <div class="sec-head"><span class="sec-no">40.3</span><h2>進階隱私強化技術（PETs）</h2></div>
+  <p class="lead">用<b>生命週期</b>定位，而不是用名稱記憶。點一個技術，看它的保護發生在哪一段、資料當下是明文還是密文。</p>
+
+  <div class="panel">
+    <div class="tabs" id="petTabs"></div>
+    <div class="life" id="life"></div>
+    <div class="tbl-wrap"><table id="petTbl" style="min-width:0"></table></div>
+  </div>
+  <details>
+    <summary>展開七種 PETs 完整對照表</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>技術</th><th>保護發生在生命週期的哪一段</th><th>資料在運算當下的狀態</th><th>大數據典型情境</th><th>主要代價</th></tr>
+        <tr><td><b>K-匿名／L-多樣性／T-接近性</b></td><td>資料<b>發布前</b>的轉換</td><td>明文，準識別欄位已群組化</td><td>開放資料集、醫療研究資料釋出</td><td>計算複雜度高；K 值太大則資料變粗；對非結構化資料適用性有限</td></tr>
+        <tr><td><b>差分隱私</b></td><td><b>查詢結果或模型輸出</b>產生時</td><td>明文（在結果上加校準噪音）</td><td>統計查詢 API、DP-SGD 訓練、差分隱私合成資料</td><td>效用下降；隱私預算 ε 會隨查詢次數累積消耗</td></tr>
+        <tr><td><b>聯邦學習</b></td><td><b>訓練階段的資料移動</b>被取消</td><td>明文，但留在各參與方本地</td><td>跨院醫療聯盟、跨行風控、行動裝置鍵盤預測</td><td>通訊成本高；梯度可能被逆向推導，常需再疊 DP 或安全聚合</td></tr>
+        <tr><td><b>同態加密</b></td><td><b>運算全程</b></td><td>密文，自始至終不解密</td><td>把推論或統計外包給雲端服務商</td><td>運算效能極低，完全同態（FHE）需高規硬體</td></tr>
+        <tr><td><b>對稱／非對稱加密</b></td><td><b>傳輸中與靜態儲存</b></td><td>密文（運算前須解密）</td><td>TLS 傳輸、資料湖靜態加密、金鑰交換</td><td>對稱的弱點是金鑰配送；非對稱慢，<b>主要用於金鑰交換與身分驗證，不用來加密大量資料</b></td></tr>
+        <tr><td><b>安全多方計算 MPC</b></td><td><b>多方共同運算的過程中</b></td><td>各方只看得到自己的輸入與最終結果</td><td>跨機構聯合統計、聯合風控</td><td><b>必須「多方且互不信任」</b>；題幹寫「單一雲端服務商」就排除 MPC，那是同態加密的場景。L22 官方 100 題尚未考，但與 114Q2-20 同型</td></tr>
+        <tr><td><b>亂數回應</b></td><td><b>資料被說出來之前</b>（蒐集當下）</td><td>個人端即已擾動</td><td>敏感問卷、端側遙測回報</td><td>需大量樣本才能還原母體統計；面對重複查詢保護力有限</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <h3>三組最常互相當誤答的配對：情境判官</h3>
+  <div class="panel">
+    <p class="hint">讀情境，選出最適合的技術。</p>
+    <div class="qtop"><span id="jgNo"></span><span id="jgScore"></span></div>
+    <div class="qtext" id="jgQ" style="font-size:16.5px"></div>
+    <div class="row" id="jgOpts"></div>
+    <p id="jgFb" style="margin:12px 0 0;min-height:1.6em" aria-live="polite"></p>
+    <div class="row" style="justify-content:flex-end"><button class="btn primary" id="jgNext">下一個情境</button></div>
+  </div>
+  <div class="compare">
+    <div><div class="big">同態加密 HE</div>「一秒都不能讓雲端看到明文」→ 密文上直接運算，解密後與明文運算結果一致。<br><span class="hint">關鍵字：不解密／密文上運算</span></div>
+    <div><div class="big">差分隱私 DP</div>「不能讓人反推某個人在不在資料集裡」→ 明文上算，在輸出加校準噪音。<br><span class="hint">關鍵字：雜訊／ε／不顯著改變輸出</span></div>
+  </div>
+  <div class="compare" style="margin-top:12px">
+    <div><div class="big">聯邦學習 FL</div>保護「資料不用搬家」，本身不加密，傳的是模型參數更新。<br><span class="hint">各醫院不得交換原始病歷，但要共同訓練 → FL</span></div>
+    <div><div class="big">K-匿名 vs DP</div>k 值只保證「同一準識別組合至少 k 人」，是群組大小的保證；DP 以 ε 提供形式化、可證明、可組合的保證。<br><span class="hint">問「可量化的隱私保證」→ DP；問「表格如何避免被唯一定位」→ K-匿名</span></div>
+  </div>
+
+  <h3>差分隱私模擬器：ε 怎麼影響答案？</h3>
+  <div class="panel">
+    <p class="hint">查詢「資料集中有幾人罹患某病？」真實答案 42（示意）。差分隱私在<b>輸出</b>加上依敏感度與 ε 校準的 Laplace 噪音。反覆查詢，看答案的分布與隱私預算消耗。</p>
+    <div class="sld"><span>隱私參數 ε</span><input type="range" id="eps" min="1" max="5" value="2" aria-label="epsilon"><output id="epsO"></output></div>
+    <div class="row"><button class="btn primary" id="dpQ">查詢 1 次</button><button class="btn" id="dpQ10">查詢 20 次</button><button class="btn" id="dpR">重設</button><span class="hint" id="dpLast"></span></div>
+    <div class="hist" id="hist" style="margin-top:12px"></div>
+    <div class="row hint" style="justify-content:space-between"><span>22</span><span>42（真值）</span><span>62</span></div>
+    <div class="row" style="justify-content:space-between;margin-top:8px"><b>已消耗隱私預算（示意，總額 10）</b><span id="budN" style="font-variant-numeric:tabular-nums"></span></div>
+    <div class="meter"><i id="budM"></i></div>
+    <p class="hint" id="dpNote" style="margin:6px 0 0"></p>
+  </div>
+
+  <h3>K-匿名家族三層遞進</h3>
+  <div class="panel">
+    <div class="steps" id="kBtns"></div>
+    <div class="stage">
+      <div class="stage-viz" id="kViz"></div>
+      <div id="kTxt"></div>
+    </div>
+  </div>
+  <p class="prose">三者是<b>層層補強</b>的關係，不是三個可互相取代的平行選項。</p>
+
+  <h3>大數據平台特有的隱私攻擊面</h3>
+  <p class="hint">模型上線、API 對外開放後，攻擊面就從「資料庫」轉移到「模型輸出」。</p>
+  <div class="panel">
+    <h3 style="margin-top:0">成員推斷攻擊：訊號藏在信心分布裡</h3>
+    <p class="hint">模型對訓練時看過的樣本通常給出更高信心。兩個分布分得愈開，攻擊者愈容易判斷「某人在不在訓練集」。試試三種防禦（分布為示意）。</p>
+    <div class="row">
+      <button class="btn" id="miDP" aria-pressed="false">以差分隱私訓練</button>
+      <button class="btn" id="miCoarse" aria-pressed="false">只回傳粗化的標籤／信心值</button>
+      <button class="btn" id="miRate" aria-pressed="false">限制查詢次數</button>
+    </div>
+    <svg id="miSvg" viewBox="0 0 640 220" style="margin-top:12px" role="img" aria-label="成員推斷信心分布"></svg>
+    <p id="miNote" style="margin:6px 0 0"></p>
+  </div>
+  <div class="panel flat">
+    <h3 style="margin-top:0">配對：攻擊者想知道什麼？</h3>
+    <div class="match" id="atkMatch"></div>
+    <div class="feedback" id="atkFb" aria-live="polite"></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>攻擊</th><th>攻擊者想知道什麼</th><th>原理</th><th>對應防禦</th></tr>
+      <tr><td><b>連結攻擊 Linkage Attack</b></td><td>這筆去識別化紀錄是誰</td><td>拿外部資料集與準識別欄位交叉比對</td><td>泛化／分桶／K-匿名，並做再識別模擬測試</td></tr>
+      <tr><td><b>成員推斷 Membership Inference</b></td><td>某個人<b>在不在</b>訓練集裡</td><td>模型對訓練時看過的樣本通常給出<b>更高信心、更低損失</b>，反覆查詢即可辨出差異</td><td>以差分隱私訓練加噪；只回傳粗化的標籤或信心值；避免嚴重過擬合</td></tr>
+      <tr><td><b>模型反演／屬性推斷 Model Inversion</b></td><td>輸入的敏感特徵是什麼</td><td>從輸出反推輸入屬性</td><td>限制輸出資訊量、控制查詢粒度</td></tr>
+      <tr><td><b>模型萃取 Model Extraction</b></td><td>複製模型本身</td><td>大量查詢後訓練替代模型</td><td>限制存取與查詢額度、浮水印</td></tr>
+    </table>
+  </div>
+  <div class="callout exam"><b>差分隱私合成資料</b>的易錯點：做法是<b>先以滿足差分隱私的方式在原始資料上訓練生成模型，再由該模型產出一份可自由發布、可重複分析的合成資料集</b>，隱私預算在生成階段一次付清；「在發布查詢結果或訓練時對資料加雜訊」講的是差分隱私的一般機制（Laplace／Gaussian 機制），不是合成資料這條路線的特徵。</div>
+</section>
+
+<!-- 40.4 -->
+<section id="s4">
+  <div class="sec-head"><span class="sec-no">40.4</span><h2>合規：原則、合法依據與三部法規</h2></div>
+  <h3 style="margin-top:0">五項核心原則（GDPR、CCPA、我國個資法的公約數）</h3>
+  <p class="hint">正面是原則，翻面看大數據場景的要求與常見違反。</p>
+  <div class="cards" id="prinCards"></div>
+  <div class="callout"><b>大數據的「被遺忘權」難題：</b>刪掉來源資料列，不等於刪掉它在模型權重裡的影響。因應方式是保留資料血緣（Data Lineage）紀錄，判斷哪些模型用過該筆資料，必要時安排重訓練或機器遺忘（Machine Unlearning）。</div>
+
+  <h3>AI 訓練資料取得的合法依據</h3>
+  <div class="panel">
+    <div class="tabs" id="lbTabs"></div>
+    <div id="lbBody"></div>
+  </div>
+  <p class="hint">GDPR 另有法定義務、重大利益、正當利益等其他法律基礎；這裡是《學習指引》針對 AI 訓練情境所列的四種常見情形。</p>
+
+  <h3>三部法規對照：選一個面向比一比</h3>
+  <div class="panel">
+    <div class="tabs" id="lawTabs"></div>
+    <div class="tbl-wrap"><table id="lawTbl"></table></div>
+  </div>
+
+  <h3>兩個必背而且常被對調的數字</h3>
+  <div class="panel">
+    <p class="hint">按下事件，看 GDPR 給你多少時間（長條長度依實際時數比例）。</p>
+    <div class="row"><button class="btn" id="tmBreach">發生個資外洩</button><button class="btn" id="tmAccess">當事人提出查閱請求</button></div>
+    <div class="timebar"><i id="tmBar" style="width:0"></i></div>
+    <p id="tmNote" style="margin:0"></p>
+  </div>
+  <div class="callout">看到題目把 72 小時掛在查閱權上，或把一個月掛在外洩通報上，直接刪。</div>
+
+  <h3>假名化 ≠ 匿名化</h3>
+  <div class="panel">
+    <div class="tabs" id="pseTabs">
+      <button class="btn" data-m="p" aria-pressed="true">假名化 Pseudonymisation</button>
+      <button class="btn" data-m="a" aria-pressed="false">匿名化 Anonymisation</button>
+    </div>
+    <svg id="pseSvg" viewBox="0 0 640 170" role="img" aria-label="假名化與匿名化"></svg>
+    <p id="pseNote" style="margin:8px 0 0"></p>
+  </div>
+
+  <h3>我國個資法在大數據應用上的兩個額外考點</h3>
+  <details><summary>域外適用（第 51 條第 2 項）</summary><div class="body">我國人民的個人資料在境外被蒐集、處理或利用者，亦適用本法。把使用者資料送到境外雲端訓練，<b>不會因此跳出個資法</b>。</div></details>
+  <details><summary>安全維護義務</summary><div class="body">非公務機關須訂定個人資料檔案安全維護計畫與業務終止後的處理方法，這使得「資料湖的存取控制與稽核軌跡」從最佳實務升格為<b>法定義務</b>，也是下一節存在的理由。</div></details>
+</section>
+
+<!-- 40.5 -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-no">40.5</span><h2>大數據平台的安全控制面</h2></div>
+  <h3 style="margin-top:0">存取控制：從「誰」到「為什麼」</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>模型</th><th>判斷依據</th><th>適合情境</th><th>限制</th></tr>
+      <tr><td><b>RBAC（角色）</b></td><td>使用者屬於哪個角色</td><td>組織結構穩定、資料分類單純</td><td>角色會爆炸；同一角色難以區分不同專案的取用目的</td></tr>
+      <tr><td><b>ABAC（屬性）</b></td><td>使用者屬性 × 資料標籤 × 環境條件（部門、資料敏感度標籤、來源 IP、時間）</td><td>資料湖多租戶、跨專案共用</td><td>政策撰寫與測試複雜</td></tr>
+      <tr><td><b>目的別存取（Purpose-based）</b></td><td>這次查詢宣告的用途是否與蒐集目的相符</td><td>落實目的限制原則</td><td>需要資料目錄記錄每份資料的原始蒐集目的</td></tr>
+    </table>
+  </div>
+  <div class="panel">
+    <h3 style="margin-top:0">三種顆粒度模擬：同一張表，不同人看到什麼？</h3>
+    <p class="hint">切換使用者，觀察資料集層級、資料列層級（Row-Level Security）、欄位層級（Column-Level Security＋動態遮罩）如何疊加（示意資料）。</p>
+    <div class="users" id="users"></div>
+    <div class="tbl-wrap"><table class="ppl" id="acl"></table></div>
+    <p class="hint" id="aclNote" style="margin:8px 0 0"></p>
+  </div>
+
+  <h3>加密的三種狀態</h3>
+  <div class="panel">
+    <div class="pipe" id="encPipe" style="grid-template-columns:repeat(3,1fr)"></div>
+    <div class="pout" id="encOut" aria-live="polite"></div>
+  </div>
+  <div class="callout"><b>雜湊不在三態任一列</b>：它單向、無金鑰、沒有解密程序，做的是完整性驗證與一致性比對，不是機密性保護。</div>
+
+  <h3>稽核軌跡與資料血緣</h3>
+  <div class="panel">
+    <p class="hint">當事人請求刪除時，你能說出他的資料散落在哪裡嗎？按下按鈕，沿著資料血緣找出受影響範圍。</p>
+    <div class="row"><button class="btn primary" id="linBtn">當事人請求刪除</button><button class="btn" id="linReset">重設</button></div>
+    <div class="lin" id="lin" style="margin-top:12px"></div>
+    <p id="linNote" style="margin:10px 0 0"></p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>機制</th><th>要記錄什麼</th><th>為什麼大數據特別需要</th></tr>
+      <tr><td><b>存取稽核軌跡（Audit Log）</b></td><td>誰、何時、用什麼身分、查了哪張表的哪些欄位、匯出多少列</td><td>資料湖的取用者多且分散，事後追查只能靠日誌；日誌本身應唯讀、獨立保存</td></tr>
+      <tr><td><b>資料血緣（Data Lineage）</b></td><td>某欄位從哪個來源系統來、經過哪些轉換、餵進哪些模型</td><td>當事人請求刪除或發生外洩時，能快速界定影響範圍</td></tr>
+      <tr><td><b>資料版本管理</b></td><td>資料集快照版本、處理流程版本</td><td>支援稽核重現與模型問題回溯</td></tr>
+    </table>
+  </div>
+  <div class="callout exam">《學習指引》章末練習直接考過：要確保 AI 系統的合規性與可追溯性，應建立的是<b>資料版本管理與操作紀錄制度</b>，不是模型評分制度。</div>
+
+  <h3>資料生命週期：每一階段的控制項</h3>
+  <div class="panel">
+    <div class="steps" id="lcBtns"></div>
+    <div class="compare" id="lcBody"></div>
+  </div>
+</section>
+
+<!-- 40.6 -->
+<section id="s6">
+  <div class="sec-head"><span class="sec-no">40.6</span><h2>內部治理制度：五個面向</h2></div>
+  <div class="panel">
+    <div class="tabs" id="govTabs"></div>
+    <div id="govBody"></div>
+  </div>
+  <h3>治理成熟度的判斷順序</h3>
+  <div class="panel">
+    <p class="hint">考題常用這條線排除選項。逐一加上要素，看治理爬到哪一階。</p>
+    <div class="strat" id="govStrat"></div>
+    <div class="ladder" id="ladder" style="margin-top:16px"></div>
+  </div>
+  <div class="callout">選項寫「由 IT 團隊部署後定期觀察效能」「採購更多訓練設備」，是把治理窄化成技術或資源問題，通常是誘答；正解方向會是<b>導入 AI 治理框架與跨部門監管流程</b>。</div>
+</section>
+
+<!-- 40.7 -->
+<section id="s7">
+  <div class="sec-head"><span class="sec-no">40.7</span><h2>官方考過什麼</h2></div>
+  <p class="lead"><b>計數基準：</b>以「題幹或選項的主要考點落在本知識點」認定，不含只是情境背景提及個資的題目；範圍是 114-2 與 115-1 兩份官方公告試題共 100 題。依此基準，屬於 L22404 的共 <b>5 題（5%）</b>。</p>
+  <div id="examList"></div>
+  <h3>命題觀察</h3>
+  <details><summary>同態加密是第一考點</summary><div class="body">5 題裡有 2 題以它為正解（114Q2-13、114Q2-20），另有 1 題（114Q2-32）把它設計成<b>誤用技術的誘答</b>。要同時記得它「能做什麼」與「不能做什麼」——它保護的是運算過程中的資料機密性，不能阻止模型把已經學進參數的個資講出來。</div></details>
+  <details><summary>差分隱私三種身分都出現過</summary><div class="body">在 115Q1-37 是正解防禦，在 115Q1-38 是比較基準，在 L23 的同類題中則常是同態加密的誘答。判準始終是「明文上加校準噪音、保護個體存不存在」。</div></details>
+  <details><summary>115 年明顯難度升級</summary><div class="body">114 年考的是單一技術定義，115 年改考<b>攻擊面</b>（成員推斷）與<b>技術強度比較</b>（K-匿名／DP 合成資料／亂數回應），而且是「選不正確」題型。準備方向要從背定義轉成建立橫向比較表。</div></details>
+  <details><summary>未計入的 115Q1-36</summary><div class="body">電商資料湖的 Text-to-SQL 架構題，題幹寫明需要「資料庫層級的權限控管與查詢審計」，但主要考點是查詢架構選型，<b>不計入上述 5 題</b>；它的存在說明官方會把權限與稽核當成架構題的限制條件（見 <a href="L22403_bigdata_generative_ai.html">L22403</a>）。</div></details>
+  <details><summary>《學習指引》章末練習</summary><div class="body">自附 10 題練習中，有 5 題（第 5～9 題）落在本知識點：資料匿名化、差分隱私、醫療資料的合法授權與同意、資料版本管理與操作紀錄制度、AI 治理框架與跨部門監管流程。這 5 題與公告試題的 5 題是<b>兩組不同來源</b>，合起來可以看出官方的關注面涵蓋「技術 → 法遵 → 治理」三層。</div></details>
+</section>
+
+<!-- 40.8 -->
+<section id="s8">
+  <div class="sec-head"><span class="sec-no">40.8</span><h2>易錯與陷阱</h2></div>
+  <p class="lead">逐條確認自己真的懂了再打勾（打勾狀態會記在這台裝置上）。</p>
+  <div class="traps" id="traps"></div>
+  <p class="hint" id="trapCount" style="margin-top:10px"></p>
+
+  <h3>情境測驗</h3>
+  <div class="qcard" id="quiz"></div>
+
+  <h3>延伸練習</h3>
+  <p class="prose"><b>L22 主題庫 290 題：</b>篩選「隱私／加密／匿名化／治理／合規」相關題目，優先練 40.3 的 PETs 定位表與 40.4 的法規對照表；作答時把題幹限制條件（是否可解密、有幾個參與方、資料在哪一層、保護識別還是敏感值）逐條列出再選。<br><b>L22 歷屆 100 題：</b>本節相關的 5 題（114Q2-13、114Q2-20、114Q2-32、115Q1-37、115Q1-38）務必做到能講出每個誘答錯在哪一層；115 年的兩題是難度升級的指標題，值得反覆看。<br>本節常與 <a href="L22403_bigdata_generative_ai.html">L22403（大數據在生成式 AI 中的應用）</a>及資料架構類知識點混考——「既要支援大規模查詢、又要權限控管與稽核」這類題幹考的是兩個知識點的交集，建議一起複習。</p>
+</section>
+</main>
+
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce){const m=document.querySelector('#heroSvg .movers');if(m)m.remove();}
+const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+
+/* ---------- generic matcher ---------- */
+function matcher(root,fb,left,right,doneMsg,badMsg){
+  let sel=null,done=0;
+  const L=document.createElement('div');L.className='col';
+  const R=document.createElement('div');R.className='col';
+  left.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;
+    b.innerHTML=it.html;if(it.c)b.style.setProperty('--c',it.c);
+    b.onclick=()=>{if(b.classList.contains('done'))return;L.querySelectorAll('.mitem').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;fb.textContent='';fb.className='feedback';};
+    L.appendChild(b);
+  });
+  right.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;b.innerHTML=it.html;
+    b.onclick=()=>{
+      if(b.classList.contains('done'))return;
+      if(!sel){fb.textContent='請先點左邊一個項目。';fb.className='feedback';return;}
+      if(sel.dataset.k===b.dataset.k){
+        const c=sel.style.getPropertyValue('--c');
+        [sel,b].forEach(x=>{x.classList.remove('sel');x.classList.add('done');if(c)x.style.setProperty('--c',c);});
+        fb.textContent='✓ '+(it.ok||'答對了！');fb.className='feedback ok';sel=null;done++;
+        if(done===left.length){fb.textContent='✓ 全部配對完成！'+doneMsg;}
+      }else{
+        b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');
+        fb.textContent='✗ '+(it.bad||badMsg||'不太對，再想想看。');fb.className='feedback bad';
+      }
+    };
+    R.appendChild(b);
+  });
+  root.append(L,R);
+}
+/* ---------- flip cards ---------- */
+function flips(root,list){
+  list.forEach(([n,o,d])=>{
+    const b=document.createElement('button');b.className='flip';b.setAttribute('aria-pressed','false');
+    b.innerHTML=`<div class="in"><div class="f"><strong>${n}</strong><span>${o}</span><span style="margin-top:auto;font-size:12.5px">點我翻面</span></div><div class="b">${d}</div></div>`;
+    b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');
+    root.appendChild(b);
+  });
+}
+/* ---------- tabs helper ---------- */
+function tabs(btnRoot,list,render){
+  list.forEach((x,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=x;b.onclick=()=>s(i);btnRoot.appendChild(b);});
+  function s(i){btnRoot.querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));render(i);}
+  s(0);
+}
+/* ---------- exam list ---------- */
+function examList(root,list){
+  list.forEach(([n,k,q,a])=>{root.insertAdjacentHTML('beforeend',`<details><summary><span class="tag">${n}</span>${k}</summary><div class="body"><p style="margin:0 0 6px"><span class="hint">怎麼問：</span>${q}</p><p style="margin:0"><span class="hint">正解思路：</span>${a}</p></div></details>`);});
+}
+/* ---------- traps ---------- */
+function traps(key,T){
+  let saved=[];try{saved=JSON.parse(localStorage.getItem(key)||'[]')||[];}catch(e){saved=[];}
+  T.forEach(([a,b],i)=>{
+    const l=document.createElement('label');const c=saved.includes(i);if(c)l.classList.add('chk');
+    l.innerHTML=`<input type="checkbox" ${c?'checked':''}><div><em>${a}</em><br><span>${b}</span></div>`;
+    l.querySelector('input').onchange=e=>{const on=e.target.checked;l.classList.toggle('chk',on);saved=on?[...new Set([...saved,i])]:saved.filter(x=>x!==i);try{localStorage.setItem(key,JSON.stringify(saved));}catch(err){}count();};
+    $('#traps').appendChild(l);
+  });
+  function count(){$('#trapCount').textContent=`已確認 ${saved.length}／${T.length} 條`;}
+  count();
+}
+/* ---------- quiz ---------- */
+function quiz(Q,msgs){
+  let i=0,score=0;const box=$('#quiz');
+  function show(){
+    if(i>=Q.length){
+      const msg=score>=Q.length-1?msgs[0]:score>=Math.ceil(Q.length*.65)?msgs[1]:msgs[2];
+      box.innerHTML=`<div class="progress"><i style="width:100%"></i></div><div class="qtext" style="font-size:24px;font-family:var(--serif)">得分 ${score}／${Q.length}</div><p>${msg}</p><button class="btn primary" id="qr">重新測驗</button>`;
+      $('#qr').onclick=()=>{i=0;score=0;show();};return;
+    }
+    const [q,opts,ex]=Q[i];
+    const order=shuffle(opts.map((o,k)=>({o,k})));
+    box.innerHTML=`<div class="progress"><i style="width:${i/Q.length*100}%"></i></div><div class="qtop"><span>第 ${i+1}／${Q.length} 題</span><span>得分 ${score}</span></div><div class="qtext">${q}</div><div class="opts">${order.map(x=>`<button class="opt" data-k="${x.k}">${x.o}</button>`).join('')}</div><div class="expl" id="qe"></div><div class="row" style="margin-top:14px;justify-content:flex-end"><button class="btn primary" id="qn" style="display:none">${i===Q.length-1?'看結果':'下一題'}</button></div>`;
+    box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.k==='0';if(ok)score++;
+      box.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.k==='0')x.classList.add('right');});
+      if(!ok)b.classList.add('wrongpick');
+      const e=$('#qe');e.innerHTML=(ok?'<b style="color:var(--ok)">答對了。</b>':'<b style="color:var(--bad)">這題要小心。</b>')+ex;e.classList.add('show');
+      $('#qn').style.display='';$('#qn').focus();
+    });
+    $('#qn').onclick=()=>{i++;show();};
+  }
+  show();
+}
+
+/* ---------- classify widget ---------- */
+function classify(fRoot,bRoot,fb,bins,items,done){
+  let sel=null,n=0;
+  bins.forEach(([k,name,c,desc])=>{const b=document.createElement('button');b.className='bin';b.dataset.k=k;b.style.setProperty('--c',c);b.innerHTML=`<b>${name}</b><span class="hint">${desc||''}</span><div class="got"></div>`;
+    b.onclick=()=>{
+      if(!sel){fb.textContent='請先點一個項目。';fb.className='feedback';return;}
+      const it=items[+sel.dataset.i];
+      if(it[1]===k){sel.classList.remove('sel');sel.classList.add('done');sel.style.setProperty('--c',c);b.querySelector('.got').insertAdjacentHTML('beforeend',`<span>${it[0]}</span>`);fb.textContent='✓ '+(it[2]||'答對了！');fb.className='feedback ok';sel=null;n++;if(n===items.length)fb.textContent='✓ 全部分類完成！'+done;}
+      else{sel.classList.remove('wrong');void sel.offsetWidth;sel.classList.add('wrong');fb.textContent='✗ '+(it[3]||'再想想看。');fb.className='feedback bad';}
+    };bRoot.appendChild(b);});
+  items.forEach((it,i)=>{const b=document.createElement('button');b.className='fbtn';b.dataset.i=i;b.textContent=it[0];b.onclick=()=>{if(b.classList.contains('done'))return;fRoot.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;fb.textContent='';fb.className='feedback';};fRoot.appendChild(b);});
+}
+classify($('#fields'),$('#bins'),$('#binFb'),[
+  ['d','直接識別資訊','var(--txt)','單一欄位即可指向特定個人'],
+  ['q','準識別資訊','var(--img)','單看無識別性，組合後可能唯一'],
+  ['s','敏感資料','var(--aud)','外洩後傷害特別大']
+],[
+  ['姓名','d'],['身分證號','d'],['Email','d','',''],['裝置 ID','d','裝置 ID 單一欄位即可指向特定人。','裝置 ID 單一欄位就能指向一個人。'],
+  ['性別','q'],['出生年月','q'],['郵遞區號','q'],['GPS 軌跡','q','單看無識別性，但時間序列組合起來就是身分指紋。'],
+  ['健康紀錄','s'],['信用狀況','s'],['宗教信仰','s','屬 GDPR 第 9 條特種類別（我國個資法第 6 條並未列入）。']
+],'記住：準識別欄位不能只靠移除，要用泛化／分桶／K-匿名降低鑑別力。');
+
+/* ---------- re-identification simulator ---------- */
+(function(){
+  const cols=[['g','性別'],['b','出生年月'],['z','郵遞區號']];
+  const P=[['女','1987-03','110','糖尿病'],['男','1987-03','110','高血壓'],['女','1990-07','106','流感'],['男','1990-07','110','氣喘'],['女','1987-03','106','高血壓'],['男','1985-11','110','流感'],['女','1990-07','110','糖尿病'],['男','1985-11','106','氣喘'],['女','1987-03','110','流感'],['男','1992-01','106','糖尿病']];
+  const on={g:true,b:false,z:false};
+  cols.forEach(([k,n])=>{const b=document.createElement('button');b.className='btn';b.textContent=n;b.setAttribute('aria-pressed',on[k]);b.onclick=()=>{on[k]=!on[k];b.setAttribute('aria-pressed',on[k]);r();};$('#qiBtns').appendChild(b);});
+  function r(){
+    const idx=cols.map((c,i)=>on[c[0]]?i:-1).filter(i=>i>=0);
+    const key=p=>idx.map(i=>p[i]).join('|');
+    const cnt={};P.forEach(p=>{cnt[key(p)]=(cnt[key(p)]||0)+1;});
+    let u=0;
+    let h='<tr><th>#</th>'+cols.map((c,i)=>`<th class="${on[c[0]]?'':'off'}">${c[1]}</th>`).join('')+'<th>診斷（敏感）</th><th>同組人數</th></tr>';
+    P.forEach((p,i)=>{const k=cnt[key(p)];const uq=idx.length>0&&k===1;if(uq)u++;h+=`<tr class="${uq?'uniq':''}"><td>${i+1}</td>${cols.map((c,j)=>`<td class="${on[c[0]]?'':'off'}">${p[j]}</td>`).join('')}<td>${p[3]}</td><td>${idx.length?k:'—'}${uq?' ⚠':''}</td></tr>`;});
+    $('#ppl').innerHTML=h;
+    $('#uniqN').textContent=`${u}／${P.length}`;$('#uniqM').style.width=u*10+'%';$('#uniqM').style.background=u>5?'var(--bad)':u>0?'var(--warn)':'var(--ok)';
+    $('#uniqNote').innerHTML=u===0?'目前沒有任何一筆是唯一的：每個組合至少有 2 人。':`有 ${u} 筆的準識別組合是唯一的。攻擊者只要手上有一份含姓名與這些欄位的外部名單，就能把「匿名」的那一列還原成一個人，連帶知道他的診斷——這就是<b>連結攻擊</b>。`;
+  }
+  r();
+})();
+
+/* ---------- 4V tabs ---------- */
+(function(){
+  const V=[
+    ['Volume 量大','橫向比對風險','內部行銷資料庫 ＋ 外部購買名單 ＋ 公開社群貼文三方交叉，就能把「匿名」的一列還原成一個人。',
+     `<svg viewBox="0 0 220 160" style="width:220px"><circle cx="80" cy="60" r="45" fill="var(--txt)" opacity=".35"/><circle cx="140" cy="60" r="45" fill="var(--img)" opacity=".35"/><circle cx="110" cy="105" r="45" fill="var(--aud)" opacity=".35"/><text x="110" y="80" text-anchor="middle" font-size="22">👤</text><text x="55" y="45" font-size="11" fill="var(--ink)">行銷庫</text><text x="140" y="45" font-size="11" fill="var(--ink)">外部名單</text><text x="95" y="140" font-size="11" fill="var(--ink)">社群貼文</text></svg>`],
+    ['Velocity 高速','時間軸拼接風險','每 5 分鐘一筆的 GPS 或刷卡時間序列，可推出住家、工作地、作息，本身就是身分指紋。',
+     `<svg viewBox="0 0 220 160" style="width:220px"><path d="M30 130 Q 70 40 110 80 T 190 30" fill="none" stroke="var(--line)" stroke-width="2"/>${[[30,130],[50,95],[72,70],[95,74],[110,80],[130,82],[150,62],[170,42],[190,30]].map(([x,y],i)=>`<circle cx="${x}" cy="${y}" r="5" fill="var(--img)"><animate attributeName="opacity" values="0;1" dur=".3s" begin="${i*.25}s" fill="freeze"/></circle>`).join('')}<text x="14" y="152" font-size="12" fill="var(--ink)">🏠 住家</text><text x="160" y="20" font-size="12" fill="var(--ink)">🏢 公司</text></svg>`],
+    ['Variety 多樣','保護不足風險','K-匿名這類技術對表格有效，對自由文本、語音、影像適用性有限；客服逐字稿的個資躲在句子中間，欄位遮罩掃不到。',
+     `<div style="max-width:240px;font-size:14px;background:var(--surface2);padding:12px;border-radius:10px">客服：您好，請問有什麼需要？<br>客戶：我是<b style="color:var(--bad)">陳小華</b>，上週在信義店刷卡，卡號後四碼 <b style="color:var(--bad)">5521</b>…<div class="hint" style="margin-top:6px">欄位遮罩只看欄位，掃不到句子裡的個資</div></div>`],
+    ['長期留存','保存期限失控風險','資料湖「先存再說」：蒐集時的目的早已結束，資料還在；當年的去識別化強度，擋不住今天的比對能力。',
+     `<svg viewBox="0 0 220 160" style="width:220px"><line x1="20" y1="90" x2="200" y2="90" stroke="var(--line)" stroke-width="3"/><circle cx="30" cy="90" r="7" fill="var(--txt)"/><text x="30" y="70" text-anchor="middle" font-size="11" fill="var(--ink)">蒐集</text><circle cx="90" cy="90" r="7" fill="var(--muted)"/><text x="90" y="70" text-anchor="middle" font-size="11" fill="var(--ink)">目的結束</text><circle cx="190" cy="90" r="9" fill="var(--bad)"><animate attributeName="r" values="7;11;7" dur="1.2s" repeatCount="indefinite"/></circle><text x="190" y="70" text-anchor="middle" font-size="11" fill="var(--ink)">資料還在</text><text x="110" y="125" text-anchor="middle" font-size="11" fill="var(--muted)">當年的去識別化 vs 今天的比對能力</text></svg>`]
+  ];
+  tabs($('#vTabs'),V.map(v=>v[0]),i=>{$('#vViz').innerHTML=V[i][3];$('#vTxt').innerHTML=`<p><b>${V[i][0]}</b> → <b style="color:var(--bad)">${V[i][1]}</b></p><p>${V[i][2]}</p>`;});
+})();
+
+/* ---------- case cards ---------- */
+flips($('#caseCards'),[
+  ['醫療','AI 診斷模型','直接使用未匿名化病歷（含年齡、診斷紀錄）→ 經外部資料比對識別患者，違反個資法遭罰 30 萬元。'],
+  ['電商','推薦系統','未匿名化顧客瀏覽紀錄 → 遭駭客以行為軌跡識別用戶，品牌信任度下降。'],
+  ['金融','詐欺偵測模型','使用未脫敏交易資料 → 遭時間軸拼接洩漏身分，影響用戶滿意度。'],
+  ['教育','學習分析模型','未移除學生年級與地區 → 身分外洩，學校合規性受質疑。']
+]);
+
+/* ---------- 40.2 technique demo ---------- */
+function fh(s){let h1=0x811c9dc5,h2=0x1234567;for(const ch of s){h1=Math.imul(h1^ch.charCodeAt(0),16777619)>>>0;h2=Math.imul(h2^ch.charCodeAt(0),2246822507)>>>0;}return (h1.toString(16).padStart(8,'0')+h2.toString(16).padStart(8,'0'));}
+(function(){
+  const F=[['姓名','王大明'],['身分證號','A123456789'],['生日','1987-03-12'],['地址','台北市信義區某路'],['年收入','58,000'],['年齡','32']];
+  const T=[
+    ['原始資料',{},'Bronze 落地層的原貌：含完整 PII。'],
+    ['遮蔽',{0:'王○○',1:'A12******89'},'<b>遮蔽 Masking</b>：保留欄位格式（長度、型別不變）。落點：報表層、測試環境、前端顯示層，可用動態遮罩在查詢當下即時套用。<br><span class="hint">限制：只隱藏部分字元，配合旁證仍可能被推回。</span>'],
+    ['雜湊',{1:()=>fh('A123456789').slice(0,16)+'…'},'<b>雜湊 Hashing</b>：單向、固定長度，供比對而非顯示。ETL 載入時對 ID 做一致性雜湊，跨資料表仍可 join。<br><span class="hint">限制：原始值空間小易被窮舉，應加 salt；雜湊值無法做數值運算。（雜湊值為示意）</span>'],
+    ['泛化',{2:'1980 年代',3:'台北市'},'<b>泛化 Generalization</b>：降低<b>階層式</b>資訊精度（日期→年代、地址→縣市）。落點：Silver 層轉換階段。<br><span class="hint">限制：精度損失影響細分群分析。</span>'],
+    ['分桶',{4:'50K–60K',5:'30–39 歲'},'<b>分桶 Bucketing</b>：把<b>連續數值</b>切成區間。落點：特徵工程階段，可與建模的分箱共用邏輯。<br><span class="hint">限制：分桶過細仍可能剩下極少數人，等於沒保護。</span>'],
+    ['隨機擾動',{4:()=>(58000+Math.round((Math.random()-.5)*400)).toLocaleString('en-US')},'<b>隨機擾動 Noise Injection</b>：對數值加隨機噪音，保留平均數、變異數等整體統計特性。落點：對外發布的統計資料集。<br><span class="hint">限制：幅度過大失去效用、過小無保護；<b>單純加噪不等於差分隱私</b>（DP 要求噪音依敏感度與 ε 校準）。再按一次會得到不同值。</span>']
+  ];
+  tabs($('#tkTabs'),T.map(t=>t[0]),i=>{
+    const m=T[i][1];
+    $('#recbox').innerHTML=F.map(([n,v],j)=>{const c=m[j]!==undefined;const val=c?(typeof m[j]==='function'?m[j]():m[j]):v;return `<div class="rf ${c?'chg':''}"><b>${n}</b><span>${val}</span></div>`;}).join('');
+    $('#tkInfo').innerHTML=T[i][2];
+  });
+})();
+
+/* ---------- salt demo ---------- */
+(function(){
+  let salt=false;const ph='0912-345-678',s='x7#Qp';
+  function r(msg){const h=salt?fh(s+ph):fh(ph);$('#saltOut').innerHTML=`<b>儲存的值：</b><code>${h}</code>${salt?`　<span class="hint">（salt 另行保管）</span>`:''}${msg?'<br>'+msg:''}`;}
+  $('#saltBtn').onclick=()=>{salt=!salt;$('#saltBtn').setAttribute('aria-pressed',salt);$('#saltBtn').textContent=salt?'移除 salt':'加上 salt';r();};
+  $('#rainBtn').onclick=()=>{r(salt?'<b style="color:var(--ok)">✓ 彩虹表查無此值</b>：加了 salt，預先算好的表對不上。':'<b style="color:var(--bad)">✗ 彩虹表命中：0912-345-678</b>　手機號種類少，可被窮舉還原。雜湊「不可逆」不代表「猜不到」。');};
+  r();
+})();
+
+/* ---------- generalize vs bucket ---------- */
+classify($('#gbFields'),$('#gbBins'),$('#gbFb'),[
+  ['g','泛化 Generalization','var(--img)','階層式／類別式資訊'],
+  ['b','分桶 Bucketing','var(--aud)','連續數值']
+],[
+  ['1987-03-12 → 1980 年代','g','日期是時間階層。'],['58,000 → 50K–60K','b','金額是連續數值。'],['信義區某路 → 台北市','g','地址是地理階層。'],['32 歲 → 30–39 歲','b','年齡數字是連續數值。'],['郵遞區號 11065 → 110**','g','郵遞區號是地理階層。']
+],'題幹給地址或日期階層就往泛化想，給金額或年齡數字就往分桶想。');
+
+/* ---------- lake layers ---------- */
+(function(){
+  const L=[
+    ['Bronze 落地層','var(--txt)','原始資料，含完整 PII','僅資料工程與稽核可及','靜態加密 ＋ 最嚴格權限；每一次存取都留稽核軌跡'],
+    ['Silver 整理層','var(--img)','清洗 ＋ <b>去識別化執行處</b>','一般分析師的起點','雜湊 ID、泛化、分桶、遮蔽；欄位層級權限、動態遮罩'],
+    ['Gold 應用層','var(--sen)','聚合指標、特徵表、報表','業務單位與外部夥伴取用','原則上不含個體層級識別欄；對外發布前做再識別測試（Silver → Gold 之間補 K-匿名或差分隱私）']
+  ];
+  L.forEach((l,i)=>{const b=document.createElement('button');b.className='layer';b.style.setProperty('--c',l[1]);b.setAttribute('aria-pressed','false');b.innerHTML=`<b>${l[0]}</b>　<span class="hint">${l[2].replace(/<[^>]+>/g,'')}</span>`;b.onclick=()=>s(i);$('#layers').appendChild(b);});
+  function s(i){$$('#layers .layer').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));const l=L[i];$('#layerOut').innerHTML=`<p style="margin:0 0 4px"><b>放什麼：</b>${l[2]}</p><p style="margin:0 0 4px"><b>誰能碰：</b>${l[3]}</p><p style="margin:0"><b>控制：</b>${l[4]}</p>`;}
+  s(0);
+})();
+
+/* ---------- PET locator ---------- */
+(function(){
+  const stages=['蒐集','傳輸／儲存','訓練','運算','發布／輸出'];
+  const P=[
+    ['K-匿名家族',4,'資料<b>發布前</b>的轉換','明文，準識別欄位已群組化','開放資料集、醫療研究資料釋出','計算複雜度高；K 值太大則資料變粗；對非結構化資料適用性有限'],
+    ['差分隱私',4,'<b>查詢結果或模型輸出</b>產生時','明文（在結果上加校準噪音）','統計查詢 API、DP-SGD 訓練、差分隱私合成資料','效用下降；隱私預算 ε 隨查詢次數累積消耗'],
+    ['聯邦學習',2,'<b>訓練階段的資料移動</b>被取消','明文，但留在各參與方本地','跨院醫療聯盟、跨行風控、行動裝置鍵盤預測','通訊成本高；梯度可能被逆推，常需再疊 DP 或安全聚合'],
+    ['同態加密',3,'<b>運算全程</b>','🔒 密文，自始至終不解密','把推論或統計外包給雲端服務商','運算效能極低，完全同態（FHE）需高規硬體'],
+    ['對稱／非對稱加密',1,'<b>傳輸中與靜態儲存</b>','🔒 密文（運算前須解密）','TLS 傳輸、資料湖靜態加密、金鑰交換','對稱弱點是金鑰配送；非對稱慢，主要用於金鑰交換與身分驗證'],
+    ['安全多方計算',3,'<b>多方共同運算的過程中</b>','各方只看得到自己的輸入與最終結果','跨機構聯合統計、聯合風控','必須「多方且互不信任」；單一雲端服務商 → 那是同態加密'],
+    ['亂數回應',0,'<b>資料被說出來之前</b>（蒐集當下）','個人端即已擾動','敏感問卷、端側遙測回報','需大量樣本才能還原母體統計；面對重複查詢保護力有限']
+  ];
+  $('#life').innerHTML=stages.map(s=>`<div class="lnode">${s}</div>`).join('');
+  tabs($('#petTabs'),P.map(p=>p[0]),i=>{const p=P[i];$$('#life .lnode').forEach((n,j)=>n.classList.toggle('on',j===p[1]));
+    $('#petTbl').innerHTML=`<tr><th style="width:120px">保護發生在</th><td>${p[2]}</td></tr><tr><th>運算當下狀態</th><td>${p[3]}</td></tr><tr><th>典型情境</th><td>${p[4]}</td></tr><tr><th>主要代價</th><td>${p[5]}</td></tr>`;});
+})();
+
+/* ---------- judge ---------- */
+(function(){
+  const O=['同態加密','差分隱私','聯邦學習','K-匿名','安全多方計算','亂數回應'];
+  const S=[
+    ['要把推論外包給<b>單一雲端服務商</b>，且該服務商<b>不得解密</b>。',0,'「不解密／密文上運算」→ HE。單一服務商就排除 MPC。'],
+    ['各醫院<b>不得交換原始病歷</b>，但要共同訓練一個模型。',2,'資料不用搬家 → FL。它本身不加密，傳的是參數更新。'],
+    ['哪一個技術提供<b>可量化</b>、可組合的隱私保證？',1,'DP 以 ε 提供形式化、可證明、可組合的保證；K 的 k 只是群組大小。'],
+    ['開放<b>表格資料集</b>前，如何避免任何人被唯一定位？',3,'表格資料避免唯一定位 → K-匿名（每組至少 K 筆）。'],
+    ['多家<b>互不信任</b>的機構要做聯合統計，各方只能看到自己的輸入與最終結果。',4,'多方且互不信任 → MPC。'],
+    ['敏感問卷希望受訪者在<b>回答當下</b>就先擾動答案，提供可否認性。',5,'蒐集當下個人端即擾動 → 亂數回應。'],
+    ['銀行把信用風險模型部署到雲端，要求服務商<b>在不解密原始資料的情況下</b>執行運算。（114Q2-20）',0,'正解同態加密。匿名化、雜湊無法支援密文運算；資料本地化只限制儲存位置。'],
+    ['統計查詢 API 要確保「無法反推某個人<b>在不在</b>資料集裡」。',1,'保護個體存不存在、在輸出加校準噪音 → DP。']
+  ];
+  let i=0,sc=0,ans=false;
+  function r(){ans=false;const s=S[i];$('#jgNo').textContent=`情境 ${i+1}／${S.length}`;$('#jgScore').textContent=`答對 ${sc}`;$('#jgQ').innerHTML=s[0];$('#jgFb').textContent='';
+    $('#jgOpts').innerHTML='';O.forEach((o,k)=>{const b=document.createElement('button');b.className='btn';b.textContent=o;b.onclick=()=>{if(ans)return;ans=true;const ok=k===s[1];if(ok)sc++;b.style.borderColor=ok?'var(--ok)':'var(--bad)';$$('#jgOpts .btn')[s[1]].style.borderColor='var(--ok)';$('#jgFb').innerHTML=(ok?'<b style="color:var(--ok)">✓ 正確。</b>':'<b style="color:var(--bad)">✗ 正解是「'+O[s[1]]+'」。</b>')+s[2];$('#jgScore').textContent=`答對 ${sc}`;};$('#jgOpts').appendChild(b);});}
+  $('#jgNext').onclick=()=>{i=(i+1)%S.length;if(i===0)sc=0;r();};
+  r();
+})();
+
+/* ---------- DP simulator ---------- */
+(function(){
+  const E=[0.1,0.2,0.5,1,2];const bins=20,lo=22,hi=62;let H=new Array(bins).fill(0),spent=0,last=null;
+  const eps=()=>E[+$('#eps').value-1];
+  const lap=b=>{const u=Math.random()-.5;return -b*Math.sign(u)*Math.log(1-2*Math.abs(u));};
+  function q(n){for(let k=0;k<n;k++){const v=42+lap(1/eps());last=v;spent+=eps();const j=Math.floor((v-lo)/(hi-lo)*bins);if(j>=0&&j<bins)H[j]++;}r();}
+  function r(){
+    $('#epsO').textContent='ε = '+eps();
+    const mx=Math.max(1,...H);$('#hist').innerHTML=H.map((v,j)=>`<i style="height:${v/mx*100}%;${j===10?'background:var(--ink)':''}"></i>`).join('');
+    $('#dpLast').textContent=last===null?'':`最近一次回答：${last.toFixed(1)}`;
+    $('#budN').textContent=spent.toFixed(1)+' / 10';$('#budM').style.width=Math.min(100,spent*10)+'%';$('#budM').style.background=spent>10?'var(--bad)':spent>7?'var(--warn)':'var(--ok)';
+    $('#dpNote').innerHTML=(eps()<=0.2?'ε 很小：噪音大、答案散，<b>隱私保護強但效用低</b>。':eps()>=1?'ε 較大：答案貼近 42，<b>效用高但保護弱</b>。':'ε 居中：保護與效用取折衷。')+(spent>10?'　<b style="color:var(--bad)">隱私預算已超支：重複查詢讓攻擊者能把噪音平均掉，這就是 ε 會隨查詢次數累積消耗的原因。</b>':'');
+  }
+  $('#eps').addEventListener('input',()=>{H=new Array(bins).fill(0);last=null;r();});
+  $('#dpQ').onclick=()=>q(1);$('#dpQ10').onclick=()=>q(20);$('#dpR').onclick=()=>{H=new Array(bins).fill(0);spent=0;last=null;r();};
+  r();
+})();
+
+/* ---------- K family ---------- */
+(function(){
+  const K=[
+    {b:'K-匿名',t:'管「識別」',d:'每筆紀錄在準識別欄位上至少與其他 K-1 筆相同。',w:'弱點：同組內敏感值全一樣（5 人同病），不必識別是誰也能推出病情。',g:['糖尿病','糖尿病','糖尿病','糖尿病','糖尿病']},
+    {b:'L-多樣性',t:'管「敏感值的種類」',d:'每個分組的敏感欄位至少有 L 種不同值。',w:'弱點：種類夠多但分佈極偏（9 比 1），仍可高機率猜中。',g:['糖尿病','糖尿病','糖尿病','糖尿病','糖尿病','糖尿病','糖尿病','糖尿病','糖尿病','流感']},
+    {b:'T-接近性',t:'管「敏感值的分佈」',d:'分組內敏感欄位的分佈需與整體分佈相近。',w:'猜中某人病情的機率不再比「不看資料」高多少。',g:['糖尿病','高血壓','流感','氣喘','糖尿病','高血壓','流感','氣喘','流感','高血壓']}
+  ];
+  const col={'糖尿病':'var(--aud)','流感':'var(--img)','高血壓':'var(--txt)','氣喘':'var(--sen)'};
+  K.forEach((k,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=`${i+1}. ${k.b}`;b.onclick=()=>s(i);$('#kBtns').appendChild(b);});
+  function s(i){$$('#kBtns .btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));const k=K[i];
+    $('#kViz').innerHTML=`<div style="width:100%"><div class="hint" style="text-align:center;margin-bottom:6px">同一組：30–39 歲．110**（示意）</div><div class="kgrid">${k.g.map(x=>`<div class="s" style="background:color-mix(in srgb,${col[x]} 30%,var(--surface2))">${x}</div>`).join('')}</div></div>`;
+    $('#kTxt').innerHTML=`<p><b>${k.b}</b>　${k.t}</p><p>${k.d}</p><p class="hint">${k.w}</p>`;}
+  s(0);
+})();
+
+/* ---------- membership inference ---------- */
+(function(){
+  const st={dp:false,co:false,rt:false};
+  const gauss=(m,s)=>{let d='';for(let x=0;x<=100;x++){const c=x/100,y=Math.exp(-((c-m)**2)/(2*s*s));d+=(x?'L':'M')+(40+x*5.6).toFixed(1)+' '+(180-y*140).toFixed(1);}return d;};
+  function r(){
+    let mm=.88,sm=.06,mn=.62,sn=.12;
+    if(st.dp){mm=.68;sm=.11;}
+    if(st.co){mm=(mm+mn)/2+.02;mn=mm-.03;sm=sn=.14;}
+    const sep=Math.max(0,Math.min(1,Math.abs(mm-mn)/(sm+sn)));
+    let h=`<line x1="40" y1="180" x2="610" y2="180" stroke="var(--line)" stroke-width="2"/><text x="40" y="200" font-size="12" fill="var(--muted)">信心 0</text><text x="610" y="200" font-size="12" fill="var(--muted)" text-anchor="end">信心 1</text>`;
+    h+=`<path d="${gauss(mn,sn)}" fill="none" stroke="var(--img)" stroke-width="3"/><path d="${gauss(mm,sm)}" fill="none" stroke="var(--bad)" stroke-width="3"/>`;
+    h+=`<g font-size="13" font-weight="700"><text x="50" y="22" fill="var(--img)">— 非訓練成員</text><text x="180" y="22" fill="var(--bad)">— 訓練成員</text><text x="610" y="22" text-anchor="end" fill="var(--ink)">可分辨度（示意）${Math.round(sep*100)}%</text></g>`;
+    if(st.rt)h+=`<text x="325" y="110" text-anchor="middle" font-size="14" fill="var(--muted)">🐢 查詢變慢了，但兩條曲線一點都沒變</text>`;
+    $('#miSvg').innerHTML=h;
+    const n=[];
+    if(!st.dp&&!st.co)n.push('兩個分布明顯分開：攻擊者對某人反覆查詢，信心特別高就猜「他在訓練集裡」。');
+    if(st.dp)n.push('<b>差分隱私訓練</b>加噪，模型不再特別「記得」個別樣本，分布靠攏。');
+    if(st.co)n.push('<b>只回傳粗化標籤／信心值</b>，攻擊者拿不到細緻的信心差異。');
+    if(st.rt)n.push('<b>限制查詢次數只能減緩</b>：訊號在信心分布，不在回應時間或查詢頻率。');
+    $('#miNote').innerHTML=n.join('<br>');
+  }
+  [['#miDP','dp'],['#miCoarse','co'],['#miRate','rt']].forEach(([id,k])=>$(id).onclick=()=>{st[k]=!st[k];$(id).setAttribute('aria-pressed',st[k]);r();});
+  r();
+})();
+
+matcher($('#atkMatch'),$('#atkFb'),[
+  {k:'l',c:'var(--txt)',html:'連結攻擊<small>Linkage Attack</small>'},
+  {k:'m',c:'var(--img)',html:'成員推斷<small>Membership Inference</small>'},
+  {k:'i',c:'var(--aud)',html:'模型反演／屬性推斷<small>Model Inversion</small>'},
+  {k:'e',c:'var(--sen)',html:'模型萃取<small>Model Extraction</small>'}
+],[
+  {k:'e',html:'複製模型本身<small>大量查詢後訓練替代模型</small>',ok:'防禦：限制存取與查詢額度、浮水印。'},
+  {k:'m',html:'某人在不在訓練集裡<small>看輸出信心的差異</small>',ok:'防禦：DP 訓練、粗化輸出、避免嚴重過擬合。'},
+  {k:'l',html:'這筆去識別化紀錄是誰<small>用外部資料交叉比對準識別欄位</small>',ok:'防禦：泛化／分桶／K-匿名＋再識別測試。'},
+  {k:'i',html:'輸入的敏感特徵是什麼<small>從輸出反推輸入屬性</small>',ok:'防禦：限制輸出資訊量、控制查詢粒度。'}
+],'四種攻擊目標不同，選項常互相偽裝。');
+
+/* ---------- 40.4 principles ---------- */
+flips($('#prinCards'),[
+  ['合法透明','合法性、正當性與透明性','隱私政策要寫清楚資料會進入模型訓練。<br><small>常見違反：一句「同意本公司於各項業務使用您的資料」包山包海。</small>'],
+  ['目的限制','Purpose Limitation','「客服品質分析」的逐字稿，不得直接轉用於廣告投放或對外販售模型。<br><small>常見違反：資料湖先存再說，被新專案任意取用。</small>'],
+  ['資料最小化','Data Minimization','建模需要交易金額與時間，就不要順手帶入婚姻狀況。<br><small>常見違反：一次拉整張表進特徵工程。</small>'],
+  ['保存期限','保存期限限制','設定保留期，逾期刪除或匿名化，落實為排程工作。<br><small>常見違反：分區永不刪除，冷儲存無限累積。</small>'],
+  ['可追蹤可刪除','可追蹤與可刪除性','回答「某人的資料散在哪些系統、備份與模型裡」，期限內完成查閱或刪除。<br><small>常見違反：只刪主表，副本、快取與訓練集仍在。</small>']
+]);
+(function(){
+  const L=[
+    ['明確同意','蒐集前主動同意，說明用途，且可撤回','同意要具備自由性、明確具體性、可撤回性；撤回後必須能真的停止使用'],
+    ['契約履行必要','處理是履行契約所必需（如信用卡風險評估）','「為了改善模型」通常不算契約必要，不要濫用此依據'],
+    ['公共利益或學術研究','資料經去識別化處理、無從識別特定個人','須經倫理審查（IRB）或內部審查，保留匿名化歷程與審查紀錄供稽核'],
+    ['非個人資料','已匿名化到無法直接或間接識別','嚴格說這是「不在個資法規範內」而非一種法律依據；必須定期做再識別風險測試並留存紀錄']
+  ];
+  tabs($('#lbTabs'),L.map(l=>l[0]),i=>{$('#lbBody').innerHTML=`<p style="margin:0 0 6px"><b>成立條件：</b>${L[i][1]}</p><p style="margin:0"><b>大數據情境要注意：</b>${L[i][2]}</p>`;});
+})();
+(function(){
+  const D=[
+    ['同意模式','原則 <b>opt-in</b>，需事前取得合法基礎','偏 <b>opt-out</b>，消費者可拒絕出售／分享其個資','原則告知後蒐集，特種個資另有嚴格限制'],
+    ['當事人權利','查閱、更正、刪除（被遺忘權）、限制處理、<b>資料可攜權</b>、拒絕自動化決策','知情、刪除、更正、拒絕出售／分享、不因行使權利而受差別待遇','查詢、閱覽、製給複製本、補充更正、停止蒐集處理利用、刪除'],
+    ['回應／通報期限','當事人請求原則 <b>1 個月內</b>回覆（複雜案件可延長）；個資外洩應於<b>知悉後 72 小時內</b>通報監管機關','依法定期限回應消費者請求','依法通知當事人並依主管機關規定通報'],
+    ['跨境傳輸','移轉至歐盟境外須有適足性認定、<b>標準合約條款（SCC）</b>或其他適當保障措施','以契約與揭露義務約束第三方','<b>第 21 條</b>：中央目的事業主管機關於特定情形（如接受國法規不完善致有損當事人權益之虞、以迂迴方式傳輸第三國規避本法等）<b>得限制國際傳輸</b>'],
+    ['敏感／特種資料','特種類別個資原則禁止處理，例外才可','敏感個資可要求限制使用','<b>第 6 條</b>：病歷、醫療、基因、性生活、健康檢查、犯罪前科原則不得蒐集處理利用，符合法定例外才可'],
+    ['罰則量級','依違反情節，最高可達 2,000 萬歐元或全球年營業額 4%（擇高）','依違規件數計罰，涉及未成年人加重','2023 年修法後，未依規定訂定安全維護計畫或未採適當安全措施者，主管機關得限期改正並按次處罰，情節重大者罰鍰上限提高至新臺幣 1,500 萬元']
+  ];
+  tabs($('#lawTabs'),D.map(d=>d[0]),i=>{$('#lawTbl').innerHTML=`<tr><th>GDPR（歐盟）</th><th>CCPA／CPRA（美國加州）</th><th>PDPA 個人資料保護法（我國）</th></tr><tr><td>${D[i][1]}</td><td>${D[i][2]}</td><td>${D[i][3]}</td></tr>`;});
+})();
+(function(){
+  const go=(w,c,t,n)=>{const b=$('#tmBar');b.style.width='0';b.textContent='';setTimeout(()=>{b.style.width=w;b.style.background=c;b.textContent=t;},40);$('#tmNote').innerHTML=n;};
+  $('#tmBreach').onclick=()=>go('9.7%','var(--bad)','72h','<b>個資外洩 → 知悉後 72 小時內</b>通報監管機關。（長條約為一個月的十分之一）');
+  $('#tmAccess').onclick=()=>go('100%','var(--txt)','約 1 個月（≈ 720 小時）','<b>當事人查閱請求 → 原則 1 個月內</b>回覆（複雜案件可延長）。');
+})();
+(function(){
+  function d(m){
+    let h=`<g font-size="14" font-weight="700"><rect x="10" y="20" width="230" height="120" rx="12" fill="var(--surface2)"/><text x="125" y="45" text-anchor="middle" fill="var(--ink)">分析用資料表</text><text x="30" y="80" fill="var(--ink)">${m==='p'?'U-7f3a':'30–39 歲．台北市'}</text><text x="30" y="110" fill="var(--ink)">${m==='p'?'消費 12,480':'群組平均消費'}</text></g>`;
+    if(m==='p'){h+=`<g font-size="14" font-weight="700"><rect x="400" y="20" width="230" height="120" rx="12" fill="var(--surface2)" stroke="var(--warn)" stroke-width="2"/><text x="515" y="45" text-anchor="middle" fill="var(--ink)">🔑 對照表／金鑰</text><text x="420" y="85" fill="var(--ink)">U-7f3a ↔ 王大明</text></g><path d="M240 80 L400 80" stroke="var(--warn)" stroke-width="3" class="flow"/><text x="320" y="70" text-anchor="middle" font-size="13" fill="var(--warn)" font-weight="700">可還原</text>`;}
+    else{h+=`<g font-size="14" font-weight="700"><rect x="400" y="20" width="230" height="120" rx="12" fill="none" stroke="var(--line)" stroke-dasharray="6 6"/><text x="515" y="85" text-anchor="middle" fill="var(--muted)">對照關係已不存在</text></g><text x="320" y="85" text-anchor="middle" font-size="22" fill="var(--ok)">✕</text>`;}
+    $('#pseSvg').innerHTML=h;
+    $('#pseNote').innerHTML=m==='p'?'假名化以代碼取代識別欄位，但<b>對照表或金鑰還在</b>。GDPR 明定假名化資料<b>仍屬個人資料</b>，仍受完整規範。最常見的錯誤：把「用戶 ID 換成雜湊值」當成已匿名化——只要 salt 與對照關係還在系統內、或原始值空間小到可窮舉，它就仍是個人資料。':'匿名化要求<b>無法再識別</b>，才可能降低法規適用程度；且必須定期做再識別風險測試。';
+  }
+  $$('#pseTabs .btn').forEach(b=>b.onclick=()=>{$$('#pseTabs .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));d(b.dataset.m);});
+  d('p');
+})();
+
+/* ---------- 40.5 access control ---------- */
+(function(){
+  const rows=[['台北','王大明','A123456789','152,300'],['台北','林美玲','B223456781','88,120'],['高雄','陳志豪','E123987654','240,000'],['高雄','張雅婷','S298765432','35,600']];
+  const U=[
+    ['台北分行分析師','tp',r=>r[0]==='台北',true,'資料集 ✓ → 資料列：只看得到台北分行 → 欄位：姓名與身分證號動態遮罩。'],
+    ['高雄分行分析師','ks',r=>r[0]==='高雄',true,'同一個角色、同一張表，但 Row-Level Security 只放行高雄的列。'],
+    ['稽核人員','au',()=>true,false,'稽核人員可看到完整值，但他的每一次查詢都會留下稽核軌跡。'],
+    ['行銷實習生','in',null,true,'資料集層級就擋下：這個人看不到這張表。目的別存取也會問：行銷用途是否符合蒐集目的？']
+  ];
+  const mk=s=>s[0]+'○○',mi=s=>s.slice(0,3)+'******'+s.slice(-2);
+  tabs($('#users'),U.map(u=>u[0]),i=>{const u=U[i];
+    if(!u[2]){$('#acl').innerHTML='<tr><td style="text-align:center;padding:30px;color:var(--bad);font-weight:700">⛔ 存取被拒：您沒有此資料集的權限</td></tr>';}
+    else{let h='<tr><th>分行</th><th>姓名</th><th>身分證號</th><th>存款餘額</th></tr>';rows.filter(u[2]).forEach(r=>{h+=`<tr><td>${r[0]}</td><td class="${u[3]?'mask':''}">${u[3]?mk(r[1]):r[1]}</td><td class="${u[3]?'mask':''}">${u[3]?mi(r[2]):r[2]}</td><td>${r[3]}</td></tr>`;});$('#acl').innerHTML=h;}
+    $('#aclNote').textContent=u[4];});
+})();
+(function(){
+  const E=[['傳輸中','in transit'],['靜態','at rest'],['使用中','in use']];
+  const T=[
+    '<b>技術：</b>TLS<br><b>落點：</b>串流寫入、節點間 shuffle、對外 API',
+    '<b>技術：</b>AES 等對稱加密、透明資料加密、金鑰管理服務（KMS）<br><b>落點：</b>物件儲存、資料湖分區、備份與冷儲存',
+    '<b>技術：</b>機密運算（TEE）、<b>同態加密</b><br><b>落點：</b>外包給第三方的運算，或多方協作分析<div class="hint" style="margin-top:6px">多數企業做到前兩者就停住，而<b>外洩常發生在「使用中」</b>——資料為了運算被解密、被複製到分析師的筆電、被匯出成試算表。同態加密與聯邦學習處理的正是這第三種狀態。</div>'
+  ];
+  E.forEach(([a,b],i)=>{const n=document.createElement('button');n.className='pnode';n.innerHTML=`<b>${['🔐','🗄','⚙'][i]} ${a}</b>${b}`;n.onclick=()=>s(i);$('#encPipe').appendChild(n);});
+  function s(i){$$('#encPipe .pnode').forEach((n,j)=>{n.classList.toggle('on',j===i);});$('#encOut').innerHTML=T[i];}
+  s(2);
+})();
+(function(){
+  const N=[['CRM 來源表',1],['Bronze 原始層',1],['Silver 去識別化表',1],['特徵表',1],['模型 A（用過此人）',1],['模型 B（未使用）',0],['備份／冷儲存',1],['分析師匯出的試算表',1]];
+  $('#lin').innerHTML=N.map(n=>`<div class="ln">${n[0]}</div>`).join('');
+  let timers=[];
+  $('#linBtn').onclick=()=>{timers.forEach(clearTimeout);timers=[];$$('#lin .ln').forEach(x=>x.classList.remove('hit'));$('#linNote').textContent='';
+    N.forEach((n,i)=>{if(n[1])timers.push(setTimeout(()=>$$('#lin .ln')[i].classList.add('hit'),reduce?0:i*220));});
+    timers.push(setTimeout(()=>{$('#linNote').innerHTML='靠<b>資料血緣</b>界定出 7 個受影響位置，模型 B 不受影響。只刪主表不夠：備份、特徵表、副本都要處理；模型 A 用過這筆資料，必要時要<b>重訓練或機器遺忘</b>。';},reduce?0:N.length*220));};
+  $('#linReset').onclick=()=>{timers.forEach(clearTimeout);$$('#lin .ln').forEach(x=>x.classList.remove('hit'));$('#linNote').textContent='';};
+})();
+(function(){
+  const L=[['蒐集','合法依據、告知同意、最小化','同意書籠統，蒐集欄位遠超需求'],['傳輸','TLS、來源驗證、完整性檢查','用未加密的內部管線傳 PII'],['儲存','靜態加密、分層分區、權限與標籤','原始層與分析層混放，全體分析師可讀'],['使用／建模','去識別化、目的別存取、訓練集紀錄','直接拿 Bronze 層原始資料訓練'],['共享／發布','再識別測試、K-匿名或差分隱私、契約約束','以為聚合過就安全，未驗證小樣本群組'],['封存','降級儲存仍需加密與權限','備份不在權限控管範圍內'],['銷毀','逾期刪除或匿名化、刪除證明、含備份與副本','主表刪了，備份與特徵表沒刪']];
+  L.forEach((l,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=`${i+1}. ${l[0]}`;b.onclick=()=>s(i);$('#lcBtns').appendChild(b);});
+  function s(i){$$('#lcBtns .btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));$('#lcBody').innerHTML=`<div><div class="big" style="color:var(--ok)">✓ 主要控制</div>${L[i][1]}</div><div><div class="big" style="color:var(--bad)">✗ 常見失誤</div>${L[i][2]}</div>`;}
+  s(0);
+})();
+
+/* ---------- 40.6 governance ---------- */
+(function(){
+  const G=[
+    ['政策','訂定資料使用範圍與限制（哪些資料可用於訓練、哪些需特別授權）、AI 倫理準則（公平、非歧視、透明）、<b>跨境資料傳輸規範</b>；政策須定期更新以納入生成式 AI 等新議題','政策不是一次性文件，「定期檢視更新」本身是要求'],
+    ['組織','<b>資料治理委員會</b>（法務、資安、資料科學、資訊、業務跨部門組成），審議資料使用規則、授權申請與違規處理；設置首席 AI 官或資料管理員（Data Steward）','治理是<b>跨部門共同責任</b>，不是資安部門或 IT 部門單獨負責'],
+    ['流程','資料登記與資產盤點（<b>資料目錄 Data Catalog</b>：來源、用途、風險層級、授權狀態）；<b>模型說明書 Model Card</b>：訓練資料、假設、測試結果與限制；權限控管與審核流程','Data Catalog 管資料，Model Card 管模型，兩者不互相取代'],
+    ['技術工具','資料稽核與追蹤系統、敏感資料自動偵測（掃描欄位中的姓名、地址、IP）、模型監控（偏誤、<b>概念漂移 Concept Drift</b>、輸出合理性）','僅靠人工控管必然遺漏，自動化是必要條件而非加分項'],
+    ['文化','分角色的定期教育訓練、把合規納入開發流程與績效、匿名舉報與回饋機制','「訓練 ＋ 制度 ＋ 舉報管道」三者並列']
+  ];
+  tabs($('#govTabs'),G.map(g=>g[0]),i=>{$('#govBody').innerHTML=`<p style="margin:0 0 8px"><b>具體作法：</b>${G[i][1]}</p><div class="callout exam" style="margin:0"><b>考點提示：</b>${G[i][2]}</div>`;});
+  const R=[['只有技術防護','缺少制度與責任歸屬'],['技術 ＋ 政策 ＋ 跨部門組織','可運作'],['＋ 生命週期流程與自動化稽核','可持續、可稽核'],['＋ 教育訓練與舉報機制','可落地到日常工作']];
+  $('#ladder').innerHTML=R.map((r,i)=>`<div class="rung" data-i="${i}"><b>${r[0]}</b>　→ ${r[1]}</div>`).join('');
+  R.forEach((r,i)=>{const b=document.createElement('button');b.setAttribute('aria-pressed','false');b.innerHTML=`<b>第 ${i+1} 階</b><br>${r[0]}`;b.onclick=()=>{$$('#govStrat button').forEach(x=>x.setAttribute('aria-pressed',x===b));$$('#ladder .rung').forEach(x=>x.classList.toggle('on',+x.dataset.i<=i));$$('#ladder .rung')[0].style.borderLeftColor=i===0?'var(--bad)':'';};$('#govStrat').appendChild(b);});
+})();
+
+/* ---------- 40.7 exam ---------- */
+examList($('#examList'),[
+  ['114Q2-13','同態加密核心特性','純定義題：下列何者為同態加密的核心特性','正解：<b>可直接在加密狀態下進行數據運算</b>。誘答分別是去識別化（匿名識別碼）、資料前處理（標準化）、資料清理（異常值偵測）——都不在密碼學層面，屬於「用不同領域的名詞填空」'],
+  ['114Q2-20','同態加密的情境選用','銀行把信用風險模型部署到雲端，要求服務商<b>在不解密原始資料的情況下</b>執行運算','正解：<b>同態加密</b>。匿名化與雜湊保護身分但無法支援密文運算；資料本地化只限制<b>儲存位置</b>，沒有解決「雲端要算但不能看」'],
+  ['114Q2-32','生成式 AI 客服的個資外洩防治','對話紀錄訓練的語言模型可能在回覆中吐出真實姓名、電話、交易資訊','正解：<b>訓練前做匿名化或偽匿名化，並建立輸出內容稽核機制</b>（事前＋事後雙重防護）。強化學習微調無法保證不洩漏已記憶的資訊；同態加密擋不住模型生成已學得的個資；只隱藏姓名仍會漏電話與交易資訊'],
+  ['115Q1-37','成員推斷攻擊的原理與防禦','信用評分模型開放 API，資安團隊警告成員推斷攻擊','正解：<b>利用模型對訓練樣本的高信心輸出判斷其是否屬於訓練集；以差分隱私或降低輸出信心防禦</b>。誘答把它寫成靠查詢頻率（錯，訊號在信心分布）、屬性推斷／模型反演、模型萃取'],
+  ['115Q1-38','三種去識別化技術的比較（選「不正確」）','K-匿名、差分隱私合成資料、亂數回應三者的定義與強度','應選的錯誤敘述是把<b>差分隱私合成資料</b>描述成「發布查詢結果或訓練時直接對原始資料加雜訊」——那是 DP 的一般機制。其餘正確：K-匿名用於表格型、每組至少 K 筆；亂數回應提供可否認性；只有 DP 提供可組合且可量化的保證']
+]);
+
+/* ---------- traps ---------- */
+traps('l22404-traps',[
+  ['同態加密是在密文上直接運算，不是「壓縮後再加密」或「傳輸前加密」','代價是運算更慢、資料更大，講它能加速或省資源的敘述方向相反。'],
+  ['同態加密保護運算過程的機密性，不是模型輸出的內容','擋不住語言模型把記住的個資生成出來；那要靠訓練前去識別化加上輸出稽核。'],
+  ['差分隱私是統計保護，不是加密','運算當下資料仍是明文，它保護「某個人在不在資料集裡」。'],
+  ['差分隱私加的是依敏感度與 ε 校準的噪音，不是隨手加雜訊','隨機擾動沒有形式化保證；ε 越小越嚴格但效用越低。'],
+  ['DP 合成資料是先用 DP 訓練生成模型再發布合成集','不是每次查詢時對原始資料加雜訊——那是 Laplace／Gaussian 一般機制。'],
+  ['聯邦學習是分散式協作訓練框架，不是加密技術','資料留本地、只交換參數更新，梯度仍可能被逆推，要再疊 DP 或安全聚合。'],
+  ['資料本地化限制的是儲存地點','題幹要求「雲端能算但不能解密」時，本地化不是答案。'],
+  ['雜湊是單向摘要，不是加密','沒有金鑰、沒有解密程序；原始值空間小時要加 salt。'],
+  ['非對稱加密主要用於金鑰交換與身分驗證','大量資料以對稱加密處理，效率差距是數量級的。'],
+  ['移除姓名不是完成匿名化','準識別欄位組合仍可能唯一定位，要做泛化／分桶／K-匿名並執行再識別測試。'],
+  ['假名化保留了還原可能，不等於匿名化','GDPR 明定假名化資料仍屬個人資料。'],
+  ['K-匿名管識別、L-多樣性管敏感值種類、T-接近性管敏感值分佈','三者層層補強，不是平行選項。'],
+  ['K 的 k 值只保證群組大小，不是可證明的數學保證','形式化、可量化（ε）且可組合的是差分隱私。'],
+  ['泛化處理階層式資訊、分桶處理連續數值','兩者都降精度但對象不同。'],
+  ['K-匿名家族對非結構化資料適用性有限','逐字稿或影像要往內容偵測、實體遮蔽或差分隱私走。'],
+  ['成員推斷靠輸出信心分布的差異，不是回應時間或查詢頻率','限制查詢次數只能減緩，不能消除訊號。'],
+  ['成員推斷、模型萃取、模型反演目標不同','是否為訓練成員／複製模型功能／反推輸入敏感屬性。'],
+  ['GDPR 查閱請求一個月內回覆，外洩知悉後 72 小時內通報','兩個期限常被對調。'],
+  ['CCPA 偏 opt-out，GDPR 與我國個資法偏事前告知與同意','不要把加州模式套到歐盟情境。'],
+  ['我國特種個資：病歷、醫療、基因、性生活、健康檢查、犯罪前科','原則不得蒐集處理利用，符合法定例外才可，不是取得同意就一律可用。'],
+  ['把資料送到境外雲端不會跳出我國個資法','有域外適用規定，主管機關在特定情形得限制國際傳輸。'],
+  ['刪除來源資料列不等於清除它在模型裡的影響','靠資料血緣界定受影響模型，必要時重訓練。'],
+  ['資料治理是跨部門共同責任','「由 IT 團隊部署後定期觀察」通常是誘答，正解是治理框架與跨部門監管流程。']
+]);
+
+/* ---------- quiz ---------- */
+quiz([
+  ['下列何者為同態加密的核心特性？',['可直接在加密狀態下進行數據運算','以匿名識別碼取代個人身分','將資料標準化以利模型訓練','自動偵測並移除異常值'],'114Q2-13。其他三項分別是去識別化、前處理、資料清理，不在密碼學層面。'],
+  ['銀行要把信用風險模型部署到雲端，並要求服務商在不解密原始資料的情況下執行運算，應採用？',['同態加密','資料本地化','雜湊處理','匿名化'],'114Q2-20。本地化只限制儲存位置；雜湊與匿名化無法支援密文運算。'],
+  ['信用評分模型開放 API，資安團隊警告「成員推斷攻擊」。下列敘述何者正確？',['攻擊者利用模型對訓練樣本較高的輸出信心判斷其是否屬於訓練集，可用差分隱私或降低輸出信心防禦','攻擊者靠回應時間與查詢頻率判斷，限制查詢次數即可根除','攻擊目標是複製模型功能','攻擊目標是從輸出反推輸入的敏感屬性'],'115Q1-37。訊號在信心分布；後兩項分別是模型萃取與模型反演。'],
+  ['關於三種去識別化技術的敘述，何者「不正確」？',['差分隱私合成資料是在發布查詢結果時直接對原始資料加雜訊','K-匿名用於表格型資料，每組至少 K 筆','亂數回應提供可否認性','差分隱私提供可組合且可量化的保證'],'115Q1-38。DP 合成資料是先以 DP 訓練生成模型再發布合成集。'],
+  ['某資料表已移除姓名，但保留性別、出生年月、郵遞區號。最正確的評估是？',['尚未完成匿名化，準識別欄位組合仍可能唯一定位個人','已移除直接識別資訊，因此已完成匿名化','只要加密儲存就等同匿名化','只要資料量夠大就不可能被識別'],'移除姓名只移除直接識別資訊，仍需泛化／分桶／K-匿名與再識別測試。'],
+  ['K-匿名資料集中，某一組 5 人全都罹患同一種病。應補強的技術是？',['L-多樣性','T-接近性取代 K-匿名','改用雜湊','改用非對稱加密'],'同組敏感值全一樣 → L-多樣性管敏感值種類；三者是層層補強。'],
+  ['把「32 歲」轉成「30–39 歲」、把「58,000」轉成「50K–60K」屬於哪種技術？',['分桶','泛化','遮蔽','雜湊'],'連續數值切區間是分桶；泛化處理階層式資訊（日期、地址）。'],
+  ['多家醫院不得交換原始病歷，但要共同訓練一個診斷模型，最適合的是？',['聯邦學習','同態加密外包給單一雲端','K-匿名後集中上傳','亂數回應'],'資料不用搬家 → 聯邦學習；梯度仍可能被逆推，實務上常再疊 DP 或安全聚合。'],
+  ['依 GDPR，下列期限配對何者正確？',['個資外洩：知悉後 72 小時內通報；當事人查閱：原則 1 個月內回覆','個資外洩：1 個月內通報；當事人查閱：72 小時內回覆','兩者都是 72 小時','兩者都是 1 個月'],'兩個期限常被對調，看到對調直接刪。'],
+  ['某平台把用戶 ID 換成雜湊值，salt 與對照關係仍保存在系統內。依 GDPR，這份資料屬於？',['假名化資料，仍屬個人資料','匿名化資料，不受 GDPR 規範','已加密資料，不受 GDPR 規範','公開資料'],'假名化保留還原可能；只有無法再識別的匿名化才可能降低法規適用程度。'],
+  ['當事人要求刪除其資料，平台只刪除了主資料表。最主要的缺漏是？',['資料湖副本、備份、特徵表與用過該資料的模型仍受影響，需靠資料血緣界定並必要時重訓練','沒有通知監管機關 72 小時','沒有改用非對稱加密','沒有做分桶'],'刪除來源資料列不等於清除它在模型裡的影響。'],
+  ['要確保 AI 系統的合規性與可追溯性，最應建立的是？',['資料版本管理與操作紀錄制度','模型評分制度','由 IT 團隊部署後定期觀察效能','採購更多訓練設備'],'《學習指引》章末練習；治理是跨部門責任，不是技術或資源問題。']
+],['太強了，技術、法遵、治理三層都很穩。','不錯！回頭看看答錯的題目對應的段落。','建議重新操作 40.3 的情境判官與 PETs 定位器，再來一次。']);
+
+/* ---------- nav highlight ---------- */
+(function(){
+  const links=[...document.querySelectorAll('nav.toc a')];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on&&window.innerWidth<=860)a.scrollIntoView({inline:'center',block:'nearest'});});}});},{rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('main section').forEach(s=>io.observe(s));
+})();
+
+</script>
+</body>
+</html>

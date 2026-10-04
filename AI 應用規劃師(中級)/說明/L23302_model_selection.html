@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L23302 模型選擇與架構設計｜互動教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F5; --surface:#FFFFFF; --surface2:#F6F8FB; --ink:#18202E; --muted:#5A6475; --line:#D5DBE4;
+  --txt:#3B4CCA; --img:#0E8A7A; --aud:#B87812; --sen:#B8336A;
+  --ok:#1F8A4C; --bad:#C23B2E; --warn:#D9822B;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+    --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121722; --surface:#1B2230; --surface2:#222B3B; --ink:#E6EAF2; --muted:#9AA5B8; --line:#2E384A;
+  --txt:#8C9BFF; --img:#3FC4B0; --aud:#F0B04A; --sen:#F07BA8; --ok:#4CC27E; --bad:#F06A5C; --warn:#F2A65A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75}
+h1,h2,h3{font-family:var(--serif);line-height:1.3;margin:0}
+p{margin:0 0 1em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--txt);outline-offset:2px;border-radius:4px}
+svg{max-width:100%;height:auto;display:block}
+
+/* layout */
+.wrap{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1180px;margin:0 auto;gap:40px;padding:0 24px}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;padding:32px 0;height:100vh;overflow:auto}
+nav.toc a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14.5px}
+nav.toc a span{font-variant-numeric:tabular-nums;font-size:13px;opacity:.8}
+nav.toc a.on{background:var(--surface);color:var(--ink);font-weight:700}
+.toc-title{font-family:var(--serif);font-weight:900;font-size:18px;padding:0 10px 14px}
+main{min-width:0;padding-bottom:80px}
+section{padding:56px 0 8px;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.sec-head{display:flex;gap:16px;align-items:baseline;margin-bottom:18px}
+.sec-no{font-family:var(--serif);font-weight:900;font-size:40px;color:var(--line);line-height:1}
+h2{font-size:28px;font-weight:900}
+h3{font-size:19px;margin:34px 0 10px}
+.lead{color:var(--muted);max-width:66ch}
+.prose{max-width:68ch}
+
+/* hero */
+.hero{padding:44px 0 24px}
+.hero .code{font-size:14px;color:var(--muted);margin-bottom:6px}
+.hero h1{font-size:clamp(34px,5.5vw,56px);font-weight:900;letter-spacing:.02em}
+.hero .one{font-size:18px;max-width:60ch;margin:16px 0 0;color:var(--muted)}
+.hero-fig{background:var(--surface);border-radius:20px;margin-top:28px;padding:14px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+.goal{border-left:4px solid var(--c);padding:6px 0 6px 14px;font-size:15px}
+
+/* panels */
+.panel{background:var(--surface);border-radius:16px;padding:22px;margin:16px 0}
+.panel.flat{background:var(--surface2)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font-size:15px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hint{font-size:14px;color:var(--muted)}
+.callout{border-left:4px solid var(--warn);background:var(--surface2);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;font-size:15px}
+.callout.exam{border-color:var(--txt)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:14px}
+
+/* modality chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+
+/* matcher */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.match .col{display:flex;flex-direction:column;gap:10px}
+.mitem{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15px;transition:border-color .2s,background .2s,transform .2s}
+.mitem small{display:block;color:var(--muted);font-size:13px}
+.mitem.sel{border-color:var(--ink);transform:translateX(4px)}
+.mitem.done{border-color:var(--c,var(--ok));background:var(--surface2);cursor:default}
+.mitem.wrong{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:1.8em;margin-top:12px;font-size:15px}
+.feedback.ok{color:var(--ok)} .feedback.bad{color:var(--bad)}
+
+/* timeline */
+.steps{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stage-viz{min-height:130px;display:flex;align-items:center;justify-content:center}
+.stage-viz .blk{display:inline-block;width:34px;height:34px;border-radius:6px;margin:2px;transition:all .5s}
+
+/* align toggle */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.compare>div{padding:18px}
+.compare>div+div{border-left:1px solid var(--line)}
+.compare .big{font-family:var(--serif);font-weight:900;font-size:22px;margin-bottom:6px}
+
+/* fusion */
+.meter{height:14px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:6px 0}
+.meter>i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .7s cubic-bezier(.3,.8,.3,1),background .4s}
+.flow{stroke-dasharray:6 7;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.jitter{animation:jit .25s steps(2) infinite}
+@keyframes jit{50%{transform:translate(1.5px,-1px)}}
+.fusion-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.pc{font-size:15px}
+.pc b{display:block;font-size:14px;color:var(--muted);font-weight:500}
+
+/* clip */
+.mat{display:grid;gap:4px;font-size:13px}
+.mat .cell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;transition:background .5s,color .5s}
+.mat .lab{display:flex;align-items:center;justify-content:center;font-size:22px}
+.mat .tlab{font-size:12px;text-align:center;color:var(--muted);display:flex;align-items:flex-end;justify-content:center;line-height:1.3}
+.zs-imgs{display:flex;gap:10px;flex-wrap:wrap}
+.zs-img{font-size:38px;width:72px;height:72px;border-radius:16px;border:2px solid var(--line);background:var(--surface2);display:flex;align-items:center;justify-content:center}
+.zs-img[aria-pressed="true"]{border-color:var(--img);box-shadow:0 0 0 3px color-mix(in srgb,var(--img) 25%,transparent)}
+.bar{display:grid;grid-template-columns:150px 1fr 64px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.bar .track{height:22px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;width:0;background:var(--txt);border-radius:6px;transition:width .8s cubic-bezier(.3,.8,.3,1)}
+.bar.win .fill{background:var(--img)}
+.bar.win{font-weight:700}
+.bar .num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.flip{perspective:900px;height:150px;border:0;background:none;padding:0;text-align:left}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flip[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:center}
+.flip .f{background:var(--surface);border:1.5px solid var(--line)}
+.flip .f strong{font-family:var(--serif);font-size:22px}
+.flip .f span{color:var(--muted);font-size:14px}
+.flip .b{background:var(--ink);color:var(--bg);transform:rotateY(180deg);font-size:15px}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.pnode{border:2px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;font-size:14px;background:var(--surface);transition:all .35s}
+.pnode b{display:block;font-size:16px}
+.pnode.on{border-color:var(--aud);background:color-mix(in srgb,var(--aud) 14%,var(--surface));transform:translateY(-3px)}
+.pnode.past{border-color:color-mix(in srgb,var(--aud) 45%,var(--line))}
+.pout{background:var(--surface2);border-radius:12px;padding:14px 16px;min-height:84px;font-size:15px}
+.wave{display:flex;gap:3px;align-items:center;height:30px}
+.wave i{width:4px;background:var(--aud);border-radius:2px;animation:wv 1s ease-in-out infinite}
+@keyframes wv{50%{transform:scaleY(.3)}}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+
+/* strategies */
+.strat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.strat button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;text-align:left;font-size:15px}
+.strat button[aria-pressed="true"]{border-color:var(--ink)}
+.verdict{font-family:var(--serif);font-weight:900;font-size:20px}
+
+details{border-bottom:1px solid var(--line)}
+details summary{cursor:pointer;padding:12px 4px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"+";font-weight:900;width:14px;color:var(--muted)}
+details[open] summary::before{content:"−"}
+details .body{padding:0 4px 14px 30px;font-size:15px}
+.tag{font-size:12.5px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums;min-width:80px}
+
+/* quiz */
+.qcard{background:var(--surface);border-radius:16px;padding:24px}
+.qtop{display:flex;justify-content:space-between;color:var(--muted);font-size:14px;margin-bottom:8px}
+.qtext{font-size:18px;font-weight:700;margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;text-align:left;font-size:15.5px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+.opt.wrongpick{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.opt:disabled{cursor:default}
+.expl{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--surface2);font-size:15px;display:none}
+.expl.show{display:block}
+.progress{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden;margin-bottom:14px}
+.progress i{display:block;height:100%;background:var(--txt);transition:width .4s}
+
+.traps label{display:flex;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:15px}
+.traps input{width:18px;height:18px;margin-top:4px;flex:none;accent-color:var(--ok)}
+.traps label.chk>span{color:var(--muted)}
+.traps em{font-style:normal;font-weight:700}
+
+/* mobile */
+@media (max-width:860px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+  nav.toc{position:sticky;top:0;height:auto;z-index:10;background:var(--bg);display:flex;overflow-x:auto;padding:8px 0;padding-top:calc(8px + env(safe-area-inset-top,0px));gap:4px;border-bottom:1px solid var(--line)}
+  .toc-title{display:none}
+  nav.toc a{white-space:nowrap;flex:none}
+  .match,.stage,.fusion-meta,.compare{grid-template-columns:1fr}
+  .compare>div+div{border-left:0;border-top:1px solid var(--line)}
+  .pipe{grid-template-columns:repeat(5,minmax(90px,1fr));overflow-x:auto}
+  .bar{grid-template-columns:110px 1fr 56px}
+  h2{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+/* ---------- page-specific ---------- */
+input[type=range]{width:100%;accent-color:var(--txt)}
+.cands{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-top:14px}
+.cand{border:2px solid var(--ok);border-radius:12px;padding:10px 12px;font-size:14.5px;background:var(--surface);transition:opacity .4s,border-color .4s,transform .4s}
+.cand b{display:block;font-size:15.5px}
+.cand small{display:block;color:var(--muted);font-size:12.5px;line-height:1.5;min-height:1.5em}
+.cand.out{opacity:.38;border-color:var(--line);transform:scale(.97)}
+.cand.out b{text-decoration:line-through}
+.cand.win{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--surface))}
+.funnel{display:flex;flex-direction:column;gap:6px}
+.fstep{border-radius:10px;padding:8px 14px;color:#fff;font-weight:700;font-size:15px;margin:0 auto;text-align:center;transition:opacity .3s}
+.kv{display:grid;grid-template-columns:120px 1fr;gap:4px 12px;font-size:15px}
+.kv b{color:var(--muted);font-weight:500}
+.order{display:flex;flex-direction:column;gap:8px}
+.order button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 14px;text-align:left;font-size:15px;display:flex;gap:12px;align-items:center}
+.order button .n{width:26px;height:26px;border-radius:50%;background:var(--surface2);display:inline-flex;align-items:center;justify-content:center;font-weight:700;flex:none;font-size:14px}
+.order button.picked{border-color:var(--txt)}
+.order button.picked .n{background:var(--txt);color:#fff}
+.order button.good{border-color:var(--ok)} .order button.good .n{background:var(--ok)}
+.order button.badord{border-color:var(--bad)} .order button.badord .n{background:var(--bad)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:14px;color:var(--muted);margin-top:6px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.tok{display:inline-flex;align-items:center;justify-content:center;min-width:44px;padding:6px 8px;border-radius:8px;background:var(--surface2);border:1.5px solid var(--line);font-size:14px}
+@media (max-width:860px){.kv{grid-template-columns:96px 1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="toc" aria-label="章節">
+  <div class="toc-title">模型選擇</div>
+  <a href="#intro"><span>●</span>導覽與目標</a>
+  <a href="#s1"><span>49.1</span>五道判準</a>
+  <a href="#s2"><span>49.2</span>任務型態</a>
+  <a href="#s3"><span>49.3</span>資料規模</a>
+  <a href="#s4"><span>49.4</span>可解釋性</a>
+  <a href="#s5"><span>49.5</span>部署限制</a>
+  <a href="#s6"><span>49.6</span>偏差-變異</a>
+  <a href="#s7"><span>49.7</span>架構設計</a>
+  <a href="#s8"><span>49.8</span>官方考題</a>
+  <a href="#s9"><span>49.9</span>易錯與測驗</a>
+</nav>
+
+<main>
+<!-- HERO -->
+<section id="intro" class="hero">
+  <div class="code">L23302　中級 AI 應用規劃師（機器學習）　建議 35 分鐘</div>
+  <h1>模型選擇與架構設計</h1>
+  <p class="one">初級只要你認得「分類用決策樹、迴歸用線性迴歸」。中級會給你一段<b>帶限制條件的業務情境</b>（只有 150 筆資料、監管要求說明拒絕原因、要塞進手機、必須毫秒回應），要你在幾個「看起來都對」的模型之間，找出哪個限制才是<b>決勝點</b>。這節官方篇幅最小，卻是整個科目「情境 → 選模型」題型的判準來源。</p>
+  <div class="hero-fig" aria-hidden="true">
+    <svg id="heroSvg" viewBox="0 0 720 300">
+      <defs>
+        <path id="hp0" d="M40 150 L 680 150"/>
+      </defs>
+      <g font-family="Noto Sans TC, sans-serif" font-weight="700" font-size="14">
+        <rect x="20" y="40" width="90" height="220" rx="14" fill="var(--surface2)" stroke="var(--line)"/>
+        <text x="65" y="30" text-anchor="middle" fill="var(--muted)" font-size="13">候選模型</text>
+        <g id="heroDots"></g>
+        <g id="heroGates"></g>
+        <rect x="610" y="115" width="95" height="70" rx="14" fill="var(--ok)"/>
+        <text x="657" y="146" text-anchor="middle" fill="#fff">同時滿足</text>
+        <text x="657" y="166" text-anchor="middle" fill="#fff">全部限制</text>
+      </g>
+    </svg>
+  </div>
+  <h3>學完這一課，你應該能夠</h3>
+  <div class="goals">
+    <div class="goal" style="--c:var(--txt)">依輸出型態與標籤有無，把任務歸入<b>分類／迴歸／聚類／降維／序列／異常偵測</b>六大族，配對模型家族</div>
+    <div class="goal" style="--c:var(--img)">依<b>資料規模</b>與維度共線性，判斷該用簡單正則化模型、樹集成，還是深度網路</div>
+    <div class="goal" style="--c:var(--aud)">區分<b>白箱</b>與「黑箱＋事後解釋」，並分辨<b>局部</b>與<b>全域</b>解釋</div>
+    <div class="goal" style="--c:var(--sen)">依運算資源、推論延遲與維運成本，選出可上線的模型與<b>壓縮策略</b>（量化／剪枝／蒸餾）</div>
+  </div>
+  <p class="hint" style="margin-top:20px">本頁顏色固定代表五道判準中的四大類考量：<span class="chip" style="--c:var(--txt)"><i class="dot"></i>任務型態</span>　<span class="chip" style="--c:var(--img)"><i class="dot"></i>資料規模</span>　<span class="chip" style="--c:var(--aud)"><i class="dot"></i>可解釋性</span>　<span class="chip" style="--c:var(--sen)"><i class="dot"></i>部署與成本</span></p>
+</section>
+
+<!-- 49.1 -->
+<section id="s1">
+  <div class="sec-head"><span class="sec-no">49.1</span><h2>模型選擇的五道判準（總決策樹）</h2></div>
+  <p class="lead">官方指引把模型選擇拆成五項考量因素。實務上它們有<b>先後順序</b>：前面的判準不通過，後面再優也沒用。點每一步看它決定了什麼。</p>
+  <div class="panel">
+    <div class="steps" id="fiveBtns"></div>
+    <div class="stage">
+      <div class="stage-viz" id="fiveViz"></div>
+      <div id="fiveTxt"></div>
+    </div>
+  </div>
+
+  <h3>限制條件篩選器：題幹每多一個限制，就刪掉一批選項</h3>
+  <div class="panel">
+    <p class="hint">開啟題幹裡出現的限制，看候選模型怎麼被刪掉。試試 115-1 第 28 題的組合：「輸出連續」＋「部分非線性」＋「須提供整體特徵重要性」。</p>
+    <div class="row" id="consBtns"></div>
+    <div class="cands" id="cands"></div>
+    <p class="feedback" id="consFb" aria-live="polite"></p>
+    <p class="hint" style="margin:0">篩選規則依本講義各判準表整理，淘汰理由為教學示意。</p>
+  </div>
+  <div class="callout exam"><b>考試上的用法：</b>題幹通常同時丟出兩個以上的限制（例如「非線性」＋「須提供特徵重要性供稽核」），正解就是<b>同時滿足全部限制</b>的那一個；只滿足一個限制的選項就是誘答。</div>
+</section>
+
+<!-- 49.2 -->
+<section id="s2">
+  <div class="sec-head"><span class="sec-no">49.2</span><h2>判準一：任務型態與模型特性配對</h2></div>
+  <p class="lead">先問輸出是什麼、有沒有標籤、有沒有時間順序。這一步決定「模型家族」。</p>
+  <div class="panel">
+    <h3 style="margin-top:0">配對遊戲：這個情境屬於哪一族？</h3>
+    <p class="hint">先點左邊的情境，再點右邊的任務族與常用模型。</p>
+    <div class="match" id="taskMatch"></div>
+    <div class="feedback" id="taskFb" aria-live="polite"></div>
+  </div>
+
+  <details>
+    <summary>展開六大任務族完整對照表</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>任務型態</th><th>判斷線索</th><th>典型情境</th><th>常用模型</th><th>對應損失函數</th></tr>
+        <tr><td><b>分類</b> Classification</td><td>輸出為離散類別</td><td>垃圾郵件偵測、疾病診斷、客戶流失</td><td>決策樹／隨機森林（特徵混合、要解釋）、SVM（邊界清晰、高維小樣本）、神經網路（影像／語音等高度非線性）</td><td>二元交叉熵 BCE／多類別交叉熵</td></tr>
+        <tr><td><b>迴歸</b> Regression</td><td>輸出為連續數值</td><td>房價預測、能源消耗、業績估算</td><td>線性迴歸（線性趨勢明顯、高解釋）、決策樹／隨機森林迴歸（非線性與特徵交互）、神經網路（大規模高維）</td><td>MSE（放大極端誤差）／MAE（對離群值穩健）</td></tr>
+        <tr><td><b>聚類</b> Clustering</td><td>無標籤，要自動分組</td><td>客戶分群、商圈劃分</td><td>K-means（群數已知、球狀群）、DBSCAN（有雜訊、群大小不均、非凸）</td><td>—</td></tr>
+        <tr><td><b>降維</b> Dimensionality Reduction</td><td>無標籤，要壓縮表示</td><td>製程特徵壓縮、嵌入視覺化</td><td>PCA（線性、保留最大變異、可對新資料投影）、自編碼器（非線性重建）、t-SNE（僅視覺化）</td><td>—</td></tr>
+        <tr><td><b>序列／時間序列</b></td><td>資料有時間或先後順序</td><td>電力需求預測、感測器監控、語音辨識</td><td>RNN／LSTM／GRU（長期依賴）、TCN（長期依賴穩定）、ARIMA（短期、週期明顯、資料量不大）</td><td>依輸出型態</td></tr>
+        <tr><td><b>異常偵測</b>（只有正常樣本）</td><td>缺乏已確認的異常標註</td><td>軸承振動監測、設備預防保養</td><td>One-Class SVM、Isolation Forest、自編碼器重建誤差</td><td>重建誤差／密度分數</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <h3>三組最常被混淆的配對</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>情境</th><th>任務族</th><th>正解</th><th>常見誤選</th></tr>
+      <tr><td>預測未來七天電力需求</td><td>時序</td><td>LSTM</td><td>CNN、聚類</td></tr>
+      <tr><td>把顧客依相似特徵分群</td><td>聚類</td><td>K-means／DBSCAN</td><td>LSTM</td></tr>
+      <tr><td>把高維感測資料壓成低維</td><td>降維</td><td>PCA／Autoencoder</td><td>LSTM</td></tr>
+    </table>
+  </div>
+
+  <h3>K-means vs DBSCAN 模擬器（情境題高頻）</h3>
+  <div class="panel">
+    <p class="hint">資料是兩個「半月形」群，外加幾個離群點。切換演算法、調參數，看誰分得對。點顏色代表分到哪一群，灰色 × 是雜訊點。</p>
+    <div class="row" style="justify-content:space-between">
+      <div class="tabs" id="cluTabs" style="margin:0">
+        <button class="btn" data-m="km" aria-pressed="true">K-means</button>
+        <button class="btn" data-m="db" aria-pressed="false">DBSCAN</button>
+      </div>
+      <button class="btn" id="cluRun">K-means 重新隨機初始化</button>
+    </div>
+    <svg id="cluSvg" viewBox="0 0 600 300" style="margin-top:12px" role="img" aria-label="聚類示意圖"></svg>
+    <div id="cluCtl" style="margin-top:8px"></div>
+    <p class="hint" id="cluNote" style="margin:8px 0 0" aria-live="polite"></p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th></th><th>K-means</th><th>DBSCAN</th></tr>
+      <tr><td>群數</td><td>必須事先指定 K</td><td>不需指定，由密度自動決定</td></tr>
+      <tr><td>群形狀</td><td>以歐氏距離最小化群內平方和，偏好球狀（凸）群</td><td>可處理半月形等非凸群</td></tr>
+      <tr><td>離群值</td><td>群心是平均值，易被離群值拉偏</td><td>明確定義<b>雜訊點（Noise Point）</b>，不歸入任何群</td></tr>
+      <tr><td>穩定性</td><td>隨機初始中心 → 僅保證局部最優，每次結果略不同</td><td>同參數下結果穩定</td></tr>
+    </table>
+  </div>
+  <p class="prose">DBSCAN 的三種點：<b>核心點</b>（鄰域樣本數達門檻）、<b>邊界點</b>（自己不是核心點，但落在某核心點鄰域內）、<b>雜訊點</b>（兩者皆非，也無密度可達關係）。</p>
+
+  <h3>PCA vs t-SNE：選型不是「誰比較準」</h3>
+  <div class="compare">
+    <div><div class="big">PCA</div>線性降維（特徵值分解找最大變異方向）<br>保留<b>全域變異結構</b><br>有固定轉換矩陣，<b>可對新資料投影外推</b><br><span class="hint">適用：作為下游模型（如 XGBoost）的輸入特徵</span></div>
+    <div><div class="big">t-SNE</div>非線性、機率式<br>保留<b>局部鄰域關係</b>，不保留全域距離與尺度<br><b>無明確外推函數</b><br><span class="hint">適用：僅適合視覺化探索群集結構</span></div>
+  </div>
+</section>
+
+<!-- 49.3 -->
+<section id="s3">
+  <div class="sec-head"><span class="sec-no">49.3</span><h2>判準二：資料規模與維度</h2></div>
+  <p class="lead">資料越多，能撐起的模型越複雜。拖動滑桿改變樣本數，看建議的模型如何換檔。</p>
+  <div class="panel">
+    <div class="row" style="justify-content:space-between"><b>樣本數</b><span id="nLab" style="font-variant-numeric:tabular-nums;font-weight:700">500 筆</span></div>
+    <input type="range" id="nRange" min="2" max="7" step="0.05" value="2.7" aria-label="樣本數（對數刻度）">
+    <div class="row hint" style="justify-content:space-between"><span>100</span><span>1 千</span><span>10 萬</span><span>1 千萬</span></div>
+    <div class="meter" style="height:18px;margin:14px 0 6px"><i id="nMeter" style="width:20%"></i></div>
+    <div class="row hint" style="justify-content:space-between;margin-bottom:10px"><span>模型複雜度上限（示意）</span></div>
+    <div class="kv" id="nOut"></div>
+  </div>
+  <details>
+    <summary>展開資料規模對照表</summary>
+    <div class="body tbl-wrap">
+      <table>
+        <tr><th>資料規模</th><th>樣本量</th><th>建議模型</th><th>關鍵理由</th><th>附帶要求</th></tr>
+        <tr><td><b>小型</b></td><td>數百～數千</td><td>線性／邏輯迴歸、決策樹、Lasso／Ridge 等正則化模型</td><td>參數少 → 降低過擬合風險</td><td>特徵工程重要性提高；需以較強先驗假設支撐；評估要用交叉驗證（樣本極不平衡時用分層 K 折）</td></tr>
+        <tr><td><b>中型</b></td><td>數千～數十萬</td><td>隨機森林、XGBoost、LightGBM</td><td>表現力與泛化的甜蜜點，可支撐集成與超參數優化</td><td>計算資源與訓練時間開始成為實務限制</td></tr>
+        <tr><td><b>大型</b></td><td>百萬級以上</td><td>深度神經網路</td><td>非結構化資料（影像、語音、文字）的表現潛力才發揮得出來</td><td>需 GPU／多機分散式、具擴展性的架構設計</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <h3>維度與共線性：Ridge vs Lasso 模擬器</h3>
+  <div class="panel">
+    <p class="hint">「月收入／年收入／季收入」三個特徵高度相關。調整懲罰強度，比較 L1 與 L2 怎麼處理它們；再按「重新抽樣訓練」，看 Lasso 留下的那一個會不會換人。（係數為示意）</p>
+    <div class="row" style="justify-content:space-between">
+      <div class="tabs" id="regTabs" style="margin:0">
+        <button class="btn" data-m="ridge" aria-pressed="true">Ridge（L2）</button>
+        <button class="btn" data-m="lasso" aria-pressed="false">Lasso（L1）</button>
+        <button class="btn" data-m="enet" aria-pressed="false">Elastic Net</button>
+      </div>
+      <button class="btn" id="resample">重新抽樣訓練</button>
+    </div>
+    <div class="row" style="justify-content:space-between;margin-top:12px"><b>懲罰強度 λ</b><span id="lamLab" style="font-variant-numeric:tabular-nums">0.50</span></div>
+    <input type="range" id="lam" min="0" max="1" step="0.01" value="0.5" aria-label="懲罰強度">
+    <div id="coefBars" style="margin-top:10px"></div>
+    <p class="hint" id="regNote" style="margin:8px 0 0"></p>
+  </div>
+  <ul class="prose">
+    <li><b>高維、小樣本、邊界清晰</b> → SVM（核函數映射至高維空間）或正則化線性模型。</li>
+    <li><b>特徵高度相關，但要保留全部特徵的解釋能力</b> → <b>Ridge（L2）</b>：平方懲罰把相關特徵的權重平均分攤並同步縮小，估計穩定且<b>不會歸零</b>。</li>
+    <li><b>特徵高度相關，且想自動篩掉不重要特徵</b> → <b>Lasso（L1）</b>：絕對值懲罰產生稀疏模型。副作用：面對高度相關群，Lasso 每次只留其中一個，<b>留誰會隨抽樣改變</b>，重要特徵清單反覆跳動、難以向稽核單位交代。</li>
+    <li><b>Elastic Net（L1+L2）</b>兼具兩者，但仍含 L1 成分，部分係數仍可能被壓為 0。</li>
+  </ul>
+</section>
+
+<!-- 49.4 -->
+<section id="s4">
+  <div class="sec-head"><span class="sec-no">49.4</span><h2>判準三：可解釋性需求</h2></div>
+  <p class="lead">這一步可能<b>推翻</b>判準二選出的「最強」模型。先分白箱黑箱，再分局部全域。</p>
+  <div class="compare">
+    <div><div class="big">高解釋性（白箱）</div>線性迴歸、邏輯迴歸、淺層決策樹<br>係數、分割規則可直接視覺化與溝通<br><span class="hint">典型場域：醫療診斷、信貸評分、法規監管</span></div>
+    <div><div class="big">低解釋性（黑箱）</div>隨機森林、梯度提升樹、深度神經網路<br>結構高度非線性、參數量大，決策過程不易直觀理解<br><span class="hint">典型場域：追求預測力且錯誤代價可承受。補救：搭配 SHAP、LIME、偏依圖（PDP）等事後解釋</span></div>
+  </div>
+
+  <h3>局部解釋長什麼樣：一筆被拒的貸款申請</h3>
+  <div class="panel">
+    <p class="hint">SHAP 回答「<b>這一筆</b>為何被拒？各特徵各貢獻多少分？」按下按鈕，從基準分數一步步加上每個特徵的貢獻。（特徵與數值皆為示意）</p>
+    <svg id="shapSvg" viewBox="0 0 640 260" role="img" aria-label="SHAP 瀑布圖示意"></svg>
+    <div class="row" style="margin-top:10px">
+      <button class="btn primary" id="shapNext">加入下一個特徵</button>
+      <button class="btn" id="shapReset">重設</button>
+      <span class="hint" id="shapInfo"></span>
+    </div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>技術</th><th>解釋層級</th><th>回答什麼問題</th><th>適用資料</th></tr>
+      <tr><td><b>SHAP</b></td><td>局部（也可彙總為全域）</td><td>「這一筆申請為何被拒？各特徵各貢獻多少分？」</td><td>表格、通用</td></tr>
+      <tr><td><b>LIME</b></td><td>局部</td><td>用簡單代理模型近似單筆預測的鄰域行為</td><td>表格、文字、影像</td></tr>
+      <tr><td><b>偏依圖（PDP）</b></td><td>全域</td><td>「某特徵整體上如何影響預測？」</td><td>表格</td></tr>
+      <tr><td><b>特徵重要性</b></td><td>全域</td><td>整體特徵影響排序（樹模型原生可輸出）</td><td>表格</td></tr>
+      <tr><td><b>Grad-CAM</b></td><td>局部</td><td>以熱力圖標示影像中影響判斷的區域</td><td><b>僅影像／CNN</b></td></tr>
+    </table>
+  </div>
+
+  <div class="panel">
+    <h3 style="margin-top:0">配對：題幹要求 → 解釋技術</h3>
+    <p class="hint">先點題幹要求，再點最合適的技術。</p>
+    <div class="match" id="xaiMatch"></div>
+    <div class="feedback" id="xaiFb" aria-live="polite"></div>
+  </div>
+  <div class="callout exam"><b>判準句：</b>題幹說「每一筆被拒絕的申請須提供可理解的原因」→ <b>局部可解釋性</b>，全域特徵重要性與混淆矩陣都不合格；表格資料也套不上 Grad-CAM。題幹說「須提供整體特徵重要性以供稽核」→ <b>全域</b>，樹集成模型原生就給得出來。</div>
+
+  <h3>排序挑戰：哪個情境最需要可解釋性？</h3>
+  <div class="panel">
+    <p class="hint">依解釋性需求「由強到弱」依序點擊四個情境。</p>
+    <div class="order" id="order"></div>
+    <div class="row" style="margin-top:10px"><button class="btn" id="orderReset">重來</button><span class="feedback" id="orderFb" style="margin:0" aria-live="polite"></span></div>
+  </div>
+</section>
+
+<!-- 49.5 -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-no">49.5</span><h2>判準四：運算資源、延遲與部署限制</h2></div>
+  <p class="lead">這一步決定模型「能不能真的上線」。選一個部署場景看策略。</p>
+  <div class="panel">
+    <div class="tabs" id="depTabs"></div>
+    <div id="depBody"></div>
+  </div>
+
+  <h3>四種模型瘦身技術（極易混淆，點卡片翻面）</h3>
+  <div class="cards" id="cmpCards"></div>
+
+  <h3>動手看：量化把什麼變小了？</h3>
+  <div class="panel">
+    <p class="hint">同一組權重，從 32-bit 浮點轉成 8-bit 整數。參數個數不變，變的是每個數字的精度與佔用空間。（權重值為示意）</p>
+    <div class="row"><button class="btn primary" id="qBtn" aria-pressed="false">執行訓練後量化</button><span class="hint" id="qInfo">目前：32-bit 浮點</span></div>
+    <div class="tbl-wrap" style="margin-top:12px"><table id="qTbl"></table></div>
+    <div class="bar" style="margin-top:12px"><span>模型大小</span><div class="track"><div class="fill" id="qFill" style="width:100%"></div></div><span class="num" id="qNum">100%</span></div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>技術</th><th>改變什麼</th><th>要不要重新訓練</th></tr>
+      <tr><td><b>量化</b> Quantization</td><td>數值精度，例如 32-bit 浮點 → 8-bit 整數</td><td>不重訓者即「訓練後量化」</td></tr>
+      <tr><td><b>剪枝</b> Pruning</td><td>參數數量與稀疏度，移除接近零或不重要的連結／通道</td><td>通常需微調</td></tr>
+      <tr><td><b>知識蒸餾</b> Distillation</td><td>用大模型輸出當軟標籤訓練小的學生模型</td><td><b>必然需要訓練</b></td></tr>
+      <tr><td><b>張量分解</b> Tensor Decomposition</td><td>把大矩陣拆為多個低秩矩陣相乘</td><td>通常需微調</td></tr>
+    </table>
+  </div>
+  <div class="callout">官方指引特別提醒：<b>模型選擇與部署應同步規劃</b>，避免訓練完成後才發現模型無法實際上線。</div>
+</section>
+
+<!-- 49.6 -->
+<section id="s6">
+  <div class="sec-head"><span class="sec-no">49.6</span><h2>判準五：偏差-變異權衡與開發維運成本</h2></div>
+  <p class="lead">模型複雜度提升 → 偏差降低、變異升高。選模型就是在這條曲線上找平衡點。拖動複雜度，看擬合曲線與誤差怎麼變。</p>
+  <div class="panel">
+    <div class="row" style="justify-content:space-between"><b>模型複雜度（多項式次數）</b><span id="degLab" style="font-weight:700">3</span></div>
+    <input type="range" id="deg" min="1" max="8" step="1" value="3" aria-label="模型複雜度">
+    <div class="fusion-meta">
+      <svg id="bvFit" viewBox="0 0 320 220" role="img" aria-label="擬合曲線"></svg>
+      <svg id="bvCurve" viewBox="0 0 320 220" role="img" aria-label="誤差曲線"></svg>
+    </div>
+    <div class="legend"><span><i style="background:var(--txt)"></i>訓練資料點</span><span><i style="background:var(--sen)"></i>測試資料點</span><span><i style="background:var(--img)"></i>訓練誤差</span><span><i style="background:var(--bad)"></i>測試誤差</span></div>
+    <div class="verdict" id="bvV" style="margin-top:10px"></div>
+    <p class="hint" id="bvWhy" style="margin:4px 0 0"></p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th></th><th>偏差</th><th>變異</th><th>訓練表現</th><th>測試表現</th><th>症狀</th></tr>
+      <tr><td>低複雜度模型</td><td>高</td><td>低</td><td>差</td><td>差</td><td>欠擬合（未捕捉主要趨勢）</td></tr>
+      <tr><td>剛好</td><td>低</td><td>低</td><td>好</td><td>好</td><td>泛化良好</td></tr>
+      <tr><td>高複雜度模型</td><td>低</td><td>高</td><td>極佳</td><td>差</td><td>過擬合（對雜訊過度敏感）</td></tr>
+    </table>
+  </div>
+  <p class="prose"><b>低複雜度（如線性迴歸）</b>：偏差高、變異低，穩定且具解釋性，但無法處理複雜關係。<b>高複雜度（如深度神經網路）</b>：偏差低、變異高，能擬合複雜模式，但<b>需要更多資料或額外正則化</b>來壓住變異。</p>
+
+  <h3>AutoML 適不適合？點選情境判斷</h3>
+  <div class="panel">
+    <div class="strat" id="autoStrat"></div>
+    <div style="margin-top:16px">
+      <div class="verdict" id="autoV">選一個情境試試</div>
+      <div id="autoWhy" class="hint"></div>
+    </div>
+  </div>
+
+  <h3>另一個成本：演算法複雜度 O(n²)</h3>
+  <div class="panel">
+    <p class="hint">系統若要逐一比對每位客戶與其他所有客戶，運算量 ≈ n²。把客戶數放大看看。</p>
+    <div class="row">
+      <button class="btn" data-n="1" aria-pressed="true">1 萬位客戶</button>
+      <button class="btn" data-n="10" aria-pressed="false">10 萬（×10）</button>
+      <button class="btn" data-n="100" aria-pressed="false">100 萬（×100）</button>
+    </div>
+    <div id="onBars" style="margin-top:12px"></div>
+    <p class="hint" id="onNote" style="margin:6px 0 0"></p>
+  </div>
+</section>
+
+<!-- 49.7 -->
+<section id="s7">
+  <div class="sec-head"><span class="sec-no">49.7</span><h2>架構設計：深度模型的內部選型</h2></div>
+  <p class="lead">模型家族選定為神經網路之後，還要選架構。官方近兩次都考。</p>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>架構</th><th>核心機制</th><th>擅長</th><th>已知瓶頸</th></tr>
+      <tr><td><b>CNN</b></td><td>區域感知（Local Receptive Field）＋參數共享 → 大幅降低參數量與運算複雜度</td><td>影像、具空間局部性的資料</td><td>不擅長長距離序列依賴</td></tr>
+      <tr><td><b>RNN／LSTM／GRU</b></td><td>時間步遞迴、記憶單元</td><td>時序與中短序列依賴</td><td>必須逐步遞迴<b>無法平行</b>；長文件跨段落關聯會衰減</td></tr>
+      <tr><td><b>Transformer</b></td><td>自注意力（Self-Attention）讓任意兩個 token 在同一層直接建立關聯</td><td>長文件、跨段落語義比對；運算可平行化</td><td>序列長度的計算成本高</td></tr>
+    </table>
+  </div>
+
+  <h3>長文件：RNN 逐步傳遞 vs Self-Attention 直接連線</h3>
+  <div class="panel">
+    <p class="hint">第 1 個字和第 8 個字有關聯。看兩種架構怎麼把資訊送過去。</p>
+    <div class="tabs" id="attTabs" style="margin-bottom:6px">
+      <button class="btn" data-m="rnn" aria-pressed="true">BiLSTM／RNN</button>
+      <button class="btn" data-m="att" aria-pressed="false">Transformer</button>
+    </div>
+    <svg id="attSvg" viewBox="0 0 640 200" role="img" aria-label="序列資訊傳遞示意"></svg>
+    <p class="hint" id="attNote" style="margin:6px 0 0"></p>
+  </div>
+
+  <h3>陷阱一：CNN 內部分工（跟著一張圖走）</h3>
+  <div class="panel">
+    <div class="pipe" id="cnnPipe"></div>
+    <div class="pout" id="cnnOut" aria-live="polite"></div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn primary" id="cnnNext">下一層</button>
+      <button class="btn" id="cnnReset">從頭開始</button>
+    </div>
+  </div>
+
+  <h3>陷阱二：加深反而變差，是哪種問題？</h3>
+  <div class="panel">
+    <p class="hint">看「訓練損失」與「驗證損失」的曲線形狀，診斷問題再選對策。（曲線為示意）</p>
+    <div class="tabs" id="deepTabs"></div>
+    <svg id="deepSvg" viewBox="0 0 640 230" role="img" aria-label="損失曲線示意"></svg>
+    <div id="deepNote" style="margin-top:8px"></div>
+  </div>
+
+  <h3>陷阱三：BERT vs GPT</h3>
+  <div class="compare">
+    <div><div class="big">BERT</div>雙向編碼器＋遮罩語言模型<br>目標：產生<b>理解</b>用的上下文表示<br><div class="row" style="margin-top:8px;gap:4px"><span class="tok">今天</span><span class="tok" style="border-color:var(--aud)">[MASK]</span><span class="tok">很好</span></div><span class="hint">架構上沒有自迴歸逐字生成機制</span></div>
+    <div><div class="big">GPT</div>以預測下一個 token 為訓練目標<br>天生適合<b>續寫</b><br><div class="row" style="margin-top:8px;gap:4px"><span class="tok">今天</span><span class="tok">天氣</span><span class="tok" style="border-color:var(--ok)">→ ？</span></div><span class="hint">一次往後生成一個 token</span></div>
+  </div>
+  <div class="callout"><b>差異來自架構與預訓練目標，增加訓練資料補不回來。</b></div>
+
+  <h3>樹集成的架構差異</h3>
+  <details><summary>XGBoost 相較傳統 GBDT 改進了什麼？</summary><div class="body">是「<b>三件事一起</b>」：目標函數加入 <b>L1／L2 正則化項</b>抑制過擬合、原生支援<b>缺失值自動分裂處理</b>、支援<b>特徵層級並行化</b>訓練。<br>它沒有改用隨機森林架構，也沒有用神經網路取代弱學習器，更與批次正規化無關。</div></details>
+  <details><summary>決策樹靠什麼選分裂特徵？</summary><div class="body"><b>資訊增益（Information Gain）</b>，即熵的減少量 —— 這是樹模型專屬機制，不是 L1 正則化、不是激活函數、也不是核函數 SVM 的做法。</div></details>
+</section>
+
+<!-- 49.8 -->
+<section id="s8">
+  <div class="sec-head"><span class="sec-no">49.8</span><h2>官方考過什麼</h2></div>
+  <p class="lead">114-2 與 115-1 共 100 題中，直接考「情境 → 選模型／選架構」的核心題 <b>13 題</b>，另有 5 題考模型特性辨識（本節周邊題），合計 <b>18 題</b>。題型幾乎全是情境判斷，純名詞定義題極少。</p>
+  <div id="examList"></div>
+  <div class="callout exam">準備方向：每題先數「題幹有幾個限制」，再找<b>全部滿足</b>的選項。</div>
+</section>
+
+<!-- 49.9 -->
+<section id="s9">
+  <div class="sec-head"><span class="sec-no">49.9</span><h2>易錯與陷阱</h2></div>
+  <p class="lead">逐條確認自己真的懂了再打勾（打勾狀態會記在這台裝置上）。</p>
+  <div class="traps" id="traps"></div>
+  <p class="hint" id="trapCount" style="margin-top:10px"></p>
+
+  <h3>情境測驗</h3>
+  <div class="qcard" id="quiz"></div>
+
+  <h3>延伸練習</h3>
+  <p class="prose"><b>L23 主題庫 326 題：</b>篩選「模型選擇／演算法比較／架構設計／模型壓縮」相關題目，重點練「題幹有幾個限制、哪個選項全部滿足」的判讀方式。<br><b>L21 主題庫 311 題：</b>對照 L21 的技術應用題，同一個模型在「應用規劃」與「技術實作」兩種問法下的考點差異值得比對。<br><b>各科歷屆 100 題：</b>本節與 <a href="L23301_feature_engineering.html">L23301</a>（資料前處理與特徵工程）、<a href="L23303_training_evaluation.html">L23303</a>（超參數調校）、<a href="L23304_tuning_optimization.html">L23304</a>（模型評估）常在同一題組中混合出現，建議四個知識點串起來一次複習。</p>
+</section>
+</main>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce){const m=document.querySelector('#heroSvg .movers');if(m)m.remove();}
+
+/* ---------- generic matcher ---------- */
+function matcher(root,fb,left,right,doneMsg){
+  let sel=null,done=0;
+  const L=document.createElement('div');L.className='col';
+  const R=document.createElement('div');R.className='col';
+  left.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;
+    b.innerHTML=it.html;if(it.c)b.style.setProperty('--c',it.c);
+    b.onclick=()=>{if(b.classList.contains('done'))return;L.querySelectorAll('.mitem').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;fb.textContent='';fb.className='feedback';};
+    L.appendChild(b);
+  });
+  right.forEach(it=>{
+    const b=document.createElement('button');b.className='mitem';b.dataset.k=it.k;b.innerHTML=it.html;
+    b.onclick=()=>{
+      if(b.classList.contains('done'))return;
+      if(!sel){fb.textContent='請先點左邊一個項目。';fb.className='feedback';return;}
+      if(sel.dataset.k===b.dataset.k){
+        const c=sel.style.getPropertyValue('--c');
+        [sel,b].forEach(x=>{x.classList.remove('sel');x.classList.add('done');if(c)x.style.setProperty('--c',c);});
+        fb.textContent='✓ '+(it.ok||'答對了！');fb.className='feedback ok';sel=null;done++;
+        if(done===left.length){fb.textContent='✓ 全部配對完成！'+doneMsg;}
+      }else{
+        b.classList.remove('wrong');void b.offsetWidth;b.classList.add('wrong');
+        fb.textContent='✗ '+(it.bad||'不太對，再想想它的資料結構特性。');fb.className='feedback bad';
+      }
+    };
+    R.appendChild(b);
+  });
+  root.append(L,R);
+}
+/* ---------- traps (generic) ---------- */
+function trapList(T,key){
+  let saved=[];try{saved=JSON.parse(localStorage.getItem(key)||'[]')||[];}catch(e){saved=[];}
+  T.forEach(([a,b],i)=>{
+    const l=document.createElement('label');const c=saved.includes(i);if(c)l.classList.add('chk');
+    l.innerHTML=`<input type="checkbox" ${c?'checked':''}><div><em>${a}</em><br><span>${b}</span></div>`;
+    l.querySelector('input').onchange=e=>{const on=e.target.checked;l.classList.toggle('chk',on);saved=on?[...new Set([...saved,i])]:saved.filter(x=>x!==i);try{localStorage.setItem(key,JSON.stringify(saved));}catch(err){}count();};
+    $('#traps').appendChild(l);
+  });
+  function count(){$('#trapCount').textContent=`已確認 ${saved.length}／${T.length} 條`;}
+  count();
+}
+/* ---------- quiz (generic) ---------- */
+function runQuiz(Q,msgs){
+  let i=0,score=0;const box=$('#quiz');
+  const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+  function show(){
+    if(i>=Q.length){
+      const msg=score>=Q.length-1?msgs[0]:score>=Math.ceil(Q.length*.65)?msgs[1]:msgs[2];
+      box.innerHTML=`<div class="progress"><i style="width:100%"></i></div><div class="qtext" style="font-size:24px;font-family:var(--serif)">得分 ${score}／${Q.length}</div><p>${msg}</p><button class="btn primary" id="qr">重新測驗</button>`;
+      $('#qr').onclick=()=>{i=0;score=0;show();};return;
+    }
+    const [q,opts,ex]=Q[i];
+    const order=shuffle(opts.map((o,k)=>({o,k})));
+    box.innerHTML=`<div class="progress"><i style="width:${i/Q.length*100}%"></i></div><div class="qtop"><span>第 ${i+1}／${Q.length} 題</span><span>得分 ${score}</span></div><div class="qtext">${q}</div><div class="opts">${order.map(x=>`<button class="opt" data-k="${x.k}">${x.o}</button>`).join('')}</div><div class="expl" id="qe"></div><div class="row" style="margin-top:14px;justify-content:flex-end"><button class="btn primary" id="qn" style="display:none">${i===Q.length-1?'看結果':'下一題'}</button></div>`;
+    box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.k==='0';if(ok)score++;
+      box.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.k==='0')x.classList.add('right');});
+      if(!ok)b.classList.add('wrongpick');
+      const e=$('#qe');e.innerHTML=(ok?'<b style="color:var(--ok)">答對了。</b>':'<b style="color:var(--bad)">這題要小心。</b>')+ex;e.classList.add('show');
+      $('#qn').style.display='';$('#qn').focus();
+    });
+    $('#qn').onclick=()=>{i++;show();};
+  }
+  show();
+}
+/* ---------- exam list (generic) ---------- */
+function examList(rows){rows.forEach(([n,k,q,a])=>{$('#examList').insertAdjacentHTML('beforeend',`<details><summary><span class="tag">${n}</span>${k}</summary><div class="body"><p style="margin:0 0 6px"><span class="hint">怎麼問：</span>${q}</p><p style="margin:0"><span class="hint">正解思路：</span>${a}</p></div></details>`);});}
+/* ---------- flip cards (generic) ---------- */
+function flipCards(root,list){list.forEach(([n,o,d])=>{const b=document.createElement('button');b.className='flip';b.setAttribute('aria-pressed','false');b.innerHTML=`<div class="in"><div class="f"><strong>${n}</strong><span>${o}</span><span style="margin-top:auto;font-size:12.5px">點我翻面</span></div><div class="b">${d}</div></div>`;b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');root.appendChild(b);});}
+/* ---------- tabs (generic) ---------- */
+function tabSet(tabRoot,bodyRoot,items){items.forEach((x,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=x[0];b.onclick=()=>s(i);tabRoot.appendChild(b);});function s(i){tabRoot.querySelectorAll('.btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));bodyRoot.innerHTML=items[i][1];}s(0);}
+/* ---------- hero ---------- */
+(function(){
+  const cols=['var(--txt)','var(--img)','var(--aud)','var(--sen)'];
+  let d='';for(let i=0;i<10;i++){d+=`<circle cx="${45+(i%2)*40}" cy="${62+Math.floor(i/2)*42}" r="9" fill="var(--muted)" opacity=".55"/>`;}
+  $('#heroDots').innerHTML=d;
+  let g='';const labels=['任務','規模','解釋','部署'];
+  labels.forEach((l,i)=>{const x=170+i*110;g+=`<rect x="${x}" y="40" width="14" height="220" rx="7" fill="${cols[i]}" opacity=".85"/><text x="${x+7}" y="285" text-anchor="middle" fill="${cols[i]}" font-size="14">${l}</text>`;});
+  if(!reduce){
+    const ys=[70,110,150,190,230];
+    ys.forEach((y,k)=>{const stop=k===2?4:k%4;const end=stop>=4?600:170+stop*110-12;
+      g+=`<circle r="8" cx="110" cy="${y}" fill="${stop>=4?'var(--ok)':'var(--muted)'}"><animate attributeName="cx" values="110;${end};${end}" keyTimes="0;.7;1" dur="3.2s" begin="${k*.35}s" repeatCount="indefinite"/><animate attributeName="cy" values="${y};${stop>=4?150:y};${stop>=4?150:y}" keyTimes="0;.7;1" dur="3.2s" begin="${k*.35}s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;1;0" keyTimes="0;.75;1" dur="3.2s" begin="${k*.35}s" repeatCount="indefinite"/></circle>`;});
+  }
+  g+=`<path d="M120 150 L600 150" stroke="var(--line)" stroke-dasharray="4 6"/>`;
+  $('#heroGates').innerHTML=g;
+})();
+
+/* ---------- five steps ---------- */
+(function(){
+  const S=[
+    {t:'任務型態',c:'var(--txt)',q:'有標籤？輸出離散還是連續？有時間順序？只有正常樣本？',d:'有標籤 → 離散＝分類／連續＝迴歸；無標籤 → 分組＝聚類／壓縮＝降維；有時間順序 → 序列模型；只有正常樣本 → 非監督／半監督異常偵測。',r:'決定「模型家族」'},
+    {t:'資料規模與維度',c:'var(--img)',q:'有幾筆？特徵是否高維、高度相關？',d:'數百～數千 → 簡單模型＋正則化（防過擬合）；數千～數十萬 → 樹集成（RF、XGBoost、LightGBM）；百萬級以上 → 深度神經網路（尤其非結構化資料）。',r:'決定「模型複雜度上限」'},
+    {t:'可解釋性',c:'var(--aud)',q:'要不要解釋？要解釋到什麼層級？',d:'醫療／金融／法遵 → 白箱模型，或黑箱＋SHAP/LIME。個案級說明 → 局部解釋；整體排序 → 全域解釋。',r:'可能「推翻」Step 2 的最佳選擇'},
+    {t:'部署與延遲',c:'var(--sen)',q:'部署在哪？要多快回應？',d:'邊緣／手機／IoT → 小模型＋剪枝／量化；雲端／資料中心 → 大型模型、集成策略可行；毫秒級即時 → 推論延遲優先，蒸餾＋快取。',r:'決定「模型能不能真的上線」'},
+    {t:'偏差-變異與成本',c:'var(--ink)',q:'偏差-變異與開發維運成本能否承擔？',d:'人力不足、要快速比較多模型 → AutoML；需精細控制特徵工程 → 人工建模。',r:'決定「團隊撐不撐得起」'}
+  ];
+  S.forEach((s,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=`Step ${i+1} ${s.t}`;b.onclick=()=>show(i);$('#fiveBtns').appendChild(b);});
+  function show(i){
+    document.querySelectorAll('#fiveBtns .btn').forEach((b,j)=>b.setAttribute('aria-pressed',i===j));
+    $('#fiveViz').innerHTML='<div class="funnel" style="width:100%">'+S.map((s,j)=>`<div class="fstep" style="background:${s.c};${s.c==='var(--ink)'?'color:var(--bg);':''}width:${100-j*13}%;opacity:${j<=i?1:.22}">${j+1}. ${s.t}</div>`).join('')+'</div>';
+    $('#fiveTxt').innerHTML=`<p><b>${S[i].q}</b></p><p>${S[i].d}</p><p class="hint">↓ ${S[i].r}</p>`;
+  }
+  show(0);
+})();
+
+/* ---------- constraint filter ---------- */
+(function(){
+  const M=[
+    {n:'線性迴歸',task:'reg',nl:0,gi:1,loc:1,small:1,edge:1},
+    {n:'邏輯迴歸',task:'cls',nl:0,gi:1,loc:1,small:1,edge:1},
+    {n:'Ridge（L2）迴歸',task:'reg',nl:0,gi:1,loc:1,small:1,edge:1},
+    {n:'淺層決策樹',task:'both',nl:1,gi:1,loc:1,small:1,edge:1},
+    {n:'SVR／SVM',task:'both',nl:1,gi:0,loc:0,small:1,edge:0},
+    {n:'隨機森林',task:'both',nl:1,gi:1,loc:0,small:0,edge:0},
+    {n:'XGBoost／LightGBM',task:'both',nl:1,gi:1,loc:0,small:0,edge:0},
+    {n:'深度神經網路',task:'both',nl:1,gi:0,loc:0,small:0,edge:0},
+    {n:'壓縮後小型神經網路',task:'both',nl:1,gi:0,loc:0,small:0,edge:1}
+  ];
+  const C=[
+    {k:'reg',l:'輸出連續（迴歸）',test:m=>m.task!=='cls',why:'是分類模型'},
+    {k:'cls',l:'輸出離散（分類）',test:m=>m.task!=='reg',why:'是迴歸模型'},
+    {k:'nl',l:'關係部分非線性',test:m=>m.nl,why:'只能建模線性關係'},
+    {k:'gi',l:'須提供整體特徵重要性',test:m=>m.gi,why:'給不出原生的整體特徵重要性'},
+    {k:'small',l:'樣本只有數百筆',test:m=>m.small,why:'參數多，小樣本易過擬合'},
+    {k:'edge',l:'部署在手機／邊緣',test:m=>m.edge,why:'太大、推論太慢'}
+  ];
+  const on=new Set();
+  C.forEach(c=>{const b=document.createElement('button');b.className='btn';b.textContent=c.l;b.setAttribute('aria-pressed','false');b.onclick=()=>{
+    if(on.has(c.k))on.delete(c.k);else{on.add(c.k);if(c.k==='reg')on.delete('cls');if(c.k==='cls')on.delete('reg');}
+    document.querySelectorAll('#consBtns .btn').forEach((x,i)=>x.setAttribute('aria-pressed',on.has(C[i].k)));draw();};$('#consBtns').appendChild(b);});
+  function draw(){
+    let left=0;
+    $('#cands').innerHTML=M.map(m=>{const fail=C.find(c=>on.has(c.k)&&!c.test(m));if(!fail)left++;return `<div class="cand ${fail?'out':''}" data-n="${m.n}"><b>${m.n}</b><small>${fail?'✗ '+fail.why:'✓ 仍符合'}</small></div>`;}).join('');
+    if(left===1)document.querySelectorAll('.cand:not(.out)').forEach(x=>x.classList.add('win'));
+    const fb=$('#consFb');
+    if(on.size===0){fb.textContent='尚未加任何限制：九個模型都「看起來都對」。';fb.className='feedback';}
+    else if(left===0){fb.textContent='全部被淘汰：限制互相衝突，實務上要放寬某一項（例如改用黑箱＋事後解釋）。';fb.className='feedback bad';}
+    else{fb.textContent=`剩下 ${left} 個候選。`+(on.has('reg')&&on.has('nl')&&on.has('gi')&&on.size===3?'這正是 115-1 第 28 題：隨機森林迴歸同時滿足兩項限制；SVR 的支持向量不是特徵重要性，邏輯迴歸是分類模型。':'');fb.className='feedback ok';}
+  }
+  draw();
+})();
+
+/* ---------- task matcher ---------- */
+matcher($('#taskMatch'),$('#taskFb'),[
+  {k:'seq',c:'var(--txt)',html:'預測未來七天電力需求<small>資料有時間順序</small>'},
+  {k:'clu',c:'var(--img)',html:'把顧客依相似特徵分群<small>沒有標籤</small>'},
+  {k:'dim',c:'var(--aud)',html:'把高維感測資料壓成低維<small>沒有標籤</small>'},
+  {k:'ano',c:'var(--sen)',html:'軸承振動監測<small>只有正常振動紀錄，無故障標註</small>'},
+  {k:'reg',c:'var(--ok)',html:'預測使用時長（分鐘）<small>輸出連續數值</small>'}
+],[
+  {k:'clu',html:'聚類：K-means／DBSCAN',ok:'無標籤、要分組 → 聚類。'},
+  {k:'reg',html:'迴歸：線性迴歸／RF 迴歸，損失 MSE',ok:'連續數值＝迴歸＝MSE（115-1 第 10 題）。'},
+  {k:'x',html:'監督式二元分類',bad:'只有正常樣本，標籤前提不成立！這是 115-1 第 29 題的誘答。'},
+  {k:'seq',html:'序列：LSTM／GRU／TCN',ok:'有時間順序 → LSTM（114-2 第 7 題）。'},
+  {k:'ano',html:'異常偵測：One-Class SVM／Isolation Forest',ok:'只有正常樣本 → 非監督／半監督異常偵測。'},
+  {k:'dim',html:'降維：PCA／Autoencoder',ok:'要壓縮表示 → 降維，不是 LSTM。'}
+],'最常混淆的三組（時序／聚類／降維）也都對上了。');
+
+/* ---------- clustering simulator ---------- */
+(function(){
+  let seed=7;const rnd=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646;};
+  const P=[];
+  for(let i=0;i<34;i++){const a=Math.PI*i/33;P.push([200+120*Math.cos(a)+(rnd()-.5)*22,170-95*Math.sin(a)+(rnd()-.5)*22]);}
+  for(let i=0;i<34;i++){const a=Math.PI*i/33;P.push([320-120*Math.cos(a)+(rnd()-.5)*22,110+95*Math.sin(a)+(rnd()-.5)*22]);}
+  [[60,40],[540,260],[560,50],[50,270]].forEach(p=>P.push(p));
+  const cols=['var(--txt)','var(--aud)','var(--img)','var(--sen)'];
+  let mode='km',K=2,eps=38,minPts=4,lab=[],cent=[],rs=1;
+  function kmeans(){
+    let s=rs*97+13;const r=()=>{s=(s*16807)%2147483647;return (s-1)/2147483646;};
+    cent=[];for(let k=0;k<K;k++){cent.push(P[Math.floor(r()*P.length)].slice());}
+    for(let it=0;it<30;it++){
+      lab=P.map(p=>{let b=0,bd=1e9;cent.forEach((c,k)=>{const d=(p[0]-c[0])**2+(p[1]-c[1])**2;if(d<bd){bd=d;b=k;}});return b;});
+      cent=cent.map((c,k)=>{const m=P.filter((_,i)=>lab[i]===k);return m.length?[m.reduce((a,p)=>a+p[0],0)/m.length,m.reduce((a,p)=>a+p[1],0)/m.length]:c;});
+    }
+  }
+  let kind=[];
+  function dbscan(){
+    const n=P.length,nb=P.map(p=>P.map((q,j)=>j).filter(j=>(P[j][0]-p[0])**2+(P[j][1]-p[1])**2<=eps*eps));
+    const core=nb.map(x=>x.length>=minPts);lab=Array(n).fill(-1);let c=0;
+    for(let i=0;i<n;i++){if(!core[i]||lab[i]!==-1)continue;const q=[i];lab[i]=c;while(q.length){const j=q.shift();if(!core[j])continue;nb[j].forEach(t=>{if(lab[t]===-1){lab[t]=c;q.push(t);}});}c++;}
+    kind=P.map((_,i)=>core[i]?'core':lab[i]>=0?'border':'noise');return c;
+  }
+  function ctl(){
+    if(mode==='km'){$('#cluCtl').innerHTML=`<div class="row"><b>K（群數）</b><button class="btn" data-k="2">K=2</button><button class="btn" data-k="3">K=3</button><button class="btn" data-k="4">K=4</button></div>`;
+      $('#cluCtl').querySelectorAll('.btn').forEach(b=>{b.setAttribute('aria-pressed',+b.dataset.k===K);b.onclick=()=>{K=+b.dataset.k;ctl();draw();};});}
+    else{$('#cluCtl').innerHTML=`<div class="row" style="justify-content:space-between"><b>鄰域半徑 ε</b><span id="epsLab">${eps}</span></div><input type="range" id="eps" min="15" max="80" value="${eps}" aria-label="鄰域半徑">`;
+      $('#eps').oninput=e=>{eps=+e.target.value;$('#epsLab').textContent=eps;draw();};}
+    $('#cluRun').style.display=mode==='km'?'':'none';
+  }
+  function draw(){
+    let h='',nC=0;
+    if(mode==='km'){kmeans();}else{nC=dbscan();}
+    if(mode==='db'){const i=P.findIndex((_,j)=>kind[j]==='core');if(i>=0)h+=`<circle cx="${P[i][0]}" cy="${P[i][1]}" r="${eps}" fill="none" stroke="var(--muted)" stroke-dasharray="3 4"/>`;}
+    P.forEach((p,i)=>{
+      if(mode==='db'&&lab[i]<0){h+=`<g stroke="var(--muted)" stroke-width="2.5"><line x1="${p[0]-6}" y1="${p[1]-6}" x2="${p[0]+6}" y2="${p[1]+6}"/><line x1="${p[0]-6}" y1="${p[1]+6}" x2="${p[0]+6}" y2="${p[1]-6}"/></g>`;return;}
+      const c=cols[lab[i]%4];
+      h+=`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${mode==='db'&&kind[i]==='border'?4:6}" fill="${c}" ${mode==='db'&&kind[i]==='border'?'fill-opacity=".45" stroke="'+c+'"':''} style="transition:fill .4s"/>`;
+    });
+    if(mode==='km')cent.forEach((c,k)=>{h+=`<g><circle cx="${c[0]}" cy="${c[1]}" r="12" fill="none" stroke="var(--ink)" stroke-width="3"/><text x="${c[0]}" y="${c[1]+5}" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">+</text></g>`;});
+    $('#cluSvg').innerHTML=h;
+    const noise=lab.filter(x=>x<0).length;
+    $('#cluNote').innerHTML=mode==='km'
+      ?`K-means 以群心（黑圈）切出<b>球狀</b>的區塊，半月形被從中間切開；離群點也被硬塞進某一群，還會把群心拉偏。按「重新隨機初始化」可見每次結果略不同（只保證局部最優）。`
+      :`DBSCAN 找到 <b>${nC}</b> 群、<b>${noise}</b> 個雜訊點（灰 ×）。實心大點＝核心點，淡色小點＝邊界點，虛線圈是一個核心點的 ε 鄰域。ε 太小會把群打碎、太大會把兩群黏在一起。`;
+  }
+  document.querySelectorAll('#cluTabs .btn').forEach(b=>b.onclick=()=>{mode=b.dataset.m;document.querySelectorAll('#cluTabs .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));ctl();draw();});
+  $('#cluRun').onclick=()=>{rs++;draw();};
+  ctl();draw();
+})();
+
+/* ---------- data size ---------- */
+(function(){
+  const fmt=n=>n>=1e6?(n/1e6).toFixed(n>=1e7?0:1)+' 百萬':n>=1e4?Math.round(n/1e4)+' 萬':Math.round(n).toLocaleString();
+  function up(){
+    const v=+$('#nRange').value,n=Math.round(10**v);$('#nLab').textContent=fmt(n)+' 筆';
+    let t;
+    if(n<5000)t=['小型（數百～數千）','線性／邏輯迴歸、決策樹、Lasso／Ridge 等正則化模型','參數少 → 降低過擬合風險','特徵工程重要性提高；需較強先驗假設；用交叉驗證（極不平衡用分層 K 折）',22,'var(--img)'];
+    else if(n<1e6)t=['中型（數千～數十萬）','隨機森林、XGBoost、LightGBM','表現力與泛化的甜蜜點，可支撐集成與超參數優化','計算資源與訓練時間開始成為實務限制',60,'var(--warn)'];
+    else t=['大型（百萬級以上）','深度神經網路','非結構化資料（影像、語音、文字）的表現潛力才發揮得出來','需 GPU／多機分散式、具擴展性的架構設計',95,'var(--sen)'];
+    $('#nMeter').style.width=t[4]+'%';$('#nMeter').style.background=t[5];
+    $('#nOut').innerHTML=`<b>規模</b><span>${t[0]}</span><b>建議模型</b><span><b>${t[1]}</b></span><b>關鍵理由</b><span>${t[2]}</span><b>附帶要求</b><span>${t[3]}</span>`;
+  }
+  $('#nRange').oninput=up;up();
+})();
+
+/* ---------- ridge vs lasso ---------- */
+(function(){
+  const F=['月收入','年收入','季收入','負債比','雜訊特徵'];
+  let mode='ridge',draw_=0;
+  const base=[.9,.85,.8,.7,.12];
+  function coefs(l){
+    if(mode==='ridge'){const s=1/(1+3*l);const share=(base[0]+base[1]+base[2])/3;return [share*s,share*s,share*s,base[3]/(1+2*l),base[4]/(1+4*l)];}
+    const keep=draw_%3;const lasso=mode==='lasso';
+    const grp=(base[0]+base[1]+base[2])*(lasso?.9:.6);
+    const sh=v=>Math.max(0,v-(lasso?l*1.1:l*.6));
+    let c=[0,0,0];
+    if(lasso){c[keep]=sh(grp);}else{const s=1/(1+1.5*l);c=[0,1,2].map(i=>i===keep?sh(grp*.6)*s:Math.max(0,(grp*.2-l*.35))*s);}
+    return [...c,sh(base[3]),sh(base[4])];
+  }
+  function render(){
+    const l=+$('#lam').value;$('#lamLab').textContent=l.toFixed(2);
+    const c=coefs(l),mx=2.3;
+    $('#coefBars').innerHTML=F.map((f,i)=>`<div class="bar ${c[i]===0?'':'win'}"><span>${f}</span><div class="track"><div class="fill" style="width:${Math.min(100,c[i]/mx*100).toFixed(1)}%"></div></div><span class="num">${c[i]===0?'0（歸零）':c[i].toFixed(2)}</span></div>`).join('');
+    const zero=c.filter(v=>v===0).length;
+    $('#regNote').innerHTML=mode==='ridge'?`Ridge 把三個收入特徵的權重<b>平均分攤並同步縮小</b>，λ 再大也<b>不會歸零</b> —— 要「保留全部特徵」選它（115-1 第 33 題）。`
+      :mode==='lasso'?`Lasso 在相關群裡只留<b>${F[draw_%3]}</b>，其餘壓成 0（目前 ${zero} 個係數歸零）。按「重新抽樣訓練」，留下的特徵會換人 —— 這是稀疏性的副作用，難以向稽核單位交代。`
+      :`Elastic Net 兼具 L1+L2，相關特徵較能一起保留，但仍含 L1 成分，λ 調大時部分係數仍會被壓為 0（目前 ${zero} 個）。`;
+  }
+  document.querySelectorAll('#regTabs .btn').forEach(b=>b.onclick=()=>{mode=b.dataset.m;document.querySelectorAll('#regTabs .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));render();});
+  $('#lam').oninput=render;
+  $('#resample').onclick=()=>{draw_++;render();};
+  render();
+})();
+
+/* ---------- SHAP waterfall ---------- */
+(function(){
+  const base=.30,F=[['負債比偏高',+.22],['近一年遲繳 3 次',+.18],['工作年資 8 年',-.07],['月收入中等',+.04],['無擔保品',+.06]];
+  let k=0;
+  function draw(){
+    const X=v=>170+v*520;let h=`<line x1="${X(.5)}" y1="10" x2="${X(.5)}" y2="230" stroke="var(--bad)" stroke-dasharray="4 4"/><text x="${X(.5)}" y="250" text-anchor="middle" font-size="12" fill="var(--bad)">拒絕門檻 0.5</text>`;
+    h+=`<text x="10" y="30" font-size="13" fill="var(--ink)">基準（平均）</text><rect x="${X(0)}" y="16" width="${X(base)-X(0)}" height="20" rx="4" fill="var(--muted)" opacity=".5"/><text x="${X(base)+6}" y="31" font-size="12" fill="var(--ink)">${base.toFixed(2)}</text>`;
+    let cur=base;
+    F.forEach((f,i)=>{const y=52+i*34;const show=i<k;const nx=cur+f[1];
+      if(show){const a=Math.min(cur,nx),w=Math.abs(f[1]);
+        h+=`<text x="10" y="${y+15}" font-size="13" fill="var(--ink)">${f[0]}</text><rect x="${X(a)}" y="${y}" width="${w*520}" height="20" rx="4" fill="${f[1]>0?'var(--bad)':'var(--ok)'}"/><text x="${X(Math.max(cur,nx))+6}" y="${y+15}" font-size="12" fill="var(--ink)">${f[1]>0?'+':''}${f[1].toFixed(2)}</text>`;}
+      else h+=`<text x="10" y="${y+15}" font-size="13" fill="var(--muted)" opacity=".5">${f[0]}</text>`;
+      cur=nx;});
+    $('#shapSvg').innerHTML=h;
+    const s=base+F.slice(0,k).reduce((a,f)=>a+f[1],0);
+    $('#shapInfo').textContent=k===F.length?`最終分數 ${s.toFixed(2)} ＞ 0.5 → 拒絕。紅色是推向拒絕的理由，就是給申請人的「個案說明」。`:`目前分數 ${s.toFixed(2)}`;
+    $('#shapNext').disabled=k===F.length;$('#shapNext').style.opacity=k===F.length?.4:1;
+  }
+  $('#shapNext').onclick=()=>{if(k<F.length){k++;draw();}};
+  $('#shapReset').onclick=()=>{k=0;draw();};
+  draw();
+})();
+
+/* ---------- XAI matcher ---------- */
+matcher($('#xaiMatch'),$('#xaiFb'),[
+  {k:'l',c:'var(--aud)',html:'每筆被拒申請須說明原因<small>表格資料（115-1 第 37 題）</small>'},
+  {k:'g',c:'var(--txt)',html:'須提供整體特徵重要性供稽核<small>表格資料</small>'},
+  {k:'c',c:'var(--img)',html:'標示 X 光片中影響判斷的區域<small>影像／CNN</small>'},
+  {k:'p',c:'var(--sen)',html:'某特徵整體上如何影響預測<small>表格資料</small>'}
+],[
+  {k:'c',html:'Grad-CAM<small>局部，僅影像／CNN</small>',ok:'Grad-CAM 用熱力圖標示影像區域。'},
+  {k:'x',html:'混淆矩陣<small>整體評估</small>',bad:'混淆矩陣是整體層級的評估，不是個案解釋！'},
+  {k:'l',html:'SHAP<small>局部（也可彙總為全域）</small>',ok:'個案級說明＝局部可解釋性 → SHAP。'},
+  {k:'p',html:'偏依圖 PDP<small>全域</small>',ok:'PDP 回答某特徵的整體影響。'},
+  {k:'g',html:'樹模型特徵重要性<small>全域</small>',ok:'樹集成原生就給得出整體排序。'}
+],'局部／全域分清楚了。');
+
+/* ---------- interpretability order ---------- */
+(function(){
+  const items=['醫療影像判讀腫瘤惡性程度','信貸／貸款審核','客戶流失預測','廣告出價、推播時間最佳化'];
+  const why=['攸關生命','監理要求','中等','錯誤代價有限'];
+  const shown=[2,0,3,1];let picked=[];
+  function render(){
+    $('#order').innerHTML=shown.map(i=>{const p=picked.indexOf(i);let cls=p>=0?'picked':'';if(picked.length===4)cls=p===i?'good':'badord';return `<button data-i="${i}" class="${cls}"><span class="n">${p>=0?p+1:'?'}</span><span>${items[i]}${picked.length===4?`<span class="hint">　${why[i]}</span>`:''}</span></button>`;}).join('');
+    $('#order').querySelectorAll('button').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(picked.length<4&&!picked.includes(i)){picked.push(i);render();}});
+    const fb=$('#orderFb');
+    if(picked.length===4){const ok=picked.every((v,j)=>v===j);fb.textContent=ok?'✓ 完全正確！114-2 第 14 題的正解就是醫療影像判讀。':'✗ 順序不對：醫療影像（攸關生命）＞ 信貸（監理）＞ 流失預測 ＞ 廣告推播（錯誤代價有限）。';fb.className='feedback '+(ok?'ok':'bad');}
+    else{fb.textContent='';fb.className='feedback';}
+  }
+  $('#orderReset').onclick=()=>{picked=[];render();};
+  render();
+})();
+
+/* ---------- deployment tabs ---------- */
+tabSet($('#depTabs'),$('#depBody'),[
+  ['資源受限（IoT、手機、邊緣）','<div class="kv"><b>限制</b><span>記憶體、電力、算力皆有限</span><b>模型策略</b><span>結構簡單、參數少、推論快：簡單決策樹、邏輯迴歸、壓縮後的小型神經網路；搭配<b>剪枝或量化</b>瘦身</span></div><div class="bar"><span>模型大小</span><div class="track"><div class="fill" style="width:15%"></div></div><span class="num">小</span></div><div class="bar"><span>推論延遲</span><div class="track"><div class="fill" style="width:20%"></div></div><span class="num">低</span></div>'],
+  ['資源充足（雲端、資料中心）','<div class="kv"><b>限制</b><span>主要成本是費用而非可行性</span><b>模型策略</b><span>高效能深度模型、<b>模型集成</b>，可支援複雜的前後處理流程</span></div><div class="bar"><span>模型大小</span><div class="track"><div class="fill" style="width:90%"></div></div><span class="num">大</span></div><div class="bar"><span>推論延遲</span><div class="track"><div class="fill" style="width:60%"></div></div><span class="num">可接受</span></div>'],
+  ['即時推論（金融交易、推薦）','<div class="kv"><b>限制</b><span>秒級／毫秒級回應</span><b>模型策略</b><span><b>推論延遲優先於絕對準確率</b>；搭配快取（caching）與知識蒸餾</span></div><div class="bar"><span>模型大小</span><div class="track"><div class="fill" style="width:35%"></div></div><span class="num">中小</span></div><div class="bar win"><span>推論延遲</span><div class="track"><div class="fill" style="width:8%"></div></div><span class="num">極低</span></div>']
+]);
+document.querySelectorAll('#depTabs .btn').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#depBody .fill').forEach(f=>{const w=f.style.width;f.style.width='0';setTimeout(()=>f.style.width=w,30);});}));
+
+/* ---------- compression cards ---------- */
+flipCards($('#cmpCards'),[
+  ['量化','Quantization','改<b>數值精度</b>（32-bit 浮點 → 8-bit 整數）。不重訓者即「訓練後量化」。'],
+  ['剪枝','Pruning','改<b>參數數量與稀疏度</b>，移除接近零或不重要的連結／通道。通常需微調。'],
+  ['知識蒸餾','Distillation','用大模型輸出當<b>軟標籤</b>訓練小的學生模型。<b>必然需要訓練</b>。'],
+  ['張量分解','Tensor Decomposition','把大矩陣拆為多個<b>低秩矩陣</b>相乘。通常需微調。']
+]);
+
+/* ---------- quantization demo ---------- */
+(function(){
+  const W=[0.73182,-0.25049,0.04417,-0.91836,0.50263];let q=false;
+  const scale=Math.max(...W.map(Math.abs))/127;
+  function render(){
+    $('#qTbl').innerHTML=`<tr><th>權重</th>${W.map((_,i)=>`<th>w${i+1}</th>`).join('')}</tr><tr><td>${q?'int8 值':'float32 值'}</td>${W.map(w=>`<td style="font-variant-numeric:tabular-nums">${q?Math.round(w/scale):w.toFixed(5)}</td>`).join('')}</tr>`+(q?`<tr><td>還原後</td>${W.map(w=>`<td style="font-variant-numeric:tabular-nums">${(Math.round(w/scale)*scale).toFixed(5)}</td>`).join('')}</tr>`:'');
+    $('#qFill').style.width=q?'25%':'100%';$('#qNum').textContent=q?'25%':'100%';
+    $('#qInfo').textContent=q?'8-bit 整數：參數個數不變、精度略降、大小約為 1/4（32→8 bit），且沒有重新訓練':'目前：32-bit 浮點';
+    $('#qBtn').textContent=q?'還原成 32-bit':'執行訓練後量化';$('#qBtn').setAttribute('aria-pressed',q);
+  }
+  $('#qBtn').onclick=()=>{q=!q;render();};render();
+})();
+
+/* ---------- bias-variance ---------- */
+(function(){
+  let seed=2024102401;const r=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646;};
+  const f=x=>Math.sin(Math.PI*x)*.8;
+  const tr=[],te=[];
+  const nz=[.16,-.24,.22,-.12,-.26,.2,-.1,.26,-.18];for(let i=0;i<9;i++){const x=-1+2*i/8;tr.push([x,f(x)+nz[i]]);}
+  for(let i=0;i<14;i++){const x=-.97+1.94*i/13;te.push([x,f(x)+(r()-.5)*.16]);}
+  function fit(d){
+    const n=d+1,A=Array.from({length:n},()=>Array(n+1).fill(0));
+    tr.forEach(([x,y])=>{for(let i=0;i<n;i++){for(let j=0;j<n;j++)A[i][j]+=x**(i+j);A[i][n]+=y*x**i;}});
+    for(let i=0;i<n;i++)A[i][i]+=1e-9;
+    for(let c=0;c<n;c++){let p=c;for(let k=c+1;k<n;k++)if(Math.abs(A[k][c])>Math.abs(A[p][c]))p=k;[A[c],A[p]]=[A[p],A[c]];for(let k=0;k<n;k++){if(k===c)continue;const m=A[k][c]/A[c][c];for(let j=c;j<=n;j++)A[k][j]-=m*A[c][j];}}
+    return A.map((row,i)=>row[n]/row[i]);
+  }
+  const ev=(w,x)=>w.reduce((s,c,i)=>s+c*x**i,0);
+  const mse=(w,D)=>D.reduce((s,[x,y])=>s+(ev(w,x)-y)**2,0)/D.length;
+  const errs=[];for(let d=1;d<=8;d++){const w=fit(d);errs.push([mse(w,tr),Math.min(mse(w,te),1.2)]);}
+  function render(){
+    const d=+$('#deg').value;$('#degLab').textContent=d;const w=fit(d);
+    const X=x=>20+(x+1)*140,Y=y=>110-y*70;
+    let h=`<rect x="0" y="0" width="320" height="220" rx="12" fill="var(--surface2)"/>`;
+    let p='';for(let i=0;i<=120;i++){const x=-1+2*i/120;const y=Math.max(-1.45,Math.min(1.45,ev(w,x)));p+=(i?'L':'M')+X(x).toFixed(1)+' '+Y(y).toFixed(1);}
+    h+=`<path d="${p}" fill="none" stroke="var(--ink)" stroke-width="2.5"/>`;
+    tr.forEach(([x,y])=>h+=`<circle cx="${X(x)}" cy="${Y(y)}" r="5" fill="var(--txt)"/>`);
+    te.forEach(([x,y])=>h+=`<rect x="${X(x)-4}" y="${Y(y)-4}" width="8" height="8" fill="var(--sen)"/>`);
+    h+=`<text x="12" y="20" font-size="13" fill="var(--muted)">擬合結果（次數 ${d}）</text>`;
+    $('#bvFit').innerHTML=h;
+    const ymax=Math.max(...errs.flat())*1.1,ex=k=>30+(k-1)*38,ey=v=>190-v/ymax*160;
+    let c=`<rect x="0" y="0" width="320" height="220" rx="12" fill="var(--surface2)"/><text x="12" y="20" font-size="13" fill="var(--muted)">誤差 vs 複雜度</text>`;
+    c+=`<path d="${errs.map((e,k)=>(k?'L':'M')+ex(k+1)+' '+ey(e[0]).toFixed(1)).join('')}" fill="none" stroke="var(--img)" stroke-width="2.5"/>`;
+    c+=`<path d="${errs.map((e,k)=>(k?'L':'M')+ex(k+1)+' '+ey(e[1]).toFixed(1)).join('')}" fill="none" stroke="var(--bad)" stroke-width="2.5"/>`;
+    c+=`<line x1="${ex(d)}" y1="28" x2="${ex(d)}" y2="195" stroke="var(--ink)" stroke-dasharray="3 4"/><circle cx="${ex(d)}" cy="${ey(errs[d-1][0])}" r="5" fill="var(--img)"/><circle cx="${ex(d)}" cy="${ey(errs[d-1][1])}" r="5" fill="var(--bad)"/>`;
+    c+=`<text x="30" y="212" font-size="12" fill="var(--muted)">簡單</text><text x="300" y="212" text-anchor="end" font-size="12" fill="var(--muted)">複雜</text>`;
+    $('#bvCurve').innerHTML=c;
+    const [a,b]=errs[d-1];
+    let v,why,col;
+    if(d<=2){v='欠擬合：偏差高、變異低';why='連主要的彎曲趨勢都抓不到，訓練與測試表現都差。';col='var(--warn)';}
+    else if(d<=5){v='剛好：泛化良好';why='偏差與變異都低，訓練與測試表現都好。';col='var(--ok)';}
+    else{v='過擬合：偏差低、變異高';why='曲線硬穿過每個訓練點，訓練誤差極低，但對雜訊過度敏感，測試誤差變大。要壓住變異，需要更多資料或額外正則化。';col='var(--bad)';}
+    $('#bvV').textContent=v;$('#bvV').style.color=col;
+    $('#bvWhy').textContent=`訓練誤差 ${a.toFixed(3)}　測試誤差 ${b.toFixed(3)}（示意資料）。${why}`;
+  }
+  $('#deg').oninput=render;render();
+})();
+
+/* ---------- AutoML strat ---------- */
+(function(){
+  const S=[
+    ['行銷部門缺乏專職工程師，要短時間比較多種流失預測模型',1,'✓ 適合 AutoML','缺乏專職工程師、需在短時間內比較多種候選模型 —— 114-2 第 10 題正解。'],
+    ['已有完整 MLOps 平台與資深資料科學團隊，更新採固定流程',0,'✗ 效益有限','團隊成熟、流程固定，AutoML 帶來的加速不大。'],
+    ['模型已長期穩定運作，只需定期微調參數',0,'✗ 效益有限','已穩定的模型只需例行微調，不需要重新大範圍搜尋。'],
+    ['建模任務標準化，只想快速產出基準線',1,'✓ 適合 AutoML','標準化任務、追求快速基準線，正是 AutoML 的強項。'],
+    ['財務信用風險：需精細控制特徵工程與演算法細節',0,'✗ 不適合','高度客製化模型需要人工建模精細控制。']
+  ];
+  S.forEach(s=>{const b=document.createElement('button');b.textContent=s[0];b.setAttribute('aria-pressed','false');b.onclick=()=>{document.querySelectorAll('#autoStrat button').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#autoV').textContent=s[2];$('#autoV').style.color=s[1]?'var(--ok)':'var(--bad)';$('#autoWhy').textContent=s[3];};$('#autoStrat').appendChild(b);});
+})();
+
+/* ---------- O(n^2) ---------- */
+(function(){
+  const btns=document.querySelectorAll('#s6 [data-n]');
+  function show(m){
+    btns.forEach(b=>b.setAttribute('aria-pressed',+b.dataset.n===m));
+    const rows=[['資料量',m,100],['O(n) 運算量',m,100],['O(n²) 運算量',m*m,10000]];
+    $('#onBars').innerHTML=rows.map(([l,v,mx],i)=>`<div class="bar ${i===2?'win':''}"><span>${l}</span><div class="track"><div class="fill" style="width:0"></div></div><span class="num">×${v.toLocaleString()}</span></div>`).join('');
+    const ws=rows.map(([l,v,mx])=>Math.max(1.5,Math.log10(v+1)/Math.log10(mx+1)*100));
+    setTimeout(()=>document.querySelectorAll('#onBars .fill').forEach((f,i)=>f.style.width=ws[i]+'%'),30);
+    $('#onNote').textContent=m===1?'以 1 萬位客戶為基準（長條為對數刻度）。':`資料量放大 ${m} 倍，O(n²) 運算量放大 ${(m*m).toLocaleString()} 倍 —— 這類設計在大規模場景下本身就不可行，架構階段就該排除。`;
+  }
+  btns.forEach(b=>b.onclick=()=>show(+b.dataset.n));show(1);
+})();
+
+/* ---------- attention vs rnn ---------- */
+(function(){
+  const T=['第1字','…','…','…','…','…','…','第8字'];let mode='rnn',timer=null;
+  function draw(){
+    const X=i=>40+i*80;let h='';
+    T.forEach((t,i)=>{h+=`<rect x="${X(i)-30}" y="140" width="60" height="34" rx="8" fill="${i===0||i===7?'var(--txt)':'var(--surface2)'}" stroke="var(--line)"/><text x="${X(i)}" y="162" text-anchor="middle" font-size="13" fill="${i===0||i===7?'#fff':'var(--muted)'}">${t}</text>`;});
+    if(mode==='rnn'){
+      for(let i=0;i<7;i++){const op=Math.max(.12,1-i*.14);h+=`<path d="M${X(i)+30} 157 L${X(i+1)-30} 157" stroke="var(--aud)" stroke-width="${4-i*.45}" opacity="${op}" marker-end="url(#ar)"/>`;h+=`<circle cx="${X(i)}" cy="100" r="${14-i*1.4}" fill="var(--aud)" opacity="${op}"/>`;}
+      h+=`<text x="320" y="40" text-anchor="middle" font-size="14" fill="var(--ink)">逐步遞迴：資訊要經過 7 步才到第 8 字，一路衰減；而且必須一步接一步，無法平行</text>`;
+    }else{
+      for(let i=0;i<8;i++)for(let j=i+1;j<8;j++){const key=i===0&&j===7;h+=`<path d="M${X(i)} 140 Q ${(X(i)+X(j))/2} ${140-(j-i)*16} ${X(j)} 140" fill="none" stroke="${key?'var(--ok)':'var(--line)'}" stroke-width="${key?4:1}" ${key?'class="flow"':''}/>`;}
+      h+=`<text x="320" y="24" text-anchor="middle" font-size="14" fill="var(--ink)">Self-Attention：任意兩個 token 在同一層直接相連，距離不影響，且可平行計算</text>`;
+    }
+    $('#attSvg').innerHTML=`<defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="var(--aud)"/></marker></defs>`+h;
+    $('#attNote').innerHTML=mode==='rnn'?'115-1 第 19 題情境：長文件用 BiLSTM 效果不佳 —— 跨段落關聯在逐步遞迴中衰減。':'改用 Transformer 為何改善？<b>Self-Attention 讓任意 token 直接建立關聯、不受距離限制，且可平行化</b>。代價是序列越長計算成本越高。';
+  }
+  document.querySelectorAll('#attTabs .btn').forEach(b=>b.onclick=()=>{mode=b.dataset.m;document.querySelectorAll('#attTabs .btn').forEach(x=>x.setAttribute('aria-pressed',x===b));draw();});
+  draw();
+})();
+
+/* ---------- CNN pipeline ---------- */
+(function(){
+  const nodes=[['輸入影像','像素'],['卷積層','第一層'],['池化層','Pooling'],['全連接層','整合'],['輸出層','分類結果']];
+  const grid=(n,fn)=>`<div style="display:inline-grid;grid-template-columns:repeat(${n},14px);gap:2px;vertical-align:middle">${Array.from({length:n*n},(_,i)=>`<span style="width:14px;height:14px;border-radius:3px;background:${fn(i%n,Math.floor(i/n))}"></span>`).join('')}</div>`;
+  const out=[
+    grid(8,(x,y)=>((x-3.5)**2+(y-3.5)**2<9)?'var(--img)':'var(--surface)')+'<div class="hint">一張 8×8 的影像（示意）。</div>',
+    grid(8,(x,y)=>{const d=Math.abs(Math.sqrt((x-3.5)**2+(y-3.5)**2)-3);return d<.8?'var(--aud)':'var(--surface)';})+'<div><b>卷積層</b>擷取邊緣、紋理等<b>低階局部特徵</b>。效率來自<b>區域感知＋參數共享</b>，不是「自動具備旋轉與比例不變性」。</div>',
+    grid(4,(x,y)=>(x===0||x===3||y===0||y===3)?'var(--aud)':'var(--surface)')+'<div><b>池化層</b>（115-1 第 18 題）：<b>降低特徵圖空間維度、減少參數與計算量</b>。8×8 → 4×4。</div>',
+    '<div class="row" style="gap:3px">'+Array.from({length:12},(_,i)=>`<span style="width:12px;height:28px;border-radius:3px;background:var(--txt);opacity:${.3+.7*((i*5)%7)/6}"></span>`).join('')+'</div><div><b>全連接層</b>：整合前面所有特徵。</div>',
+    '<b>輸出層：</b>「圓形」0.93｜「方形」0.07<div class="hint">卷積抽特徵、池化降維、全連接整合輸出 —— 三者職責不可互換。</div>'
+  ];
+  let i=0;
+  $('#cnnPipe').innerHTML=nodes.map(([a,b])=>`<div class="pnode"><b>${a}</b>${b}</div>`).join('');
+  function r(){document.querySelectorAll('#cnnPipe .pnode').forEach((n,j)=>{n.classList.toggle('on',j===i);n.classList.toggle('past',j<i);});$('#cnnOut').innerHTML=out[i];$('#cnnNext').disabled=i===4;$('#cnnNext').style.opacity=i===4?.4:1;}
+  $('#cnnNext').onclick=()=>{if(i<4){i++;r();}};
+  $('#cnnReset').onclick=()=>{i=0;r();};
+  r();
+})();
+
+/* ---------- deeper is worse ---------- */
+(function(){
+  const C={
+    plain:{l:'3 層 → 16 層（無殘差）',tr3:e=>.9*Math.exp(-e/6)+.25,tr16:e=>.95*Math.exp(-e/25)+.48,va:null,v:'最佳化問題：梯度消失',d:'16 層版本的<b>訓練損失反而高於</b> 3 層版本且收斂困難 → 問題出在最佳化，不是泛化。對策：ResNet 的<b>殘差連接（Skip Connection）</b>提供恆等捷徑（115-1 第 17 題）。',c:'var(--bad)'},
+    res:{l:'16 層＋殘差連接',tr3:e=>.9*Math.exp(-e/6)+.25,tr16:e=>.95*Math.exp(-e/7)+.12,va:null,v:'加上殘差連接後',d:'恆等捷徑讓梯度能順利傳回淺層，深層網路的訓練損失終於低於淺版本。',c:'var(--ok)'},
+    over:{l:'訓練低、驗證高',tr3:null,tr16:e=>.95*Math.exp(-e/6)+.03,va:e=>.6*Math.exp(-e/5)+.35+Math.max(0,e-12)*.025,v:'泛化問題：過擬合',d:'訓練損失低、<b>驗證損失</b>高 → 這才是過擬合，要走<b>正則化</b>路線（或增加資料），不是加殘差。',c:'var(--warn)'}
+  };
+  const keys=Object.keys(C);
+  keys.forEach(k=>{const b=document.createElement('button');b.className='btn';b.textContent=C[k].l;b.onclick=()=>show(k);$('#deepTabs').appendChild(b);});
+  function show(k){
+    document.querySelectorAll('#deepTabs .btn').forEach((b,j)=>b.setAttribute('aria-pressed',keys[j]===k));
+    const c=C[k],X=e=>50+e*18,Y=v=>200-v*150;
+    const line=(fn,col,dash,lab)=>{if(!fn)return '';let p='';for(let e=0;e<=28;e++)p+=(e?'L':'M')+X(e)+' '+Y(fn(e)).toFixed(1);return `<path d="${p}" fill="none" stroke="${col}" stroke-width="3" ${dash?'stroke-dasharray="6 5"':''}/><text x="${X(28)+6}" y="${Y(fn(28))+4}" font-size="12" fill="${col}">${lab}</text>`;};
+    let h=`<line x1="50" y1="20" x2="50" y2="200" stroke="var(--line)"/><line x1="50" y1="200" x2="610" y2="200" stroke="var(--line)"/><text x="40" y="30" text-anchor="end" font-size="12" fill="var(--muted)">損失</text><text x="610" y="220" text-anchor="end" font-size="12" fill="var(--muted)">訓練回合</text>`;
+    if(k!=='over'){h+=line(c.tr3,'var(--muted)',true,'3層 訓練');h+=line(c.tr16,c.c,false,'16層 訓練');}
+    else{h+=line(c.tr16,'var(--img)',false,'訓練');h+=line(c.va,'var(--bad)',false,'驗證');}
+    $('#deepSvg').innerHTML=h;
+    $('#deepNote').innerHTML=`<div class="verdict" style="color:${c.c}">${c.v}</div><p class="hint" style="margin:4px 0 0">${c.d}</p>`;
+  }
+  show('plain');
+})();
+
+/* ---------- exam list ---------- */
+examList([
+  ['114-2 第7題','任務型態 → 模型','下列哪種應用最適合 LSTM？','找「有時間順序」的選項：<b>預測未來七天電力需求</b>。物件辨識走 CNN、分群走聚類、壓縮走降維'],
+  ['115-1 第10題','任務型態 → 損失函數','使用時長（分鐘）與是否流失（是／否）各該用什麼損失？','連續數值＝迴歸＝<b>MSE</b>；二元分類＝<b>BCE</b>。誘答把兩者對調'],
+  ['115-1 第29題','只有正常樣本','只有正常振動紀錄、無故障標註','標籤前提不成立 → <b>非監督／半監督異常偵測</b>，不是監督式二元分類'],
+  ['115-1 第15題','聚類模型限制','K-means 遇半月形群、離群值、每次結果不同','選<b>同時涵蓋三項限制</b>的敘述：需指定 K、難處理非凸、對初始化與離群值敏感。只講一項的是誘答'],
+  ['114-2 第4題','聚類定義','DBSCAN 中孤立且密度不足的點屬於哪類？','<b>雜訊點</b>。邊界點必須落在某核心點鄰域內'],
+  ['115-1 第6題','降維選型','t-SNE 與 PCA 該怎麼分工？','t-SNE 保留局部鄰域、適合視覺化；不保留全域結構、無外推函數，<b>不能當模型輸入特徵</b>'],
+  ['115-1 第28題','非線性＋可稽核','50 個特徵、部分非線性、須提供整體特徵重要性','<b>隨機森林迴歸</b>：同時滿足兩項限制。SVR 的支持向量不是特徵重要性；邏輯迴歸是分類模型'],
+  ['115-1 第33題','共線性＋不歸零','150 特徵高度相關，要控過擬合又不讓係數歸零','<b>Ridge（L2）</b>。Lasso 與 Elastic Net 都會產生零係數'],
+  ['114-2 第14題','解釋性情境排序','哪個情境可解釋性最關鍵？','<b>醫療影像判讀腫瘤惡性程度</b>。行銷推播、廣告出價錯誤代價有限'],
+  ['115-1 第37題','局部可解釋性','每筆被拒申請須說明原因','<b>SHAP</b>。全域特徵重要性與混淆矩陣都是整體層級，Grad-CAM 只適用影像'],
+  ['114-2 第25題','監理場域選模型','傳統信用評分卡流程，何者<b>不是</b>常見步驟？','「使用生成式模型進行特徵學習」缺乏可解釋性，不符評分卡標準化流程'],
+  ['115-1 第21題','資源受限部署','32-bit 浮點轉 8-bit 整數、不重新訓練','<b>模型量化</b>（訓練後量化）。蒸餾必然要訓練、剪枝改的是參數數量'],
+  ['115-1 第19題','長文件架構選型','BiLSTM 效果不佳，改 Transformer 為何改善？','<b>Self-Attention</b> 讓任意 token 直接建立關聯、不受距離限制，且可平行化'],
+  ['115-1 第23題','生成任務架構','BERT 生成效果差、加資料也沒用','BERT <b>無自迴歸逐字生成機制</b>，是架構與預訓練目標的差異'],
+  ['115-1 第17題','深度加深反變差','3 層 CNN 升 16 層，訓練損失反而更高','梯度消失 → <b>ResNet 殘差連接</b>。關鍵線索是「訓練損失」變差'],
+  ['115-1 第18題','架構分工','池化層最主要解決什麼？','<b>降低特徵圖空間維度、減少參數與計算量</b>'],
+  ['114-2 第8題','樹模型機制','資訊增益用於哪類模型？','遞迴分裂建立分類規則的<b>決策樹</b>'],
+  ['114-2 第18題','樹集成改進','XGBoost 相較 GBDT 的主要改進','<b>正則化＋缺失值自動處理＋並行化</b>，三者並列的那個選項'],
+  ['114-2 第10題','開發成本','哪種情境最適合導入 AutoML？','<b>缺乏專職工程師、要短時間比較多種模型</b>']
+]);
+
+/* ---------- traps ---------- */
+trapList([
+  ['「最準確」不等於「最適合」','情境題問的是限制條件下的最佳解，不是絕對效能榜首。題幹每多一個限制，就多刪掉一批選項。'],
+  ['選項只滿足一半需求就是誘答','題幹同時要「非線性」與「可稽核」，只能建模非線性（SVR）或只能解釋（邏輯迴歸）的都不對。'],
+  ['可解釋性要先分局部還是全域','「每一筆被拒案件的原因」是局部（SHAP／LIME）；「整體特徵排序」是全域（特徵重要性／PDP）。用錯層級一定錯。'],
+  ['Ridge 不歸零，Lasso 會歸零','要「保留全部特徵」選 Ridge；要「自動特徵選擇」選 Lasso。Elastic Net 含 L1 成分，仍會歸零。'],
+  ['Lasso 在高度相關特徵間的選擇不穩定','每次重訓保留的特徵會跳動，這是稀疏性的副作用，不是「沒用正則化」也不是「梯度消失」。'],
+  ['t-SNE 是視覺化工具，不是特徵萃取工具','它沒有可重複套用到新樣本的固定轉換；要當下游模型輸入請用 PCA。'],
+  ['只有正常樣本就不可能做監督式分類','看到「缺乏已確認的故障標註」立刻轉向非監督／半監督異常偵測。'],
+  ['「訓練損失變差」是最佳化問題，「驗證損失變差」才是泛化問題','前者找梯度消失／學習率，後者才找正則化與資料量。'],
+  ['量化改精度、剪枝改參數量、蒸餾要訓練','「不重新訓練」這五個字直接排除知識蒸餾。'],
+  ['CNN 的效率優勢來自區域感知與參數共享','不是「自動具備旋轉與比例不變性」，也不是「捨棄激活函數」。'],
+  ['池化層降維，卷積層抽特徵，全連接層整合輸出','三者職責在題目中常被互換。'],
+  ['AutoML 不是萬用加速器','團隊成熟、模型已穩定、或需精細控制特徵工程時，導入效益反而有限。'],
+  ['模型選擇必須與部署同步規劃','訓練階段沒考慮延遲與裝置限制，上線時整個模型作廢，是官方明寫的警告。'],
+  ['ARIMA 適合「短期、週期明顯、資料量不大」','資料量大且非線性強時才輪到 LSTM／TCN，不要看到時間序列就直接選深度模型。']
+],'l23302-traps');
+
+/* ---------- quiz ---------- */
+runQuiz([
+  ['下列哪種應用最適合使用 LSTM？',['預測未來七天的電力需求','辨識照片中的物件','把顧客依相似特徵分群','把高維感測資料壓成低維'],'LSTM 處理有時間順序的資料。物件辨識走 CNN、分群走聚類、壓縮走降維。'],
+  ['要預測「使用時長（分鐘）」與「是否流失（是／否）」，各該用什麼損失函數？',['時長用 MSE、流失用 BCE','時長用 BCE、流失用 MSE','兩者都用 MSE','兩者都用 BCE'],'連續數值＝迴歸＝MSE；二元分類＝BCE。誘答把兩者對調。'],
+  ['工廠只有正常的軸承振動紀錄、沒有任何確認過的故障標註，最合適的建模方式是？',['非監督／半監督異常偵測（如 Isolation Forest、自編碼器重建誤差）','監督式二元分類','多類別分類','線性迴歸'],'標籤前提不成立，不可能做監督式分類。'],
+  ['資料有 50 個特徵、關係部分非線性，且須提供整體特徵重要性供稽核，哪個模型最合適？',['隨機森林迴歸','SVR','邏輯迴歸','線性迴歸'],'要同時滿足兩項限制。SVR 的支持向量不是特徵重要性；邏輯迴歸是分類模型。'],
+  ['150 個特徵高度相關，想控制過擬合又不讓任何係數歸零，應選？',['Ridge（L2）','Lasso（L1）','Elastic Net','不加正則化的線性迴歸'],'Ridge 平方懲罰把權重平均分攤並同步縮小，不會歸零。Lasso 與 Elastic Net 都會產生零係數。'],
+  ['銀行規定「每一筆被拒絕的貸款申請都要提供可理解的原因」，最合適的技術是？',['SHAP','全域特徵重要性','混淆矩陣','Grad-CAM'],'個案級說明是局部可解釋性。Grad-CAM 只適用影像／CNN。'],
+  ['要把 32-bit 浮點模型轉成 8-bit 整數以部署到手機，且不重新訓練，這是？',['訓練後量化','知識蒸餾','剪枝','張量分解'],'量化改精度；蒸餾必然要訓練；剪枝改的是參數數量。'],
+  ['CNN 從 3 層加深到 16 層後，「訓練損失」反而比淺版本更高且難以收斂，最合理的對策是？',['加入殘差連接（ResNet Skip Connection）','加強 L2 正則化','加入更多 Dropout','增加訓練資料量'],'訓練損失變差是最佳化問題（梯度消失），不是過擬合。'],
+  ['用 BERT 做文章續寫效果很差，加了更多訓練資料也沒改善，主要原因是？',['BERT 是雙向編碼器，沒有自迴歸逐字生成機制','訓練資料還不夠多','學習率設定錯誤','BERT 沒有使用注意力機制'],'差異來自架構與預訓練目標，增加訓練資料補不回來。'],
+  ['關於 t-SNE 與 PCA 的分工，何者正確？',['t-SNE 適合視覺化群集結構；要當下游模型輸入特徵用 PCA','t-SNE 比 PCA 準，應一律取代 PCA','t-SNE 有固定轉換矩陣，可直接投影新資料','PCA 保留局部鄰域，t-SNE 保留全域變異'],'t-SNE 不保留全域結構、沒有外推函數。'],
+  ['XGBoost 相較傳統 GBDT 的主要改進是？',['目標函數加入正則化、缺失值自動處理、特徵層級並行化','改用隨機森林架構','以神經網路取代弱學習器','加入批次正規化'],'三件事一起並列的那個選項才是正解。'],
+  ['下列哪個情境最適合導入 AutoML？',['行銷部門缺乏專職工程師，需在短時間內比較多種流失預測模型','已有完整 MLOps 平台與資深團隊，流程固定','模型已長期穩定，只需定期微調參數','財務信用風險模型，需精細控制特徵工程'],'AutoML 適合人力不足、要快速比較多模型的情境。']
+],['太強了，限制條件一眼就看穿。','不錯！回頭看看答錯題對應的判準段落。','建議重新操作 49.1 的限制篩選器與 49.4 的局部／全域配對，再來一次。']);
+/* ---------- nav highlight ---------- */
+(function(){
+  const links=[...document.querySelectorAll('nav.toc a')];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on&&window.innerWidth<=860)a.scrollIntoView({inline:'center',block:'nearest'});});}});},{rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('main section').forEach(s=>io.observe(s));
+})();
+</script>
+</body>
+</html>
